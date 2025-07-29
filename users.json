@@ -1,0 +1,47 @@
+{
+  "soomin": {
+    "username": "soomin",
+    "age": 10,
+    "password_hash": "",
+    "created_at": "2025-07-02T22:37:07.991120",
+    "last_login": "2025-07-03T02:18:13.483857",
+    "user_dir": "user_data/soomin",
+    "chat_dir": "user_data/soomin/chat_history"
+  },
+  "jane": {
+    "username": "jane",
+    "age": 5,
+    "password_hash": "",
+    "created_at": "2025-07-02T22:40:43.583129",
+    "last_login": null,
+    "user_dir": "user_data/jane",
+    "chat_dir": "user_data/jane/chat_history"
+  },
+  "mike": {
+    "username": "mike",
+    "age": 6,
+    "password_hash": "",
+    "created_at": "2025-07-02T22:42:40.334277",
+    "last_login": null,
+    "user_dir": "user_data/mike",
+    "chat_dir": "user_data/mike/chat_history"
+  },
+  "hanna": {
+    "username": "hanna",
+    "age": 5,
+    "password_hash": "",
+    "created_at": "2025-07-02T22:45:08.773638",
+    "last_login": "2025-07-02T22:45:11.472317",
+    "user_dir": "user_data/hanna",
+    "chat_dir": "user_data/hanna/chat_history"
+  },
+  "testuser": {
+    "username": "testuser",
+    "age": 25,
+    "password_hash": "",
+    "created_at": "2025-07-02T22:50:20.826832",
+    "last_login": "2025-07-02T22:54:37.549007",
+    "user_dir": "user_data/testuser",
+    "chat_dir": "user_data/testuser/chat_history"
+  }
+}

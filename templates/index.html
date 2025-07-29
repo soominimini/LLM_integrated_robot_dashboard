@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QTrobot AI Assistant - User Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], 
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f8f9fa;
+        }
+
+        input[type="text"]:focus, 
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-info p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        .user-info strong {
+            color: #333;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .stat-card h3 {
+            color: #333;
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .stat-card p {
+            color: #666;
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .main-menu {
+            text-align: center;
+        }
+
+        .menu-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        .menu-btn.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .game-selection {
+            display: none;
+        }
+
+        .game-selection.active {
+            display: block;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .game-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .game-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .game-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .welcome-section h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .story-form {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-result {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .story-metadata {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f8f9fa;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" data-logged-in="{{ 'true' if logged_in else 'false' }}">
+        <!-- Login/Register Section -->
+        <div id="auth-section" class="{% if logged_in %}dashboard{% else %}active{% endif %}">
+            <div class="header">
+                <h1>🤖 QTrobot AI Assistant</h1>
+                <p id="form-title">Welcome! Please login or register to continue.</p>
+            </div>
+            <div id="alert"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" name="username" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <form id="registerForm" style="display:none;">
+                <div class="form-group">
+                    <label for="register-username">Username:</label>
+                    <input type="text" id="register-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-age">Age:</label>
+                    <input type="number" id="register-age" name="age" min="0" max="150" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <div class="links">
+                <a href="#" id="toggle-link">Don't have an account? Register here</a>
+            </div>
+        </div>
+
+        <!-- Game Selection Section -->
+        <div id="game-selection" class="game-selection {% if logged_in and show_game_selection %}active{% endif %}">
+            <div class="welcome-section">
+                <h2>Welcome, {{ user.username if user else 'User' }}! 👋</h2>
+                <p>Choose a game or activity to start your QTrobot experience</p>
+            </div>
+            
+            <div class="game-grid">
+                <div class="game-card" onclick="startGame('chat')">
+                    <div class="game-icon">💬</div>
+                    <h3>AI Chat Assistant</h3>
+                    <p>Have a conversation with the QTrobot AI assistant</p>
+                </div>
+                
+                <div class="game-card" onclick="startGame('story')">
+                    <div class="game-icon">📚</div>
+                    <h3>Interactive Story</h3>
+                    <p>Create and explore interactive stories together</p>
+                </div>
+                
+                <div class="game-card" onclick="startGame('quiz')">
+                    <div class="game-icon">❓</div>
+                    <h3>Educational Quiz</h3>
+                    <p>Test your knowledge with fun quizzes</p>
+                </div>
+                
+                <div class="game-card" onclick="startGame('detection')">
+                    <div class="game-icon">👁️</div>
+                    <h3>Scene Detection</h3>
+                    <p>Explore the robot's vision capabilities</p>
+                </div>
+            </div>
+            
+            <button class="btn secondary" onclick="backToDashboard()">Back to Dashboard</button>
+            <button class="btn secondary" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Story Generation Section -->
+        <div id="story-section" class="game-selection">
+            <div class="welcome-section">
+                <h2>📚 Interactive Story Generator</h2>
+                <p>Generate a personalized therapeutic story for language development</p>
+            </div>
+            
+            <div class="story-form">
+                <div class="form-group">
+                    <label for="story-child-name">Child's Name:</label>
+                    <input type="text" id="story-child-name" name="child_name" value="{{ user.username if user else 'Anna' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="story-child-age">Child's Age:</label>
+                    <input type="number" id="story-child-age" name="age" min="1" max="12" value="{{ user.age if user else 4 }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="story-custom-prompt">Custom Prompt (Optional):</label>
+                    <textarea id="story-custom-prompt" name="custom_prompt" rows="3" placeholder="Leave empty to use the default therapeutic story template..."></textarea>
+                </div>
+                <button class="btn" onclick="generateStory()">Generate Story</button>
+                <button class="btn secondary" onclick="backToGameSelection()">Back to Games</button>
+            </div>
+            
+            <div id="story-result" class="story-result" style="display: none;">
+                <h3>Your Therapeutic Story</h3>
+                <div id="story-content" class="story-content"></div>
+                <div id="story-metadata" class="story-metadata"></div>
+                <button class="btn" onclick="generateNewStory()">Generate Another Story</button>
+                <button class="btn secondary" onclick="backToGameSelection()">Back to Games</button>
+                <button class="btn" id="approve-story-btn" onclick="approveStory()">Approve & Save Story</button>
+                <div id="story-save-status" style="margin-top:1rem;"></div>
+            </div>
+            
+            <div id="story-loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Generating your therapeutic story...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const toggleLink = document.getElementById('toggle-link');
+        const alertDiv = document.getElementById('alert');
+        const formTitle = document.getElementById('form-title');
+        const authSection = document.getElementById('auth-section');
+        const gameSelection = document.getElementById('game-selection');
+        const storySection = document.getElementById('story-section');
+
+        // Check if user is already logged in
+        const container = document.querySelector('.container');
+        const isLoggedIn = container.getAttribute('data-logged-in') === 'true';
+        if (isLoggedIn) {
+            showGameSelection();
+        }
+
+        function showGameSelection() {
+            authSection.classList.remove('active');
+            gameSelection.classList.add('active');
+            storySection.classList.remove('active');
+        }
+
+        function showAuth() {
+            authSection.classList.add('active');
+            gameSelection.classList.remove('active');
+            storySection.classList.remove('active');
+        }
+
+        function showStorySection() {
+            authSection.classList.remove('active');
+            gameSelection.classList.remove('active');
+            storySection.classList.add('active');
+        }
+
+        function startGame(gameType) {
+            if (gameType === 'story') {
+                showStorySection();
+            } else {
+                alert(`Starting ${gameType} game! This will integrate with the QTrobot AI assistant.`);
+                // Here you can add logic to start the specific game
+                // For now, just show an alert
+            }
+        }
+
+        function backToGameSelection() {
+            showGameSelection();
+            // Hide story result and loading
+            document.getElementById('story-result').style.display = 'none';
+            document.getElementById('story-loading').style.display = 'none';
+            document.querySelector('.story-form').style.display = 'block';
+        }
+
+        async function generateStory() {
+            const childName = document.getElementById('story-child-name').value.trim();
+            const age = parseInt(document.getElementById('story-child-age').value);
+            const customPrompt = document.getElementById('story-custom-prompt').value.trim();
+
+            if (!childName || !age || age < 1 || age > 12) {
+                alert('Please enter a valid child name and age (1-12)');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('story-loading').style.display = 'block';
+            document.querySelector('.story-form').style.display = 'none';
+            document.getElementById('story-result').style.display = 'none';
+
+            try {
+                const response = await fetch('/api/generate_story', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        child_name: childName,
+                        age: age,
+                        custom_prompt: customPrompt || null
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Display the story
+                    document.getElementById('story-content').textContent = data.story;
+                    
+                    // Display metadata
+                    const metadata = data.metadata;
+                    document.getElementById('story-metadata').innerHTML = `
+                        <strong>Story Details:</strong><br>
+                        Child: ${metadata.child_name}<br>
+                        Age: ${metadata.age} years old<br>
+                        Word Count: ${metadata.word_count}<br>
+                        Generated with: ${metadata.model}<br>
+                        Generated at: ${metadata.generated_at || 'Just now'}
+                    `;
+
+                    document.getElementById('story-result').style.display = 'block';
+                    window.lastStoryMetadata = metadata;
+                } else {
+                    alert(`Error generating story: ${data.error || 'Unknown error'}`);
+                    document.querySelector('.story-form').style.display = 'block';
+                }
+            } catch (error) {
+                alert(`Error generating story: ${error.message}`);
+                document.querySelector('.story-form').style.display = 'block';
+            } finally {
+                document.getElementById('story-loading').style.display = 'none';
+            }
+        }
+
+        function generateNewStory() {
+            document.getElementById('story-result').style.display = 'none';
+            document.querySelector('.story-form').style.display = 'block';
+            // Clear the custom prompt for a fresh start
+            document.getElementById('story-custom-prompt').value = '';
+        }
+
+        function backToDashboard() {
+            window.location.href = '/';
+        }
+
+        async function logout() {
+            const res = await fetch('/api/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (res.ok) {
+                showAuth();
+                alertDiv.innerHTML = '<div class="alert success">Logged out successfully!</div>';
+            }
+        }
+
+        async function approveStory() {
+            const storyContent = document.getElementById('story-content').textContent.trim();
+            // Parse metadata from the last generated story (from the last successful API call)
+            // We'll store the last metadata in a global variable when generating the story
+            if (!window.lastStoryMetadata) {
+                alert('Story metadata is missing');
+                return;
+            }
+            if (!storyContent) {
+                alert('Story content is missing');
+                return;
+            }
+            document.getElementById('story-save-status').textContent = '';
+            document.getElementById('approve-story-btn').disabled = true;
+            try {
+                // Show initial saving message
+                document.getElementById('story-save-status').innerHTML = '<span style="color:blue;">Saving story and generating images...</span>';
+                
+                const response = await fetch('/api/save_story', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        story: storyContent,
+                        metadata: window.lastStoryMetadata
+                    })
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    document.getElementById('story-save-status').innerHTML = '<span style="color:green;">Story approved and saved successfully! Images are being generated in the background.</span>';
+                } else {
+                    document.getElementById('story-save-status').innerHTML = `<span style="color:red;">Error saving story: ${data.error || 'Unknown error'}</span>`;
+                }
+            } catch (error) {
+                document.getElementById('story-save-status').innerHTML = `<span style="color:red;">Error saving story: ${error.message}</span>`;
+            } finally {
+                document.getElementById('approve-story-btn').disabled = false;
+            }
+        }
+
+        toggleLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (loginForm.style.display !== 'none') {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                toggleLink.textContent = 'Already have an account? Login here';
+                formTitle.textContent = 'Create your account to get started';
+            } else {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                toggleLink.textContent = "Don't have an account? Register here";
+                formTitle.textContent = 'Welcome! Please login or register to continue.';
+            }
+            alertDiv.innerHTML = '';
+        });
+
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            alertDiv.innerHTML = '';
+            const username = document.getElementById('login-username').value;
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alertDiv.innerHTML = '<div class="alert success">Login successful! Loading game selection...</div>';
+                setTimeout(() => { 
+                    showGameSelection();
+                    alertDiv.innerHTML = '';
+                }, 1000);
+            } else {
+                alertDiv.innerHTML = `<div class="alert error">${data.error || 'Login failed'}</div>`;
+            }
+        });
+
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            alertDiv.innerHTML = '';
+            const username = document.getElementById('register-username').value;
+            const age = document.getElementById('register-age').value;
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, age })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alertDiv.innerHTML = '<div class="alert success">Registration successful! Please login.</div>';
+                setTimeout(() => {
+                    loginForm.style.display = 'block';
+                    registerForm.style.display = 'none';
+                    toggleLink.textContent = "Don't have an account? Register here";
+                    formTitle.textContent = 'Welcome! Please login or register to continue.';
+                    alertDiv.innerHTML = '';
+                }, 1500);
+            } else {
+                alertDiv.innerHTML = `<div class="alert error">${data.error || 'Registration failed'}</div>`;
+            }
+        });
+    </script>
+</body>
+</html> 

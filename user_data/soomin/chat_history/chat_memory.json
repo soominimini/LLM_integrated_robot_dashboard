@@ -1,0 +1,1 @@
+"{\"store\": {\"chat_history\": [{\"role\": \"user\", \"content\": \"Kitty. (user soomin (Age: 10))\", \"additional_kwargs\": {}}, {\"role\": \"assistant\", \"content\": \"Hello Kitty! What's your favorite color?\", \"additional_kwargs\": {\"tool_calls\": []}}]}, \"class_name\": \"SimpleChatStore\"}"

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QTrobot AI Assistant - Play Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .welcome-section h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .game-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .game-card.playing {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .game-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .game-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .play-btn.playing {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .game-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .game-status.playing {
+            display: block;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+        }
+
+        .alert {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .game-info {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Play Games</h1>
+            <p>Welcome to your personalized gaming experience!</p>
+        </div>
+
+        <div class="welcome-section">
+            <h2>Welcome, {{ user.username if user else 'Soomin' }}! 🎯</h2>
+            <p>Ready to play some amazing games with QTrobot?</p>
+        </div>
+
+        <div id="alert"></div>
+
+        <div class="games-grid">
+            <div class="game-card" id="story-game">
+                <div class="game-icon">📚</div>
+                <h3>Interactive Story</h3>
+                <p>Play with the therapeutic stories we generated together</p>
+                <button class="play-btn" onclick="playGame('story')">Play Story Game</button>
+                <div class="game-status">Playing...</div>
+            </div>
+
+            <div class="game-card" id="scene-game">
+                <div class="game-icon">👁️</div>
+                <h3>Scene Detection</h3>
+                <p>Explore what QTrobot can see and understand</p>
+                <button class="play-btn" onclick="playGame('scene')">Play Scene Game</button>
+                <div class="game-status">Playing...</div>
+            </div>
+
+            <div class="game-card" id="chat-game">
+                <div class="game-icon">💬</div>
+                <h3>AI Chat Assistant</h3>
+                <p>Have a conversation with QTrobot</p>
+                <button class="play-btn" onclick="playGame('chat')">Start Chat</button>
+                <div class="game-status">Chatting...</div>
+            </div>
+
+            <div class="game-card" id="quiz-game">
+                <div class="game-icon">❓</div>
+                <h3>Educational Quiz</h3>
+                <p>Test your knowledge with fun quizzes</p>
+                <button class="play-btn" onclick="playGame('quiz')">Take Quiz</button>
+                <div class="game-status">Playing...</div>
+            </div>
+        </div>
+
+        <div class="game-info">
+            <strong>Game Instructions:</strong><br>
+            • Click any game button to start playing<br>
+            • Each game is designed to help with learning and development<br>
+            • You can switch between games at any time<br>
+            • Your progress is automatically saved
+        </div>
+
+        <button class="btn" onclick="backToDashboard()">Back to Dashboard</button>
+        <button class="btn" onclick="logout()">Logout</button>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading game...</p>
+        </div>
+    </div>
+
+    <script>
+        const alertDiv = document.getElementById('alert');
+        const loading = document.getElementById('loading');
+
+        // Game state management
+        let currentGame = null;
+
+        function playGame(gameType) {
+            // Stop any currently playing game
+            if (currentGame && currentGame !== gameType) {
+                stopGame(currentGame);
+            }
+
+            // Start the new game
+            currentGame = gameType;
+            const gameCard = document.getElementById(`${gameType}-game`);
+            const playBtn = gameCard.querySelector('.play-btn');
+            const status = gameCard.querySelector('.game-status');
+
+            // Update UI
+            gameCard.classList.add('playing');
+            playBtn.classList.add('playing');
+            playBtn.textContent = 'Stop Game';
+            status.classList.add('playing');
+
+            // Show loading
+            loading.classList.add('active');
+
+            // Simulate game loading
+            setTimeout(() => {
+                loading.classList.remove('active');
+                
+                // Handle different game types
+                switch(gameType) {
+                    case 'story':
+                        startStoryGame();
+                        break;
+                    case 'scene':
+                        startSceneGame();
+                        break;
+                    case 'chat':
+                        startChatGame();
+                        break;
+                    case 'quiz':
+                        startQuizGame();
+                        break;
+                }
+            }, 1500);
+        }
+
+        function stopGame(gameType) {
+            const gameCard = document.getElementById(`${gameType}-game`);
+            const playBtn = gameCard.querySelector('.play-btn');
+            const status = gameCard.querySelector('.game-status');
+
+            // Reset UI
+            gameCard.classList.remove('playing');
+            playBtn.classList.remove('playing');
+            status.classList.remove('playing');
+
+            // Reset button text based on game type
+            switch(gameType) {
+                case 'story':
+                    playBtn.textContent = 'Play Story Game';
+                    break;
+                case 'scene':
+                    playBtn.textContent = 'Play Scene Game';
+                    break;
+                case 'chat':
+                    playBtn.textContent = 'Start Chat';
+                    break;
+                case 'quiz':
+                    playBtn.textContent = 'Take Quiz';
+                    break;
+            }
+
+            if (currentGame === gameType) {
+                currentGame = null;
+            }
+        }
+
+        function startStoryGame() {
+            alertDiv.innerHTML = '<div class="alert success">🎭 Interactive Story Game Started!<br>Loading your saved stories...</div>';
+            
+            // First get the list of available stories
+            fetch('/api/get_user_stories', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.stories && data.stories.length > 0) {
+                    // Show story selection interface
+                    let storyList = '<div class="alert success">📚 Choose a story to read aloud:</div>';
+                    storyList += '<div style="margin: 1rem 0;">';
+                    
+                    data.stories.forEach((story, index) => {
+                        storyList += `
+                            <div class="story-item" style="background: white; padding: 1rem; margin: 0.5rem 0; border-radius: 8px; border: 2px solid #e0e0e0; cursor: pointer;" 
+                                 onclick="readSpecificStory('${story.filename}')">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">${story.title}</h4>
+                                <p style="margin: 0.25rem 0; color: #666; font-size: 0.9rem;">
+                                    <strong>Age:</strong> ${story.age} years old | 
+                                    <strong>Words:</strong> ${story.word_count} | 
+                                    <strong>Created:</strong> ${story.created_at || 'Unknown'}
+                                </p>
+                                <p style="margin: 0.5rem 0 0 0; color: #888; font-size: 0.85rem; font-style: italic;">
+                                    ${story.preview}
+                                </p>
+                                <div style="text-align: center; margin-top: 0.5rem;">
+                                    <button class="btn btn-primary" style="background: #007bff; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;" onclick="window.location.href='/read_story/' + encodeURIComponent('${story.filename}')">
+                                        🎭 Read This Story
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    storyList += '</div>';
+                    alertDiv.innerHTML = storyList;
+                } else {
+                    alertDiv.innerHTML = '<div class="alert info">📚 No saved stories found. Please generate some stories first!</div>';
+                }
+            })
+            .catch(error => {
+                alertDiv.innerHTML = '<div class="alert error">❌ Error loading stories: ' + error.message + '</div>';
+            });
+        }
+        
+        function readSpecificStory(filename) {
+            alertDiv.innerHTML = '<div class="alert success">🎭 Reading story... Please wait...</div>';
+            
+            // Call the API to read the specific story
+            fetch('/api/read_specific_story', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename: filename })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.tts_available === false) {
+                        alertDiv.innerHTML = '<div class="alert info">📚 Story loaded! TTS not available, but here\'s your story:<br><br>' + 
+                                           '<div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: left; font-size: 0.9rem;">' +
+                                           data.story.replace(/\n/g, '<br>') + '</div>' +
+                                           '<button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
+                    } else {
+                        alertDiv.innerHTML = '<div class="alert success">🎭 ' + data.message + '<br><br>' +
+                                           '<strong>Story Details:</strong><br>' +
+                                           'Child: ' + data.metadata.child_name + '<br>' +
+                                           'Age: ' + data.metadata.age + ' years old<br>' +
+                                           'Word Count: ' + data.metadata.word_count + '<br><br>' +
+                                           '<button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
+                    }
+                } else {
+                    alertDiv.innerHTML = '<div class="alert error">❌ Error: ' + (data.error || 'Failed to read story') + 
+                                       '<br><button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
+                }
+            })
+            .catch(error => {
+                alertDiv.innerHTML = '<div class="alert error">❌ Error reading story: ' + error.message + 
+                                   '<br><button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
+            });
+        }
+
+        function startSceneGame() {
+            alertDiv.innerHTML = '<div class="alert success">👁️ Scene Detection Game Started!<br>QTrobot is now analyzing the environment and will describe what it sees.</div>';
+            // Here you would integrate with the actual scene detection functionality
+        }
+
+        function startChatGame() {
+            alertDiv.innerHTML = '<div class="alert success">💬 Chat Game Started!<br>You can now have a conversation with QTrobot. Try asking questions!</div>';
+            // Here you would integrate with the actual chat functionality
+        }
+
+        function startQuizGame() {
+            alertDiv.innerHTML = '<div class="alert success">❓ Quiz Game Started!<br>QTrobot will ask you educational questions. Get ready to learn!</div>';
+            // Here you would integrate with the actual quiz functionality
+        }
+
+        function backToDashboard() {
+            window.location.href = '/';
+        }
+
+        async function logout() {
+            const res = await fetch('/api/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (res.ok) {
+                window.location.reload();
+            }
+        }
+
+        // Handle game button clicks
+        document.querySelectorAll('.play-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const gameType = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                
+                if (this.classList.contains('playing')) {
+                    // Stop the game
+                    stopGame(gameType);
+                    alertDiv.innerHTML = '<div class="alert info">Game stopped. Click any game to start a new one!</div>';
+                } else {
+                    // Start the game
+                    playGame(gameType);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
