@@ -698,10 +698,9 @@
             });
             const data = await res.json();
             if (res.ok) {
-                alertDiv.innerHTML = '<div class="alert success">Login successful! Loading game selection...</div>';
+                alertDiv.innerHTML = '<div class="alert success">Login successful! Redirecting to dashboard...</div>';
                 setTimeout(() => { 
-                    showGameSelection();
-                    alertDiv.innerHTML = '';
+                    window.location.href = '/';
                 }, 1000);
             } else {
                 alertDiv.innerHTML = `<div class="alert error">${data.error || 'Login failed'}</div>`;
@@ -720,7 +719,7 @@
             });
             const data = await res.json();
             if (res.ok) {
-                alertDiv.innerHTML = '<div class="alert success">Registration successful! Please login.</div>';
+                alertDiv.innerHTML = '<div class="alert success">Registration successful! Please login to access the dashboard.</div>';
                 setTimeout(() => {
                     loginForm.style.display = 'block';
                     registerForm.style.display = 'none';

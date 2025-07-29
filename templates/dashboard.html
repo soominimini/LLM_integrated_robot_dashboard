@@ -195,6 +195,83 @@
         .user-info strong {
             color: #333;
         }
+
+        .movement-controls {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .movement-controls h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .movement-toggle {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #667eea;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .movement-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        #movement-status {
+            font-weight: 600;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -232,11 +309,85 @@
             <strong>Member since:</strong> {{ user.created_at.split('T')[0] if user and user.created_at else 'Unknown' }}
         </div>
 
+        <div class="movement-controls">
+            <h3>🤖 Robot Movement Settings</h3>
+            <div class="movement-toggle">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="movement-toggle" onchange="toggleMovement(this.checked)">
+                    <span class="slider"></span>
+                </label>
+                <span id="movement-status">Loading...</span>
+            </div>
+            <p class="movement-description">Enable gentle arm and head movements while the robot speaks</p>
+        </div>
+
         <button class="btn" onclick="logout()">Logout</button>
     </div>
 
     <script>
         const alertDiv = document.getElementById('alert');
+
+        // Load movement status on page load
+        window.addEventListener('load', loadMovementStatus);
+
+        async function loadMovementStatus() {
+            try {
+                const response = await fetch('/api/movement_status');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const toggle = document.getElementById('movement-toggle');
+                    const status = document.getElementById('movement-status');
+                    
+                    toggle.checked = data.movement_enabled;
+                    toggle.disabled = !data.movement_available;
+                    
+                    if (data.movement_available) {
+                        status.textContent = data.movement_enabled ? 'Enabled' : 'Disabled';
+                        status.style.color = data.movement_enabled ? '#28a745' : '#dc3545';
+                    } else {
+                        status.textContent = 'Not Available';
+                        status.style.color = '#6c757d';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading movement status:', error);
+                document.getElementById('movement-status').textContent = 'Error loading status';
+            }
+        }
+
+        async function toggleMovement(enabled) {
+            try {
+                const response = await fetch('/api/movement_settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled: enabled })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const status = document.getElementById('movement-status');
+                    status.textContent = enabled ? 'Enabled' : 'Disabled';
+                    status.style.color = enabled ? '#28a745' : '#dc3545';
+                    
+                    // Show feedback
+                    alertDiv.innerHTML = `<div class="alert success">Movement ${enabled ? 'enabled' : 'disabled'} successfully!</div>`;
+                    setTimeout(() => {
+                        alertDiv.innerHTML = '';
+                    }, 2000);
+                } else {
+                    // Revert toggle if failed
+                    document.getElementById('movement-toggle').checked = !enabled;
+                    alertDiv.innerHTML = `<div class="alert error">Failed to ${enabled ? 'enable' : 'disable'} movement: ${data.error}</div>`;
+                }
+            } catch (error) {
+                console.error('Error toggling movement:', error);
+                // Revert toggle if failed
+                document.getElementById('movement-toggle').checked = !enabled;
+                alertDiv.innerHTML = '<div class="alert error">Error updating movement settings</div>';
+            }
+        }
 
         function navigateTo(destination) {
             if (destination === 'generate') {

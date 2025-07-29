@@ -429,10 +429,10 @@
         }
         
         function readSpecificStory(filename) {
-            alertDiv.innerHTML = '<div class="alert success">🎭 Reading story... Please wait...</div>';
+            alertDiv.innerHTML = '<div class="alert info">📚 Loading story details...</div>';
             
-            // Call the API to read the specific story
-            fetch('/api/read_specific_story', {
+            // Call the API to get the story details without speaking
+            fetch('/api/get_specific_story_details', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ filename: filename })
@@ -440,26 +440,22 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    if (data.tts_available === false) {
-                        alertDiv.innerHTML = '<div class="alert info">📚 Story loaded! TTS not available, but here\'s your story:<br><br>' + 
-                                           '<div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: left; font-size: 0.9rem;">' +
-                                           data.story.replace(/\n/g, '<br>') + '</div>' +
-                                           '<button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
-                    } else {
-                        alertDiv.innerHTML = '<div class="alert success">🎭 ' + data.message + '<br><br>' +
-                                           '<strong>Story Details:</strong><br>' +
-                                           'Child: ' + data.metadata.child_name + '<br>' +
-                                           'Age: ' + data.metadata.age + ' years old<br>' +
-                                           'Word Count: ' + data.metadata.word_count + '<br><br>' +
-                                           '<button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
-                    }
+                    alertDiv.innerHTML = '<div class="alert success">📚 Story loaded!<br><br>' +
+                                       '<strong>Story Details:</strong><br>' +
+                                       'Child: ' + data.metadata.child_name + '<br>' +
+                                       'Age: ' + data.metadata.age + ' years old<br>' +
+                                       'Word Count: ' + data.metadata.word_count + '<br><br>' +
+                                       '<div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: left; font-size: 0.9rem; max-height: 200px; overflow-y: auto;">' +
+                                       data.story.replace(/\n/g, '<br>') + '</div>' +
+                                       '<button class="btn btn-primary" onclick="window.location.href=\'/read_story/\' + encodeURIComponent(\'' + filename + '\')">🎭 Read Story Sentence by Sentence</button>' +
+                                       '<button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
                 } else {
-                    alertDiv.innerHTML = '<div class="alert error">❌ Error: ' + (data.error || 'Failed to read story') + 
+                    alertDiv.innerHTML = '<div class="alert error">❌ Error: ' + (data.error || 'Failed to load story') + 
                                        '<br><button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
                 }
             })
             .catch(error => {
-                alertDiv.innerHTML = '<div class="alert error">❌ Error reading story: ' + error.message + 
+                alertDiv.innerHTML = '<div class="alert error">❌ Error loading story: ' + error.message + 
                                    '<br><button class="btn btn-secondary" onclick="startStoryGame()">← Back to Story List</button></div>';
             });
         }

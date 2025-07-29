@@ -22,6 +22,32 @@ image_generator = ImageGenerator()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USER_DATA_DIR = os.path.join(BASE_DIR, 'user_data')
 
+def clean_story_text(text):
+    """
+    Clean story text by removing asterisks, emojis, and other formatting symbols
+    that should not be spoken or displayed in sentences
+    
+    Args:
+        text: Raw story text
+        
+    Returns:
+        str: Cleaned text suitable for speech and display
+    """
+    if not text:
+        return text
+    
+    # Remove markdown formatting
+    cleaned = text.replace('**', '').replace('*', '')
+    
+    # Remove emojis and special symbols, but preserve punctuation and letters
+    # This regex targets emoji characters and other symbols while keeping text and punctuation
+    cleaned = re.sub(r'[^\w\s.,!?;:()"\'-]', '', cleaned)
+    
+    # Clean up extra whitespace
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    
+    return cleaned
+
 @app.route("/")
 def index():
     # If user is logged in, show main dashboard with two options
@@ -287,16 +313,19 @@ def api_read_user_stories():
         if not story_text:
             return jsonify({"error": "Story content is empty"}), 400
         
+        # Clean the story text before speaking
+        cleaned_story = clean_story_text(story_text)
+        
         # Make the robot speak the story
         if tts_helper.is_available():
             # Determine language from metadata or use default
             language = metadata.get('language', 'en-US')
-            success = tts_helper.speak_story(story_text, language)
+            success = tts_helper.speak_story(cleaned_story, language)
             
             if success:
                 return jsonify({
                     "success": True,
-                    "story": story_text,
+                    "story": cleaned_story,
                     "metadata": metadata,
                     "filename": latest_story_file,
                     "message": "Story is being read aloud by QTrobot!"
@@ -305,7 +334,7 @@ def api_read_user_stories():
                 return jsonify({
                     "success": False,
                     "error": "Failed to make robot speak the story",
-                    "story": story_text,
+                    "story": cleaned_story,
                     "metadata": metadata,
                     "filename": latest_story_file
                 }), 500
@@ -313,7 +342,7 @@ def api_read_user_stories():
             # TTS not available, return story without speaking
             return jsonify({
                 "success": True,
-                "story": story_text,
+                "story": cleaned_story,
                 "metadata": metadata,
                 "filename": latest_story_file,
                 "message": "TTS not available. Story content provided.",
@@ -322,6 +351,50 @@ def api_read_user_stories():
         
     except Exception as e:
         return jsonify({"error": f"Error reading stories: {str(e)}"}), 500
+
+@app.route("/api/get_specific_story_details", methods=["POST"])
+def api_get_specific_story_details():
+    """Get details of a specific story without speaking"""
+    username = session.get('username')
+    if not username:
+        return jsonify({"error": "Not logged in"}), 401
+    
+    data = request.get_json() or {}
+    filename = data.get("filename")
+    
+    if not filename:
+        return jsonify({"error": "Filename is required"}), 400
+    
+    try:
+        # Get user's stories directory
+        user_stories_dir = os.path.join(USER_DATA_DIR, username, "stories")
+        story_path = os.path.join(user_stories_dir, filename)
+        
+        if not os.path.exists(story_path):
+            return jsonify({"error": "Story file not found"}), 404
+        
+        with open(story_path, 'r') as f:
+            story_data = json.load(f)
+        
+        story_text = story_data.get('story', '')
+        metadata = story_data.get('metadata', {})
+        
+        if not story_text:
+            return jsonify({"error": "Story content is empty"}), 400
+        
+        # Clean the story text for display
+        cleaned_story = clean_story_text(story_text)
+        
+        # Return story details without speaking
+        return jsonify({
+            "success": True,
+            "story": cleaned_story,
+            "metadata": metadata,
+            "filename": filename
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": f"Error loading story: {str(e)}"}), 500
 
 @app.route("/api/read_specific_story", methods=["POST"])
 def api_read_specific_story():
@@ -353,16 +426,19 @@ def api_read_specific_story():
         if not story_text:
             return jsonify({"error": "Story content is empty"}), 400
         
+        # Clean the story text before speaking
+        cleaned_story = clean_story_text(story_text)
+        
         # Make the robot speak the story
         if tts_helper.is_available():
             # Determine language from metadata or use default
             language = metadata.get('language', 'en-US')
-            success = tts_helper.speak_story(story_text, language)
+            success = tts_helper.speak_story(cleaned_story, language)
             
             if success:
                 return jsonify({
                     "success": True,
-                    "story": story_text,
+                    "story": cleaned_story,
                     "metadata": metadata,
                     "filename": filename,
                     "message": "Story is being read aloud by QTrobot!"
@@ -371,7 +447,7 @@ def api_read_specific_story():
                 return jsonify({
                     "success": False,
                     "error": "Failed to make robot speak the story",
-                    "story": story_text,
+                    "story": cleaned_story,
                     "metadata": metadata,
                     "filename": filename
                 }), 500
@@ -379,7 +455,7 @@ def api_read_specific_story():
             # TTS not available, return story without speaking
             return jsonify({
                 "success": True,
-                "story": story_text,
+                "story": cleaned_story,
                 "metadata": metadata,
                 "filename": filename,
                 "message": "TTS not available. Story content provided.",
@@ -429,13 +505,18 @@ def api_get_user_stories():
                         except:
                             created_at = 'Unknown'
                     
+                    # Clean the preview text
+                    raw_story = story_data.get('story', '')
+                    cleaned_preview = clean_story_text(raw_story)
+                    preview = cleaned_preview[:100] + "..." if len(cleaned_preview) > 100 else cleaned_preview
+                    
                     stories.append({
                         "filename": filename,
                         "title": f"Story for {metadata.get('child_name', 'Unknown')}",
                         "age": metadata.get('age', 'Unknown'),
                         "word_count": metadata.get('word_count', 0),
                         "created_at": created_at or 'Unknown',
-                        "preview": story_data.get('story', '')[:100] + "..." if len(story_data.get('story', '')) > 100 else story_data.get('story', '')
+                        "preview": preview
                     })
                     print(f"Added story: {filename}")
                 except Exception as e:
@@ -473,8 +554,12 @@ def api_get_story_sentences():
             story_data = json.load(f)
         story_text = story_data.get('story', '')
         metadata = story_data.get('metadata', {})
+        
+        # Clean the story text first
+        cleaned_story = clean_story_text(story_text)
+        
         # Split into sentences (simple split, can be improved)
-        sentences = re.split(r'(?<=[.!?])\s+', story_text.strip())
+        sentences = re.split(r'(?<=[.!?])\s+', cleaned_story.strip())
         sentences = [s for s in sentences if s.strip()]
         
         return jsonify({
@@ -564,6 +649,10 @@ def api_speak_sentence():
     filename = data.get('filename', '')
     if not username or not sentence:
         return jsonify({'success': False, 'error': 'Missing username or sentence'})
+    
+    # Clean the sentence before speaking
+    cleaned_sentence = clean_story_text(sentence)
+    
     # Optionally get language from story metadata
     language = 'en-US'
     if filename:
@@ -577,8 +666,80 @@ def api_speak_sentence():
                 language = metadata.get('language', 'en-US')
             except:
                 pass
-    tts_helper.speak_story(sentence, language)
+    
+    tts_helper.speak_story(cleaned_sentence, language)
     return jsonify({'success': True})
+
+@app.route('/api/movement_settings', methods=['POST'])
+def api_movement_settings():
+    """Enable or disable movement during speech"""
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    
+    data = request.get_json() or {}
+    enabled = data.get('enabled', True)
+    
+    try:
+        tts_helper.enable_movement(enabled)
+        return jsonify({
+            'success': True, 
+            'movement_enabled': enabled,
+            'movement_available': tts_helper.is_movement_available()
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/movement_status', methods=['GET'])
+def api_movement_status():
+    """Get current movement status"""
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    
+    try:
+        return jsonify({
+            'success': True,
+            'movement_available': tts_helper.is_movement_available(),
+            'movement_enabled': getattr(tts_helper, 'movement_enabled', False)
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/joint_limits', methods=['GET'])
+def api_joint_limits():
+    """Get joint limits and safe movement ranges"""
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    
+    try:
+        return jsonify({
+            'success': True,
+            'joint_limits': tts_helper.get_joint_limits(),
+            'safe_movement_ranges': tts_helper.get_safe_movement_ranges()
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/head_position', methods=['GET'])
+def api_head_position():
+    """Get current head position"""
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    
+    try:
+        yaw, pitch = tts_helper.get_current_head_position()
+        return jsonify({
+            'success': True,
+            'head_position': {
+                'yaw': yaw,
+                'pitch': pitch
+            }
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True) 
