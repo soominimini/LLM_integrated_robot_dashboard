@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DIY Activity Builder</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial; background: #f5f7fb; margin: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .header h1 { margin: 0; font-size: 22px; color: #333; }
+    .toolbar { display: flex; gap: 8px; }
+    .btn { background: #667eea; color: #fff; border: 0; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn.secondary { background: #6c757d; }
+    .btn.outline { background: #fff; color: #667eea; border: 2px solid #667eea; }
+    .grid { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+    .panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; }
+    .panel h2 { font-size: 16px; margin: 0 0 10px; color: #444; }
+    .palette { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .item { border: 1px dashed #cbd5e1; border-radius: 10px; padding: 10px; background: #f8fafc; cursor: grab; text-align: center; font-size: 14px; }
+    .canvas { min-height: 420px; background: #fafafa; border: 2px dashed #cbd5e1; border-radius: 10px; padding: 12px; }
+    .block { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+    .block.dragging { opacity: 0.6; border-color: #93c5fd; background: #eef2ff; }
+    .block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .block-title { font-weight: 700; font-size: 13px; color: #374151; }
+    .block-actions button { background: transparent; border: 0; color: #6b7280; cursor: pointer; }
+    .field { display: grid; gap: 6px; margin: 8px 0; }
+    .field label { font-size: 12px; color: #6b7280; }
+    .field input, .field textarea, .field select { border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px; font-size: 14px; }
+    .empty-hint { color: #94a3b8; text-align: center; padding: 24px; }
+    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+    .status { font-size: 13px; color: #64748b; }
+    .img-preview { display: block; max-width: 100%; border-radius: 8px; border: 1px solid #e5e7eb; margin-top: 6px; }
+
+    /* Modal styles */
+    .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); display: none; align-items: center; justify-content: center; z-index: 999; }
+    .modal.active { display: flex; }
+    .modal-card { background: #fff; border-radius: 12px; padding: 16px; max-width: 900px; width: calc(100% - 40px); max-height: 80vh; overflow: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .modal-header h3 { margin: 0; font-size: 16px; color: #334155; }
+    .modal-close { background: transparent; border: 0; font-size: 20px; cursor: pointer; color: #64748b; }
+    .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+    .image-item { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; background: #f8fafc; }
+    .image-item img { width: 100%; height: auto; display: block; }
+    .image-caption { font-size: 12px; color: #64748b; padding: 6px 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛠️ Do It Yourself — Activity Builder</h1>
+      <div class="toolbar">
+        <button class="btn outline" onclick="window.location.href='/'">Back</button>
+        <button class="btn secondary" id="prepareBtn">Send to Robot</button>
+        <button class="btn" id="testBtn">Test</button>
+        <button class="btn" id="saveBtn">Save</button>
+      </div>
+    </div>
+    <div id="toy-banner" style="margin-bottom:10px; color:#64748b;"></div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>Blocks</h2>
+        <div class="palette">
+          <div class="item" draggable="true" data-type="praise">Praise</div>
+          <div class="item" draggable="true" data-type="speech">Speech Block</div>
+          <div class="item" draggable="true" data-type="image">Image Block</div>
+          <div class="item" draggable="true" data-type="gesture">Gesture Block</div>
+          <div class="item" draggable="true" data-type="wait">Wait for Child</div>
+          <div class="item" draggable="true" data-type="logic">Logic Block</div>
+          <div class="item" draggable="true" data-type="recognize">Recognize</div>
+          <div class="item" draggable="true" data-type="loop">Loop</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Activity Flow</h2>
+        <div id="canvas" class="canvas">
+          <div class="empty-hint">Drag blocks here to build your activity flow</div>
+        </div>
+        <div class="footer">
+          <div class="status" id="status"></div>
+          <div>
+            <label style="font-size:12px;color:#64748b;margin-right:6px;">Loop count:</label>
+            <input id="loopCount" type="number" min="1" value="1" style="width:64px;padding:6px;border:1px solid #e5e7eb;border-radius:8px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Images Modal -->
+  <div id="image-modal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="image-modal-title">
+      <div class="modal-header">
+        <h3 id="image-modal-title">Generated Images</h3>
+        <button class="modal-close" id="image-modal-close" aria-label="Close">✕</button>
+      </div>
+      <div id="image-modal-grid" class="image-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    const paletteItems = document.querySelectorAll('.item');
+    const canvas = document.getElementById('canvas');
+    const statusEl = document.getElementById('status');
+    const loopInput = document.getElementById('loopCount');
+
+    let paletteDrag = false;
+    let blockDrag = false;
+
+    paletteItems.forEach(el => {
+      el.addEventListener('dragstart', (e) => {
+        const type = e.target.getAttribute('data-type');
+        paletteDrag = true;
+        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.setData('text/x-palette', type);
+      });
+      el.addEventListener('dragend', () => { paletteDrag = false; });
+    });
+
+    function attachCanvasDnD(container) {
+      container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (blockDrag) {
+          const dragging = document.querySelector('.block.dragging');
+          if (!dragging) return;
+          const afterEl = getDragAfterElement(container, e.clientY);
+          if (afterEl == null) {
+            container.appendChild(dragging);
+          } else {
+            container.insertBefore(dragging, afterEl);
+          }
+        }
+      });
+      container.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (paletteDrag && e.dataTransfer.types.includes('text/x-palette')) {
+          const type = e.dataTransfer.getData('text/x-palette');
+          if (type) addBlock(type, {}, container);
+        }
+      });
+    }
+    attachCanvasDnD(canvas);
+
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll('.block:not(.dragging)')];
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function addBlock(type, initial = {}, targetContainer = canvas) {
+      const block = document.createElement('div');
+      block.className = 'block';
+      block.draggable = true;
+      block.addEventListener('dragstart', (e) => {
+        blockDrag = true;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/x-block', 'reorder');
+        block.classList.add('dragging');
+      });
+      block.addEventListener('dragend', () => {
+        blockDrag = false;
+        block.classList.remove('dragging');
+      });
+
+      const header = document.createElement('div');
+      header.className = 'block-header';
+      const title = document.createElement('div');
+      title.className = 'block-title';
+      title.textContent = labelFor(type);
+      const actions = document.createElement('div');
+      actions.className = 'block-actions';
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = '✕';
+      removeBtn.title = 'Remove';
+      removeBtn.onclick = () => block.remove();
+      actions.appendChild(removeBtn);
+      header.appendChild(title);
+      header.appendChild(actions);
+
+      const body = document.createElement('div');
+      renderFields(type, body, initial);
+
+      block.appendChild(header);
+      block.appendChild(body);
+      const hint = targetContainer.querySelector('.empty-hint');
+      if (hint) hint.remove();
+      targetContainer.appendChild(block);
+      return block;
+    }
+
+    function labelFor(type) {
+      return {
+        praise: 'Praise',
+        speech: 'Speech Block',
+        image: 'Image Block',
+        gesture: 'Gesture Block',
+        wait: 'Wait for Child',
+        logic: 'Logic Block',
+        recognize: 'Recognize',
+        loop: 'Loop Control'
+      }[type] || type;
+    }
+
+    function renderFields(type, container, initial) {
+      container.innerHTML = '';
+      if (type === 'speech') {
+        container.appendChild(fieldText('Text to say', 'text', initial.text || ""));
+      } else if (type === 'praise') {
+        container.appendChild(fieldText('Praise text (optional)', 'text', initial.text || "Great job!"));
+      } else if (type === 'image') {
+        container.appendChild(fieldText('Image description or URL', 'src', initial.src || 'tiger'));
+        // hidden field to persist resolved image_path
+        container.appendChild(fieldHidden('image_path', initial.image_path || ''));
+        if (initial.image_path) {
+          const img = document.createElement('img');
+          img.className = 'img-preview';
+          img.src = initial.image_path;
+          img.alt = 'Generated image';
+          container.appendChild(img);
+        }
+      } else if (type === 'gesture') {
+        container.appendChild(fieldSelect('Gesture', 'name', ['wave', 'nod'], initial.name || 'wave'));
+      } else if (type === 'wait') {
+        container.appendChild(fieldSelect('Wait type', 'mode', ['button', 'speech'], initial.mode || 'button'));
+        container.appendChild(fieldText('Expected answer (optional)', 'expected', initial.expected || ''));
+      } else if (type === 'recognize') {
+        container.appendChild(fieldSelect('Recognize', 'target', ['object', 'gesture', 'speech'], initial.target || 'object'));
+        container.appendChild(fieldText('Value (e.g., fruit, wave, yes)', 'value', initial.value || ''));
+      } else if (type === 'logic') {
+        const logicWrap = document.createElement('div');
+        logicWrap.style.display = 'grid';
+        logicWrap.style.gridTemplateColumns = 'auto 1fr';
+        logicWrap.style.gap = '8px';
+
+        const condLabel = document.createElement('div');
+        condLabel.textContent = 'If Robot';
+        condLabel.style.fontWeight = '700';
+        const condCanvas = document.createElement('div');
+        condCanvas.className = 'canvas';
+        condCanvas.dataset.role = 'cond';
+        condCanvas.innerHTML = '<div class="empty-hint">Drop condition blocks here (e.g., Recognize)</div>';
+        logicWrap.appendChild(condLabel);
+        logicWrap.appendChild(condCanvas);
+
+        // Then actions droppable area
+        const thenLabel = document.createElement('div');
+        thenLabel.textContent = 'Then';
+        thenLabel.style.fontWeight = '700';
+        const thenCanvas = document.createElement('div');
+        thenCanvas.className = 'canvas';
+        thenCanvas.dataset.role = 'then';
+        thenCanvas.innerHTML = '<div class="empty-hint">Drop action blocks here</div>';
+        logicWrap.appendChild(thenLabel);
+        logicWrap.appendChild(thenCanvas);
+
+        container.appendChild(logicWrap);
+        // Enable DnD inside logic areas
+        attachCanvasDnD(condCanvas);
+        attachCanvasDnD(thenCanvas);
+      } else if (type === 'loop') {
+        container.appendChild(fieldNumber('Repeat times', 'count', initial.count || 1, 1));
+      }
+    }
+
+    function fieldText(labelTxt, name, value) {
+      const wrap = document.createElement('div'); wrap.className = 'field';
+      const label = document.createElement('label'); label.textContent = labelTxt;
+      const input = document.createElement('textarea'); input.value = value; input.dataset.name = name; input.rows = 2;
+      wrap.appendChild(label); wrap.appendChild(input); return wrap;
+    }
+
+    function fieldNumber(labelTxt, name, value, min=0) {
+      const wrap = document.createElement('div'); wrap.className = 'field';
+      const label = document.createElement('label'); label.textContent = labelTxt;
+      const input = document.createElement('input'); input.type = 'number'; input.value = value; input.min = min; input.dataset.name = name;
+      wrap.appendChild(label); wrap.appendChild(input); return wrap;
+    }
+
+    function fieldSelect(labelTxt, name, options, value) {
+      const wrap = document.createElement('div'); wrap.className = 'field';
+      const label = document.createElement('label'); label.textContent = labelTxt;
+      const select = document.createElement('select'); select.dataset.name = name;
+      options.forEach(o => { const opt = document.createElement('option'); opt.value = o; opt.textContent = o; if (o === value) opt.selected = true; select.appendChild(opt); });
+      wrap.appendChild(label); wrap.appendChild(select); return wrap;
+    }
+
+    function fieldHidden(name, value) {
+      const input = document.createElement('input'); input.type = 'hidden'; input.dataset.name = name; input.value = value || '';
+      return input;
+    }
+
+    function readBlocksFrom(container) {
+      const titleToType = {
+        'Praise': 'praise',
+        'Speech Block': 'speech',
+        'Image Block': 'image',
+        'Gesture Block': 'gesture',
+        'Wait for Child': 'wait',
+        'Logic Block': 'logic',
+        'Loop Control': 'loop',
+        'Recognize': 'recognize'
+      };
+      return Array.from(container.querySelectorAll('.block')).map(b => {
+        const title = b.querySelector('.block-title')?.textContent || '';
+        const type = titleToType[title];
+        if (!type) {
+          return null; // skip unknown blocks rather than crashing
+        }
+        if (type === 'logic') {
+          const condCanvas = b.querySelector('.canvas[data-role="cond"]');
+          const thenCanvas = b.querySelector('.canvas[data-role="then"]');
+          const condBlocks = condCanvas ? readBlocksFrom(condCanvas) : [];
+          const thenBlocks = thenCanvas ? readBlocksFrom(thenCanvas) : [];
+          return { type, cond: condBlocks, then: thenBlocks };
+        } else {
+          const fields = {};
+          b.querySelectorAll('textarea, input, select').forEach(el => {
+            const name = el.dataset.name || '';
+            if (!name) return;
+            fields[name] = el.type === 'number' ? Number(el.value) : el.value;
+          });
+          return { type, ...fields };
+        }
+      }).filter(Boolean);
+    }
+    function serialize() {
+      const blocks = readBlocksFrom(canvas);
+      return { blocks, loop: Number(loopInput.value) || 1 };
+    }
+
+    async function callApi(url, body) {
+      const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      return res.json();
+    }
+
+    function updateImageBlocksFromPrepared(preparedBlocks) {
+      const uiBlocks = Array.from(canvas.querySelectorAll('.block'));
+      uiBlocks.forEach((blk, idx) => {
+        const title = blk.querySelector('.block-title')?.textContent || '';
+        const type = ({
+          'Praise': 'praise', 'Speech Block': 'speech', 'Image Block': 'image',
+          'Gesture Block': 'gesture', 'Wait for Child': 'wait', 'Logic Block': 'logic', 'Loop Control': 'loop'
+        })[title];
+        if (type === 'image' && preparedBlocks[idx] && preparedBlocks[idx].image_path) {
+          const hidden = blk.querySelector('input[type="hidden"][data-name="image_path"]');
+          if (hidden) hidden.value = preparedBlocks[idx].image_path;
+          let img = blk.querySelector('img.img-preview');
+          if (!img) {
+            img = document.createElement('img');
+            img.className = 'img-preview';
+            blk.querySelector('.field:last-child').after(img);
+          }
+          img.src = preparedBlocks[idx].image_path;
+          img.alt = 'Generated image';
+        }
+      });
+    }
+
+    // Show selected toy if any
+    try {
+      const toy = sessionStorage.getItem('selectedToy');
+      if (toy) document.getElementById('toy-banner').textContent = `Selected toy: ${toy}`;
+    } catch (e) {}
+
+    document.getElementById('prepareBtn').onclick = async () => {
+      statusEl.textContent = 'Preparing plan...';
+      const plan = serialize();
+      const data = await callApi('/api/activity/prepare', plan);
+      if (!data.success) {
+        statusEl.textContent = `Error: ${data.error || 'Unknown error'}`;
+        return;
+      }
+      const prepared = data.plan || {};
+      updateImageBlocksFromPrepared(prepared.blocks || []);
+      // If server provided expanded images for later loops, append them to the modal display list on demand
+      statusEl.textContent = prepared.images_available ? 'Plan ready. Images generated.' : 'Plan ready. Image generation not available.';
+    };
+
+    function collectImagePaths() {
+      const paths = [];
+      Array.from(canvas.querySelectorAll('.block')).forEach(blk => {
+        const title = blk.querySelector('.block-title')?.textContent || '';
+        const type = ({
+          'Praise': 'praise', 'Speech Block': 'speech', 'Image Block': 'image',
+          'Gesture Block': 'gesture', 'Wait for Child': 'wait', 'Logic Block': 'logic', 'Loop Control': 'loop'
+        })[title];
+        if (type === 'image') {
+          const hidden = blk.querySelector('input[type="hidden"][data-name="image_path"]');
+          if (hidden && hidden.value) paths.push({ src: hidden.value, caption: blk.querySelector('textarea[data-name="src"]').value || '' });
+        }
+      });
+      return paths;
+    }
+
+    function showImagesModal(items) {
+      const modal = document.getElementById('image-modal');
+      const grid = document.getElementById('image-modal-grid');
+      grid.innerHTML = '';
+      items.forEach((it, i) => {
+        const card = document.createElement('div');
+        card.className = 'image-item';
+        const img = document.createElement('img');
+        img.src = it.src; img.alt = it.caption || `Image ${i+1}`;
+        const cap = document.createElement('div'); cap.className = 'image-caption'; cap.textContent = it.caption || `Image ${i+1}`;
+        card.appendChild(img); card.appendChild(cap); grid.appendChild(card);
+      });
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    document.getElementById('image-modal-close').onclick = () => {
+      const modal = document.getElementById('image-modal');
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+    document.getElementById('image-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'image-modal') {
+        const modal = document.getElementById('image-modal');
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    document.getElementById('testBtn').onclick = async () => {
+      statusEl.textContent = 'Preparing & testing on robot...';
+      const plan = serialize();
+      // Determine if we need to generate images first
+      const needPrepare = plan.blocks.some(b => b.type === 'image' && !b.image_path);
+      let preparedBlocks = null;
+      let expandedImages = [];
+      if (needPrepare) {
+        const prep = await callApi('/api/activity/prepare', plan);
+        if (!prep.success) {
+          statusEl.textContent = `Error: ${prep.error || 'Unknown error'}`;
+          return;
+        }
+        preparedBlocks = (prep.plan && prep.plan.blocks) || [];
+        expandedImages = (prep.plan && prep.plan.expanded_images) || [];
+        updateImageBlocksFromPrepared(preparedBlocks);
+      }
+      // Show images popup if we have any
+      let images = collectImagePaths();
+      if (expandedImages && expandedImages.length) {
+        images = images.concat(expandedImages.map(e => ({ src: e.image_path, caption: e.subject })));
+      }
+      if (images.length) showImagesModal(images);
+      // Execute test
+      const testRes = await callApi('/api/activity/test', serialize());
+      statusEl.textContent = testRes.success ? 'Test executed.' : `Error: ${testRes.error || 'Unknown error'}`;
+    };
+
+    document.getElementById('testBtn').onclick = async () => {
+      statusEl.textContent = 'Testing on robot...';
+      const plan = serialize();
+      const data = await callApi('/api/activity/test', plan);
+      statusEl.textContent = data.success ? 'Test executed.' : `Error: ${data.error || 'Unknown error'}`;
+    };
+
+    document.getElementById('saveBtn').onclick = async () => {
+      statusEl.textContent = 'Saving...';
+      const plan = serialize();
+      const data = await callApi('/api/activity/save', plan);
+      statusEl.textContent = data.success ? `Saved as ${data.filename}` : `Error: ${data.error || 'Unknown error'}`;
+    };
+
+    // Load existing activity if ?file= is present; otherwise start empty
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    async function hydrateFromSaved(filename) {
+      try {
+        statusEl.textContent = 'Loading saved activity...';
+        const res = await fetch('/api/activity/load_saved', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename })
+        });
+        const data = await res.json();
+        if (!data.success) { statusEl.textContent = `Error: ${data.error || 'Failed to load'}`; return; }
+        const activity = data.activity || {};
+        // Clear existing
+        canvas.innerHTML = '<div class="empty-hint">Drag blocks here to build your activity flow</div>';
+        loopInput.value = activity.loop || 1;
+        // Render blocks recursively
+        renderBlocks(activity.blocks || [], canvas);
+        statusEl.textContent = 'Activity loaded.';
+      } catch (e) {
+        statusEl.textContent = `Error: ${e.message}`;
+      }
+    }
+
+    function renderBlocks(blocks, container) {
+      if (!Array.isArray(blocks)) return;
+      const hint = container.querySelector('.empty-hint');
+      if (hint) hint.remove();
+      blocks.forEach(b => {
+        const type = b.type;
+        if (type === 'logic') {
+          const blk = addBlock('logic', {}, container);
+          const condCanvas = blk.querySelector('.canvas[data-role="cond"]');
+          const thenCanvas = blk.querySelector('.canvas[data-role="then"]');
+          renderBlocks(b.cond || [], condCanvas);
+          renderBlocks(b.then || [], thenCanvas);
+        } else {
+          addBlock(type, b, container);
+        }
+      });
+    }
+
+    // Kickoff: hydrate if query param provided
+    (function init() {
+      const file = getQueryParam('file');
+      if (file) {
+        hydrateFromSaved(file);
+      } else {
+        // start empty; do not prefill example
+      }
+    })();
+
+  </script>
+</body>
+</html>
+
+

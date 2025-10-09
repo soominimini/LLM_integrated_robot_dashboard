@@ -13,6 +13,8 @@ import riva.client
 import grpc
 
 
+_audio_enabled = True
+
 class MicrophoneStream:
     """Opens a recording stream as responses yielding the audio chunks."""
 
@@ -117,6 +119,10 @@ class RivaSpeechRecognition:
 
 
     def _callback_audio_stream(self, msg): 
+        # Drop audio when ASR is globally disabled (e.g., robot is speaking)
+        global _audio_enabled
+        if not _audio_enabled:
+            return
         indata = bytes(msg.data)          
         try:
             self.aqueue.put_nowait(indata)            
@@ -146,6 +152,15 @@ class RivaSpeechRecognition:
     def resume(self):
         self._is_paused.clear()
 
+    @staticmethod
+    def set_audio_enabled(enabled: bool):
+        global _audio_enabled
+        _audio_enabled = bool(enabled)
+
+    @staticmethod
+    def is_audio_enabled() -> bool:
+        return _audio_enabled
+
 
     def recognize_once(self):               
         # self._is_paused.wait()
@@ -172,8 +187,16 @@ class RivaSpeechRecognition:
                                 continue
                             self._asr_event_callback(RivaSpeechRecognition.Event.RECOGNIZING)
                             transcript = result.alternatives[0].transcript
+                            try:
+                                print(f"[ASR] partial: {transcript}")
+                            except Exception:
+                                pass
                             if result.is_final:
                                 self._asr_event_callback(RivaSpeechRecognition.Event.RECOGNIZED)                            
+                                try:
+                                    print(f"[ASR] final: {transcript}")
+                                except Exception:
+                                    pass
                                 return transcript.strip(), self.language_code
 
                     # check timeout 

@@ -75,33 +75,32 @@ class ImageGenerator:
             print(f"Generating image for prompt: {prompt[:100]}...")
             
             try:
-                # Generate image with basic parameters for SDXL
-                # result = self.pipe(
-                #     prompt=prompt,
-                #     num_inference_steps=20,
-                #     added_cond_kwargs={}  # Required for SDXL
-                # )
-
+                # Generate image (SDXL returns StableDiffusionXLPipelineOutput)
                 result = self.pipe(prompt=prompt)
-                print("result: ", result)
-                # Check if result is valid - pipeline returns a tuple (images, nsfw_content_detected)
-                if result is None or not isinstance(result, tuple) or len(result) == 0:
-                    print(f"Pipeline returned invalid result: {result}")
-                    # return None
+                images = None
+                if hasattr(result, 'images'):
+                    images = result.images
+                elif isinstance(result, (list, tuple)):
+                    images = result[0] if result else None
                 
-                images = result[0]  # First element is the images
-                if not images or len(images) == 0:
-                    print(f"No images generated: {images}")
-                    # return None
+                if images is None:
+                    print(f"No images returned by pipeline: {type(result)}")
+                    return None
                 
-                image = images[0]  # Get the first image
+                # If a single PIL image is returned
+                if hasattr(images, 'save'):
+                    image = images
+                else:
+                    # Assume list-like of PIL images
+                    if not images:
+                        print("No images generated (empty list)")
+                        return None
+                    image = images[0]
                 
                 # Save the image
                 image.save(filepath)
                 print(f"Image saved to: {filepath}")
-                
                 return filepath
-                
             except Exception as e:
                 print(f"Error in pipeline call: {e}")
                 return None
@@ -109,7 +108,80 @@ class ImageGenerator:
         except Exception as e:
             print(f"Error generating image: {e}")
             return None
-    
+
+    '''
+        def generate_image(self, prompt: str, output_dir: str = "generated_images", filename_prefix: str = None, prev_img) -> Optional[str]:
+        """
+        Generate an image from a text prompt
+        
+        Args:
+            prompt: Text description for the image
+            output_dir: Directory to save the generated image
+            filename_prefix: Optional prefix for the filename
+            
+        Returns:
+            str: Path to the generated image file, or None if failed
+        """
+        if not self._available or not self.pipe:
+            return None
+        
+        try:
+            # Create output directory if it doesn't exist
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Generate unique filename
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            unique_id = str(uuid.uuid4())[:8]
+            if filename_prefix:
+                filename = f"{filename_prefix}_{timestamp}_{unique_id}.png"
+            else:
+                filename = f"story_scene_{timestamp}_{unique_id}.png"
+            filepath = os.path.join(output_dir, filename)
+            
+            # Generate the image
+            print(f"Generating image for prompt: {prompt[:100]}...")
+            
+            try:
+                # Generate image (SDXL returns StableDiffusionXLPipelineOutput)
+                if prev_img != None:
+                prev_img_converted = Image.open(prev_img).convert("RGB")
+                    result = img2img(prompt=prompt, image=prev_img_converted, strength=0.6, guidance_scale = 7.5)
+                else:
+                    result = self.pipe(prompt=prompt)
+                images = None
+                if hasattr(result, 'images'):
+                    images = result.images
+                elif isinstance(result, (list, tuple)):
+                    images = result[0] if result else None
+                
+                if images is None:
+                    print(f"No images returned by pipeline: {type(result)}")
+                    return None
+                
+                # If a single PIL image is returned
+                if hasattr(images, 'save'):
+                    image = images
+                else:
+                    # Assume list-like of PIL images
+                    if not images:
+                        print("No images generated (empty list)")
+                        return None
+                    image = images[0]
+                
+                # Save the image
+                image.save(filepath)
+                print(f"Image saved to: {filepath}")
+                return filepath
+            except Exception as e:
+                print(f"Error in pipeline call: {e}")
+                return None
+            
+        except Exception as e:
+            print(f"Error generating image: {e}")
+            return None
+    '''
+
+
     def generate_story_scene_image(self, sentence: str, story_context: str = "", output_dir: str = "generated_images", filename_prefix: str = None) -> Optional[str]:
         """
         Generate an image for a story scene based on a sentence
@@ -132,9 +204,9 @@ class ImageGenerator:
         
         # Add story context if available
         if story_context:
-            prompt = f"{clean_sentence} {story_context} Children's book illustration style, colorful, detailed, safe for children"
+            prompt = f"{clean_sentence} {story_context} Children's book water colour illustration style, colorful, detailed, safe for children"
         else:
-            prompt = f"{clean_sentence} Children's book illustration style, colorful, detailed, safe for children"
+            prompt = f"{clean_sentence} Children's book water colour illustration style, colorful, detailed, safe for children"
         
         # Remove any markdown formatting
         prompt = prompt.replace("**", "").replace("*", "")

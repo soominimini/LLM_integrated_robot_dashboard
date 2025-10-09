@@ -302,11 +302,52 @@
                 <p>Jump into exciting games and activities! Play with generated stories, explore scene detection, chat with QTrobot, and take educational quizzes.</p>
                 <button class="option-btn secondary">Start Playing</button>
             </div>
+            <div class="option-card" onclick="navigateTo('my_games')">
+                <div class="option-icon">🧩</div>
+                <h3>My DIY Games</h3>
+                <p>Play or review your saved Do It Yourself activities.</p>
+                <button class="option-btn secondary" onclick="gotoMyGames(event)">Open List</button>
+            </div>
         </div>
 
         <div class="user-info">
-            <strong>User Info:</strong> {{ user.username }} (Age: {{ user.age }}) | 
+            <strong>User Info:</strong> {{ user.username }} (Age: {{ user.age }}) |
             <strong>Member since:</strong> {{ user.created_at.split('T')[0] if user and user.created_at else 'Unknown' }}
+            <div style="margin-top:8px;">
+                <button class="btn" onclick="openProfileModal()">Edit Profile</button>
+            </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div id="profile-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); align-items:center; justify-content:center;">
+          <div style="background:#fff; border-radius:12px; padding:16px; width:90%; max-width:520px;">
+            <h3 style="margin:0 0 12px 0;">Edit Profile</h3>
+            <div id="profile-alert"></div>
+            <div class="form-group">
+              <label for="pf-display-name">Display Name</label>
+              <input id="pf-display-name" type="text" />
+            </div>
+            <div class="form-group">
+              <label for="pf-age">Age</label>
+              <input id="pf-age" type="number" min="0" max="150" />
+            </div>
+            <div class="form-group">
+              <label for="pf-gender">Gender</label>
+              <input id="pf-gender" type="text" />
+            </div>
+            <div class="form-group">
+              <label for="pf-disorder">Disorder</label>
+              <input id="pf-disorder" type="text" />
+            </div>
+            <div class="form-group">
+              <label for="pf-goals">Learning Goals</label>
+              <textarea id="pf-goals" rows="3"></textarea>
+            </div>
+            <div style="display:flex; gap:8px; justify-content:flex-end;">
+              <button class="btn" onclick="closeProfileModal()">Cancel</button>
+              <button class="option-btn" onclick="saveProfile()">Save</button>
+            </div>
+          </div>
         </div>
 
         <div class="movement-controls">
@@ -399,6 +440,11 @@
             }
         }
 
+        function gotoMyGames(ev) {
+            if (ev) ev.stopPropagation();
+            window.location.href = '/my_games';
+        }
+
         async function logout() {
             const res = await fetch('/api/logout', {
                 method: 'POST',
@@ -406,6 +452,47 @@
             });
             if (res.ok) {
                 window.location.reload();
+            }
+        }
+
+        function openProfileModal() {
+            document.getElementById('profile-modal').style.display = 'flex';
+            // Prefill from current user info
+            fetch('/api/current_user').then(r => r.json()).then(({ user }) => {
+                if (!user) return;
+                document.getElementById('pf-display-name').value = user.display_name || user.username || '';
+                document.getElementById('pf-age').value = user.age ?? '';
+                document.getElementById('pf-gender').value = user.gender || '';
+                document.getElementById('pf-disorder').value = user.disorder || '';
+                document.getElementById('pf-goals').value = user.learning_goals || '';
+            });
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').style.display = 'none';
+            document.getElementById('profile-alert').innerHTML = '';
+        }
+
+        async function saveProfile() {
+            const payload = {
+                display_name: document.getElementById('pf-display-name').value.trim(),
+                age: document.getElementById('pf-age').value,
+                gender: document.getElementById('pf-gender').value.trim(),
+                disorder: document.getElementById('pf-disorder').value.trim(),
+                learning_goals: document.getElementById('pf-goals').value.trim(),
+            };
+            const res = await fetch('/api/update_profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            const alertBox = document.getElementById('profile-alert');
+            if (data.success) {
+                alertBox.innerHTML = '<div class="alert success">Profile updated successfully.</div>';
+                setTimeout(() => { window.location.reload(); }, 600);
+            } else {
+                alertBox.innerHTML = `<div class="alert error">${data.error || 'Update failed'}</div>`;
             }
         }
 

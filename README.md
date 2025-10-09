@@ -1,3 +1,116 @@
+## QTrobot AI Assistant (version_1_llm)
+
+An interactive Flask web app for QTrobot that combines language therapy content with on-robot capabilities:
+- **User login (no passwords)** and simple profile
+- **Therapeutic story generation** via LLM with optional image generation per sentence
+- **On-robot TTS with optional movements** (head/arm gestures)
+- **Human tracking** to keep gaze on the speaker
+- **DIY activity builder** (speech, images, gestures, simple logic, loops)
+- **Scene game** and utilities (camera capture, image serving)
+
+This repository is meant for demos and local development, not production hardening.
+
+### Directory layout
+- `src/`
+  - `web_user_server.py`: Flask server and REST API
+  - `story_generator.py`: LLM-backed story generation (streaming and non-streaming)
+  - `human_tracking.py`: Tracks a person using presence detection + kinematics
+  - `tts_helper.py`: Robot speech and optional movement (head/arm)
+  - `image_generator.py`: Optional image generation for stories/activities
+  - `riva_speech_recognition.py`: Optional NVIDIA Riva ASR client
+  - `user_management.py`: File-backed user storage
+  - `user_data/`: Per-user saved data (stories, images, activities, captures)
+- `templates/`: HTML pages for login/dashboard, games, DIY builder, story reader
+- `users.json`: Simple user database (no passwords)
+
+### Major features
+- **Stories for language therapy**: Personalized story for a child’s name/age; metadata saved; optional per-sentence images; can read aloud and follow the user.
+- **DIY builder**: Compose activities using blocks (speech, recognition, images, gestures, logic, loop). Server can pre-generate images and execute activities.
+- **Human tracking**: Uses `HumanPresenceDetection` and `QTrobotKinematicInterface` to look at faces/voices, with simple presence memory.
+- **Camera access**: Pull frames either from ROS `sensor_msgs/Image` or from V4L/GStreamer via OpenCV. Optional YOLOv8 demo processing.
+
+### Requirements
+Base (minimal demo):
+- Python 3.8+
+- Flask, flask-cors, numpy
+
+Optional integrations (best effort; app degrades gracefully when missing):
+- QTrobot SDK with `QTrobotKinematicInterface`
+- OpenCV (`opencv-python`)
+- ROS (rospy, cv_bridge, sensor_msgs) if using ROS camera
+- Ultralytics YOLO (`ultralytics`) and a YOLOv8 model file (e.g., `yolov8n.pt` in the working directory)
+- NVIDIA Riva Python client if using ASR (`riva_speech_recognition.py`)
+- LLM runtime via `llamaindex_interface.ChatWithRAG` (local or remote model)
+
+Tip: You can run without ROS/LLM/ASR/YOLO; those parts will simply be disabled.
+
+### Install (example)
+Create a virtual environment and install the basics:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install flask flask-cors numpy
+# Optional
+pip install opencv-python ultralytics
+# ROS deps come from your ROS distro (e.g., apt + Python site-packages)
+```
+
+Place a YOLOv8 model if you want detection demo logs:
+```bash
+cp /path/to/yolov8n.pt ./yolov8n.pt
+```
+
+### Configuration (environment variables)
+- **Camera**
+  - `CAMERA_MODE`: `ros_only` | `v4l_only` | empty for auto
+  - `CAMERA_ROS_TOPIC`: ROS image topic (default `/camera/color/image_raw`)
+  - `CAMERA_DEVICE`: V4L index or device path (e.g., `0` or `/dev/video0`)
+  - `CAMERA_GSTREAMER`: GStreamer pipeline string for OpenCV
+- **LLM/ASR**
+  - LLM and ASR are auto-detected; configure according to your local stack
+
+### Running
+From the project root:
+```bash
+python3 src/web_user_server.py
+# Server listens on 0.0.0.0:8080 (debug enabled by default for dev)
+```
+Open `http://<robot-or-host>:8080/` in a browser.
+
+### Typical workflow
+1) Login or register with just a username (and age for registration)
+2) From the dashboard, choose:
+   - Interactive Story → generate, review, Approve & Save (images generated if available)
+   - DIY Builder → build an activity using blocks, test/run/save
+   - Scene page / Play pages → try camera, tracking, and simple games
+
+### Data storage
+Per-user data is saved under `src/user_data/<username>/`:
+- `stories/`: approved stories (`story_YYYYMMDD_HHMMSS.json`)
+- `story_images/story_YYYYMMDD_HHMMSS/`: generated images per sentence
+- `captured_scenes/`: saved camera frames
+- `activities/`: saved DIY activities (JSON)
+- `profile.json`, `toys.json`: user profile and toy list
+
+### API highlights (selected)
+- `POST /api/generate_story` → generate story for given `child_name`, `age`, `custom_prompt`
+- `POST /api/save_story` → persist story and trigger image generation
+- `GET /api/get_user_stories` → list saved stories (with previews)
+- `POST /api/read_specific_story` → speak a selected story (if TTS available)
+- `POST /api/activity/prepare` | `/api/activity/save` | `/api/activity/run_saved`
+- `POST /api/human_tracking/start` | `/api/human_tracking/untrack` | `GET /api/human_tracking/status`
+- `GET /api/camera_frame` | `POST /api/camera_capture`
+
+Use the web UI for most flows; APIs are primarily used by the pages under `templates/`.
+
+### Notes and limitations
+- This demo uses no passwords and enables CORS for convenience; do not expose publicly.
+- Features relying on hardware/ROS/LLM/ASR will only work if those stacks are present and configured.
+- YOLOv8 demo logging requires `ultralytics` and a local model file (e.g., `yolov8n.pt`).
+
+### License
+MIT License (see file headers).
+
 
 # QTrobot: Your AI Data Assistant
 **The AI Data Assistant** is a project that demonstrate how to transform QTrobot ([QTrobotAI@Edge](https://luxai.com/humanoid-social-robot-for-research-and-teaching/)) into a powerful,  on-device AI assistant capable of engaging in natural voice conversations. By integrating advanced technologies such as Retrieval-Augmented Generation (RAG), Offline LLM, Automatic Speech Recognition (ASR), Scene Understanding via Visual Language Models (VLM), and Text-to-Speech (TTS),  QTrobot can now understand, process, and provide insightful responses based on user-provided documents, visual inputs, and data in various spoken languages. To enhance the naturalness of interactions, QTrobot actively tracks the user's face and voice during conversations.

@@ -1,0 +1,48 @@
+{
+  "blocks": [
+    {
+      "type": "logic",
+      "cond": [
+        {
+          "type": "recognize",
+          "target": "speech",
+          "value": "spin"
+        },
+        {
+          "type": "recognize",
+          "target": "speech",
+          "value": "out"
+        }
+      ],
+      "then": [
+        {
+          "type": "speech",
+          "text": "spin"
+        },
+        {
+          "type": "speech",
+          "text": "out"
+        }
+      ]
+    },
+    {
+      "type": "recognize",
+      "target": "speech",
+      "value": "spin"
+    },
+    {
+      "type": "recognize",
+      "target": "speech",
+      "value": "out"
+    },
+    {
+      "type": "speech",
+      "text": "spin"
+    },
+    {
+      "type": "speech",
+      "text": "out"
+    }
+  ],
+  "loop": 1
+}

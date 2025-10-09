@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My DIY Games</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#f5f7fb; margin:0; }
+        .container { max-width: 900px; margin: 24px auto; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+        h1 { margin: 0 0 8px 0; color:#333; }
+        p.desc { margin: 0 0 16px 0; color:#666; }
+        .toolbar { display:flex; gap:8px; margin:12px 0 16px 0; }
+        button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#fff; border:none; border-radius:8px; padding:8px 12px; cursor:pointer; font-weight:600; }
+        button.secondary { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:12px; }
+        .card { border:1px solid #e9ecef; border-radius:10px; padding:12px; background:#fafbff; }
+        .title { font-weight:600; color:#333; margin-bottom:4px; }
+        .meta { color:#888; font-size:12px; margin-bottom:8px; }
+        .row { display:flex; gap:8px; }
+        .alert { background:#d1ecf1; color:#0c5460; padding:8px; border-radius:8px; border:1px solid #bee5eb; margin:8px 0; }
+    </style>
+    <script>
+        async function loadGames() {
+            const list = document.getElementById('list');
+            list.innerHTML = '<div class="alert">Loading games...</div>';
+            try {
+                const res = await fetch('/api/get_custom_games');
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Failed to load');
+                const games = data.games || [];
+                if (!games.length) { list.innerHTML = '<div class="alert">No DIY games yet. Create one in the builder.</div>'; return; }
+                list.innerHTML = '';
+                const grid = document.createElement('div'); grid.className = 'grid';
+                games.forEach(g => {
+                    const card = document.createElement('div'); card.className = 'card';
+                    card.innerHTML = `
+                        <div class="title">${g.filename}</div>
+                        <div class="meta">Created at: ${g.created_at} • Blocks: ${g.blocks_count}</div>
+                        <div class="row">
+                            <button onclick="runGame('${g.filename}')">Run</button>
+                            <button class="secondary" onclick="openBuilder('${g.filename}')">Open in Builder</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+                list.appendChild(grid);
+            } catch (e) {
+                list.innerHTML = `<div class="alert">Error: ${e.message}</div>`;
+            }
+        }
+        async function runGame(filename) {
+            try {
+                const res = await fetch('/api/activity/run_saved', {
+                    method: 'POST', headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({ filename })
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Failed to start');
+                alert(data.running ? 'Started continuous game. Use Stop when finished.' : 'Started and finished game on the robot.');
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+        async function stopGame() {
+            try {
+                const res = await fetch('/api/activity/stop', { method: 'POST' });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Failed to stop');
+                alert('Stopped.');
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+        function openBuilder(filename) {
+            window.location.href = '/builder?file=' + encodeURIComponent(filename);
+        }
+        window.addEventListener('load', loadGames);
+    </script>
+  </head>
+  <body>
+    <div class="container">
+        <h1>My DIY Games</h1>
+        <p class="desc">Your saved activities are listed below. You can run them directly on the robot.</p>
+        <div class="toolbar">
+            <button onclick="window.location.href='/select_toy'">Create New Game</button>
+            <button class="secondary" onclick="loadGames()">Refresh</button>
+            <button onclick="stopGame()">Stop</button>
+        </div>
+        <div id="list"></div>
+    </div>
+  </body>
+</html>
+
+

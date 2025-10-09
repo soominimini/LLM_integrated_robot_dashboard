@@ -65,10 +65,12 @@ class TTSHelper:
                     print(f"Warning: Could not initialize kinematic interface: {e}")
                     self.kinematics = None
             
-            # Movement settings
-            self.movement_enabled = True
+            # Movement settings (disabled by default; use HumanTracking for motion)
+            self.movement_enabled = False
             self.movement_thread = None
             self.stop_movement = False
+            # Speaking state
+            self._is_speaking = False
             
             # Set default language and volume
             self.set_language("en-US")
@@ -304,6 +306,7 @@ class TTSHelper:
             bool: True if successful, False otherwise
         """
         try:
+            self._is_speaking = True
             if self.talk_text_service and text.strip():
                 # Estimate speech duration (rough approximation: 0.1 seconds per character)
                 estimated_duration = len(text.strip()) * 0.1
@@ -323,6 +326,9 @@ class TTSHelper:
             print(f"Error speaking text: {e}")
             self.stop_movement = True
             return False
+        finally:
+            # Ensure speaking flag resets even on errors
+            self._is_speaking = False
     
     def speak_story(self, story_text: str, language: str = "en-US") -> bool:
         """
@@ -355,6 +361,10 @@ class TTSHelper:
             bool: True if TTS is available, False otherwise
         """
         return self.talk_text_service is not None
+
+    def is_speaking(self) -> bool:
+        """Return True while the robot is currently speaking."""
+        return getattr(self, '_is_speaking', False)
     
     def is_movement_available(self) -> bool:
         """

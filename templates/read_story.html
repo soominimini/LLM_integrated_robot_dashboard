@@ -71,6 +71,11 @@
         </div>
     </div>
     <script>
+
+window.addEventListener('load', () => {
+    fetch('/api/human_tracking/start', { method: 'POST' });
+    fetch('/api/human_tracking/status').then(r => r.json()).then(console.log);
+});
         const urlParams = new URLSearchParams(window.location.search);
         const filename = urlParams.get('filename') || window.location.pathname.split('/').pop();
         let sentences = [];
@@ -138,7 +143,7 @@
                 console.log('Image API response:', data);
                 if (data.success && data.image_path) {
                     console.log('Loading image from:', data.image_path);
-                    imageContainer.innerHTML = `<img src="${data.image_path}" alt="Story scene" class="story-image" onerror="this.style.display='none'; console.log('Image failed to load:', data.image_path);" onload="console.log('Image loaded successfully:', data.image_path);">`;
+                    imageContainer.innerHTML = `<img src="${data.image_path}" alt="Story scene" class="story-image" onerror="this.style.display='none'; console.log('Image failed to load:', data.image_path);" onload="console.log('Image loaded successfully:');">`;
                 } else {
                     console.log('No image available:', data.error);
                     imageContainer.innerHTML = '<div class="image-loading">🎨 No image available for this scene</div>';
@@ -198,6 +203,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sentence: sentence, filename: filename })
             });
+            // fetch('/api/human_tracking/start', { method: 'POST' });
+            // fetch('/api/human_tracking/status').then(r => r.json()).then(console.log);
         }
 
         window.onload = fetchStory;

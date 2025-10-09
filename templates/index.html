@@ -453,6 +453,12 @@
                     <h3>Scene Detection</h3>
                     <p>Explore the robot's vision capabilities</p>
                 </div>
+
+                 <div class="game-card" onclick="startGame('builder')">
+                     <div class="game-icon">🛠️</div>
+                     <h3>Do It Yourself</h3>
+                     <p>Build your own activity with speech, images, gestures and logic</p>
+                 </div>
             </div>
             
             <button class="btn secondary" onclick="backToDashboard()">Back to Dashboard</button>
@@ -538,10 +544,10 @@
         function startGame(gameType) {
             if (gameType === 'story') {
                 showStorySection();
+            } else if (gameType === 'builder') {
+                window.location.href = '/select_toy';
             } else {
                 alert(`Starting ${gameType} game! This will integrate with the QTrobot AI assistant.`);
-                // Here you can add logic to start the specific game
-                // For now, just show an alert
             }
         }
 

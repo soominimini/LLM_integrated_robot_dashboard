@@ -337,7 +337,7 @@
                         startStoryGame();
                         break;
                     case 'scene':
-                        startSceneGame();
+                        window.location.href = '/play_scene';
                         break;
                     case 'chat':
                         startChatGame();
@@ -377,6 +377,11 @@
 
             if (currentGame === gameType) {
                 currentGame = null;
+            }
+            if (gameType === 'scene') {
+                stopCameraPolling();
+                const live = document.getElementById('camera-live');
+                if (live) live.remove();
             }
         }
 
@@ -461,8 +466,21 @@
         }
 
         function startSceneGame() {
-            alertDiv.innerHTML = '<div class="alert success">👁️ Scene Detection Game Started!<br>QTrobot is now analyzing the environment and will describe what it sees.</div>';
-            // Here you would integrate with the actual scene detection functionality
+            alertDiv.innerHTML = '<div class="alert success">👁️ Scene Detection Started! Opening camera...</div>';
+            // Create a live view container if not exists
+            let live = document.getElementById('camera-live');
+            if (!live) {
+                live = document.createElement('div');
+                live.id = 'camera-live';
+                live.style = 'margin-top:12px; background:#000; border-radius:8px; overflow:hidden; text-align:center;';
+                const img = document.createElement('img');
+                img.id = 'camera-frame';
+                img.alt = 'Camera';
+                img.style = 'max-width:100%; display:block; margin:0 auto;';
+                live.appendChild(img);
+                document.querySelector('.container').appendChild(live);
+            }
+            startCameraPolling();
         }
 
         function startChatGame() {
@@ -505,6 +523,24 @@
                 }
             });
         });
+        // Simple polling-based camera preview
+        let camTimer = null;
+        function startCameraPolling() {
+            stopCameraPolling();
+            const img = document.getElementById('camera-frame');
+            if (!img) return;
+            const tick = async () => {
+                try {
+                    // Avoid caching by adding a timestamp
+                    img.src = '/api/camera_frame?t=' + Date.now();
+                } catch (e) { /* ignore */ }
+            };
+            tick();
+            camTimer = setInterval(tick, 500);
+        }
+        function stopCameraPolling() {
+            if (camTimer) { clearInterval(camTimer); camTimer = null; }
+        }
     </script>
 </body>
 </html> 
