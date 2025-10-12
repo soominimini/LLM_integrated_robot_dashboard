@@ -5,8 +5,13 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
+import os
+import sys
+import shutil
+import subprocess
+import shlex
 import rospy
-from qt_robot_interface.srv import behavior_talk_text, speech_config, setting_setVolume
+from qt_robot_interface.srv import behavior_talk_text, behavior_talk_audio, speech_config, setting_setVolume
 import math
 import threading
 import time
@@ -52,6 +57,7 @@ class TTSHelper:
             
             # Create service proxies
             self.talk_text_service = rospy.ServiceProxy('/qt_robot/behavior/talkText', behavior_talk_text)
+            self.talk_audio_service = rospy.ServiceProxy('/qt_robot/behavior/talkAudio', behavior_talk_audio)
             self.speech_config_service = rospy.ServiceProxy('/qt_robot/speech/config', speech_config)
             self.volume_service = rospy.ServiceProxy('/qt_robot/setting/setVolume', setting_setVolume)
             
@@ -71,6 +77,16 @@ class TTSHelper:
             self.stop_movement = False
             # Speaking state
             self._is_speaking = False
+
+            # Engine selection
+            # 'qt' (default) uses robot's built-in TTS; 'polly' uses AWS Polly with audio playback
+            self.engine = (os.environ.get('TTS_ENGINE') or 'qt').strip().lower()
+            self.aws_voice = os.environ.get('POLLY_VOICE', 'Justin')
+            self.polly_rate = os.environ.get('POLLY_RATE')  # e.g., 'slow', 'x-slow', '85%'
+            self.polly_volume = os.environ.get('POLLY_VOLUME')  # e.g., 'loud', 'x-loud', '+6dB'
+            self.robot_host = os.environ.get('ROBOT_HOST', '192.168.100.1')
+            self.robot_user = os.environ.get('ROBOT_USER', 'developer')
+            self.robot_qt_audio_dir = os.environ.get('ROBOT_QT_AUDIO_DIR', '/home/qtrobot/robot/data/audios/')
             
             # Set default language and volume
             self.set_language("en-US")
@@ -79,6 +95,7 @@ class TTSHelper:
         except Exception as e:
             print(f"Warning: Could not initialize TTS services: {e}")
             self.talk_text_service = None
+            self.talk_audio_service = None
             self.speech_config_service = None
             self.volume_service = None
             self.kinematics = None
@@ -96,7 +113,7 @@ class TTSHelper:
         try:
             if self.speech_config_service:
                 # Set language with default pitch and speed
-                result = self.speech_config_service(language_code, 100, 100)
+                result = self.speech_config_service(language_code, 100, 80)
                 return result
             return False
         except Exception as e:
@@ -307,19 +324,21 @@ class TTSHelper:
         """
         try:
             self._is_speaking = True
-            if self.talk_text_service and text.strip():
-                # Estimate speech duration (rough approximation: 0.1 seconds per character)
-                estimated_duration = len(text.strip()) * 0.1
-                
-                # Start movement thread
+            clean_text = (text or '').strip()
+            if not clean_text:
+                return False
+
+            # If using AWS Polly path
+            print("self.engine : ",self.engine )
+            if self.engine == 'polly':
+                return self._speak_with_polly(clean_text)
+
+            # Default: QT built-in TTS
+            if self.talk_text_service:
+                estimated_duration = len(clean_text) * 0.1
                 self._start_movement_thread(estimated_duration)
-                
-                # Speak the text
-                result = self.talk_text_service(text.strip())
-                
-                # Stop movement after speech
+                result = self.talk_text_service(clean_text)
                 self.stop_movement = True
-                
                 return result
             return False
         except Exception as e:
@@ -342,11 +361,10 @@ class TTSHelper:
             bool: True if successful, False otherwise
         """
         try:
-            # Set the language first
-            if not self.set_language(language):
-                print(f"Warning: Could not set language to {language}")
-            
-            # Speak the story with movement
+            # Set language for QT engine only; Polly voice is selected via env
+            if self.engine != 'polly':
+                if not self.set_language(language):
+                    print(f"Warning: Could not set language to {language}")
             return self.speak(story_text)
             
         except Exception as e:
@@ -419,3 +437,142 @@ class TTSHelper:
         except Exception as e:
             print(f"Error getting head position: {e}")
             return None, None 
+
+    # Internal helpers for AWS Polly playback
+    def _speak_with_polly(self, text: str) -> bool:
+        try:
+            # Lazy import to avoid hard dependency; add repo root if needed
+            try:
+                from tts.local_polly_generator import generate_polly_audio
+            except Exception:
+                repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+                if repo_root not in sys.path:
+                    sys.path.insert(0, repo_root)
+                from tts.local_polly_generator import generate_polly_audio
+        except Exception as e:
+            print(f"Polly path unavailable: {e}")
+            return False
+
+        # Determine if text is SSML
+        is_ssml = ('<' in text and '>' in text)
+        # File name
+        ts = int(time.time())
+        filename = f"polly_{ts}.mp3"
+
+        # Generate locally via Polly
+        # Apply SSML prosody rate if requested
+        rate = (self.polly_rate or '').strip()
+        volume = (self.polly_volume or '').strip()
+        if rate or volume:
+            try:
+                lowered = text.lower()
+                if '<speak' in lowered and '</speak>' in lowered:
+                    # Insert prosody inside existing <speak> ... </speak>
+                    # Find tags conservatively
+                    start = lowered.find('<speak')
+                    start_close = lowered.find('>', start)
+                    end = lowered.rfind('</speak>')
+                    if start != -1 and start_close != -1 and end != -1 and end > start_close:
+                        inner = text[start_close+1:end]
+                        attrs = []
+                        if rate:
+                            attrs.append(f"rate=\"{rate}\"")
+                        if volume:
+                            attrs.append(f"volume=\"{volume}\"")
+                        attr_str = ' '.join(attrs) if attrs else ''
+                        wrapped = f"<speak>\n  <prosody {attr_str}>{inner}</prosody>\n</speak>"
+                        text = wrapped
+                    else:
+                        attrs = []
+                        if rate:
+                            attrs.append(f"rate=\"{rate}\"")
+                        if volume:
+                            attrs.append(f"volume=\"{volume}\"")
+                        attr_str = ' '.join(attrs) if attrs else ''
+                        text = f"<speak><prosody {attr_str}>{text}</prosody></speak>"
+                else:
+                    # No SSML: create SSML wrapper
+                    attrs = []
+                    if rate:
+                        attrs.append(f"rate=\"{rate}\"")
+                    if volume:
+                        attrs.append(f"volume=\"{volume}\"")
+                    attr_str = ' '.join(attrs) if attrs else ''
+                    text = f"<speak><prosody {attr_str}>{text}</prosody></speak>"
+            except Exception:
+                # If anything goes wrong, fall back to original text
+                pass
+
+        audio_path = generate_polly_audio(text, self.aws_voice, filename)
+        if not audio_path:
+            return False
+
+        # Upload to QTRP host
+        if not self._upload_to_robot(audio_path):
+            return False
+
+        # Copy into qtrobot audio dir and chown
+        if not self._copy_to_qtrobot_user(filename):
+            return False
+
+        # Trigger playback on robot via ROS service
+        try:
+            if self.talk_audio_service:
+                # Movement: approximate duration if possible (not precise for MP3). Use 0.08s per char.
+                estimated_duration = max(2.0, len(text) * 0.08)
+                self._start_movement_thread(estimated_duration)
+                res = self.talk_audio_service(filename, "")
+                self.stop_movement = True
+                return bool(res)
+            print("talkAudio service not available")
+            return False
+        except Exception as e:
+            print(f"Error triggering talkAudio: {e}")
+            return False
+
+    def _upload_to_robot(self, local_file: str) -> bool:
+        try:
+            ssh_opts = ['-o', 'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null']
+            password = os.environ.get('ROBOT_PASSWORD')
+            if password and shutil.which('sshpass'):
+                cmd = ['sshpass', '-p', password, 'scp'] + ssh_opts + [local_file, f"{self.robot_user}@{self.robot_host}:~/"]
+            else:
+                if password and not shutil.which('sshpass'):
+                    print("Hint: install sshpass (e.g., sudo apt-get install -y sshpass) for non-interactive auth.")
+                cmd = ['scp'] + ssh_opts + [local_file, f"{self.robot_user}@{self.robot_host}:~/"]
+            subprocess.run(cmd, check=True)
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Upload failed: {e}")
+            return False
+
+    def _copy_to_qtrobot_user(self, filename: str) -> bool:
+        try:
+            ssh_opts = ['-o', 'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null']
+            # Allow passing sudo password; fallback to ROBOT_PASSWORD
+            sudo_pw = os.environ.get('ROBOT_SUDO_PASSWORD') or os.environ.get('ROBOT_PASSWORD')
+            if sudo_pw:
+                # Use sudo -S to read password from stdin; suppress prompt with -p ''
+                remote_cmd = (
+                    f"echo {shlex.quote(sudo_pw)} | sudo -S -p '' cp ~/{filename} {self.robot_qt_audio_dir} && "
+                    f"echo {shlex.quote(sudo_pw)} | sudo -S -p '' chown qtrobot:qtrobot {os.path.join(self.robot_qt_audio_dir, filename)}"
+                )
+            else:
+                remote_cmd = (
+                    f"sudo cp ~/{filename} {self.robot_qt_audio_dir} && "
+                    f"sudo chown qtrobot:qtrobot {os.path.join(self.robot_qt_audio_dir, filename)}"
+                )
+
+            password = os.environ.get('ROBOT_PASSWORD')
+            if password and shutil.which('sshpass'):
+                cmd = ['sshpass', '-p', password, 'ssh'] + ssh_opts + ['-t', f"{self.robot_user}@{self.robot_host}", remote_cmd]
+            else:
+                if password and not shutil.which('sshpass'):
+                    print("Hint: install sshpass (e.g., sudo apt-get install -y sshpass) for non-interactive auth.")
+                cmd = ['ssh'] + ssh_opts + ['-t', f"{self.robot_user}@{self.robot_host}", remote_cmd]
+
+            subprocess.run(cmd, check=True)
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Copy to qtrobot user failed: {e}")
+            return False
