@@ -56,7 +56,7 @@ When you start the QTrobot AI Assistant, you'll now see a user authentication sc
 ```bash
 cd qt_ai_data_assistant
 source venv/bin/activate
-python src/qt_ai_data_assistant.py
+python3.9 src/qt_ai_data_assistant.py
 ```
 
 ### User Interface
@@ -166,7 +166,7 @@ The user management system is integrated into the main `QTAIDataAssistant` class
 You can test the user management system using the provided test script:
 
 ```bash
-python test_user_management.py
+python3.9 test_user_management.py
 ```
 
 This script will:

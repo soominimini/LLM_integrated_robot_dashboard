@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.9
 """
 Complete Polly TTS Workflow
 1. Generate Polly audio locally

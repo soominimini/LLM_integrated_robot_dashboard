@@ -21,7 +21,7 @@ fi
 # Check if virtual environment exists
 if [ ! -d "venv" ]; then
     echo "❌ Error: Virtual environment not found. Please run the installation steps first:"
-    echo "   python3 -m venv venv"
+    echo "   python3.9 -m venv venv"
     echo "   source venv/bin/activate"
     echo "   pip install -r requirements.txt"
     exit 1

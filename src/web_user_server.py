@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.9
 
 import os
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, send_from_directory, send_file
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, send_from_directory, send_file,make_response
 from user_management import UserManager
 from story_generator import StoryGenerator
 from tts_helper import TTSHelper
@@ -13,6 +13,8 @@ import time
 import random
 from typing import Optional
 import difflib
+import subprocess
+import subprocess
 try:
     import cv2
 except Exception:
@@ -29,7 +31,7 @@ try:
     import rospy
     from sensor_msgs.msg import Image
     from cv_bridge import CvBridge, CvBridgeError
-    from ultralytics import YOLO
+    # from ultralytics import YOLO  # disabled: not using YOLO
     from queue import Queue
     from threading import Thread
     ROS_AVAILABLE = True
@@ -60,6 +62,10 @@ _ros_cam_lock = Lock()
 # HumanTracking singleton
 _human_tracker = None
 _human_tracker_lock = Lock()
+
+# V4L2 camera handle (non-ROS fallback)
+_v4l_cap = None
+_v4l_cap_lock = Lock()
 
 def _ensure_human_tracker():
     global _human_tracker
@@ -104,64 +110,6 @@ def _pick_recent_person(tracker, timeout_sec: float = 0.5):
         _t.sleep(0.05)
     return picked
 
-# # IdleAttention singleton and runner
-# _idle_attention = None
-# _idle_attn_lock = Lock()
-# _idle_thread = None
-# _idle_stop = ThreadEvent()
-
-# def _ensure_idle_attention():
-    # global _idle_attention
-    # if not IDLE_ATTENTION_AVAILABLE:
-    #     return None
-    # with _idle_attn_lock:
-    #     if _idle_attention is None:
-    #         try:
-    #             tracker = _ensure_human_tracker()
-    #             attn = IdleAttention()
-    #             attn.setup(attention_time=2, human_tracker=tracker)
-    #             _idle_attention = attn
-    #         except Exception as e:
-    #             print(f"IdleAttention init failed: {e}")
-    #             return None
-    # return _idle_attention
-
-# def _idle_loop():
-#     attn = _idle_attention
-#     if not attn:
-#         return
-#     while not _idle_stop.is_set():
-#         try:
-#             attn.process()
-#         except Exception as e:
-#             print(f"IdleAttention process error: {e}")
-#             time.sleep(0.1)
-
-# def _start_idle_attention():
-#     global _idle_thread
-#     attn = _ensure_idle_attention()
-#     if not attn:
-#         return
-#     try:
-#         attn.start()
-#     except Exception:
-#         pass
-#     if not _idle_thread or not _idle_thread.is_alive():
-#         _idle_stop.clear()
-#         _idle_thread = Thread(target=_idle_loop, daemon=True)
-#         _idle_thread.start()
-
-# def _stop_idle_attention():
-#     global _idle_thread
-#     try:
-#         _idle_stop.set()
-#         attn = _idle_attention
-#         if attn:
-#             attn.stop()
-#         if _idle_thread and _idle_thread.is_alive():
-#             _idle_thread.join(timeout=0.5)
-#     except Exception:
-#         pass
 
 class CameraCapture:
     def __init__(self, topic="/camera/color/image_raw"):
@@ -175,12 +123,12 @@ class CameraCapture:
             pass
         self.image_sub = rospy.Subscriber(topic, Image, self._image_callback)
 
-        # Load YOLO model
-        self.model = YOLO("yolov8n.pt")  # Load a lightweight pretrained YOLOv8 model
-
-        # Start processing thread
-        self.processing_thread = Thread(target=self.process_images, daemon=True)
-        self.processing_thread.start()
+        # # Load YOLO model (disabled)
+        # self.model = YOLO("yolov8n.pt")  # Load a lightweight pretrained YOLOv8 model
+        #
+        # # Start processing thread (disabled)
+        # self.processing_thread = Thread(target=self.process_images, daemon=True)
+        # self.processing_thread.start()
 
     def _image_callback(self, data):
         try:
@@ -229,46 +177,20 @@ def _get_ros_frame():
         if _ros_cam is None:
             topic = os.environ.get('CAMERA_ROS_TOPIC', "/camera/color/image_raw")
             _ros_cam = CameraCapture(topic=topic)
-    # Fetch latest queued image
+    # Fetch latest image with a brief wait for first frame
+    wait_seconds = 1.5
+    try:
+        wait_seconds = float(os.environ.get('CAMERA_FRAME_WAIT_SEC', '1.5'))
+    except Exception:
+        wait_seconds = 1.5
+    deadline = time.time() + max(0.0, wait_seconds)
     frame = _ros_cam.get_latest_image()
+    while frame is None and time.time() < deadline:
+        time.sleep(0.05)
+        frame = _ros_cam.get_latest_image()
     return frame
 
-# Camera helper: try env overrides, common indices, and optional GStreamer
-def _open_camera():
-    if cv2 is None:
-        return None, 'OpenCV not available'
-    # 1) explicit device from env (index or path)
-    dev = os.environ.get('CAMERA_DEVICE')
-    if dev:
-        try:
-            idx = int(dev)
-            cap = cv2.VideoCapture(idx)
-            if cap and cap.isOpened():
-                return cap, None
-        except Exception:
-            # try as device path
-            cap = cv2.VideoCapture(dev)
-            if cap and cap.isOpened():
-                return cap, None
-    # 2) try common indices
-    for idx in [0, 1, 2, 3]:
-        try:
-            cap = cv2.VideoCapture(idx)
-            if cap and cap.isOpened():
-                return cap, None
-            if cap: cap.release()
-        except Exception:
-            pass
-    # 3) try GStreamer pipeline from env
-    gst = os.environ.get('CAMERA_GSTREAMER')
-    if gst:
-        try:
-            cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
-            if cap and cap.isOpened():
-                return cap, None
-        except Exception:
-            pass
-    return None, 'No camera available (tried indices 0-3, CAMERA_DEVICE, CAMERA_GSTREAMER)'
+
 
 app = Flask(__name__, template_folder="../templates")
 app.secret_key = os.urandom(24)
@@ -281,6 +203,8 @@ image_generator = ImageGenerator()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USER_DATA_DIR = os.path.join(BASE_DIR, 'user_data')
+
+# Gemini analysis is delegated to external script (Python 3.9) when requested
 
 # De-duplicate short-interval wait announcements
 _last_wait_announce_ts = 0.0
@@ -321,6 +245,8 @@ def _with_asr_suspended(say_callable):
         #     _stop_idle_attention()
         # except Exception:
         #     pass
+
+# --- Camera REST endpoints ---
 
 # Lightweight LLM-based ASR intent correction
 _intent_llm = None
@@ -999,24 +925,15 @@ def api_camera_frame():
     try:
         if cv2 is None:
             return jsonify({'success': False, 'error': 'OpenCV not available'}), 500
-        prefer_mode = os.environ.get('CAMERA_MODE', '').lower().strip()  # 'ros_only' | 'v4l_only' | ''
-        frame = None if prefer_mode == 'v4l_only' else _get_ros_frame()
-        if frame is None and prefer_mode != 'ros_only':
-            # Fallback to V4L/GStreamer
-            cap, err = _open_camera()
-            if not cap:
-                return jsonify({'success': False, 'error': err}), 500
-            ok, frame = cap.read()
-            cap.release()
-            if not ok or frame is None:
-                return jsonify({'success': False, 'error': 'Camera read failed'}), 500
+        frame = _get_ros_frame()
+        ok = True if frame is not None else False
         if not ok or frame is None:
             return jsonify({'success': False, 'error': 'Camera read failed'}), 500
         # Encode JPEG
         ok, buf = cv2.imencode('.jpg', frame)
         if not ok:
             return jsonify({'success': False, 'error': 'JPEG encode failed'}), 500
-        from flask import make_response
+        # from flask import make_response
         resp = make_response(buf.tobytes())
         resp.headers['Content-Type'] = 'image/jpeg'
         resp.headers['Cache-Control'] = 'no-store'
@@ -1033,16 +950,9 @@ def api_camera_capture():
         return jsonify({'success': False, 'error': 'OpenCV not available'}), 500
     try:
         username = session['username']
-        prefer_mode = os.environ.get('CAMERA_MODE', '').lower().strip()
-        frame = None if prefer_mode == 'v4l_only' else _get_ros_frame()
-        if frame is None and prefer_mode != 'ros_only':
-            cap, err = _open_camera()
-            if not cap:
-                return jsonify({'success': False, 'error': err}), 500
-            ok, frame = cap.read()
-            cap.release()
-            if not ok or frame is None:
-                return jsonify({'success': False, 'error': 'Camera read failed'}), 500
+        frame = _get_ros_frame()
+        if frame is None:
+            return jsonify({'success': False, 'error': 'Camera read failed'}), 500
         # Save JPEG under user directory
         import datetime
         user_cap_dir = os.path.join(USER_DATA_DIR, username, 'captured_scenes')
@@ -1054,7 +964,72 @@ def api_camera_capture():
         if not ok:
             return jsonify({'success': False, 'error': 'Failed to save image'}), 500
         rel = os.path.relpath(fpath, USER_DATA_DIR)
-        return jsonify({'success': True, 'image_path': f"/images/{rel}"})
+        # Optional target from request body
+        target = None
+        try:
+            payload = request.get_json(silent=True) or {}
+            t = payload.get('target')
+            if isinstance(t, str) and t.strip():
+                target = t.strip()
+        except Exception:
+            target = None
+        # Call external Gemini script and return its raw JSON/text
+        analysis = None
+        try:
+            script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_analyze_image.py')
+            if os.path.exists(script_path):
+                cmd = ['python3.9', script_path, '--image', fpath]
+
+                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                if proc.returncode == 0:
+                    analysis = (proc.stdout or '').strip()
+                else:
+                    print(f"Gemini script error: {proc.stderr}")
+        except Exception as _e:
+            print(f"Gemini script exec failed: {_e}")
+        # Extract only label from returned JSON/text
+        detected_label = None
+        if isinstance(analysis, str) and analysis:
+            try:
+                raw = analysis.strip()
+                if raw.startswith('```'):
+                    raw = raw.strip('`')
+                obj = None
+                try:
+                    obj = json.loads(raw)
+                except Exception:
+                    l = raw.find('[')
+                    r = raw.rfind(']')
+                    if l != -1 and r != -1 and r > l:
+                        obj = json.loads(raw[l:r+1])
+                if isinstance(obj, list) and obj:
+                    item = obj[0]
+                    if isinstance(item, dict):
+                        lbl = item.get('label')
+                        if isinstance(lbl, str) and lbl.strip():
+                            detected_label = lbl.strip()
+                elif isinstance(obj, dict):
+                    lbl = obj.get('label')
+                    if isinstance(lbl, str) and lbl.strip():
+                        detected_label = lbl.strip()
+            except Exception:
+                detected_label = None
+        # Speak feedback based on comparison
+        try:
+            if target and detected_label:
+                if target.lower() in detected_label.lower():
+                    _with_asr_suspended(lambda: tts_helper.speak("That's correct!"))
+                else:
+                    _with_asr_suspended(lambda: tts_helper.speak("No, try again."))
+        except Exception:
+            pass
+        found = None
+        if target and detected_label:
+            try:
+                found = target.lower() in detected_label.lower()
+            except Exception:
+                found = None
+        return jsonify({'success': True, 'image_path': f"/images/{rel}", 'label': detected_label, 'target': target, 'found': found})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
@@ -2181,6 +2156,19 @@ def api_head_position():
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/scene/start', methods=['POST'])
+def api_scene_start():
+    try:
+        choices = ['tomato', 'lemon', 'apple', 'banana']
+        target = random.choice(choices)
+        try:
+            _with_asr_suspended(lambda: tts_helper.speak(f"Show me a {target}"))
+        except Exception:
+            pass
+        return jsonify({'success': True, 'target': target})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True) 

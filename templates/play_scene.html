@@ -23,18 +23,16 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1 class="title">👁️ Scene Detection</h1>
+      <h1 class="title"> Scene Detection</h1>
       <div>
         <button class="btn secondary" onclick="back()">Back</button>
-        <button id="newRoundBtn" class="btn">New Round</button>
+        <button id="newRoundBtn" class="btn">Start</button>
         <button id="captureBtn" class="btn">Capture Scene</button>
       </div>
     </div>
     <div id="question" class="question">Click "New Round" to start</div>
-    <div id="live" style="background:#000; border-radius:10px; text-align:center; overflow:hidden; margin-bottom:12px;">
-      <img id="camera-frame" alt="Camera" style="max-width:100%; display:block; margin:0 auto;" />
-    </div>
-    <div id="cards" class="grid"></div>
+
+    <div id="cards" class="grid" style="display:none"></div>
     <div id="status" class="status"></div>
   </div>
 
@@ -45,54 +43,32 @@
     const $new = document.getElementById('newRoundBtn');
     const $cap = document.getElementById('captureBtn');
 
-    $new.onclick = newRound;
+    $new.onclick = startRound;
     $cap.onclick = captureScene;
     startCamera();
-
-    async function newRound() {
-      $status.textContent = 'Loading objects...';
-      $cards.innerHTML = '';
+    async function startRound() {
       try {
-        const res = await fetch('/api/scene_game/new_round', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+        $status.textContent = 'Starting...';
+        const res = await fetch('/api/scene/start', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
         const data = await res.json();
-        if (!data.success) throw new Error(data.error || 'Failed');
-        $q.textContent = data.question || 'I want a fruit, show me a fruit';
-        (data.items || []).forEach(item => {
-          const card = document.createElement('div'); card.className = 'card';
-          card.onclick = () => answer(item.label);
-          if (item.image_path) {
-            const img = document.createElement('img'); img.src = item.image_path; img.alt = item.label; card.appendChild(img);
-          }
-          const cap = document.createElement('div'); cap.className = 'caption'; cap.textContent = item.label; card.appendChild(cap);
-          $cards.appendChild(card);
-        });
-        $status.textContent = 'Pick the right item';
+        if (!data.success) throw new Error(data.error || 'Failed to start');
+        window.currentTarget = data.target;
+        $q.textContent = `Show me a ${data.target}`;
+        $status.textContent = 'Listening for your answer...';
       } catch (e) {
         $status.textContent = 'Error: ' + e.message;
       }
     }
 
-    async function answer(label) {
-      try {
-        const res = await fetch('/api/scene_game/answer', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ label }) });
-        const data = await res.json();
-        if (!data.success) throw new Error(data.error || 'Failed');
-        if (data.correct) {
-          $status.textContent = '✅ Correct! Great job!';
-        } else {
-          $status.textContent = '❌ Not quite. Try again!';
-        }
-      } catch (e) {
-        $status.textContent = 'Error: ' + e.message;
-      }
-    }
+
+    // Scene game UI removed: capture only
 
     function back() { window.location.href = '/play'; }
 
     // Live camera preview and capture
     let camTimer = null;
     function startCamera() {
-      stopCamera();
+      // stopCamera();
       const img = document.getElementById('camera-frame');
       if (!img) return;
       const tick = () => { img.src = '/api/camera_frame?t=' + Date.now(); };
@@ -102,10 +78,12 @@
     function stopCamera() { if (camTimer) { clearInterval(camTimer); camTimer = null; } }
     async function captureScene() {
       try {
-        const res = await fetch('/api/camera_capture', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+        const res = await fetch('/api/camera_capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target: window.currentTarget || null }) });
         const data = await res.json();
         if (data.success) {
-          $status.textContent = '📷 Captured scene saved.';
+          let msg = '📷 Captured scene saved.';
+          if (data.label) { msg += ' Label: ' + data.label; }
+          $status.textContent = msg;
         } else {
           $status.textContent = 'Error capturing: ' + (data.error || 'Unknown');
         }

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.9
 
 # Copyright (c) 2024 LuxAI S.A.
 #

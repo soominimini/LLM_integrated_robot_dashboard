@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.9
 """
 Local Polly TTS Generator
 Generates Polly audio files locally on QTPC

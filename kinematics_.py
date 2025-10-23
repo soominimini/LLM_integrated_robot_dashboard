@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.9
 import rospy
 import numpy as np
 from qt_nuitrack_app.msg import Skeletons

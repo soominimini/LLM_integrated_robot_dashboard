@@ -449,8 +449,8 @@
                 </div>
                 
                 <div class="game-card" onclick="startGame('detection')">
-                    <div class="game-icon">👁️</div>
-                    <h3>Scene Detection</h3>
+                    <div class="game-icon">🍎 🍊 🍋️</div>
+                    <h3>Object Detection</h3>
                     <p>Explore the robot's vision capabilities</p>
                 </div>
 
@@ -546,7 +546,9 @@
                 showStorySection();
             } else if (gameType === 'builder') {
                 window.location.href = '/select_toy';
-            } else {
+            } else if (gameType === 'detection') {
+                window.location.href = '/object_game_generate';
+            }  else {
                 alert(`Starting ${gameType} game! This will integrate with the QTrobot AI assistant.`);
             }
         }

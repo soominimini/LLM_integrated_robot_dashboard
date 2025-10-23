@@ -1,12 +1,16 @@
 {
   "soomin": {
     "username": "soomin",
-    "age": 10,
+    "age": 5,
     "password_hash": "",
     "created_at": "2025-07-02T22:37:07.991120",
-    "last_login": "2025-08-09T00:51:04.456296",
+    "last_login": "2025-10-23T20:53:18.018851",
     "user_dir": "user_data/soomin",
-    "chat_dir": "user_data/soomin/chat_history"
+    "chat_dir": "user_data/soomin/chat_history",
+    "display_name": "soomin",
+    "gender": "female",
+    "disorder": "ASD, ADHD",
+    "learning_goals": "learning adjective forms, plural forms"
   },
   "jane": {
     "username": "jane",

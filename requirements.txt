@@ -37,6 +37,7 @@ nvidia-riva-client==2.16.0
 
 # Web interface
 flask==2.3.3
+google-genai
 
 # Stable Diffusion for image generation
 diffusers==0.22.0
