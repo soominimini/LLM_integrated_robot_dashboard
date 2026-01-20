@@ -26,7 +26,7 @@ def copy_to_qtrobot_user(audio_file, robot_host="192.168.100.1", robot_user="dev
     """
     Copy audio file to qtrobot user's audio directory using interactive SSH
     """
-    print(f"📋 Copying {audio_file} to qtrobot user...")
+    print(f" Copying {audio_file} to qtrobot user: ")
 
     # Use ssh -t for interactive sudo
     ssh_cmd = [

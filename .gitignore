@@ -3,3 +3,5 @@
 # Secrets
 .env
 .env.*
+.env
+env.polly

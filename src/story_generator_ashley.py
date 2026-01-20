@@ -6,6 +6,7 @@
 # https://opensource.org/licenses/MIT
 
 import json
+import random
 from typing import Dict, Any, Optional
 from llamaindex_interface import ChatWithRAG
 from llm_prompts import ConversationPrompt
@@ -22,16 +23,20 @@ class StoryGenerator:
     Integrate the following speech and language therapy goals naturally into the story:
     1) learning descriptive words, 2) collaboration, 3) importance of friendships and relationships, 4) overcoming challenges.
 
-    The story should be: Short (about 300–500 words). Written in simple and friendly language."""
+    The story should be: Short (about 300–500 words). Written in simple and friendly language.
 
-    STORY_PROMPT_TEMPLATE_2 = """Write a short therapeutic story for a {age}-year-old child named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development. Use simple sentence structures and gentle, encouraging tones with an emphasis on learning how to do an everyday task.
+    Keep in mind the following goals for {child_name} while generating the story: {goals}"""
+
+    SCHOOL_TEMPLATE_3 = """Write a short therapeutic story for a {age}-year-old child named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development. Use simple sentence structures and gentle, encouraging tones with an emphasis on learning how to do an everyday task.
 
         Use the following story template: A protagonist named {child_name} is going to their first day of school. {child_name} worries about making friends and doesn't want to go but decides to be brave and overcome their fear. {child_name} meets supportive friends who help {child_name} feel excited about school. With their help, {child_name} overcomes their worries and enjoys school and learning.
 
         Integrate the following speech and language therapy goals naturally into the story:
         1) learning descriptive words, 2) collaboration, 3) importance of friendships and relationships, 4) overcoming challenges.
 
-        The story should be: Short (about 300–500 words). Written in simple and friendly language."""
+        The story should be: Short (about 300–500 words). Written in simple and friendly language.
+
+        Keep in mind the following goals for {child_name} while generating the story: {goals}"""
 
     STORY_PROMPT_TEMPLATE_3 = """Write a short therapeutic story for a {age}-year-old child named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development. Use simple sentence structures and gentle, encouraging tones with an emphasis on learning how to do an everyday task.
 
@@ -40,9 +45,60 @@ class StoryGenerator:
             Integrate the following speech and language therapy goals naturally into the story:
             1) learning descriptive words, 2) collaboration, 3) importance of friendships and relationships, 4) overcoming challenges.
 
-            The story should be: Short (about 300–500 words). Written in simple and friendly language."""
+            The story should be: Short (about 300–500 words). Written in simple and friendly language.
 
-    STORY_PROMPT_TEMPLATES = {"template_1": STORY_PROMPT_TEMPLATE_1, "template_2": STORY_PROMPT_TEMPLATE_2, "template_3": STORY_PROMPT_TEMPLATE_3}
+            Keep in mind the following goals for {child_name} while generating the story: {goals}"""
+
+    SCHOOL_TEMPLATE_1 = """Write a children’s story titled The Lost Lunchbox for a {age}-year-old. The story should center on the theme of friendship, curiosity, and problem-solving, and take place in an elementary school during lunchtime. 
+
+                            You may also include side characters like a kind teacher, a helpful classmate, or even a playful classroom pet. 
+
+                            Begin by introducing the characters, the school setting, and the main problem—{child_name} discovers his brand-new lunchbox is missing. In the middle, show how friends can work together to solve the mystery, face small challenges, and learn the value of teamwork and empathy. End with a warm and satisfying resolution where the lunchbox is found and {child_name} realizes that helping others and staying kind always pays off. Use simple, expressive language, short sentences, and lively dialogue appropriate for young readers. 
+
+                            Keep the tone friendly, imaginative, and lighthearted, about 400–700 words long. Add playful touches of humor, sound effects, or small moments of wonder to make the story engaging and vivid for children.
+                            Keep in mind the following goals for {child_name} while generating the story: {goals}
+                            """
+
+    SCHOOL_TEMPLATE_2 = """Tell a gentle, encouraging story about a young child named {child_name} who is going to school for the very first time. {child_name} feels a mix of excitement and worry while getting ready in the morning — {child_name}  doesn’t know what the day will be like or if they'll make any friends. {child_name}'s stomach feels fluttery, and everything seems big and new.
+
+When {child_name} arrives at school, {child_name} discovers a colorful classroom filled with books, toys, and smiling faces. {child_name}'s teacher greets them kindly and helps them find a seat. At first, {child_name} feels shy, but soon another child asks if to play. Together, they build a tower, draw pictures, and laugh. Slowly, {child_name}'s nervousness begins to fade.
+
+By the end of the day, {child_name} realizes that school is a place where one can have fun, learn new things, and be themselves. {child_name} feels proud for being brave and is excited to come back tomorrow.
+
+Keep in mind the following goals for {child_name} while generating the story: {goals}
+"""
+
+    NATURE_TEMPLATE_1 = """Write a lyrical, nature-based children’s story titled “{child_name} and the Whispering Wind.” The story centers on {child_name}, a curious young child who loves to listen to the wind in the trees. When a sudden storm arrives, they learn how nature can be both strong and gentle — and that calm always returns after chaos.
+
+        Follow a three-part story structure:
+        Beginning: Introduce {child_name}’s fascination with the wind and their sense of wonder.
+        Middle: Describe the storm through vivid sensory imagery — whistling leaves, bending branches, soft rain.
+        End: Show the stillness after the storm, as {child_name} learns courage, patience, and appreciation for balance in nature.
+
+        Integrate learning goals about emotional regulation, observation, and respect for natural forces. Focus on rhythm and sensory language to build vocabulary — whooshing, rustling, shimmering. The tone should be poetic, soothing, and reflective.
+
+        Keep in mind the following goals for {child_name} while generating the story: {goals}
+"""
+
+    NATURE_TEMPLATE_2 = """Write a peaceful children’s story titled River’s Secret Song. The story follows {child_name}, who loves to play by the river but can’t understand why it sounds different each day. Guided by a wise frog, {child_name} discovers that the river changes its tune with the weather, the seasons, and the creatures around it — just like people do.
+
+    Follow a three-part story structure:
+    Beginning: Introduce {child_name}’s curiosity and their visits to the river.
+    Middle: Show their exploration and conversations with the frog as he listens carefully to nature’s “music.”
+    End: End with {child_name} recognizing the beauty of change and harmony in the world around them.
+
+    Highlight learning goals on mindfulness, listening skills, curiosity, and appreciation of the environment. Use gentle, musical language — rippling, humming, splashing — to support auditory awareness and descriptive understanding. The tone should be calm, rhythmic, and full of quiet wonder.
+
+    Keep in mind the following goals for {child_name} while generating the story: {goals}
+    """
+
+    SCHOOL_STORY_PROMPT_TEMPLATES = {"template_3": SCHOOL_TEMPLATE_3, "template_1": SCHOOL_TEMPLATE_1,
+                                     "template_2": SCHOOL_TEMPLATE_2}
+
+    NATURE_STORY_PROMPT_TEMPLATES = {"template_1": NATURE_TEMPLATE_1, "template_2": NATURE_TEMPLATE_2,
+                                     }
+
+    THEME_TEMPLATES = {"SCHOOL_STORY_PROMPT_TEMPLATES": SCHOOL_STORY_PROMPT_TEMPLATES, "NATURE_STORY_PROMPT_TEMPLATES": NATURE_STORY_PROMPT_TEMPLATES}
 
     STORY_PROMPT_TEMPLATE = """Write a short therapeutic story for a {age}-year-old child named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development. Use simple sentence structures and gentle, encouraging tones with a three act structure that teaches an important lesson.
 
@@ -69,6 +125,7 @@ class StoryGenerator:
     def _initialize_chat_engine(self):
         """Initialize the chat engine for story generation"""
         # Use a specialized system prompt for story generation
+
         story_system_prompt = """You are a creative storyteller specializing in therapeutic stories for children with speech delays. 
         Your stories should be:
         - Engaging and age-appropriate
@@ -78,7 +135,9 @@ class StoryGenerator:
         - Around 300-500 words in length
         - Only output the story text and nothing else
 
-        Focus on creating stories that help children learn descriptive words, overcoming challenges, practicing collaboration, and the importance of friendships and relationships"""
+        Focus on creating stories that help children learn descriptive words, overcoming challenges, practicing collaboration, and the importance of friendships and relationships
+
+        """
 
         self.chat_engine = ChatWithRAG(
             model=self.llm_model,
@@ -99,6 +158,9 @@ class StoryGenerator:
         Returns:
             Dictionary containing the generated story and metadata
         """
+        with open("src/user.json", "r") as data_file:
+            data = json.load(data_file)
+        goals = data[child_name]["learning_goals"]
         try:
             if not self.chat_engine:
                 return {
@@ -112,9 +174,13 @@ class StoryGenerator:
             if custom_prompt:
                 prompt = custom_prompt
             else:
-                prompt = self.STORY_PROMPT_TEMPLATE.format(
+                rand_theme = random.randint(0, len(self.THEME_TEMPLATES)-1)
+                theme = self.THEME_TEMPLATES[rand_theme]
+                rand_story = random.randint(0, len(self.theme) - 1)
+                prompt = self.STORY_PROMPT_TEMPLATE[rand_story].format(
                     child_name=child_name,
-                    age=age
+                    age=age,
+                    goals=goals
                 )
 
             # Generate the story using the chat engine

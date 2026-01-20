@@ -128,16 +128,22 @@ window.addEventListener('load', () => {
             
             // Show loading state
             imageContainer.innerHTML = '<div class="image-loading"><span class="loading-spinner"></span> Loading image...</div>';
-            
+            // Compute paragraph index for current sentence using stored mapping
+            const paragraphIndex = (window.storyMetadata && window.storyMetadata.sentence_to_paragraph)
+                ? window.storyMetadata.sentence_to_paragraph[current]
+                : null;
+            console.log('Paragraph index for sentence', current, ':', paragraphIndex);
+
             // Call API to get image for this sentence
             fetch('/api/get_sentence_image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    filename: filename,
-                    sentence_index: current 
-                })
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                filename: filename,
+                sentence_index: current,
+                paragraph_index: paragraphIndex   // <-- new
             })
+        })
             .then(res => res.json())
             .then(data => {
                 console.log('Image API response:', data);

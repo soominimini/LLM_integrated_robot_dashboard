@@ -613,22 +613,39 @@ def api_generate_story():
         return jsonify({"error": "User not found"}), 404
     
     data = request.get_json() or {}
-    child_name = data.get("child_name", username)  # Use username as default child name
-    age = data.get("age", user.get("age", 4))  # Use user's age as default
+    child_name = data.get("child_name", username)
+    age = data.get("age", user.get("age", 4))
     custom_prompt = data.get("custom_prompt")
+    topics = data.get("topics")
+
+    # Load learning goals from profile.json if available
+    gender = user.get("gender", "")
+    learning_goals = user.get("learning_goals", "")
     
+    try:
+        profile_path = os.path.join(USER_DATA_DIR, username, "profile.json")
+        if os.path.exists(profile_path):
+            with open(profile_path, "r") as pf:
+                profile = json.load(pf)
+            learning_goals = profile.get("learning_goals", learning_goals)
+            gender = profile.get("gender", gender)
+    except Exception as e:
+        print(f"Warning: failed to read profile.json: {e}")
     try:
         result = story_generator.generate_story(
             child_name=child_name,
             age=age,
-            custom_prompt=custom_prompt
+            gender=gender,
+            custom_prompt=custom_prompt,
+            topics=topics,
+            goals=learning_goals
         )
-        
         if result["success"]:
             return jsonify(result), 200
         else:
             return jsonify({"error": result["error"]}), 500
-            
+
+                
     except Exception as e:
         return jsonify({"error": f"Story generation failed: {str(e)}"}), 500
 
@@ -644,16 +661,40 @@ def api_generate_story_stream():
         return jsonify({"error": "User not found"}), 404
     
     data = request.get_json() or {}
-    child_name = data.get("child_name", username)  # Use username as default child name
-    age = data.get("age", user.get("age", 4))  # Use user's age as default
+    child_name = data.get("child_name", username)
+    age = data.get("age", user.get("age", 4))
     custom_prompt = data.get("custom_prompt")
-    
+    topics = data.get("topics")
+
+    learning_goals = user.get("learning_goals", "")
+    gender = user.get("gender", "")
+    try:
+        profile_path = os.path.join(USER_DATA_DIR, username, "profile.json")
+        if os.path.exists(profile_path):
+            with open(profile_path, "r") as pf:
+                profile = json.load(pf)
+            learning_goals = profile.get("learning_goals", learning_goals)
+            gender = profile.get("gender", gender)
+    except Exception as e:
+        print(f"Warning: failed to read profile.json: {e}")
+        
     def generate():
         try:
+            # Send initial metadata event for streaming clients
+            meta = {
+                "child_name": child_name,
+                "age": age,
+                "gender": gender,
+                "topics": topics or [],
+            }
+            yield f"data: {json.dumps({'meta': meta})}\n\n"
             for chunk in story_generator.generate_story_stream(
                 child_name=child_name,
                 age=age,
-                custom_prompt=custom_prompt
+                gender=gender,
+                custom_prompt=custom_prompt,
+                topics=topics,
+                goals=learning_goals
             ):
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         except Exception as e:
@@ -698,36 +739,29 @@ def api_save_story():
     # Generate images for all sentences in the story
     if image_generator.is_available():
         try:
-            # Split story into sentences
-            #sentences = re.split(r'(?<=[.!?])\s+', story.strip())
-            sentences = [s.strip() for s in re.split(r'\n\s*\n', story) if s.strip()]
-            #sentences = [s for s in sentences if s.strip()]
-            
+            # Split story into paragraphs (blank-line separated)
+            paragraphs = [p.strip() for p in re.split(r"\n\s*\n+", story.strip()) if p.strip()]
+
             # Create user-specific image directory
-            user_images_dir = os.path.join(USER_DATA_DIR, username, 'story_images', fname.replace('.json', ''))
+            user_images_dir = os.path.join(USER_DATA_DIR, username, "story_images", fname.replace(".json", ""))
             os.makedirs(user_images_dir, exist_ok=True)
-            
-            # Generate images for each sentence
+
+            # Generate images for each paragraph
             image_paths = []
-            for i, sentence in enumerate(sentences):
+            for i, paragraph in enumerate(paragraphs):
                 image_path = image_generator.generate_story_scene_image(
-                    sentence, 
+                    paragraph,
                     story_context=f"Story about {metadata.get('child_name', 'a child')}",
                     output_dir=user_images_dir,
-                    filename_prefix=f"story_scene_{i:03d}"
-                    #if !image_path.empty():
-                        #prev_img = image_path[-1]
-                    #else:
-                        #prev_img = None
+                    filename_prefix=f"story_paragraph_{i:03d}",
                 )
                 image_paths.append(image_path)
-            
+
             print(f"Generated {len(image_paths)} images for story {fname}")
-            
+
         except Exception as e:
             print(f"Error generating images for story {fname}: {str(e)}")
             # Continue even if image generation fails
-
     else:
         print("image_generator not available")
     
@@ -1973,60 +2007,63 @@ def api_get_story_sentences():
 
 @app.route('/api/get_sentence_image', methods=['POST'])
 def api_get_sentence_image():
-    """Get image for a specific sentence"""
+    """Get image for a specific sentence (mapped to its paragraph image)"""
     username = session.get('username')
     data = request.get_json() or {}
     filename = data.get('filename', '')
-    sentence_index = data.get('sentence_index', 0)
-    
-    print(f"Getting image for user: {username}, filename: {filename}, sentence_index: {sentence_index}")
-    
+    sentence_index = int(data.get('sentence_index', 0))
+
     if not username or not filename:
         return jsonify({'success': False, 'error': 'Missing username or filename'})
-    
+
     try:
-        # Check for existing images
         user_images_dir = os.path.join(USER_DATA_DIR, username, 'story_images', filename.replace('.json', ''))
-        print(f"Looking for images in: {user_images_dir}")
-        
+        user_stories_dir = os.path.join(USER_DATA_DIR, username, 'stories')
+        story_path = os.path.join(user_stories_dir, filename)
+
+        if not os.path.exists(story_path):
+            return jsonify({'success': False, 'error': 'Story not found'})
         if not os.path.exists(user_images_dir):
-            print(f"Images directory does not exist: {user_images_dir}")
             return jsonify({'success': False, 'error': 'No images directory found'})
-        
-        print(f"Images directory exists. Files found: {os.listdir(user_images_dir)}")
-        
-        # Look for existing image files for this sentence
-        # Try both patterns: with sentence index and without
-        pattern_with_index = f'story_scene_{sentence_index:03d}_'
-        pattern_without_index = 'story_scene_'
-        
-        existing_images = [f for f in os.listdir(user_images_dir) if f.startswith(pattern_with_index)]
-        print(f"Looking for pattern '{pattern_with_index}', found: {existing_images}")
-        
-        # If no images found with index, try without index (for older images)
-        if not existing_images:
-            all_story_images = [f for f in os.listdir(user_images_dir) if f.startswith(pattern_without_index) and f.endswith('.png')]
-            print(f"Looking for pattern '{pattern_without_index}', found: {all_story_images}")
-            # Sort by creation time and take the sentence_index-th image
-            all_story_images.sort()
-            if sentence_index < len(all_story_images):
-                existing_images = [all_story_images[sentence_index]]
-                print(f"Using image {sentence_index} from sorted list: {existing_images}")
-        
-        if existing_images:
-            # Use the first existing image
-            image_path = f"/images/{username}/story_images/{os.path.basename(user_images_dir)}/{existing_images[0]}"
-            print(f"Returning image path: {image_path}")
-            return jsonify({
-                'success': True, 
-                'image_path': image_path
-            })
+
+        # Load story + metadata
+        with open(story_path, 'r') as f:
+            story_data = json.load(f)
+        metadata = story_data.get('metadata', {}) or {}
+
+        # Use saved mapping if available
+        mapping = metadata.get('sentence_to_paragraph') or []
+        if mapping:
+            if sentence_index < 0 or sentence_index >= len(mapping):
+                return jsonify({'success': False, 'error': 'Sentence index out of range'})
+            paragraph_index = mapping[sentence_index]
         else:
-            print(f"No image found for sentence {sentence_index}")
-            return jsonify({'success': False, 'error': 'No image found for this sentence'})
-            
+            # Fallback: compute from story text
+            story_text = clean_story_text(story_data.get('story', '')).strip()
+            paragraphs = [p.strip() for p in re.split(r"\n\s*\n+", story_text) if p.strip()]
+
+            sent_to_para = []
+            for pi, p in enumerate(paragraphs):
+                sents = re.split(r'(?<=[.!?])\s+', p.strip())
+                for s in [x for x in sents if x.strip()]:
+                    sent_to_para.append(pi)
+
+            if sentence_index < 0 or sentence_index >= len(sent_to_para):
+                return jsonify({'success': False, 'error': 'Sentence index out of range'})
+            paragraph_index = sent_to_para[sentence_index]
+
+        # Find the paragraph image
+        pattern = f"story_paragraph_{int(paragraph_index):03d}_"
+        matches = [f for f in os.listdir(user_images_dir) if f.startswith(pattern) and f.endswith('.png')]
+        matches.sort()
+
+        if not matches:
+            return jsonify({'success': False, 'error': 'No image found for this paragraph'})
+
+        image_path = f"/images/{username}/story_images/{os.path.basename(user_images_dir)}/{matches[0]}"
+        return jsonify({'success': True, 'image_path': image_path, 'paragraph_index': paragraph_index})
+
     except Exception as e:
-        print(f"Error getting image: {str(e)}")
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/images/<path:filename>')
