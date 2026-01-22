@@ -361,7 +361,17 @@
             </div>
             <p class="movement-description">Enable gentle arm and head movements while the robot speaks</p>
         </div>
-
+        <div class="movement-controls">
+            <h3>🔊 Robot Volume</h3>
+            <div class="movement-toggle" style="align-items:center; gap:12px;">
+              <input type="range" id="volume-slider" min="0" max="100" value="50"
+                     oninput="updateVolumeLabel(this.value)"
+                     onchange="setVolume(this.value)">
+              <span id="volume-label">50</span>
+              <button class="secondary" onclick="testVolume()">Test Volume</button>
+            </div>
+            <p class="movement-description">Adjust robot speaker volume (0–100)</p>
+          </div>
         <button class="btn" onclick="logout()">Logout</button>
     </div>
 
@@ -369,7 +379,7 @@
         const alertDiv = document.getElementById('alert');
 
         // Load movement status on page load
-        window.addEventListener('load', loadMovementStatus);
+        window.addEventListener('load', () => { loadMovementStatus(); loadVolumeStatus(); });
 
         async function loadMovementStatus() {
             try {
@@ -429,6 +439,51 @@
                 alertDiv.innerHTML = '<div class="alert error">Error updating movement settings</div>';
             }
         }
+
+        async function loadVolumeStatus() {
+            try {
+                const res = await fetch('/api/volume_status');
+                const data = await res.json();
+                if (data.success) {
+                    const slider = document.getElementById('volume-slider');
+                    const label = document.getElementById('volume-label');
+                    slider.value = data.volume_level ?? 50;
+                    label.textContent = slider.value;
+                }
+            } catch (e) {
+                console.error('Error loading volume status:', e);
+            }
+        }
+
+        function updateVolumeLabel(val) {
+            document.getElementById('volume-label').textContent = val;
+        }
+
+        async function setVolume(level) {
+            try {
+                const res = await fetch('/api/volume_settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ level: Number(level) })
+                });
+                const data = await res.json();
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to set volume');
+                }
+            } catch (e) {
+                console.error('Error setting volume:', e);
+            }
+        }
+
+        async function testVolume() {
+            try {
+                const res = await fetch('/api/volume_test', { method: 'POST' });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Failed to test volume');
+            } catch (e) {
+                console.error('Error testing volume:', e);
+            }
+            }
 
         function navigateTo(destination) {
             if (destination === 'generate') {

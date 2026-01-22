@@ -10,6 +10,7 @@ from flask_cors import CORS
 import json
 import re
 import time
+import sys
 import random
 from typing import Optional
 import difflib
@@ -197,7 +198,7 @@ app.secret_key = os.urandom(24)
 CORS(app)
 
 user_manager = UserManager()
-story_generator = StoryGenerator()
+story_generator = StoryGenerator(llm_model="llama3.3:70b")
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
@@ -228,29 +229,34 @@ def _with_asr_suspended(say_callable):
             tracker.track(person)
     except Exception:
         pass
-    try:
-        from riva_speech_recognition import RivaSpeechRecognition
-        RivaSpeechRecognition.set_audio_enabled(False)
-    except Exception:
-        pass
+    # NOTE: Riva ASR disabled (switched to Whisper).
+    # try:
+    #     from riva_speech_recognition import RivaSpeechRecognition
+    #     RivaSpeechRecognition.set_audio_enabled(False)
+    # except Exception:
+    #     pass
     try:
         return say_callable()
     finally:
-        try:
-            from riva_speech_recognition import RivaSpeechRecognition
-            RivaSpeechRecognition.set_audio_enabled(True)
-        except Exception:
-            pass
+        # NOTE: Riva ASR disabled (switched to Whisper).
+        # try:
+        #     from riva_speech_recognition import RivaSpeechRecognition
+        #     RivaSpeechRecognition.set_audio_enabled(True)
+        # except Exception:
+        #     pass
         # try:
         #     _stop_idle_attention()
         # except Exception:
         #     pass
+        pass
 
 # --- Camera REST endpoints ---
 
 # Lightweight LLM-based ASR intent correction
 _intent_llm = None
 _intent_llm_lock = Lock()
+_quiz_llm = None
+_quiz_llm_lock = Lock()
 
 def _ensure_intent_llm():
     global _intent_llm
@@ -272,6 +278,25 @@ def _ensure_intent_llm():
                 )
             except Exception as e:
                 print(f"Warning: failed to initialize intent LLM: {e}")
+
+def _ensure_quiz_llm():
+    global _quiz_llm
+    if not LLM_AVAILABLE:
+        return
+    with _quiz_llm_lock:
+        if _quiz_llm is None:
+            try:
+                _quiz_llm = ChatWithRAG(
+                    model="phi4:14b",
+                    system_role=(
+                        "You create short, child-friendly quiz questions. "
+                        "Return JSON only. Each item must be {\"question\": \"...\", \"type\": \"yes_no\"|\"wh\"}."
+                    ),
+                    disable_rag=True,
+                    max_tokens=512
+                )
+            except Exception as e:
+                print(f"Warning: failed to initialize quiz LLM: {e}")
 
 def _llm_canonicalize_heard(expected: str, heard: str, context: Optional[str] = None) -> Optional[str]:
     try:
@@ -377,6 +402,35 @@ def _fuzzy_canonicalize_heard(expected: str, heard: str) -> Optional[str]:
 # Activity runner state
 _activity_stop_event = ThreadEvent()
 _activity_thread = None
+_asr_enabled = True
+
+# Streaming TTS queue for partial ASR text
+_stream_tts_queue = Queue()
+_stream_tts_thread = None
+_stream_tts_stop = ThreadEvent()
+
+def _ensure_stream_tts_worker():
+    global _stream_tts_thread
+    if _stream_tts_thread and _stream_tts_thread.is_alive():
+        return
+    def worker():
+        while not _stream_tts_stop.is_set():
+            try:
+                text = _stream_tts_queue.get(timeout=0.2)
+            except Exception:
+                continue
+            try:
+                if text:
+                    tts_helper.speak_story(text, "en-US")
+            except Exception as e:
+                print(f"[TTS stream] error: {e}")
+    _stream_tts_thread = Thread(target=worker, daemon=True)
+    _stream_tts_thread.start()
+
+def _enqueue_tts_chunk(text: str):
+    if text:
+        _ensure_stream_tts_worker()
+        _stream_tts_queue.put(text)
 
 def _has_parallel_recognizers(blocks):
     try:
@@ -392,6 +446,64 @@ def _has_parallel_recognizers(blocks):
         return False
     except Exception:
         return False
+
+def _whisper_recognize_once():
+    """Run whisper.py as a subprocess and return recognized text (best-effort)."""
+    script_path = os.path.join(BASE_DIR, "whisper.py")
+    python_bin = os.getenv("WHISPER_PYTHON", sys.executable)
+    try:
+        proc = subprocess.run(
+            [python_bin, script_path],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            env=os.environ.copy(),
+        )
+        if proc.returncode != 0:
+            print(f"[Whisper] error (code={proc.returncode}): {proc.stderr.strip()}")
+            return ""
+        recognized = (proc.stdout or "").strip()
+        print(f"[Whisper] recognized: {recognized}")
+        return recognized
+    except Exception as e:
+        print(f"[Whisper] exception: {e}")
+        return ""
+
+def _whisper_recognize_streaming():
+    """
+    Run whisper.py and stream PARTIAL lines to TTS while returning FINAL text.
+    """
+    if not _asr_enabled:
+        return ""
+    script_path = os.path.join(BASE_DIR, "whisper.py")
+    python_bin = os.getenv("WHISPER_PYTHON", sys.executable)
+    try:
+        proc = subprocess.Popen(
+            [python_bin, script_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=os.environ.copy(),
+        )
+        final_text = ""
+        if proc.stdout:
+            for line in proc.stdout:
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith("PARTIAL:"):
+                    chunk = line.replace("PARTIAL:", "", 1).strip()
+                    _enqueue_tts_chunk(chunk)
+                elif line.startswith("FINAL:"):
+                    final_text = line.replace("FINAL:", "", 1).strip()
+        stderr = (proc.stderr.read() if proc.stderr else "").strip()
+        rc = proc.wait()
+        if rc != 0:
+            print(f"[Whisper] error (code={rc}): {stderr}")
+        return final_text
+    except Exception as e:
+        print(f"[Whisper] exception: {e}")
+        return ""
 
 def clean_story_text(text):
     """
@@ -707,6 +819,122 @@ def start_assistant():
     # This endpoint can be used to redirect to the main assistant app
     # For now, just show a message
     return "<h2>QTrobot AI Assistant will start here (integration point).</h2>"
+
+@app.route("/quiz_generation")
+def quiz_generation_page():
+    """Render the quiz generation page."""
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    return render_template("quiz_generation.html")
+
+@app.route("/api/generate_quiz", methods=["POST"])
+def api_generate_quiz():
+    """Generate quiz questions using Llama."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    topics = data.get("topics") or []
+    if isinstance(topics, str):
+        topics = [topics]
+    topics = [str(t).strip() for t in topics if str(t).strip()]
+    difficulty = (data.get("difficulty") or "Med").strip()
+    count = int(data.get("count") or 5)
+    types = data.get("types") or []
+
+    if not topics:
+        return jsonify({"success": False, "error": "Topic is required"}), 400
+    if count < 1 or count > 20:
+        return jsonify({"success": False, "error": "Count must be 1-20"}), 400
+    if not types:
+        return jsonify({"success": False, "error": "Select at least one question type"}), 400
+
+    _ensure_quiz_llm()
+    if _quiz_llm is None:
+        return jsonify({"success": False, "error": "Quiz LLM not available"}), 500
+
+    type_hint = ", ".join(types)
+    rule_text = ""
+    if types == ["yes_no"] or (len(types) == 1 and types[0] == "yes_no"):
+        rule_text = "Rules: yes_no questions must be answerable with a clear yes or no (correct/incorrect)."
+    elif types == ["wh"] or (len(types) == 1 and types[0] == "wh"):
+        rule_text = "Rules: wh questions must begin with one of: what, when, where, why, who, how."
+    else:
+        rule_text = (
+            "Rules: questions must be answerable with a clear yes or no (correct/incorrect). "
+            "questions must begin with one of: what, when, where, why, who, how."
+        )
+
+    age_hint = ""
+    if difficulty.lower() == "low":
+        age_hint = "Target ages 2-3."
+    elif difficulty.lower() == "med":
+        age_hint = "Target ages 4-5."
+    elif difficulty.lower() == "high":
+        age_hint = "Target ages 7+."
+
+    topic_text = ", ".join(topics)
+    prompt = (
+        f"Act as a pediatric educator. Create {count} questions about the topic(s) '{topic_text}'. "
+        f"{age_hint} "
+        f"Use only these types: {type_hint}. "
+        "Goal: Questions must be objectively True or False based on basic object functions or category labels. "
+        "Avoid subjective questions like 'Do you like school?' or 'Are there toys?'. "
+        "Constraint: Questions must be short (under 8 words). "
+        "Return Format: JSON array of objects with keys: 'question', 'type', 'correct_answer'. "
+        "For yes_no, correct_answer must be 'yes' or 'no'. For wh, correct_answer must be a short factual answer. "
+        f"{rule_text}"
+    )
+    print("education question prompt: ", prompt)
+
+    try:
+        resp = _quiz_llm.get_response(prompt)
+        text = getattr(resp, 'message', None)
+        text = getattr(text, 'content', None) if text is not None else str(resp)
+        raw = (text or "").strip()
+        if raw.startswith("```"):
+            raw = raw.strip("`")
+        # Extract JSON
+        obj = None
+        try:
+            obj = json.loads(raw)
+        except Exception:
+            l = raw.find('[')
+            r = raw.rfind(']')
+            if l != -1 and r != -1 and r > l:
+                obj = json.loads(raw[l:r+1])
+        if not isinstance(obj, list):
+            return jsonify({"success": False, "error": "LLM returned invalid JSON"}), 500
+
+        questions = []
+        for item in obj:
+            if not isinstance(item, dict):
+                continue
+            q = (item.get("question") or "").strip()
+            t = (item.get("type") or "").strip().lower()
+            correct_answer = (item.get("correct_answer") or "").strip()
+            if not q:
+                continue
+            if t not in ("yes_no", "wh"):
+                # Try to infer
+                t = "yes_no" if q.lower().startswith(("is", "are", "do", "does", "can", "did")) else "wh"
+            if t == "yes_no":
+                correct_answer = correct_answer.lower()
+                if correct_answer not in ("yes", "no"):
+                    correct_answer = ""
+            else:
+                if not correct_answer:
+                    correct_answer = ""
+            questions.append({"question": q, "type": t, "correct_answer": correct_answer})
+
+        return jsonify({
+            "success": True,
+            "questions": questions,
+            "topics": topics,
+            "difficulty": difficulty
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 @app.route("/api/save_story", methods=["POST"])
 def api_save_story():
@@ -1312,6 +1540,8 @@ def api_activity_test():
     loop_count = int(payload.get("loop", 1) or 1)
     # Reset and run inline (test mode): stop on completion or if stop requested
     _activity_stop_event.clear()
+    global _asr_enabled
+    _asr_enabled = True
     # Prefer Loop block's count if present
     for blk in blocks:
         if blk.get("type") == "loop":
@@ -1378,7 +1608,6 @@ def _execute_activity(blocks, loop_count):
                             expected = (c.get('value') or '').strip().lower()
                             if target == 'speech' and expected:
                                 def worker(exp=expected, tblock=t):
-                                    from riva_speech_recognition import RivaSpeechRecognition
                                     while not _activity_stop_event.is_set():
                                         try:
                                             # avoid overlap with TTS
@@ -1387,8 +1616,7 @@ def _execute_activity(blocks, loop_count):
                                                 if _activity_stop_event.is_set():
                                                     return
                                                 time.sleep(0.05)
-                                            asr = RivaSpeechRecognition(language='en-US', detection_timeout=5)
-                                            text, _lang = asr.recognize_once()
+                                            text = _whisper_recognize_streaming()
                                             heard_raw = (text or '').strip().lower()
                                             import re as _re
                                             heard = _re.sub(r"[^a-z0-9\s]", "", heard_raw)
@@ -1460,13 +1688,11 @@ def _execute_activity(blocks, loop_count):
                     start_wait = time.time()
                     max_wait_seconds = 30
                     try:
-                        from riva_speech_recognition import RivaSpeechRecognition
                         while time.time() - start_wait < max_wait_seconds:
                             guard_start = time.time()
                             while getattr(tts_helper, 'is_speaking', lambda: False)() and time.time() - guard_start < 10:
                                 time.sleep(0.05)
-                            asr = RivaSpeechRecognition(language='en-US', detection_timeout=5)
-                            text, _lang = asr.recognize_once()
+                            text = _whisper_recognize_streaming()
                             heard_raw = (text or '').strip().lower()
                             import re as _re
                             heard = _re.sub(r"[^a-z0-9\s]", "", heard_raw)
@@ -1530,12 +1756,10 @@ def _execute_activity(blocks, loop_count):
                         if target == 'speech' and expected:
                             def worker(exp=expected, tblock=t):
                                 try:
-                                    from riva_speech_recognition import RivaSpeechRecognition
                                     guard_start = time.time()
                                     while getattr(tts_helper, 'is_speaking', lambda: False)() and time.time() - guard_start < 10:
                                         time.sleep(0.05)
-                                    asr = RivaSpeechRecognition(language='en-US', detection_timeout=5)
-                                    text, _lang = asr.recognize_once()
+                                    text = _whisper_recognize_once()
                                     heard = (text or '').strip().lower()
                                     print(f"[Logic ASR] expected='{exp}' heard='{heard}'")
                                     # Try LLM correction before matching
@@ -1583,6 +1807,8 @@ def api_activity_run_saved():
         # If continuous recognizers exist, run in background until stopped
         global _activity_thread
         _activity_stop_event.clear()
+        global _asr_enabled
+        _asr_enabled = True
         if _has_parallel_recognizers(blocks):
             def runner():
                 try:
@@ -1614,6 +1840,8 @@ def api_activity_stop():
     try:
         global _activity_thread
         _activity_stop_event.set()
+        global _asr_enabled
+        _asr_enabled = False
         if _activity_thread and _activity_thread.is_alive():
             _activity_thread.join(timeout=1.0)
         return jsonify({"success": True})
@@ -2159,6 +2387,40 @@ def api_movement_status():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/volume_settings', methods=['POST'])
+def api_volume_settings():
+    """Set robot speaker volume (0-100) via ROS service."""
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+
+    data = request.get_json() or {}
+    try:
+        level = int(data.get('level', 50))
+        level = max(0, min(100, level))
+    except Exception:
+        return jsonify({'success': False, 'error': 'Invalid volume level'}), 400
+
+    try:
+        # Equivalent to: rosservice call /qt_robot/setting/setVolume "volume: <level>"
+        from qt_robot_interface.srv import setting_setVolume
+        service = rospy.ServiceProxy('/qt_robot/setting/setVolume', setting_setVolume)
+        service(level)
+
+        setattr(tts_helper, 'volume_level', level)
+        return jsonify({'success': True, 'volume_level': level, 'applied': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+@app.route('/api/volume_test', methods=['POST'])
+def api_volume_test():
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    try:
+        _with_asr_suspended(lambda: tts_helper.speak_story("Testing volume.", "en-US"))
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 @app.route('/api/joint_limits', methods=['GET'])
 def api_joint_limits():
     """Get joint limits and safe movement ranges"""

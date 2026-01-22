@@ -87,7 +87,7 @@ class ChatWithRAG:
         self.scene_procesing = scene_procesing
         self.mem_store_file = mem_store_file
 
-        Settings.llm = Ollama(model=model, request_timeout=300.0)        
+        Settings.llm = Ollama(model=model, request_timeout=600.0)        
         self.llm = Settings.llm
 
         self.chat_store = None

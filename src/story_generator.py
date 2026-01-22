@@ -43,7 +43,7 @@ class StoryGenerator:
         Integrate the following speech and language therapy goals naturally into the story:
         1) learning descriptive words, 2) collaboration, 3) importance of friendships and relationships, 4) overcoming challenges.
 
-        The story should be: Short (about 300–500 words). Written in simple and friendly language.
+        The story should be: Short (about 300 words). Written in simple and friendly language.
 
         Keep in mind the following goals for {child_name} while generating the story: {goals}""" + OUTPUT_FORMAT
 
@@ -54,7 +54,7 @@ class StoryGenerator:
             Integrate the following speech and language therapy goals naturally into the story:
             1) learning descriptive words, 2) collaboration, 3) importance of friendships and relationships, 4) overcoming challenges.
 
-            The story should be: Short (about 300–500 words). Written in simple and friendly language.
+            The story should be: Short (about 300 words). Written in simple and friendly language.
 
             Keep in mind the following goals for {child_name} while generating the story: {goals}""" + OUTPUT_FORMAT
 
@@ -64,7 +64,7 @@ class StoryGenerator:
 
                             Begin by introducing the characters, the school setting, and the main problem—{child_name} discovers his brand-new lunchbox is missing. In the middle, show how friends can work together to solve the mystery, face small challenges, and learn the value of teamwork and empathy. End with a warm and satisfying resolution where the lunchbox is found and {child_name} realizes that helping others and staying kind always pays off. Use simple, expressive language, short sentences, and lively dialogue appropriate for young readers. 
 
-                            Keep the tone friendly, imaginative, and lighthearted, about 400–700 words long. Add playful touches of humor, sound effects, or small moments of wonder to make the story engaging and vivid for children.
+                            Keep the tone friendly, imaginative, and lighthearted, about 300 words long. Add playful touches of humor, sound effects, or small moments of wonder to make the story engaging and vivid for children.
                             Keep in mind the following goals for {child_name} while generating the story: {goals}""" + OUTPUT_FORMAT
 
     SCHOOL_TEMPLATE_2 = """Tell a gentle, encouraging story about a young {gender} named {child_name} who is going to school for the very first time. {child_name} feels a mix of excitement and worry while getting ready in the morning — {child_name}  doesn’t know what the day will be like or if they'll make any friends. {child_name}'s stomach feels fluttery, and everything seems big and new.
@@ -72,7 +72,7 @@ class StoryGenerator:
                 When {child_name} arrives at school, {child_name} discovers a colorful classroom filled with books, toys, and smiling faces. {child_name}'s teacher greets them kindly and helps them find a seat. At first, {child_name} feels shy, but soon another child asks if to play. Together, they build a tower, draw pictures, and laugh. Slowly, {child_name}'s nervousness begins to fade.
 
                 By the end of the day, {child_name} realizes that school is a place where one can have fun, learn new things, and be themselves. {child_name} feels proud for being brave and is excited to come back tomorrow.
-
+                The story should be: Short (about 300 words). Written in simple and friendly language.
                 Keep in mind the following goals for {child_name} while generating the story: {goals}""" + OUTPUT_FORMAT
 
     NATURE_TEMPLATE_1 = """Write a lyrical, nature-based children’s story titled “{child_name} and the Whispering Wind.” The story centers on {child_name}, a curious young {gender} who loves to listen to the wind in the trees. When a sudden storm arrives, they learn how nature can be both strong and gentle — and that calm always returns after chaos.
@@ -104,7 +104,7 @@ class StoryGenerator:
         "friends": STORY_PROMPT_TEMPLATE_3,
     }
 
-    def __init__(self, llm_model: str = "llama3.1", disable_rag: bool = True):
+    def __init__(self, llm_model: str = "llama3.3:70b", disable_rag: bool = True):
         """
         Initialize the story generator
 
@@ -134,7 +134,7 @@ class StoryGenerator:
             model=self.llm_model,
             system_role=story_system_prompt,
             disable_rag=self.disable_rag,
-            max_tokens=1000  # Allow for longer story generation
+            max_tokens=4096  # Allow for longer story generation
         )
 
 
