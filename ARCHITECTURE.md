@@ -1,0 +1,943 @@
+# QTrobot AI Data Assistant — System Architecture
+
+## 1. System Overview
+
+A socially assistive robot (SAR) platform for pediatric therapeutic settings, built on QTrobot hardware. The system integrates multi-modal perception (speech, vision, presence detection), LLM-powered conversation with RAG, and expressive robot behavior (speech, gestures, gaze tracking) — all governed by a layered ethical system prompt designed for child safety.
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                        THERAPIST / CHILD                         │
+│                    (Speech, Gestures, Objects)                    │
+└──────────┬──────────────────────────────────────┬────────────────┘
+           │ Audio / Visual Input                  │ Speech / Movement Output
+           ▼                                       ▼
+┌──────────────────────┐              ┌──────────────────────────┐
+│   PERCEPTION LAYER   │              │    EXPRESSION LAYER      │
+│  ┌────────────────┐  │              │  ┌────────────────────┐  │
+│  │ Riva ASR (ROS) │  │              │  │ QT TTS (ROS)       │  │
+│  │ Whisper (Web)  │  │              │  │ AWS Polly (optional)│  │
+│  │ Silero VAD     │  │              │  │ Gestures (ROS)     │  │
+│  │ DeepFace       │  │              │  │ Emotions (ROS)     │  │
+│  │ Moondream      │  │              │  │ Head/Arm IK (ROS)  │  │
+│  │ Gemini ER      │  │              │  │ Pylips Lipsync     │  │
+│  └────────────────┘  │              │  └────────────────────┘  │
+└──────────┬───────────┘              └──────────▲───────────────┘
+           │                                     │
+           ▼                                     │
+┌──────────────────────────────────────────────────────────────────┐
+│                       COGNITION LAYER                            │
+│  ┌─────────────────┐  ┌──────────────┐  ┌───────────────────┐  │
+│  │ Ollama LLM      │  │ LlamaIndex   │  │ Gemini Vision     │  │
+│  │ (llama3.1,      │  │ RAG Engine   │  │ (robotics-er,     │  │
+│  │  phi4:14b)      │  │ (documents)  │  │  2.5-flash-image) │  │
+│  └─────────────────┘  └──────────────┘  └───────────────────┘  │
+│  ┌─────────────────┐  ┌──────────────┐  ┌───────────────────┐  │
+│  │ Chat Memory     │  │ System Prompt│  │ Scene Context     │  │
+│  │ (per-user)      │  │ (4-layer)    │  │ (camera feed)     │  │
+│  └─────────────────┘  └──────────────┘  └───────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
+           │                                     ▲
+           ▼                                     │
+┌──────────────────────────────────────────────────────────────────┐
+│                     ORCHESTRATION LAYER                          │
+│  ┌──────────────────────────┐  ┌─────────────────────────────┐  │
+│  │ QTAIDataAssistant        │  │ Flask Web Server             │  │
+│  │ (ROS main node)          │  │ (Therapist/User interface)   │  │
+│  │ State: IDLE → LISTENING  │  │ Routes: /api/*, pages        │  │
+│  │  → PROCESSING → RESPOND  │  │ Session-based auth           │  │
+│  └──────────────────────────┘  └─────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
+           │                                     │
+           ▼                                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                        DATA LAYER                                │
+│  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────┐  │
+│  │ User Profiles │  │ Chat Memory  │  │ Quizzes / Stories /   │  │
+│  │ (users.json)  │  │ (per-user)   │  │ Activities / Learned  │  │
+│  └──────────────┘  └──────────────┘  └───────────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. Entry Points
+
+### 2.1 Robot Main Process — `qt_ai_data_assistant.py`
+
+**Runtime**: Python 3.9 (required for Gemini API)
+**Startup**: `scripts/autostart/start_qt_ai_data_assitant.sh`
+
+Startup sequence:
+1. Source ROS environment (`/home/qtrobot/robot/autostart/qt_robot.inc`)
+2. Wait for ROS services (`/qt_robot/emotion/show`, `/qt_robot/gesture/play`, `/qt_robot/head_position/command`)
+3. Wait ~100s for Riva ASR Docker container
+4. Activate `.venv39` virtual environment
+5. Run `python3.9 src/qt_ai_data_assistant.py`
+
+### 2.2 Web Server — `web_user_server.py`
+
+**Runtime**: Python 3.8 (Flask)
+**Port**: 6060 (default)
+**Startup**: Manual or via separate autostart script
+- Loads `.env` via `python-dotenv`
+- Initializes: UserManager, StoryGenerator, TTSHelper, ImageGenerator
+
+### 2.3 Configuration — `config/default.yaml`
+
+```yaml
+parameters:
+  system_prompt_file: "documents/sar_system_prompt.md"
+  docs: "documents/"            # RAG document folder
+  formats: [".pdf"]             # Allowed document formats
+  max_docs: 5                   # Max documents for RAG
+  llm: "llama3.1"              # Default LLM model
+  lang: "en-US"                # Default language
+  disable_rag: false            # Toggle RAG
+  enable_scene: false           # Toggle camera scene processing
+  volume: 33                    # Speaker volume (0-100)
+  role: |                       # Fallback system prompt (if file not found)
+    You are a humanoid social robot assistant named "QTrobot"...
+```
+
+---
+
+## 3. Module Reference
+
+### 3.1 Core Orchestration
+
+#### `src/qt_ai_data_assistant.py` — Robot Brain
+
+**Class**: `QTAIDataAssistant(ParamifyWeb, BaseNode)`
+
+**State Machine**:
+```
+IDLE ──(speech detected)──► LISTENING ──(ASR complete)──► PROCESSING
+  ▲                                                           │
+  │                                                     (LLM response)
+  │                                                           │
+  └──(response complete)──── RESPONDING ◄─────────────────────┘
+                                │
+                          (user says "hold on")
+                                │
+                              PAUSED ──(user says "start conversation")──► IDLE
+```
+
+**Key Methods**:
+| Method | Purpose |
+|--------|---------|
+| `setup()` | Initialize all subsystems, authenticate user, load system prompt |
+| `process()` | Main loop: listen → recognize → respond → reset |
+| `_asr_callback(text, lang)` | Process recognized speech through LLM |
+| `proccess_response(user, response_stream)` | Stream LLM response, execute commands |
+| `_function_call_response_callback(function, result)` | Handle LLM tool calls |
+| `_reset_chat_engine()` | Rebuild ChatWithRAG with user-specific memory |
+| `_set_language(language)` | Change TTS + ASR language |
+
+**System Prompt Loading** (setup, lines 78-88):
+```
+1. Check self.parameters.role (from config/web UI)
+2. If empty → load documents/sar_system_prompt.md
+3. Prepend SAR prompt + append ConversationPrompt['system_role']
+4. Fallback to ConversationPrompt['system_role'] alone
+```
+
+#### `src/command_interface.py` — Command Execution
+
+**Class**: `CommandInterface`
+
+Executes LLM-generated JSON commands via ROS services.
+
+**Command Registry**:
+| Command | ROS Service / Action |
+|---------|---------------------|
+| `talk` | `/qt_robot/behavior/talkText` |
+| `look_at_xyz` | IK solver → head position publisher |
+| `look_at_pixel` | Pixel→3D transform → IK → head |
+| `point_at_pixel` | Pixel→3D → arm IK |
+| `point_at_xyz` | 3D → arm IK |
+| `pause_interaction` | Set hold_on flag |
+| `resume_interaction` | Clear hold_on flag |
+| `forget_conversation` | Clear chat memory |
+| `get_datetime` | Return current datetime |
+| `set_language` | Update TTS + ASR language |
+
+**Execution Model**: `ThreadPoolExecutor` — commands run in parallel (e.g., talk + gesture simultaneously).
+
+---
+
+### 3.2 Language & Cognition
+
+#### `src/llamaindex_interface.py` — LLM + RAG Engine
+
+**Class**: `ChatWithRAG`
+
+**Components**:
+- **LLM**: Ollama (local, default `llama3.1`)
+- **Embeddings**: OllamaEmbedding (`mxbai-embed-large:latest`)
+- **Document Loader**: SimpleDirectoryReader (PDF, TXT, MD, DOCX)
+- **Index**: VectorStoreIndex (in-memory)
+- **Memory**: ChatMemoryBuffer → SimpleChatStore (persistent per-user)
+- **Chat Engine**: CustomChatEngine (extends ContextChatEngine) with camera context injection
+
+**Key Methods**:
+| Method | Purpose |
+|--------|---------|
+| `get_stream_response(text, user_id)` | Stream LLM tokens, yield complete sentences |
+| `get_response(text)` | Non-streaming response |
+| `get_raw_chat(system, user)` | Direct LLM call (no memory/RAG) |
+| `update_camera_feed(scene_desc)` | Inject scene context into chat engine |
+| `clear_memmory()` | Reset conversation history |
+| `close()` | Persist memory to user's chat_store.json |
+
+**RAG Flow**:
+```
+User Query
+  → VectorStoreIndex.as_retriever() retrieves relevant document chunks
+  → ContextChatEngine combines: system prompt + document context + camera context + query
+  → Ollama LLM generates response
+  → Response streamed token-by-token
+  → split_into_sentences() yields complete sentences for TTS
+```
+
+#### `src/llm_prompts.py` — Prompt Definitions
+
+**ConversationPrompt**: Default robot personality and response guidelines
+- Keep responses short (1-2 sentences)
+- Plain text only, no formatting
+- Multi-language support
+- Special JSON commands for: pause, forget, set_language
+
+**WakeupPrompt**: Detects if user wants to start conversation (for PAUSED state)
+
+---
+
+### 3.3 Speech I/O
+
+#### `src/riva_speech_recognition_vad.py` — Primary ASR (Robot Process)
+
+**Class**: `RivaSpeechRecognitionSilero`
+
+- **ASR Backend**: NVIDIA Riva (gRPC, Docker)
+- **VAD**: Silero VAD (confidence threshold: 0.6)
+- **Audio**: 16kHz, mono, from ROS topic `/qt_respeaker_app/channel0`
+- **Languages**: en-US, en-GB, ar-AR, de-DE, es-ES, fr-FR, hi-IN, it-IT, ja-JP, ru-RU, ko-KR, pt-BR, zh-CN
+
+**Event Flow**:
+```
+Audio chunks from ROS mic topic
+  → Silero VAD detects voice activity
+  → Event.RECOGNIZING fired → robot starts tracking speaker
+  → Riva ASR processes audio stream
+  → Returns recognized text + language
+```
+
+#### `src/whisper.py` — Web ASR (Quiz/Web Interface)
+
+**Type**: Subprocess (called by web server)
+**Backend**: OpenAI `gpt-4o-transcribe`
+
+**Parameters** (environment-configurable):
+| Param | Default | Env Var |
+|-------|---------|---------|
+| Silence threshold | 0.008 RMS | `WHISPER_SILENCE_THRESHOLD` |
+| Silence duration | 1.5s | `WHISPER_SILENCE_DURATION` |
+| Max record time | 15s | `WHISPER_MAX_RECORD` |
+| Stream interval | 2.0s | `WHISPER_STREAM_INTERVAL` |
+
+**Output Protocol**:
+```
+PARTIAL:<intermediate text>    (emitted every stream_interval)
+FINAL:<final transcription>    (emitted once at end)
+```
+
+**Language**: Passed via `--language` CLI arg (ISO-639-1 code extracted from config).
+
+#### `src/tts_helper.py` — Text-to-Speech
+
+**Class**: `TTSHelper`
+
+**Engines**:
+| Engine | Service | Mouth Sync |
+|--------|---------|------------|
+| `qt` (default) | ROS `/qt_robot/behavior/talkText` (Acapela) | Built-in viseme support |
+| `polly` | AWS Polly → SSH upload → robot playback | Via Pylips (socketio) |
+
+**Joint Limits** (for movement during speech):
+```
+Head:      HeadYaw [-90, 90], HeadPitch [-15, 25]
+Right Arm: ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
+Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
+```
+
+---
+
+### 3.4 Vision & Perception
+
+#### `src/human_presence_detection.py` — Face Detection
+
+**Class**: `HumanPresenceDetection`
+
+- **Backend**: DeepFace + RetinaFace
+- **Input**: ROS camera topic
+- **Output**: Per-person data: face bbox, 3D position (xyz), emotions, embeddings
+- **Features**: Temporal filtering, external VAD trigger, callback-based
+
+#### `src/human_tracking.py` — Gaze Following
+
+**Class**: `HumanTracking`
+
+- **Input**: HumanPresenceDetection callbacks
+- **Output**: Smooth head movement to follow active speaker
+- **Features**: Person ID tracking, absence memory (forgets after 10 min)
+
+#### `src/idle_attention.py` — Idle Gaze
+
+**Class**: `IdleAttention`
+
+- Random gaze at detected persons or random directions
+- Prevents staring; creates natural "looking around" behavior
+- Active when robot is in IDLE state
+
+#### `src/scene_detection.py` — Scene Understanding
+
+**Class**: `SceneDetection`
+
+- **Model**: Moondream (via Ollama)
+- **Input**: Camera frames at configurable framerate (default: 0.1 FPS)
+- **Output**: Scene description text → injected into LLM context
+- **Prompt**: "Describe in details what you see. If you see people, also describe how they dressed and what they carry."
+
+#### `scripts/gemini_analyze_image.py` — Physical Object Detection
+
+**Model**: `gemini-robotics-er-1.5-preview`
+**Runtime**: Python 3.9 (subprocess)
+
+- **Input**: Image file path (`--image` argument)
+- **Output**: JSON array of detected objects with normalized point coordinates
+- **Format**: `[{"point": [y, x], "label": "object_name"}]` (coordinates 0-1000)
+- **Prompt**: "Point to no more than 1 item a person is holding in the image."
+- **Used by**: `/api/camera_capture` in web server for scene game / object validation
+
+---
+
+### 3.5 User & Data Management
+
+#### `src/user_management.py` — Multi-User System
+
+**Class**: `UserManager`
+
+| Method | Purpose |
+|--------|---------|
+| `register_user(username, age, password)` | Create new user |
+| `authenticate_user(username)` | Login user |
+| `get_current_user()` | Return active user info |
+| `get_user_mem_store_path()` | Path to user's chat memory |
+
+#### `src/kinematics/kinematic_interface.py` — Robot Kinematics
+
+**Class**: `QTrobotKinematicInterface`
+
+**ROS Publishers**:
+- `/qt_robot/head_position/command` (Float64MultiArray)
+- `/qt_robot/right_arm_position/command` (Float64MultiArray)
+- `/qt_robot/left_arm_position/command` (Float64MultiArray)
+
+**Home Positions**: Head [0, 0], Right arm [-90, -55, -35], Left arm [90, -55, -35]
+
+#### `src/utils/`
+
+- `base_node.py` — Abstract threaded component with pause/resume
+- `utils.py` — `split_into_sentences()`, `get_utc_timestamp()`
+
+---
+
+### 3.6 Content Generation
+
+#### `src/story_generator.py` — Therapeutic Story Generation
+
+**Class**: `StoryGenerator`
+**LLM**: Ollama (llama3.1)
+
+**Age Tiers**:
+| Tier | Ages | Word Count | Complexity |
+|------|------|-----------|------------|
+| 1 | 3-4 | ~100 | Simple sentences, basic vocabulary |
+| 2 | 5-6 | ~200 | Short paragraphs, common words |
+| 3 | 7-8 | ~350 | Developed narrative, richer vocabulary |
+| 4 | 9-12 | ~500 | Complex plots, varied sentence structure |
+
+#### `src/image_generator.py` — Story Illustration
+
+**Class**: `ImageGenerator`
+**Model**: `gemini-2.5-flash-image`
+
+- Generates children's book-style illustrations (soft shapes, pastel colors, thick outlines)
+- Dual-path: direct SDK call (Python 3.9) or worker subprocess
+- Worker: `src/image_generator_worker.py` (runs in `.venv39`)
+- Supports reference images for style consistency
+
+---
+
+## 4. Web Server API Reference
+
+### 4.1 Authentication
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/register` | Register new user |
+| POST | `/api/login` | Authenticate |
+| POST | `/api/logout` | Clear session |
+| GET | `/api/current_user` | Get logged-in user |
+
+### 4.2 User Profile
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/update_profile` | Update age, gender, learning goals |
+| GET | `/api/users` | List all users |
+| GET | `/api/user_stats` | User statistics |
+
+### 4.3 Story Generation & Reading
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/generate_story` | Generate story (blocking) |
+| POST | `/api/generate_story_stream` | Generate story (SSE streaming) |
+| POST | `/api/save_story` | Save story + generate images |
+| GET | `/api/get_user_stories` | List user's stories |
+| POST | `/api/get_specific_story_details` | Fetch story details |
+| GET | `/api/get_story_sentences` | Get story sentences |
+| GET | `/api/get_sentence_image` | Get paragraph image |
+| POST | `/api/speak_sentence` | Robot reads sentence aloud |
+| GET | `/read_story/<filename>` | Story reading page |
+
+### 4.4 Quiz System
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/generate_quiz` | LLM generates quiz questions |
+| POST | `/api/save_quiz` | Save quiz (split yes_no/wh folders) |
+| GET | `/api/get_saved_quiz?type=` | Load saved quizzes by type |
+| POST | `/api/teach_quiz_answer` | Save user-taught alternative answers |
+| POST | `/api/generate_quiz_feedback` | Pre-generate varied feedback phrases |
+| GET | `/quiz_generation` | Quiz builder page |
+| GET | `/educational_quiz` | Quiz playing page |
+
+### 4.5 DIY Activity Builder
+| Method | Route | Purpose |
+|--------|-------|---------|
+| GET | `/api/get_custom_games` | List saved activities |
+| POST | `/api/activity_save` | Save activity (JSON blocks) |
+| POST | `/api/activity_load_saved` | Load saved activity |
+| POST | `/api/activity_prepare` | Prepare for execution |
+| POST | `/api/activity_run_saved` | Execute activity |
+| POST | `/api/activity_stop` | Stop running activity |
+| POST | `/api/activity_test` | Test single block |
+
+### 4.6 Camera & Vision
+| Method | Route | Purpose |
+|--------|-------|---------|
+| GET | `/api/camera_frame` | Get latest camera JPEG |
+| POST | `/api/camera_capture` | Capture + Gemini ER object detection |
+| GET | `/api/scene_start` | Start scene game |
+| POST | `/api/scene_game_new_round` | Generate scene question |
+| POST | `/api/scene_game_answer` | Check answer |
+
+### 4.7 Robot Control
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/robot_gesture` | Play gesture + emotion |
+| POST | `/api/speech_recognize` | Whisper ASR (blocking) |
+| POST | `/api/speak_sentence` | TTS a sentence |
+| POST | `/api/head_position` | Move robot head |
+| POST | `/api/volume_settings` | Set speaker volume |
+| POST | `/api/human_tracking_start` | Start person tracking |
+| POST | `/api/human_tracking_untrack` | Stop tracking |
+
+### 4.8 Pages
+| Route | Template | Purpose |
+|-------|----------|---------|
+| `/` | `index.html` | Login / registration |
+| `/dashboard` | `dashboard.html` | Main dashboard |
+| `/play` | `play_games.html` | Game selection |
+| `/educational_quiz` | `educational_quiz.html` | Play quizzes |
+| `/quiz_generation` | `quiz_generation.html` | Build quizzes |
+| `/read_story/<file>` | `read_story.html` | Story reading |
+| `/play_scene` | `play_scene.html` | Object detection game |
+| `/diy_builder` | `diy_builder.html` | Activity builder |
+| `/my_games` | `my_games.html` | Saved custom activities |
+| `/select_toy` | `select_toy.html` | Toy selection |
+
+---
+
+## 5. External Services & Models
+
+### 5.1 LLM Models
+
+| Model | Provider | Runtime | Used For |
+|-------|----------|---------|----------|
+| `llama3.1` | Ollama (local) | Python 3.8/3.9 | Main conversation, story generation, RAG |
+| `phi4:14b` | Ollama (local) | Python 3.8 | Quiz generation, feedback phrases |
+| `mxbai-embed-large:latest` | Ollama (local) | Python 3.8 | Document embeddings for RAG |
+| `moondream` | Ollama (local) | Python 3.8 | Camera scene understanding |
+
+### 5.2 Gemini Models
+
+| Model | Purpose | Called From |
+|-------|---------|------------|
+| `gemini-robotics-er-1.5-preview` | Physical object detection + localization | `scripts/gemini_analyze_image.py` → `/api/camera_capture` |
+| `gemini-2.5-flash-image` | Story scene illustration generation | `src/image_generator.py` / `src/image_generator_worker.py` |
+| `gemini-2.5-flash` | General image captioning | `test.py` |
+
+### 5.3 Speech Services
+
+| Service | Purpose | Interface |
+|---------|---------|-----------|
+| NVIDIA Riva | Primary ASR (robot process) | gRPC (Docker container) |
+| OpenAI `gpt-4o-transcribe` | Web ASR (quiz/web interface) | REST API via subprocess |
+| QT Acapela | Default TTS (with mouth sync) | ROS service |
+| AWS Polly | Optional TTS | boto3 SDK |
+
+### 5.4 Vision Services
+
+| Service | Purpose | Interface |
+|---------|---------|-----------|
+| DeepFace + RetinaFace | Face detection & recognition | Local Python library |
+| Silero VAD | Voice activity detection | Local PyTorch model |
+
+### 5.5 Environment Variables
+
+```bash
+# LLM / AI APIs
+OPENAI_API_KEY=...              # Whisper ASR
+GOOGLE_API_KEY=...              # Gemini (image gen + object detection)
+GEMINI_API_KEY=...              # Gemini (alternative key name)
+
+# TTS Engine
+TTS_ENGINE=qt                   # "qt" (default, with mouth sync) or "polly"
+POLLY_VOICE=Ivy                 # AWS Polly voice
+POLLY_RATE=85%                  # Polly speech rate
+POLLY_VOLUME=-10dB              # Polly volume
+
+# AWS (for Polly)
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_DEFAULT_REGION=us-east-1
+
+# Robot Connection
+ROBOT_HOST=192.168.100.1
+ROBOT_USER=developer
+ROBOT_PASSWORD=qtrobot
+ROBOT_SUDO_PASSWORD=qtrobot
+
+# Whisper Tuning
+WHISPER_SILENCE_THRESHOLD=0.008 # RMS threshold for speech detection
+WHISPER_SILENCE_DURATION=1.5    # Seconds of silence to stop recording
+WHISPER_MAX_RECORD=15.0         # Max recording seconds
+WHISPER_STREAM_INTERVAL=2.0     # Partial transcription interval
+WHISPER_PYTHON=/usr/bin/python3 # Python binary for whisper subprocess
+```
+
+---
+
+## 6. ROS Interface
+
+### 6.1 Services Used
+
+| Service | Type | Purpose |
+|---------|------|---------|
+| `/qt_robot/behavior/talkText` | `behavior_talk_text` | Speak text (QT TTS) |
+| `/qt_robot/behavior/talkAudio` | `behavior_talk_audio` | Play audio file |
+| `/qt_robot/speech/config` | `speech_config` | Set TTS language/pitch/speed |
+| `/qt_robot/emotion/show` | `emotion_show` | Display facial emotion |
+| `/qt_robot/emotion/stop` | — | Stop current emotion |
+| `/qt_robot/gesture/play` | `gesture_play` | Play arm gesture (name, speed) |
+| `/qt_robot/gesture/list` | — | List available gestures |
+| `/qt_robot/gesture/stop` | — | Stop current gesture |
+| `/qt_robot/setting/setVolume` | `setting_setVolume` | Set speaker volume |
+| `/qt_respeaker_app/tuning/set` | `tuning_set` | Configure microphone (AGC, etc.) |
+
+### 6.2 Topics
+
+| Topic | Type | Direction | Purpose |
+|-------|------|-----------|---------|
+| `/camera/color/image_raw` | `sensor_msgs/Image` | Subscribe | Camera feed |
+| `/qt_robot/joints/state` | `sensor_msgs/JointState` | Subscribe | Joint positions |
+| `/qt_respeaker_app/channel0` | `audio_common_msgs/AudioData` | Subscribe | Microphone audio |
+| `/qt_robot/head_position/command` | `Float64MultiArray` | Publish | Head IK target |
+| `/qt_robot/right_arm_position/command` | `Float64MultiArray` | Publish | Right arm IK target |
+| `/qt_robot/left_arm_position/command` | `Float64MultiArray` | Publish | Left arm IK target |
+
+### 6.3 Available Gestures (on QTRD)
+
+**Location**: `qtrobot@QTRD:/home/qtrobot/robot/data/gestures/QT/`
+
+**Positive / Celebration**: `happy`, `hoora`, `clapping`, `hi`, `nodding-yes`, `enjoy`, `yes1`, `bighi`, `one-arm-up`
+**Encouragement**: `up_right`, `up_left`, `botharms`, `fast_hi`, `exactly`, `good_part`
+**Empathy / Gentle**: `calm`, `shy`, `embrace`, `patience`, `relaxed`
+**Correction / Gentle negative**: `slight_no`, `slight_no1`, `head-right-left`, `think`
+**Emotions** (face): `happy`, `sad`, `surprised`, `afraid`, `angry`, `calm`, `disgusted`, `shy`, `hoora`
+**Dance**: `Dance-1-1` through `Dance-4-6`
+**Imitation**: `hands-on-belly`, `hands-on-head`, `hands-on-hip`, `hands-up`, `hands-side`, `nodding-yes`
+**Pretend Play**: `Beep`, `Drive`, `Fly`, `Phone_call`
+**Other**: `bye`, `kiss`, `peekaboo`, `monkey`, `sneezing`, `stretching`, `yawn`, `breathing_exercise`
+
+**Gesture XML Format**:
+```xml
+<gesture>
+    <name>happy</name>
+    <parts>
+        <part>left_arm</part>
+        <part>right_arm</part>
+    </parts>
+    <duration>4.80</duration>
+    <waypoints count="97">
+        <point time="1549893042577720547">
+            <LeftElbowRoll>-35.50</LeftElbowRoll>
+            <LeftShoulderPitch>88.30</LeftShoulderPitch>
+            <LeftShoulderRoll>-60.60</LeftShoulderRoll>
+            <RightElbowRoll>-34.20</RightElbowRoll>
+            <RightShoulderPitch>-87.60</RightShoulderPitch>
+            <RightShoulderRoll>-58.60</RightShoulderRoll>
+        </point>
+        <!-- ... more waypoints ... -->
+    </waypoints>
+</gesture>
+```
+
+**6 Joints**: LeftElbowRoll, LeftShoulderPitch, LeftShoulderRoll, RightElbowRoll, RightShoulderPitch, RightShoulderRoll (all in degrees)
+
+---
+
+## 7. System Prompt Architecture
+
+**File**: `documents/sar_system_prompt.md`
+
+### Layer 1 — Core Values (hardcoded, never override)
+1. **Child Wellbeing First** — safety over task completion
+2. **Therapist Authority** — defer to clinical expert
+3. **Honesty** — never deceive or fabricate
+4. **Dignity** — respect regardless of behavior/ability
+5. **Transparency of Limitations** — acknowledge uncertainty, escalate
+
+### Layer 2 — Hard Constraints (hardcoded, never override)
+- Never claim to be human
+- Stop immediately if child distressed
+- No age-inappropriate content
+- No PII collection beyond session needs
+- No medical/diagnostic advice
+- No autonomous session continuation without therapist
+
+### Layer 3 — Soft Constraints (defaults, therapist adjustable)
+- Language complexity (target ages 4-10 default)
+- Response length (1-3 sentences default)
+- Encouragement style (effort-focused, not outcome-focused)
+- Silence wait time (5 seconds default)
+- Repetition limits (max 2 re-prompts)
+- Error handling (never label response as "wrong")
+- Topic boundaries (gentle redirect after 1 exchange)
+
+### Layer 4 — Interaction Style (fully customizable per session)
+- Persona: warm, curious, calm
+- Session opening/closing scripts
+- Unexpected input handling
+- Robot self-reference (first person, no emotion claims)
+
+### Session Context Injection Point
+Insert child name, age, therapy type, session goals, sensitivities, and therapist overrides below Layer 4.
+
+---
+
+## 8. Data Flow Diagrams
+
+### 8.1 Full Speech → Response → Action Cycle
+
+```
+[Microphone / ROS topic]
+       │
+       ▼
+RivaSpeechRecognitionSilero
+  ├── Silero VAD detects voice
+  ├── Event.RECOGNIZING → HumanPresenceDetection.on_vad_trigged()
+  │                      → acknowledge_human() → HumanTracking.track(speaker)
+  └── Riva ASR returns text + language
+       │
+       ▼
+QTAIDataAssistant._asr_callback(text, language)
+  ├── State: LISTENING → PROCESSING
+  ├── If PAUSED: check WakeupPrompt → resume or ignore
+  └── ChatWithRAG.get_stream_response(text, user_context)
+       │
+       ▼
+Ollama LLM Inference
+  ├── System prompt (SAR 4-layer + ConversationPrompt)
+  ├── Document context (RAG, if enabled)
+  ├── Camera context (scene detection, if enabled)
+  ├── Conversation memory (per-user ChatMemoryBuffer)
+  └── Streams tokens → split_into_sentences()
+       │
+       ▼ (per complete sentence)
+QTAIDataAssistant.proccess_response()
+  ├── Try JSON parse → tool call?
+  │     ├── {"command": "pause_interaction"} → set PAUSED state
+  │     ├── {"command": "forget_conversation"} → clear memory
+  │     ├── {"command": "set_language", "code": "fr-FR"} → change lang
+  │     └── Other tool calls → CommandInterface.execute()
+  └── Plain text → clean markdown → CommandInterface.execute([{"command": "talk", "message": text}])
+       │
+       ▼
+CommandInterface._cmd_talk()
+  └── ROS /qt_robot/behavior/talkText → Robot speaks (with mouth sync)
+       │
+       ▼
+State: RESPONDING → IDLE
+  ├── rest_robot_attention() (restore head position)
+  ├── HumanTracking.untrack()
+  └── IdleAttention.start()
+```
+
+### 8.2 Quiz Flow (Web Interface)
+
+```
+[Educational Quiz Page]
+       │
+       ├── loadQuiz(type) ──► GET /api/get_saved_quiz?type=yes_no
+       │                       ├── Read user_data/<user>/quizzes/<type>/*.json
+       │                       └── Merge learned_answers.json into accepted_answers
+       │
+       ├── (background) ──► POST /api/generate_quiz_feedback
+       │                     ├── Load sar_system_prompt.md
+       │                     ├── LLM generates 10 correct + 10 incorrect phrases
+       │                     └── Return phrases (non-blocking)
+       │
+       ▼ Show question
+       │
+   ┌───┴───────────────────┐
+   │                       │
+[Click Yes/No]        [Click Mic 🎤]
+   │                       │
+   │                  POST /api/speech_recognize
+   │                       ├── whisper.py --language en
+   │                       ├── Parse FINAL: line
+   │                       └── Return recognized text
+   │                       │
+   │                  Match "yes"/"no" or fill WH input
+   │                       │
+   └───────┬───────────────┘
+           │
+     Check answer
+       ├── Yes/No: exact match
+       ├── WH: normalize() + toSingular() + isAnswerAccepted()
+       │        ├── Check against accepted_answers list
+       │        ├── Strip articles (a/an/the/in/at/on)
+       │        ├── Singular form match
+       │        └── Containment match
+       │
+       ▼ Show feedback
+       │
+       ├── POST /api/speak_sentence ──► Robot speaks feedback phrase
+       ├── POST /api/robot_gesture  ──► Robot plays gesture + emotion
+       │     Correct: clapping/hoora/happy + happy face
+       │     Wrong: patience/think/slight_no + calm face
+       │
+       └── [Teach Robot] button (WH only)
+             ├── User types alternative answers
+             └── POST /api/teach_quiz_answer
+                  └── Save to user_data/<user>/quizzes/learned_answers.json
+```
+
+### 8.3 Object Detection Flow (Scene Game)
+
+```
+[Play Scene Page]
+       │
+       ▼
+  GET /api/camera_frame ──► Camera feed (polling)
+       │
+  POST /api/camera_capture
+       ├── Capture frame from ROS camera topic
+       ├── Save to user_data/<user>/captured_scenes/
+       ├── Invoke: python3.9 scripts/gemini_analyze_image.py --image <path>
+       │     └── gemini-robotics-er-1.5-preview
+       │          └── Returns [{"point": [y, x], "label": "carrot"}]
+       ├── Parse detected label
+       ├── Compare with target object (if provided)
+       └── Robot voice feedback via tts_helper.speak()
+```
+
+---
+
+## 9. User Data Structure
+
+```
+user_data/
+├── <username>/
+│   ├── profile.json                    # {age, gender, disorder, learning_goals}
+│   ├── chat_store.json                 # Persistent conversation memory (LlamaIndex)
+│   ├── chat_history/                   # Individual conversation logs
+│   ├── stories/
+│   │   └── story_20260324_180000.json  # {story: "...", metadata: {child_name, age, word_count}}
+│   ├── story_images/
+│   │   └── story_20260324_180000/
+│   │       ├── story_paragraph_000.png
+│   │       ├── story_paragraph_001.png
+│   │       └── ...
+│   ├── quizzes/
+│   │   ├── yes_no/
+│   │   │   └── quiz_20260324_180803.json  # [{question, type, correct_answer}]
+│   │   ├── wh/
+│   │   │   └── quiz_20260324_180803.json  # [{question, type, correct_answer, accepted_answers}]
+│   │   └── learned_answers.json           # {"question text": ["alt1", "alt2", ...]}
+│   ├── activities/
+│   │   └── activity_20260324_180000.json  # {blocks: [...], loop: 1}
+│   ├── captured_scenes/                   # Camera captures for scene game
+│   └── polly/                             # Polly TTS audio cache (if using polly)
+│
+├── activity_images/                       # Shared DIY builder images
+│
+└── users.json                             # Global user registry
+    {
+      "<username>": {
+        "username": "...",
+        "age": 5,
+        "password_hash": "...",
+        "created_at": "2026-03-24T...",
+        "last_login": "2026-03-24T...",
+        "display_name": "...",
+        "gender": "...",
+        "disorder": "...",
+        "learning_goals": "..."
+      }
+    }
+```
+
+---
+
+## 10. Python Runtime Architecture
+
+The system requires **two Python versions** due to SDK compatibility:
+
+```
+┌─────────────────────────────┐    ┌──────────────────────────────┐
+│    Python 3.8 (.venv)       │    │    Python 3.9 (.venv39)      │
+│                             │    │                              │
+│  - Flask web server         │    │  - qt_ai_data_assistant.py   │
+│  - LlamaIndex / Ollama      │    │  - google-genai SDK          │
+│  - DeepFace                 │    │  - Gemini API calls          │
+│  - ROS Python bindings      │    │  - image_generator_worker.py │
+│  - Whisper subprocess mgmt  │    │  - gemini_analyze_image.py   │
+│  - TTSHelper                │    │  - robotics.py               │
+│  - Human tracking/detection │    │                              │
+└──────────┬──────────────────┘    └──────────────▲───────────────┘
+           │                                      │
+           │    subprocess.run / subprocess.Popen  │
+           └──────────────────────────────────────┘
+```
+
+---
+
+## 11. Threading & Concurrency
+
+| Component | Thread Model | Sync Mechanism |
+|-----------|-------------|----------------|
+| QTAIDataAssistant | BaseNode loop thread | pause_event, state_lock |
+| RivaSpeechRecognitionSilero | BaseNode loop thread | pause_event |
+| HumanPresenceDetection | BaseNode loop thread | persons_lock |
+| HumanTracking | Callback-driven | tracking state |
+| IdleAttention | BaseNode loop thread | pause_event |
+| SceneDetection | BaseNode loop thread | pause_event |
+| CommandInterface | ThreadPoolExecutor | futures.wait() |
+| Flask Web Server | Multi-threaded (default) | Flask session |
+| Whisper ASR | Subprocess (blocking) | proc.wait() |
+| Image Generator | Subprocess (Python 3.9) | proc.wait() |
+
+---
+
+## 12. Interaction Modes
+
+### Mode 1: Free Conversation (Robot Process)
+Robot listens continuously → LLM responds → speaks + gestures → tracks gaze
+
+### Mode 2: Educational Quiz (Web Interface)
+Pre-generated questions → child answers via button/speech → robot gives varied feedback with gestures → "Teach Robot" for adaptive learning
+
+### Mode 3: Story Reading (Web Interface)
+LLM generates age-appropriate therapeutic story → Gemini generates illustrations → robot reads aloud sentence by sentence with movement
+
+### Mode 4: Scene Game / Object Detection (Web Interface)
+Camera feed shown → Gemini ER detects held objects → robot asks questions → validates answers
+
+### Mode 5: DIY Activity Builder (Web Interface)
+Therapist creates visual block programs → blocks: speech, gesture, image, wait-for-child, recognize, logic (if/else), loop → saved and executable
+
+---
+
+## 13. Security & Privacy
+
+- **User isolation**: Separate data directories per user
+- **Session-based auth**: Flask sessions, no cross-user access
+- **API keys**: Environment variables only (not in code)
+- **System prompt**: Explicitly forbids PII collection, sensitive data storage
+- **No autonomous operation**: Robot stops if therapist leaves or becomes unresponsive
+- **Child safety**: Hard constraints prevent harmful content generation
+- **Data on disk**: Conversation memory, stories, quizzes stored locally (consider encryption for production)
+
+---
+
+## 14. File Index
+
+```
+version_1_llm_gemini/
+├── config/
+│   └── default.yaml                    # Application configuration
+├── documents/
+│   ├── sar_system_prompt.md            # 4-layer system prompt
+│   ├── QTrobot.pdf                     # RAG document
+│   └── QTrobot_research_papers.txt     # RAG document
+├── scripts/
+│   ├── autostart/
+│   │   └── start_qt_ai_data_assitant.sh
+│   ├── gemini_analyze_image.py         # Gemini ER object detection (Py3.9)
+│   └── install_ollama.sh
+├── src/
+│   ├── qt_ai_data_assistant.py         # Main robot brain
+│   ├── web_user_server.py              # Flask web server (~2700 lines)
+│   ├── command_interface.py            # ROS command execution
+│   ├── llamaindex_interface.py         # LLM + RAG engine
+│   ├── llm_prompts.py                  # Prompt definitions
+│   ├── tts_helper.py                   # Text-to-speech
+│   ├── whisper.py                      # OpenAI Whisper ASR
+│   ├── riva_speech_recognition_vad.py  # Riva ASR + Silero VAD
+│   ├── human_presence_detection.py     # Face detection
+│   ├── human_tracking.py              # Gaze following
+│   ├── idle_attention.py              # Idle gaze behavior
+│   ├── scene_detection.py             # Camera scene understanding
+│   ├── story_generator.py            # Therapeutic story generation
+│   ├── story_generator_ashley.py      # Story variant
+│   ├── image_generator.py            # Gemini image generation
+│   ├── image_generator_worker.py      # Py3.9 image gen subprocess
+│   ├── user_management.py            # Multi-user system
+│   ├── user_interface.py             # User interface base
+│   ├── user_cli_interface.py         # CLI user selection
+│   ├── user_web_interface.py         # Web user interface
+│   ├── version.py                    # Version info
+│   ├── kinematics/
+│   │   └── kinematic_interface.py    # IK for head + arms
+│   ├── utils/
+│   │   ├── base_node.py              # Threaded component base class
+│   │   └── utils.py                  # Sentence splitting, timestamps
+│   ├── user_data/                    # Per-user data storage
+│   └── .env                          # Environment variables
+├── templates/
+│   ├── index.html                    # Login / registration
+│   ├── dashboard.html                # Main dashboard
+│   ├── play_games.html               # Game selection
+│   ├── educational_quiz.html         # Quiz playing
+│   ├── quiz_generation.html          # Quiz builder
+│   ├── read_story.html               # Story reading
+│   ├── play_scene.html               # Object detection game
+│   ├── diy_builder.html              # Activity builder
+│   ├── my_games.html                 # Saved activities
+│   └── select_toy.html               # Toy selection
+├── robotics.py                       # Gemini ER demo script
+├── test.py                           # Gemini vision test
+├── requirements.txt                  # Python dependencies
+├── env.polly                         # Polly TTS env vars (source manually)
+└── ARCHITECTURE.md                   # This file
+```

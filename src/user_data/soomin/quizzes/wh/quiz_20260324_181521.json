@@ -1,0 +1,99 @@
+[
+  {
+    "question": "What color is a banana?",
+    "type": "wh",
+    "correct_answer": "yellow",
+    "accepted_answers": [
+      "yellow",
+      "golden",
+      "ripe"
+    ]
+  },
+  {
+    "question": "Where do apples grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "tree",
+      "trees",
+      "orchards"
+    ]
+  },
+  {
+    "question": "Which fruit is red and round?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "cherry",
+      "strawberry"
+    ]
+  },
+  {
+    "question": "How many seeds does a strawberry have?",
+    "type": "wh",
+    "correct_answer": "many",
+    "accepted_answers": [
+      "many",
+      "numerous",
+      "several"
+    ]
+  },
+  {
+    "question": "What is orange's color?",
+    "type": "wh",
+    "correct_answer": "orange",
+    "accepted_answers": [
+      "orange",
+      "oranges"
+    ]
+  },
+  {
+    "question": "Who eats a lot of fruit?",
+    "type": "wh",
+    "correct_answer": "people",
+    "accepted_answers": [
+      "people",
+      "humans",
+      "individuals"
+    ]
+  },
+  {
+    "question": "When do strawberries grow?",
+    "type": "wh",
+    "correct_answer": "spring",
+    "accepted_answers": [
+      "spring",
+      "summer"
+    ]
+  },
+  {
+    "question": "Why do we eat fruit?",
+    "type": "wh",
+    "correct_answer": "nutrition",
+    "accepted_answers": [
+      "nutrition",
+      "health",
+      "vitamins"
+    ]
+  },
+  {
+    "question": "What is a small green apple called?",
+    "type": "wh",
+    "correct_answer": "granny smith",
+    "accepted_answers": [
+      "granny smith",
+      "green apple"
+    ]
+  },
+  {
+    "question": "Where can you find bananas in a store?",
+    "type": "wh",
+    "correct_answer": "produce",
+    "accepted_answers": [
+      "produce",
+      "fruit section",
+      "aisle"
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "story": "Soomin loved playing with her dog, Max, in the backyard. One sunny day, she said, \"I want to play ball with Max!\" Her mom smiled and said, \"First, we need to get a new ball from the tree where it got lost.\"\n\nAs they walked to the tree, Soomin's dad said, \"Look! A bird is singing! 'Tweet, tweet!'\". Soomin clapped and said, \"Wow!\" They found the ball stuck in a bush. Max tried to pull it out, but it wouldn't come. Soomin said, \"I need help!\"\n\nHer mom said, \"We can work together to get the ball out.\" Soomin's dad showed her how to gently pull the branches apart. Soomin exclaimed, \"Max is so helpful!\" After a few tries, they finally got the ball out.\n\nSoomin was so proud of herself and Max that she said, \"Yay! We did it together!\" Her mom gave her a big hug and said, \"You're such a caring friend to Max. And I'm so proud of you for helping us get the ball.\"\n\nAs they walked back to the house with their new ball, Soomin's dad said, \"Let's have a picnic under the tree where we found it.\" Soomin squealed with delight and said, \"Yeah! With our yummy sandwiches and juice!\" Everyone laughed and cheered.",
+  "metadata": {
+    "age": 4,
+    "age_tier": "early_preschool",
+    "child_name": "soomin",
+    "generated_at": null,
+    "model": "llama3.1:latest",
+    "target_word_range": [
+      150,
+      250
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 262,
+    "paragraph_count": 5,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4
+    ]
+  }
+}

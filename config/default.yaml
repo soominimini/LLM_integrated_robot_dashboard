@@ -1,6 +1,12 @@
 name: "QT AI Data Assistant"
 description: "Configuration for the QT AI Data Assistant application"
 parameters:
+- name: "system_prompt_file"
+  type: "str"
+  default: "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/documents/sar_system_prompt.md"
+  description: "Path to a markdown file containing an additional system prompt prepended to the default role."
+  scope: "cli"
+
 - name: "docs"
   type: "str"
   default: "/home/qtrobot/robot/code/tutorials/demos/qt_ai_data_assistant/documents"

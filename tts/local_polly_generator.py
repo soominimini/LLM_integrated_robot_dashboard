@@ -10,7 +10,7 @@ import boto3
 from botocore.exceptions import ClientError, NoCredentialsError, NoRegionError
 
 
-def generate_polly_audio(text, voice_name="Justin", output_file="polly_audio.mp3"):
+def generate_polly_audio(text, voice_name="Justin", output_file="polly_audio.mp3", force_text: bool = False):
     """
     Generate Polly TTS audio file locally
 
@@ -30,7 +30,7 @@ def generate_polly_audio(text, voice_name="Justin", output_file="polly_audio.mp3
         polly = boto3.client('polly', region_name=region)
 
         # Check if text contains SSML tags
-        is_ssml = '<' in text and '>' in text
+        is_ssml = (not force_text) and ('<' in text and '>' in text)
 
         if is_ssml:
             print(f"   📝 Using SSML format for enhanced speech")

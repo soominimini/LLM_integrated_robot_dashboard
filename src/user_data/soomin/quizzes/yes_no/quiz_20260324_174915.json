@@ -1,0 +1,17 @@
+[
+  {
+    "question": "Do schools have teachers?",
+    "type": "yes_no",
+    "correct_answer": "yes"
+  },
+  {
+    "question": "Do schools have playgrounds?",
+    "type": "yes_no",
+    "correct_answer": "yes"
+  },
+  {
+    "question": "Do schools have pencils and crayons?",
+    "type": "yes_no",
+    "correct_answer": "yes"
+  }
+]

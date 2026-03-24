@@ -1,0 +1,56 @@
+[
+  {
+    "question": "Is there homework in school?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do schools have lunch breaks?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are teachers in classrooms?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can students wear uniforms?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do schools have playgrounds?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is recess a part of school day?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do students use textbooks in school?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are there sports teams in schools?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do students have classes every day?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

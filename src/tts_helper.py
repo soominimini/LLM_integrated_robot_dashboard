@@ -10,7 +10,10 @@ import sys
 import shutil
 import subprocess
 import shlex
+import re
+import html
 import rospy
+from typing import Optional
 from qt_robot_interface.srv import behavior_talk_text, behavior_talk_audio, speech_config, setting_setVolume
 import math
 import threading
@@ -24,6 +27,13 @@ try:
 except ImportError:
     print("Warning: Kinematic interface not available. Movement features will be disabled.")
     KINEMATICS_AVAILABLE = False
+
+# Optional pylips face sync for lipsync
+try:
+    from pylips.speech import RobotFace
+    PYLIPS_AVAILABLE = True
+except Exception:
+    PYLIPS_AVAILABLE = False
 
 class TTSHelper:
     """
@@ -51,33 +61,6 @@ class TTSHelper:
     def __init__(self):
         """Initialize TTS services and movement interface"""
         try:
-            # Initialize ROS node if not already done
-            if not rospy.core.is_initialized():
-                rospy.init_node('tts_helper', anonymous=True)
-            
-            # Create service proxies
-            self.talk_text_service = rospy.ServiceProxy('/qt_robot/behavior/talkText', behavior_talk_text)
-            self.talk_audio_service = rospy.ServiceProxy('/qt_robot/behavior/talkAudio', behavior_talk_audio)
-            self.speech_config_service = rospy.ServiceProxy('/qt_robot/speech/config', speech_config)
-            self.volume_service = rospy.ServiceProxy('/qt_robot/setting/setVolume', setting_setVolume)
-            
-            # Initialize kinematic interface for movement
-            self.kinematics = None
-            if KINEMATICS_AVAILABLE:
-                try:
-                    self.kinematics = QTrobotKinematicInterface()
-                    print("Kinematic interface initialized successfully")
-                except Exception as e:
-                    print(f"Warning: Could not initialize kinematic interface: {e}")
-                    self.kinematics = None
-            
-            # Movement settings (disabled by default; use HumanTracking for motion)
-            self.movement_enabled = False
-            self.movement_thread = None
-            self.stop_movement = False
-            # Speaking state
-            self._is_speaking = False
-
             # Engine selection
             # 'qt' (default) uses robot's built-in TTS; 'polly' uses AWS Polly with audio playback
             self.engine = (os.environ.get('TTS_ENGINE') or 'qt').strip().lower()
@@ -87,7 +70,55 @@ class TTSHelper:
             self.robot_host = os.environ.get('ROBOT_HOST', '192.168.100.1')
             self.robot_user = os.environ.get('ROBOT_USER', 'developer')
             self.robot_qt_audio_dir = os.environ.get('ROBOT_QT_AUDIO_DIR', '/home/qtrobot/robot/data/audios/')
+            self.robot_tmp_audio_dir = os.environ.get('ROBOT_TMP_AUDIO_DIR', '/tmp/qwen_voices')
+            self.polly_lipsync = (os.environ.get('POLLY_LIPSYNC', '1').strip().lower() in ('1', 'true', 'yes'))
+            self.face = None
+            self.user_data_dir = os.environ.get(
+                'USER_DATA_DIR',
+                os.path.join(os.path.dirname(__file__), 'user_data')
+            )
+            self.current_user = None
+
+            # Initialize ROS node (needed for some dependencies even in polly mode)
+            if not rospy.core.is_initialized():
+                rospy.init_node('tts_helper', anonymous=True)
+
+            # Create service proxies only for QT engine
+            if self.engine == 'qt':
+                self.talk_text_service = rospy.ServiceProxy('/qt_robot/behavior/talkText', behavior_talk_text)
+                self.talk_audio_service = rospy.ServiceProxy('/qt_robot/behavior/talkAudio', behavior_talk_audio)
+                self.speech_config_service = rospy.ServiceProxy('/qt_robot/speech/config', speech_config)
+                self.volume_service = rospy.ServiceProxy('/qt_robot/setting/setVolume', setting_setVolume)
+            else:
+                self.talk_text_service = None
+                self.talk_audio_service = None
+                self.speech_config_service = None
+                self.volume_service = None
+
+            # Initialize kinematic interface for movement
+            self.kinematics = None
+            if KINEMATICS_AVAILABLE:
+                try:
+                    self.kinematics = QTrobotKinematicInterface()
+                    print("Kinematic interface initialized successfully")
+                except Exception as e:
+                    print(f"Warning: Could not initialize kinematic interface: {e}")
+                    self.kinematics = None
+
+            if self.engine == 'polly' and self.polly_lipsync and PYLIPS_AVAILABLE:
+                try:
+                    self.face = RobotFace()
+                except Exception as e:
+                    print(f"Warning: Could not initialize pylips face sync: {e}")
+                    self.face = None
             
+            # Movement settings (disabled by default; use HumanTracking for motion)
+            self.movement_enabled = False
+            self.movement_thread = None
+            self.stop_movement = False
+            # Speaking state
+            self._is_speaking = False
+
             # Set default language and volume
             self.set_language("en-US")
             self.set_volume(50)
@@ -103,22 +134,35 @@ class TTSHelper:
     def set_language(self, language_code: str) -> bool:
         """
         Set the TTS language
-        
+
         Args:
             language_code: Language code (e.g., 'en-US', 'fr-FR')
-            
+
         Returns:
             bool: True if successful, False otherwise
         """
         try:
             if self.speech_config_service:
-                # Set language with default pitch and speed
+                # Wait for service with a short timeout to avoid hanging
+                self.speech_config_service.wait_for_service(timeout=3.0)
                 result = self.speech_config_service(language_code, 100, 80)
                 return result
+            return False
+        except rospy.ROSException:
+            print(f"Warning: speech config service not available (timeout). Skipping language set.")
             return False
         except Exception as e:
             print(f"Error setting language: {e}")
             return False
+
+    def set_current_user(self, username: Optional[str]):
+        """Set the active user for per-user output paths."""
+        self.current_user = username.strip().lower() if username else None
+
+    def _polly_output_dir(self) -> str:
+        username = self.current_user or os.environ.get('TTS_USERNAME') or 'guest'
+        safe = re.sub(r'[^a-zA-Z0-9_\-]', '_', username)
+        return os.path.join(self.user_data_dir, safe, 'polly')
     
     def set_volume(self, level: int) -> bool:
         """
@@ -140,6 +184,18 @@ class TTSHelper:
         except Exception as e:
             print(f"Error setting volume: {e}")
             return False
+
+    def set_polly_volume(self, volume_db: str) -> bool:
+        """
+        Set Polly SSML volume (e.g., "+6dB", "-3dB").
+        """
+        if not volume_db:
+            return False
+        volume_db = volume_db.strip()
+        if not re.match(r'^[+-]?\d+(\.\d+)?dB$', volume_db):
+            return False
+        self.polly_volume = volume_db
+        return True
     
     def enable_movement(self, enabled: bool = True):
         """
@@ -151,6 +207,7 @@ class TTSHelper:
         self.movement_enabled = enabled
         if not enabled and self.movement_thread and self.movement_thread.is_alive():
             self.stop_movement = True
+
     
     def _clamp_joint_value(self, joint_name: str, value: float) -> float:
         """
@@ -455,14 +512,19 @@ class TTSHelper:
 
         # Determine if text is SSML
         is_ssml = ('<' in text and '>' in text)
-        # File name
+        # File name (save under user_data/<user>/polly)
         ts = int(time.time())
+        polly_dir = self._polly_output_dir()
+        os.makedirs(polly_dir, exist_ok=True)
         filename = f"polly_{ts}.mp3"
+        output_path = os.path.join(polly_dir, filename)
 
         # Generate locally via Polly
         # Apply SSML prosody rate if requested
         rate = (self.polly_rate or '').strip()
         volume = (self.polly_volume or '').strip()
+        def _maybe_escape_ssml(s: str) -> str:
+            return html.escape(s, quote=True) if ('<' not in s and '>' not in s) else s
         if rate or volume:
             try:
                 lowered = text.lower()
@@ -474,6 +536,7 @@ class TTSHelper:
                     end = lowered.rfind('</speak>')
                     if start != -1 and start_close != -1 and end != -1 and end > start_close:
                         inner = text[start_close+1:end]
+                        inner = _maybe_escape_ssml(inner)
                         attrs = []
                         if rate:
                             attrs.append(f"rate=\"{rate}\"")
@@ -483,67 +546,128 @@ class TTSHelper:
                         wrapped = f"<speak>\n  <prosody {attr_str}>{inner}</prosody>\n</speak>"
                         text = wrapped
                     else:
+                        safe_text = _maybe_escape_ssml(text)
                         attrs = []
                         if rate:
                             attrs.append(f"rate=\"{rate}\"")
                         if volume:
                             attrs.append(f"volume=\"{volume}\"")
                         attr_str = ' '.join(attrs) if attrs else ''
-                        text = f"<speak><prosody {attr_str}>{text}</prosody></speak>"
+                        text = f"<speak><prosody {attr_str}>{safe_text}</prosody></speak>"
                 else:
                     # No SSML: create SSML wrapper
+                    safe_text = _maybe_escape_ssml(text)
                     attrs = []
                     if rate:
                         attrs.append(f"rate=\"{rate}\"")
                     if volume:
                         attrs.append(f"volume=\"{volume}\"")
                     attr_str = ' '.join(attrs) if attrs else ''
-                    text = f"<speak><prosody {attr_str}>{text}</prosody></speak>"
+                    text = f"<speak><prosody {attr_str}>{safe_text}</prosody></speak>"
             except Exception:
                 # If anything goes wrong, fall back to original text
                 pass
 
-        audio_path = generate_polly_audio(text, self.aws_voice, filename)
+        audio_path = generate_polly_audio(text, self.aws_voice, output_path)
+        if not audio_path and is_ssml:
+            try:
+                # Retry with plain text if SSML was invalid
+                plain_text = re.sub(r'<[^>]+>', ' ', text)
+                plain_text = ' '.join(plain_text.split()).strip()
+                if plain_text:
+                    audio_path = generate_polly_audio(
+                        plain_text,
+                        self.aws_voice,
+                        output_path,
+                        force_text=True,
+                    )
+            except Exception:
+                pass
         if not audio_path:
             return False
 
+        # Convert MP3 to WAV for reliable playback with aplay
+        play_path = audio_path
+        play_filename = os.path.basename(audio_path)
+        if audio_path.lower().endswith('.mp3'):
+            wav_filename = f"polly_{ts}.wav"
+            wav_path = os.path.join(os.path.dirname(audio_path), wav_filename)
+            try:
+                subprocess.run(
+                    [
+                        'ffmpeg', '-y',
+                        '-i', audio_path,
+                        '-ar', '24000',
+                        '-ac', '1',
+                        '-sample_fmt', 's16',
+                        wav_path,
+                    ],
+                    check=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+                play_path = wav_path
+                play_filename = wav_filename
+            except Exception as e:
+                print(f"Warning: MP3->WAV conversion failed, using MP3 playback: {e}")
+
         # Upload to QTRP host
-        if not self._upload_to_robot(audio_path):
+        if not self._upload_to_robot(play_path):
             return False
 
-        # Copy into qtrobot audio dir and chown
-        if not self._copy_to_qtrobot_user(filename):
-            return False
+        # Trigger lipsync using plain text (strip SSML tags)
+        if self.face:
+            try:
+                plain_text = re.sub(r'<[^>]+>', ' ', text)
+                plain_text = ' '.join(plain_text.split()).strip()
+                if plain_text:
+                    self.face.say(plain_text)
+            except Exception as e:
+                print(f"Warning: pylips face sync failed: {e}")
 
-        # Trigger playback on robot via ROS service
-        try:
-            if self.talk_audio_service:
-                # Movement: approximate duration if possible (not precise for MP3). Use 0.08s per char.
-                estimated_duration = max(2.0, len(text) * 0.08)
-                self._start_movement_thread(estimated_duration)
-                res = self.talk_audio_service(filename, "")
-                self.stop_movement = True
-                return bool(res)
-            print("talkAudio service not available")
-            return False
-        except Exception as e:
-            print(f"Error triggering talkAudio: {e}")
-            return False
+        # Play on robot using the same mechanism as pylips_basic.py
+        return self._play_on_robot(play_filename)
 
     def _upload_to_robot(self, local_file: str) -> bool:
         try:
             ssh_opts = ['-o', 'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null']
             password = os.environ.get('ROBOT_PASSWORD')
+            remote_dir = self.robot_tmp_audio_dir
+            remote_path = f"{self.robot_user}@{self.robot_host}:{remote_dir}/{os.path.basename(local_file)}"
+            mkdir_cmd = ['ssh'] + ssh_opts + [f"{self.robot_user}@{self.robot_host}", f"mkdir -p {remote_dir}"]
             if password and shutil.which('sshpass'):
-                cmd = ['sshpass', '-p', password, 'scp'] + ssh_opts + [local_file, f"{self.robot_user}@{self.robot_host}:~/"]
+                mkdir_cmd = ['sshpass', '-p', password, 'ssh'] + ssh_opts + [f"{self.robot_user}@{self.robot_host}", f"mkdir -p {remote_dir}"]
+                cmd = ['sshpass', '-p', password, 'scp'] + ssh_opts + [local_file, remote_path]
             else:
                 if password and not shutil.which('sshpass'):
                     print("Hint: install sshpass (e.g., sudo apt-get install -y sshpass) for non-interactive auth.")
-                cmd = ['scp'] + ssh_opts + [local_file, f"{self.robot_user}@{self.robot_host}:~/"]
+                cmd = ['scp'] + ssh_opts + [local_file, remote_path]
+            subprocess.run(mkdir_cmd, check=True)
             subprocess.run(cmd, check=True)
             return True
         except subprocess.CalledProcessError as e:
             print(f"Upload failed: {e}")
+            return False
+
+    def _play_on_robot(self, filename: str) -> bool:
+        try:
+            ssh_opts = ['-o', 'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null']
+            remote_path = f"{self.robot_tmp_audio_dir}/{filename}"
+            if filename.lower().endswith('.mp3'):
+                remote_cmd = f"export DISPLAY=:0 && ffplay -nodisp -autoexit {remote_path}"
+            else:
+                remote_cmd = f"aplay -D plughw:1,0 {remote_path}"
+            password = os.environ.get('ROBOT_PASSWORD')
+            if password and shutil.which('sshpass'):
+                cmd = ['sshpass', '-p', password, 'ssh'] + ssh_opts + ['-t', f"{self.robot_user}@{self.robot_host}", remote_cmd]
+            else:
+                if password and not shutil.which('sshpass'):
+                    print("Hint: install sshpass (e.g., sudo apt-get install -y sshpass) for non-interactive auth.")
+                cmd = ['ssh'] + ssh_opts + ['-t', f"{self.robot_user}@{self.robot_host}", remote_cmd]
+            subprocess.run(cmd, check=True)
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Remote playback failed: {e}")
             return False
 
     def _copy_to_qtrobot_user(self, filename: str) -> bool:

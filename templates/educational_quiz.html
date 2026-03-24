@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Quiz</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header h1 { color: #333; font-size: 2rem; margin-bottom: 0.5rem; }
+        .header p { color: #666; font-size: 1rem; }
+
+        /* Type selection screen */
+        .type-selection { display: flex; gap: 1.5rem; justify-content: center; margin: 2rem 0; }
+        .type-btn {
+            flex: 1;
+            padding: 2rem 1.5rem;
+            border: 3px solid #e9ecef;
+            border-radius: 16px;
+            background: #f8f9fa;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .type-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.2);
+        }
+        .type-btn .icon { font-size: 3rem; margin-bottom: 0.75rem; }
+        .type-btn h3 { color: #333; font-size: 1.2rem; margin-bottom: 0.25rem; }
+        .type-btn p { color: #888; font-size: 0.85rem; }
+
+        /* Quiz screen */
+        #quiz-screen { display: none; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .progress-text {
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .question-card {
+            background: linear-gradient(135deg, #f8f9fa, #fff);
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .question-card h2 {
+            color: #333;
+            font-size: 1.4rem;
+            line-height: 1.6;
+        }
+        .answer-section { margin: 1.5rem 0; }
+        .yn-buttons { display: flex; gap: 1rem; justify-content: center; }
+        .yn-btn {
+            padding: 1rem 3rem;
+            border: 3px solid #e9ecef;
+            border-radius: 12px;
+            background: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .yn-btn:hover { transform: translateY(-2px); }
+        .yn-btn.yes { color: #28a745; }
+        .yn-btn.yes:hover { border-color: #28a745; background: #d4edda; }
+        .yn-btn.no { color: #dc3545; }
+        .yn-btn.no:hover { border-color: #dc3545; background: #f8d7da; }
+        .yn-btn.correct { border-color: #28a745; background: #d4edda; }
+        .yn-btn.wrong { border-color: #dc3545; background: #f8d7da; }
+
+        .mic-btn {
+            display: block;
+            margin: 1.2rem auto 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #667eea;
+            background: white;
+            color: #667eea;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mic-btn:hover { background: #667eea; color: white; }
+        .mic-btn.listening {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220,53,69,0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(220,53,69,0); }
+        }
+        .mic-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 0.4rem;
+        }
+
+        .wh-answer-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .wh-answer-input:focus { border-color: #667eea; }
+        .submit-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.3); }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: none;
+        }
+        .feedback.correct { display: block; background: #d4edda; color: #155724; }
+        .feedback.wrong { display: block; background: #f8d7da; color: #721c24; }
+
+        .next-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+        }
+        .next-btn:hover { transform: translateY(-2px); }
+
+        /* Results screen */
+        #results-screen { display: none; text-align: center; }
+        .score-circle {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            margin: 1.5rem auto;
+            font-size: 2.5rem; font-weight: 700;
+        }
+        .score-circle span { font-size: 0.9rem; font-weight: 400; opacity: 0.9; }
+
+        .back-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s;
+        }
+        .back-btn:hover { transform: translateY(-2px); }
+
+        .empty-msg {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        /* Teach Robot */
+        .teach-btn {
+            display: none;
+            margin: 0.75rem auto 0;
+            padding: 0.5rem 1.2rem;
+            background: #ffc107;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .teach-btn:hover { background: #e0a800; transform: translateY(-1px); }
+        .teach-panel {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+        }
+        .teach-panel p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .teach-input {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+        }
+        .teach-input:focus { border-color: #ffc107; }
+        .teach-add-btn {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: #ffc107;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .teach-add-btn:hover { background: #e0a800; }
+        .teach-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+        }
+        .teach-tag {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #664d03;
+        }
+        .teach-saved {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Educational Quiz</h1>
+            <p>Choose a question type to begin!</p>
+        </div>
+
+        <!-- Type Selection Screen -->
+        <div id="type-screen">
+            <div class="type-selection">
+                <div class="type-btn" onclick="loadQuiz('yes_no')">
+                    <div class="icon">Yes / No</div>
+                    <h3>Yes / No</h3>
+                    <p>Answer with Yes or No</p>
+                </div>
+                <div class="type-btn" onclick="loadQuiz('wh')">
+                    <div class="icon">WH-</div>
+                    <h3>WH- Questions</h3>
+                    <p>What, Where, Who, Why...</p>
+                </div>
+            </div>
+            <button class="back-btn" onclick="window.location.href='/play'">Back to Games</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div class="progress-text" id="progress-text">Question 1 / 10</div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+            <div class="question-card">
+                <h2 id="question-text"></h2>
+            </div>
+
+            <div class="answer-section" id="answer-section"></div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div style="text-align:center;">
+                <button class="teach-btn" id="teach-btn" onclick="toggleTeachPanel()">Teach Robot</button>
+            </div>
+
+            <div class="teach-panel" id="teach-panel">
+                <p>Add other correct answers for this question:</p>
+                <input class="teach-input" id="teach-input" type="text" placeholder="Type an alternative answer..."
+                       onkeydown="if(event.key==='Enter')addTeachAnswer()">
+                <div style="text-align:center;">
+                    <button class="teach-add-btn" onclick="addTeachAnswer()">+ Add Answer</button>
+                </div>
+                <div class="teach-tags" id="teach-tags"></div>
+                <div style="text-align:center;">
+                    <button class="teach-add-btn" onclick="saveTeachAnswers()" style="background:#28a745;color:white;margin-top:0.5rem;">Save to Robot</button>
+                </div>
+                <div class="teach-saved" id="teach-saved">Saved! Robot will remember these answers.</div>
+            </div>
+
+            <div style="text-align:center;">
+                <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+            </div>
+
+            <button class="back-btn" onclick="backToTypeSelection()" style="margin-top:1.5rem;">Change Type</button>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen">
+            <h2 style="color:#333; margin-bottom:0.5rem;">Quiz Complete!</h2>
+            <p style="color:#666;">Here's how you did:</p>
+            <div class="score-circle">
+                <div id="score-value">0</div>
+                <span>correct</span>
+            </div>
+            <p id="score-detail" style="color:#666; margin-bottom:1rem;"></p>
+            <button class="submit-btn" onclick="backToTypeSelection()">Play Again</button>
+            <button class="back-btn" onclick="window.location.href='/play'">Back to Games</button>
+        </div>
+    </div>
+
+    <script>
+        let questions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+        let currentType = '';
+
+        // Pre-generated feedback phrases (filled at quiz load)
+        const defaultCorrect = ['That is right!', 'Correct!', 'Great job!', 'Well done!', 'You got it!'];
+        const defaultIncorrect = ['Not quite.', 'Good try!', 'Almost there.', 'Let us try again.', 'Nice effort!'];
+        let correctPhrases = [...defaultCorrect];
+        let incorrectPhrases = [...defaultIncorrect];
+
+        function pickRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        async function loadQuiz(type) {
+            currentType = type;
+            try {
+                // Fetch quiz questions (fast - just reads files)
+                const quizRes = await fetch(`/api/get_saved_quiz?type=${type}`);
+                const data = await quizRes.json();
+                if (!data.success || !data.questions.length) {
+                    document.getElementById('type-screen').innerHTML =
+                        `<div class="empty-msg">No saved ${type === 'yes_no' ? 'Yes/No' : 'WH-'} questions found.<br>Generate some in the Quiz Builder first!</div>
+                         <button class="back-btn" onclick="window.location.href='/play'">Back to Games</button>`;
+                    return;
+                }
+
+                // Shuffle questions randomly
+                questions = data.questions.sort(() => Math.random() - 0.5);
+                currentIndex = 0;
+                score = 0;
+                answered = false;
+
+                // Start quiz immediately with default phrases
+                document.getElementById('type-screen').style.display = 'none';
+                document.getElementById('quiz-screen').style.display = 'block';
+                showQuestion();
+
+                // Generate LLM feedback phrases in the background (non-blocking)
+                fetch('/api/generate_quiz_feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(res => res.json()).then(fbData => {
+                    if (fbData.correct && fbData.correct.length) correctPhrases = fbData.correct;
+                    if (fbData.incorrect && fbData.incorrect.length) incorrectPhrases = fbData.incorrect;
+                }).catch(() => {});
+            } catch (e) {
+                alert('Failed to load quiz: ' + e.message);
+            }
+        }
+
+        function showQuestion() {
+            answered = false;
+            const q = questions[currentIndex];
+            const total = questions.length;
+
+            document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} / ${total}`;
+            document.getElementById('progress-fill').style.width = `${((currentIndex + 1) / total) * 100}%`;
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('teach-btn').style.display = 'none';
+            document.getElementById('teach-panel').style.display = 'none';
+
+            const section = document.getElementById('answer-section');
+            if (q.type === 'yes_no') {
+                section.innerHTML = `
+                    <div class="yn-buttons">
+                        <button class="yn-btn yes" onclick="answerYN(this, 'yes')">Yes</button>
+                        <button class="yn-btn no" onclick="answerYN(this, 'no')">No</button>
+                    </div>
+                    <button class="mic-btn" id="mic-btn" onclick="startListening()">&#127908;</button>
+                    <div class="mic-label" id="mic-label">or say your answer</div>`;
+            } else {
+                section.innerHTML = `
+                    <input class="wh-answer-input" id="wh-input" type="text" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')submitWH()">
+                    <div style="text-align:center;">
+                        <button class="submit-btn" onclick="submitWH()">Submit</button>
+                    </div>
+                    <button class="mic-btn" id="mic-btn" onclick="startListening()">&#127908;</button>
+                    <div class="mic-label" id="mic-label">or say your answer</div>`;
+            }
+        }
+
+        function answerYN(btn, answer) {
+            if (answered) return;
+            answered = true;
+            const q = questions[currentIndex];
+            const correct = q.correct_answer && q.correct_answer.toLowerCase() === answer;
+
+            const buttons = btn.parentElement.querySelectorAll('.yn-btn');
+            buttons.forEach(b => {
+                if (b.textContent.toLowerCase() === q.correct_answer.toLowerCase()) {
+                    b.classList.add('correct');
+                } else if (b === btn && !correct) {
+                    b.classList.add('wrong');
+                }
+            });
+
+            showFeedback(correct, q.correct_answer);
+        }
+
+        // Normalize a string for flexible comparison:
+        // lowercase, strip leading articles (a/an/the/in), trim whitespace,
+        // strip trailing 's' for basic plural handling
+        function normalize(str) {
+            let s = str.toLowerCase().trim();
+            s = s.replace(/^(a |an |the |in |at |on )/, '');
+            s = s.replace(/[.,!?;:'"]/g, '');
+            s = s.trim();
+            return s;
+        }
+
+        // Strip trailing 's' for basic singular form
+        function toSingular(s) {
+            if (s.length > 3 && s.endsWith('s') && !s.endsWith('ss')) {
+                return s.slice(0, -1);
+            }
+            return s;
+        }
+
+        // Check if user answer matches any of the accepted answers
+        function isAnswerAccepted(userAnswer, question) {
+            const pool = (question.accepted_answers && question.accepted_answers.length)
+                ? question.accepted_answers
+                : [question.correct_answer];
+
+            const userNorm = normalize(userAnswer);
+            const userSingular = toSingular(userNorm);
+
+            for (const ans of pool) {
+                if (!ans) continue;
+                const ansNorm = normalize(ans);
+                const ansSingular = toSingular(ansNorm);
+                // Exact normalized match
+                if (userNorm === ansNorm) return true;
+                // Singular form match (teacher == teachers)
+                if (userSingular === ansSingular) return true;
+                // One contains the other (e.g. "the library" vs "library")
+                if (userNorm.includes(ansNorm) || ansNorm.includes(userNorm)) return true;
+            }
+            return false;
+        }
+
+        function submitWH() {
+            if (answered) return;
+            const input = document.getElementById('wh-input');
+            const userAnswer = input.value.trim();
+            if (!userAnswer) return;
+            answered = true;
+            input.disabled = true;
+
+            const q = questions[currentIndex];
+            const correct = isAnswerAccepted(userAnswer, q);
+
+            showFeedback(correct, q.correct_answer);
+        }
+
+        let listening = false;
+
+        async function startListening() {
+            if (answered || listening) return;
+            listening = true;
+
+            const micBtn = document.getElementById('mic-btn');
+            const micLabel = document.getElementById('mic-label');
+            micLabel.textContent = 'Starting...';
+
+            // Delay the listening animation by 1 second to match actual mic activation
+            setTimeout(() => {
+                if (listening) {
+                    micBtn.classList.add('listening');
+                    micLabel.textContent = 'Listening...';
+                }
+            }, 1000);
+
+            try {
+                const res = await fetch('/api/speech_recognize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await res.json();
+                listening = false;
+                micBtn.classList.remove('listening');
+
+                if (!data.success || !data.text) {
+                    micLabel.textContent = 'Could not hear you. Try again.';
+                    return;
+                }
+
+                const heard = data.text.trim().toLowerCase();
+                micLabel.textContent = `Heard: "${data.text.trim()}"`;
+
+                const q = questions[currentIndex];
+                if (q.type === 'yes_no') {
+                    // Match yes or no from speech
+                    let spokenAnswer = null;
+                    if (/\byes\b/.test(heard)) spokenAnswer = 'yes';
+                    else if (/\bno\b/.test(heard)) spokenAnswer = 'no';
+
+                    if (spokenAnswer) {
+                        // Simulate button click
+                        const btn = document.querySelector(`.yn-btn.${spokenAnswer}`);
+                        if (btn) answerYN(btn, spokenAnswer);
+                    } else {
+                        micLabel.textContent = `Heard: "${data.text.trim()}" — say Yes or No`;
+                    }
+                } else {
+                    // WH question — fill the input and auto-submit
+                    const input = document.getElementById('wh-input');
+                    if (input) {
+                        input.value = data.text.trim();
+                        submitWH();
+                    }
+                }
+            } catch (e) {
+                listening = false;
+                const micBtn = document.getElementById('mic-btn');
+                const micLabel = document.getElementById('mic-label');
+                micBtn.classList.remove('listening');
+                micLabel.textContent = 'Error. Try again.';
+            }
+        }
+
+        let pendingTeachAnswers = [];
+
+        // Gesture + emotion combos for correct/incorrect answers
+        const correctGestures = [
+            { gesture: 'clapping', emotion: 'QT/emotions/happy' },
+            { gesture: 'hoora', emotion: 'QT/emotions/happy' },
+            { gesture: 'happy', emotion: 'QT/emotions/happy' },
+            { gesture: 'nodding-yes', emotion: 'QT/emotions/happy' },
+            { gesture: 'yes1', emotion: 'QT/emotions/happy' },
+            { gesture: 'enjoy', emotion: 'QT/emotions/happy' },
+            { gesture: 'bighi', emotion: 'QT/emotions/happy' },
+            { gesture: 'one-arm-up', emotion: 'QT/emotions/happy' },
+        ];
+
+        const incorrectGestures = [
+            { gesture: 'patience', emotion: 'QT/emotions/calm' },
+            { gesture: 'think', emotion: 'QT/emotions/calm' },
+            { gesture: 'slight_no', emotion: 'QT/emotions/calm' },
+            { gesture: 'head-right-left', emotion: 'QT/emotions/sad' },
+            { gesture: 'calm', emotion: 'QT/emotions/calm' },
+            { gesture: 'relaxed', emotion: 'QT/emotions/calm' },
+        ];
+
+        function robotGesture(correct) {
+            const set = correct ? correctGestures : incorrectGestures;
+            const choice = set[Math.floor(Math.random() * set.length)];
+            fetch('/api/robot_gesture', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ gesture: choice.gesture, emotion: choice.emotion, speed: 1.0 })
+            }).catch(() => {});
+        }
+
+        function robotSpeak(text) {
+            fetch('/api/speak_sentence', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sentence: text })
+            }).catch(() => {});
+        }
+
+        function showFeedback(correct, correctAnswer) {
+            const fb = document.getElementById('feedback');
+            if (correct) {
+                score++;
+                const phrase = pickRandom(correctPhrases);
+                fb.className = 'feedback correct';
+                fb.textContent = phrase;
+                robotSpeak(phrase);
+                robotGesture(true);
+            } else {
+                const phrase = pickRandom(incorrectPhrases);
+                fb.className = 'feedback wrong';
+                fb.textContent = `${phrase} The answer is: ${correctAnswer}`;
+                robotSpeak(`${phrase} The answer is ${correctAnswer}.`);
+                robotGesture(false);
+            }
+            document.getElementById('next-btn').style.display = 'inline-block';
+
+            // Show teach button for WH questions (yes/no answers are fixed)
+            const q = questions[currentIndex];
+            if (q.type === 'wh') {
+                document.getElementById('teach-btn').style.display = 'inline-block';
+            }
+            // Reset teach panel
+            pendingTeachAnswers = [];
+            document.getElementById('teach-panel').style.display = 'none';
+            document.getElementById('teach-tags').innerHTML = '';
+            document.getElementById('teach-saved').style.display = 'none';
+        }
+
+        function toggleTeachPanel() {
+            const panel = document.getElementById('teach-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            if (panel.style.display === 'block') {
+                document.getElementById('teach-input').focus();
+            }
+        }
+
+        function addTeachAnswer() {
+            const input = document.getElementById('teach-input');
+            const answer = input.value.trim();
+            if (!answer) return;
+            if (pendingTeachAnswers.includes(answer.toLowerCase())) {
+                input.value = '';
+                return;
+            }
+            pendingTeachAnswers.push(answer);
+            const tag = document.createElement('span');
+            tag.className = 'teach-tag';
+            tag.textContent = answer;
+            document.getElementById('teach-tags').appendChild(tag);
+            input.value = '';
+            input.focus();
+        }
+
+        async function saveTeachAnswers() {
+            if (!pendingTeachAnswers.length) return;
+            const q = questions[currentIndex];
+            try {
+                const res = await fetch('/api/teach_quiz_answer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: q.question,
+                        answers: pendingTeachAnswers
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('teach-saved').style.display = 'block';
+                    // Also update the local question so it's recognized in the current session
+                    if (!q.accepted_answers) q.accepted_answers = [];
+                    pendingTeachAnswers.forEach(a => {
+                        if (!q.accepted_answers.includes(a)) q.accepted_answers.push(a);
+                    });
+                } else {
+                    alert('Save failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (e) {
+                alert('Save failed: ' + e.message);
+            }
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex >= questions.length) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+            document.getElementById('score-value').textContent = `${score}/${questions.length}`;
+            document.getElementById('score-detail').textContent =
+                `You got ${score} out of ${questions.length} questions right!`;
+        }
+
+        function backToTypeSelection() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'none';
+            document.getElementById('type-screen').style.display = 'block';
+            questions = [];
+            currentIndex = 0;
+            score = 0;
+        }
+    </script>
+</body>
+</html>

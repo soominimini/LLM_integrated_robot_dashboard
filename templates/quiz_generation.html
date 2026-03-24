@@ -82,7 +82,7 @@
                     </div>
                     <div class="flex gap-2">
                         <button id="btnClear" class="px-4 py-2 bg-white border border-gray-200 text-xs font-bold rounded-lg hover:bg-gray-50 uppercase tracking-tight transition">Clear</button>
-                        <button class="px-4 py-2 bg-emerald-500 text-white text-xs font-bold rounded-lg hover:bg-emerald-600 uppercase tracking-tight transition shadow-sm">Save Quiz</button>
+                        <button id="btnSave" class="px-4 py-2 bg-emerald-500 text-white text-xs font-bold rounded-lg hover:bg-emerald-600 uppercase tracking-tight transition shadow-sm">Save Quiz</button>
                     </div>
                 </div>
 
@@ -170,6 +170,9 @@
                     const answerLabel = q.correct_answer ? q.correct_answer.toUpperCase() : "N/A";
                     const card = document.createElement('div');
                     card.className = "bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 group animate-fade-in";
+                    card.dataset.type = q.type;
+                    card.dataset.answer = q.correct_answer || "";
+                    card.dataset.acceptedAnswers = JSON.stringify(q.accepted_answers || []);
                     card.innerHTML = `
                         <div class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0">${i + 1}</div>
                         <div class="flex-1">
@@ -188,6 +191,39 @@
                 statusText.innerText = "Generation failed.";
                 questionList.appendChild(emptyState);
                 alert(e.message);
+            }
+        });
+
+        // Save Quiz
+        document.getElementById('btnSave').addEventListener('click', async () => {
+            const cards = questionList.querySelectorAll('[data-type]');
+            if (!cards.length) {
+                alert("No questions to save.");
+                return;
+            }
+            const questions = Array.from(cards).map(card => {
+                const entry = {
+                    question: card.querySelector('input[type="text"]').value.trim(),
+                    type: card.dataset.type,
+                    correct_answer: card.dataset.answer
+                };
+                if (card.dataset.acceptedAnswers) {
+                    try { entry.accepted_answers = JSON.parse(card.dataset.acceptedAnswers); } catch(e) {}
+                }
+                return entry;
+            }).filter(q => q.question);
+
+            try {
+                const res = await fetch('/api/save_quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ questions })
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Save failed');
+                statusText.innerText = `Quiz saved (${data.yes_no_count} yes/no, ${data.wh_count} wh- questions).`;
+            } catch (e) {
+                alert("Save failed: " + e.message);
             }
         });
 

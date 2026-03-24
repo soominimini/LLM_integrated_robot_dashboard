@@ -371,6 +371,12 @@
               <button class="secondary" onclick="testVolume()">Test Volume</button>
             </div>
             <p class="movement-description">Adjust robot speaker volume (0–100)</p>
+            <div class="movement-toggle" style="align-items:center; gap:12px; margin-top:10px;">
+              <input type="text" id="polly-volume" placeholder="+1dB"
+                     onkeydown="if (event.key === 'Enter') setPollyVolume();">
+              <button class="secondary" onclick="setPollyVolume()">Set Polly dB</button>
+            </div>
+            <p class="movement-description">Polly SSML volume (e.g., +6dB, -3dB)</p>
           </div>
         <button class="btn" onclick="logout()">Logout</button>
     </div>
@@ -484,6 +490,26 @@
                 console.error('Error testing volume:', e);
             }
             }
+
+        async function setPollyVolume() {
+            const input = document.getElementById('polly-volume');
+            const volumeDb = (input.value || '').trim();
+            if (!volumeDb) return;
+            try {
+                const res = await fetch('/api/polly_volume', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ volume_db: volumeDb })
+                });
+                const data = await res.json();
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to set Polly dB');
+                }
+                await testVolume();
+            } catch (e) {
+                console.error('Error setting Polly volume:', e);
+            }
+        }
 
         function navigateTo(destination) {
             if (destination === 'generate') {

@@ -1,0 +1,93 @@
+[
+  {
+    "question": "What is red like an apple?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "apples"
+    ]
+  },
+  {
+    "question": "Where do bananas grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "tree",
+      "trees"
+    ]
+  },
+  {
+    "question": "What can be peeled like a banana?",
+    "type": "wh",
+    "correct_answer": "banana",
+    "accepted_answers": [
+      "banana",
+      "bananas"
+    ]
+  },
+  {
+    "question": "Where do oranges come from?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "tree",
+      "trees"
+    ]
+  },
+  {
+    "question": "What is a small orange fruit?",
+    "type": "wh",
+    "correct_answer": "tangerine",
+    "accepted_answers": [
+      "tangerine",
+      "clementine",
+      "mandarin"
+    ]
+  },
+  {
+    "question": "Where do grapes grow in bunches?",
+    "type": "wh",
+    "correct_answer": "vines",
+    "accepted_answers": [
+      "vine",
+      "vines"
+    ]
+  },
+  {
+    "question": "What is green like a lime?",
+    "type": "wh",
+    "correct_answer": "lime",
+    "accepted_answers": [
+      "lime",
+      "limes"
+    ]
+  },
+  {
+    "question": "Where do strawberries grow in rows?",
+    "type": "wh",
+    "correct_answer": "fields",
+    "accepted_answers": [
+      "field",
+      "fields"
+    ]
+  },
+  {
+    "question": "What can be sliced like an orange?",
+    "type": "wh",
+    "correct_answer": "orange",
+    "accepted_answers": [
+      "orange",
+      "oranges"
+    ]
+  },
+  {
+    "question": "Where do watermelons grow on the ground?",
+    "type": "wh",
+    "correct_answer": "vines",
+    "accepted_answers": [
+      "vine",
+      "vines"
+    ]
+  }
+]

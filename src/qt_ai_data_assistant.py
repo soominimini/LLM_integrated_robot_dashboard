@@ -76,7 +76,15 @@ class QTAIDataAssistant(ParamifyWeb, BaseNode):
         
         # set the default system prompt if it is not set via parameters
         if not self.parameters.role or not self.parameters.role.strip():
-            self.set_role(ConversationPrompt['system_role'])
+            combined_role = ConversationPrompt['system_role']
+            prompt_file = getattr(self.parameters, 'system_prompt_file', None)
+            if prompt_file and os.path.isfile(prompt_file):
+                with open(prompt_file, 'r') as f:
+                    combined_role = f.read() + '\n\n' + ConversationPrompt['system_role']
+                rospy.loginfo(f"Loaded system prompt from: {prompt_file}")
+            else:
+                rospy.logwarn(f"system_prompt_file not found: {prompt_file}. Using default prompt only.")
+            self.set_role(combined_role)
 
         # initialize chat engine with user-specific memory store
         self.chat = None

@@ -133,7 +133,7 @@ def main():
 
     # Step 2: Upload to QTRP
     print("📤 Step 2: Uploading to QTRP...")
-    if not upload_to_robot(generated_file):
+    if not upload_to_robot(generated_file, robot_host=os.getenv("ROBOT_HOST", "192.168.100.1"), robot_user=os.getenv("ROBOT_USER", "developer")):
         print("❌ Step 2 failed: Could not upload audio")
         return
 

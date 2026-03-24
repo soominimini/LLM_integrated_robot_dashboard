@@ -1,3 +1,4 @@
+import argparse
 import os
 import sys
 import time
@@ -17,6 +18,12 @@ if not api_key:
 
 client = OpenAI(api_key=api_key)
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--language", type=str, default=None,
+                    help="ISO-639-1 language code for transcription (e.g. en, fr, ko)")
+_args, _ = parser.parse_known_args()
+whisper_language = _args.language
+
 sample_rate = 16000
 channels = 1
 topic_name = "/qt_respeaker_app/channel0"
@@ -31,10 +38,10 @@ def _callback_audio_stream(msg):
         pass
 
 
-silence_threshold = 0.012  # RMS threshold; tune if needed
-silence_duration = 1.0     # seconds of silence to stop
-max_record_seconds = 20.0  # safety cap
-pre_roll_seconds = 0.5     # keep a little audio before speech starts
+silence_threshold = float(os.getenv("WHISPER_SILENCE_THRESHOLD", "0.008"))  # RMS threshold; tune if needed
+silence_duration = float(os.getenv("WHISPER_SILENCE_DURATION", "1.5"))     # seconds of silence to stop
+max_record_seconds = float(os.getenv("WHISPER_MAX_RECORD", "15.0"))  # safety cap
+pre_roll_seconds = 0.8     # keep a little audio before speech starts
 stream_interval = float(os.getenv("WHISPER_STREAM_INTERVAL", "2.0"))
 
 # Approximate 512-sample frames -> 16000/512 ~= 31.25 frames/sec
@@ -71,11 +78,13 @@ while True:
             speech_started = True
             last_voice_time = time.time()
             frames.extend(pre_roll)
+            print(f"[Whisper] Speech detected (RMS={rms:.4f})", file=sys.stderr)
         frames.append(chunk)
         last_voice_time = time.time()
     elif speech_started:
         frames.append(chunk)
         if last_voice_time and (time.time() - last_voice_time) >= silence_duration:
+            print(f"[Whisper] Silence detected, stopping. Total frames: {len(frames)}", file=sys.stderr)
             break
 
     # Emit partial transcription while recording
@@ -91,10 +100,10 @@ while True:
                         wav_file.setframerate(sample_rate)
                         wav_file.writeframes(pcm_bytes)
                     with open(tmp_wav.name, "rb") as audio_file:
-                        transcription = client.audio.transcriptions.create(
-                            model="gpt-4o-transcribe",
-                            file=audio_file,
-                        )
+                        transcribe_kwargs = {"model": "gpt-4o-transcribe", "file": audio_file}
+                        if whisper_language:
+                            transcribe_kwargs["language"] = whisper_language
+                        transcription = client.audio.transcriptions.create(**transcribe_kwargs)
                 partial_text = (transcription.text or "").strip()
                 if partial_text and partial_text != latest_partial:
                     latest_partial = partial_text
@@ -105,8 +114,12 @@ while True:
 
 if not frames:
     # Avoid hard failure; let caller decide how to handle empty recognition
-    print("No audio captured. Check mic topic or threshold.", file=sys.stderr)
+    elapsed = time.time() - record_start_time
+    print(f"No audio captured after {elapsed:.1f}s. Threshold={silence_threshold}, check mic topic or lower threshold.", file=sys.stderr)
     sys.exit(0)
+
+audio_duration = len(frames) * 512 / sample_rate
+print(f"[Whisper] Captured {len(frames)} frames ({audio_duration:.1f}s of audio)", file=sys.stderr)
 
 pcm_bytes = b"".join(frames)
 audio_int16 = np.frombuffer(pcm_bytes, dtype=np.int16)
@@ -129,10 +142,10 @@ with wave.open(wav_path, "wb") as wav_file:
 
 
 with open(wav_path, "rb") as audio_file:
-    transcription = client.audio.transcriptions.create(
-        model="gpt-4o-transcribe",
-        file=audio_file,
-    )
+    transcribe_kwargs = {"model": "gpt-4o-transcribe", "file": audio_file}
+    if whisper_language:
+        transcribe_kwargs["language"] = whisper_language
+    transcription = client.audio.transcriptions.create(**transcribe_kwargs)
 
 final_text = (transcription.text or "").strip()
 if final_text:

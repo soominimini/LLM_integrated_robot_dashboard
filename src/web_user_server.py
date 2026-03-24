@@ -68,6 +68,11 @@ _human_tracker_lock = Lock()
 _v4l_cap = None
 _v4l_cap_lock = Lock()
 
+
+#loading env variables
+from dotenv import load_dotenv
+load_dotenv()
+
 def _ensure_human_tracker():
     global _human_tracker
     if not HUMAN_TRACKING_AVAILABLE:
@@ -198,7 +203,7 @@ app.secret_key = os.urandom(24)
 CORS(app)
 
 user_manager = UserManager()
-story_generator = StoryGenerator(llm_model="llama3.3:70b")
+story_generator = StoryGenerator(llm_model="llama3.1:latest")
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
@@ -447,29 +452,47 @@ def _has_parallel_recognizers(blocks):
     except Exception:
         return False
 
-def _whisper_recognize_once():
+def _whisper_recognize_once(language=None):
     """Run whisper.py as a subprocess and return recognized text (best-effort)."""
     script_path = os.path.join(BASE_DIR, "whisper.py")
     python_bin = os.getenv("WHISPER_PYTHON", sys.executable)
     try:
+        cmd = [python_bin, script_path]
+        if language:
+            cmd.extend(["--language", language])
         proc = subprocess.run(
-            [python_bin, script_path],
+            cmd,
             capture_output=True,
             text=True,
             timeout=60,
             env=os.environ.copy(),
         )
+        # Always log stderr for debug info (RMS levels, frame counts)
+        if proc.stderr and proc.stderr.strip():
+            print(f"[Whisper] {proc.stderr.strip()}")
         if proc.returncode != 0:
-            print(f"[Whisper] error (code={proc.returncode}): {proc.stderr.strip()}")
+            print(f"[Whisper] error (code={proc.returncode})")
             return ""
-        recognized = (proc.stdout or "").strip()
+        raw = (proc.stdout or "").strip()
+        # Extract the FINAL: line; fall back to last non-empty line
+        recognized = ""
+        for line in raw.splitlines():
+            line = line.strip()
+            if line.startswith("FINAL:"):
+                recognized = line.replace("FINAL:", "", 1).strip()
+        if not recognized:
+            # Fallback: use last non-empty line (older whisper format)
+            for line in reversed(raw.splitlines()):
+                if line.strip():
+                    recognized = line.strip()
+                    break
         print(f"[Whisper] recognized: {recognized}")
         return recognized
     except Exception as e:
         print(f"[Whisper] exception: {e}")
         return ""
 
-def _whisper_recognize_streaming():
+def _whisper_recognize_streaming(language=None):
     """
     Run whisper.py and stream PARTIAL lines to TTS while returning FINAL text.
     """
@@ -478,8 +501,11 @@ def _whisper_recognize_streaming():
     script_path = os.path.join(BASE_DIR, "whisper.py")
     python_bin = os.getenv("WHISPER_PYTHON", sys.executable)
     try:
+        cmd = [python_bin, script_path]
+        if language:
+            cmd.extend(["--language", language])
         proc = subprocess.Popen(
-            [python_bin, script_path],
+            cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -621,6 +647,10 @@ def api_login():
     # No password
     if user_manager.authenticate_user(username):
         session['username'] = username
+        try:
+            tts_helper.set_current_user(username)
+        except Exception:
+            pass
         user = user_manager.users[username]
         return jsonify({"success": True, "user": {
             "username": user["username"],
@@ -635,6 +665,10 @@ def api_login():
 def api_logout():
     session.pop('username', None)
     user_manager.logout()
+    try:
+        tts_helper.set_current_user(None)
+    except Exception:
+        pass
     return jsonify({"success": True})
 
 @app.route("/api/current_user")
@@ -881,8 +915,12 @@ def api_generate_quiz():
         "Goal: Questions must be objectively True or False based on basic object functions or category labels. "
         "Avoid subjective questions like 'Do you like school?' or 'Are there toys?'. "
         "Constraint: Questions must be short (under 8 words). "
-        "Return Format: JSON array of objects with keys: 'question', 'type', 'correct_answer'. "
-        "For yes_no, correct_answer must be 'yes' or 'no'. For wh, correct_answer must be a short factual answer. "
+        "Return Format: JSON array of objects with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. "
+        "For yes_no, correct_answer must be 'yes' or 'no' and accepted_answers should be omitted. "
+        "For wh, correct_answer is the primary short answer and accepted_answers must be a list of all "
+        "reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). "
+        "Example: if question is 'Where do kids read books in school?', correct_answer is 'classroom' and "
+        "accepted_answers could be ['classroom', 'library', 'reading room', 'classrooms']. "
         f"{rule_text}"
     )
     print("education question prompt: ", prompt)
@@ -913,6 +951,10 @@ def api_generate_quiz():
             q = (item.get("question") or "").strip()
             t = (item.get("type") or "").strip().lower()
             correct_answer = (item.get("correct_answer") or "").strip()
+            accepted_answers = item.get("accepted_answers") or []
+            if not isinstance(accepted_answers, list):
+                accepted_answers = []
+            accepted_answers = [str(a).strip() for a in accepted_answers if str(a).strip()]
             if not q:
                 continue
             if t not in ("yes_no", "wh"):
@@ -922,10 +964,55 @@ def api_generate_quiz():
                 correct_answer = correct_answer.lower()
                 if correct_answer not in ("yes", "no"):
                     correct_answer = ""
+                entry = {"question": q, "type": t, "correct_answer": correct_answer}
             else:
                 if not correct_answer:
                     correct_answer = ""
-            questions.append({"question": q, "type": t, "correct_answer": correct_answer})
+                # Ensure correct_answer is in accepted_answers
+                if correct_answer and correct_answer not in accepted_answers:
+                    accepted_answers.insert(0, correct_answer)
+                entry = {"question": q, "type": t, "correct_answer": correct_answer, "accepted_answers": accepted_answers}
+            questions.append(entry)
+
+        # Post-process: generate accepted_answers for WH questions that have empty/insufficient lists
+        wh_needing_alts = [q for q in questions if q.get("type") == "wh" and len(q.get("accepted_answers", [])) <= 1]
+        if wh_needing_alts and _quiz_llm is not None:
+            try:
+                alt_input = [{"question": q["question"], "correct_answer": q["correct_answer"]} for q in wh_needing_alts]
+                alt_prompt = (
+                    "For each question below, generate a list of all reasonably correct alternative answers "
+                    "that a child might give. Include the original answer, synonyms, plural/singular forms, "
+                    "and semantically valid alternatives. "
+                    "Return a JSON array where each element is a list of accepted answer strings, in the same order as the input. "
+                    "Example input: [{\"question\": \"Where do kids read books?\", \"correct_answer\": \"classroom\"}] "
+                    "Example output: [[\"classroom\", \"classrooms\", \"library\", \"reading room\", \"school\"]] "
+                    f"Input: {json.dumps(alt_input)}"
+                )
+                alt_resp = _quiz_llm.get_response(alt_prompt)
+                alt_text = getattr(alt_resp, 'message', None)
+                alt_text = getattr(alt_text, 'content', None) if alt_text is not None else str(alt_resp)
+                alt_raw = (alt_text or "").strip()
+                if alt_raw.startswith("```"):
+                    alt_raw = alt_raw.strip("`")
+                    if alt_raw.startswith("json"):
+                        alt_raw = alt_raw[4:].strip()
+                alt_obj = None
+                try:
+                    alt_obj = json.loads(alt_raw)
+                except Exception:
+                    l2 = alt_raw.find('[')
+                    r2 = alt_raw.rfind(']')
+                    if l2 != -1 and r2 != -1 and r2 > l2:
+                        alt_obj = json.loads(alt_raw[l2:r2+1])
+                if isinstance(alt_obj, list) and len(alt_obj) == len(wh_needing_alts):
+                    for q, alts in zip(wh_needing_alts, alt_obj):
+                        if isinstance(alts, list):
+                            merged = list(alts)
+                            if q["correct_answer"] and q["correct_answer"] not in merged:
+                                merged.insert(0, q["correct_answer"])
+                            q["accepted_answers"] = [str(a).strip() for a in merged if str(a).strip()]
+            except Exception as e:
+                print(f"Warning: accepted_answers generation failed: {e}")
 
         return jsonify({
             "success": True,
@@ -935,6 +1022,247 @@ def api_generate_quiz():
         })
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/api/robot_gesture", methods=["POST"])
+def api_robot_gesture():
+    """Play a gesture and/or emotion on the robot."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    if not ROS_AVAILABLE:
+        return jsonify({"success": False, "error": "ROS not available"}), 500
+    data = request.get_json() or {}
+    gesture = (data.get("gesture") or "").strip()
+    emotion = (data.get("emotion") or "").strip()
+    speed = float(data.get("speed", 1.0))
+    try:
+        from qt_robot_interface.srv import emotion_show
+        from qt_gesture_controller.srv import gesture_play
+        if emotion:
+            emo_proxy = rospy.ServiceProxy('/qt_robot/emotion/show', emotion_show)
+            emo_proxy.wait_for_service(timeout=2.0)
+            emo_proxy(emotion)
+        if gesture:
+            ges_proxy = rospy.ServiceProxy('/qt_robot/gesture/play', gesture_play)
+            ges_proxy.wait_for_service(timeout=2.0)
+            ges_proxy(gesture, speed)
+        return jsonify({"success": True})
+    except Exception as e:
+        print(f"[Gesture] error: {e}")
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/api/speech_recognize", methods=["POST"])
+def api_speech_recognize():
+    """Run whisper ASR once and return the recognized text."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    try:
+        # Extract ISO-639-1 code from the configured language (e.g. "en-US" -> "en")
+        lang_code = None
+        config_lang = session.get('lang') or app.config.get('LANG', 'en-US')
+        if config_lang and '-' in config_lang:
+            lang_code = config_lang.split('-')[0]
+        elif config_lang:
+            lang_code = config_lang
+        text = _whisper_recognize_once(language=lang_code)
+        return jsonify({"success": True, "text": text.strip()})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/educational_quiz")
+def educational_quiz_page():
+    """Render the educational quiz play page."""
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    return render_template("educational_quiz.html")
+
+@app.route("/api/get_saved_quiz")
+def api_get_saved_quiz():
+    """Return all saved quiz questions of a given type for the current user."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    qtype = request.args.get("type", "").strip()
+    if qtype not in ("yes_no", "wh"):
+        return jsonify({"success": False, "error": "Invalid type. Use yes_no or wh."}), 400
+
+    quiz_dir = os.path.join(USER_DATA_DIR, username, "quizzes", qtype)
+    all_questions = []
+    if os.path.isdir(quiz_dir):
+        for fname in sorted(os.listdir(quiz_dir)):
+            if not fname.endswith(".json"):
+                continue
+            try:
+                with open(os.path.join(quiz_dir, fname), "r") as f:
+                    qs = json.load(f)
+                if isinstance(qs, list):
+                    all_questions.extend(qs)
+            except Exception:
+                continue
+
+    # Merge user-taught answers into accepted_answers
+    learned_path = os.path.join(USER_DATA_DIR, username, "quizzes", "learned_answers.json")
+    learned = {}
+    if os.path.isfile(learned_path):
+        try:
+            with open(learned_path, "r") as f:
+                learned = json.load(f)
+        except Exception:
+            pass
+    if learned:
+        for q in all_questions:
+            question_key = q.get("question", "").strip()
+            extra = learned.get(question_key, [])
+            if extra:
+                if not q.get("accepted_answers"):
+                    q["accepted_answers"] = [q["correct_answer"]] if q.get("correct_answer") else []
+                for ans in extra:
+                    if ans not in q["accepted_answers"]:
+                        q["accepted_answers"].append(ans)
+
+    return jsonify({"success": True, "questions": all_questions})
+
+@app.route("/api/generate_quiz_feedback", methods=["POST"])
+def api_generate_quiz_feedback():
+    """Pre-generate varied feedback phrases for correct/incorrect answers using the system prompt."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+
+    _ensure_quiz_llm()
+    if _quiz_llm is None:
+        return jsonify({"success": True, "correct": [], "incorrect": []})
+
+    # Load the SAR system prompt for pediatric context
+    system_prompt_path = os.path.join(os.path.dirname(BASE_DIR), "documents", "sar_system_prompt.md")
+    system_context = ""
+    if os.path.isfile(system_prompt_path):
+        try:
+            with open(system_prompt_path, "r") as f:
+                system_context = f.read()
+        except Exception:
+            pass
+
+    prompt = (
+        "You are a socially assistive robot in a pediatric therapeutic setting. "
+        "Here is your system prompt for context:\n"
+        f"{system_context}\n\n"
+        "Generate 10 short, varied, child-friendly phrases for when a child answers a quiz question CORRECTLY, "
+        "and 10 short, varied, child-friendly phrases for when a child answers INCORRECTLY. "
+        "Follow these rules:\n"
+        "- Each phrase must be 2-8 words maximum\n"
+        "- Use warm, encouraging, effort-focused language\n"
+        "- For incorrect: be gentle, never shaming. Encourage trying again\n"
+        "- Vary the style: some excited, some calm, some playful\n"
+        "- Do not use emojis\n"
+        "Return JSON only: {\"correct\": [\"...\", ...], \"incorrect\": [\"...\", ...]}"
+    )
+
+    try:
+        resp = _quiz_llm.get_response(prompt)
+        text = getattr(resp, 'message', None)
+        text = getattr(text, 'content', None) if text is not None else str(resp)
+        raw = (text or "").strip()
+        if raw.startswith("```"):
+            raw = raw.strip("`")
+            if raw.startswith("json"):
+                raw = raw[4:].strip()
+        obj = None
+        try:
+            obj = json.loads(raw)
+        except Exception:
+            l = raw.find('{')
+            r = raw.rfind('}')
+            if l != -1 and r != -1 and r > l:
+                obj = json.loads(raw[l:r+1])
+        if isinstance(obj, dict):
+            correct = [str(s).strip() for s in (obj.get("correct") or []) if str(s).strip()]
+            incorrect = [str(s).strip() for s in (obj.get("incorrect") or []) if str(s).strip()]
+            return jsonify({"success": True, "correct": correct, "incorrect": incorrect})
+    except Exception as e:
+        print(f"Warning: feedback generation failed: {e}")
+
+    return jsonify({"success": True, "correct": [], "incorrect": []})
+
+@app.route("/api/teach_quiz_answer", methods=["POST"])
+def api_teach_quiz_answer():
+    """Save user-taught alternative answers for a specific question."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    question = (data.get("question") or "").strip()
+    answers = data.get("answers") or []
+    if not question or not answers:
+        return jsonify({"success": False, "error": "Question and answers required"}), 400
+
+    answers = [str(a).strip() for a in answers if str(a).strip()]
+    if not answers:
+        return jsonify({"success": False, "error": "No valid answers provided"}), 400
+
+    learned_path = os.path.join(USER_DATA_DIR, username, "quizzes", "learned_answers.json")
+    os.makedirs(os.path.dirname(learned_path), exist_ok=True)
+
+    learned = {}
+    if os.path.isfile(learned_path):
+        try:
+            with open(learned_path, "r") as f:
+                learned = json.load(f)
+        except Exception:
+            learned = {}
+
+    existing = learned.get(question, [])
+    for ans in answers:
+        if ans not in existing:
+            existing.append(ans)
+    learned[question] = existing
+
+    with open(learned_path, "w") as f:
+        json.dump(learned, f, indent=2)
+
+    return jsonify({"success": True, "total_answers": len(existing)})
+
+@app.route("/api/save_quiz", methods=["POST"])
+def api_save_quiz():
+    """Save generated quiz questions to the user's folder, split by type."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    questions = data.get("questions") or []
+    if not questions:
+        return jsonify({"success": False, "error": "No questions provided"}), 400
+
+    import datetime
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    yes_no_qs = [q for q in questions if q.get("type") == "yes_no"]
+    wh_qs = [q for q in questions if q.get("type") == "wh"]
+
+    saved = []
+    if yes_no_qs:
+        folder = os.path.join(USER_DATA_DIR, username, "quizzes", "yes_no")
+        os.makedirs(folder, exist_ok=True)
+        fpath = os.path.join(folder, f"quiz_{ts}.json")
+        with open(fpath, "w") as f:
+            json.dump(yes_no_qs, f, indent=2)
+        saved.append(fpath)
+
+    if wh_qs:
+        folder = os.path.join(USER_DATA_DIR, username, "quizzes", "wh")
+        os.makedirs(folder, exist_ok=True)
+        fpath = os.path.join(folder, f"quiz_{ts}.json")
+        with open(fpath, "w") as f:
+            json.dump(wh_qs, f, indent=2)
+        saved.append(fpath)
+
+    return jsonify({
+        "success": True,
+        "yes_no_count": len(yes_no_qs),
+        "wh_count": len(wh_qs),
+        "files": saved
+    })
 
 @app.route("/api/save_story", methods=["POST"])
 def api_save_story():
@@ -2409,6 +2737,25 @@ def api_volume_settings():
 
         setattr(tts_helper, 'volume_level', level)
         return jsonify({'success': True, 'volume_level': level, 'applied': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/polly_volume', methods=['POST'])
+def api_polly_volume():
+    """Set Polly SSML volume in dB (e.g., '+6dB', '-3dB')."""
+    username = session.get('username')
+    if not username:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+
+    data = request.get_json() or {}
+    volume_db = str(data.get('volume_db', '')).strip()
+    if not volume_db:
+        return jsonify({'success': False, 'error': 'Missing volume_db'}), 400
+
+    try:
+        if not tts_helper.set_polly_volume(volume_db):
+            return jsonify({'success': False, 'error': 'Invalid dB value'}), 400
+        return jsonify({'success': True, 'polly_volume': tts_helper.polly_volume})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 @app.route('/api/volume_test', methods=['POST'])
