@@ -419,16 +419,30 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 | GET | `/quiz_generation` | Quiz builder page |
 | GET | `/educational_quiz` | Quiz playing page |
 
-### 4.5 DIY Activity Builder
+### 4.5 DIY Activity Builder (Recovery Strategy Builder)
 | Method | Route | Purpose |
 |--------|-------|---------|
-| GET | `/api/get_custom_games` | List saved activities |
-| POST | `/api/activity_save` | Save activity (JSON blocks) |
-| POST | `/api/activity_load_saved` | Load saved activity |
-| POST | `/api/activity_prepare` | Prepare for execution |
-| POST | `/api/activity_run_saved` | Execute activity |
-| POST | `/api/activity_stop` | Stop running activity |
-| POST | `/api/activity_test` | Test single block |
+| GET | `/api/get_custom_games` | List saved activities (includes `activity_type`) |
+| POST | `/api/activity/save` | Save activity (JSON blocks) |
+| POST | `/api/activity/load_saved` | Load saved activity |
+| POST | `/api/activity/prepare` | Prepare for execution |
+| POST | `/api/activity/run_saved` | Execute activity (with therapist step-by-step confirmation) |
+| POST | `/api/activity/stop` | Stop running activity |
+| POST | `/api/activity/test` | Test blocks on robot |
+| POST | `/api/activity/delete` | Delete a saved activity |
+| GET | `/api/activity/step_status` | Poll step-by-step execution state |
+| POST | `/api/activity/confirm_step` | Therapist confirms to proceed to next step |
+
+### 4.5.1 Recovery Camera & Question Generation
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/recovery/generate_question` | Capture camera + Gemini generates toy/child question |
+
+### 4.5.2 Conversation Flow
+| Method | Route | Purpose |
+|--------|-------|---------|
+| POST | `/api/conversation/wait_for_turn` | Listen for child speech + red card detection + generate follow-up |
+| GET | `/api/conversation/check_red_card` | Quick red card visibility check |
 
 ### 4.6 Camera & Vision
 | Method | Route | Purpose |
@@ -453,15 +467,16 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 ### 4.8 Pages
 | Route | Template | Purpose |
 |-------|----------|---------|
-| `/` | `index.html` | Login / registration |
+| `/` | `index.html` | Login / registration / game selection |
 | `/dashboard` | `dashboard.html` | Main dashboard |
 | `/play` | `play_games.html` | Game selection |
 | `/educational_quiz` | `educational_quiz.html` | Play quizzes |
 | `/quiz_generation` | `quiz_generation.html` | Build quizzes |
 | `/read_story/<file>` | `read_story.html` | Story reading |
 | `/play_scene` | `play_scene.html` | Object detection game |
-| `/diy_builder` | `diy_builder.html` | Activity builder |
-| `/my_games` | `my_games.html` | Saved custom activities |
+| `/builder` | `diy_builder.html` | Recovery strategy builder |
+| `/conversation_builder` | `conversation_builder.html` | Conversation flow builder |
+| `/my_games` | `my_games.html` | Saved activities & conversations |
 | `/select_toy` | `select_toy.html` | Toy selection |
 
 ---
@@ -483,7 +498,9 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 |-------|---------|------------|
 | `gemini-robotics-er-1.5-preview` | Physical object detection + localization | `scripts/gemini_analyze_image.py` → `/api/camera_capture` |
 | `gemini-2.5-flash-image` | Story scene illustration generation | `src/image_generator.py` / `src/image_generator_worker.py` |
-| `gemini-2.5-flash` | General image captioning | `test.py` |
+| `gemini-2.5-flash` | Recovery question generation (toy/child, age-appropriate) | `scripts/gemini_recovery_question.py` → `/api/recovery/generate_question` |
+| `gemini-2.5-flash` | Conversation follow-up generation | `scripts/gemini_conversation_followup.py` → `/api/conversation/wait_for_turn` |
+| `gemini-2.5-flash` | WH-question scene analysis | `scripts/gemini_wh_scene.py` → `/api/wh_scene/capture` |
 
 ### 5.3 Speech Services
 
@@ -761,6 +778,75 @@ State: RESPONDING → IDLE
        └── Robot voice feedback via tts_helper.speak()
 ```
 
+### 8.4 Recovery Strategy Builder Flow
+
+```
+[Therapist drags components → builds recovery sequence]
+       │
+       ▼ serialize()
+  { blocks: [{type:"step", component:"simple_attention", element:"name_call",
+              text:"Hey! Soomin!", gesture:"hi", emotion:"QT/happy", useCamera:null},
+             {type:"step", component:"question_attention", element:"toy_question",
+              text:"...", gesture:"show_tablet", emotion:"QT/happy", useCamera:"toy"}],
+    loop: 1 }
+       │
+       ├── [Test on Robot] → POST /api/activity/test (all steps, no pauses)
+       ├── [Run] → step-by-step with therapist confirmation overlay
+       └── [Save] → POST /api/activity/save → user_data/<user>/activities/
+
+  Toy Question Step (useCamera="toy"):
+  ┌──────────────────────────────────────────────────────┐
+  │ 1. Capture camera → Gemini generates question        │
+  │ 2. If toy seen: ask about it                         │
+  │    If no toy: "What do you have? Show me!"           │
+  │ 3. Watch camera every 3s for toy (up to 45s)         │
+  │ 4. If toy appears: excited follow-up                 │
+  │ 5. "Well done {name}!"                               │
+  └──────────────────────────────────────────────────────┘
+```
+
+### 8.5 Conversation Flow Builder
+
+```
+[Therapist drags themes → sets follow-up count per theme]
+       │
+       ▼ serialize()
+  { blocks: [{type:"step", theme:"greeting", text:"Hello Soomin!",
+              gesture:"hi", emotion:"QT/happy", followups: 2},
+             {type:"step", theme:"weather", text:"What's the weather?",
+              gesture:"", emotion:"QT/happy", followups: 1}],
+    loop: 1, activity_type: "conversation" }
+       │
+       ▼ Per theme step (e.g., greeting with 2 follow-ups):
+
+  ┌─── Robot speaks opening ──────────────────────────────────┐
+  │                                                            │
+  │  _wait_until_robot_silent() → _enable_face_tracking()     │
+  │  _signal_child_can_speak() → show_tablet gesture          │
+  │                                                            │
+  │  ┌── Follow-up 1 ──────────────────────────────────────┐  │
+  │  │ ASR listens ◄──────────► Red card watcher (0.5s)    │  │
+  │  │ (collects speech)         (polls camera in thread)   │  │
+  │  │                  Red card detected!                  │  │
+  │  │                     │                                │  │
+  │  │  Filter English-only │                               │  │
+  │  │                     ▼                                │  │
+  │  │  Gemini generates follow-up question (ends with ?)   │  │
+  │  │  Robot speaks follow-up                              │  │
+  │  └─────────────────────────────────────────────────────┘  │
+  │                                                            │
+  │  ┌── Follow-up 2 ──────────────────────────────────────┐  │
+  │  │ (same flow as above)                                 │  │
+  │  └─────────────────────────────────────────────────────┘  │
+  │                                                            │
+  │  ┌── Closing ──────────────────────────────────────────┐  │
+  │  │ ASR + red card → Gemini generates closing comment    │  │
+  │  │ (no question, no farewell — warm acknowledgment)     │  │
+  │  │ Robot speaks: "I really enjoyed hearing about that!" │  │
+  │  └─────────────────────────────────────────────────────┘  │
+  └────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## 9. User Data Structure
@@ -785,8 +871,9 @@ user_data/
 │   │   │   └── quiz_20260324_180803.json  # [{question, type, correct_answer, accepted_answers}]
 │   │   └── learned_answers.json           # {"question text": ["alt1", "alt2", ...]}
 │   ├── activities/
-│   │   └── activity_20260324_180000.json  # {blocks: [...], loop: 1}
-│   ├── captured_scenes/                   # Camera captures for scene game
+│   │   ├── activity_20260324_180000.json  # DIY: {blocks: [...], loop: 1}
+│   │   └── activity_20260326_120000.json  # Conversation: {blocks: [...], loop: 1, activity_type: "conversation"}
+│   ├── captured_scenes/                   # Camera captures for scene game & recovery questions
 │   └── polly/                             # Polly TTS audio cache (if using polly)
 │
 ├── activity_images/                       # Shared DIY builder images
@@ -846,6 +933,9 @@ The system requires **two Python versions** due to SDK compatibility:
 | Flask Web Server | Multi-threaded (default) | Flask session |
 | Whisper ASR | Subprocess (blocking) | proc.wait() |
 | Image Generator | Subprocess (Python 3.9) | proc.wait() |
+| Red Card Watcher | Daemon thread per listen round | ThreadEvent (red_card_event) |
+| Step Confirmation | Background activity thread | ThreadEvent (_step_confirm_event) |
+| Conversation Follow-up | Gemini subprocess (Python 3.9) | subprocess.run + stdin pipe |
 
 ---
 
@@ -863,8 +953,41 @@ LLM generates age-appropriate therapeutic story → Gemini generates illustratio
 ### Mode 4: Scene Game / Object Detection (Web Interface)
 Camera feed shown → Gemini ER detects held objects → robot asks questions → validates answers
 
-### Mode 5: DIY Activity Builder (Web Interface)
-Therapist creates visual block programs → blocks: speech, gesture, image, wait-for-child, recognize, logic (if/else), loop → saved and executable
+### Mode 5: Recovery Strategy Builder (Web Interface)
+Therapist builds meltdown/disengagement recovery sequences via drag-and-drop. Four component types:
+- **Simple Attention Bid** — name call or sound effect (age-appropriate text)
+- **Question Attention Bid** — camera-based toy detection or child observation via Gemini
+- **Modality Switch** — jumping jack, sing, or wiggling body
+- **Graceful Withdrawal** — calm exit with age-appropriate language
+
+**Toy question flow**: Robot captures camera → Gemini detects object → asks about it. If no object: asks child to show toy → watches camera every 3s → when toy appears, speaks excited follow-up → finishes with "Well done {name}!"
+
+**Execution modes**:
+- **Test**: All steps run sequentially (no pauses)
+- **Run**: Step-by-step with therapist confirmation overlay between steps
+- **Saved (run_saved)**: Server-side step-by-step with polling-based therapist confirmation
+
+All text, gestures, and facial expressions are editable by the therapist. Text auto-generates based on child's age (4 tiers: 2-3, 4-5, 6-7, 8+).
+
+### Mode 6: Conversation Flow Builder (Web Interface)
+Therapist constructs conversational interaction flows from theme components (greeting, weather, weekend plan) via drag-and-drop.
+
+**Per-theme step flow**:
+1. Robot speaks opening line (greeting gets `hi` gesture; others have no gesture)
+2. `_wait_until_robot_silent()` — mic stays off until TTS finishes + 1.5s cooldown
+3. `_enable_face_tracking()` — robot follows child's face via camera + sound direction
+4. `_signal_child_can_speak()` — robot performs `show_tablet` gesture to signal "your turn"
+5. ASR listens while red card watcher polls camera every 0.5s in parallel
+6. Child shows red card → ASR stops immediately → collected speech filtered to English-only
+7. Gemini generates age-appropriate follow-up question (always ends with `?` unless closing)
+8. Robot speaks follow-up → repeat from step 2 for configured number of rounds
+9. Final round: closing comment (warm acknowledgment, no question, no farewell)
+
+**Red card detection**: OpenCV HSV color thresholding (hue 0-10 & 165-180, saturation > 100), triggers when red area exceeds 3% of frame.
+
+**Follow-up generation**: If child's speech is insufficient (< 2 English words), Gemini generates a new on-theme question instead of trying to reference unclear speech.
+
+**Configurable**: 0-5 follow-up exchanges per theme. Even with 0 follow-ups, robot always listens once and gives a closing comment.
 
 ---
 
@@ -894,6 +1017,9 @@ version_1_llm_gemini/
 │   ├── autostart/
 │   │   └── start_qt_ai_data_assitant.sh
 │   ├── gemini_analyze_image.py         # Gemini ER object detection (Py3.9)
+│   ├── gemini_recovery_question.py     # Camera-based toy/child question gen (Py3.9)
+│   ├── gemini_conversation_followup.py # Conversation follow-up generation (Py3.9)
+│   ├── gemini_wh_scene.py              # WH-question scene analysis (Py3.9)
 │   └── install_ollama.sh
 ├── src/
 │   ├── qt_ai_data_assistant.py         # Main robot brain
@@ -925,15 +1051,16 @@ version_1_llm_gemini/
 │   ├── user_data/                    # Per-user data storage
 │   └── .env                          # Environment variables
 ├── templates/
-│   ├── index.html                    # Login / registration
+│   ├── index.html                    # Login / registration / game selection
 │   ├── dashboard.html                # Main dashboard
 │   ├── play_games.html               # Game selection
 │   ├── educational_quiz.html         # Quiz playing
 │   ├── quiz_generation.html          # Quiz builder
 │   ├── read_story.html               # Story reading
 │   ├── play_scene.html               # Object detection game
-│   ├── diy_builder.html              # Activity builder
-│   ├── my_games.html                 # Saved activities
+│   ├── diy_builder.html              # Recovery strategy builder (drag-and-drop)
+│   ├── conversation_builder.html     # Conversation flow builder (drag-and-drop)
+│   ├── my_games.html                 # Saved activities & conversations
 │   └── select_toy.html               # Toy selection
 ├── robotics.py                       # Gemini ER demo script
 ├── test.py                           # Gemini vision test
