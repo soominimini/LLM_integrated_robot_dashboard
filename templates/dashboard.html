@@ -513,11 +513,11 @@
 
         function navigateTo(destination) {
             if (destination === 'generate') {
-                // Navigate to game generation page (current index.html with game selection)
                 window.location.href = '/generate';
             } else if (destination === 'play') {
-                // Navigate to play games page
                 window.location.href = '/play';
+            } else if (destination === 'my_games') {
+                window.location.href = '/my_games';
             }
         }
 

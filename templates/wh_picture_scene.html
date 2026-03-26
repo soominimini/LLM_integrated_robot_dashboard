@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WH Questions - Prepare Scenes</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header { text-align: center; margin-bottom: 1.5rem; }
+    .header h1 { color: #333; font-size: 1.8rem; margin-bottom: 0.3rem; }
+    .header p { color: #666; font-size: 0.95rem; }
+
+    /* Camera section */
+    .camera-section {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .camera-preview {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      display: inline-block;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .camera-preview img {
+      display: block;
+      max-width: 100%;
+      width: 480px;
+      height: 360px;
+      object-fit: cover;
+    }
+    .camera-preview .no-camera {
+      width: 480px;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1rem;
+    }
+    .capture-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+    }
+    .capture-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(102,126,234,0.4);
+    }
+    .capture-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .capture-status {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: #888;
+      min-height: 1.5em;
+    }
+
+    /* Scene list */
+    .scene-list { display: flex; flex-direction: column; gap: 1rem; }
+    .scene-card {
+      display: flex;
+      gap: 1rem;
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      padding: 1rem;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .scene-card:hover { border-color: #667eea; }
+    .scene-card img {
+      width: 120px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .scene-card .info { flex: 1; }
+    .scene-card .info h4 { color: #333; margin-bottom: 0.25rem; }
+    .scene-card .info p { color: #888; font-size: 0.85rem; }
+    .scene-card .actions { display: flex; gap: 0.5rem; }
+
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge.ready { background: #d4edda; color: #155724; }
+    .badge.pending { background: #fff3cd; color: #664d03; }
+    .badge.error { background: #f8d7da; color: #721c24; }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+    .btn-secondary { background: #6c757d; color: white; }
+    .btn-danger { background: #dc3545; color: white; }
+    .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>WH Questions - Prepare Scenes</h1>
+      <p>Point the robot's camera at a scene and capture it to generate questions</p>
+    </div>
+
+    <!-- Camera preview + capture -->
+    <div class="camera-section">
+      <div class="camera-preview">
+        <img id="cameraFrame" src="" alt="Camera Feed">
+      </div>
+      <br>
+      <button class="capture-btn" id="captureBtn" onclick="captureScene()">Capture Scene</button>
+      <div class="capture-status" id="captureStatus"></div>
+    </div>
+
+    <h3 style="color:#333; margin-bottom:0.75rem;">Captured Scenes</h3>
+    <div id="sceneList" class="scene-list">
+      <p style="color:#aaa; text-align:center; padding:1rem;">No scenes captured yet.</p>
+    </div>
+
+    <div class="text-center mt-1">
+      <button class="btn btn-secondary" onclick="window.location.href='/'">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script>
+    // ===================== CAMERA FEED =====================
+    let camTimer = null;
+
+    function startCamera() {
+      stopCamera();
+      const img = document.getElementById('cameraFrame');
+      const tick = () => { img.src = '/api/camera_frame?t=' + Date.now(); };
+      tick();
+      camTimer = setInterval(tick, 500);
+    }
+
+    function stopCamera() {
+      if (camTimer) { clearInterval(camTimer); camTimer = null; }
+    }
+
+    // ===================== CAPTURE =====================
+    let capturing = false;
+
+    async function captureScene() {
+      if (capturing) return;
+      capturing = true;
+      const btn = document.getElementById('captureBtn');
+      const status = document.getElementById('captureStatus');
+      btn.disabled = true;
+      status.innerHTML = '<span class="spinner"></span> Capturing and analyzing scene...';
+
+      try {
+        const res = await fetch('/api/wh_scene/capture', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        if (data.success) {
+          if (data.warning) {
+            status.textContent = 'Captured but analysis failed: ' + data.warning;
+          } else {
+            status.textContent = 'Scene captured and ' + (data.scene.question_count || 0) + ' questions generated!';
+          }
+          loadSceneList();
+        } else {
+          status.textContent = 'Error: ' + (data.error || 'Unknown error');
+        }
+      } catch (e) {
+        status.textContent = 'Error: ' + e.message;
+      } finally {
+        capturing = false;
+        btn.disabled = false;
+      }
+    }
+
+    // ===================== SCENE LIST =====================
+    async function loadSceneList() {
+      try {
+        const res = await fetch('/api/wh_scene/list');
+        const data = await res.json();
+        renderSceneList(data.scenes || []);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderSceneList(scenes) {
+      const container = document.getElementById('sceneList');
+      if (!scenes.length) {
+        container.innerHTML = '<p style="color:#aaa; text-align:center; padding:1rem;">No scenes captured yet.</p>';
+        return;
+      }
+      container.innerHTML = scenes.map(s => `
+        <div class="scene-card">
+          <img src="${s.image_url}" alt="Scene">
+          <div class="info">
+            <h4>${s.filename}</h4>
+            <p>${s.scene_description || 'Analysis failed'}</p>
+            <span class="badge ${s.status}">${s.status}</span>
+            ${s.question_count ? ' &middot; ' + s.question_count + ' questions' : ''}
+          </div>
+          <div class="actions">
+            ${s.status === 'error' ? `<button class="btn btn-sm btn-primary" onclick="regenerateScene('${s.id}')">Retry</button>` : ''}
+            <button class="btn btn-sm btn-danger" onclick="deleteScene('${s.id}')">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function deleteScene(sceneId) {
+      if (!confirm('Delete this scene?')) return;
+      try {
+        await fetch('/api/wh_scene/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scene_id: sceneId })
+        });
+        loadSceneList();
+      } catch (e) { alert(e.message); }
+    }
+
+    async function regenerateScene(sceneId) {
+      try {
+        const res = await fetch('/api/wh_scene/regenerate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scene_id: sceneId })
+        });
+        const data = await res.json();
+        if (data.success) loadSceneList();
+        else alert('Regeneration failed: ' + (data.error || 'Unknown'));
+      } catch (e) { alert(e.message); }
+    }
+
+    // ===================== INIT =====================
+    startCamera();
+    loadSceneList();
+  </script>
+</body>
+</html>

@@ -430,12 +430,6 @@
             </div>
             
             <div class="game-grid">
-                <div class="game-card" onclick="startGame('chat')">
-                    <div class="game-icon">💬</div>
-                    <h3>AI Chat Assistant</h3>
-                    <p>Have a conversation with the QTrobot AI assistant</p>
-                </div>
-                
                 <div class="game-card" onclick="startGame('story')">
                     <div class="game-icon">📚</div>
                     <h3>Interactive Story</h3>
@@ -454,10 +448,22 @@
                     <p>Explore the robot's vision capabilities</p>
                 </div>
 
+                <div class="game-card" onclick="startGame('wh_scene')">
+                    <div class="game-icon">?</div>
+                    <h3>WH Picture Scenes</h3>
+                    <p>Upload pictures and practice WH-questions with the robot</p>
+                </div>
+
                  <div class="game-card" onclick="startGame('builder')">
                      <div class="game-icon">🛠️</div>
                      <h3>Do It Yourself</h3>
-                     <p>Build your own activity with speech, images, gestures and logic</p>
+                     <p>Build your own activity with speech, gestures, and facial expressions</p>
+                 </div>
+
+                 <div class="game-card" onclick="startGame('conversation')">
+                     <div class="game-icon">💬</div>
+                     <h3>Conversation</h3>
+                     <p>Build a conversational interaction flow between the robot and the child</p>
                  </div>
             </div>
             
@@ -562,11 +568,15 @@
             if (gameType === 'story') {
                 showStorySection();
             } else if (gameType === 'builder') {
-                window.location.href = '/select_toy';
+                window.location.href = '/builder';
             } else if (gameType === 'detection') {
                 window.location.href = '/object_game_generate';
             } else if (gameType === 'quiz') {
                 window.location.href = '/quiz_generation';
+            } else if (gameType === 'wh_scene') {
+                window.location.href = '/wh_picture_scene';
+            } else if (gameType === 'conversation') {
+                window.location.href = '/conversation_builder';
             }  else {
                 alert(`Starting ${gameType} game! This will integrate with the QTrobot AI assistant.`);
             }

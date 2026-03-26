@@ -265,19 +265,19 @@
                 <div class="game-status">Playing...</div>
             </div>
 
-            <div class="game-card" id="chat-game">
-                <div class="game-icon">💬</div>
-                <h3>AI Chat Assistant</h3>
-                <p>Have a conversation with QTrobot</p>
-                <button class="play-btn" onclick="playGame('chat')">Start Chat</button>
-                <div class="game-status">Chatting...</div>
-            </div>
-
             <div class="game-card" id="quiz-game">
                 <div class="game-icon">❓</div>
                 <h3>Educational Quiz</h3>
                 <p>Test your knowledge with fun quizzes</p>
                 <button class="play-btn" onclick="playGame('quiz')">Take Quiz</button>
+                <div class="game-status">Playing...</div>
+            </div>
+
+            <div class="game-card" id="wh-scene-game">
+                <div class="game-icon">?</div>
+                <h3>WH Picture Scenes</h3>
+                <p>Answer Who, What, When, Where, Why about pictures</p>
+                <button class="play-btn" onclick="playGame('wh_scene')">Play WH Scenes</button>
                 <div class="game-status">Playing...</div>
             </div>
         </div>
@@ -307,6 +307,17 @@
         let currentGame = null;
 
         function playGame(gameType) {
+            // Games that navigate away immediately
+            const redirects = {
+                'scene': '/play_scene',
+                'quiz': '/educational_quiz',
+                'wh_scene': '/wh_picture_play'
+            };
+            if (redirects[gameType]) {
+                window.location.href = redirects[gameType];
+                return;
+            }
+
             // Stop any currently playing game
             if (currentGame && currentGame !== gameType) {
                 stopGame(currentGame);
@@ -315,6 +326,7 @@
             // Start the new game
             currentGame = gameType;
             const gameCard = document.getElementById(`${gameType}-game`);
+            if (!gameCard) return;
             const playBtn = gameCard.querySelector('.play-btn');
             const status = gameCard.querySelector('.game-status');
 
@@ -330,20 +342,11 @@
             // Simulate game loading
             setTimeout(() => {
                 loading.classList.remove('active');
-                
+
                 // Handle different game types
                 switch(gameType) {
                     case 'story':
                         startStoryGame();
-                        break;
-                    case 'scene':
-                        window.location.href = '/play_scene';
-                        break;
-                    case 'chat':
-                        startChatGame();
-                        break;
-                    case 'quiz':
-                        startQuizGame();
                         break;
                 }
             }, 1500);
@@ -366,9 +369,6 @@
                     break;
                 case 'scene':
                     playBtn.textContent = 'Play Scene Game';
-                    break;
-                case 'chat':
-                    playBtn.textContent = 'Start Chat';
                     break;
                 case 'quiz':
                     playBtn.textContent = 'Take Quiz';
@@ -483,11 +483,6 @@
             startCameraPolling();
         }
 
-        function startChatGame() {
-            alertDiv.innerHTML = '<div class="alert success">💬 Chat Game Started!<br>You can now have a conversation with QTrobot. Try asking questions!</div>';
-            // Here you would integrate with the actual chat functionality
-        }
-
         function startQuizGame() {
             window.location.href = '/educational_quiz';
         }
@@ -506,22 +501,7 @@
             }
         }
 
-        // Handle game button clicks
-        document.querySelectorAll('.play-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const gameType = this.getAttribute('onclick').match(/'([^']+)'/)[1];
-                
-                if (this.classList.contains('playing')) {
-                    // Stop the game
-                    stopGame(gameType);
-                    alertDiv.innerHTML = '<div class="alert info">Game stopped. Click any game to start a new one!</div>';
-                } else {
-                    // Start the game
-                    playGame(gameType);
-                }
-            });
-        });
+        // Note: game buttons use inline onclick="playGame(...)" handlers directly.
         // Simple polling-based camera preview
         let camTimer = null;
         function startCameraPolling() {

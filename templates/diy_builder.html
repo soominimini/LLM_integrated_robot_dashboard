@@ -3,534 +3,898 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DIY Activity Builder</title>
+  <title>Recovery Strategy Builder</title>
   <style>
+    * { box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial; background: #f5f7fb; margin: 0; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .header h1 { margin: 0; font-size: 22px; color: #333; }
+    .top-bar { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .top-bar h1 { margin: 0; font-size: 20px; color: #333; }
+    .top-bar .subtitle { font-size: 13px; color: #64748b; margin-left: 8px; }
     .toolbar { display: flex; gap: 8px; }
-    .btn { background: #667eea; color: #fff; border: 0; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn { background: #667eea; color: #fff; border: 0; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102,126,234,0.3); }
     .btn.secondary { background: #6c757d; }
     .btn.outline { background: #fff; color: #667eea; border: 2px solid #667eea; }
-    .grid { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
-    .panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; }
-    .panel h2 { font-size: 16px; margin: 0 0 10px; color: #444; }
-    .palette { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .item { border: 1px dashed #cbd5e1; border-radius: 10px; padding: 10px; background: #f8fafc; cursor: grab; text-align: center; font-size: 14px; }
-    .canvas { min-height: 420px; background: #fafafa; border: 2px dashed #cbd5e1; border-radius: 10px; padding: 12px; }
-    .block { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
-    .block.dragging { opacity: 0.6; border-color: #93c5fd; background: #eef2ff; }
-    .block-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-    .block-title { font-weight: 700; font-size: 13px; color: #374151; }
-    .block-actions button { background: transparent; border: 0; color: #6b7280; cursor: pointer; }
-    .field { display: grid; gap: 6px; margin: 8px 0; }
-    .field label { font-size: 12px; color: #6b7280; }
-    .field input, .field textarea, .field select { border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px; font-size: 14px; }
-    .empty-hint { color: #94a3b8; text-align: center; padding: 24px; }
-    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
-    .status { font-size: 13px; color: #64748b; }
-    .img-preview { display: block; max-width: 100%; border-radius: 8px; border: 1px solid #e5e7eb; margin-top: 6px; }
+    .btn.green { background: #10b981; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    /* Modal styles */
-    .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); display: none; align-items: center; justify-content: center; z-index: 999; }
-    .modal.active { display: flex; }
-    .modal-card { background: #fff; border-radius: 12px; padding: 16px; max-width: 900px; width: calc(100% - 40px); max-height: 80vh; overflow: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-    .modal-header h3 { margin: 0; font-size: 16px; color: #334155; }
-    .modal-close { background: transparent; border: 0; font-size: 20px; cursor: pointer; color: #64748b; }
-    .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
-    .image-item { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; background: #f8fafc; }
-    .image-item img { width: 100%; height: auto; display: block; }
-    .image-caption { font-size: 12px; color: #64748b; padding: 6px 8px; }
+    .layout { display: flex; gap: 0; height: calc(100vh - 60px); }
+
+    /* ── Left palette ── */
+    .palette { width: 280px; min-width: 280px; background: #fff; border-right: 1px solid #e5e7eb; padding: 20px 16px; overflow-y: auto; }
+    .palette h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin: 0 0 16px; }
+
+    .palette-card {
+      background: #fff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 14px;
+      margin-bottom: 12px; cursor: grab; user-select: none;
+      transition: all 0.2s;
+    }
+    .palette-card:hover { border-color: #667eea; box-shadow: 0 4px 12px rgba(102,126,234,0.12); }
+    .palette-card:active { cursor: grabbing; }
+    .palette-card .pc-icon { font-size: 22px; margin-bottom: 6px; }
+    .palette-card .pc-name { font-weight: 700; font-size: 14px; color: #1e293b; margin-bottom: 2px; }
+    .palette-card .pc-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+
+    .palette-card[data-component="simple_attention"]   { border-left: 4px solid #f59e0b; }
+    .palette-card[data-component="question_attention"] { border-left: 4px solid #3b82f6; }
+    .palette-card[data-component="modality_switch"]    { border-left: 4px solid #8b5cf6; }
+    .palette-card[data-component="graceful_withdrawal"]{ border-left: 4px solid #10b981; }
+
+    /* ── Right: step timeline ── */
+    .timeline-panel { flex: 1; padding: 24px 32px; overflow-y: auto; }
+    .timeline-panel h2 { font-size: 16px; color: #333; margin: 0 0 4px; }
+    .timeline-panel .hint { font-size: 13px; color: #94a3b8; margin: 0 0 20px; }
+
+    .steps { display: flex; flex-direction: column; gap: 0; min-height: 200px; }
+
+    .drop-zone {
+      border: 2px dashed #cbd5e1; border-radius: 12px; padding: 32px;
+      text-align: center; color: #94a3b8; font-size: 14px;
+      transition: all 0.2s; min-height: 80px; display: flex; align-items: center; justify-content: center;
+    }
+    .drop-zone.drag-over { border-color: #667eea; background: #eef2ff; color: #667eea; }
+
+    .step-connector { display: flex; align-items: center; justify-content: center; height: 32px; position: relative; }
+    .step-connector::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #cbd5e1; }
+    .step-connector .arrow { background: #f5f7fb; position: relative; z-index: 1; color: #94a3b8; font-size: 18px; }
+
+    .step-card {
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: box-shadow 0.2s; position: relative;
+    }
+    .step-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+    .step-card[data-component="simple_attention"]    { border-left: 4px solid #f59e0b; }
+    .step-card[data-component="question_attention"]  { border-left: 4px solid #3b82f6; }
+    .step-card[data-component="modality_switch"]     { border-left: 4px solid #8b5cf6; }
+    .step-card[data-component="graceful_withdrawal"] { border-left: 4px solid #10b981; }
+
+    .step-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .step-title { display: flex; align-items: center; gap: 8px; }
+    .step-number { color: #fff; font-size: 12px; font-weight: 700; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-card[data-component="simple_attention"]    .step-number { background: #f59e0b; }
+    .step-card[data-component="question_attention"]  .step-number { background: #3b82f6; }
+    .step-card[data-component="modality_switch"]     .step-number { background: #8b5cf6; }
+    .step-card[data-component="graceful_withdrawal"] .step-number { background: #10b981; }
+
+    .step-label { font-weight: 700; font-size: 14px; color: #374151; }
+    .step-actions { display: flex; gap: 4px; }
+    .step-actions button { background: transparent; border: 0; color: #9ca3af; cursor: pointer; font-size: 18px; padding: 4px 6px; border-radius: 6px; transition: all 0.15s; }
+    .step-actions button:hover { background: #f3f4f6; color: #6b7280; }
+    .step-actions button.delete:hover { color: #ef4444; background: #fef2f2; }
+
+    .step-fields { display: grid; gap: 12px; }
+    .field { display: grid; gap: 4px; }
+    .field label { font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .field select, .field input, .field textarea {
+      border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px;
+      font-size: 14px; font-family: inherit; background: #fff;
+      transition: border-color 0.2s;
+    }
+    .field select:focus, .field input:focus, .field textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+    .field textarea { resize: vertical; min-height: 50px; cursor: text; }
+    .field select { cursor: pointer; }
+
+    .field-row { display: flex; gap: 10px; }
+    .field-row .field { flex: 1; }
+
+    .camera-hint {
+      font-size: 12px; color: #6366f1; margin-top: 4px; line-height: 1.4;
+    }
+
+    .reset-btn {
+      background: none; border: 1px solid #cbd5e1; border-radius: 6px;
+      padding: 4px 10px; font-size: 11px; color: #64748b; cursor: pointer;
+      margin-left: 8px; transition: all 0.15s;
+    }
+    .reset-btn:hover { background: #f1f5f9; color: #334155; border-color: #94a3b8; }
+
+    .empty-state { text-align: center; padding: 60px 24px; color: #94a3b8; }
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { margin: 0; font-size: 15px; }
+
+    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
+    .status { font-size: 13px; color: #64748b; }
+
+    .btn.run { background: #6366f1; }
+
+    /* ── Step highlight during run ── */
+    .step-card.running { box-shadow: 0 0 0 3px rgba(99,102,241,0.4); }
+    .step-card.done    { opacity: 0.55; }
+
+    /* ── Therapist confirmation overlay ── */
+    .confirm-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 1000; align-items: center; justify-content: center;
+    }
+    .confirm-overlay.visible { display: flex; }
+    .confirm-box {
+      background: #fff; border-radius: 16px; padding: 32px 36px; max-width: 440px; width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: center;
+    }
+    .confirm-box .cb-icon { font-size: 40px; margin-bottom: 8px; }
+    .confirm-box h3 { margin: 0 0 6px; font-size: 18px; color: #1e293b; }
+    .confirm-box .cb-detail { font-size: 14px; color: #64748b; margin: 0 0 8px; }
+    .confirm-box .cb-progress { font-size: 13px; color: #94a3b8; margin: 0 0 20px; }
+    .confirm-box .cb-actions { display: flex; gap: 10px; justify-content: center; }
+    .confirm-box .cb-actions .btn { min-width: 120px; font-size: 15px; padding: 12px 20px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🛠️ Do It Yourself — Activity Builder</h1>
-      <div class="toolbar">
-        <button class="btn outline" onclick="window.location.href='/'">Back</button>
-        <button class="btn secondary" id="prepareBtn">Send to Robot</button>
-        <button class="btn" id="testBtn">Test</button>
-        <button class="btn" id="saveBtn">Save</button>
-      </div>
+
+  <div class="top-bar">
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <h1>Recovery Strategy Builder</h1>
+      <span class="subtitle">Meltdown & Disengagement Recovery</span>
     </div>
-    <div id="toy-banner" style="margin-bottom:10px; color:#64748b;"></div>
+    <div class="toolbar">
+      <button class="btn outline" onclick="window.location.href='/'">Back</button>
+      <button class="btn green" id="testBtn" title="Run all steps at once without pauses">Test on Robot</button>
+      <button class="btn run" id="runBtn" title="Run step-by-step with therapist confirmation between each step">Run</button>
+      <button class="btn secondary" id="saveBtn">Save</button>
+    </div>
+  </div>
 
-    <div class="grid">
-      <div class="panel">
-        <h2>Blocks</h2>
-        <div class="palette">
-          <div class="item" draggable="true" data-type="praise">Praise</div>
-          <div class="item" draggable="true" data-type="speech">Speech Block</div>
-          <div class="item" draggable="true" data-type="image">Image Block</div>
-          <div class="item" draggable="true" data-type="gesture">Gesture Block</div>
-          <div class="item" draggable="true" data-type="wait">Wait for Child</div>
-          <div class="item" draggable="true" data-type="logic">Logic Block</div>
-          <div class="item" draggable="true" data-type="recognize">Recognize</div>
-          <div class="item" draggable="true" data-type="loop">Loop</div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Activity Flow</h2>
-        <div id="canvas" class="canvas">
-          <div class="empty-hint">Drag blocks here to build your activity flow</div>
-        </div>
-        <div class="footer">
-          <div class="status" id="status"></div>
-          <div>
-            <label style="font-size:12px;color:#64748b;margin-right:6px;">Loop count:</label>
-            <input id="loopCount" type="number" min="1" value="1" style="width:64px;padding:6px;border:1px solid #e5e7eb;border-radius:8px;">
-          </div>
-        </div>
+  <!-- ── Therapist confirmation overlay ── -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <div class="cb-icon" id="cbIcon"></div>
+      <h3 id="cbTitle">Step completed</h3>
+      <p class="cb-detail" id="cbDetail"></p>
+      <p class="cb-progress" id="cbProgress"></p>
+      <div class="cb-actions">
+        <button class="btn outline" id="cbStopBtn">Stop</button>
+        <button class="btn run" id="cbNextBtn">Next Step</button>
       </div>
     </div>
   </div>
 
-  <!-- Images Modal -->
-  <div id="image-modal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="image-modal-title">
-      <div class="modal-header">
-        <h3 id="image-modal-title">Generated Images</h3>
-        <button class="modal-close" id="image-modal-close" aria-label="Close">✕</button>
+  <div class="layout">
+    <!-- ── Left: Component palette ── -->
+    <div class="palette">
+      <h2>Components</h2>
+
+      <div class="palette-card" data-component="simple_attention" draggable="true">
+        <div class="pc-icon">👋</div>
+        <div class="pc-name">Simple Attention Bid</div>
+        <div class="pc-desc">Name call or sound effect to gently recapture attention</div>
       </div>
-      <div id="image-modal-grid" class="image-grid"></div>
+
+      <div class="palette-card" data-component="question_attention" draggable="true">
+        <div class="pc-icon">❓</div>
+        <div class="pc-name">Question Attention Bid</div>
+        <div class="pc-desc">Ask about a toy or the child to re-engage through curiosity</div>
+      </div>
+
+      <div class="palette-card" data-component="modality_switch" draggable="true">
+        <div class="pc-icon">🎭</div>
+        <div class="pc-name">Modality Switch</div>
+        <div class="pc-desc">Change the interaction mode with movement or music</div>
+      </div>
+
+      <div class="palette-card" data-component="graceful_withdrawal" draggable="true">
+        <div class="pc-icon">🕊️</div>
+        <div class="pc-name">Graceful Withdrawal</div>
+        <div class="pc-desc">Calmly step back and give the child space</div>
+      </div>
+    </div>
+
+    <!-- ── Right: Step timeline ── -->
+    <div class="timeline-panel">
+      <h2>Recovery Steps</h2>
+      <p class="hint">Drag components from the left and drop them here to build your recovery sequence.</p>
+
+      <div id="steps" class="steps"></div>
+
+      <div id="drop-zone" class="drop-zone">
+        Drop a component here to add a step
+      </div>
+
+      <div class="footer">
+        <div class="status" id="status"></div>
+      </div>
     </div>
   </div>
 
   <script>
-    const paletteItems = document.querySelectorAll('.item');
-    const canvas = document.getElementById('canvas');
-    const statusEl = document.getElementById('status');
-    const loopInput = document.getElementById('loopCount');
+    // ── User info from server ──
+    const USERNAME = {{ user.display_name|default(user.username, true)|tojson }};
+    const USER_AGE = {{ user.age|default(5, true)|tojson }};
 
-    let paletteDrag = false;
-    let blockDrag = false;
+    // ── Age-appropriate text generators ──
+    function nameCallText() {
+      const age = USER_AGE;
+      if (age <= 3) return `${USERNAME}! ${USERNAME}! Hi!`;
+      if (age <= 5) return `Hey! ${USERNAME}! Look at me!`;
+      if (age <= 7) return `Hey ${USERNAME}! Over here! I want to show you something!`;
+      return `Hey ${USERNAME}! Can I get your attention for a moment?`;
+    }
 
-    paletteItems.forEach(el => {
-      el.addEventListener('dragstart', (e) => {
-        const type = e.target.getAttribute('data-type');
-        paletteDrag = true;
-        e.dataTransfer.effectAllowed = 'copy';
-        e.dataTransfer.setData('text/x-palette', type);
-      });
-      el.addEventListener('dragend', () => { paletteDrag = false; });
-    });
+    function soundEffectText() {
+      const age = USER_AGE;
+      if (age <= 3) return 'Beep beep! Boop! Look!';
+      if (age <= 5) return 'Beep boop! Hey, look over here!';
+      if (age <= 7) return 'Beep boop beep! Hey, something cool is happening over here!';
+      return 'Beep boop! Attention please! Something interesting is going on!';
+    }
 
-    function attachCanvasDnD(container) {
-      container.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (blockDrag) {
-          const dragging = document.querySelector('.block.dragging');
-          if (!dragging) return;
-          const afterEl = getDragAfterElement(container, e.clientY);
-          if (afterEl == null) {
-            container.appendChild(dragging);
-          } else {
-            container.insertBefore(dragging, afterEl);
+    // ── Component definitions ──
+    const COMPONENTS = {
+      simple_attention: {
+        label: 'Simple Attention Bid',
+        icon: '👋',
+        elements: {
+          name_call: {
+            label: 'Name Call',
+            description: 'Call the child by name',
+            getText: nameCallText,
+            gesture: 'hi',
+            emotion: 'QT/happy'
+          },
+          sound_effect: {
+            label: 'Sound Effect',
+            description: 'Play a fun sound to get attention',
+            getText: soundEffectText,
+            gesture: 'surprised',
+            emotion: 'QT/surprised'
           }
         }
-      });
-      container.addEventListener('drop', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (paletteDrag && e.dataTransfer.types.includes('text/x-palette')) {
-          const type = e.dataTransfer.getData('text/x-palette');
-          if (type) addBlock(type, {}, container);
+      },
+      question_attention: {
+        label: 'Question Attention Bid',
+        icon: '❓',
+        elements: {
+          toy_question: {
+            label: 'Toy Question',
+            description: 'Use camera to see what toy the child has and ask about it',
+            getText: () => `Hey ${USERNAME}, what is your favourite toy? Can you show it to me?`,
+            gesture: 'show_tablet',
+            emotion: 'QT/happy',
+            useCamera: 'toy'
+          },
+          child_question: {
+            label: 'Child Question',
+            description: 'Use camera to observe the child and make a friendly comment',
+            getText: () => `${USERNAME}, you look great today!`,
+            gesture: 'point_front',
+            emotion: 'QT/happy',
+            useCamera: 'child'
+          }
         }
-      });
-    }
-    attachCanvasDnD(canvas);
-
-    function getDragAfterElement(container, y) {
-      const draggableElements = [...container.querySelectorAll('.block:not(.dragging)')];
-      return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
+      },
+      modality_switch: {
+        label: 'Modality Switch',
+        icon: '🎭',
+        elements: {
+          jumping_jack: {
+            label: 'Jumping Jack',
+            description: 'Do jumping jacks together',
+            getText: () => {
+              if (USER_AGE <= 3) return `${USERNAME}! Jump jump jump!`;
+              if (USER_AGE <= 5) return `Hey ${USERNAME}! Let's jump together! Ready? Jump! Jump! Jump!`;
+              if (USER_AGE <= 7) return `Hey ${USERNAME}! Let's do jumping jacks together! Ready? Jump! Jump! Jump!`;
+              return `Hey ${USERNAME}! How about some jumping jacks to get our energy going? Let's do it together!`;
+            },
+            gesture: 'hands-up',
+            emotion: 'QT/happy'
+          },
+          sing: {
+            label: 'Sing',
+            description: 'Sing a short song',
+            getText: () => {
+              if (USER_AGE <= 3) return `La la la! Sing with me, ${USERNAME}! La la la!`;
+              if (USER_AGE <= 5) return `La la la! Let's sing together, ${USERNAME}! If you're happy and you know it, clap your hands!`;
+              if (USER_AGE <= 7) return `Hey ${USERNAME}, let's sing! If you're happy and you know it, clap your hands! Can you sing along with me?`;
+              return `Hey ${USERNAME}, how about we sing something together? If you're happy and you know it, clap your hands! Join in!`;
+            },
+            gesture: 'clapping',
+            emotion: 'QT/happy'
+          },
+          wiggling_body: {
+            label: 'Wiggling Body',
+            description: 'Wiggle and shake it out',
+            getText: () => {
+              if (USER_AGE <= 3) return `${USERNAME}, wiggle wiggle! Shake shake!`;
+              if (USER_AGE <= 5) return `${USERNAME}, let's wiggle our bodies! Wiggle wiggle wiggle! Shake it all out!`;
+              if (USER_AGE <= 7) return `Hey ${USERNAME}, let's wiggle and shake our whole body! Wiggle your arms, wiggle your legs! Shake it all out!`;
+              return `${USERNAME}, let's shake off some energy! Wiggle your arms, shake your legs, move your whole body! Ready? Go!`;
+            },
+            gesture: 'stretching',
+            emotion: 'QT/happy'
+          }
         }
-      }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-
-    function addBlock(type, initial = {}, targetContainer = canvas) {
-      const block = document.createElement('div');
-      block.className = 'block';
-      block.draggable = true;
-      block.addEventListener('dragstart', (e) => {
-        blockDrag = true;
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/x-block', 'reorder');
-        block.classList.add('dragging');
-      });
-      block.addEventListener('dragend', () => {
-        blockDrag = false;
-        block.classList.remove('dragging');
-      });
-
-      const header = document.createElement('div');
-      header.className = 'block-header';
-      const title = document.createElement('div');
-      title.className = 'block-title';
-      title.textContent = labelFor(type);
-      const actions = document.createElement('div');
-      actions.className = 'block-actions';
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = '✕';
-      removeBtn.title = 'Remove';
-      removeBtn.onclick = () => block.remove();
-      actions.appendChild(removeBtn);
-      header.appendChild(title);
-      header.appendChild(actions);
-
-      const body = document.createElement('div');
-      renderFields(type, body, initial);
-
-      block.appendChild(header);
-      block.appendChild(body);
-      const hint = targetContainer.querySelector('.empty-hint');
-      if (hint) hint.remove();
-      targetContainer.appendChild(block);
-      return block;
-    }
-
-    function labelFor(type) {
-      return {
-        praise: 'Praise',
-        speech: 'Speech Block',
-        image: 'Image Block',
-        gesture: 'Gesture Block',
-        wait: 'Wait for Child',
-        logic: 'Logic Block',
-        recognize: 'Recognize',
-        loop: 'Loop Control'
-      }[type] || type;
-    }
-
-    function renderFields(type, container, initial) {
-      container.innerHTML = '';
-      if (type === 'speech') {
-        container.appendChild(fieldText('Text to say', 'text', initial.text || ""));
-      } else if (type === 'praise') {
-        container.appendChild(fieldText('Praise text (optional)', 'text', initial.text || "Great job!"));
-      } else if (type === 'image') {
-        container.appendChild(fieldText('Image description or URL', 'src', initial.src || 'tiger'));
-        // hidden field to persist resolved image_path
-        container.appendChild(fieldHidden('image_path', initial.image_path || ''));
-        if (initial.image_path) {
-          const img = document.createElement('img');
-          img.className = 'img-preview';
-          img.src = initial.image_path;
-          img.alt = 'Generated image';
-          container.appendChild(img);
+      },
+      graceful_withdrawal: {
+        label: 'Graceful Withdrawal',
+        icon: '🕊️',
+        elements: {
+          calm_exit: {
+            label: 'Calm Exit',
+            description: 'Gently let the child know you will give them space',
+            getText: () => {
+              if (USER_AGE <= 3) return `It's okay, ${USERNAME}. I'm here.`;
+              if (USER_AGE <= 5) return `It's okay, ${USERNAME}. I'll be right here. Take your time.`;
+              if (USER_AGE <= 7) return `It's okay, ${USERNAME}. I'll be right here whenever you're ready. Take all the time you need.`;
+              return `No worries, ${USERNAME}. I understand. I'll be right here whenever you feel like coming back. Take your time.`;
+            },
+            gesture: 'calm',
+            emotion: 'QT/neutral'
+          }
         }
-      } else if (type === 'gesture') {
-        container.appendChild(fieldSelect('Gesture', 'name', ['wave', 'nod'], initial.name || 'wave'));
-      } else if (type === 'wait') {
-        container.appendChild(fieldSelect('Wait type', 'mode', ['button', 'speech'], initial.mode || 'button'));
-        container.appendChild(fieldText('Expected answer (optional)', 'expected', initial.expected || ''));
-      } else if (type === 'recognize') {
-        container.appendChild(fieldSelect('Recognize', 'target', ['object', 'gesture', 'speech'], initial.target || 'object'));
-        container.appendChild(fieldText('Value (e.g., fruit, wave, yes)', 'value', initial.value || ''));
-      } else if (type === 'logic') {
-        const logicWrap = document.createElement('div');
-        logicWrap.style.display = 'grid';
-        logicWrap.style.gridTemplateColumns = 'auto 1fr';
-        logicWrap.style.gap = '8px';
-
-        const condLabel = document.createElement('div');
-        condLabel.textContent = 'If Robot';
-        condLabel.style.fontWeight = '700';
-        const condCanvas = document.createElement('div');
-        condCanvas.className = 'canvas';
-        condCanvas.dataset.role = 'cond';
-        condCanvas.innerHTML = '<div class="empty-hint">Drop condition blocks here (e.g., Recognize)</div>';
-        logicWrap.appendChild(condLabel);
-        logicWrap.appendChild(condCanvas);
-
-        // Then actions droppable area
-        const thenLabel = document.createElement('div');
-        thenLabel.textContent = 'Then';
-        thenLabel.style.fontWeight = '700';
-        const thenCanvas = document.createElement('div');
-        thenCanvas.className = 'canvas';
-        thenCanvas.dataset.role = 'then';
-        thenCanvas.innerHTML = '<div class="empty-hint">Drop action blocks here</div>';
-        logicWrap.appendChild(thenLabel);
-        logicWrap.appendChild(thenCanvas);
-
-        container.appendChild(logicWrap);
-        // Enable DnD inside logic areas
-        attachCanvasDnD(condCanvas);
-        attachCanvasDnD(thenCanvas);
-      } else if (type === 'loop') {
-        container.appendChild(fieldNumber('Repeat times', 'count', initial.count || 1, 1));
       }
-    }
+    };
 
-    function fieldText(labelTxt, name, value) {
-      const wrap = document.createElement('div'); wrap.className = 'field';
-      const label = document.createElement('label'); label.textContent = labelTxt;
-      const input = document.createElement('textarea'); input.value = value; input.dataset.name = name; input.rows = 2;
-      wrap.appendChild(label); wrap.appendChild(input); return wrap;
-    }
+    const stepsContainer = document.getElementById('steps');
+    const dropZone = document.getElementById('drop-zone');
+    const statusEl = document.getElementById('status');
 
-    function fieldNumber(labelTxt, name, value, min=0) {
-      const wrap = document.createElement('div'); wrap.className = 'field';
-      const label = document.createElement('label'); label.textContent = labelTxt;
-      const input = document.createElement('input'); input.type = 'number'; input.value = value; input.min = min; input.dataset.name = name;
-      wrap.appendChild(label); wrap.appendChild(input); return wrap;
-    }
+    // ── Drag from palette ──
+    let draggedComponent = null;
 
-    function fieldSelect(labelTxt, name, options, value) {
-      const wrap = document.createElement('div'); wrap.className = 'field';
-      const label = document.createElement('label'); label.textContent = labelTxt;
-      const select = document.createElement('select'); select.dataset.name = name;
-      options.forEach(o => { const opt = document.createElement('option'); opt.value = o; opt.textContent = o; if (o === value) opt.selected = true; select.appendChild(opt); });
-      wrap.appendChild(label); wrap.appendChild(select); return wrap;
-    }
+    document.querySelectorAll('.palette-card').forEach(card => {
+      card.addEventListener('dragstart', e => {
+        draggedComponent = card.dataset.component;
+        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.setData('text/plain', draggedComponent);
+        card.style.opacity = '0.5';
+      });
+      card.addEventListener('dragend', () => {
+        card.style.opacity = '1';
+        draggedComponent = null;
+      });
+    });
 
-    function fieldHidden(name, value) {
-      const input = document.createElement('input'); input.type = 'hidden'; input.dataset.name = name; input.value = value || '';
-      return input;
-    }
+    // ── Drop zone ──
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      dropZone.classList.add('drag-over');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const comp = e.dataTransfer.getData('text/plain');
+      if (comp && COMPONENTS[comp]) {
+        addStep(comp);
+      }
+    });
 
-    function readBlocksFrom(container) {
-      const titleToType = {
-        'Praise': 'praise',
-        'Speech Block': 'speech',
-        'Image Block': 'image',
-        'Gesture Block': 'gesture',
-        'Wait for Child': 'wait',
-        'Logic Block': 'logic',
-        'Loop Control': 'loop',
-        'Recognize': 'recognize'
-      };
-      return Array.from(container.querySelectorAll('.block')).map(b => {
-        const title = b.querySelector('.block-title')?.textContent || '';
-        const type = titleToType[title];
-        if (!type) {
-          return null; // skip unknown blocks rather than crashing
+    // ── Also allow dropping on the steps container ──
+    stepsContainer.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+    });
+    stepsContainer.addEventListener('drop', e => {
+      e.preventDefault();
+      const comp = e.dataTransfer.getData('text/plain');
+      if (comp && COMPONENTS[comp]) {
+        addStep(comp);
+      }
+    });
+
+    // ── Update UI ──
+    function updateUI() {
+      const cards = stepsContainer.querySelectorAll('.step-card');
+      dropZone.style.display = cards.length === 0 ? '' : '';
+      dropZone.textContent = cards.length === 0
+        ? 'Drop a component here to add the first step'
+        : 'Drop another component here to add a step';
+
+      // Re-number
+      cards.forEach((card, i) => {
+        const num = card.querySelector('.step-number');
+        if (num) num.textContent = i + 1;
+      });
+
+      // Re-draw connectors
+      stepsContainer.querySelectorAll('.step-connector').forEach(c => c.remove());
+      const allCards = stepsContainer.querySelectorAll('.step-card');
+      allCards.forEach((card, i) => {
+        if (i < allCards.length - 1) {
+          const conn = document.createElement('div');
+          conn.className = 'step-connector';
+          conn.innerHTML = '<span class="arrow">▼</span>';
+          card.after(conn);
         }
-        if (type === 'logic') {
-          const condCanvas = b.querySelector('.canvas[data-role="cond"]');
-          const thenCanvas = b.querySelector('.canvas[data-role="then"]');
-          const condBlocks = condCanvas ? readBlocksFrom(condCanvas) : [];
-          const thenBlocks = thenCanvas ? readBlocksFrom(thenCanvas) : [];
-          return { type, cond: condBlocks, then: thenBlocks };
+      });
+    }
+
+    // ── Gesture and emotion options ──
+    const GESTURES = [
+      '', 'hi', 'bye-bye', 'bye', 'clapping', 'happy', 'sad', 'angry', 'surprised',
+      'shy', 'bored', 'afraid', 'calm', 'disgusted', 'kiss', 'send_kiss',
+      'nodding-yes', 'show_tablet', 'show_QT', 'point_front', 'show_right', 'show_left',
+      'hands-up', 'hands-on-hip', 'hands-on-belly', 'hands-on-head', 'hands-side',
+      'peekaboo', 'yawn', 'sneezing', 'stretching', 'breathing_exercise',
+      'hoora', 'challenge', 'neutral'
+    ];
+    const EMOTIONS = [
+      '', 'QT/happy', 'QT/sad', 'QT/angry', 'QT/afraid', 'QT/surprised',
+      'QT/confused', 'QT/neutral', 'QT/bye', 'QT/challenge',
+      'QT/monkey', 'QT/show_QT', 'QT/show_tablet'
+    ];
+
+    function makeOptionSelect(name, options, value) {
+      const sel = document.createElement('select');
+      sel.dataset.name = name;
+      options.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o;
+        opt.textContent = o === '' ? '— None —' : o.replace('QT/', '').replace(/[-_]/g, ' ');
+        if (o === value) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      return sel;
+    }
+
+    // ── Add a step ──
+    // savedOverrides: { text, gesture, emotion } from a previously saved activity
+    function addStep(componentKey, savedElement, savedOverrides) {
+      const comp = COMPONENTS[componentKey];
+      if (!comp) return;
+
+      const card = document.createElement('div');
+      card.className = 'step-card';
+      card.dataset.component = componentKey;
+
+      // Header
+      const header = document.createElement('div');
+      header.className = 'step-header';
+
+      const title = document.createElement('div');
+      title.className = 'step-title';
+      const numEl = document.createElement('span');
+      numEl.className = 'step-number';
+      numEl.textContent = '?';
+      title.appendChild(numEl);
+      const labelEl = document.createElement('span');
+      labelEl.className = 'step-label';
+      labelEl.textContent = comp.icon + ' ' + comp.label;
+      title.appendChild(labelEl);
+      header.appendChild(title);
+
+      const actions = document.createElement('div');
+      actions.className = 'step-actions';
+      const moveUpBtn = document.createElement('button');
+      moveUpBtn.innerHTML = '&#9650;';
+      moveUpBtn.title = 'Move up';
+      moveUpBtn.onclick = () => moveStep(card, -1);
+      const moveDownBtn = document.createElement('button');
+      moveDownBtn.innerHTML = '&#9660;';
+      moveDownBtn.title = 'Move down';
+      moveDownBtn.onclick = () => moveStep(card, 1);
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete';
+      deleteBtn.innerHTML = '&times;';
+      deleteBtn.title = 'Remove step';
+      deleteBtn.onclick = () => { card.remove(); updateUI(); };
+      actions.appendChild(moveUpBtn);
+      actions.appendChild(moveDownBtn);
+      actions.appendChild(deleteBtn);
+      header.appendChild(actions);
+      card.appendChild(header);
+
+      // Fields
+      const fields = document.createElement('div');
+      fields.className = 'step-fields';
+
+      // Element selector
+      const elementKeys = Object.keys(comp.elements);
+      const elementField = document.createElement('div');
+      elementField.className = 'field';
+      const elementLabel = document.createElement('label');
+      elementLabel.textContent = 'Choose action';
+      elementField.appendChild(elementLabel);
+
+      const sel = document.createElement('select');
+      sel.dataset.name = 'element';
+      elementKeys.forEach(key => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = comp.elements[key].label + ' — ' + comp.elements[key].description;
+        if (key === savedElement) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      elementField.appendChild(sel);
+      fields.appendChild(elementField);
+
+      // Editable speech text
+      const textField = document.createElement('div');
+      textField.className = 'field';
+      const textLabelRow = document.createElement('div');
+      textLabelRow.style.cssText = 'display:flex;align-items:center;';
+      const textLabel = document.createElement('label');
+      textLabel.textContent = 'Robot will say';
+      textLabel.style.marginBottom = '0';
+      textLabelRow.appendChild(textLabel);
+      const resetTextBtn = document.createElement('button');
+      resetTextBtn.className = 'reset-btn';
+      resetTextBtn.textContent = 'Reset to default';
+      resetTextBtn.title = 'Reset text to the auto-generated default';
+      textLabelRow.appendChild(resetTextBtn);
+      textField.appendChild(textLabelRow);
+
+      const textArea = document.createElement('textarea');
+      textArea.dataset.name = 'text';
+      textArea.rows = 2;
+      textArea.placeholder = 'What the robot should say...';
+      textField.appendChild(textArea);
+
+      // Camera hint (shown for camera-based elements)
+      const cameraHint = document.createElement('div');
+      cameraHint.className = 'camera-hint';
+      cameraHint.style.display = 'none';
+      textField.appendChild(cameraHint);
+
+      fields.appendChild(textField);
+
+      // Gesture + Emotion dropdowns side by side
+      const actionRow = document.createElement('div');
+      actionRow.className = 'field-row';
+
+      const gestureField = document.createElement('div');
+      gestureField.className = 'field';
+      const gestureLabel = document.createElement('label');
+      gestureLabel.textContent = 'Gesture';
+      gestureField.appendChild(gestureLabel);
+      const gestureSel = makeOptionSelect('gesture', GESTURES, '');
+      gestureField.appendChild(gestureSel);
+      actionRow.appendChild(gestureField);
+
+      const emotionField = document.createElement('div');
+      emotionField.className = 'field';
+      const emotionLabel = document.createElement('label');
+      emotionLabel.textContent = 'Facial Expression';
+      emotionField.appendChild(emotionLabel);
+      const emotionSel = makeOptionSelect('emotion', EMOTIONS, '');
+      emotionField.appendChild(emotionSel);
+      actionRow.appendChild(emotionField);
+
+      fields.appendChild(actionRow);
+      card.appendChild(fields);
+
+      // Populate fields from element defaults
+      function applyDefaults() {
+        const elKey = sel.value;
+        const el = comp.elements[elKey];
+        if (!el) return;
+        textArea.value = el.getText();
+        gestureSel.value = el.gesture || '';
+        emotionSel.value = el.emotion || '';
+        if (el.useCamera) {
+          const camLabel = el.useCamera === 'toy'
+            ? 'At run time, camera will detect what the child is holding and generate a question. Edit the fallback text above if needed.'
+            : 'At run time, camera will observe the child and generate a friendly comment. Edit the fallback text above if needed.';
+          cameraHint.textContent = camLabel;
+          cameraHint.style.display = '';
         } else {
-          const fields = {};
-          b.querySelectorAll('textarea, input, select').forEach(el => {
-            const name = el.dataset.name || '';
-            if (!name) return;
-            fields[name] = el.type === 'number' ? Number(el.value) : el.value;
-          });
-          return { type, ...fields };
+          cameraHint.style.display = 'none';
         }
-      }).filter(Boolean);
-    }
-    function serialize() {
-      const blocks = readBlocksFrom(canvas);
-      return { blocks, loop: Number(loopInput.value) || 1 };
+      }
+
+      // When element changes, reset fields to new defaults
+      sel.addEventListener('change', applyDefaults);
+
+      // Reset button restores defaults for current element
+      resetTextBtn.onclick = () => applyDefaults();
+
+      // Initial population
+      applyDefaults();
+
+      // Apply saved overrides (from loaded activity)
+      if (savedOverrides) {
+        if (savedOverrides.text) textArea.value = savedOverrides.text;
+        if (savedOverrides.gesture) gestureSel.value = savedOverrides.gesture;
+        if (savedOverrides.emotion) emotionSel.value = savedOverrides.emotion;
+      }
+
+      stepsContainer.appendChild(card);
+      updateUI();
     }
 
+    // ── Move step ──
+    function moveStep(card, direction) {
+      const cards = Array.from(stepsContainer.querySelectorAll('.step-card'));
+      const idx = cards.indexOf(card);
+      const targetIdx = idx + direction;
+      if (targetIdx < 0 || targetIdx >= cards.length) return;
+      if (direction === -1) {
+        stepsContainer.insertBefore(card, cards[targetIdx]);
+      } else {
+        const after = cards[targetIdx];
+        const next = after.nextElementSibling;
+        if (next && next.classList.contains('step-connector')) {
+          stepsContainer.insertBefore(card, next.nextElementSibling);
+        } else {
+          stepsContainer.insertBefore(card, next);
+        }
+      }
+      updateUI();
+    }
+
+    // ── Serialize to API format ──
+    function serialize() {
+      const blocks = Array.from(stepsContainer.querySelectorAll('.step-card')).map(card => {
+        const componentKey = card.dataset.component;
+        const comp = COMPONENTS[componentKey];
+        const elKey = card.querySelector('[data-name="element"]')?.value;
+        const el = comp?.elements[elKey];
+        if (!el) return null;
+        // Read from editable fields (therapist may have customized)
+        const text = (card.querySelector('[data-name="text"]')?.value || '').trim();
+        const gesture = card.querySelector('[data-name="gesture"]')?.value || '';
+        const emotion = card.querySelector('[data-name="emotion"]')?.value || '';
+        return {
+          type: 'step',
+          text: text || el.getText(),
+          gesture,
+          emotion,
+          component: componentKey,
+          element: elKey,
+          useCamera: el.useCamera || null
+        };
+      }).filter(Boolean);
+      return { blocks, loop: 1 };
+    }
+
+    // ── API helpers ──
     async function callApi(url, body) {
       const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       return res.json();
     }
 
-    function updateImageBlocksFromPrepared(preparedBlocks) {
-      const uiBlocks = Array.from(canvas.querySelectorAll('.block'));
-      uiBlocks.forEach((blk, idx) => {
-        const title = blk.querySelector('.block-title')?.textContent || '';
-        const type = ({
-          'Praise': 'praise', 'Speech Block': 'speech', 'Image Block': 'image',
-          'Gesture Block': 'gesture', 'Wait for Child': 'wait', 'Logic Block': 'logic', 'Loop Control': 'loop'
-        })[title];
-        if (type === 'image' && preparedBlocks[idx] && preparedBlocks[idx].image_path) {
-          const hidden = blk.querySelector('input[type="hidden"][data-name="image_path"]');
-          if (hidden) hidden.value = preparedBlocks[idx].image_path;
-          let img = blk.querySelector('img.img-preview');
-          if (!img) {
-            img = document.createElement('img');
-            img.className = 'img-preview';
-            blk.querySelector('.field:last-child').after(img);
+    // ── Generate camera-based question for a block ──
+    async function resolveBlockText(block, statusMsg) {
+      if (!block.useCamera) return block;
+      statusEl.textContent = statusMsg || 'Capturing camera and generating question...';
+      try {
+        const data = await callApi('/api/recovery/generate_question', {
+          mode: block.useCamera,
+          child_name: USERNAME
+        });
+        if (data.success && data.text) {
+          return { ...block, text: data.text, _detectedObject: data.object || null };
+        }
+      } catch (e) {
+        console.warn('Camera question generation failed, using fallback:', e);
+      }
+      return { ...block, _detectedObject: null };
+    }
+
+    // Watch camera for toy (polling), returns followup text or null
+    async function watchForToy(maxAttempts = 15) {
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        await new Promise(r => setTimeout(r, 3000));
+        statusEl.textContent = `Watching for child's response... (${attempt + 1})`;
+        try {
+          const data = await callApi('/api/recovery/generate_question', {
+            mode: 'toy_followup',
+            child_name: USERNAME
+          });
+          if (data.success && data.object) {
+            return data.text;
           }
-          img.src = preparedBlocks[idx].image_path;
-          img.alt = 'Generated image';
+        } catch (e) {
+          console.warn('Watch attempt failed:', e);
         }
-      });
-    }
-
-    // Show selected toy if any
-    try {
-      const toy = sessionStorage.getItem('selectedToy');
-      if (toy) document.getElementById('toy-banner').textContent = `Selected toy: ${toy}`;
-    } catch (e) {}
-
-    document.getElementById('prepareBtn').onclick = async () => {
-      statusEl.textContent = 'Preparing plan...';
-      const plan = serialize();
-      const data = await callApi('/api/activity/prepare', plan);
-      if (!data.success) {
-        statusEl.textContent = `Error: ${data.error || 'Unknown error'}`;
-        return;
       }
-      const prepared = data.plan || {};
-      updateImageBlocksFromPrepared(prepared.blocks || []);
-      // If server provided expanded images for later loops, append them to the modal display list on demand
-      statusEl.textContent = prepared.images_available ? 'Plan ready. Images generated.' : 'Plan ready. Image generation not available.';
-    };
-
-    function collectImagePaths() {
-      const paths = [];
-      Array.from(canvas.querySelectorAll('.block')).forEach(blk => {
-        const title = blk.querySelector('.block-title')?.textContent || '';
-        const type = ({
-          'Praise': 'praise', 'Speech Block': 'speech', 'Image Block': 'image',
-          'Gesture Block': 'gesture', 'Wait for Child': 'wait', 'Logic Block': 'logic', 'Loop Control': 'loop'
-        })[title];
-        if (type === 'image') {
-          const hidden = blk.querySelector('input[type="hidden"][data-name="image_path"]');
-          if (hidden && hidden.value) paths.push({ src: hidden.value, caption: blk.querySelector('textarea[data-name="src"]').value || '' });
-        }
-      });
-      return paths;
+      return null;
     }
 
-    function showImagesModal(items) {
-      const modal = document.getElementById('image-modal');
-      const grid = document.getElementById('image-modal-grid');
-      grid.innerHTML = '';
-      items.forEach((it, i) => {
-        const card = document.createElement('div');
-        card.className = 'image-item';
-        const img = document.createElement('img');
-        img.src = it.src; img.alt = it.caption || `Image ${i+1}`;
-        const cap = document.createElement('div'); cap.className = 'image-caption'; cap.textContent = it.caption || `Image ${i+1}`;
-        card.appendChild(img); card.appendChild(cap); grid.appendChild(card);
+    // Send a single speech block to the robot
+    async function speakOnRobot(text, gesture, emotion) {
+      return callApi('/api/activity/test', {
+        blocks: [{ type: 'step', text, gesture: gesture || '', emotion: emotion || '' }],
+        loop: 1
       });
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden', 'false');
     }
 
-    document.getElementById('image-modal-close').onclick = () => {
-      const modal = document.getElementById('image-modal');
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden', 'true');
-    };
-    document.getElementById('image-modal').addEventListener('click', (e) => {
-      if (e.target.id === 'image-modal') {
-        const modal = document.getElementById('image-modal');
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
+    // Resolve all camera-based blocks in a plan (for test mode — all at once)
+    async function resolveAllBlocks(plan) {
+      const resolved = [];
+      for (let i = 0; i < plan.blocks.length; i++) {
+        const b = plan.blocks[i];
+        resolved.push(await resolveBlockText(b, `Generating question for step ${i + 1}...`));
       }
-    });
+      return { ...plan, blocks: resolved };
+    }
 
+    // ── Test: all steps at once, no pauses ──
     document.getElementById('testBtn').onclick = async () => {
-      statusEl.textContent = 'Preparing & testing on robot...';
       const plan = serialize();
-      // Determine if we need to generate images first
-      const needPrepare = plan.blocks.some(b => b.type === 'image' && !b.image_path);
-      let preparedBlocks = null;
-      let expandedImages = [];
-      if (needPrepare) {
-        const prep = await callApi('/api/activity/prepare', plan);
-        if (!prep.success) {
-          statusEl.textContent = `Error: ${prep.error || 'Unknown error'}`;
-          return;
-        }
-        preparedBlocks = (prep.plan && prep.plan.blocks) || [];
-        expandedImages = (prep.plan && prep.plan.expanded_images) || [];
-        updateImageBlocksFromPrepared(preparedBlocks);
+      if (!plan.blocks.length) { statusEl.textContent = 'Add some steps first!'; return; }
+      const testBtn = document.getElementById('testBtn');
+      const runBtn = document.getElementById('runBtn');
+      testBtn.disabled = true;
+      runBtn.disabled = true;
+      // Resolve camera-based questions before sending all at once
+      const resolved = await resolveAllBlocks(plan);
+      statusEl.textContent = 'Testing all steps sequentially...';
+      try {
+        const data = await callApi('/api/activity/test', resolved);
+        statusEl.textContent = data.success ? 'Done!' : ('Error: ' + (data.error || 'Unknown error'));
+      } catch (e) {
+        statusEl.textContent = 'Error: ' + e.message;
       }
-      // Show images popup if we have any
-      let images = collectImagePaths();
-      if (expandedImages && expandedImages.length) {
-        images = images.concat(expandedImages.map(e => ({ src: e.image_path, caption: e.subject })));
-      }
-      if (images.length) showImagesModal(images);
-      // Execute test
-      const testRes = await callApi('/api/activity/test', serialize());
-      statusEl.textContent = testRes.success ? 'Test executed.' : `Error: ${testRes.error || 'Unknown error'}`;
+      testBtn.disabled = false;
+      runBtn.disabled = false;
     };
 
-    document.getElementById('testBtn').onclick = async () => {
-      statusEl.textContent = 'Testing on robot...';
-      const plan = serialize();
-      const data = await callApi('/api/activity/test', plan);
-      statusEl.textContent = data.success ? 'Test executed.' : `Error: ${data.error || 'Unknown error'}`;
-    };
-
+    // ── Save ──
     document.getElementById('saveBtn').onclick = async () => {
-      statusEl.textContent = 'Saving...';
       const plan = serialize();
+      if (!plan.blocks.length) { statusEl.textContent = 'Add some steps first!'; return; }
+      statusEl.textContent = 'Saving...';
       const data = await callApi('/api/activity/save', plan);
-      statusEl.textContent = data.success ? `Saved as ${data.filename}` : `Error: ${data.error || 'Unknown error'}`;
+      statusEl.textContent = data.success ? ('Saved as ' + data.filename) : ('Error: ' + (data.error || 'Unknown error'));
     };
 
-    // Load existing activity if ?file= is present; otherwise start empty
-    function getQueryParam(name) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name);
+    // ── Run: step-by-step with therapist confirmation ──
+    const overlay   = document.getElementById('confirmOverlay');
+    const cbIcon    = document.getElementById('cbIcon');
+    const cbTitle   = document.getElementById('cbTitle');
+    const cbDetail  = document.getElementById('cbDetail');
+    const cbProgress= document.getElementById('cbProgress');
+    const cbNextBtn = document.getElementById('cbNextBtn');
+    const cbStopBtn = document.getElementById('cbStopBtn');
+
+    let runResolve = null; // resolved by Next / Stop buttons
+
+    cbNextBtn.onclick = () => { overlay.classList.remove('visible'); if (runResolve) runResolve('next'); };
+    cbStopBtn.onclick = () => { overlay.classList.remove('visible'); if (runResolve) runResolve('stop'); };
+
+    function waitForTherapist() {
+      return new Promise(resolve => { runResolve = resolve; });
     }
 
-    async function hydrateFromSaved(filename) {
+    function highlightStep(index) {
+      const cards = stepsContainer.querySelectorAll('.step-card');
+      cards.forEach((c, i) => {
+        c.classList.toggle('running', i === index);
+        c.classList.toggle('done', i < index);
+      });
+    }
+
+    function clearHighlights() {
+      stepsContainer.querySelectorAll('.step-card').forEach(c => {
+        c.classList.remove('running', 'done');
+      });
+    }
+
+    document.getElementById('runBtn').onclick = async () => {
+      const plan = serialize();
+      if (!plan.blocks.length) { statusEl.textContent = 'Add some steps first!'; return; }
+
+      const totalSteps = plan.blocks.length;
+      const runBtn = document.getElementById('runBtn');
+      const testBtn = document.getElementById('testBtn');
+      runBtn.disabled = true;
+      testBtn.disabled = true;
+
+      let stopped = false;
+      for (let i = 0; i < totalSteps; i++) {
+        let block = plan.blocks[i];
+        const comp = COMPONENTS[block.component];
+        const elDef = comp?.elements[block.element];
+        const isToyStep = block.useCamera === 'toy';
+
+        // Highlight the current step card
+        highlightStep(i);
+
+        // ── Phase 1: Generate initial question from camera ──
+        if (block.useCamera) {
+          statusEl.textContent = `Step ${i + 1}: Capturing camera...`;
+          block = await resolveBlockText(block, `Step ${i + 1}: Generating question from camera...`);
+        }
+
+        statusEl.textContent = `Running step ${i + 1} of ${totalSteps}...`;
+
+        // Execute the initial speech on the robot
+        try {
+          const data = await callApi('/api/activity/test', { blocks: [block], loop: 1 });
+          if (!data.success) {
+            statusEl.textContent = 'Error: ' + (data.error || 'Unknown error');
+            stopped = true; break;
+          }
+        } catch (e) {
+          statusEl.textContent = 'Error: ' + e.message;
+          stopped = true; break;
+        }
+
+        // ── Phase 2 (toy only): Watch for child's response ──
+        if (isToyStep && !block._detectedObject) {
+          statusEl.textContent = `Watching for child's response...`;
+          const followup = await watchForToy(15);
+          if (followup) {
+            statusEl.textContent = `Toy found! Robot responding...`;
+            await speakOnRobot(followup, 'happy', 'QT/happy');
+          }
+        }
+
+        // ── Phase 3 (toy only): "Well done!" complement ──
+        if (isToyStep) {
+          await speakOnRobot(`Well done ${USERNAME}!`, 'clapping', 'QT/happy');
+        }
+
+        // ── Therapist confirmation before next step ──
+        if (i < totalSteps - 1) {
+          const nextBlock = plan.blocks[i + 1];
+          const nextComp = COMPONENTS[nextBlock.component];
+          const nextElDef = nextComp?.elements[nextBlock.element];
+
+          cbIcon.textContent = comp?.icon || '';
+          cbTitle.textContent = `Step ${i + 1} completed`;
+          cbDetail.innerHTML = `<strong>Next:</strong> ${nextComp?.icon || ''} ${nextComp?.label || ''} &mdash; ${nextElDef?.label || ''}`;
+          cbProgress.textContent = `Step ${i + 1} of ${totalSteps} done`;
+          cbNextBtn.textContent = `Next Step (${i + 2}/${totalSteps})`;
+          overlay.classList.add('visible');
+
+          const decision = await waitForTherapist();
+          if (decision === 'stop') {
+            statusEl.textContent = `Stopped after step ${i + 1} of ${totalSteps}.`;
+            stopped = true; break;
+          }
+        }
+
+        // Mark last step as done
+        if (i === totalSteps - 1) {
+          highlightStep(totalSteps);
+          statusEl.textContent = 'All steps completed!';
+        }
+      }
+
+      clearHighlights();
+      runBtn.disabled = false;
+      testBtn.disabled = false;
+    };
+
+    // ── Load saved activity ──
+    (async function init() {
+      const file = new URLSearchParams(window.location.search).get('file');
+      if (!file) return;
       try {
         statusEl.textContent = 'Loading saved activity...';
         const res = await fetch('/api/activity/load_saved', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ filename })
+          body: JSON.stringify({ filename: file })
         });
         const data = await res.json();
-        if (!data.success) { statusEl.textContent = `Error: ${data.error || 'Failed to load'}`; return; }
+        if (!data.success) { statusEl.textContent = 'Error: ' + data.error; return; }
         const activity = data.activity || {};
-        // Clear existing
-        canvas.innerHTML = '<div class="empty-hint">Drag blocks here to build your activity flow</div>';
-        loopInput.value = activity.loop || 1;
-        // Render blocks recursively
-        renderBlocks(activity.blocks || [], canvas);
+        (activity.blocks || []).forEach(b => {
+          if (b.component && COMPONENTS[b.component]) {
+            addStep(b.component, b.element, {
+              text: b.text || '',
+              gesture: b.gesture || '',
+              emotion: b.emotion || ''
+            });
+          }
+        });
         statusEl.textContent = 'Activity loaded.';
-      } catch (e) {
-        statusEl.textContent = `Error: ${e.message}`;
-      }
-    }
-
-    function renderBlocks(blocks, container) {
-      if (!Array.isArray(blocks)) return;
-      const hint = container.querySelector('.empty-hint');
-      if (hint) hint.remove();
-      blocks.forEach(b => {
-        const type = b.type;
-        if (type === 'logic') {
-          const blk = addBlock('logic', {}, container);
-          const condCanvas = blk.querySelector('.canvas[data-role="cond"]');
-          const thenCanvas = blk.querySelector('.canvas[data-role="then"]');
-          renderBlocks(b.cond || [], condCanvas);
-          renderBlocks(b.then || [], thenCanvas);
-        } else {
-          addBlock(type, b, container);
-        }
-      });
-    }
-
-    // Kickoff: hydrate if query param provided
-    (function init() {
-      const file = getQueryParam('file');
-      if (file) {
-        hydrateFromSaved(file);
-      } else {
-        // start empty; do not prefill example
-      }
+      } catch (e) { statusEl.textContent = 'Error: ' + e.message; }
     })();
-
   </script>
 </body>
 </html>
-
-

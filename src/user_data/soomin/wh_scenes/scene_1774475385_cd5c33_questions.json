@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young boy with reddish-brown hair is standing in a bathroom, looking into a mirror, and brushing his teeth. He is wearing a grey t-shirt and a patterned neck gaiter. Toiletries and a small device are visible on the counter.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "A boy",
+      "visual_choices": [
+        "A boy",
+        "A girl",
+        "A man",
+        "A dog"
+      ],
+      "evidence_hint": "Look at the person in the picture"
+    },
+    {
+      "wh_type": "what",
+      "question": "What is he doing?",
+      "answer": "Brushing teeth",
+      "visual_choices": [
+        "Brushing teeth",
+        "Eating food",
+        "Washing hands",
+        "Playing game"
+      ],
+      "evidence_hint": "Look at his hands and mouth"
+    },
+    {
+      "wh_type": "when",
+      "question": "When do people brush teeth?",
+      "answer": "In the morning",
+      "visual_choices": [
+        "In the morning",
+        "At lunchtime",
+        "In the evening",
+        "At school"
+      ],
+      "evidence_hint": "Think about your daily routine"
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is he?",
+      "answer": "In the bathroom",
+      "visual_choices": [
+        "In the bathroom",
+        "In the kitchen",
+        "In the bedroom",
+        "At the park"
+      ],
+      "evidence_hint": "Look at the room around him"
+    },
+    {
+      "wh_type": "why",
+      "question": "Why is he brushing his teeth?",
+      "answer": "To clean them",
+      "visual_choices": [
+        "To clean them",
+        "To make noise",
+        "To play a game",
+        "To eat paste"
+      ],
+      "evidence_hint": "Think about why you brush your teeth"
+    }
+  ]
+}

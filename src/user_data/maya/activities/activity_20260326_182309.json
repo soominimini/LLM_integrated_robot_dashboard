@@ -1,0 +1,21 @@
+{
+  "blocks": [
+    {
+      "type": "step",
+      "text": "Beep boop! Hey, look over here!",
+      "gesture": "surprised",
+      "emotion": "QT/surprised",
+      "component": "simple_attention",
+      "element": "sound_effect"
+    },
+    {
+      "type": "step",
+      "text": "Hey maya, what is your favourite toy? Can you show it to me?",
+      "gesture": "show_tablet",
+      "emotion": "QT/happy",
+      "component": "question_attention",
+      "element": "toy_question"
+    }
+  ],
+  "loop": 1
+}

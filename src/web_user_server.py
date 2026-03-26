@@ -12,6 +12,7 @@ import re
 import time
 import sys
 import random
+import uuid
 from typing import Optional
 import difflib
 import subprocess
@@ -202,13 +203,16 @@ app = Flask(__name__, template_folder="../templates")
 app.secret_key = os.urandom(24)
 CORS(app)
 
-user_manager = UserManager()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+USER_DATA_DIR = os.path.join(BASE_DIR, 'user_data')
+
+user_manager = UserManager(
+    users_file=os.path.join(BASE_DIR, 'users.json'),
+    base_dir=USER_DATA_DIR
+)
 story_generator = StoryGenerator(llm_model="llama3.1:latest")
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-USER_DATA_DIR = os.path.join(BASE_DIR, 'user_data')
 
 # Gemini analysis is delegated to external script (Python 3.9) when requested
 
@@ -408,6 +412,171 @@ def _fuzzy_canonicalize_heard(expected: str, heard: str) -> Optional[str]:
 _activity_stop_event = ThreadEvent()
 _activity_thread = None
 _asr_enabled = True
+
+# Step-by-step confirmation state (for run_saved with therapist confirmation)
+_step_confirm_event = ThreadEvent()
+_step_current_index = -1       # which step is waiting for confirmation (-1 = not running)
+_step_total_count = 0
+_step_current_label = ""
+_step_next_label = ""
+_step_waiting = False           # True when paused waiting for therapist
+
+def _generate_recovery_question(mode, username=''):
+    """Capture a camera frame and generate a recovery question via Gemini.
+    Returns dict with 'text' and 'object' (or None on failure)."""
+    try:
+        frame = _get_ros_frame()
+        if frame is None:
+            print("[Recovery] Camera frame failed")
+            return None
+        import datetime
+        cap_dir = os.path.join(USER_DATA_DIR, username or '_tmp', 'captured_scenes')
+        os.makedirs(cap_dir, exist_ok=True)
+        ts = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        fpath = os.path.join(cap_dir, f'recovery_{mode}_{ts}.jpg')
+        cv2.imwrite(fpath, frame)
+
+        script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_recovery_question.py')
+        if not os.path.exists(script_path):
+            print("[Recovery] Script not found")
+            return None
+
+        # Resolve child name and age from user profile
+        child_name = ''
+        child_age = 5
+        if username:
+            u = user_manager.users.get(username, {})
+            child_name = u.get('display_name') or username
+            try:
+                child_age = int(u.get('age', 5))
+            except (ValueError, TypeError):
+                child_age = 5
+
+        cmd = ['python3.9', script_path, '--image', fpath, '--mode', mode,
+               '--child-age', str(child_age)]
+        if child_name:
+            cmd += ['--child-name', child_name]
+
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if proc.returncode != 0:
+            print(f"[Recovery] Script error: {proc.stderr}")
+            return None
+        raw = (proc.stdout or '').strip()
+        try:
+            result = json.loads(raw)
+            return {'text': result.get('text', ''), 'object': result.get('object', None)}
+        except Exception:
+            return {'text': raw, 'object': None} if raw else None
+    except Exception as e:
+        print(f"[Recovery] Error: {e}")
+        return None
+
+def _wait_until_robot_silent(timeout=15):
+    """Block until TTS finishes speaking, plus a short cooldown for mic to clear."""
+    start = time.time()
+    while getattr(tts_helper, 'is_speaking', lambda: False)() and time.time() - start < timeout:
+        time.sleep(0.1)
+    # Extra cooldown so the mic doesn't pick up tail-end audio from the speaker
+    time.sleep(1.5)
+
+def _enable_face_tracking():
+    """Activate face/sound tracking so the robot follows the child during conversation."""
+    try:
+        tracker = _ensure_human_tracker()
+        if tracker:
+            person = _pick_recent_person(tracker, timeout_sec=1.0)
+            if person:
+                tracker.track(person)
+                print("[Conversation] Face tracking enabled")
+            elif not getattr(tracker, 'should_track', False):
+                # No face found yet — track by sound direction
+                tracker.track(None)
+                print("[Conversation] Tracking enabled (waiting for face/sound)")
+    except Exception as e:
+        print(f"[Conversation] Tracking error: {e}")
+
+def _signal_child_can_speak():
+    """Play show_tablet gesture to let the child know the mic is on and they can talk."""
+    if not ROS_AVAILABLE:
+        return
+    try:
+        from qt_gesture_controller.srv import gesture_play
+        ges_proxy = rospy.ServiceProxy('/qt_robot/gesture/play', gesture_play)
+        rospy.wait_for_service('/qt_robot/gesture/play', timeout=3.0)
+        ges_proxy('QT/show_tablet', 1.0)
+        print("[Conversation] show_tablet gesture -> child can speak now")
+    except Exception as e:
+        print(f"[Conversation] gesture error: {e}")
+
+def _detect_red_card(frame):
+    """Detect a red card in the camera frame using HSV color thresholding.
+    Returns True if a significant red area is found."""
+    if frame is None or cv2 is None:
+        return False
+    try:
+        import numpy as np
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        # Red wraps around hue 0/180, so use two ranges
+        lower_red1 = np.array([0, 100, 80])
+        upper_red1 = np.array([10, 255, 255])
+        lower_red2 = np.array([165, 100, 80])
+        upper_red2 = np.array([180, 255, 255])
+        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        mask = mask1 | mask2
+        red_ratio = mask.sum() / 255.0 / (frame.shape[0] * frame.shape[1])
+        detected = red_ratio > 0.03  # 3% of frame is red
+        if detected:
+            print(f"[RedCard] Detected! red_ratio={red_ratio:.4f}")
+        return detected
+    except Exception as e:
+        print(f"[RedCard] Detection error: {e}")
+        return False
+
+def _filter_english_only(text):
+    """Remove non-English characters, keeping only ASCII letters, digits, basic punctuation, and spaces."""
+    import re
+    if not text:
+        return ''
+    filtered = re.sub(r'[^\x20-\x7E]', ' ', text)
+    return re.sub(r'\s+', ' ', filtered).strip()
+
+def _generate_conversation_followup(theme, robot_said, child_said, child_name, child_age, followup_number, total_followups, history, is_closing=False):
+    """Generate a conversational follow-up using Gemini."""
+    # Filter child's speech to English-only before sending to Gemini
+    child_said = _filter_english_only(child_said)
+    try:
+        script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_conversation_followup.py')
+        if not os.path.exists(script_path):
+            print("[Conversation] Follow-up script not found")
+            return None
+        input_data = json.dumps({
+            "theme": theme,
+            "robot_said": robot_said,
+            "child_said": child_said,
+            "child_name": child_name,
+            "child_age": child_age,
+            "followup_number": followup_number,
+            "total_followups": total_followups,
+            "history": history,
+            "is_closing": is_closing
+        })
+        proc = subprocess.run(
+            ['python3.9', script_path],
+            input=input_data, capture_output=True, text=True, timeout=60
+        )
+        if proc.returncode != 0:
+            print(f"[Conversation] Follow-up script error: {proc.stderr}")
+            return None
+        raw = (proc.stdout or '').strip()
+        try:
+            result = json.loads(raw)
+            return result.get('text', '') or None
+        except Exception:
+            return raw if raw else None
+    except Exception as e:
+        print(f"[Conversation] Follow-up error: {e}")
+        return None
 
 # Streaming TTS queue for partial ASR text
 _stream_tts_queue = Queue()
@@ -736,10 +905,16 @@ def api_get_custom_games():
                 blocks = data.get('blocks', [])
             except Exception:
                 blocks = []
+            activity_type = 'diy'
+            try:
+                activity_type = data.get('activity_type', 'diy') if isinstance(data, dict) else 'diy'
+            except Exception:
+                pass
             games.append({
                 "filename": fname,
                 "created_at": created_at,
-                "blocks_count": len(blocks)
+                "blocks_count": len(blocks),
+                "activity_type": activity_type
             })
         # newest first by created_at string
         games.sort(key=lambda x: x.get('created_at', ''), reverse=True)
@@ -1623,6 +1798,182 @@ def api_camera_capture():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/recovery/generate_question', methods=['POST'])
+def api_recovery_generate_question():
+    """Capture a frame and generate a recovery question using Gemini vision."""
+    if 'username' not in session:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    if cv2 is None:
+        return jsonify({'success': False, 'error': 'OpenCV not available'}), 500
+    try:
+        username = session['username']
+        payload = request.get_json(silent=True) or {}
+        mode = payload.get('mode', 'toy')  # 'toy' or 'child'
+        child_name = payload.get('child_name', '')
+
+        frame = _get_ros_frame()
+        if frame is None:
+            return jsonify({'success': False, 'error': 'Camera read failed'}), 500
+
+        # Save frame temporarily
+        import datetime
+        user_cap_dir = os.path.join(USER_DATA_DIR, username, 'captured_scenes')
+        os.makedirs(user_cap_dir, exist_ok=True)
+        ts = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        fname = f'recovery_{mode}_{ts}.jpg'
+        fpath = os.path.join(user_cap_dir, fname)
+        cv2.imwrite(fpath, frame)
+
+        # Call Gemini recovery question script
+        script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_recovery_question.py')
+        if not os.path.exists(script_path):
+            return jsonify({'success': False, 'error': 'Recovery question script not found'}), 500
+
+        # Resolve child age from user profile
+        child_age = 5
+        user_data = user_manager.users.get(username, {})
+        try:
+            child_age = int(user_data.get('age', 5))
+        except (ValueError, TypeError):
+            child_age = 5
+
+        cmd = ['python3.9', script_path, '--image', fpath, '--mode', mode,
+               '--child-age', str(child_age)]
+        if child_name:
+            cmd += ['--child-name', child_name]
+
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if proc.returncode != 0:
+            print(f"[Recovery question] script error: {proc.stderr}")
+            return jsonify({'success': False, 'error': 'Gemini analysis failed'}), 500
+
+        raw = (proc.stdout or '').strip()
+        detected_object = None
+        try:
+            result = json.loads(raw)
+            text = result.get('text', '')
+            detected_object = result.get('object', None)
+        except Exception:
+            text = raw
+
+        if not text:
+            text = f"Hey {child_name}!" if child_name else "Hey there!"
+
+        return jsonify({'success': True, 'text': text, 'mode': mode, 'object': detected_object})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/conversation/wait_for_turn', methods=['POST'])
+def api_conversation_wait_for_turn():
+    """Listen for child's speech until red card is shown, then generate follow-up.
+
+    Expects JSON:
+      theme, robot_said, child_name, child_age,
+      followup_number, total_followups, history
+    Returns:
+      child_said, followup_text
+    """
+    if 'username' not in session:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    try:
+        payload = request.get_json() or {}
+        theme = payload.get('theme', 'greeting')
+        robot_said = payload.get('robot_said', '')
+        child_name = payload.get('child_name', '')
+        child_age = int(payload.get('child_age', 5))
+        followup_number = int(payload.get('followup_number', 1))
+        total_followups = int(payload.get('total_followups', 1))
+        history = payload.get('history', [])
+
+        # Wait for robot to finish speaking before opening the mic
+        _wait_until_robot_silent()
+        # Enable face/sound tracking so robot follows the child
+        _enable_face_tracking()
+        # Signal child that mic is on — show_tablet gesture
+        _signal_child_can_speak()
+
+        # Phase 1: Listen for child's speech while watching for red card
+        collected_speech = []
+        red_card_seen = False
+        _activity_stop_event.clear()
+
+        print(f"[Conversation] Waiting for child's turn (theme={theme}, followup={followup_number}/{total_followups})")
+
+        # Red card watcher runs in parallel with ASR
+        red_card_event = ThreadEvent()
+        def _watch_red_card():
+            while not red_card_event.is_set() and not _activity_stop_event.is_set():
+                f = _get_ros_frame()
+                if f is not None and _detect_red_card(f):
+                    red_card_event.set()
+                    return
+                time.sleep(0.5)
+        red_card_thread = Thread(target=_watch_red_card, daemon=True)
+        red_card_thread.start()
+
+        # Collect speech until red card is detected
+        max_rounds = 20
+        for round_num in range(max_rounds):
+            if _activity_stop_event.is_set() or red_card_event.is_set():
+                break
+            heard = (_whisper_recognize_once() or '').strip()
+            if heard:
+                collected_speech.append(heard)
+                print(f"[Conversation] Heard: {heard}")
+            if red_card_event.is_set():
+                break
+
+        # Signal watcher to stop and wait for it
+        red_card_seen = red_card_event.is_set()
+        red_card_event.set()
+        red_card_thread.join(timeout=1.0)
+
+        child_said = ' '.join(collected_speech)
+        if not child_said:
+            child_said = ''
+        print(f"[Conversation] Child said: '{child_said}' (red_card={red_card_seen}) -> generating follow-up immediately")
+
+        # Phase 2: Generate follow-up response
+        is_closing = payload.get('is_closing', False)
+        followup_text = _generate_conversation_followup(
+            theme=theme,
+            robot_said=robot_said,
+            child_said=child_said,
+            child_name=child_name,
+            child_age=child_age,
+            followup_number=followup_number,
+            total_followups=total_followups,
+            history=history,
+            is_closing=is_closing
+        )
+
+        if not followup_text:
+            if is_closing:
+                followup_text = f"I really enjoyed hearing about that, {child_name}!" if child_name else "I really enjoyed hearing about that!"
+            elif child_said:
+                followup_text = f"That's interesting, {child_name}!" if child_name else "That's interesting!"
+            else:
+                followup_text = f"It's okay {child_name}, take your time!" if child_name else "It's okay, take your time!"
+
+        return jsonify({
+            'success': True,
+            'child_said': child_said,
+            'followup_text': followup_text,
+            'red_card_seen': red_card_seen
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/conversation/check_red_card', methods=['GET'])
+def api_check_red_card():
+    """Quick check if red card is currently visible in camera."""
+    try:
+        frame = _get_ros_frame()
+        detected = _detect_red_card(frame) if frame is not None else False
+        return jsonify({'success': True, 'detected': detected})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @app.route("/builder")
 def builder_page():
     """DIY activity builder page"""
@@ -1631,6 +1982,15 @@ def builder_page():
     username = session['username']
     user = user_manager.users.get(username)
     return render_template("diy_builder.html", logged_in=True, user=user)
+
+@app.route("/conversation_builder")
+def conversation_builder_page():
+    """Conversation flow builder page"""
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    username = session['username']
+    user = user_manager.users.get(username)
+    return render_template("conversation_builder.html", logged_in=True, user=user)
 
 @app.route("/select_toy")
 def select_toy_page():
@@ -1866,6 +2226,7 @@ def api_activity_test():
     payload = request.get_json() or {}
     blocks = payload.get("blocks", [])
     loop_count = int(payload.get("loop", 1) or 1)
+    print(f"[DIY test] blocks={blocks}, loop_count={loop_count}")
     # Reset and run inline (test mode): stop on completion or if stop requested
     _activity_stop_event.clear()
     global _asr_enabled
@@ -1879,12 +2240,12 @@ def api_activity_test():
                 pass
             break
     try:
-        _execute_activity(blocks, loop_count)
+        _execute_activity(blocks, loop_count, username=username)
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
-def _execute_activity(blocks, loop_count):
+def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
     """Internal routine to execute a block list with loop count."""
     # Remove loop control blocks from the execution list
     exec_blocks = [b for b in blocks if b.get("type") != "loop"]
@@ -1912,18 +2273,28 @@ def _execute_activity(blocks, loop_count):
                                 _with_asr_suspended(lambda: tts_helper.speak_story(txt, 'en-US'))
                         elif ttype == 'praise':
                             _with_asr_suspended(lambda: tts_helper.speak('Great job!'))
-                        elif ttype == 'gesture' and kin:
-                            g = (tblock.get('name') or tblock.get('gesture') or '').lower()
-                            if g == 'nod':
-                                kin._move_part('head', [0.0, 8.0], sync=False); time.sleep(0.4)
-                                kin._move_part('head', [0.0, -4.0], sync=False); time.sleep(0.3)
-                                kin._move_part('head', [0.0, 0.0], sync=False)
-                            elif g == 'wave':
-                                kin._move_part('right_arm', [-70.0, -10.0, -20.0], sync=False)
-                                for _i in range(3):
-                                    kin._move_part('right_arm', [-70.0, -25.0, -20.0], sync=False); time.sleep(0.25)
-                                    kin._move_part('right_arm', [-70.0, 0.0, -20.0], sync=False); time.sleep(0.25)
-                                kin._move_part('right_arm', [-55.0, -20.0, -20.0], sync=False)
+                        elif ttype == 'gesture':
+                            g = (tblock.get('name') or tblock.get('gesture') or '').strip()
+                            if g and not g.startswith("QT/"):
+                                g = "QT/" + g
+                            if g and ROS_AVAILABLE:
+                                try:
+                                    from qt_gesture_controller.srv import gesture_play
+                                    ges_proxy = rospy.ServiceProxy('/qt_robot/gesture/play', gesture_play)
+                                    ges_proxy.wait_for_service(timeout=2.0)
+                                    ges_proxy(g, 1.0)
+                                except Exception as e:
+                                    print(f"[DIY gesture] error: {e}")
+                        elif ttype == 'emotion':
+                            emo = (tblock.get('name') or '').strip()
+                            if emo and ROS_AVAILABLE:
+                                try:
+                                    from qt_robot_interface.srv import emotion_show
+                                    emo_proxy = rospy.ServiceProxy('/qt_robot/emotion/show', emotion_show)
+                                    emo_proxy.wait_for_service(timeout=2.0)
+                                    emo_proxy(emo)
+                                except Exception as e:
+                                    print(f"[DIY emotion] error: {e}")
 
                     # Launch parallel recognizers that keep firing when matches occur
                     threads = []
@@ -1980,131 +2351,258 @@ def _execute_activity(blocks, loop_count):
             break
         return
 
-    # Non-continuous mode: Execute in strict sequence A..Z then repeat, as requested
+    # Execute steps sequentially; within each step, gesture + emotion fire in
+    # parallel (non-blocking), then speech plays (blocking, waits for TTS to finish).
+    global _step_current_index, _step_total_count, _step_current_label, _step_next_label, _step_waiting
+    if require_confirm:
+        _step_total_count = len(exec_blocks)
+        _step_current_index = 0
+        _step_waiting = False
     for _ in range(max(1, loop_count)):
-        for block in exec_blocks:
+        for block_idx, block in enumerate(exec_blocks):
             btype = block.get("type")
-            if btype == "speech":
+
+            if btype == "step":
+                # --- Step block: gesture, emotion, and speech in one unit ---
+                gesture = (block.get("gesture") or "").strip()
+                emotion = (block.get("emotion") or "").strip()
+                text = (block.get("text") or "").strip()
+
+                # If block uses camera, generate text dynamically via Gemini
+                use_camera = (block.get("useCamera") or "").strip()
+                toy_detected_in_initial = False
+                if use_camera:
+                    generated = _generate_recovery_question(use_camera, username=username)
+                    if generated and generated.get('text'):
+                        text = generated['text']
+                        if use_camera == 'toy' and generated.get('object'):
+                            toy_detected_in_initial = True
+                        print(f"[DIY step] camera-generated text: {text} (object={generated.get('object')})")
+
+                # Gesture: add QT/ prefix if missing
+                if gesture and not gesture.startswith("QT/"):
+                    gesture = "QT/" + gesture
+
+                # Fire gesture + emotion in parallel (they are non-blocking ROS calls)
+                threads = []
+                # Speech plays before gesture/emotion have started (blocks until done)
+                if text:
+                    _with_asr_suspended(lambda: tts_helper.speak_story(text, "en-US"))
+                if gesture and ROS_AVAILABLE:
+                    def _play_gesture(g=gesture):
+                        try:
+                            from qt_gesture_controller.srv import gesture_play
+                            ges_proxy = rospy.ServiceProxy('/qt_robot/gesture/play', gesture_play)
+                            rospy.wait_for_service('/qt_robot/gesture/play', timeout=5.0)
+                            result = ges_proxy(g, 1.0)
+                            print(f"[DIY step] gesture '{g}' result={result}")
+                        except Exception as e:
+                            print(f"[DIY step] gesture error: {e}")
+                    t = Thread(target=_play_gesture, daemon=True)
+                    t.start()
+                    threads.append(t)
+
+                if emotion and ROS_AVAILABLE:
+                    def _show_emotion(emo=emotion):
+                        try:
+                            from qt_robot_interface.srv import emotion_show
+                            emo_proxy = rospy.ServiceProxy('/qt_robot/emotion/show', emotion_show)
+                            rospy.wait_for_service('/qt_robot/emotion/show', timeout=5.0)
+                            result = emo_proxy(emo)
+                            print(f"[DIY step] emotion '{emo}' result={result}")
+                        except Exception as e:
+                            print(f"[DIY step] emotion error: {e}")
+                    t = Thread(target=_show_emotion, daemon=True)
+                    t.start()
+                    threads.append(t)
+
+                # Wait for gesture/emotion threads to finish before moving to next step
+                for t in threads:
+                    t.join(timeout=10.0)
+
+                # Conversation follow-up loop: listen for child + red card, generate follow-up
+                num_followups = int(block.get("followups", 0) or 0)
+                block_theme = (block.get("theme") or "").strip()
+                if block_theme:
+                    # Enable face/sound tracking so robot follows the child throughout
+                    _enable_face_tracking()
+                    # Wait for robot's opening speech to fully finish before starting to listen
+                    _wait_until_robot_silent()
+                    child_name = ''
+                    child_age = 5
+                    if username:
+                        u = user_manager.users.get(username, {})
+                        child_name = u.get('display_name') or username
+                        try:
+                            child_age = int(u.get('age', 5))
+                        except (ValueError, TypeError):
+                            child_age = 5
+                    conv_history = []
+                    last_robot_said = text
+                    # Total rounds = follow-up questions + 1 final closing listen
+                    total_rounds = num_followups + 1
+                    for fu_num in range(1, total_rounds + 1):
+                        if _activity_stop_event.is_set():
+                            break
+                        is_closing = (fu_num == total_rounds)
+                        # Wait for robot to finish speaking before opening the mic
+                        _wait_until_robot_silent()
+                        # Re-enable face tracking for each round
+                        _enable_face_tracking()
+                        # Signal child that mic is on — show_tablet gesture
+                        _signal_child_can_speak()
+                        label = "closing" if is_closing else f"follow-up {fu_num}/{num_followups}"
+                        print(f"[Conversation] {label}: listening for child (theme={block_theme})")
+
+                        # Red card watcher runs in parallel with ASR
+                        red_card_event = ThreadEvent()
+                        def _watch_red_card(ev=red_card_event):
+                            while not ev.is_set() and not _activity_stop_event.is_set():
+                                f = _get_ros_frame()
+                                if f is not None and _detect_red_card(f):
+                                    ev.set()
+                                    return
+                                time.sleep(0.5)
+                        red_card_thread = Thread(target=_watch_red_card, daemon=True)
+                        red_card_thread.start()
+
+                        # Collect speech until red card is detected
+                        collected_speech = []
+                        for listen_round in range(20):
+                            if _activity_stop_event.is_set() or red_card_event.is_set():
+                                break
+                            heard = (_whisper_recognize_once() or '').strip()
+                            if heard:
+                                collected_speech.append(heard)
+                                print(f"[Conversation] Heard: {heard}")
+                            if red_card_event.is_set():
+                                break
+
+                        # Signal watcher to stop and wait for it
+                        red_card_event.set()
+                        red_card_thread.join(timeout=1.0)
+
+                        child_said = ' '.join(collected_speech)
+                        print(f"[Conversation] Child said: '{child_said}' -> generating {'closing' if is_closing else 'follow-up'}")
+
+                        # Generate response (follow-up question or closing comment)
+                        fu_text = _generate_conversation_followup(
+                            theme=block_theme,
+                            robot_said=last_robot_said,
+                            child_said=child_said,
+                            child_name=child_name,
+                            child_age=child_age,
+                            followup_number=fu_num,
+                            total_followups=num_followups,
+                            history=conv_history,
+                            is_closing=is_closing
+                        )
+                        if not fu_text:
+                            if is_closing:
+                                fu_text = f"I really enjoyed hearing about that, {child_name}!" if child_name else "I really enjoyed hearing about that!"
+                            else:
+                                fu_text = f"That's interesting, {child_name}!" if child_name else "That's interesting!"
+                        conv_history.append({'robot': last_robot_said, 'child': child_said})
+                        _with_asr_suspended(lambda: tts_helper.speak_story(fu_text, "en-US"))
+                        last_robot_said = fu_text
+                        print(f"[Conversation] {label}: robot said: {fu_text}")
+
+                # Toy watching loop: if no toy was seen initially, keep watching
+                if use_camera == 'toy' and not toy_detected_in_initial:
+                    child_name = ''
+                    if username:
+                        u = user_manager.users.get(username, {})
+                        child_name = u.get('display_name') or username
+                    print(f"[DIY step] Toy watching: waiting for child to show a toy...")
+                    watch_count = 0
+                    while not _activity_stop_event.is_set() and watch_count < 15:
+                        time.sleep(3)
+                        watch_count += 1
+                        if _activity_stop_event.is_set():
+                            break
+                        followup = _generate_recovery_question('toy_followup', username=username)
+                        if followup and followup.get('object'):
+                            print(f"[DIY step] Toy detected: {followup['object']}")
+                            fu_text = followup.get('text', '')
+                            if fu_text:
+                                _with_asr_suspended(lambda: tts_helper.speak_story(fu_text, "en-US"))
+                            break
+
+                # Toy step "well done" complement before moving on
+                if use_camera == 'toy':
+                    child_name = ''
+                    if username:
+                        u = user_manager.users.get(username, {})
+                        child_name = u.get('display_name') or username
+                    wd_text = f"Well done {child_name}!" if child_name else "Well done!"
+                    _with_asr_suspended(lambda: tts_helper.speak_story(wd_text, "en-US"))
+
+                # If require_confirm and more steps remain, pause for therapist
+                if require_confirm and block_idx < len(exec_blocks) - 1:
+                    _step_current_index = block_idx
+                    next_blk = exec_blocks[block_idx + 1]
+                    _step_current_label = block.get("component", block.get("type", "step"))
+                    _step_next_label = next_blk.get("component", next_blk.get("type", "step"))
+                    _step_waiting = True
+                    _step_confirm_event.clear()
+                    print(f"[DIY run] Waiting for therapist confirmation after step {block_idx + 1}/{len(exec_blocks)}")
+                    # Block until therapist confirms or activity is stopped
+                    while not _step_confirm_event.is_set() and not _activity_stop_event.is_set():
+                        _step_confirm_event.wait(timeout=0.5)
+                    _step_waiting = False
+                    if _activity_stop_event.is_set():
+                        print(f"[DIY run] Stopped by therapist after step {block_idx + 1}")
+                        _step_current_index = -1
+                        return
+
+            # Legacy block types kept for backward compatibility with saved activities
+            elif btype == "speech":
                 text = block.get("text", "")
                 if text:
                     _with_asr_suspended(lambda: tts_helper.speak_story(text, "en-US"))
-            elif btype == "praise":
-                _with_asr_suspended(lambda: tts_helper.speak("Great job!"))
             elif btype == "gesture":
-                name = (block.get("name") or block.get("gesture") or "").lower()
-                if kin:
-                    if name == "nod":
-                        kin._move_part('head', [0.0, 8.0], sync=False)
-                        time.sleep(0.4)
-                        kin._move_part('head', [0.0, -4.0], sync=False)
-                        time.sleep(0.3)
-                        kin._move_part('head', [0.0, 0.0], sync=False)
-                    elif name == "wave":
-                        kin._move_part('right_arm', [-70.0, -10.0, -20.0], sync=False)
-                        for _i in range(3):
-                            kin._move_part('right_arm', [-70.0, -25.0, -20.0], sync=False)
-                            time.sleep(0.25)
-                            kin._move_part('right_arm', [-70.0, 0.0, -20.0], sync=False)
-                            time.sleep(0.25)
-                        kin._move_part('right_arm', [-55.0, -20.0, -20.0], sync=False)
-            elif btype == "recognize":
-                target = (block.get("target") or "speech").lower()
-                value = (block.get("value") or "").strip()
-                _announce_wait_once()
-                if target == 'speech' and value:
-                    expected = value.strip().lower()
-                    start_wait = time.time()
-                    max_wait_seconds = 30
+                name = (block.get("name") or block.get("gesture") or "").strip()
+                if name and not name.startswith("QT/"):
+                    name = "QT/" + name
+                if name and ROS_AVAILABLE:
                     try:
-                        while time.time() - start_wait < max_wait_seconds:
-                            guard_start = time.time()
-                            while getattr(tts_helper, 'is_speaking', lambda: False)() and time.time() - guard_start < 10:
-                                time.sleep(0.05)
-                            text = _whisper_recognize_streaming()
-                            heard_raw = (text or '').strip().lower()
-                            import re as _re
-                            heard = _re.sub(r"[^a-z0-9\s]", "", heard_raw)
-                            print(f"[Recognize ASR] expected='{expected}' heard='{heard_raw}' -> norm='{heard}'")
-                            # Try fuzzy and LLM correction before matching when expected is not contained in heard
-                            if heard and expected not in heard:
-                                fuzzy = _fuzzy_canonicalize_heard(expected, heard)
-                                if fuzzy:
-                                    print(f"[Recognize ASR] fuzzy corrected '{heard_raw}' -> '{fuzzy}'")
-                                    heard = fuzzy
-                                else:
-                                    print(f"[Recognize ASR] LLM correcting '{heard_raw}'")
-                                    corrected = _llm_canonicalize_heard(expected, heard, context="DIY activity recognize block")
-                                    if corrected:
-                                        print(f"[Recognize ASR] corrected '{heard_raw}' -> '{corrected}'")
-                                        heard = corrected.lower()
-                            if heard and expected in heard:
-                                break
+                        from qt_gesture_controller.srv import gesture_play
+                        ges_proxy = rospy.ServiceProxy('/qt_robot/gesture/play', gesture_play)
+                        rospy.wait_for_service('/qt_robot/gesture/play', timeout=5.0)
+                        ges_proxy(name, 1.0)
                     except Exception as e:
-                        print(f"ASR error: {e}")
-            elif btype == "image":
-                pass
-            elif btype == "wait":
-                pass
-            elif btype == "logic":
-                cond_blocks = (block.get('cond') or [])
-                then_blocks = (block.get('then') or [])
+                        print(f"[DIY gesture] error: {e}")
+            elif btype == "emotion":
+                name = (block.get("name") or "").strip()
+                if name and ROS_AVAILABLE:
+                    try:
+                        from qt_robot_interface.srv import emotion_show
+                        emo_proxy = rospy.ServiceProxy('/qt_robot/emotion/show', emotion_show)
+                        rospy.wait_for_service('/qt_robot/emotion/show', timeout=5.0)
+                        emo_proxy(name)
+                    except Exception as e:
+                        print(f"[DIY emotion] error: {e}")
+    # Reset step-by-step state
+    if require_confirm:
+        _step_current_index = -1
+        _step_waiting = False
 
-                def exec_then_block(tblock):
-                    ttype = tblock.get('type')
-                    if ttype == 'speech':
-                        txt = tblock.get('text', '')
-                        if txt:
-                            _with_asr_suspended(lambda: tts_helper.speak_story(txt, 'en-US'))
-                    elif ttype == 'praise':
-                        _with_asr_suspended(lambda: tts_helper.speak('Great job!'))
-                    elif ttype == 'gesture' and kin:
-                        g = (tblock.get('name') or tblock.get('gesture') or '').lower()
-                        if g == 'nod':
-                            kin._move_part('head', [0.0, 8.0], sync=False); time.sleep(0.4)
-                            kin._move_part('head', [0.0, -4.0], sync=False); time.sleep(0.3)
-                            kin._move_part('head', [0.0, 0.0], sync=False)
-                        elif g == 'wave':
-                            kin._move_part('right_arm', [-70.0, -10.0, -20.0], sync=False)
-                            for _i in range(3):
-                                kin._move_part('right_arm', [-70.0, -25.0, -20.0], sync=False); time.sleep(0.25)
-                                kin._move_part('right_arm', [-70.0, 0.0, -20.0], sync=False); time.sleep(0.25)
-                            kin._move_part('right_arm', [-55.0, -20.0, -20.0], sync=False)
+@app.route("/api/activity/step_status", methods=["GET"])
+def api_activity_step_status():
+    """Return current step-by-step execution status for therapist UI."""
+    return jsonify({
+        "waiting": _step_waiting,
+        "current_index": _step_current_index,
+        "total": _step_total_count,
+        "current_label": _step_current_label,
+        "next_label": _step_next_label
+    })
 
-                if any((c.get('type') == 'recognize' and (c.get('target') or 'speech').lower() == 'speech' and (c.get('value') or '').strip()) for c in cond_blocks):
-                    _announce_wait_once()
-
-                threads = []
-                pair_count = min(len(cond_blocks), len(then_blocks))
-                for i in range(pair_count):
-                    c = cond_blocks[i]
-                    t = then_blocks[i]
-                    if c.get('type') == 'recognize':
-                        target = (c.get('target') or 'speech').lower()
-                        expected = (c.get('value') or '').strip().lower()
-                        if target == 'speech' and expected:
-                            def worker(exp=expected, tblock=t):
-                                try:
-                                    guard_start = time.time()
-                                    while getattr(tts_helper, 'is_speaking', lambda: False)() and time.time() - guard_start < 10:
-                                        time.sleep(0.05)
-                                    text = _whisper_recognize_once()
-                                    heard = (text or '').strip().lower()
-                                    print(f"[Logic ASR] expected='{exp}' heard='{heard}'")
-                                    # Try LLM correction before matching
-                                    if heard and exp not in heard:
-                                        corrected = _llm_canonicalize_heard(exp, heard, context="DIY logic recognize")
-                                        if corrected:
-                                            print(f"[Logic ASR] corrected '{heard}' -> '{corrected}'")
-                                            heard = corrected.lower()
-                                    if heard and exp in heard:
-                                        exec_then_block(tblock)
-                                except Exception as e:
-                                    print(f"ASR error: {e}")
-                            th = Thread(target=worker, daemon=True)
-                            th.start()
-                            threads.append(th)
-                for th in threads:
-                    th.join(timeout=0.1)
+@app.route("/api/activity/confirm_step", methods=["POST"])
+def api_activity_confirm_step():
+    """Therapist confirms to proceed to the next step."""
+    _step_confirm_event.set()
+    return jsonify({"success": True})
 
 @app.route("/api/activity/run_saved", methods=["POST"])
 def api_activity_run_saved():
@@ -2132,15 +2630,17 @@ def api_activity_run_saved():
                 except Exception:
                     pass
                 break
-        # If continuous recognizers exist, run in background until stopped
+        # Determine if therapist confirmation is needed between steps
+        require_confirm = len([b for b in blocks if b.get("type") != "loop"]) > 1
+        # Run in background (either for parallel recognizers or step-by-step confirm)
         global _activity_thread
         _activity_stop_event.clear()
         global _asr_enabled
         _asr_enabled = True
-        if _has_parallel_recognizers(blocks):
+        if _has_parallel_recognizers(blocks) or require_confirm:
             def runner():
                 try:
-                    _execute_activity(blocks, loop_count)
+                    _execute_activity(blocks, loop_count, require_confirm=require_confirm, username=username)
                 except Exception as e:
                     print(f"Run activity error: {e}")
             if _activity_thread and _activity_thread.is_alive():
@@ -2152,9 +2652,9 @@ def api_activity_run_saved():
                 _activity_stop_event.clear()
             _activity_thread = Thread(target=runner, daemon=True)
             _activity_thread.start()
-            return jsonify({"success": True, "running": True})
+            return jsonify({"success": True, "running": True, "require_confirm": require_confirm})
         else:
-            _execute_activity(blocks, loop_count)
+            _execute_activity(blocks, loop_count, username=username)
             return jsonify({"success": True, "running": False})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
@@ -2222,6 +2722,26 @@ def api_activity_load_saved():
         with open(fpath, 'r') as f:
             saved = json.load(f)
         return jsonify({"success": True, "activity": saved, "filename": filename})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/api/activity/delete", methods=["POST"])
+def api_activity_delete():
+    """Delete a previously saved DIY activity by filename."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    filename = (data.get('filename') or '').strip()
+    if not filename:
+        return jsonify({"success": False, "error": "Filename required"}), 400
+    try:
+        user_dir = os.path.join(USER_DATA_DIR, username, "activities")
+        fpath = os.path.join(user_dir, filename)
+        if not os.path.exists(fpath):
+            return jsonify({"success": False, "error": "Activity not found"}), 404
+        os.remove(fpath)
+        return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
@@ -2816,5 +3336,390 @@ def api_scene_start():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+# ===================== WH PICTURE SCENE ENDPOINTS =====================
+
+WH_SCENE_DIR_NAME = 'wh_scenes'
+
+def _user_wh_dir(username):
+    """Get or create the WH scenes directory for a user."""
+    d = os.path.join(USER_DATA_DIR, username, WH_SCENE_DIR_NAME)
+    os.makedirs(d, exist_ok=True)
+    return d
+
+def _load_scene_index(username):
+    """Load the scene index JSON for a user."""
+    idx_path = os.path.join(_user_wh_dir(username), 'index.json')
+    if os.path.exists(idx_path):
+        try:
+            with open(idx_path, 'r') as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
+
+def _save_scene_index(username, index):
+    """Save the scene index JSON for a user."""
+    idx_path = os.path.join(_user_wh_dir(username), 'index.json')
+    with open(idx_path, 'w') as f:
+        json.dump(index, f, indent=2)
+
+def _run_gemini_wh_analysis(image_path, child_age, difficulty):
+    """Run the Gemini vision worker to analyze a scene and generate WH questions."""
+    project_root = os.path.dirname(BASE_DIR)
+    script_path = os.path.join(project_root, 'scripts', 'gemini_wh_scene.py')
+    worker_python = os.getenv(
+        "IMAGE_WORKER_PYTHON",
+        os.path.join(project_root, ".venv39", "bin", "python"),
+    )
+    if not os.path.exists(script_path):
+        return None, "Worker script not found"
+    payload = json.dumps({
+        "image_path": image_path,
+        "child_age": child_age,
+        "difficulty": difficulty
+    })
+    try:
+        proc = subprocess.run(
+            [worker_python, script_path],
+            input=payload,
+            capture_output=True,
+            text=True,
+            timeout=90,
+            env=os.environ.copy()
+        )
+        if proc.returncode != 0:
+            return None, f"Worker failed: {proc.stderr.strip()}"
+        raw = proc.stdout.strip()
+        if raw.startswith("```"):
+            raw = raw.strip("`")
+            if raw.startswith("json"):
+                raw = raw[4:].strip()
+        result = json.loads(raw)
+        return result, None
+    except json.JSONDecodeError as e:
+        return None, f"JSON parse error: {e}"
+    except subprocess.TimeoutExpired:
+        return None, "Analysis timed out"
+    except Exception as e:
+        return None, str(e)
+
+
+@app.route("/wh_picture_scene")
+def wh_picture_scene_page():
+    """WH Questions Picture Scene - Prepare (therapist uploads images)."""
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    username = session['username']
+    user = user_manager.users.get(username)
+    return render_template("wh_picture_scene.html", logged_in=True, user=user)
+
+
+@app.route("/wh_picture_play")
+def wh_picture_play_page():
+    """WH Questions Picture Scene - Play session (child plays)."""
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    username = session['username']
+    user = user_manager.users.get(username)
+    return render_template("wh_picture_play.html", logged_in=True, user=user)
+
+
+@app.route("/api/wh_scene/upload", methods=["POST"])
+def api_wh_scene_upload():
+    """Upload a scene image, analyze it with Gemini, generate WH questions."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+
+    if 'image' not in request.files:
+        return jsonify({"success": False, "error": "No image provided"}), 400
+
+    file = request.files['image']
+    if not file.filename:
+        return jsonify({"success": False, "error": "Empty filename"}), 400
+
+    # Save image
+    wh_dir = _user_wh_dir(username)
+    images_dir = os.path.join(wh_dir, 'images')
+    os.makedirs(images_dir, exist_ok=True)
+
+    ext = os.path.splitext(file.filename)[1].lower() or '.jpg'
+    scene_id = f"scene_{int(time.time())}_{str(uuid.uuid4())[:6]}"
+    safe_name = scene_id + ext
+    image_path = os.path.join(images_dir, safe_name)
+    file.save(image_path)
+
+    # Get user profile for age-appropriate questions
+    user = user_manager.users.get(username, {})
+    child_age = user.get('age', 5)
+    # Default to receptive for initial generation
+    difficulty = "receptive"
+
+    # Run Gemini analysis
+    result, error = _run_gemini_wh_analysis(image_path, child_age, difficulty)
+
+    index = _load_scene_index(username)
+
+    if result and 'questions' in result:
+        # Save questions to a separate JSON file
+        questions_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
+        with open(questions_path, 'w') as f:
+            json.dump(result, f, indent=2)
+
+        rel_path = os.path.relpath(image_path, USER_DATA_DIR)
+        entry = {
+            "id": scene_id,
+            "filename": file.filename,
+            "image_path": image_path,
+            "image_url": f"/images/{rel_path}",
+            "scene_description": result.get("scene_description", ""),
+            "question_count": len(result.get("questions", [])),
+            "status": "ready",
+            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        index.append(entry)
+        _save_scene_index(username, index)
+
+        return jsonify({"success": True, "scene": entry})
+    else:
+        # Save with error status so therapist can retry
+        rel_path = os.path.relpath(image_path, USER_DATA_DIR)
+        entry = {
+            "id": scene_id,
+            "filename": file.filename,
+            "image_path": image_path,
+            "image_url": f"/images/{rel_path}",
+            "scene_description": "",
+            "question_count": 0,
+            "status": "error",
+            "error": error or "Unknown error",
+            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        index.append(entry)
+        _save_scene_index(username, index)
+
+        return jsonify({"success": True, "scene": entry, "warning": error})
+
+
+@app.route("/api/wh_scene/capture", methods=["POST"])
+def api_wh_scene_capture():
+    """Capture a scene from the robot camera, analyze it, generate WH questions."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    if cv2 is None:
+        return jsonify({"success": False, "error": "OpenCV not available"}), 500
+
+    frame = _get_ros_frame()
+    if frame is None:
+        return jsonify({"success": False, "error": "Camera read failed"}), 500
+
+    # Save captured frame
+    wh_dir = _user_wh_dir(username)
+    images_dir = os.path.join(wh_dir, 'images')
+    os.makedirs(images_dir, exist_ok=True)
+
+    scene_id = f"scene_{int(time.time())}_{str(uuid.uuid4())[:6]}"
+    safe_name = scene_id + '.jpg'
+    image_path = os.path.join(images_dir, safe_name)
+    ok = cv2.imwrite(image_path, frame)
+    if not ok:
+        return jsonify({"success": False, "error": "Failed to save captured image"}), 500
+
+    # Get user profile for age-appropriate questions
+    user = user_manager.users.get(username, {})
+    child_age = user.get('age', 5)
+    difficulty = "receptive"
+
+    # Run Gemini analysis
+    result, error = _run_gemini_wh_analysis(image_path, child_age, difficulty)
+
+    index = _load_scene_index(username)
+    rel_path = os.path.relpath(image_path, USER_DATA_DIR)
+    ts_label = time.strftime("%Y-%m-%d %H:%M:%S")
+
+    if result and 'questions' in result:
+        questions_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
+        with open(questions_path, 'w') as f:
+            json.dump(result, f, indent=2)
+
+        entry = {
+            "id": scene_id,
+            "filename": f"capture_{ts_label}.jpg",
+            "image_path": image_path,
+            "image_url": f"/images/{rel_path}",
+            "scene_description": result.get("scene_description", ""),
+            "question_count": len(result.get("questions", [])),
+            "status": "ready",
+            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        index.append(entry)
+        _save_scene_index(username, index)
+        return jsonify({"success": True, "scene": entry})
+    else:
+        entry = {
+            "id": scene_id,
+            "filename": f"capture_{ts_label}.jpg",
+            "image_path": image_path,
+            "image_url": f"/images/{rel_path}",
+            "scene_description": "",
+            "question_count": 0,
+            "status": "error",
+            "error": error or "Unknown error",
+            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        index.append(entry)
+        _save_scene_index(username, index)
+        return jsonify({"success": True, "scene": entry, "warning": error})
+
+
+@app.route("/api/wh_scene/list")
+def api_wh_scene_list():
+    """List all uploaded scenes for the current user."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    index = _load_scene_index(username)
+    return jsonify({"success": True, "scenes": index})
+
+
+@app.route("/api/wh_scene/delete", methods=["POST"])
+def api_wh_scene_delete():
+    """Delete a scene and its questions."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    scene_id = data.get("scene_id")
+    if not scene_id:
+        return jsonify({"success": False, "error": "Missing scene_id"}), 400
+
+    index = _load_scene_index(username)
+    scene = next((s for s in index if s['id'] == scene_id), None)
+    if not scene:
+        return jsonify({"success": False, "error": "Scene not found"}), 404
+
+    # Delete image file
+    try:
+        if os.path.exists(scene.get('image_path', '')):
+            os.remove(scene['image_path'])
+    except Exception:
+        pass
+
+    # Delete questions file
+    wh_dir = _user_wh_dir(username)
+    q_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
+    try:
+        if os.path.exists(q_path):
+            os.remove(q_path)
+    except Exception:
+        pass
+
+    index = [s for s in index if s['id'] != scene_id]
+    _save_scene_index(username, index)
+    return jsonify({"success": True})
+
+
+@app.route("/api/wh_scene/regenerate", methods=["POST"])
+def api_wh_scene_regenerate():
+    """Re-run Gemini analysis for a scene that failed."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    scene_id = data.get("scene_id")
+    if not scene_id:
+        return jsonify({"success": False, "error": "Missing scene_id"}), 400
+
+    index = _load_scene_index(username)
+    scene = next((s for s in index if s['id'] == scene_id), None)
+    if not scene:
+        return jsonify({"success": False, "error": "Scene not found"}), 404
+
+    user = user_manager.users.get(username, {})
+    child_age = user.get('age', 5)
+
+    result, error = _run_gemini_wh_analysis(scene['image_path'], child_age, "receptive")
+
+    if result and 'questions' in result:
+        wh_dir = _user_wh_dir(username)
+        q_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
+        with open(q_path, 'w') as f:
+            json.dump(result, f, indent=2)
+        scene['status'] = 'ready'
+        scene['scene_description'] = result.get('scene_description', '')
+        scene['question_count'] = len(result.get('questions', []))
+        scene.pop('error', None)
+        _save_scene_index(username, index)
+        return jsonify({"success": True})
+    else:
+        scene['status'] = 'error'
+        scene['error'] = error or 'Unknown error'
+        _save_scene_index(username, index)
+        return jsonify({"success": False, "error": error})
+
+
+@app.route("/api/wh_scene/get_questions", methods=["POST"])
+def api_wh_scene_get_questions():
+    """Get the generated WH questions for a scene."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    scene_id = data.get("scene_id")
+    if not scene_id:
+        return jsonify({"success": False, "error": "Missing scene_id"}), 400
+
+    wh_dir = _user_wh_dir(username)
+    q_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
+    if not os.path.exists(q_path):
+        return jsonify({"success": False, "error": "Questions not found"}), 404
+
+    with open(q_path, 'r') as f:
+        result = json.load(f)
+
+    return jsonify({
+        "success": True,
+        "questions": result.get("questions", []),
+        "scene_description": result.get("scene_description", "")
+    })
+
+
+@app.route("/api/wh_scene/save_result", methods=["POST"])
+def api_wh_scene_save_result():
+    """Save a session result for progress tracking."""
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    scene_id = data.get("scene_id")
+    mode = data.get("mode", "receptive")
+    score_val = data.get("score", 0)
+    total = data.get("total", 0)
+
+    wh_dir = _user_wh_dir(username)
+    results_path = os.path.join(wh_dir, 'results.json')
+    results = []
+    if os.path.exists(results_path):
+        try:
+            with open(results_path, 'r') as f:
+                results = json.load(f)
+        except Exception:
+            results = []
+
+    results.append({
+        "scene_id": scene_id,
+        "mode": mode,
+        "score": score_val,
+        "total": total,
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+    })
+
+    with open(results_path, 'w') as f:
+        json.dump(results, f, indent=2)
+
+    return jsonify({"success": True})
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True) 
+    app.run(host="0.0.0.0", port=8080, debug=True)

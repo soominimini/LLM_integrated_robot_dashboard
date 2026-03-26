@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young boy is sleeping peacefully in bed, next to a wooden nightstand with a lamp and an alarm clock.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a boy",
+      "visual_choices": [
+        "a boy",
+        "a girl",
+        "a man",
+        "a dog"
+      ],
+      "evidence_hint": "Look at the person in the picture"
+    },
+    {
+      "wh_type": "what",
+      "question": "What is he doing?",
+      "answer": "sleeping",
+      "visual_choices": [
+        "sleeping",
+        "eating",
+        "playing",
+        "reading"
+      ],
+      "evidence_hint": "Look at what the person is doing"
+    },
+    {
+      "wh_type": "when",
+      "question": "When is it?",
+      "answer": "nighttime",
+      "visual_choices": [
+        "nighttime",
+        "morning",
+        "afternoon",
+        "lunchtime"
+      ],
+      "evidence_hint": "Look at the light and what he is doing"
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is he?",
+      "answer": "in bed",
+      "visual_choices": [
+        "in bed",
+        "at school",
+        "in the park",
+        "at the store"
+      ],
+      "evidence_hint": "Look at the place around the person"
+    },
+    {
+      "wh_type": "why",
+      "question": "Why is he sleeping?",
+      "answer": "because he is tired",
+      "visual_choices": [
+        "because he is tired",
+        "because he is hungry",
+        "because he is sad",
+        "because he is playing"
+      ],
+      "evidence_hint": "Think about why someone sleeps"
+    }
+  ]
+}

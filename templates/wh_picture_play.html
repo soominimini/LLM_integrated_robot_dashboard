@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WH Questions - Play Session</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header { text-align: center; margin-bottom: 1.5rem; }
+    .header h1 { color: #333; font-size: 1.8rem; margin-bottom: 0.3rem; }
+    .header p { color: #666; font-size: 0.95rem; }
+
+    /* Mode selection */
+    .mode-select {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .mode-btn {
+      flex: 1;
+      max-width: 250px;
+      padding: 1.5rem;
+      border: 3px solid #e9ecef;
+      border-radius: 16px;
+      background: #f8f9fa;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .mode-btn:hover {
+      border-color: #667eea;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(102,126,234,0.15);
+    }
+    .mode-btn.selected { border-color: #667eea; background: #eef2ff; }
+    .mode-btn .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .mode-btn h3 { color: #333; font-size: 1rem; margin-bottom: 0.25rem; }
+    .mode-btn p { color: #888; font-size: 0.8rem; }
+
+    /* Scene selector */
+    .scene-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .scene-thumb {
+      border: 3px solid #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .scene-thumb:hover { border-color: #667eea; transform: translateY(-2px); }
+    .scene-thumb.selected { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.2); }
+    .scene-thumb img { width: 100%; height: 100px; object-fit: cover; display: block; }
+    .scene-thumb .label {
+      padding: 0.4rem;
+      font-size: 0.75rem;
+      color: #555;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Play area */
+    .play-area { display: none; }
+    .play-area.active { display: block; }
+
+    .scene-image-container { text-align: center; margin-bottom: 1.5rem; }
+    .scene-image-container img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    /* WH type indicator */
+    .wh-indicator { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; }
+    .wh-dot {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.65rem;
+      color: white; opacity: 0.35;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+    .wh-dot.active { opacity: 1; transform: scale(1.2); }
+    .wh-dot.done { opacity: 0.7; }
+    .wh-dot.who { background: #e74c3c; }
+    .wh-dot.what { background: #3498db; }
+    .wh-dot.when { background: #f39c12; }
+    .wh-dot.where { background: #2ecc71; }
+    .wh-dot.why { background: #9b59b6; }
+
+    .question-display {
+      background: linear-gradient(135deg, #eef2ff, #fff);
+      border: 2px solid #e9ecef;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .question-display h2 { color: #333; font-size: 1.3rem; line-height: 1.5; }
+
+    /* Visual choices (receptive) */
+    .visual-choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .choice-card {
+      background: #f8f9fa;
+      border: 3px solid #e9ecef;
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .choice-card:hover {
+      border-color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102,126,234,0.15);
+    }
+    .choice-card.correct { border-color: #28a745; background: #d4edda; color: #155724; }
+    .choice-card.wrong { border-color: #dc3545; background: #f8d7da; color: #721c24; }
+
+    /* Expressive input */
+    .expressive-input { margin-bottom: 1.5rem; text-align: center; }
+    .expressive-input input {
+      width: 100%; max-width: 400px;
+      padding: 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      text-align: center;
+      outline: none;
+    }
+    .expressive-input input:focus { border-color: #667eea; }
+
+    .mic-btn {
+      display: inline-block;
+      margin-top: 0.75rem;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 3px solid #667eea;
+      background: white;
+      color: #667eea;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mic-btn:hover { background: #667eea; color: white; }
+    .mic-btn.listening {
+      background: #dc3545; border-color: #dc3545; color: white;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(220,53,69,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(220,53,69,0); }
+    }
+    .mic-label { font-size: 0.8rem; color: #888; margin-top: 0.3rem; }
+
+    .submit-btn {
+      margin-top: 0.75rem;
+      padding: 0.6rem 2rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; border: none;
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(102,126,234,0.3); }
+
+    /* Evidence hint */
+    .evidence-hint {
+      display: none;
+      background: #fff9e6; border: 2px solid #ffc107;
+      border-radius: 10px; padding: 0.75rem;
+      margin-bottom: 1rem; text-align: center;
+      font-size: 0.9rem; color: #664d03;
+    }
+    .evidence-hint.show { display: block; }
+
+    /* Feedback */
+    .feedback {
+      padding: 1rem; border-radius: 10px;
+      font-weight: 600; font-size: 1.1rem;
+      text-align: center; display: none;
+      margin-bottom: 1rem;
+    }
+    .feedback.correct { display: block; background: #d4edda; color: #155724; }
+    .feedback.wrong { display: block; background: #f8d7da; color: #721c24; }
+
+    .next-btn {
+      display: none; margin: 0 auto;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; border: none;
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+    }
+    .next-btn:hover { transform: translateY(-2px); }
+
+    /* Results */
+    .results { display: none; text-align: center; }
+    .results.active { display: block; }
+    .score-circle {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin: 1rem auto;
+      font-size: 2rem; font-weight: 700;
+    }
+    .score-circle span { font-size: 0.8rem; font-weight: 400; opacity: 0.9; }
+
+    /* Buttons */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+    .btn-secondary { background: #6c757d; color: white; }
+    .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+
+    .empty-msg {
+      text-align: center; padding: 2rem;
+      color: #888; font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>WH Questions - Play Session</h1>
+      <p>Practice answering Who, What, When, Where, Why about picture scenes</p>
+    </div>
+
+    <!-- Step 1: pick scene + mode -->
+    <div id="play-step-pick">
+      <h3 style="color:#333; margin-bottom:1rem; text-align:center;">Choose a Scene</h3>
+      <div id="playSceneSelector" class="scene-selector"></div>
+      <div id="playScenesEmpty" class="empty-msg" style="display:none;">
+        No scenes available. Ask your therapist to upload some first!
+      </div>
+
+      <h3 style="color:#333; margin:1.5rem 0 0.75rem; text-align:center;">Choose Mode</h3>
+      <div class="mode-select">
+        <div class="mode-btn selected" id="mode-receptive" onclick="selectMode('receptive')">
+          <div class="icon">?</div>
+          <h3>Receptive</h3>
+          <p>Pick from visual choices</p>
+        </div>
+        <div class="mode-btn" id="mode-expressive" onclick="selectMode('expressive')">
+          <div class="icon">A</div>
+          <h3>Expressive</h3>
+          <p>Answer by speaking or typing</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-primary" onclick="startSession()" id="startBtn" disabled>Start Session</button>
+        <button class="btn btn-secondary" style="margin-left:0.5rem;" onclick="window.location.href='/play'">Back to Games</button>
+      </div>
+    </div>
+
+    <!-- Step 2: play questions -->
+    <div id="play-step-game" class="play-area">
+      <div class="scene-image-container">
+        <img id="gameImage" src="" alt="Scene">
+      </div>
+
+      <div class="wh-indicator" id="whIndicator"></div>
+
+      <div class="question-display">
+        <h2 id="questionText">Loading...</h2>
+      </div>
+
+      <div class="evidence-hint" id="evidenceHint"></div>
+
+      <!-- Receptive: visual choices -->
+      <div id="receptiveArea" class="visual-choices" style="display:none;"></div>
+
+      <!-- Expressive: text + mic -->
+      <div id="expressiveArea" class="expressive-input" style="display:none;">
+        <input type="text" id="answerInput" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')submitAnswer()">
+        <br>
+        <button class="submit-btn" onclick="submitAnswer()">Submit</button>
+        <br>
+        <button class="mic-btn" id="micBtn" onclick="startListening()">&#127908;</button>
+        <div class="mic-label" id="micLabel">or say your answer</div>
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <div class="text-center">
+        <button class="btn btn-sm" style="background:#ffc107; color:#333; display:none;" id="hintBtn" onclick="showHint()">Show Hint</button>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+      </div>
+
+      <div class="text-center mt-1">
+        <button class="btn btn-secondary btn-sm" onclick="endSession()">End Session</button>
+      </div>
+    </div>
+
+    <!-- Step 3: results -->
+    <div id="play-step-results" class="results">
+      <h2 style="color:#333;">Session Complete!</h2>
+      <div class="score-circle">
+        <div id="scoreValue">0/5</div>
+        <span>correct</span>
+      </div>
+      <p id="scoreDetail" style="color:#666; margin-bottom:1rem;"></p>
+      <button class="btn btn-primary" onclick="resetPlay()">Play Again</button>
+      <button class="btn btn-secondary" style="margin-left:0.5rem;" onclick="window.location.href='/play'">Back to Games</button>
+    </div>
+  </div>
+
+  <script>
+    // ===================== STATE =====================
+    let scenes = [];
+    let selectedSceneId = null;
+    let selectedMode = 'receptive';
+    let gameQuestions = [];
+    let currentQIdx = 0;
+    let score = 0;
+    let answered = false;
+    let listening = false;
+
+    const correctPhrases = ['That is right!','Correct!','Great job!','Well done!','You got it!'];
+    const incorrectPhrases = ['Not quite.','Good try!','Almost there.','Nice effort!'];
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    const correctGestures = [
+      {gesture:'clapping',emotion:'QT/emotions/happy'},
+      {gesture:'hoora',emotion:'QT/emotions/happy'},
+      {gesture:'happy',emotion:'QT/emotions/happy'},
+      {gesture:'yes1',emotion:'QT/emotions/happy'},
+    ];
+    const incorrectGestures = [
+      {gesture:'patience',emotion:'QT/emotions/calm'},
+      {gesture:'think',emotion:'QT/emotions/calm'},
+      {gesture:'calm',emotion:'QT/emotions/calm'},
+    ];
+
+    // ===================== LOAD SCENES =====================
+    async function loadScenes() {
+      try {
+        const res = await fetch('/api/wh_scene/list');
+        const data = await res.json();
+        scenes = (data.scenes || []).filter(s => s.status === 'ready');
+        renderSceneSelector();
+      } catch (e) { console.error(e); }
+    }
+
+    function renderSceneSelector() {
+      const sel = document.getElementById('playSceneSelector');
+      const empty = document.getElementById('playScenesEmpty');
+      if (!scenes.length) {
+        sel.innerHTML = '';
+        empty.style.display = 'block';
+        document.getElementById('startBtn').disabled = true;
+        return;
+      }
+      empty.style.display = 'none';
+      sel.innerHTML = scenes.map(s => `
+        <div class="scene-thumb" onclick="pickScene('${s.id}', this)">
+          <img src="${s.image_url}" alt="Scene">
+          <div class="label">${s.filename}</div>
+        </div>
+      `).join('');
+    }
+
+    function pickScene(id, el) {
+      selectedSceneId = id;
+      document.querySelectorAll('.scene-thumb').forEach(t => t.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('startBtn').disabled = false;
+    }
+
+    function selectMode(mode) {
+      selectedMode = mode;
+      document.getElementById('mode-receptive').classList.toggle('selected', mode === 'receptive');
+      document.getElementById('mode-expressive').classList.toggle('selected', mode === 'expressive');
+    }
+
+    // ===================== GAME SESSION =====================
+    async function startSession() {
+      if (!selectedSceneId) return;
+      const scene = scenes.find(s => s.id === selectedSceneId);
+      if (!scene) return;
+
+      try {
+        const res = await fetch('/api/wh_scene/get_questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scene_id: selectedSceneId })
+        });
+        const data = await res.json();
+        if (!data.success || !data.questions.length) {
+          alert('No questions available for this scene.');
+          return;
+        }
+        gameQuestions = data.questions;
+      } catch (e) {
+        alert('Failed to load questions: ' + e.message);
+        return;
+      }
+
+      currentQIdx = 0;
+      score = 0;
+      answered = false;
+
+      document.getElementById('play-step-pick').style.display = 'none';
+      document.getElementById('play-step-game').classList.add('active');
+      document.getElementById('play-step-results').classList.remove('active');
+      document.getElementById('gameImage').src = scene.image_url;
+
+      buildWhIndicator();
+      showGameQuestion();
+    }
+
+    function buildWhIndicator() {
+      const container = document.getElementById('whIndicator');
+      container.innerHTML = gameQuestions.map((q, i) =>
+        `<div class="wh-dot ${q.wh_type}" id="wh-dot-${i}">${q.wh_type}</div>`
+      ).join('');
+    }
+
+    function showGameQuestion() {
+      answered = false;
+      const q = gameQuestions[currentQIdx];
+
+      document.querySelectorAll('.wh-dot').forEach((d, i) => {
+        d.classList.remove('active', 'done');
+        if (i < currentQIdx) d.classList.add('done');
+        if (i === currentQIdx) d.classList.add('active');
+      });
+
+      document.getElementById('questionText').textContent = q.question;
+      document.getElementById('feedback').className = 'feedback';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('nextBtn').style.display = 'none';
+      document.getElementById('hintBtn').style.display = 'inline-block';
+      document.getElementById('evidenceHint').classList.remove('show');
+      document.getElementById('evidenceHint').textContent = q.evidence_hint || '';
+
+      robotSpeak(q.question);
+
+      if (selectedMode === 'receptive') {
+        document.getElementById('receptiveArea').style.display = 'grid';
+        document.getElementById('expressiveArea').style.display = 'none';
+        renderChoices(q);
+      } else {
+        document.getElementById('receptiveArea').style.display = 'none';
+        document.getElementById('expressiveArea').style.display = 'block';
+        const inp = document.getElementById('answerInput');
+        inp.value = '';
+        inp.disabled = false;
+        inp.focus();
+        document.getElementById('micLabel').textContent = 'or say your answer';
+      }
+    }
+
+    function renderChoices(q) {
+      const area = document.getElementById('receptiveArea');
+      const choices = [...(q.visual_choices || [])];
+      for (let i = choices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [choices[i], choices[j]] = [choices[j], choices[i]];
+      }
+      area.innerHTML = choices.map(c =>
+        `<div class="choice-card" onclick="pickChoice(this, '${c.replace(/'/g, "\\'")}')">${c}</div>`
+      ).join('');
+    }
+
+    function pickChoice(el, choice) {
+      if (answered) return;
+      answered = true;
+      const q = gameQuestions[currentQIdx];
+      const correct = normalize(choice) === normalize(q.answer);
+      document.querySelectorAll('.choice-card').forEach(card => {
+        if (normalize(card.textContent) === normalize(q.answer)) card.classList.add('correct');
+        else if (card === el && !correct) card.classList.add('wrong');
+      });
+      showFeedback(correct, q.answer);
+    }
+
+    function submitAnswer() {
+      if (answered) return;
+      const input = document.getElementById('answerInput');
+      const userAnswer = input.value.trim();
+      if (!userAnswer) return;
+      answered = true;
+      input.disabled = true;
+      const q = gameQuestions[currentQIdx];
+      const correct = isAnswerAccepted(userAnswer, q);
+      showFeedback(correct, q.answer);
+    }
+
+    function normalize(str) {
+      let s = str.toLowerCase().trim();
+      s = s.replace(/^(a |an |the |in |at |on |because )/, '');
+      s = s.replace(/[.,!?;:'"]/g, '').trim();
+      return s;
+    }
+
+    function isAnswerAccepted(userAnswer, q) {
+      const userNorm = normalize(userAnswer);
+      const ansNorm = normalize(q.answer);
+      if (userNorm === ansNorm) return true;
+      if (userNorm.includes(ansNorm) || ansNorm.includes(userNorm)) return true;
+      if (userNorm.endsWith('s') && userNorm.slice(0,-1) === ansNorm) return true;
+      if (ansNorm.endsWith('s') && ansNorm.slice(0,-1) === userNorm) return true;
+      return false;
+    }
+
+    function showFeedback(correct, correctAnswer) {
+      const fb = document.getElementById('feedback');
+      if (correct) {
+        score++;
+        const phrase = pickRandom(correctPhrases);
+        fb.className = 'feedback correct';
+        fb.textContent = phrase;
+        robotSpeak(phrase);
+        robotGesture(true);
+      } else {
+        const phrase = pickRandom(incorrectPhrases);
+        fb.className = 'feedback wrong';
+        fb.textContent = `${phrase} The answer is: ${correctAnswer}`;
+        robotSpeak(`${phrase} The answer is ${correctAnswer}.`);
+        robotGesture(false);
+      }
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      document.getElementById('hintBtn').style.display = 'none';
+    }
+
+    function showHint() {
+      document.getElementById('evidenceHint').classList.add('show');
+      document.getElementById('hintBtn').style.display = 'none';
+    }
+
+    function nextQuestion() {
+      currentQIdx++;
+      if (currentQIdx >= gameQuestions.length) {
+        showResults();
+      } else {
+        showGameQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('play-step-game').classList.remove('active');
+      const results = document.getElementById('play-step-results');
+      results.classList.add('active');
+      document.getElementById('scoreValue').textContent = `${score}/${gameQuestions.length}`;
+      document.getElementById('scoreDetail').textContent =
+        `You got ${score} out of ${gameQuestions.length} questions right!`;
+      fetch('/api/wh_scene/save_result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scene_id: selectedSceneId, mode: selectedMode, score: score, total: gameQuestions.length })
+      }).catch(() => {});
+    }
+
+    function endSession() {
+      if (currentQIdx > 0 && !confirm('End session early?')) return;
+      showResults();
+    }
+
+    function resetPlay() {
+      document.getElementById('play-step-game').classList.remove('active');
+      document.getElementById('play-step-results').classList.remove('active');
+      document.getElementById('play-step-pick').style.display = 'block';
+      selectedSceneId = null;
+      document.getElementById('startBtn').disabled = true;
+      loadScenes();
+    }
+
+    // ===================== SPEECH =====================
+    async function startListening() {
+      if (answered || listening) return;
+      listening = true;
+      const micBtn = document.getElementById('micBtn');
+      const micLabel = document.getElementById('micLabel');
+      micLabel.textContent = 'Starting...';
+      setTimeout(() => { if (listening) { micBtn.classList.add('listening'); micLabel.textContent = 'Listening...'; }}, 1000);
+      try {
+        const res = await fetch('/api/speech_recognize', { method: 'POST', headers: { 'Content-Type': 'application/json' }});
+        const data = await res.json();
+        listening = false;
+        micBtn.classList.remove('listening');
+        if (!data.success || !data.text) { micLabel.textContent = 'Could not hear you. Try again.'; return; }
+        micLabel.textContent = `Heard: "${data.text.trim()}"`;
+        const input = document.getElementById('answerInput');
+        if (input) { input.value = data.text.trim(); submitAnswer(); }
+      } catch (e) {
+        listening = false;
+        document.getElementById('micBtn').classList.remove('listening');
+        document.getElementById('micLabel').textContent = 'Error. Try again.';
+      }
+    }
+
+    // ===================== ROBOT =====================
+    function robotSpeak(text) {
+      fetch('/api/speak_sentence', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sentence: text })
+      }).catch(() => {});
+    }
+
+    function robotGesture(correct) {
+      const set = correct ? correctGestures : incorrectGestures;
+      const choice = set[Math.floor(Math.random() * set.length)];
+      fetch('/api/robot_gesture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gesture: choice.gesture, emotion: choice.emotion, speed: 1.0 })
+      }).catch(() => {});
+    }
+
+    // ===================== INIT =====================
+    loadScenes();
+  </script>
+</body>
+</html>

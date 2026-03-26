@@ -12,14 +12,119 @@
         .toolbar { display:flex; gap:8px; margin:12px 0 16px 0; }
         button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#fff; border:none; border-radius:8px; padding:8px 12px; cursor:pointer; font-weight:600; }
         button.secondary { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        button.stop { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); }
+        button.danger { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); font-size: 12px; padding: 6px 10px; }
         .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:12px; }
         .card { border:1px solid #e9ecef; border-radius:10px; padding:12px; background:#fafbff; }
         .title { font-weight:600; color:#333; margin-bottom:4px; }
         .meta { color:#888; font-size:12px; margin-bottom:8px; }
         .row { display:flex; gap:8px; }
         .alert { background:#d1ecf1; color:#0c5460; padding:8px; border-radius:8px; border:1px solid #bee5eb; margin:8px 0; }
+
+        /* ── Status banner ── */
+        .run-status {
+            display: none; background: #eef2ff; border: 1px solid #c7d2fe;
+            border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;
+            align-items: center; gap: 12px;
+        }
+        .run-status.visible { display: flex; }
+        .run-status .rs-spinner {
+            width: 22px; height: 22px; border: 3px solid #c7d2fe;
+            border-top-color: #6366f1; border-radius: 50%;
+            animation: spin 0.8s linear infinite; flex-shrink: 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .run-status .rs-text { flex: 1; font-size: 14px; color: #334155; }
+        .run-status .rs-text strong { color: #1e293b; }
+
+        /* ── Therapist confirmation overlay ── */
+        .confirm-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+            z-index: 1000; align-items: center; justify-content: center;
+        }
+        .confirm-overlay.visible { display: flex; }
+        .confirm-box {
+            background: #fff; border-radius: 16px; padding: 32px 36px; max-width: 440px; width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: center;
+        }
+        .confirm-box .cb-icon { font-size: 40px; margin-bottom: 8px; }
+        .confirm-box h3 { margin: 0 0 6px; font-size: 18px; color: #1e293b; }
+        .confirm-box .cb-detail { font-size: 14px; color: #64748b; margin: 0 0 8px; }
+        .confirm-box .cb-progress { font-size: 13px; color: #94a3b8; margin: 0 0 20px; }
+        .confirm-box .cb-actions { display: flex; gap: 10px; justify-content: center; }
+        .confirm-box .cb-actions button { min-width: 120px; font-size: 15px; padding: 12px 20px; }
+        .confirm-box .cb-actions .btn-next {
+            background: linear-gradient(135deg, #6366f1 0%, #764ba2 100%);
+        }
+        .confirm-box .cb-actions .btn-stop {
+            background: #fff; color: #667eea; border: 2px solid #667eea;
+        }
     </style>
+</head>
+<body>
+
+    <!-- ── Therapist confirmation overlay ── -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-box">
+            <div class="cb-icon" id="cbIcon">✅</div>
+            <h3 id="cbTitle">Step completed</h3>
+            <p class="cb-detail" id="cbDetail"></p>
+            <p class="cb-progress" id="cbProgress"></p>
+            <div class="cb-actions">
+                <button class="btn-stop" id="cbStopBtn">Stop</button>
+                <button class="btn-next" id="cbNextBtn">Next Step</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>My DIY Games</h1>
+        <p class="desc">Your saved activities are listed below. You can run them directly on the robot.</p>
+
+        <!-- ── Running status banner ── -->
+        <div class="run-status" id="runStatus">
+            <div class="rs-spinner"></div>
+            <div class="rs-text" id="runStatusText">Running activity...</div>
+            <button class="stop" onclick="stopGame()">Stop</button>
+        </div>
+
+        <div class="toolbar">
+            <button onclick="window.location.href='/select_toy'">Create New Game</button>
+            <button class="secondary" onclick="loadGames()">Refresh</button>
+            <button class="stop" onclick="stopGame()">Stop</button>
+        </div>
+        <div id="list"></div>
+    </div>
+
     <script>
+        // ── Component label map (matches diy_builder component keys) ──
+        const COMP_LABELS = {
+            simple_attention:    '👋 Simple Attention Bid',
+            question_attention:  '❓ Question Attention Bid',
+            modality_switch:     '🎭 Modality Switch',
+            graceful_withdrawal: '🕊️ Graceful Withdrawal',
+            step: 'Step'
+        };
+
+        function prettyLabel(key) {
+            return COMP_LABELS[key] || key || 'Step';
+        }
+
+        // ── DOM refs ──
+        const overlay    = document.getElementById('confirmOverlay');
+        const cbIcon     = document.getElementById('cbIcon');
+        const cbTitle    = document.getElementById('cbTitle');
+        const cbDetail   = document.getElementById('cbDetail');
+        const cbProgress = document.getElementById('cbProgress');
+        const cbNextBtn  = document.getElementById('cbNextBtn');
+        const cbStopBtn  = document.getElementById('cbStopBtn');
+        const runStatus  = document.getElementById('runStatus');
+        const runStatusText = document.getElementById('runStatusText');
+
+        let pollTimer = null;
+        let isRunning = false;
+
+        // ── Load games list ──
         async function loadGames() {
             const list = document.getElementById('list');
             list.innerHTML = '<div class="alert">Loading games...</div>';
@@ -28,17 +133,20 @@
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || 'Failed to load');
                 const games = data.games || [];
-                if (!games.length) { list.innerHTML = '<div class="alert">No DIY games yet. Create one in the builder.</div>'; return; }
+                if (!games.length) { list.innerHTML = '<div class="alert">No saved activities yet. Create one in the builder.</div>'; return; }
                 list.innerHTML = '';
                 const grid = document.createElement('div'); grid.className = 'grid';
                 games.forEach(g => {
+                    const isConvo = g.activity_type === 'conversation';
+                    const typeLabel = isConvo ? '💬 Conversation' : '🛠️ DIY Activity';
                     const card = document.createElement('div'); card.className = 'card';
                     card.innerHTML = `
                         <div class="title">${g.filename}</div>
-                        <div class="meta">Created at: ${g.created_at} • Blocks: ${g.blocks_count}</div>
+                        <div class="meta">${typeLabel} • Created at: ${g.created_at} • Blocks: ${g.blocks_count}</div>
                         <div class="row">
                             <button onclick="runGame('${g.filename}')">Run</button>
-                            <button class="secondary" onclick="openBuilder('${g.filename}')">Open in Builder</button>
+                            <button class="secondary" onclick="openBuilder('${g.filename}', '${g.activity_type || 'diy'}')">Open in Builder</button>
+                            <button class="danger" onclick="deleteGame('${g.filename}')">Delete</button>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -48,7 +156,13 @@
                 list.innerHTML = `<div class="alert">Error: ${e.message}</div>`;
             }
         }
+
+        // ── Run a saved game ──
         async function runGame(filename) {
+            if (isRunning) {
+                alert('An activity is already running. Stop it first.');
+                return;
+            }
             try {
                 const res = await fetch('/api/activity/run_saved', {
                     method: 'POST', headers: {'Content-Type':'application/json'},
@@ -56,39 +170,123 @@
                 });
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || 'Failed to start');
-                alert(data.running ? 'Started continuous game. Use Stop when finished.' : 'Started and finished game on the robot.');
+
+                if (data.running) {
+                    isRunning = true;
+                    runStatus.classList.add('visible');
+                    runStatusText.innerHTML = '<strong>Running:</strong> ' + filename;
+
+                    if (data.require_confirm) {
+                        // Start polling for step confirmation prompts
+                        startPolling();
+                    }
+                } else {
+                    alert('Activity completed on the robot.');
+                }
             } catch (e) {
                 alert('Error: ' + e.message);
             }
         }
+
+        // ── Poll server for step-by-step status ──
+        function startPolling() {
+            stopPolling();
+            pollTimer = setInterval(pollStepStatus, 800);
+        }
+
+        function stopPolling() {
+            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+        }
+
+        async function pollStepStatus() {
+            try {
+                const res = await fetch('/api/activity/step_status');
+                const data = await res.json();
+
+                if (data.waiting) {
+                    // Server is paused — show the confirmation overlay
+                    if (!overlay.classList.contains('visible')) {
+                        const stepDone = data.current_index + 1;
+                        const total = data.total;
+
+                        cbIcon.textContent = '✅';
+                        cbTitle.textContent = `Step ${stepDone} completed`;
+                        cbDetail.innerHTML = `<strong>Completed:</strong> ${prettyLabel(data.current_label)}<br><strong>Next:</strong> ${prettyLabel(data.next_label)}`;
+                        cbProgress.textContent = `Step ${stepDone} of ${total} done`;
+                        cbNextBtn.textContent = `Next Step (${stepDone + 1}/${total})`;
+                        overlay.classList.add('visible');
+                    }
+                } else if (data.current_index === -1 && isRunning) {
+                    // Activity finished or was stopped
+                    finishRun('Activity completed.');
+                }
+            } catch (e) {
+                // Network error — keep polling
+            }
+        }
+
+        // ── Therapist clicks Next Step ──
+        cbNextBtn.onclick = async () => {
+            overlay.classList.remove('visible');
+            runStatusText.innerHTML = '<strong>Running next step...</strong>';
+            try {
+                await fetch('/api/activity/confirm_step', { method: 'POST' });
+            } catch (e) {
+                alert('Error confirming step: ' + e.message);
+            }
+        };
+
+        // ── Therapist clicks Stop ──
+        cbStopBtn.onclick = async () => {
+            overlay.classList.remove('visible');
+            await stopGame();
+        };
+
+        // ── Stop running activity ──
         async function stopGame() {
             try {
                 const res = await fetch('/api/activity/stop', { method: 'POST' });
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || 'Failed to stop');
-                alert('Stopped.');
+                finishRun('Stopped.');
+            } catch (e) {
+                alert('Error: ' + e.message);
+                finishRun('Stopped.');
+            }
+        }
+
+        function finishRun(message) {
+            stopPolling();
+            isRunning = false;
+            overlay.classList.remove('visible');
+            runStatus.classList.remove('visible');
+            runStatusText.textContent = '';
+        }
+
+        function openBuilder(filename, activityType) {
+            if (activityType === 'conversation') {
+                window.location.href = '/conversation_builder?file=' + encodeURIComponent(filename);
+            } else {
+                window.location.href = '/builder?file=' + encodeURIComponent(filename);
+            }
+        }
+
+        async function deleteGame(filename) {
+            if (!confirm(`Are you sure you want to delete "${filename}"? This cannot be undone.`)) return;
+            try {
+                const res = await fetch('/api/activity/delete', {
+                    method: 'POST', headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({ filename })
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Failed to delete');
+                loadGames();
             } catch (e) {
                 alert('Error: ' + e.message);
             }
         }
-        function openBuilder(filename) {
-            window.location.href = '/builder?file=' + encodeURIComponent(filename);
-        }
+
         window.addEventListener('load', loadGames);
     </script>
-  </head>
-  <body>
-    <div class="container">
-        <h1>My DIY Games</h1>
-        <p class="desc">Your saved activities are listed below. You can run them directly on the robot.</p>
-        <div class="toolbar">
-            <button onclick="window.location.href='/select_toy'">Create New Game</button>
-            <button class="secondary" onclick="loadGames()">Refresh</button>
-            <button onclick="stopGame()">Stop</button>
-        </div>
-        <div id="list"></div>
-    </div>
-  </body>
+</body>
 </html>
-
-

@@ -1,0 +1,22 @@
+{
+  "blocks": [
+    {
+      "type": "step",
+      "text": "Hi amy! It's great to see you again. How's your day going so far?",
+      "gesture": "hi",
+      "emotion": "QT/happy",
+      "theme": "greeting",
+      "followups": 2
+    },
+    {
+      "type": "step",
+      "text": "amy, what's the weather like today? Do you think it'll be good enough to do something outside later?",
+      "gesture": "show_right",
+      "emotion": "QT/happy",
+      "theme": "weather",
+      "followups": 0
+    }
+  ],
+  "loop": 1,
+  "activity_type": "conversation"
+}
