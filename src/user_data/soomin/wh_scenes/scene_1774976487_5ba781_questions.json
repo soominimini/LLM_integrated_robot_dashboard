@@ -1,0 +1,65 @@
+{
+  "scene_description": "A smiling man is sitting outdoors, reading a blue book.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "A man",
+      "visual_choices": [
+        "A man",
+        "A girl",
+        "A dog",
+        "A baby"
+      ],
+      "evidence_hint": "Look at the person in the picture"
+    },
+    {
+      "wh_type": "what",
+      "question": "What is he doing?",
+      "answer": "Reading",
+      "visual_choices": [
+        "Reading",
+        "Eating",
+        "Sleeping",
+        "Running"
+      ],
+      "evidence_hint": "Look at what the man is doing with the book"
+    },
+    {
+      "wh_type": "when",
+      "question": "When is it?",
+      "answer": "Daytime",
+      "visual_choices": [
+        "Daytime",
+        "Nighttime",
+        "Morning",
+        "Evening"
+      ],
+      "evidence_hint": "Look at the light outside"
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is he?",
+      "answer": "Outdoors",
+      "visual_choices": [
+        "Outdoors",
+        "At home",
+        "At school",
+        "In a car"
+      ],
+      "evidence_hint": "Look at the place around the man"
+    },
+    {
+      "wh_type": "why",
+      "question": "Why is he smiling?",
+      "answer": "He likes the book",
+      "visual_choices": [
+        "He likes the book",
+        "He is sad",
+        "He is cold",
+        "He is hungry"
+      ],
+      "evidence_hint": "Think about why someone smiles when reading"
+    }
+  ]
+}

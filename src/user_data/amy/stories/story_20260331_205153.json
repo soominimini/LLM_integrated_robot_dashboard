@@ -1,0 +1,89 @@
+{
+  "story": "Amy skipped into the community garden, her heart feeling as light and bubbly as the **butterflies** flitting among the tall sunflowers. Today was special. She clutched a small packet of \"Rainbow Dream Flower\" **seeds**, excited to plant them in her very own patch. She imagined the **flowers** bursting into **colorful** blooms, a glorious mix of reds, yellows, and purples. A tiny flutter of nervousness, however, made her hands feel a little shaky; she really wanted to plant them perfectly.\n\nNear a row of fragrant lavender bushes, Amy spotted her friend, Leo. He looked a bit frustrated, his brow furrowed as he hovered over a tiny pot. \"What's wrong, Leo?\" Amy asked, her voice soft.\n\nLeo sighed, pushing a strand of hair from his eyes. \"These **seeds** are too small! Every time I try to put one in, it blows away, or my fingers are too big. I\u2019m worried they won't grow at all.\" He looked genuinely sad. Amy felt a surge of **kindness**. Even though she was a little nervous about her own planting, she wanted to help Leo. \"Maybe we can try together?\" she suggested, stepping closer.\n\nJust then, Mrs. Davis, the garden manager, walked by, a **basket** of gardening tools slung over her arm. She smiled warmly at the two children. \"Having a bit of trouble with those tiny treasures?\" she asked gently. \"Sometimes, the littlest **seeds** need the littlest helpers.\" She pulled out two small, smooth wooden spoons and a few more shallow **pots**. \"These tiny spoons might be just right for scooping. And these pots are perfect for little sprouts.\"\n\nAmy and Leo looked at each other, their faces brightening. \"That's a great idea!\" Leo exclaimed. They sat down, sharing the spoons. Amy carefully scooped a pinch of brown planting mix into a pot, while Leo used his spoon to pick up a single, almost invisible seed. They worked slowly, their heads close together. A gentle breeze rustled the **leaves** of a nearby rose bush, but this time, no **seeds** blew away. Amy even used a spoon to plant her own Rainbow Dream **seeds**, feeling much more confident with Leo by her side. A bright blue dragonfly zipped past, its wings sparkling in the sun, making them both giggle.\n\nSoon, all the **seeds** were nestled safely in their new homes. Amy felt so **proud** of their careful work. Leo beamed, his earlier frustration replaced by relief. \"Thank you, Amy,\" he said, \"I couldn't have done it without you.\" Amy felt a warm feeling spread through her chest. \"And I feel much better about my rainbow **flowers** now, too,\" she replied, feeling very **grateful** for her friend. They imagined their little **plants** pushing through the soil, growing into strong, beautiful **flowers**. Amy knew that just like their **seeds**, their friendship had grown stronger today, too. She felt brave and excited to watch their garden grow.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "amy",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      400,
+      500
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 532,
+    "paragraph_count": 6,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ]
+  },
+  "pages": [
+    "Amy skipped into the community garden, her heart feeling as light and bubbly as the butterflies flitting among the tall sunflowers. Today was special. She clutched a small packet of \"Rainbow Dream Flower\" seeds, excited to plant them in her very own patch. She imagined the flowers bursting into colorful blooms, a glorious mix of reds, yellows, and purples. A tiny flutter of nervousness, however, made her hands feel a little shaky; she really wanted to plant them perfectly.",
+    "Near a row of fragrant lavender bushes, Amy spotted her friend, Leo. He looked a bit frustrated, his brow furrowed as he hovered over a tiny pot. \"What's wrong, Leo?\" Amy asked, her voice soft.",
+    "Leo sighed, pushing a strand of hair from his eyes. \"These seeds are too small! Every time I try to put one in, it blows away, or my fingers are too big. I'm worried they won't grow at all.\" He looked genuinely sad.",
+    "Amy felt a surge of kindness. Even though she was a little nervous about her own planting, she wanted to help Leo. \"Maybe we can try together?\" she suggested, stepping closer.",
+    "Just then, Mrs. Davis, the garden manager, walked by, a basket of gardening tools slung over her arm. She smiled warmly at the two children. \"Having a bit of trouble with those tiny treasures?\" she asked gently. \"Sometimes, the littlest seeds need the littlest helpers.\"",
+    "She pulled out two small, smooth wooden spoons and a few more shallow pots. \"These tiny spoons might be just right for scooping. And these pots are perfect for little sprouts.\"",
+    "Amy and Leo looked at each other, their faces brightening. \"That's a great idea!\" Leo exclaimed. They sat down, sharing the spoons. Amy carefully scooped a pinch of brown planting mix into a pot, while Leo used his spoon to pick up a single, almost invisible seed. They worked slowly, their heads close together.",
+    "A gentle breeze rustled the leaves of a nearby rose bush, but this time, no seeds blew away. Amy even used a spoon to plant her own Rainbow Dream seeds, feeling much more confident with Leo by her side. A bright blue dragonfly zipped past, its wings sparkling in the sun, making them both giggle.",
+    "Soon, all the seeds were nestled safely in their new homes. Amy felt so proud of their careful work. Leo beamed, his earlier frustration replaced by relief. \"Thank you, Amy,\" he said, \"I couldn't have done it without you.\"",
+    "Amy felt a warm feeling spread through her chest. \"And I feel much better about my rainbow flowers now, too,\" she replied, feeling very grateful for her friend. They imagined their little plants pushing through the soil, growing into strong, beautiful flowers. Amy knew that just like their seeds, their friendship had grown stronger today, too. She felt brave and excited to watch their garden grow."
+  ],
+  "scenes": [
+    "Amy skips into a vibrant community garden filled with tall sunflowers, clutching a seed packet and feeling a mix of excitement and nervousness.",
+    "Amy approaches her friend Leo, who looks frustrated while trying to plant tiny seeds near fragrant lavender bushes.",
+    "Mrs. Davis, the kind garden manager, walks by and offers Amy and Leo small wooden spoons and shallow pots to help them plant their tiny seeds.",
+    "Amy and Leo sit together, carefully using the small spoons to plant their seeds, later beaming with pride at their successful work and strengthened friendship."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3
+  ]
+}

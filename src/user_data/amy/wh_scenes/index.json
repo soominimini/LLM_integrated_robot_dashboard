@@ -1,0 +1,22 @@
+[
+  {
+    "id": "scene_1774983496_c78fec",
+    "filename": "capture_2026-03-31 20:58:26.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/amy/wh_scenes/images/scene_1774983496_c78fec.jpg",
+    "image_url": "/images/amy/wh_scenes/images/scene_1774983496_c78fec.jpg",
+    "scene_description": "A young woman is rollerblading on a paved path in a park with trees and grass on either side.",
+    "question_count": 5,
+    "status": "ready",
+    "created_at": "2026-03-31T20:58:26"
+  },
+  {
+    "id": "scene_1774983517_9ba01f",
+    "filename": "capture_2026-03-31 20:58:49.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/amy/wh_scenes/images/scene_1774983517_9ba01f.jpg",
+    "image_url": "/images/amy/wh_scenes/images/scene_1774983517_9ba01f.jpg",
+    "scene_description": "A close-up view of a printed picture on a paper, showing a young boy in a soccer uniform dribbling a ball on a green field during the day, with other people and trees in the background. The paper also contains text questions.",
+    "question_count": 5,
+    "status": "ready",
+    "created_at": "2026-03-31T20:58:49"
+  }
+]

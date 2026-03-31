@@ -18,5 +18,15 @@
     "question_count": 5,
     "status": "ready",
     "created_at": "2026-03-25T22:50:02"
+  },
+  {
+    "id": "scene_1774976487_5ba781",
+    "filename": "capture_2026-03-31 19:01:37.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/soomin/wh_scenes/images/scene_1774976487_5ba781.jpg",
+    "image_url": "/images/soomin/wh_scenes/images/scene_1774976487_5ba781.jpg",
+    "scene_description": "A smiling man is sitting outdoors, reading a blue book.",
+    "question_count": 5,
+    "status": "ready",
+    "created_at": "2026-03-31T19:01:37"
   }
 ]

@@ -1,0 +1,79 @@
+{
+  "story": "Amy stood by the big oak trees at Willow Creek Park, a little *worried*. She really wanted to play with Leo, the new boy, but sometimes finding the right *words* to start a game felt like a twisty path. She watched him by the pond, looking down at something in his hands. Amy knew the pond was full of treasures \u2013 smooth *stones* and colorful *feathers*. She hoped he might like to search for them too.\n\nTaking a deep breath, Amy walked closer. Leo looked *frustrated*. His small, blue toy sailboat lay on its side, and its little *sails* were tangled. \"What's wrong?\" Amy asked, her voice a bit quiet.\n\nLeo sighed, pointing to the boat. \"My *sails* are all stuck, and I lost one of the *ropes* for the mast. Now it won't float on the water.\" He looked up, his eyes a bit sad.\n\nAmy felt a pang of nervousness, but also a surge of *kindness*. She remembered seeing some sturdy *vines* near the big oak *trees* that might work. \"I think I know where we can find some new *ropes*,\" she offered, pointing towards the trees. \"They're really *strong* and *twisty*.\"\n\nLeo\u2019s eyes brightened. \"Really?\" he asked, standing up. Together, they walked to the oak trees. Amy showed him the long, green *vines* hanging down. They carefully pulled a few down, their fingers brushing against soft moss. A tiny, iridescent *beetle* scurried across a *leaf* they passed, making Amy giggle. Back by the pond, Amy helped Leo untangle the old *sails*. Then, carefully, they used the new *vines* to replace the missing *ropes*, making tiny, secure *knots*. It took teamwork, and Leo was *grateful* for Amy's steady hands.\n\nFinally, the sailboat was fixed! Leo was *excited*. He carefully placed it on the water. The little boat, with its bright blue *sails* and new *ropes*, glided gracefully across the pond. Amy and Leo watched it, feeling a shared sense of *pride*. \"It works!\" Leo exclaimed, a wide smile spreading across his face. \"Thank you, Amy! You're a really *kind* friend.\" Amy felt a wave of *bravery* and *happiness*. It hadn't been so hard after all. \"Want to find some cool *stones* for our *boats*?\" she asked. Leo nodded enthusiastically. Amy felt *relieved* and *grateful* for their new friendship as they scanned the water's edge for more treasures.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "amy",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      400,
+      500
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 444,
+    "paragraph_count": 6,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ]
+  },
+  "pages": [
+    "{'question': 'Is the sky blue during a clear day?', 'type': 'yes_no'}",
+    "{'question': 'What is the capital of France?', 'type': 'wh'}",
+    "{'question': 'Do dogs have whiskers?', 'type': 'yes_no'}",
+    "{'question': 'Which planet is known as the Red Planet?', 'type': 'wh'}",
+    "{'question': 'Can a tree grow from an apple seed?', 'type': 'yes_no'}"
+  ],
+  "scenes": [
+    "A bright blue sky with fluffy clouds overhead.",
+    "An illustrated map showcasing a city skyline, possibly including landmarks.",
+    "A friendly dog with visible whiskers and playful posture.",
+    "The depiction of Mars, the Red Planet, with its distinctive reddish hue.",
+    "A young tree sprouting from an apple seed in a pot or garden setting."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "story": "Soomin loved autumn because she loved to collect colorful leaves. Each morning, she looked for the brightest red and gold leaves. Today, a crisp breeze rustled the branches, and many leaves danced down from the tall trees. Soomin filled her small basket with beautiful, crunchy leaves. She hummed a happy song.\n\nSuddenly, the air grew much colder. Big, dark clouds rolled in quickly. Then, tiny white flakes started to fall, gentle at first, then more. \"Snow!\" Soomin said, watching the ground turn white. The pretty autumn leaves disappeared under the soft, shimmering snow. Soomin felt a little sad because her favorite leaves were gone.\n\nA friendly squirrel, Squeaky, peeked out from behind a big oak tree. Squeaky chattered and pointed a tiny paw towards some evergreen bushes. Soomin looked. \"What is it, Squeaky?\" she asked. Squeaky scampered over and showed Soomin two smooth, brown pinecones resting on a snowy branch. Next to them were little clumps of shiny, red berries. \"Wow!\" Soomin exclaimed. Squeaky nudged a pinecone towards Soomin. Soomin carefully picked up the pinecones and some berries. \"These are beautiful, too!\" she said.\n\nSoomin smiled big. She put the pinecones and berries into her basket, right next to her last few autumn leaves. The snow continued to fall gently, covering the world in a soft, white blanket. Soomin learned that even when things change, new beautiful treasures can be found. She felt warm and happy, even in the chilly air, because she had new treasures and a new friend.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "late_preschool",
+    "child_name": "soomin",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "season"
+    ],
+    "word_count": 303,
+    "paragraph_count": 4,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "pages": [
+    "Soomin loved autumn because she loved to collect colorful leaves. Each morning, she looked for the brightest red and gold leaves. Today, a crisp breeze rustled the branches, and many leaves danced down from the tall trees.",
+    "Soomin filled her small basket with beautiful, crunchy leaves. She hummed a happy song. Suddenly, the air grew much colder.",
+    "Big, dark clouds rolled in quickly. Then, tiny white flakes started to fall, gentle at first, then more. \"Snow!\" Soomin said, watching the ground turn white.",
+    "The pretty autumn leaves disappeared under the soft, shimmering snow. Soomin felt a little sad because her favorite leaves were gone. A friendly squirrel, Squeaky, peeked out from behind a big oak tree.",
+    "Squeaky chattered and pointed a tiny paw towards some evergreen bushes. Soomin looked. \"What is it, Squeaky?\" she asked.",
+    "Squeaky scampered over and showed Soomin two smooth, brown pinecones resting on a snowy branch. Next to them were little clumps of shiny, red berries. \"Wow!\" Soomin exclaimed.",
+    "Squeaky nudged a pinecone towards Soomin. Soomin carefully picked up the pinecones and some berries. \"These are beautiful, too!\" she said.",
+    "Soomin smiled big. She put the pinecones and berries into her basket, right next to her last few autumn leaves. The snow continued to fall gently, covering the world in a soft, white blanket.",
+    "Soomin learned that even when things change, new beautiful treasures can be found. She felt warm and happy, even in the chilly air, because she had new treasures and a new friend."
+  ],
+  "scenes": [
+    "Soomin loved autumn because she loved to collect colorful leaves. Each morning, she looked for the brightest red and gold leaves. Today, a crisp breeze rustled the branches, and many leaves danced dow",
+    "Soomin filled her small basket with beautiful, crunchy leaves. She hummed a happy song. Suddenly, the air grew much colder.",
+    "Big, dark clouds rolled in quickly. Then, tiny white flakes started to fall, gentle at first, then more. \"Snow!\" Soomin said, watching the ground turn white.",
+    "The pretty autumn leaves disappeared under the soft, shimmering snow. Soomin felt a little sad because her favorite leaves were gone. A friendly squirrel, Squeaky, peeked out from behind a big oak tre",
+    "Squeaky chattered and pointed a tiny paw towards some evergreen bushes. Soomin looked. \"What is it, Squeaky?\" she asked.",
+    "Squeaky scampered over and showed Soomin two smooth, brown pinecones resting on a snowy branch. Next to them were little clumps of shiny, red berries. \"Wow!\" Soomin exclaimed.",
+    "Squeaky nudged a pinecone towards Soomin. Soomin carefully picked up the pinecones and some berries. \"These are beautiful, too!\" she said.",
+    "Soomin smiled big. She put the pinecones and berries into her basket, right next to her last few autumn leaves. The snow continued to fall gently, covering the world in a soft, white blanket.",
+    "Soomin learned that even when things change, new beautiful treasures can be found. She felt warm and happy, even in the chilly air, because she had new treasures and a new friend."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ]
+}
