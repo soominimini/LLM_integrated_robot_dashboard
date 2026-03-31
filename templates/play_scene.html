@@ -27,6 +27,7 @@
       <div>
         <button class="btn secondary" onclick="back()">Back</button>
         <button id="newRoundBtn" class="btn">Start</button>
+        <button id="hintBtn" class="btn" style="background:#f59e0b;">Hint</button>
         <button id="captureBtn" class="btn">Capture Scene</button>
       </div>
     </div>
@@ -43,32 +44,103 @@
     const $new = document.getElementById('newRoundBtn');
     const $cap = document.getElementById('captureBtn');
 
+    // Current round state
+    window.roundMode = null;     // "exact" or "criteria"
+    window.currentTarget = null; // toy name (exact mode)
+    window.currentCriteria = null; // criteria string (criteria mode)
+
+    const $hint = document.getElementById('hintBtn');
+
     $new.onclick = startRound;
-    $cap.onclick = captureScene;
+    $cap.onclick = captureAndValidate;
+    $hint.onclick = getHint;
     startCamera();
+
     async function startRound() {
       try {
         $status.textContent = 'Starting...';
         const res = await fetch('/api/scene/start', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'Failed to start');
-        window.currentTarget = data.target;
-        $q.textContent = `Show me a ${data.target}`;
-        $status.textContent = 'Listening for your answer...';
+        window.roundMode = data.mode || 'exact';
+        window.currentTarget = data.target || null;
+        window.currentCriteria = data.criteria || null;
+        $q.textContent = data.question || 'Show me an object!';
+        $status.textContent = 'Show the object to the camera and click "Capture Scene"!';
       } catch (e) {
         $status.textContent = 'Error: ' + e.message;
       }
     }
 
+    async function captureAndValidate() {
+      if (!window.roundMode) {
+        $status.textContent = 'Click "Start" first to begin a round.';
+        return;
+      }
+      try {
+        $status.textContent = 'Analyzing...';
+        const body = {
+          mode: window.roundMode,
+          target: window.currentTarget,
+          criteria: window.currentCriteria
+        };
+        const res = await fetch('/api/scene_game/answer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (!data.success) {
+          $status.textContent = 'Error: ' + (data.error || 'Unknown');
+          return;
+        }
+        if (data.correct === null) {
+          $status.textContent = 'Could not see clearly. Try again!';
+        } else if (data.correct) {
+          const det = data.detected || 'that';
+          $status.textContent = 'Correct! Detected: ' + det + (data.reason ? ' — ' + data.reason : '');
+        } else {
+          const det = data.detected || 'that';
+          $status.textContent = 'Not quite! Detected: ' + det + (data.reason ? ' — ' + data.reason : '') + '. Try again!';
+        }
+      } catch (e) {
+        $status.textContent = 'Error: ' + e.message;
+      }
+    }
 
-    // Scene game UI removed: capture only
+    async function getHint() {
+      if (!window.roundMode) {
+        $status.textContent = 'Click "Start" first to begin a round.';
+        return;
+      }
+      try {
+        $status.textContent = 'Thinking of a hint...';
+        const body = {
+          mode: window.roundMode,
+          target: window.currentTarget,
+          criteria: window.currentCriteria
+        };
+        const res = await fetch('/api/scene_game/hint', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.success) {
+          $status.textContent = 'Hint: ' + data.hint;
+        } else {
+          $status.textContent = 'Could not generate hint.';
+        }
+      } catch (e) {
+        $status.textContent = 'Error: ' + e.message;
+      }
+    }
 
     function back() { window.location.href = '/play'; }
 
-    // Live camera preview and capture
+    // Live camera preview
     let camTimer = null;
     function startCamera() {
-      // stopCamera();
       const img = document.getElementById('camera-frame');
       if (!img) return;
       const tick = () => { img.src = '/api/camera_frame?t=' + Date.now(); };
@@ -76,19 +148,6 @@
       camTimer = setInterval(tick, 600);
     }
     function stopCamera() { if (camTimer) { clearInterval(camTimer); camTimer = null; } }
-    async function captureScene() {
-      try {
-        const res = await fetch('/api/camera_capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target: window.currentTarget || null }) });
-        const data = await res.json();
-        if (data.success) {
-          let msg = '📷 Captured scene saved.';
-          if (data.label) { msg += ' Label: ' + data.label; }
-          $status.textContent = msg;
-        } else {
-          $status.textContent = 'Error capturing: ' + (data.error || 'Unknown');
-        }
-      } catch (e) { $status.textContent = 'Error: ' + e.message; }
-    }
   </script>
 </body>
 </html>

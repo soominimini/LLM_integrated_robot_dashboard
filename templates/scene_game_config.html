@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection Game - Setup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 700px;
+        }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header h1 { color: #333; font-size: 2rem; margin-bottom: 0.3rem; }
+        .header p { color: #666; font-size: 1rem; }
+
+        /* Add item form */
+        .add-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .add-section input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .add-section input:focus { border-color: #667eea; }
+        .add-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.7rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(40,167,69,0.3); }
+
+        /* Toy list */
+        .toy-list { list-style: none; margin-bottom: 1.5rem; }
+        .toy-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+        .toy-item:hover { border-color: #667eea; }
+        .toy-name {
+            font-size: 1.05rem;
+            color: #333;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        .toy-badge {
+            background: #667eea;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .delete-btn:hover { background: #c82333; transform: translateY(-1px); }
+
+        .empty-msg {
+            text-align: center;
+            color: #999;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        /* Action buttons */
+        .actions { display: flex; gap: 10px; margin-top: 1rem; }
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-play {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-play:hover { box-shadow: 0 10px 20px rgba(102,126,234,0.3); }
+        .btn-back {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+        .btn-back:hover { box-shadow: 0 10px 20px rgba(108,117,125,0.3); }
+        .btn-reset {
+            background: linear-gradient(135deg, #fd7e14 0%, #e55d00 100%);
+            color: white;
+            flex: 0.5;
+        }
+        .btn-reset:hover { box-shadow: 0 10px 20px rgba(253,126,20,0.3); }
+
+        /* Alert */
+        .alert {
+            padding: 0.6rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+        .alert.show { display: block; }
+        .alert.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .count-info {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Object Detection Game Setup</h1>
+            <p>Manage the physical toys for the detection game</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <div class="add-section">
+            <input type="text" id="newToyInput" placeholder="Enter toy name (e.g. teddy bear)"
+                   onkeydown="if(event.key==='Enter') addToy()">
+            <button class="add-btn" onclick="addToy()">+ Add</button>
+        </div>
+
+        <div class="count-info" id="countInfo"></div>
+
+        <ul class="toy-list" id="toyList"></ul>
+
+        <div class="actions">
+            <button class="btn btn-back" onclick="window.location.href='/generate'">Back</button>
+            <button class="btn btn-reset" onclick="resetDefaults()">Reset</button>
+            <button class="btn btn-play" onclick="window.location.href='/play_scene'">Play Game</button>
+        </div>
+    </div>
+
+    <script>
+        let toys = [];
+
+        async function loadToys() {
+            try {
+                const res = await fetch('/api/scene_game/toys');
+                const data = await res.json();
+                if (data.success) {
+                    toys = data.toys;
+                    renderList();
+                }
+            } catch (e) {
+                showAlert('Failed to load toy list', 'error');
+            }
+        }
+
+        function renderList() {
+            const list = document.getElementById('toyList');
+            const info = document.getElementById('countInfo');
+            info.textContent = toys.length + ' item' + (toys.length !== 1 ? 's' : '') + ' in the game';
+            if (toys.length === 0) {
+                list.innerHTML = '<div class="empty-msg">No toys added yet. Add some above!</div>';
+                return;
+            }
+            const defaults = ['lemon', 'tomato', 'apple', 'banana'];
+            list.innerHTML = toys.map(t => {
+                const isDefault = defaults.includes(t.toLowerCase());
+                return `<li class="toy-item">
+                    <span>
+                        <span class="toy-name">${escHtml(t)}</span>
+                        ${isDefault ? '<span class="toy-badge">default</span>' : ''}
+                    </span>
+                    <button class="delete-btn" onclick="deleteToy('${escAttr(t)}')">Remove</button>
+                </li>`;
+            }).join('');
+        }
+
+        async function addToy() {
+            const input = document.getElementById('newToyInput');
+            const name = input.value.trim();
+            if (!name) return;
+            try {
+                const res = await fetch('/api/scene_game/toys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'add', name: name })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    toys = data.toys;
+                    renderList();
+                    input.value = '';
+                    showAlert('Added "' + name + '"', 'success');
+                } else {
+                    showAlert(data.error || 'Failed to add', 'error');
+                }
+            } catch (e) {
+                showAlert('Error: ' + e.message, 'error');
+            }
+        }
+
+        async function deleteToy(name) {
+            try {
+                const res = await fetch('/api/scene_game/toys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete', name: name })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    toys = data.toys;
+                    renderList();
+                    showAlert('Removed "' + name + '"', 'success');
+                } else {
+                    showAlert(data.error || 'Failed to remove', 'error');
+                }
+            } catch (e) {
+                showAlert('Error: ' + e.message, 'error');
+            }
+        }
+
+        async function resetDefaults() {
+            try {
+                const res = await fetch('/api/scene_game/toys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'reset' })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    toys = data.toys;
+                    renderList();
+                    showAlert('Reset to defaults', 'success');
+                }
+            } catch (e) {
+                showAlert('Error: ' + e.message, 'error');
+            }
+        }
+
+        function showAlert(msg, type) {
+            const el = document.getElementById('alert');
+            el.textContent = msg;
+            el.className = 'alert show ' + type;
+            setTimeout(() => { el.classList.remove('show'); }, 2500);
+        }
+
+        function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+        function escAttr(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+
+        loadToys();
+    </script>
+</body>
+</html>
