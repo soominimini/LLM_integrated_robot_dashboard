@@ -3,5 +3,15 @@
 # Secrets
 .env
 .env.*
-.env
 env.polly
+
+# Audio files
+*.wav
+*.mp3
+
+# Cache
+__pycache__/
+*.pyc
+
+# Model weights
+*.pt
