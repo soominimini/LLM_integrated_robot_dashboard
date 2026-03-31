@@ -63,6 +63,11 @@ def main():
 
     prompt = f"""You are a pediatric speech-language pathologist creating therapy materials.
 
+IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface.
+Focus ONLY on the illustration or scene depicted ON the card/page itself.
+Ignore everything outside the card — hands holding it, the person, the table, background, etc.
+Treat the illustration on the card as the entire scene for your analysis.
+
 Analyze this image and generate WH-questions for a child aged {child_age}.
 
 For EACH of the 5 WH-question types (who, what, when, where, why), generate:
