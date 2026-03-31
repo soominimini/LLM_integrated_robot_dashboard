@@ -33,7 +33,6 @@ try:
     import rospy
     from sensor_msgs.msg import Image
     from cv_bridge import CvBridge, CvBridgeError
-    # from ultralytics import YOLO  # disabled: not using YOLO
     from queue import Queue
     from threading import Thread
     ROS_AVAILABLE = True
@@ -130,13 +129,6 @@ class CameraCapture:
             pass
         self.image_sub = rospy.Subscriber(topic, Image, self._image_callback)
 
-        # # Load YOLO model (disabled)
-        # self.model = YOLO("yolov8n.pt")  # Load a lightweight pretrained YOLOv8 model
-        #
-        # # Start processing thread (disabled)
-        # self.processing_thread = Thread(target=self.process_images, daemon=True)
-        # self.processing_thread.start()
-
     def _image_callback(self, data):
         try:
             image = self.bridge.imgmsg_to_cv2(data, "bgr8")
@@ -152,29 +144,6 @@ class CameraCapture:
         if not self.image_queue.empty():
             return self.image_queue.get()
         return None
-
-    def process_images(self):
-        rate = rospy.Rate(10)  # 10 FPS
-        while not rospy.is_shutdown():
-            image = self.get_latest_image()
-            if image is not None:
-                # Run YOLO detection on the image
-                results = self.model(image)
-
-                for result in results:
-                    for box in result.boxes:
-                        cls_id = int(box.cls[0])
-                        confidence = float(box.conf[0])
-                        label = self.model.names[cls_id]
-                        print(f"Detected {label} with confidence {confidence:.2f}")
-
-                # (Optional) Display image with detections
-                annotated_frame = results[0].plot()
-                cv2.imshow("YOLOv8 Detection", annotated_frame)
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break
-            rate.sleep()
-        cv2.destroyAllWindows()
 
 def _get_ros_frame():
     global _ros_cam
@@ -205,12 +174,16 @@ CORS(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 USER_DATA_DIR = os.path.join(BASE_DIR, 'user_data')
+WORKER_PYTHON = os.getenv(
+    "IMAGE_WORKER_PYTHON",
+    os.path.join(os.path.dirname(BASE_DIR), ".venv39", "bin", "python"),
+)
 
 user_manager = UserManager(
     users_file=os.path.join(BASE_DIR, 'users.json'),
     base_dir=USER_DATA_DIR
 )
-story_generator = StoryGenerator(llm_model="llama3.1:latest")
+story_generator = StoryGenerator(llm_model="gemini-2.5-flash")
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
@@ -452,7 +425,7 @@ def _generate_recovery_question(mode, username=''):
             except (ValueError, TypeError):
                 child_age = 5
 
-        cmd = ['python3.9', script_path, '--image', fpath, '--mode', mode,
+        cmd = [WORKER_PYTHON, script_path, '--image', fpath, '--mode', mode,
                '--child-age', str(child_age)]
         if child_name:
             cmd += ['--child-name', child_name]
@@ -562,7 +535,7 @@ def _generate_conversation_followup(theme, robot_said, child_said, child_name, c
             "is_closing": is_closing
         })
         proc = subprocess.run(
-            ['python3.9', script_path],
+            [WORKER_PYTHON, script_path],
             input=input_data, capture_output=True, text=True, timeout=60
         )
         if proc.returncode != 0:
@@ -700,30 +673,70 @@ def _whisper_recognize_streaming(language=None):
         print(f"[Whisper] exception: {e}")
         return ""
 
+def _extract_story_title(text):
+    """Extract the title from raw story text.
+
+    Handles multiple formats:
+    - ** Title **\\n<title>\\n\\n<story>
+    - <title>\\n\\n<story>  (first line before double newline)
+
+    Returns (title, body) where body is the story without the title.
+    """
+    if not text:
+        return '', text
+
+    working = text.replace('**', '').replace('*', '').strip()
+
+    # Format 1: "Title\n<title line>\n..."
+    m = re.match(r'^\s*Title\s*\n\s*(.+?)\s*\n', working, flags=re.IGNORECASE)
+    if m:
+        title = m.group(1).strip()
+        body = working[m.end():]
+        return title, body
+
+    # Format 2: first line is title, followed by blank line
+    m = re.match(r'^(.+?)\n\s*\n', working)
+    if m:
+        candidate = m.group(1).strip()
+        # Only treat as title if it's short (< 80 chars) and doesn't end with
+        # sentence-ending punctuation (titles usually don't end with period)
+        if len(candidate) < 80 and not re.search(r'[.!?]\s*$', candidate):
+            return candidate, working[m.end():]
+
+    return '', text
+
+
 def clean_story_text(text):
     """
-    Clean story text by removing asterisks, emojis, and other formatting symbols
-    that should not be spoken or displayed in sentences
-    
+    Clean story text by removing the title, end markers, explanation,
+    asterisks, emojis, and other formatting symbols.
+
     Args:
         text: Raw story text
-        
+
     Returns:
-        str: Cleaned text suitable for speech and display
+        str: Cleaned story body suitable for speech and display
     """
     if not text:
         return text
-    
-    # Remove markdown formatting
-    cleaned = text.replace('**', '').replace('*', '')
-    
+
+    # Extract and discard the title
+    _title, body = _extract_story_title(text)
+
+    # Remove remaining markdown formatting
+    cleaned = body.replace('**', '').replace('*', '')
+
+    # Strip everything from "End" onward (includes Explanation section)
+    end_match = re.search(r'\n\s*End\s*$|\n\s*End\s*\n', cleaned, flags=re.IGNORECASE)
+    if end_match:
+        cleaned = cleaned[:end_match.start()]
+
     # Remove emojis and special symbols, but preserve punctuation and letters
-    # This regex targets emoji characters and other symbols while keeping text and punctuation
     cleaned = re.sub(r'[^\w\s.,!?;:()"\'-]', '', cleaned)
-    
+
     # Clean up extra whitespace
     cleaned = re.sub(r'\s+', ' ', cleaned).strip()
-    
+
     return cleaned
 
 @app.route("/")
@@ -1439,6 +1452,134 @@ def api_save_quiz():
         "files": saved
     })
 
+def _split_story_into_pages(story_text, child_age):
+    """Split a story into age-appropriate pages using Gemini.
+
+    Ages 3-4:  1-2 sentences per page
+    Ages 5-6:  2-3 sentences per page
+    Ages 7+:   3+ sentences per page (context-dependent)
+
+    Returns a list of page strings. Falls back to simple splitting if LLM is unavailable.
+    """
+    cleaned = clean_story_text(story_text)
+    if not cleaned.strip():
+        return [cleaned]
+
+    if child_age <= 4:
+        sents_per_page = "1-2"
+    elif child_age <= 6:
+        sents_per_page = "2-3"
+    else:
+        sents_per_page = "3-5, depending on the narrative flow and context"
+
+    prompt = (
+        f"Split the following story into pages for a {child_age}-year-old child.\n"
+        f"Each page should have {sents_per_page} sentences.\n"
+        f"Rules:\n"
+        f"- Keep sentences intact, do NOT rephrase or change any words.\n"
+        f"- Group sentences so each page forms a coherent scene or moment.\n"
+        f"- Do not split a sentence across pages.\n"
+        f"- Return ONLY a JSON array of strings, where each string is one page.\n"
+        f"- Example: [\"Page 1 text here.\", \"Page 2 text here.\"]\n\n"
+        f"Story:\n{cleaned}"
+    )
+    raw = _gemini_generate(prompt, system="You split stories into pages. Return JSON only.", max_tokens=4096)
+    if raw:
+        try:
+            print(f"[StoryPages] Gemini raw response: {raw[:500]}")
+            if raw.startswith('```'):
+                raw = raw.strip('`').strip()
+                if raw.startswith('json'):
+                    raw = raw[4:].strip()
+            start = raw.find('[')
+            end = raw.rfind(']')
+            if start != -1 and end != -1 and end > start:
+                pages = json.loads(raw[start:end+1])
+                if isinstance(pages, list) and len(pages) > 0:
+                    pages = [str(p).strip() for p in pages if str(p).strip()]
+                    if pages:
+                        print(f"[StoryPages] Split into {len(pages)} pages (age {child_age})")
+                        return pages
+        except Exception as e:
+            print(f"[StoryPages] LLM page splitting failed: {e}")
+
+    # Fallback: simple sentence-based splitting
+    sentences = re.split(r'(?<=[.!?])\s+', cleaned.strip())
+    sentences = [s.strip() for s in sentences if s.strip()]
+    if not sentences:
+        return [cleaned]
+
+    if child_age <= 4:
+        n = 2
+    elif child_age <= 6:
+        n = 3
+    else:
+        n = 4
+
+    pages = []
+    for i in range(0, len(sentences), n):
+        page = ' '.join(sentences[i:i+n])
+        pages.append(page)
+    print(f"[StoryPages] Fallback split into {len(pages)} pages (age {child_age}, {n} sents/page)")
+    return pages
+
+
+def _identify_story_scenes(pages):
+    """Analyze story pages and identify scene/context changes.
+
+    Uses the quiz LLM to group pages by scene — a scene changes when the
+    setting, characters, or action shifts significantly.
+
+    Returns:
+        scenes: list of scene description strings (one per unique scene)
+        page_to_scene: list of ints mapping each page index to a scene index
+    """
+    if not pages:
+        return [""], [0]
+
+    full_text = "\n\n".join(f"Page {i+1}: {p}" for i, p in enumerate(pages))
+
+    prompt = (
+        f"You are analyzing a children's story that has been split into {len(pages)} pages.\n"
+        f"Identify where the SCENE or CONTEXT changes — a new scene starts when the "
+        f"setting changes, new characters appear, or a significantly different action begins.\n"
+        f"Group consecutive pages that share the same scene together.\n\n"
+        f"{full_text}\n\n"
+        f"Return ONLY a JSON object with:\n"
+        f"- \"scenes\": an array of short visual descriptions (1-2 sentences each) "
+        f"describing what should be illustrated for each scene. Focus on setting, "
+        f"characters, and key action.\n"
+        f"- \"page_to_scene\": an array of {len(pages)} integers, where each integer "
+        f"is the 0-based scene index for that page.\n\n"
+        f"Example for 5 pages with 3 scenes:\n"
+        f"{{\"scenes\": [\"A child in a sunny garden planting seeds\", "
+        f"\"The child and a rabbit watching rain fall on the garden\", "
+        f"\"The child picking colorful flowers from the grown garden\"], "
+        f"\"page_to_scene\": [0, 0, 1, 1, 2]}}"
+    )
+    raw = _gemini_generate(prompt, system="You analyze story structure. Return JSON only.", max_tokens=2048)
+    if raw:
+        try:
+            print(f"[StoryScenes] Gemini raw response: {raw[:500]}")
+            obj = _extract_json(raw)
+            print(f"[StoryScenes] Parsed JSON: {json.dumps(obj, indent=2) if obj else None}")
+            if obj:
+                scenes = obj.get('scenes', [])
+                mapping = obj.get('page_to_scene', [])
+                if (isinstance(scenes, list) and len(scenes) > 0
+                        and isinstance(mapping, list) and len(mapping) == len(pages)):
+                    if all(isinstance(m, int) and 0 <= m < len(scenes) for m in mapping):
+                        return scenes, mapping
+        except Exception as e:
+            print(f"[StoryScenes] Scene identification failed: {e}")
+
+    # Fallback: treat each page as its own scene
+    print("[StoryScenes] Using fallback: one scene per page")
+    scenes = [p[:200] for p in pages]  # Use first 200 chars as scene description
+    page_to_scene = list(range(len(pages)))
+    return scenes, page_to_scene
+
+
 @app.route("/api/save_story", methods=["POST"])
 def api_save_story():
     username = session.get('username')
@@ -1452,50 +1593,68 @@ def api_save_story():
     metadata = data.get("metadata")
     if not story or not metadata:
         return jsonify({"error": "Missing story or metadata"}), 400
-    
+
+    # Extract title from story text and store in metadata
+    title, _body = _extract_story_title(story)
+    if title:
+        metadata['title'] = title
+        print(f"[StorySave] Extracted title: {title}")
+
+    # Get child age for page splitting
+    child_age = 5
+    try:
+        child_age = int(metadata.get('age', user.get('age', 5)))
+    except (ValueError, TypeError):
+        child_age = 5
+
+    # Split story into age-appropriate pages (clean_story_text strips the title)
+    pages = _split_story_into_pages(story, child_age)
+
     # Prepare user stories directory
     user_dir = os.path.join(USER_DATA_DIR, username, "stories")
     os.makedirs(user_dir, exist_ok=True)
-    
+
     # Use timestamp for unique filename
     import datetime
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     fname = f"story_{ts}.json"
     fpath = os.path.join(user_dir, fname)
-    
-    # Save story and metadata
+
+    # Identify scene breaks and map pages to scenes
+    scenes, page_to_scene = _identify_story_scenes(pages)
+    print(f"[StorySave] {len(scenes)} scenes identified, page_to_scene: {page_to_scene}")
+
+    # Save story, metadata, pages, scenes, and mapping
     with open(fpath, "w") as f:
-        json.dump({"story": story, "metadata": metadata}, f, indent=2)
-    
-    # Generate images for all sentences in the story
+        json.dump({
+            "story": story,
+            "metadata": metadata,
+            "pages": pages,
+            "scenes": scenes,
+            "page_to_scene": page_to_scene,
+        }, f, indent=2)
+
+    # Generate one image per scene (not per page)
     if image_generator.is_available():
         try:
-            # Split story into paragraphs (blank-line separated)
-            paragraphs = [p.strip() for p in re.split(r"\n\s*\n+", story.strip()) if p.strip()]
-
-            # Create user-specific image directory
             user_images_dir = os.path.join(USER_DATA_DIR, username, "story_images", fname.replace(".json", ""))
             os.makedirs(user_images_dir, exist_ok=True)
 
-            # Generate images for each paragraph
-            image_paths = []
-            for i, paragraph in enumerate(paragraphs):
-                image_path = image_generator.generate_story_scene_image(
-                    paragraph,
+            for i, scene_desc in enumerate(scenes):
+                image_generator.generate_story_scene_image(
+                    scene_desc,
                     story_context=f"Story about {metadata.get('child_name', 'a child')}",
                     output_dir=user_images_dir,
-                    filename_prefix=f"story_paragraph_{i:03d}",
+                    filename_prefix=f"story_scene_{i:03d}",
                 )
-                image_paths.append(image_path)
 
-            print(f"Generated {len(image_paths)} images for story {fname}")
+            print(f"[StorySave] Generated {len(scenes)} scene images for story {fname}")
 
         except Exception as e:
-            print(f"Error generating images for story {fname}: {str(e)}")
-            # Continue even if image generation fails
+            print(f"Error generating scene images for story {fname}: {str(e)}")
     else:
         print("image_generator not available")
-    
+
     return jsonify({"success": True, "filename": fname})
 
 @app.route("/generate")
@@ -1541,24 +1700,299 @@ def play_scene_page():
         print(f"HumanTracking auto-start (/play_scene) error: {e}")
     return render_template("play_scene.html", logged_in=True, user=user)
 
+def _gemini_generate(prompt, system="You are a helpful assistant. Return JSON only when asked.",
+                     temperature=0.3, max_tokens=2048):
+    """Call Gemini via subprocess for general-purpose text generation.
+
+    Returns the raw response text, or None on failure.
+    """
+    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_general.py')
+    if not os.path.exists(script_path):
+        print("[Gemini] gemini_general.py not found")
+        return None
+    import tempfile
+    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False)
+    try:
+        tmp.write(prompt)
+        tmp.close()
+        cmd = [WORKER_PYTHON, script_path,
+               '--prompt-file', tmp.name,
+               '--system', system,
+               '--temperature', str(temperature),
+               '--max-tokens', str(max_tokens)]
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+        if proc.returncode != 0:
+            print(f"[Gemini] Script error: {proc.stderr[:300]}")
+            return None
+        return (proc.stdout or '').strip()
+    except Exception as e:
+        print(f"[Gemini] Error: {e}")
+        return None
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+
+
+def _extract_json(raw):
+    """Extract the first JSON object from a string that may contain extra text."""
+    raw = raw.strip()
+    if raw.startswith('```'):
+        raw = raw.strip('`').strip()
+        if raw.startswith('json'):
+            raw = raw[4:].strip()
+    # Try direct parse first
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        pass
+    # Find first { ... } block
+    start = raw.find('{')
+    if start == -1:
+        return None
+    depth = 0
+    for i in range(start, len(raw)):
+        if raw[i] == '{':
+            depth += 1
+        elif raw[i] == '}':
+            depth -= 1
+            if depth == 0:
+                try:
+                    return json.loads(raw[start:i+1])
+                except json.JSONDecodeError:
+                    return None
+    return None
+
+
+def _scene_game_generate_question(toy_list, child_age, learning_goals):
+    """Use the quiz LLM to generate a scene-game question.
+
+    For ages 2-3: direct request naming one specific object.
+    For ages 4-6: criteria-based (e.g. "a red fruit") — multiple toys may match.
+    For ages 7+:  complex inference riddle — child must reason about properties.
+
+    Returns dict with keys:
+        question  – the text to speak
+        target    – exact toy name (ages 2-3) or None (ages 4+)
+        criteria  – descriptive criteria string (ages 4+) or None (ages 2-3)
+        mode      – "exact" | "criteria"
+    """
+    # Pick one toy as the primary target (always used as fallback)
+    target = random.choice(toy_list)
+
+    # Determine mode based on age
+    if child_age <= 3:
+        mode = "exact"
+    else:
+        mode = "criteria"
+
+    goals_clause = ""
+    if learning_goals:
+        goals_clause = (
+            f"The child's therapy session goals are: {learning_goals}. "
+            "Weave these goals naturally into the question (e.g. target vocabulary, "
+            "sentence structure, or concepts relevant to the goals). "
+        )
+
+    if mode == "exact":
+        prompt = (
+            f"Generate ONE short, direct request that a friendly robot says to a "
+            f"{child_age}-year-old child, asking them to find and show \"{target}\".\n"
+            f"{goals_clause}"
+            f"Use very simple, direct language. Name the object explicitly.\n"
+            f"Examples: \"Show me the apple!\", \"Do you have a banana?\", "
+            f"\"Can you give me the pear?\"\n"
+            f"Return ONLY a JSON object: "
+            f"{{\"question\": \"<the sentence>\", \"target\": \"{target}\"}}"
+        )
+    elif child_age <= 6:
+        prompt = (
+            f"You are generating a question for an object detection game for a "
+            f"{child_age}-year-old child.\n"
+            f"Available physical toys: {', '.join(toy_list)}.\n"
+            f"{goals_clause}"
+            f"Generate ONE request that describes a TARGET object by its observable "
+            f"properties (color, category, shape) WITHOUT naming any specific object.\n"
+            f"The criteria MUST match at least one toy from the list above.\n"
+            f"Use simple, clear language appropriate for ages 4-6.\n"
+            f"Examples:\n"
+            f"- \"I want a red fruit!\" (matches apple, strawberry, tomato)\n"
+            f"- \"Can you find something yellow?\" (matches banana, lemon)\n"
+            f"- \"Show me a round vegetable!\" (matches tomato)\n"
+            f"Return ONLY a JSON object:\n"
+            f"{{\"question\": \"<the sentence>\", "
+            f"\"criteria\": \"<short criteria phrase, e.g. red fruit>\"}}"
+        )
+    else:
+        prompt = (
+            f"You are generating a question for an object detection game for a "
+            f"{child_age}-year-old child.\n"
+            f"Available physical toys: {', '.join(toy_list)}.\n"
+            f"{goals_clause}"
+            f"Generate ONE riddle or multi-step descriptive clue so the child must "
+            f"reason about properties (color, shape, texture, category, function) to "
+            f"figure out which object to show. Do NOT name any object directly. "
+            f"Do NOT use a conversational tone.\n"
+            f"The criteria MUST match at least one toy from the list.\n"
+            f"Example: \"I am thinking of something round and red that grows on a tree. "
+            f"Which one is it?\"\n"
+            f"Return ONLY a JSON object:\n"
+            f"{{\"question\": \"<the riddle>\", "
+            f"\"criteria\": \"<short criteria phrase, e.g. round red tree fruit>\"}}"
+        )
+
+    raw = _gemini_generate(prompt, system="You generate game questions for children. Return JSON only.")
+    if raw:
+        try:
+            print(f"[SceneGame] Gemini raw question response: {raw}")
+            obj = _extract_json(raw)
+            print(f"[SceneGame] Parsed question JSON: {json.dumps(obj, indent=2) if obj else None}")
+            if obj and obj.get('question', '').strip():
+                q = obj['question'].strip()
+                if mode == "exact":
+                    return {
+                        'question': q,
+                        'target': obj.get('target', target),
+                        'criteria': None,
+                        'mode': 'exact'
+                    }
+                else:
+                    return {
+                        'question': q,
+                        'target': None,
+                        'criteria': obj.get('criteria', ''),
+                        'mode': 'criteria'
+                    }
+        except Exception as e:
+            print(f"[SceneGame] Question generation failed: {e}")
+
+    # Fallback
+    return {
+        'question': f"Can you find the {target}? Show it to me!",
+        'target': target,
+        'criteria': None,
+        'mode': 'exact'
+    }
+
+
+def _run_gemini_detect_and_look(image_path):
+    """Run gemini_analyze_image.py to detect the held object and make the robot look at it.
+
+    Returns the detected label (str) or None.
+    """
+    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_analyze_image.py')
+    if not os.path.exists(script_path):
+        print("[SceneGame] gemini_analyze_image.py not found")
+        return None
+    try:
+        proc = subprocess.run(
+            [WORKER_PYTHON, script_path, '--image', image_path],
+            capture_output=True, text=True, timeout=60
+        )
+        if proc.returncode != 0:
+            print(f"[SceneGame] analyze script error: {proc.stderr}")
+            return None
+        raw = (proc.stdout or '').strip()
+        print(f"[SceneGame] gemini_analyze_image raw: {raw}")
+        if raw.startswith('```'):
+            raw = raw.strip('`').strip()
+            if raw.startswith('json'):
+                raw = raw[4:].strip()
+        obj = json.loads(raw)
+        # obj is typically [{"point": [y, x], "label": "..."}]
+        item = obj[0] if isinstance(obj, list) and obj else obj
+        if not isinstance(item, dict):
+            return None
+        label = (item.get('label') or '').strip()
+        point = item.get('point')
+        print(f"[SceneGame] Detected object: {label}, point: {point}")
+
+        # Make the robot look at the detected object
+        if point and len(point) >= 2:
+            try:
+                # point is [y, x] normalised to 0-1000; convert to pixels (640x480)
+                norm_y, norm_x = point[0], point[1]
+                pixel_u = norm_x * 640.0 / 1000.0
+                pixel_v = norm_y * 480.0 / 1000.0
+                tracker = _ensure_human_tracker()
+                if tracker:
+                    kin = tracker.human_detector.kinematics
+                    kin.look_at_pixel([pixel_u, pixel_v], depth=1.0, duration=0, sync=False)
+                    print(f"[SceneGame] Robot looking at pixel ({pixel_u:.0f}, {pixel_v:.0f})")
+            except Exception as e:
+                print(f"[SceneGame] look_at_pixel failed: {e}")
+
+        return label or None
+    except Exception as e:
+        print(f"[SceneGame] analyze script exec failed: {e}")
+        return None
+
+
+def _check_criteria_match(detected_label, criteria):
+    """Use Gemini to check if a detected object matches descriptive criteria.
+
+    Returns (matches: bool, reason: str).
+    """
+    prompt = (
+        f"A child showed an object identified as \"{detected_label}\".\n"
+        f"The game asked for: \"{criteria}\".\n"
+        f"Does \"{detected_label}\" match the criteria \"{criteria}\"?\n"
+        f"Consider color, category, shape, and common knowledge about the object.\n"
+        f"Return ONLY a JSON object: {{\"match\": true or false, \"reason\": \"<brief explanation>\"}}"
+    )
+    raw = _gemini_generate(prompt, system="You validate object matches. Return JSON only.")
+    if raw:
+        try:
+            print(f"[SceneGame] Criteria match Gemini raw: {raw}")
+            obj = _extract_json(raw)
+            print(f"[SceneGame] Criteria match parsed: {json.dumps(obj, indent=2) if obj else None}")
+            if obj:
+                return bool(obj.get('match', False)), obj.get('reason', '')
+        except Exception as e:
+            print(f"[SceneGame] Criteria match failed: {e}")
+    # Fallback
+    match = criteria.lower() in detected_label.lower() or detected_label.lower() in criteria.lower()
+    return match, "fallback string match"
+
+
+def _get_user_age_and_goals(username):
+    """Helper to read child age and learning_goals for a user."""
+    user = user_manager.users.get(username, {})
+    child_age = 5
+    try:
+        child_age = int(user.get('age', 5))
+    except (ValueError, TypeError):
+        child_age = 5
+    learning_goals = user.get('learning_goals', '')
+    try:
+        profile_path = os.path.join(USER_DATA_DIR, username, 'profile.json')
+        if os.path.exists(profile_path):
+            with open(profile_path, 'r') as f:
+                profile = json.load(f)
+            learning_goals = profile.get('learning_goals', learning_goals)
+    except Exception:
+        pass
+    return child_age, learning_goals
+
+
 @app.route('/api/scene_game/new_round', methods=['POST'])
 def api_scene_game_new_round():
-    """Start a new scene detection round: show random objects and ask a question"""
+    """Start a new scene detection round using the configured toy list."""
     if 'username' not in session:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
     try:
-        # Define a small vocabulary
-        fruits = ['apple', 'banana', 'orange', 'grape', 'strawberry', 'watermelon']
-        others = ['book', 'car', 'chair', 'dog', 'cat', 'ball', 'cup', 'pencil']
-        import random as _rnd
-        _rnd.shuffle(fruits)
-        _rnd.shuffle(others)
-        # Build candidates: 2 fruits + 3 others
-        candidates = fruits[:2] + others[:3]
-        _rnd.shuffle(candidates)
+        username = session['username']
+        child_age, learning_goals = _get_user_age_and_goals(username)
 
-        # Question
-        question = "I want a fruit, show me a fruit"
+        # Use the configured toy list
+        toy_list = _load_scene_toys()
+        if not toy_list:
+            toy_list = list(SCENE_GAME_DEFAULT_TOYS)
+
+        # Generate age/goal-appropriate question
+        result = _scene_game_generate_question(toy_list, child_age, learning_goals)
+        question = result['question']
 
         # Make the robot ask the question
         try:
@@ -1570,62 +2004,186 @@ def api_scene_game_new_round():
         try:
             tracker = _ensure_human_tracker()
             if tracker:
-                # pick most recent visible person and track; if none, tracker.track(None) will neutral gaze
                 person = _pick_recent_person(tracker, timeout_sec=0.5)
                 tracker.track(person)
         except Exception as e:
             print(f"HumanTracking start error: {e}")
 
-        # Generate or map images
+        # Build item cards from the toy list
         items = []
         img_dir = os.path.join(USER_DATA_DIR, 'activity_images')
         os.makedirs(img_dir, exist_ok=True)
-        for label in candidates:
+        shuffled = list(toy_list)
+        random.shuffle(shuffled)
+        for label in shuffled:
             img_url = None
             if image_generator.is_available():
-                # save as <label>.png (collision-safe)
                 safe = re.sub(r"[^A-Za-z0-9_-]+", "_", label)
-                target = os.path.join(img_dir, f"{safe}.png")
-                if not os.path.exists(target):
+                dest = os.path.join(img_dir, f"{safe}.png")
+                if not os.path.exists(dest):
                     path = image_generator.generate_image(
                         prompt=f"{label}, single object on simple background, children's book illustration",
                         output_dir=img_dir,
                         filename_prefix=f"scene_{safe}"
                     )
-                    if path and not os.path.exists(target):
+                    if path and not os.path.exists(dest):
                         try:
-                            os.replace(path, target)
+                            os.replace(path, dest)
                         except Exception:
-                            target = path
-                rel = os.path.relpath(target, USER_DATA_DIR)
+                            dest = path
+                rel = os.path.relpath(dest, USER_DATA_DIR)
                 img_url = f"/images/{rel}"
             items.append({
                 'label': label,
-                'is_fruit': label in fruits,
                 'image_path': img_url
             })
 
-        return jsonify({'success': True, 'question': question, 'items': items, 'target': 'fruit'})
+        return jsonify({
+            'success': True,
+            'question': question,
+            'items': items,
+            'target': result.get('target'),
+            'criteria': result.get('criteria'),
+            'mode': result['mode']
+        })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-@app.route('/api/scene_game/answer', methods=['POST'])
-def api_scene_game_answer():
+@app.route('/api/scene_game/hint', methods=['POST'])
+def api_scene_game_hint():
+    """Generate an age-appropriate hint for the current round's target object."""
     if 'username' not in session:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
     data = request.get_json() or {}
-    label = (data.get('label') or '').lower().strip()
-    fruits = {'apple','banana','orange','grape','strawberry','watermelon'}
-    correct = label in fruits
+    mode = (data.get('mode') or 'exact').strip()
+    target = (data.get('target') or '').strip()
+    criteria = (data.get('criteria') or '').strip()
+
+    username = session['username']
+    child_age, learning_goals = _get_user_age_and_goals(username)
+
+    # Build the subject of the hint
+    if mode == 'exact' and target:
+        subject = f'the object "{target}"'
+    elif criteria:
+        subject = f'an object matching "{criteria}"'
+    else:
+        return jsonify({'success': False, 'error': 'No active round'})
+
+    prompt = (
+        f"A {child_age}-year-old child is playing an object detection game and needs a hint "
+        f"to find {subject} from these toys: {', '.join(_load_scene_toys())}.\n"
+        f"Generate ONE short hint that helps the child identify the object.\n"
+        f"Age guidelines:\n"
+        f"- Ages 2-3: very simple, point out one obvious feature (color or shape). "
+        f"Example: \"It is yellow!\"\n"
+        f"- Ages 4-6: describe 1-2 properties (color, shape, what it does). "
+        f"Example: \"It is red and round, and you can eat it!\"\n"
+        f"- Ages 7+: give a clue that requires reasoning but is easier than the original riddle. "
+        f"Example: \"You might put this in a salad. It grows on a vine.\"\n"
+        f"Return ONLY a JSON object: {{\"hint\": \"<the hint sentence>\"}}"
+    )
+    raw = _gemini_generate(prompt, system="You generate game hints for children. Return JSON only.")
+    if raw:
+        try:
+            print(f"[SceneGame] Gemini raw hint response: {raw}")
+            obj = _extract_json(raw)
+            print(f"[SceneGame] Parsed hint JSON: {json.dumps(obj, indent=2) if obj else None}")
+            hint = (obj.get('hint', '') if obj else '').strip()
+            if hint:
+                print(f"[SceneGame] Hint generated: {hint}")
+                try:
+                    _with_asr_suspended(lambda: tts_helper.speak(hint))
+                except Exception:
+                    pass
+                return jsonify({'success': True, 'hint': hint})
+        except Exception as e:
+            print(f"[SceneGame] Hint generation failed: {e}")
+
+    hint = f"Look carefully at the toys! Think about {target or criteria}."
     try:
-        if correct:
-            tts_helper.speak("Great job! That's a fruit!")
-        else:
-            tts_helper.speak("Not quite. Try again and pick a fruit.")
+        _with_asr_suspended(lambda: tts_helper.speak(hint))
     except Exception:
         pass
-    # Continue tracking implicitly; you can stop at end of session via endpoint below
-    return jsonify({'success': True, 'correct': correct})
+    return jsonify({'success': True, 'hint': hint})
+
+@app.route('/api/scene_game/answer', methods=['POST'])
+def api_scene_game_answer():
+    """Validate an answer by capturing a camera frame and using gemini_analyze_image.py.
+
+    Step 1: Capture frame, run gemini_analyze_image.py to detect the object + robot looks at it.
+    Step 2: Compare detected label against target (exact) or criteria (ages 4+).
+    """
+    if 'username' not in session:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    if cv2 is None:
+        return jsonify({'success': False, 'error': 'OpenCV not available'}), 500
+
+    data = request.get_json() or {}
+    answer_mode = (data.get('mode') or 'exact').strip()
+    target = (data.get('target') or '').strip()
+    criteria = (data.get('criteria') or '').strip()
+
+    username = session['username']
+
+    # Capture frame from camera
+    frame = _get_ros_frame()
+    if frame is None:
+        return jsonify({'success': False, 'error': 'Camera read failed'}), 500
+
+    import datetime
+    cap_dir = os.path.join(USER_DATA_DIR, username, 'captured_scenes')
+    os.makedirs(cap_dir, exist_ok=True)
+    ts = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+    fpath = os.path.join(cap_dir, f'scene_answer_{ts}.jpg')
+    cv2.imwrite(fpath, frame)
+
+    # Step 1: detect object + robot looks at it
+    detected = _run_gemini_detect_and_look(fpath)
+    if not detected:
+        try:
+            tts_helper.speak("I couldn't see clearly. Can you show me again?")
+        except Exception:
+            pass
+        return jsonify({'success': True, 'correct': None, 'detected': None,
+                        'error': 'Vision analysis failed'})
+
+    print(f"[SceneGame] Detected object: {detected}")
+
+    # Step 2: match against target or criteria
+    if answer_mode == 'exact':
+        # Ages 2-3: simple name comparison
+        correct = detected.lower().strip() == target.lower().strip()
+        # Also accept if one contains the other (e.g. "red apple" vs "apple")
+        if not correct:
+            correct = (target.lower() in detected.lower()) or (detected.lower() in target.lower())
+        reason = ''
+        try:
+            if correct:
+                tts_helper.speak(f"Great job! That's the {target}!")
+            else:
+                tts_helper.speak(f"I see a {detected}, but I asked for the {target}. Try again!")
+        except Exception:
+            pass
+    else:
+        # Ages 4+: criteria-based — use LLM to check match
+        if not criteria:
+            return jsonify({'success': False, 'error': 'No criteria provided'}), 400
+        correct, reason = _check_criteria_match(detected, criteria)
+        try:
+            if correct:
+                tts_helper.speak(f"Great job! I can see a {detected}. That's right!")
+            else:
+                tts_helper.speak(f"I see a {detected}, but that doesn't match. Try again!")
+        except Exception:
+            pass
+
+    return jsonify({
+        'success': True,
+        'correct': correct,
+        'detected': detected,
+        'reason': reason
+    })
 
 @app.route('/api/human_tracking/untrack', methods=['POST'])
 def api_human_tracking_untrack():
@@ -1743,7 +2301,7 @@ def api_camera_capture():
         try:
             script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_analyze_image.py')
             if os.path.exists(script_path):
-                cmd = ['python3.9', script_path, '--image', fpath]
+                cmd = [WORKER_PYTHON, script_path, '--image', fpath]
 
                 proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
                 if proc.returncode == 0:
@@ -1837,7 +2395,7 @@ def api_recovery_generate_question():
         except (ValueError, TypeError):
             child_age = 5
 
-        cmd = ['python3.9', script_path, '--image', fpath, '--mode', mode,
+        cmd = [WORKER_PYTHON, script_path, '--image', fpath, '--mode', mode,
                '--child-age', str(child_age)]
         if child_name:
             cmd += ['--child-name', child_name]
@@ -3062,19 +3620,25 @@ def api_get_story_sentences():
     try:
         with open(story_path, 'r') as f:
             story_data = json.load(f)
-        story_text = story_data.get('story', '')
         metadata = story_data.get('metadata', {})
-        
-        # Clean the story text first
-        cleaned_story = clean_story_text(story_text)
-        
-        # Split into sentences (simple split, can be improved)
-        sentences = re.split(r'(?<=[.!?])\s+', cleaned_story.strip())
-        sentences = [s for s in sentences if s.strip()]
-        
+
+        # Use pre-split pages if available (saved at approval time)
+        pages = story_data.get('pages')
+        if pages and isinstance(pages, list) and len(pages) > 0:
+            sentences = pages
+        else:
+            # Fallback for older stories without pages: split now based on age
+            story_text = story_data.get('story', '')
+            child_age = 5
+            try:
+                child_age = int(metadata.get('age', 5))
+            except (ValueError, TypeError):
+                child_age = 5
+            sentences = _split_story_into_pages(story_text, child_age)
+
         return jsonify({
-            'success': True, 
-            'sentences': sentences, 
+            'success': True,
+            'sentences': sentences,
             'metadata': metadata,
             'images_available': image_generator.is_available()
         })
@@ -3083,7 +3647,11 @@ def api_get_story_sentences():
 
 @app.route('/api/get_sentence_image', methods=['POST'])
 def api_get_sentence_image():
-    """Get image for a specific sentence (mapped to its paragraph image)"""
+    """Get the scene image for a specific page (sentence_index = page index).
+
+    Uses the saved page_to_scene mapping to find the correct scene image.
+    The same image is returned for all pages that belong to the same scene.
+    """
     username = session.get('username')
     data = request.get_json() or {}
     filename = data.get('filename', '')
@@ -3102,42 +3670,35 @@ def api_get_sentence_image():
         if not os.path.exists(user_images_dir):
             return jsonify({'success': False, 'error': 'No images directory found'})
 
-        # Load story + metadata
         with open(story_path, 'r') as f:
             story_data = json.load(f)
-        metadata = story_data.get('metadata', {}) or {}
 
-        # Use saved mapping if available
-        mapping = metadata.get('sentence_to_paragraph') or []
-        if mapping:
-            if sentence_index < 0 or sentence_index >= len(mapping):
-                return jsonify({'success': False, 'error': 'Sentence index out of range'})
-            paragraph_index = mapping[sentence_index]
-        else:
-            # Fallback: compute from story text
-            story_text = clean_story_text(story_data.get('story', '')).strip()
-            paragraphs = [p.strip() for p in re.split(r"\n\s*\n+", story_text) if p.strip()]
+        # Use saved page_to_scene mapping (new format)
+        page_to_scene = story_data.get('page_to_scene')
+        if page_to_scene and isinstance(page_to_scene, list):
+            if sentence_index < 0 or sentence_index >= len(page_to_scene):
+                return jsonify({'success': False, 'error': 'Page index out of range'})
+            scene_index = page_to_scene[sentence_index]
 
-            sent_to_para = []
-            for pi, p in enumerate(paragraphs):
-                sents = re.split(r'(?<=[.!?])\s+', p.strip())
-                for s in [x for x in sents if x.strip()]:
-                    sent_to_para.append(pi)
+            # Look for scene image
+            pattern = f"story_scene_{int(scene_index):03d}_"
+            matches = [f for f in os.listdir(user_images_dir) if f.startswith(pattern) and f.endswith('.png')]
+            matches.sort()
 
-            if sentence_index < 0 or sentence_index >= len(sent_to_para):
-                return jsonify({'success': False, 'error': 'Sentence index out of range'})
-            paragraph_index = sent_to_para[sentence_index]
+            if matches:
+                image_path = f"/images/{username}/story_images/{os.path.basename(user_images_dir)}/{matches[0]}"
+                return jsonify({'success': True, 'image_path': image_path, 'scene_index': scene_index})
 
-        # Find the paragraph image
-        pattern = f"story_paragraph_{int(paragraph_index):03d}_"
+        # Fallback: try legacy story_paragraph_NNN format
+        pattern = f"story_paragraph_{int(sentence_index):03d}_"
         matches = [f for f in os.listdir(user_images_dir) if f.startswith(pattern) and f.endswith('.png')]
         matches.sort()
 
-        if not matches:
-            return jsonify({'success': False, 'error': 'No image found for this paragraph'})
+        if matches:
+            image_path = f"/images/{username}/story_images/{os.path.basename(user_images_dir)}/{matches[0]}"
+            return jsonify({'success': True, 'image_path': image_path, 'scene_index': sentence_index})
 
-        image_path = f"/images/{username}/story_images/{os.path.basename(user_images_dir)}/{matches[0]}"
-        return jsonify({'success': True, 'image_path': image_path, 'paragraph_index': paragraph_index})
+        return jsonify({'success': False, 'error': 'No image found for this page'})
 
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
@@ -3323,16 +3884,98 @@ def api_head_position():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+# ===================== SCENE GAME TOY LIST =====================
+
+SCENE_GAME_DEFAULT_TOYS = ['lemon', 'tomato', 'apple', 'banana']
+SCENE_GAME_TOYS_FILE = os.path.join(USER_DATA_DIR, 'scene_game_toys.json')
+
+def _load_scene_toys():
+    """Load the toy list from disk, falling back to defaults."""
+    if os.path.exists(SCENE_GAME_TOYS_FILE):
+        try:
+            with open(SCENE_GAME_TOYS_FILE, 'r') as f:
+                toys = json.load(f)
+            if isinstance(toys, list) and len(toys) > 0:
+                return toys
+        except Exception:
+            pass
+    return list(SCENE_GAME_DEFAULT_TOYS)
+
+def _save_scene_toys(toys):
+    """Persist the toy list to disk."""
+    os.makedirs(os.path.dirname(SCENE_GAME_TOYS_FILE), exist_ok=True)
+    with open(SCENE_GAME_TOYS_FILE, 'w') as f:
+        json.dump(toys, f, indent=2)
+
+@app.route("/object_game_generate")
+def object_game_generate_page():
+    """Game generation mode – manage the physical toy list for object detection."""
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    user = user_manager.users.get(session['username'])
+    return render_template("scene_game_config.html", logged_in=True, user=user)
+
+@app.route('/api/scene_game/toys', methods=['GET'])
+def api_scene_game_toys_get():
+    """Return the current toy list."""
+    return jsonify({'success': True, 'toys': _load_scene_toys()})
+
+@app.route('/api/scene_game/toys', methods=['POST'])
+def api_scene_game_toys_post():
+    """Add, delete, or reset the toy list."""
+    data = request.get_json() or {}
+    action = data.get('action', '')
+    toys = _load_scene_toys()
+
+    if action == 'add':
+        name = (data.get('name') or '').strip()
+        if not name:
+            return jsonify({'success': False, 'error': 'Name cannot be empty'})
+        if name.lower() in [t.lower() for t in toys]:
+            return jsonify({'success': False, 'error': f'"{name}" already exists'})
+        toys.append(name)
+        _save_scene_toys(toys)
+        return jsonify({'success': True, 'toys': toys})
+
+    if action == 'delete':
+        name = (data.get('name') or '').strip()
+        toys = [t for t in toys if t.lower() != name.lower()]
+        _save_scene_toys(toys)
+        return jsonify({'success': True, 'toys': toys})
+
+    if action == 'reset':
+        toys = list(SCENE_GAME_DEFAULT_TOYS)
+        _save_scene_toys(toys)
+        return jsonify({'success': True, 'toys': toys})
+
+    return jsonify({'success': False, 'error': 'Unknown action'}), 400
+
 @app.route('/api/scene/start', methods=['POST'])
 def api_scene_start():
     try:
-        choices = ['tomato', 'lemon', 'apple', 'banana']
-        target = random.choice(choices)
+        toy_list = _load_scene_toys()
+        if not toy_list:
+            toy_list = list(SCENE_GAME_DEFAULT_TOYS)
+
+        child_age = 5
+        learning_goals = ''
+        username = session.get('username')
+        if username:
+            child_age, learning_goals = _get_user_age_and_goals(username)
+
+        result = _scene_game_generate_question(toy_list, child_age, learning_goals)
+        question = result['question']
         try:
-            _with_asr_suspended(lambda: tts_helper.speak(f"Show me a {target}"))
+            _with_asr_suspended(lambda: tts_helper.speak(question))
         except Exception:
             pass
-        return jsonify({'success': True, 'target': target})
+        return jsonify({
+            'success': True,
+            'question': question,
+            'target': result.get('target'),
+            'criteria': result.get('criteria'),
+            'mode': result['mode']
+        })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
@@ -3365,12 +4008,7 @@ def _save_scene_index(username, index):
 
 def _run_gemini_wh_analysis(image_path, child_age, difficulty):
     """Run the Gemini vision worker to analyze a scene and generate WH questions."""
-    project_root = os.path.dirname(BASE_DIR)
-    script_path = os.path.join(project_root, 'scripts', 'gemini_wh_scene.py')
-    worker_python = os.getenv(
-        "IMAGE_WORKER_PYTHON",
-        os.path.join(project_root, ".venv39", "bin", "python"),
-    )
+    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_wh_scene.py')
     if not os.path.exists(script_path):
         return None, "Worker script not found"
     payload = json.dumps({
@@ -3380,7 +4018,7 @@ def _run_gemini_wh_analysis(image_path, child_age, difficulty):
     })
     try:
         proc = subprocess.run(
-            [worker_python, script_path],
+            [WORKER_PYTHON, script_path],
             input=payload,
             capture_output=True,
             text=True,
