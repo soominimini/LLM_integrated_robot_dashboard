@@ -5,10 +5,11 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
+import os
 import json
+import subprocess
+import tempfile
 from typing import Dict, Any, Optional, List
-from llamaindex_interface import ChatWithRAG
-from llm_prompts import ConversationPrompt
 
 class StoryGenerator:
 
@@ -210,34 +211,24 @@ Use a clear three-act structure:
         "- Overcoming challenges with support"
     )
 
-    def __init__(self, llm_model: str = "llama3.1:latest", disable_rag: bool = True):
+    def __init__(self, llm_model: str = "gemini-2.5-flash", disable_rag: bool = True):
         """
-        Initialize the story generator
+        Initialize the story generator with Gemini API (via subprocess).
 
         Args:
-            llm_model: The LLM model to use for story generation
-            disable_rag: Whether to disable RAG for story generation (recommended for creative tasks)
+            llm_model: The Gemini model to use (e.g. "gemini-2.5-flash")
+            disable_rag: Kept for API compatibility (unused with Gemini)
         """
         self.llm_model = llm_model
         self.disable_rag = disable_rag
-        self.chat_engine = None
-        self._initialize_chat_engine()
-
-    def _initialize_chat_engine(self):
-        """Initialize the chat engine for story generation"""
-        story_system_prompt = (
-            "You are a clinical storyteller for pediatric speech-language therapy. "
-            "You create personalized therapeutic stories that are age-calibrated, "
-            "clinically grounded, and engaging. You follow word count constraints precisely. "
-            "You integrate therapy goals into narrative and dialogue naturally, never as explicit lessons. "
-            "You never add preamble, commentary, or text outside the requested output format."
+        self._script_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'scripts', 'gemini_story.py'
         )
-
-        self.chat_engine = ChatWithRAG(
-            model=self.llm_model,
-            system_role=story_system_prompt,
-            disable_rag=self.disable_rag,
-            max_tokens=4096  # Allow for longer story generation
+        self._worker_python = os.getenv(
+            "IMAGE_WORKER_PYTHON",
+            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         ".venv39", "bin", "python"),
         )
 
     # ─────────────────────────────────────────────
@@ -347,6 +338,36 @@ Use a clear three-act structure:
     # PUBLIC API (unchanged signatures)
     # ─────────────────────────────────────────────
 
+    def _run_gemini(self, prompt: str, stream: bool = False):
+        """Run the gemini_story.py script via subprocess.
+
+        Returns story text (non-stream) or a Popen object (stream).
+        """
+        # Write prompt to a temp file to avoid shell escaping issues
+        tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False)
+        try:
+            tmp.write(prompt)
+            tmp.close()
+
+            cmd = [self._worker_python, self._script_path,
+                   '--model', self.llm_model,
+                   '--prompt-file', tmp.name]
+            if stream:
+                cmd.append('--stream')
+                return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        text=True, bufsize=1)
+
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+            if proc.returncode != 0:
+                raise RuntimeError(f"gemini_story.py failed: {proc.stderr}")
+            return proc.stdout or ''
+        finally:
+            if not stream:
+                try:
+                    os.unlink(tmp.name)
+                except OSError:
+                    pass
+
     def generate_story(
         self,
         child_name: str,
@@ -358,15 +379,6 @@ Use a clear three-act structure:
     ) -> Dict[str, Any]:
 
         try:
-            if not self.chat_engine:
-                return {
-                    "success": False,
-                    "error": "Chat engine not initialized",
-                    "story": None,
-                    "metadata": None
-                }
-
-            # Use custom prompt if provided, otherwise build from components
             if custom_prompt:
                 prompt = custom_prompt
             else:
@@ -378,13 +390,10 @@ Use a clear three-act structure:
                     goals=goals,
                 )
 
-            # Generate the story using the chat engine
-            response = self.chat_engine.get_response(prompt)
-            story_text = response.message.content if hasattr(response, 'message') else str(response)
+            print("[StoryGenerator] prompt: ", prompt)
 
-            print("prompt: ", prompt)
+            story_text = self._run_gemini(prompt, stream=False)
 
-            # Create metadata for the story
             age_tier = self._get_age_tier(age)
             story_metadata = {
                 "child_name": child_name,
@@ -392,7 +401,7 @@ Use a clear three-act structure:
                 "age_tier": age_tier["label"],
                 "target_word_range": list(age_tier["word_range"]),
                 "word_count": len(story_text.split()),
-                "generated_at": str(response.created_at) if hasattr(response, 'created_at') else None,
+                "generated_at": None,
                 "model": self.llm_model,
                 "topics": topics or []
             }
@@ -422,25 +431,13 @@ Use a clear three-act structure:
         goals: Optional[str] = None,
     ):
         """
-        Generate a therapeutic story with streaming response
-
-        Args:
-            child_name: Name of the child for the story
-            age: Age of the child
-            gender: Gender of the child
-            custom_prompt: Optional custom prompt to override the default template
-            topics: Optional list of theme keywords
-            goals: Optional clinician-specified therapy goals
+        Generate a therapeutic story with streaming response via Gemini API.
 
         Yields:
             Story text chunks as they are generated
         """
+        tmp_path = None
         try:
-            if not self.chat_engine:
-                yield f"Error: Chat engine not initialized"
-                return
-
-            # Use custom prompt if provided, otherwise build from components
             if custom_prompt:
                 prompt = custom_prompt
             else:
@@ -452,14 +449,29 @@ Use a clear three-act structure:
                     goals=goals,
                 )
 
-            # Generate the story with streaming
-            for chunk in self.chat_engine.get_stream_response(prompt):
-                yield chunk
+            proc = self._run_gemini(prompt, stream=True)
+            # Save tmp path for cleanup (stored in proc.args)
+            tmp_path = proc.args[proc.args.index('--prompt-file') + 1]
+
+            for line in proc.stdout:
+                line = line.rstrip('\n')
+                if line.startswith('CHUNK:'):
+                    yield line[6:] + '\n'
+
+            proc.wait()
+            if proc.returncode != 0:
+                err = proc.stderr.read() if proc.stderr else ''
+                yield f"Error generating story: {err}"
 
         except Exception as e:
             yield f"Error generating story: {str(e)}"
+        finally:
+            if tmp_path:
+                try:
+                    os.unlink(tmp_path)
+                except OSError:
+                    pass
 
     def close(self):
         """Clean up resources"""
-        if self.chat_engine:
-            self.chat_engine.close()
+        pass
