@@ -3,7 +3,7 @@ from google import genai
 from google.genai import types
 
 # Initialize the GenAI client and specify the model
-MODEL_ID = "gemini-robotics-er-1.5-preview"
+MODEL_ID = "gemini-robotics-er-1.6-preview"
 PROMPT = """
           Point to no more than 1 item a person is holding in the image. The label returned
           should be an identifying name for the object detected.

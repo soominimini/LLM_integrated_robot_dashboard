@@ -16,8 +16,10 @@
         .btn:disabled { background: #aaa; cursor: not-allowed; }
         .btn.speak { background: #28a745; }
         .btn.speak:hover { background: #218838; }
+        .btn.question-btn { background: #ff9800; font-size: 1.1rem; padding: 0.8rem 2.5rem; }
+        .btn.question-btn:hover { background: #e68a00; }
         .meta { color: #888; font-size: 0.95rem; margin-bottom: 1rem; }
-        
+
         .movement-indicator {
             display: flex;
             align-items: center;
@@ -31,7 +33,7 @@
             color: #155724;
             font-size: 0.9rem;
         }
-        
+
         .movement-dot {
             width: 12px;
             height: 12px;
@@ -39,7 +41,7 @@
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.2); }
@@ -49,25 +51,166 @@
         .back-btn { background: #eee; color: #333; border: none; padding: 0.5rem 1.5rem; border-radius: 5px; font-size: 1rem; cursor: pointer; margin: 0.5rem; }
         .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .btn.skip-btn { background: #6c757d; }
+        .btn.skip-btn:hover { background: #5a6268; }
+        .story-end-prompt {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        .story-end-prompt h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+        /* Questions styles */
+        .question-display {
+            background: #fff8e1;
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .question-display .question-label {
+            color: #e65100;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .question-display .question-text {
+            font-size: 1.4rem;
+            color: #333;
+            line-height: 1.5;
+        }
+        .question-type-badge {
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .badge-main_idea { background: #e3f2fd; color: #1565c0; }
+        .badge-detail { background: #e8f5e9; color: #2e7d32; }
+        .badge-inference { background: #fce4ec; color: #c62828; }
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin: 1.5rem auto;
+            max-width: 500px;
+        }
+        .answer-btn {
+            background: #fff;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            text-align: left;
+        }
+        .answer-btn:hover { background: #e8f0fe; }
+        .answer-btn.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+            font-weight: bold;
+        }
+        .answer-btn.wrong {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .answer-btn:disabled { cursor: default; opacity: 0.85; }
+        .answer-btn:disabled:hover { background: inherit; }
+        .answer-feedback {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            min-height: 1.5rem;
+        }
+        .answer-feedback.correct-feedback { color: #28a745; }
+        .answer-feedback.wrong-feedback { color: #dc3545; }
+        .questions-complete {
+            text-align: center;
+            padding: 2rem;
+        }
+        .questions-complete h3 {
+            color: #28a745;
+            font-size: 1.3rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="back-btn" onclick="window.history.back()">← Back</button>
+        <button class="back-btn" onclick="window.history.back()">&#8592; Back</button>
         <h2>Read Story with QTrobot</h2>
         <div class="meta" id="storyMeta"></div>
         <div class="progress" id="progress"></div>
-        <div class="image-container" id="imageContainer">
-            <div class="image-loading">🎨 Generating image...</div>
+
+        <!-- Story reading section -->
+        <div id="storySection">
+            <div class="image-container" id="imageContainer">
+                <div class="image-loading">Generating image...</div>
+            </div>
+            <div class="sentence" id="sentence"></div>
+            <div style="text-align: center;" id="storyButtons">
+                <button class="btn speak" id="speakBtn" onclick="speakCurrentSentence()">Speak Sentence</button>
+                <button class="btn" id="nextBtn" onclick="nextSentence()">Next</button>
+            </div>
+            <div class="movement-indicator" id="movementIndicator" style="display: none;">
+                <div class="movement-dot"></div>
+                <span>Robot is moving while speaking...</span>
+            </div>
         </div>
-        <div class="sentence" id="sentence"></div>
-        <div style="text-align: center;">
-            <button class="btn speak" id="speakBtn" onclick="speakCurrentSentence()">🔊 Speak Sentence</button>
-            <button class="btn" id="nextBtn" onclick="nextSentence()">Next</button>
+
+        <!-- Story end prompt -->
+        <div id="storyEndSection" style="display: none;">
+            <div class="story-end-prompt">
+                <h3>The story is finished!</h3>
+                <p style="font-size: 1.1rem; color: #555; margin-bottom: 1.5rem;">
+                    Would you like to answer some questions about the story?
+                </p>
+                <div>
+                    <button class="btn question-btn" onclick="startQuestions()">Yes, let's go!</button>
+                    <button class="btn skip-btn" onclick="skipQuestions()">No, thanks</button>
+                </div>
+            </div>
         </div>
-        <div class="movement-indicator" id="movementIndicator" style="display: none;">
-            <div class="movement-dot"></div>
-            <span>🤖 Robot is moving while speaking...</span>
+
+        <!-- Questions section -->
+        <div id="questionsSection" style="display: none;">
+            <div class="question-display" id="questionDisplay">
+                <div class="question-label" id="questionLabel"></div>
+                <div class="question-type-badge" id="questionBadge"></div>
+                <div class="question-text" id="questionText"></div>
+            </div>
+            <div class="answer-options" id="answerOptions"></div>
+            <div class="answer-feedback" id="answerFeedback"></div>
+            <div style="text-align: center;">
+                <button class="btn speak" id="speakQuestionBtn" onclick="speakCurrentQuestion()">Speak Question</button>
+                <button class="btn" id="nextQuestionBtn" onclick="nextQuestion()" style="display: none;">Next Question</button>
+            </div>
+            <div class="movement-indicator" id="questionMovementIndicator" style="display: none;">
+                <div class="movement-dot"></div>
+                <span>Robot is speaking...</span>
+            </div>
+        </div>
+
+        <!-- Questions complete -->
+        <div id="questionsCompleteSection" style="display: none;">
+            <div class="questions-complete">
+                <h3>Great job! You answered all the questions!</h3>
+                <div style="margin-top: 1rem;">
+                    <button class="btn" onclick="window.history.back()">Back to Stories</button>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -82,6 +225,8 @@ window.addEventListener('load', () => {
         let current = 0;
         let meta = {};
         let imagesAvailable = false;
+        let questions = [];
+        let currentQuestion = 0;
 
         function fetchStory() {
             fetch(`/api/get_story_sentences?filename=${encodeURIComponent(filename)}`)
@@ -91,7 +236,8 @@ window.addEventListener('load', () => {
                         sentences = data.sentences;
                         meta = data.metadata || {};
                         imagesAvailable = data.images_available || false;
-                        
+                        questions = data.questions || [];
+
                         document.getElementById('storyMeta').innerHTML =
                             `<b>Child:</b> ${meta.child_name || ''} &nbsp; <b>Age:</b> ${meta.age || ''} &nbsp; <b>Words:</b> ${meta.word_count || ''}`;
                         current = 0;
@@ -103,29 +249,42 @@ window.addEventListener('load', () => {
                 });
         }
 
+        function stripTags(text) {
+            // Remove all tag variations: [gesture:X], [emotion:X], gesture:X, emotion:X
+            return text
+                .replace(/\[gesture:[^\]]+\]/gi, '')
+                .replace(/\[emotion:[^\]]+\]/gi, '')
+                .replace(/\bgesture:\S+/gi, '')
+                .replace(/\bemotion:\S+/gi, '')
+                .replace(/\s{2,}/g, ' ')
+                .trim();
+        }
+
         function showSentence() {
             if (sentences.length === 0) {
                 document.getElementById('sentence').innerHTML = 'No story loaded.';
                 document.getElementById('nextBtn').disabled = true;
                 return;
             }
-            
-            document.getElementById('sentence').innerText = sentences[current] || '';
-            document.getElementById('progress').innerText = `Sentence ${current+1} of ${sentences.length}`;
-            document.getElementById('nextBtn').disabled = (current >= sentences.length-1);
-            
+
+            document.getElementById('sentence').innerText = stripTags(sentences[current] || '');
+            document.getElementById('progress').innerText = `Page ${current+1} of ${sentences.length}`;
+
+            // On the last page, keep Next enabled so it leads to the question prompt
+            document.getElementById('nextBtn').disabled = false;
+
             // Show image if available
             showImage();
         }
 
         function showImage() {
             const imageContainer = document.getElementById('imageContainer');
-            
+
             if (!imagesAvailable) {
-                imageContainer.innerHTML = '<div class="image-loading">🎨 Image generation not available</div>';
+                imageContainer.innerHTML = '<div class="image-loading">Image generation not available</div>';
                 return;
             }
-            
+
             // Show loading state
             imageContainer.innerHTML = '<div class="image-loading"><span class="loading-spinner"></span> Loading image...</div>';
             // Compute paragraph index for current sentence using stored mapping
@@ -141,7 +300,7 @@ window.addEventListener('load', () => {
             body: JSON.stringify({
                 filename: filename,
                 sentence_index: current,
-                paragraph_index: paragraphIndex   // <-- new
+                paragraph_index: paragraphIndex
             })
         })
             .then(res => res.json())
@@ -152,19 +311,175 @@ window.addEventListener('load', () => {
                     imageContainer.innerHTML = `<img src="${data.image_path}" alt="Story scene" class="story-image" onerror="this.style.display='none'; console.log('Image failed to load:', data.image_path);" onload="console.log('Image loaded successfully:');">`;
                 } else {
                     console.log('No image available:', data.error);
-                    imageContainer.innerHTML = '<div class="image-loading">🎨 No image available for this scene</div>';
+                    imageContainer.innerHTML = '<div class="image-loading">No image available for this scene</div>';
                 }
             })
             .catch(error => {
                 console.log('Error loading image:', error);
-                imageContainer.innerHTML = '<div class="image-loading">❌ Error loading image</div>';
+                imageContainer.innerHTML = '<div class="image-loading">Error loading image</div>';
             });
         }
 
         function nextSentence() {
-            if (current < sentences.length-1) {
+            if (current < sentences.length - 1) {
                 current++;
                 showSentence();
+            } else {
+                // Last page: show the question prompt
+                showStoryEndPrompt();
+            }
+        }
+
+        function showStoryEndPrompt() {
+            document.getElementById('storySection').style.display = 'none';
+            if (questions.length > 0) {
+                document.getElementById('storyEndSection').style.display = 'block';
+                speakSentence("The story is finished! Would you like to answer some questions about the story?");
+            } else {
+                document.getElementById('questionsCompleteSection').style.display = 'block';
+                document.getElementById('questionsCompleteSection').querySelector('h3').textContent =
+                    'The story is finished!';
+            }
+        }
+
+        function startQuestions() {
+            document.getElementById('storyEndSection').style.display = 'none';
+            document.getElementById('questionsSection').style.display = 'block';
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function skipQuestions() {
+            document.getElementById('storyEndSection').style.display = 'none';
+            document.getElementById('questionsCompleteSection').style.display = 'block';
+            document.getElementById('questionsCompleteSection').querySelector('h3').textContent =
+                'Thanks for reading the story!';
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                document.getElementById('questionsSection').style.display = 'none';
+                document.getElementById('progress').style.display = 'none';
+                document.getElementById('questionsCompleteSection').style.display = 'block';
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            document.getElementById('progress').innerText =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+            // Set question type badge
+            const badge = document.getElementById('questionBadge');
+            const typeLabels = {
+                'main_idea': 'Main Idea',
+                'detail': 'Story Detail',
+                'inference': 'Think Deeper'
+            };
+            badge.textContent = typeLabels[q.type] || q.type;
+            badge.className = 'question-type-badge badge-' + (q.type || 'detail');
+
+            document.getElementById('questionLabel').textContent =
+                `Question ${currentQuestion + 1}`;
+            document.getElementById('questionText').textContent = q.question;
+
+            // Build shuffled answer buttons
+            const optionsContainer = document.getElementById('answerOptions');
+            const correctAnswer = q.correct_answer || '';
+            const wrongAnswers = q.wrong_answers || [];
+            const allAnswers = shuffleArray([
+                { text: correctAnswer, isCorrect: true },
+                { text: wrongAnswers[0] || '', isCorrect: false },
+                { text: wrongAnswers[1] || '', isCorrect: false },
+            ]);
+
+            optionsContainer.innerHTML = '';
+            allAnswers.forEach(ans => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = ans.text;
+                btn.onclick = () => selectAnswer(btn, ans.isCorrect, correctAnswer);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Reset feedback and hide next button
+            document.getElementById('answerFeedback').textContent = '';
+            document.getElementById('answerFeedback').className = 'answer-feedback';
+            document.getElementById('nextQuestionBtn').style.display = 'none';
+        }
+
+        function selectAnswer(selectedBtn, isCorrect, correctAnswer) {
+            // Disable all answer buttons
+            const allBtns = document.querySelectorAll('.answer-btn');
+            allBtns.forEach(btn => {
+                btn.disabled = true;
+                // Highlight the correct answer
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            const feedback = document.getElementById('answerFeedback');
+            if (isCorrect) {
+                feedback.textContent = 'Correct! Great job!';
+                feedback.className = 'answer-feedback correct-feedback';
+                speakSentence('Correct! Great job!');
+            } else {
+                selectedBtn.classList.add('wrong');
+                feedback.textContent = 'Not quite. The correct answer is shown in green.';
+                feedback.className = 'answer-feedback wrong-feedback';
+                speakSentence('Not quite. Let\'s look at the correct answer.');
+            }
+
+            // Show next button
+            const nextQBtn = document.getElementById('nextQuestionBtn');
+            nextQBtn.style.display = 'inline-block';
+            if (currentQuestion >= questions.length - 1) {
+                nextQBtn.textContent = 'Finish';
+            } else {
+                nextQBtn.textContent = 'Next Question';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function speakCurrentQuestion() {
+            if (questions.length > 0 && currentQuestion < questions.length) {
+                const questionText = questions[currentQuestion].question;
+                const speakBtn = document.getElementById('speakQuestionBtn');
+                const movementIndicator = document.getElementById('questionMovementIndicator');
+
+                speakBtn.textContent = 'Speaking...';
+                speakBtn.disabled = true;
+                movementIndicator.style.display = 'flex';
+
+                fetch('/api/speak_sentence', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sentence: questionText, filename: filename })
+                })
+                .then(() => {
+                    setTimeout(() => {
+                        speakBtn.textContent = 'Speak Question';
+                        speakBtn.disabled = false;
+                        movementIndicator.style.display = 'none';
+                    }, 2000);
+                })
+                .catch(() => {
+                    speakBtn.textContent = 'Speak Question';
+                    speakBtn.disabled = false;
+                    movementIndicator.style.display = 'none';
+                });
             }
         }
 
@@ -173,14 +488,14 @@ window.addEventListener('load', () => {
                 const sentence = sentences[current];
                 const speakBtn = document.getElementById('speakBtn');
                 const movementIndicator = document.getElementById('movementIndicator');
-                
+
                 // Visual feedback
-                speakBtn.textContent = '🔊 Speaking...';
+                speakBtn.textContent = 'Speaking...';
                 speakBtn.disabled = true;
-                
+
                 // Show movement indicator
                 movementIndicator.style.display = 'flex';
-                
+
                 fetch('/api/speak_sentence', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -189,14 +504,14 @@ window.addEventListener('load', () => {
                 .then(() => {
                     // Reset button and hide movement indicator after a short delay
                     setTimeout(() => {
-                        speakBtn.textContent = '🔊 Speak Sentence';
+                        speakBtn.textContent = 'Speak Sentence';
                         speakBtn.disabled = false;
                         movementIndicator.style.display = 'none';
                     }, 2000);
                 })
                 .catch(() => {
                     // Reset button and hide movement indicator on error
-                    speakBtn.textContent = '🔊 Speak Sentence';
+                    speakBtn.textContent = 'Speak Sentence';
                     speakBtn.disabled = false;
                     movementIndicator.style.display = 'none';
                 });
@@ -209,11 +524,9 @@ window.addEventListener('load', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sentence: sentence, filename: filename })
             });
-            // fetch('/api/human_tracking/start', { method: 'POST' });
-            // fetch('/api/human_tracking/status').then(r => r.json()).then(console.log);
         }
 
         window.onload = fetchStory;
     </script>
 </body>
-</html> 
+</html>

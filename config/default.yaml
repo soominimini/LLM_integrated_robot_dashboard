@@ -28,8 +28,8 @@ parameters:
 
 - name: "llm"
   type: "str"
-  default: "llama3.1"
-  description: "LLM model to use. Default is llama3.1."
+  default: "gemma4:e4b"
+  description: "LLM model to use. Default is gemma4:e4b."
   scope: "cli"
 
 - name: "mem_store"

@@ -4,6 +4,7 @@ import os
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, send_from_directory, send_file,make_response
 from user_management import UserManager
 from story_generator import StoryGenerator
+from persona_rag import PersonaRAG
 from tts_helper import TTSHelper
 from image_generator import ImageGenerator
 from flask_cors import CORS
@@ -183,9 +184,57 @@ user_manager = UserManager(
     users_file=os.path.join(BASE_DIR, 'users.json'),
     base_dir=USER_DATA_DIR
 )
-story_generator = StoryGenerator(llm_model="gemini-2.5-flash")
+story_generator = StoryGenerator(llm_model="gemma4:e4b")
+persona_rag = PersonaRAG()
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
+
+
+def _load_user_profile(username):
+    """Merge user_manager entry with any profile.json overrides. Returns a dict."""
+    user = user_manager.users.get(username) or {}
+    profile = {
+        "age": user.get("age"),
+        "gender": user.get("gender", ""),
+        "disorder": user.get("disorder", ""),
+        "learning_goals": user.get("learning_goals", ""),
+    }
+    try:
+        profile_path = os.path.join(USER_DATA_DIR, username, "profile.json")
+        if os.path.exists(profile_path):
+            with open(profile_path, "r") as pf:
+                pdata = json.load(pf)
+            for key in ("age", "gender", "disorder", "learning_goals"):
+                if pdata.get(key) not in (None, ""):
+                    profile[key] = pdata[key]
+    except Exception as e:
+        print(f"[Profile] Failed to read profile.json for {username}: {e}")
+    return profile
+
+
+def _persona_context_for(username, age, kind="story"):
+    """Look up profile.disorder for `username` and build a persona RAG fragment.
+
+    kind: "story" -> narrative-shaped fragment; "question" -> compact fragment.
+    Returns an empty string if no persona can be matched.
+    """
+    try:
+        profile = _load_user_profile(username)
+        disorder = profile.get("disorder", "") or ""
+        effective_age = age if age is not None else profile.get("age") or 0
+        if kind == "question":
+            fragment = persona_rag.build_question_prompt_fragment(effective_age, disorder)
+        else:
+            fragment = persona_rag.build_story_prompt_fragment(effective_age, disorder)
+        if fragment:
+            matched = persona_rag.match(effective_age, disorder)
+            if matched:
+                print(f"[PersonaRAG] matched persona '{matched.get('name')}' for "
+                      f"user={username} age={effective_age} disorder='{disorder}' kind={kind}")
+        return fragment or ''
+    except Exception as e:
+        print(f"[PersonaRAG] context build failed for {username}: {e}")
+        return ''
 
 # Gemini analysis is delegated to external script (Python 3.9) when requested
 
@@ -248,7 +297,7 @@ def _ensure_intent_llm():
         if _intent_llm is None:
             try:
                 _intent_llm = ChatWithRAG(
-                    model="llama3.1",
+                    model="gemma4:e4b",
                     system_role=(
                         "You correct ASR mishearings for a child's therapy robot. "
                         "Decide if the transcript likely intended the target word(s) given the immediate context. "
@@ -269,7 +318,7 @@ def _ensure_quiz_llm():
         if _quiz_llm is None:
             try:
                 _quiz_llm = ChatWithRAG(
-                    model="phi4:14b",
+                    model="gemma4:e4b",
                     system_role=(
                         "You create short, child-friendly quiz questions. "
                         "Return JSON only. Each item must be {\"question\": \"...\", \"type\": \"yes_no\"|\"wh\"}."
@@ -965,6 +1014,8 @@ def api_generate_story():
             gender = profile.get("gender", gender)
     except Exception as e:
         print(f"Warning: failed to read profile.json: {e}")
+    persona_context = _persona_context_for(username, age, kind="story")
+
     try:
         result = story_generator.generate_story(
             child_name=child_name,
@@ -972,7 +1023,8 @@ def api_generate_story():
             gender=gender,
             custom_prompt=custom_prompt,
             topics=topics,
-            goals=learning_goals
+            goals=learning_goals,
+            persona_context=persona_context,
         )
         if result["success"]:
             return jsonify(result), 200
@@ -1028,7 +1080,8 @@ def api_generate_story_stream():
                 gender=gender,
                 custom_prompt=custom_prompt,
                 topics=topics,
-                goals=learning_goals
+                goals=learning_goals,
+                persona_context=_persona_context_for(username, age, kind="story"),
             ):
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         except Exception as e:
@@ -1452,36 +1505,353 @@ def api_save_quiz():
         "files": saved
     })
 
-def _split_story_into_pages(story_text, child_age):
-    """Split a story into age-appropriate pages using Gemini.
+def _generate_story_questions(story_text, child_age, child_name="the child", persona_context=""):
+    """Generate comprehension questions for a story using Gemini.
 
-    Ages 3-4:  1-2 sentences per page
-    Ages 5-6:  2-3 sentences per page
-    Ages 7+:   3+ sentences per page (context-dependent)
+    For all ages: questions about main idea and story details.
+    For ages > 7: also include inference questions (e.g. character feelings/motivations).
 
-    Returns a list of page strings. Falls back to simple splitting if LLM is unavailable.
+    Each question has 3 answer options (1 correct, 2 incorrect).
+
+    Returns a list of dicts:
+        [{"question": "...", "type": "...", "correct_answer": "...", "wrong_answers": ["...", "..."]}, ...]
     """
     cleaned = clean_story_text(story_text)
     if not cleaned.strip():
-        return [cleaned]
+        return []
 
     if child_age <= 4:
-        sents_per_page = "1-2"
+        num_questions = 3
+        detail_guidance = (
+            "- 1 main idea question (e.g. 'What was the story about?')\n"
+            "- 2 detail questions about characters, events, or objects in the story\n"
+            "Use very simple language with short sentences (3-6 words per question).\n"
+            "Keep answer options very short (1-5 words each)."
+        )
     elif child_age <= 6:
-        sents_per_page = "2-3"
+        num_questions = 4
+        detail_guidance = (
+            "- 1 main idea question (e.g. 'What was the main thing that happened in the story?')\n"
+            "- 3 detail questions about characters, events, settings, or objects\n"
+            "Use simple language appropriate for a 5-6 year old.\n"
+            "Keep answer options short (1-8 words each)."
+        )
     else:
-        sents_per_page = "3-5, depending on the narrative flow and context"
+        num_questions = 5
+        detail_guidance = (
+            "- 1 main idea question (e.g. 'What is the main message of this story?')\n"
+            "- 2 detail questions about characters, events, settings, or sequence of events\n"
+            "- 2 inference questions that ask the child to think deeper, such as:\n"
+            "  * 'Why do you think [character] felt that way?'\n"
+            "  * 'What do you think would have happened if...?'\n"
+            "  * 'How do you think [character] felt when...?'\n"
+            "  * 'Why did [character] decide to...?'\n"
+            "Use age-appropriate language for a 7-12 year old.\n"
+            "Keep answer options concise (1-12 words each)."
+        )
+
+    persona_block = ''
+    if persona_context and str(persona_context).strip():
+        persona_block = "\n" + str(persona_context).strip() + "\n"
+
+    prompt = (
+        f"You are creating comprehension questions for a story read by a {child_age}-year-old child named {child_name}.\n\n"
+        f"Story:\n{cleaned}\n"
+        f"{persona_block}\n"
+        f"Generate exactly {num_questions} questions:\n"
+        f"{detail_guidance}\n\n"
+        f"For each question, provide:\n"
+        f"- 1 correct answer\n"
+        f"- 2 plausible but incorrect answers\n"
+        f"The wrong answers should be believable but clearly wrong based on the story.\n\n"
+        f"Return ONLY a JSON array of objects. Each object has:\n"
+        f"- \"question\": the question text\n"
+        f"- \"type\": one of \"main_idea\", \"detail\", or \"inference\"\n"
+        f"- \"correct_answer\": the correct answer text\n"
+        f"- \"wrong_answers\": an array of exactly 2 incorrect answer texts\n\n"
+        f"Example: [{{\"question\": \"What was the story about?\", \"type\": \"main_idea\", "
+        f"\"correct_answer\": \"A boy who helped his friend\", \"wrong_answers\": [\"A girl who went swimming\", \"A cat who got lost\"]}}]\n"
+    )
+
+    raw = _gemini_generate(prompt, system="You generate comprehension questions for children's stories. Return JSON only.", max_tokens=4096)
+    if raw:
+        try:
+            print(f"[StoryQuestions] Gemini raw response: {raw[:500]}")
+            if raw.startswith('```'):
+                raw = raw.strip('`').strip()
+                if raw.startswith('json'):
+                    raw = raw[4:].strip()
+            start = raw.find('[')
+            end = raw.rfind(']')
+            if start != -1 and end != -1 and end > start:
+                questions = json.loads(raw[start:end+1])
+                if isinstance(questions, list) and len(questions) > 0:
+                    # Validate structure
+                    valid = []
+                    for q in questions:
+                        if (isinstance(q, dict) and 'question' in q and 'type' in q
+                                and 'correct_answer' in q and 'wrong_answers' in q
+                                and isinstance(q['wrong_answers'], list) and len(q['wrong_answers']) >= 2):
+                            valid.append({
+                                "question": q["question"],
+                                "type": q["type"],
+                                "correct_answer": q["correct_answer"],
+                                "wrong_answers": q["wrong_answers"][:2],
+                            })
+                    if valid:
+                        print(f"[StoryQuestions] Generated {len(valid)} questions for age {child_age}")
+                        return valid
+        except Exception as e:
+            print(f"[StoryQuestions] Question generation failed: {e}")
+
+    # Fallback: return basic questions with answer options
+    print("[StoryQuestions] Using fallback questions")
+    fallback = [
+        {"question": "What was the story about?", "type": "main_idea",
+         "correct_answer": "Helping a friend", "wrong_answers": ["Going to the store", "Playing alone"]},
+        {"question": "Who was the main character in the story?", "type": "detail",
+         "correct_answer": child_name, "wrong_answers": ["A teacher", "A stranger"]},
+        {"question": "What happened at the end of the story?", "type": "detail",
+         "correct_answer": "Everyone was happy", "wrong_answers": ["Everyone was sad", "Nothing happened"]},
+    ]
+    if child_age > 7:
+        fallback.append({"question": "Why do you think the main character felt happy at the end?", "type": "inference",
+                         "correct_answer": "Because they helped someone", "wrong_answers": ["Because they got a prize", "Because they went home"]})
+        fallback.append({"question": "What do you think the story is trying to teach us?", "type": "inference",
+                         "correct_answer": "Being kind to others is important", "wrong_answers": ["Being fast is the best", "You should always be alone"]})
+    return fallback
+
+
+def _apply_emotion_tags_with_gemini(story_text):
+    """Run a Gemini-Flash pass over a generated story to insert correct
+    [gesture:...] and [emotion:...] tags inline.
+
+    Story generation uses a small local model (gemma4:e4b) which often
+    under-tags or invents emotion names. This pass uses Gemini specifically
+    for the tagging step: it preserves the story word-for-word and adds tags
+    immediately before the sentence that depicts each emotional beat or
+    physical action. Returns the tagged story, or the original on failure.
+    """
+    if not story_text or not story_text.strip():
+        return story_text
+
+    prompt = (
+        "You are tagging a children's story for a robot that will read it aloud "
+        "while showing matching facial expressions and gestures.\n\n"
+        "TASK: Return the SAME story word-for-word, but with [gesture:NAME] and "
+        "[emotion:NAME] tags inserted immediately before the sentence that "
+        "depicts the emotional beat or physical action.\n\n"
+        "ALLOWED EMOTION NAMES (use ONLY these — exact match):\n"
+        "  QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy\n\n"
+        "ALLOWED GESTURE NAMES:\n"
+        "  hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace,\n"
+        "  patience, slight_no, think, sneezing, yawn, breathing_exercise,\n"
+        "   kiss, stretching\n\n"
+        "RULES:\n"
+        "- Tag EVERY clear emotional beat. Whenever a character smiles, laughs,\n"
+        "  giggles, or feels happy/proud/excited/relieved/grateful, insert\n"
+        "  [emotion:QT/happy]. Whenever they cry, frown, or feel\n"
+        "  sad/disappointed/lonely, insert [emotion:QT/sad]. Same rule for\n"
+        "  surprised, afraid (scared/nervous/worried), angry (frustrated/mad),\n"
+        "  calm (peaceful/content), shy (embarrassed/bashful).\n"
+        "- Never invent emotion names. If a feeling is not in the allowlist,\n"
+        "  pick the closest one.\n"
+        "- Place each tag IMMEDIATELY BEFORE the sentence it describes —\n"
+        "  not at the start of the paragraph. The same emotion may appear\n"
+        "  multiple times in one paragraph if the character feels it more\n"
+        "  than once.\n"
+        "- Use gesture tags for physical actions where they fit (waving,\n"
+        "  clapping, nodding, hugging, stretching, etc.).\n"
+        "- DO NOT change, add, remove, rephrase, or reorder ANY of the\n"
+        "  original words. Only insert tags.\n"
+        "- If the input already contains tags, KEEP correct ones, FIX invalid\n"
+        "  emotion names by remapping to the allowlist, and ADD missing tags\n"
+        "  for emotional beats that are currently untagged.\n"
+        "- Return ONLY the tagged story text. No JSON, no explanation, no\n"
+        "  preamble, no code fences.\n\n"
+        f"STORY:\n{story_text}"
+    )
+
+    tagged = _gemini_generate(
+        prompt,
+        system="You add inline gesture/emotion tags to children's stories. Return only the tagged story.",
+        temperature=0.2,
+        max_tokens=4096,
+    )
+    if not tagged:
+        print("[StoryTagger] Gemini returned nothing — keeping original story untagged")
+        return story_text
+
+    # Strip code fences if Gemini wrapped the output despite instructions
+    tagged = tagged.strip()
+    if tagged.startswith('```'):
+        tagged = tagged.strip('`').strip()
+        for prefix in ('text\n', 'markdown\n', 'plain\n'):
+            if tagged.lower().startswith(prefix):
+                tagged = tagged[len(prefix):]
+                break
+
+    # Sanity check: if Gemini drastically changed the length, fall back.
+    # Tags add length, so the tagged version should be >= original; allow 5%
+    # shrinkage as slack for whitespace normalization, but reject anything
+    # that lost real text.
+    if len(tagged) < int(len(story_text) * 0.95):
+        print(f"[StoryTagger] tagged output too short ({len(tagged)} vs {len(story_text)}) — keeping original")
+        return story_text
+
+    print(f"[StoryTagger] Gemini tagging pass succeeded ({len(tagged)} chars)")
+    return tagged
+
+
+def _reinject_tags_into_pages(original_story, pages):
+    """Re-inject [gesture:...] and [emotion:...] tags from the original story into split pages.
+
+    The page splitter (LLM) may strip proper tags or leave malformed ones.
+    Tags are inserted INLINE right before the sentence they originally preceded,
+    so the robot's gesture/emotion fires at the right narrative moment — not
+    at the start of the whole page.
+    """
+    import re
+
+    # First, strip ALL tag variants from pages (clean slate)
+    bare_tag_re = re.compile(r'\[(?:gesture|emotion):[^\]]+\]|\b(?:gesture|emotion):\S+', re.IGNORECASE)
+    result = [re.sub(r'\s{2,}', ' ', bare_tag_re.sub('', p)).strip() for p in pages]
+
+    # Find proper tags in original story and the words that follow each one.
+    # Track the ORDER tags appear so identical tags get matched to distinct contexts.
+    tag_pattern = re.compile(r'(\[(?:gesture|emotion):[^\]]+\])')
+    tags_with_context = []
+    for m in tag_pattern.finditer(original_story):
+        tag = m.group(1)
+        rest = original_story[m.end():].lstrip()
+        # Skip any immediately following tags (e.g. [gesture:hi][emotion:QT/happy])
+        while rest and rest.startswith('['):
+            close = rest.find(']')
+            if close != -1:
+                rest = rest[close+1:].lstrip()
+            else:
+                break
+        # Grab a longer context window for more reliable matching
+        context = rest[:120].strip()
+        if context:
+            tags_with_context.append((tag, context))
+
+    if not tags_with_context:
+        return result
+
+    def _normalize_for_match(s):
+        # Loose match: collapse whitespace, drop straight/curly quote variants
+        s = re.sub(r'\s+', ' ', s)
+        s = s.replace('“', '"').replace('”', '"').replace('‘', "'").replace('’', "'")
+        return s
+
+    # Insert each tag inline at its matching sentence within the matching page.
+    # Use progressively shorter prefixes so spacing/punctuation tweaks by the
+    # page-splitter LLM don't kill the match.
+    used_positions = {i: [] for i in range(len(result))}  # page_idx -> [insert_positions]
+    for tag, context in tags_with_context:
+        norm_context = _normalize_for_match(context)
+        inserted = False
+        for prefix_len in (60, 40, 25, 15):
+            if inserted:
+                break
+            needle = norm_context[:prefix_len].strip()
+            if not needle:
+                continue
+            for i, page in enumerate(result):
+                norm_page = _normalize_for_match(page)
+                pos = norm_page.find(needle)
+                if pos == -1:
+                    continue
+                # Map normalized position back to raw page (close enough — both
+                # normalizations are length-preserving aside from whitespace
+                # collapse, which is rare inside a single sentence).
+                raw_pos = page.find(needle) if needle in page else pos
+                if raw_pos < 0:
+                    raw_pos = pos
+                # Skip if we already inserted at (or very near) this spot
+                if any(abs(raw_pos - p) < 3 for p in used_positions[i]):
+                    continue
+                # Insert tag + space at raw_pos, shifting any later positions
+                result[i] = page[:raw_pos] + tag + ' ' + page[raw_pos:]
+                shift = len(tag) + 1
+                used_positions[i] = [p + shift if p >= raw_pos else p for p in used_positions[i]]
+                used_positions[i].append(raw_pos)
+                inserted = True
+                break
+
+    return result
+
+
+def _split_story_into_pages(story_text, child_age):
+    """Split a story into age-appropriate pages using Gemini.
+
+    Sentence count is a SOFT target tied to age:
+        Ages 3-4:  ~1-2 sentences per page
+        Ages 5-6:  ~2-3 sentences per page
+        Ages 7+:   ~3-5 sentences per page
+
+    Narrative flow and scene context come FIRST. Sentences belonging to the
+    same scene or context are kept together on a single page even if that
+    pushes the count slightly over the target. A page break should land at a
+    natural scene/context shift, never in the middle of a continuous moment.
+
+    Returns a list of page strings. Falls back to paragraph-aware splitting
+    if the LLM is unavailable.
+    """
+    # Preserve [gesture:...] / [emotion:...] tags through clean_story_text by
+    # swapping them for placeholders, cleaning, then restoring. Same trick for
+    # paragraph breaks so the fallback splitter can respect them as scene hints.
+    tag_re_preserve = re.compile(r'\[(?:gesture|emotion):[^\]]+\]', re.IGNORECASE)
+    saved_tags = tag_re_preserve.findall(story_text)
+    placeholder_text = story_text
+    for idx, _t in enumerate(saved_tags):
+        placeholder_text = placeholder_text.replace(_t, f"TAGPLACEHOLDER{idx}NUM", 1)
+    # Mark paragraph breaks before clean_story_text collapses them
+    placeholder_text = re.sub(r'\n\s*\n+', ' PARABREAKMARKER ', placeholder_text)
+    cleaned = clean_story_text(placeholder_text)
+    for idx, t in enumerate(saved_tags):
+        cleaned = cleaned.replace(f"TAGPLACEHOLDER{idx}NUM", t, 1)
+    # Restore paragraph break marker for the fallback path; for the LLM input
+    # we feed plain text with newline-separated paragraphs.
+    cleaned_for_llm = cleaned.replace('PARABREAKMARKER', '\n\n')
+    cleaned_for_llm = re.sub(r'\n\n\s+', '\n\n', cleaned_for_llm)
+    if not cleaned_for_llm.strip():
+        return [cleaned_for_llm]
+
+    if child_age <= 4:
+        sents_per_page = "about 1 to 2"
+    elif child_age <= 6:
+        sents_per_page = "about 2 to 3"
+    else:
+        sents_per_page = "about 3 to 5"
 
     prompt = (
         f"Split the following story into pages for a {child_age}-year-old child.\n"
-        f"Each page should have {sents_per_page} sentences.\n"
-        f"Rules:\n"
-        f"- Keep sentences intact, do NOT rephrase or change any words.\n"
-        f"- Group sentences so each page forms a coherent scene or moment.\n"
-        f"- Do not split a sentence across pages.\n"
+        f"\n"
+        f"PRIORITIES (in order):\n"
+        f"1. Narrative flow and context come FIRST. Keep sentences that belong to\n"
+        f"   the same scene, moment, or train of thought together on the SAME page.\n"
+        f"   Never split a continuous scene across pages just to hit a sentence count.\n"
+        f"2. A page break must fall at a natural scene/context shift — a change of\n"
+        f"   setting, time, character focus, or action.\n"
+        f"3. As a SOFT target, aim for {sents_per_page} sentences per page. It is\n"
+        f"   acceptable to go slightly over (or under) this target when the scene\n"
+        f"   demands it. Do NOT force a split mid-scene to satisfy the count.\n"
+        f"\n"
+        f"HARD RULES:\n"
+        f"- Keep every sentence intact and do NOT rephrase or change any words.\n"
+        f"- Do not split a single sentence across two pages.\n"
+        f"- PRESERVE all [gesture:...] and [emotion:...] tags VERBATIM in their\n"
+        f"  exact original positions. Do NOT remove, move, rewrite, or reformat\n"
+        f"  any tag. A tag stays attached to the sentence that follows it; if\n"
+        f"  that sentence moves to a new page, the tag moves with it.\n"
+        f"- Paragraph breaks in the input are strong scene hints — prefer to\n"
+        f"  split at paragraph boundaries when possible.\n"
         f"- Return ONLY a JSON array of strings, where each string is one page.\n"
-        f"- Example: [\"Page 1 text here.\", \"Page 2 text here.\"]\n\n"
-        f"Story:\n{cleaned}"
+        f"- Example: [\"Page 1 text here.\", \"[emotion:QT/happy] Page 2 text.\"]\n"
+        f"\n"
+        f"Story:\n{cleaned_for_llm}"
     )
     raw = _gemini_generate(prompt, system="You split stories into pages. Return JSON only.", max_tokens=4096)
     if raw:
@@ -1503,24 +1873,47 @@ def _split_story_into_pages(story_text, child_age):
         except Exception as e:
             print(f"[StoryPages] LLM page splitting failed: {e}")
 
-    # Fallback: simple sentence-based splitting
-    sentences = re.split(r'(?<=[.!?])\s+', cleaned.strip())
-    sentences = [s.strip() for s in sentences if s.strip()]
-    if not sentences:
-        return [cleaned]
-
+    # Fallback: paragraph-aware splitting. A paragraph is treated as a single
+    # scene/context block — never split across pages unless its sentence count
+    # exceeds the target by more than half (in which case break at the midpoint).
     if child_age <= 4:
-        n = 2
+        target = 2
     elif child_age <= 6:
-        n = 3
+        target = 3
     else:
-        n = 4
+        target = 4
+
+    paragraphs = [p.strip() for p in cleaned_for_llm.split('\n\n') if p.strip()]
+    if not paragraphs:
+        paragraphs = [cleaned_for_llm.strip()]
 
     pages = []
-    for i in range(0, len(sentences), n):
-        page = ' '.join(sentences[i:i+n])
-        pages.append(page)
-    print(f"[StoryPages] Fallback split into {len(pages)} pages (age {child_age}, {n} sents/page)")
+    for para in paragraphs:
+        sentences = re.split(r'(?<=[.!?])\s+', para.strip())
+        sentences = [s.strip() for s in sentences if s.strip()]
+        if not sentences:
+            continue
+        # Keep the whole paragraph as one page when it's at or near target,
+        # or only modestly over it (within 1.5x). Only break very long
+        # paragraphs, and break them at the most balanced midpoint.
+        if len(sentences) <= int(target * 1.5):
+            pages.append(' '.join(sentences))
+        else:
+            # Split into roughly target-sized chunks but never below target/2
+            min_chunk = max(1, target // 2)
+            i = 0
+            while i < len(sentences):
+                chunk = sentences[i:i + target]
+                # If the leftover after this chunk would be below min_chunk,
+                # absorb it into this page instead of leaving an orphan.
+                remaining = len(sentences) - (i + len(chunk))
+                if 0 < remaining < min_chunk:
+                    chunk = sentences[i:]
+                    i = len(sentences)
+                else:
+                    i += len(chunk)
+                pages.append(' '.join(chunk))
+    print(f"[StoryPages] Fallback split into {len(pages)} pages (age {child_age}, target {target} sents, {len(paragraphs)} paragraphs)")
     return pages
 
 
@@ -1607,8 +2000,19 @@ def api_save_story():
     except (ValueError, TypeError):
         child_age = 5
 
+    # Run a Gemini-Flash tagging pass on the story before splitting. The
+    # story-generation model (gemma4:e4b) is small and often misses or
+    # invents emotion tags; Gemini Flash is used here specifically to
+    # insert/correct [gesture:...] / [emotion:...] tags inline.
+    story = _apply_emotion_tags_with_gemini(story)
+
     # Split story into age-appropriate pages (clean_story_text strips the title)
     pages = _split_story_into_pages(story, child_age)
+
+    # Re-inject [gesture:...] and [emotion:...] tags into pages.
+    # The page splitter may drop tags, so we match each tag's surrounding text
+    # back into the correct sentence.
+    pages = _reinject_tags_into_pages(story, pages)
 
     # Prepare user stories directory
     user_dir = os.path.join(USER_DATA_DIR, username, "stories")
@@ -1620,11 +2024,24 @@ def api_save_story():
     fname = f"story_{ts}.json"
     fpath = os.path.join(user_dir, fname)
 
+    # Strip tags from pages before scene identification (images don't need gesture/emotion tags)
+    import re
+    _tag_re = re.compile(r'\[(gesture|emotion):[^\]]+\]\s*')
+    clean_pages = [_tag_re.sub('', p).strip() for p in pages]
+
     # Identify scene breaks and map pages to scenes
-    scenes, page_to_scene = _identify_story_scenes(pages)
+    scenes, page_to_scene = _identify_story_scenes(clean_pages)
     print(f"[StorySave] {len(scenes)} scenes identified, page_to_scene: {page_to_scene}")
 
-    # Save story, metadata, pages, scenes, and mapping
+    # Generate comprehension questions for the story
+    q_persona_ctx = _persona_context_for(username, child_age, kind="question")
+    questions = _generate_story_questions(
+        story, child_age, metadata.get('child_name', 'the child'),
+        persona_context=q_persona_ctx,
+    )
+    print(f"[StorySave] Generated {len(questions)} comprehension questions")
+
+    # Save story, metadata, pages, scenes, mapping, and questions
     with open(fpath, "w") as f:
         json.dump({
             "story": story,
@@ -1632,6 +2049,7 @@ def api_save_story():
             "pages": pages,
             "scenes": scenes,
             "page_to_scene": page_to_scene,
+            "questions": questions,
         }, f, indent=2)
 
     # Generate one image per scene (not per page)
@@ -1765,7 +2183,7 @@ def _extract_json(raw):
     return None
 
 
-def _scene_game_generate_question(toy_list, child_age, learning_goals):
+def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=""):
     """Use the quiz LLM to generate a scene-game question.
 
     For ages 2-3: direct request naming one specific object.
@@ -1794,35 +2212,69 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals):
             "Weave these goals naturally into the question (e.g. target vocabulary, "
             "sentence structure, or concepts relevant to the goals). "
         )
+    if persona_context and str(persona_context).strip():
+        goals_clause = (goals_clause + "\n" + str(persona_context).strip() + "\n").strip() + " "
 
     if mode == "exact":
-        prompt = (
-            f"Generate ONE short, direct request that a friendly robot says to a "
-            f"{child_age}-year-old child, asking them to find and show \"{target}\".\n"
-            f"{goals_clause}"
-            f"Use very simple, direct language. Name the object explicitly.\n"
-            f"Examples: \"Show me the apple!\", \"Do you have a banana?\", "
-            f"\"Can you give me the pear?\"\n"
-            f"Return ONLY a JSON object: "
-            f"{{\"question\": \"<the sentence>\", \"target\": \"{target}\"}}"
-        )
+        # For age <=3 we DO NOT call the LLM. Skip it and pick one of the four
+        # fixed templates locally — this guarantees a strictly-direct request
+        # of the form "<opener> the <target>!" with no extra clauses.
+        article = "an" if target[:1].lower() in "aeiou" else "a"
+        templates = [
+            f"Show me the {target}!",
+            f"Where is the {target}?",
+            f"Can you find the {target}?",
+            f"Let's find the {target}!",
+            # Variants with article when "the" feels off (kept rare):
+            f"Show me {article} {target}!",
+        ]
+        question = random.choice(templates)
+        return {
+            'question': question,
+            'target': target,
+            'criteria': None,
+            'mode': 'exact',
+        }
     elif child_age <= 6:
         prompt = (
             f"You are generating a question for an object detection game for a "
             f"{child_age}-year-old child.\n"
             f"Available physical toys: {', '.join(toy_list)}.\n"
             f"{goals_clause}"
-            f"Generate ONE request that describes a TARGET object by its observable "
-            f"properties (color, category, shape) WITHOUT naming any specific object.\n"
+            f"Generate ONE inference-style request that lets the child figure\n"
+            f"out the target object from its observable properties.\n"
+            f"\n"
+            f"HARD RULE — the QUESTION text must NOT name the target object.\n"
+            f"It must NEVER contain any of these noun names from the toy list:\n"
+            f"  {', '.join(toy_list)}\n"
+            f"Refer to the target only as \"it\", \"something\", \"one\", or by\n"
+            f"a generic placeholder like \"a fruit\" or \"a vehicle\". The child\n"
+            f"must INFER which object you mean from the description.\n"
+            f"\n"
+            f"CRITICAL — the criteria must describe ONE simple, concrete object:\n"
+            f"- A single noun (the object type) with at most ONE adjective\n"
+            f"  describing color, size, or category.\n"
+            f"- Good criteria: \"banana\", \"red car\", \"green dinosaur\",\n"
+            f"  \"tomato\", \"yellow fruit\", \"round ball\".\n"
+            f"- BAD criteria (do NOT produce these):\n"
+            f"    * \"red car moving block\" (compound / multi-object)\n"
+            f"    * \"big round shiny red fruit on a tree\" (too many properties)\n"
+            f"    * \"toy that you can stack\" (function-based, vague)\n"
+            f"- Do not chain multiple objects or stack three+ adjectives.\n"
+            f"\n"
             f"The criteria MUST match at least one toy from the list above.\n"
             f"Use simple, clear language appropriate for ages 4-6.\n"
-            f"Examples:\n"
-            f"- \"I want a red fruit!\" (matches apple, strawberry, tomato)\n"
-            f"- \"Can you find something yellow?\" (matches banana, lemon)\n"
-            f"- \"Show me a round vegetable!\" (matches tomato)\n"
+            f"Good examples (target NOT named in the question):\n"
+            f"- Question: \"I want a red fruit!\" (criteria: red fruit)\n"
+            f"- Question: \"Can you find something yellow?\" (criteria: yellow)\n"
+            f"- Question: \"Show me something green that goes ROAR!\"\n"
+            f"  (criteria: green dinosaur)\n"
+            f"BAD example (do NOT do this — names the target):\n"
+            f"- Question: \"Show me the red apple!\" — \"apple\" is the target name.\n"
+            f"\n"
             f"Return ONLY a JSON object:\n"
-            f"{{\"question\": \"<the sentence>\", "
-            f"\"criteria\": \"<short criteria phrase, e.g. red fruit>\"}}"
+            f"{{\"question\": \"<the sentence — must NOT contain any toy name>\", "
+            f"\"criteria\": \"<short criteria phrase: one noun + at most one adjective>\"}}"
         )
     else:
         prompt = (
@@ -1830,56 +2282,114 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals):
             f"{child_age}-year-old child.\n"
             f"Available physical toys: {', '.join(toy_list)}.\n"
             f"{goals_clause}"
-            f"Generate ONE riddle or multi-step descriptive clue so the child must "
-            f"reason about properties (color, shape, texture, category, function) to "
-            f"figure out which object to show. Do NOT name any object directly. "
-            f"Do NOT use a conversational tone.\n"
-            f"The criteria MUST match at least one toy from the list.\n"
-            f"Example: \"I am thinking of something round and red that grows on a tree. "
-            f"Which one is it?\"\n"
+            f"Generate ONE riddle that requires the child to reason about\n"
+            f"properties (color, shape, size, function, where it is found) to\n"
+            f"figure out the answer. Do NOT use a conversational tone.\n"
+            f"\n"
+            f"HARD RULE — the QUESTION (riddle) text must NEVER name the target\n"
+            f"object. It must NOT contain any of these noun names from the toy list:\n"
+            f"  {', '.join(toy_list)}\n"
+            f"Use only pronouns (\"it\", \"I\") and property descriptions. The\n"
+            f"child must INFER the target from the clues.\n"
+            f"\n"
+            f"CRITICAL — the underlying TARGET must be ONE simple, concrete object:\n"
+            f"- A single noun (the object type), optionally with ONE color or\n"
+            f"  size adjective. Examples of acceptable targets: \"banana\",\n"
+            f"  \"red car\", \"green dinosaur\", \"tomato\".\n"
+            f"- The riddle text may use 2-3 properties as clues, but the\n"
+            f"  \"criteria\" field MUST be the simple target description (one\n"
+            f"  noun + at most one adjective).\n"
+            f"- Do NOT chain multiple objects or invent compound targets like\n"
+            f"  \"red car moving block\" or \"shiny round tree fruit\".\n"
+            f"\n"
+            f"The target MUST match at least one toy from the list.\n"
+            f"Good example: \"I am round and red, and I grow on a tree. What am I?\"\n"
+            f"  (criteria: \"red apple\") — note the riddle does NOT say \"apple\".\n"
+            f"BAD example (do NOT do this — names the target):\n"
+            f"- \"Find the red apple that grows on a tree.\"\n"
+            f"\n"
             f"Return ONLY a JSON object:\n"
-            f"{{\"question\": \"<the riddle>\", "
-            f"\"criteria\": \"<short criteria phrase, e.g. round red tree fruit>\"}}"
+            f"{{\"question\": \"<the riddle — must NOT contain any toy name>\", "
+            f"\"criteria\": \"<simple target: one noun + at most one adjective>\"}}"
         )
 
-    raw = _gemini_generate(prompt, system="You generate game questions for children. Return JSON only.")
-    if raw:
+    def _question_leaks_target(q_text):
+        """Return True if the question text contains any toy name from the list."""
+        ql = q_text.lower()
+        for toy in toy_list:
+            tl = toy.lower().strip()
+            if not tl:
+                continue
+            # Word-boundary check so "carp" doesn't match "carpet"
+            if re.search(rf'\b{re.escape(tl)}\b', ql):
+                return tl
+        return None
+
+    last_obj = None
+    for attempt in range(2):
+        raw = _gemini_generate(prompt, system="You generate game questions for children. Return JSON only.")
+        if not raw:
+            continue
         try:
-            print(f"[SceneGame] Gemini raw question response: {raw}")
+            print(f"[SceneGame] Gemini raw question response (attempt {attempt + 1}): {raw}")
             obj = _extract_json(raw)
             print(f"[SceneGame] Parsed question JSON: {json.dumps(obj, indent=2) if obj else None}")
             if obj and obj.get('question', '').strip():
                 q = obj['question'].strip()
-                if mode == "exact":
-                    return {
-                        'question': q,
-                        'target': obj.get('target', target),
-                        'criteria': None,
-                        'mode': 'exact'
-                    }
-                else:
-                    return {
-                        'question': q,
-                        'target': None,
-                        'criteria': obj.get('criteria', ''),
-                        'mode': 'criteria'
-                    }
+                last_obj = obj
+                leaked = _question_leaks_target(q)
+                if leaked:
+                    print(f"[SceneGame] Question leaked target name '{leaked}'. Retrying...")
+                    # Strengthen the prompt for the retry
+                    prompt = (
+                        prompt
+                        + f"\n\nPREVIOUS ATTEMPT FAILED — your last question contained the\n"
+                        + f"forbidden word \"{leaked}\". Rewrite the question so it contains\n"
+                        + f"NONE of these words: {', '.join(toy_list)}. Refer to the target\n"
+                        + f"only as \"it\" or \"something\"."
+                    )
+                    continue
+                return {
+                    'question': q,
+                    'target': None,
+                    'criteria': obj.get('criteria', ''),
+                    'mode': 'criteria'
+                }
         except Exception as e:
             print(f"[SceneGame] Question generation failed: {e}")
 
-    # Fallback
+    # If both attempts leaked the target name, sanitize the last question by
+    # replacing the leaked toy name with "it".
+    if last_obj and last_obj.get('question'):
+        q = last_obj['question'].strip()
+        for toy in toy_list:
+            tl = toy.lower().strip()
+            if tl:
+                q = re.sub(rf'\b{re.escape(tl)}\b', 'it', q, flags=re.IGNORECASE)
+        q = re.sub(r'\s{2,}', ' ', q).strip()
+        print(f"[SceneGame] Returning sanitized question: {q}")
+        return {
+            'question': q,
+            'target': None,
+            'criteria': last_obj.get('criteria', ''),
+            'mode': 'criteria'
+        }
+
+    # Final fallback: a generic inference question keyed to the picked target's
+    # color/category words is hard to derive without metadata, so use a safe
+    # generic phrasing that doesn't name any specific toy.
     return {
-        'question': f"Can you find the {target}? Show it to me!",
-        'target': target,
-        'criteria': None,
-        'mode': 'exact'
+        'question': "Can you find something special in front of you?",
+        'target': None,
+        'criteria': target,
+        'mode': 'criteria'
     }
 
 
 def _run_gemini_detect_and_look(image_path):
     """Run gemini_analyze_image.py to detect the held object and make the robot look at it.
 
-    Returns the detected label (str) or None.
+    Returns a dict with 'label', 'color', 'shape' (and optionally 'point'), or None on failure.
     """
     script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_analyze_image.py')
     if not os.path.exists(script_path):
@@ -1900,13 +2410,15 @@ def _run_gemini_detect_and_look(image_path):
             if raw.startswith('json'):
                 raw = raw[4:].strip()
         obj = json.loads(raw)
-        # obj is typically [{"point": [y, x], "label": "..."}]
+        # obj is typically [{"point": [y, x], "label": "...", "color": "...", "shape": "..."}]
         item = obj[0] if isinstance(obj, list) and obj else obj
         if not isinstance(item, dict):
             return None
         label = (item.get('label') or '').strip()
+        color = (item.get('color') or '').strip()
+        shape = (item.get('shape') or '').strip()
         point = item.get('point')
-        print(f"[SceneGame] Detected object: {label}, point: {point}")
+        print(f"[SceneGame] Detected object: {label}, color: {color}, shape: {shape}, point: {point}")
 
         # Make the robot look at the detected object
         if point and len(point) >= 2:
@@ -1923,22 +2435,71 @@ def _run_gemini_detect_and_look(image_path):
             except Exception as e:
                 print(f"[SceneGame] look_at_pixel failed: {e}")
 
-        return label or None
+        return {'label': label or None, 'color': color or None, 'shape': shape or None, 'point': point}
     except Exception as e:
         print(f"[SceneGame] analyze script exec failed: {e}")
         return None
 
 
-def _check_criteria_match(detected_label, criteria):
-    """Use Gemini to check if a detected object matches descriptive criteria.
+def _check_criteria_match(detected_label, criteria, detected_color=None, detected_shape=None):
+    """Check whether a detected object matches descriptive criteria, using
+    EVERY attribute returned by the robotics-API analyzer (label + color +
+    shape), not just the label.
+
+    Example: criteria \"red car\" + detection {label: \"toy car\", color:
+    \"red\"} should match — the label alone wouldn't, but color seals it.
 
     Returns (matches: bool, reason: str).
     """
+    crit_lower = (criteria or '').lower().strip()
+    label_lower = (detected_label or '').lower().strip()
+    color_lower = (detected_color or '').lower().strip()
+    shape_lower = (detected_shape or '').lower().strip()
+
+    # Fast path: token-level satisfaction. Split criteria into words; require
+    # every word to be supported by SOME attribute of the detection. Stop-words
+    # ("a", "the", "an") are skipped.
+    stop = {"a", "an", "the", "some", "any", "this", "that"}
+    crit_tokens = [t for t in re.split(r'\s+', crit_lower) if t and t not in stop]
+    if crit_tokens:
+        attribute_blob = ' '.join([label_lower, color_lower, shape_lower]).strip()
+        all_satisfied = True
+        for tok in crit_tokens:
+            tok_clean = re.sub(r'[^\w-]', '', tok)
+            if not tok_clean:
+                continue
+            # Require token (or its singular/plural variant) to appear in any
+            # attribute. Loose substring match handles "car" vs "toy car".
+            variants = {tok_clean, tok_clean.rstrip('s'), tok_clean + 's'}
+            if not any(v and v in attribute_blob for v in variants):
+                all_satisfied = False
+                break
+        if all_satisfied:
+            return True, f"matched via attributes (label={detected_label!r}, color={detected_color!r}, shape={detected_shape!r})"
+
+    # LLM path: ask Gemini to reason across all attributes
     prompt = (
-        f"A child showed an object identified as \"{detected_label}\".\n"
+        f"A child showed a physical object. The vision system detected:\n"
+        f"  label: \"{detected_label or 'unknown'}\"\n"
+        f"  color: \"{detected_color or 'unknown'}\"\n"
+        f"  shape: \"{detected_shape or 'unknown'}\"\n"
         f"The game asked for: \"{criteria}\".\n"
-        f"Does \"{detected_label}\" match the criteria \"{criteria}\"?\n"
-        f"Consider color, category, shape, and common knowledge about the object.\n"
+        f"\n"
+        f"Decide if the detected object matches the criteria. Use ALL of the\n"
+        f"detected attributes (label AND color AND shape), not just the label.\n"
+        f"\n"
+        f"Examples of correct matches:\n"
+        f"- criteria \"red car\" + label \"toy car\" + color \"red\" → MATCH\n"
+        f"  (label gives \"car\", color gives \"red\")\n"
+        f"- criteria \"yellow fruit\" + label \"banana\" + color \"yellow\" → MATCH\n"
+        f"- criteria \"green dinosaur\" + label \"t-rex\" + color \"green\" → MATCH\n"
+        f"- criteria \"round ball\" + label \"ball\" + shape \"round\" → MATCH\n"
+        f"\n"
+        f"Examples of non-matches:\n"
+        f"- criteria \"red car\" + label \"truck\" + color \"red\" → NO MATCH\n"
+        f"  (\"truck\" isn't a car)\n"
+        f"- criteria \"red apple\" + label \"apple\" + color \"green\" → NO MATCH\n"
+        f"\n"
         f"Return ONLY a JSON object: {{\"match\": true or false, \"reason\": \"<brief explanation>\"}}"
     )
     raw = _gemini_generate(prompt, system="You validate object matches. Return JSON only.")
@@ -1951,9 +2512,13 @@ def _check_criteria_match(detected_label, criteria):
                 return bool(obj.get('match', False)), obj.get('reason', '')
         except Exception as e:
             print(f"[SceneGame] Criteria match failed: {e}")
-    # Fallback
-    match = criteria.lower() in detected_label.lower() or detected_label.lower() in criteria.lower()
-    return match, "fallback string match"
+
+    # Fallback: lenient string contain across all attributes
+    blob = ' '.join([label_lower, color_lower, shape_lower])
+    match = bool(crit_lower) and (
+        crit_lower in blob or any(tok in blob for tok in crit_tokens)
+    )
+    return match, "fallback string match (all attributes)"
 
 
 def _get_user_age_and_goals(username):
@@ -1991,7 +2556,8 @@ def api_scene_game_new_round():
             toy_list = list(SCENE_GAME_DEFAULT_TOYS)
 
         # Generate age/goal-appropriate question
-        result = _scene_game_generate_question(toy_list, child_age, learning_goals)
+        persona_ctx = _persona_context_for(username, child_age, kind="question")
+        result = _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=persona_ctx)
         question = result['question']
 
         # Make the robot ask the question
@@ -2139,24 +2705,40 @@ def api_scene_game_answer():
     cv2.imwrite(fpath, frame)
 
     # Step 1: detect object + robot looks at it
-    detected = _run_gemini_detect_and_look(fpath)
-    if not detected:
+    detection = _run_gemini_detect_and_look(fpath)
+    if not detection or not detection.get('label'):
         try:
             tts_helper.speak("I couldn't see clearly. Can you show me again?")
         except Exception:
             pass
         return jsonify({'success': True, 'correct': None, 'detected': None,
+                        'color': None, 'shape': None,
                         'error': 'Vision analysis failed'})
 
-    print(f"[SceneGame] Detected object: {detected}")
+    detected = detection['label']
+    detected_color = detection.get('color')
+    detected_shape = detection.get('shape')
+    print(f"[SceneGame] Detected object: {detected}, color: {detected_color}, shape: {detected_shape}")
 
     # Step 2: match against target or criteria
     if answer_mode == 'exact':
-        # Ages 2-3: simple name comparison
-        correct = detected.lower().strip() == target.lower().strip()
-        # Also accept if one contains the other (e.g. "red apple" vs "apple")
+        # Ages 2-3: name comparison, but use ALL detection attributes so
+        # e.g. target "red car" matches label "toy car" + color "red".
+        target_lower = target.lower().strip()
+        detected_lower = detected.lower().strip()
+        attr_blob = ' '.join([detected_lower,
+                              (detected_color or '').lower().strip(),
+                              (detected_shape or '').lower().strip()]).strip()
+        target_tokens = [t for t in re.split(r'\s+', target_lower) if t and t not in {"a", "an", "the"}]
+        correct = detected_lower == target_lower
         if not correct:
-            correct = (target.lower() in detected.lower()) or (detected.lower() in target.lower())
+            correct = (target_lower in detected_lower) or (detected_lower in target_lower)
+        if not correct and target_tokens:
+            # All target tokens must appear across label+color+shape
+            correct = all(
+                any(v in attr_blob for v in {tok, tok.rstrip('s'), tok + 's'})
+                for tok in target_tokens
+            )
         reason = ''
         try:
             if correct:
@@ -2166,10 +2748,12 @@ def api_scene_game_answer():
         except Exception:
             pass
     else:
-        # Ages 4+: criteria-based — use LLM to check match
+        # Ages 4+: criteria-based — use LLM with full detection attributes
         if not criteria:
             return jsonify({'success': False, 'error': 'No criteria provided'}), 400
-        correct, reason = _check_criteria_match(detected, criteria)
+        correct, reason = _check_criteria_match(detected, criteria,
+                                                detected_color=detected_color,
+                                                detected_shape=detected_shape)
         try:
             if correct:
                 tts_helper.speak(f"Great job! I can see a {detected}. That's right!")
@@ -2182,6 +2766,8 @@ def api_scene_game_answer():
         'success': True,
         'correct': correct,
         'detected': detected,
+        'color': detected_color,
+        'shape': detected_shape,
         'reason': reason
     })
 
@@ -2310,8 +2896,10 @@ def api_camera_capture():
                     print(f"Gemini script error: {proc.stderr}")
         except Exception as _e:
             print(f"Gemini script exec failed: {_e}")
-        # Extract only label from returned JSON/text
+        # Extract label, color, shape from returned JSON/text
         detected_label = None
+        detected_color = None
+        detected_shape = None
         if isinstance(analysis, str) and analysis:
             try:
                 raw = analysis.strip()
@@ -2325,16 +2913,21 @@ def api_camera_capture():
                     r = raw.rfind(']')
                     if l != -1 and r != -1 and r > l:
                         obj = json.loads(raw[l:r+1])
+                item = None
                 if isinstance(obj, list) and obj:
                     item = obj[0]
-                    if isinstance(item, dict):
-                        lbl = item.get('label')
-                        if isinstance(lbl, str) and lbl.strip():
-                            detected_label = lbl.strip()
                 elif isinstance(obj, dict):
-                    lbl = obj.get('label')
+                    item = obj
+                if isinstance(item, dict):
+                    lbl = item.get('label')
                     if isinstance(lbl, str) and lbl.strip():
                         detected_label = lbl.strip()
+                    clr = item.get('color')
+                    if isinstance(clr, str) and clr.strip():
+                        detected_color = clr.strip()
+                    shp = item.get('shape')
+                    if isinstance(shp, str) and shp.strip():
+                        detected_shape = shp.strip()
             except Exception:
                 detected_label = None
         # Speak feedback based on comparison
@@ -2352,7 +2945,9 @@ def api_camera_capture():
                 found = target.lower() in detected_label.lower()
             except Exception:
                 found = None
-        return jsonify({'success': True, 'image_path': f"/images/{rel}", 'label': detected_label, 'target': target, 'found': found})
+        return jsonify({'success': True, 'image_path': f"/images/{rel}", 'label': detected_label,
+                        'color': detected_color, 'shape': detected_shape,
+                        'target': target, 'found': found})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
@@ -3636,11 +4231,40 @@ def api_get_story_sentences():
                 child_age = 5
             sentences = _split_story_into_pages(story_text, child_age)
 
+        # Include questions if available; generate on-the-fly for older stories
+        # Also regenerate if old format (missing correct_answer/wrong_answers)
+        questions = story_data.get('questions', [])
+        needs_regen = (not questions
+                       or (questions and 'correct_answer' not in questions[0]))
+        if needs_regen:
+            story_text = story_data.get('story', '')
+            child_age = 5
+            try:
+                child_age = int(metadata.get('age', 5))
+            except (ValueError, TypeError):
+                child_age = 5
+            child_name = metadata.get('child_name', 'the child')
+            q_persona_ctx = _persona_context_for(username, child_age, kind="question")
+            questions = _generate_story_questions(
+                story_text, child_age, child_name,
+                persona_context=q_persona_ctx,
+            )
+            # Save back to the story file so we don't regenerate next time
+            if questions:
+                try:
+                    story_data['questions'] = questions
+                    with open(story_path, 'w') as f:
+                        json.dump(story_data, f, indent=2)
+                    print(f"[StoryQuestions] Backfilled {len(questions)} questions for {filename}")
+                except Exception as e:
+                    print(f"[StoryQuestions] Failed to backfill questions: {e}")
+
         return jsonify({
             'success': True,
             'sentences': sentences,
             'metadata': metadata,
-            'images_available': image_generator.is_available()
+            'images_available': image_generator.is_available(),
+            'questions': questions
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
@@ -3715,6 +4339,166 @@ def serve_image(filename):
     else:
         return "Image not found", 404
 
+def _normalize_tag_name(name):
+    """Normalize tag names: QThappy -> QT/happy, strip punctuation."""
+    name = name.strip().rstrip('.,;!?')
+    if name.upper().startswith('QT') and '/' not in name:
+        name = 'QT/' + name[2:]
+    return name
+
+
+def _split_page_into_segments(page_text):
+    """Split a page into segments at gesture/emotion tag boundaries.
+
+    Returns a list of (text, gestures, emotions) tuples.
+    Each segment is the text that follows its tags until the next tag or end of page.
+
+    Example input:
+      "Hello world. [gesture:hi] Nice to meet you. [emotion:QT/happy] I am happy."
+    Returns:
+      [("Hello world.", [], []),
+       ("Nice to meet you.", ["hi"], []),
+       ("I am happy.", [], ["QT/happy"])]
+    """
+    import re
+    # Match all tag variants
+    tag_re = re.compile(
+        r'(\[gesture:[^\]]+\]|\[emotion:[^\]]+\]|\bgesture:\S+|\bemotion:\S+)',
+        re.IGNORECASE
+    )
+    gesture_val_re = re.compile(r'\[gesture:([^\]]+)\]|gesture:(\S+)', re.IGNORECASE)
+    emotion_val_re = re.compile(r'\[emotion:([^\]]+)\]|emotion:(\S+)', re.IGNORECASE)
+
+    # Split text by tags, keeping the tags as separators
+    parts = tag_re.split(page_text)
+
+    segments = []
+    pending_gestures = []
+    pending_emotions = []
+
+    for part in parts:
+        part_stripped = part.strip()
+        if not part_stripped:
+            continue
+
+        # Check if this part is a tag
+        gm = gesture_val_re.fullmatch(part_stripped)
+        em = emotion_val_re.fullmatch(part_stripped)
+        if gm:
+            val = gm.group(1) or gm.group(2)
+            pending_gestures.append(_normalize_tag_name(val))
+        elif em:
+            val = em.group(1) or em.group(2)
+            pending_emotions.append(_normalize_tag_name(val))
+        else:
+            # This is text — attach any pending tags to it
+            cleaned = re.sub(r'\s{2,}', ' ', part_stripped).strip()
+            if cleaned:
+                segments.append((cleaned, pending_gestures, pending_emotions))
+                pending_gestures = []
+                pending_emotions = []
+
+    # If there are leftover tags with no following text, attach to last segment
+    if (pending_gestures or pending_emotions) and segments:
+        text, g, e = segments[-1]
+        segments[-1] = (text, g + pending_gestures, e + pending_emotions)
+
+    # If no segments were created, return the whole page as one segment
+    if not segments:
+        cleaned = tag_re.sub('', page_text)
+        cleaned = re.sub(r'\s{2,}', ' ', cleaned).strip()
+        return [(cleaned, [], [])]
+
+    # Deduplicate: track which gesture/emotion names have been seen
+    seen_gestures = set()
+    seen_emotions = set()
+    deduped = []
+    for text, gestures, emotions in segments:
+        new_g = [g for g in gestures if g not in seen_gestures]
+        new_e = [e for e in emotions if e not in seen_emotions]
+        seen_gestures.update(new_g)
+        seen_emotions.update(new_e)
+        deduped.append((text, new_g, new_e))
+
+    return deduped
+
+
+# Valid robot emotions (must match the set the QT robot can actually display).
+# Anything else is remapped to the closest available expression so hallucinated
+# names from the LLM (e.g. "QT/relieved") don't silently fail.
+_VALID_EMOTIONS = {"QT/happy", "QT/sad", "QT/surprised", "QT/afraid", "QT/angry", "QT/calm", "QT/shy"}
+_EMOTION_REMAP = {
+    "relieved": "QT/happy", "joyful": "QT/happy", "excited": "QT/happy",
+    "proud": "QT/happy", "grateful": "QT/happy", "delighted": "QT/happy",
+    "amused": "QT/happy", "content": "QT/calm", "peaceful": "QT/calm",
+    "frustrated": "QT/angry", "annoyed": "QT/angry", "mad": "QT/angry",
+    "scared": "QT/afraid", "fearful": "QT/afraid", "nervous": "QT/afraid",
+    "worried": "QT/afraid", "anxious": "QT/afraid",
+    "upset": "QT/sad", "disappointed": "QT/sad", "lonely": "QT/sad",
+    "shocked": "QT/surprised", "amazed": "QT/surprised", "astonished": "QT/surprised",
+    "embarrassed": "QT/shy", "bashful": "QT/shy",
+}
+
+
+def _resolve_emotion(name):
+    """Normalize an emotion tag to a valid QT/ name, or return None to skip."""
+    raw = (name or "").strip()
+    if not raw:
+        return None
+    # Normalize prefix and case
+    if raw.upper().startswith("QT/"):
+        bare = raw[3:]
+    elif raw.upper().startswith("QT"):
+        bare = raw[2:]
+    else:
+        bare = raw
+    bare = bare.lower().strip().strip('/')
+    candidate = f"QT/{bare}"
+    # Match valid set case-insensitively
+    for v in _VALID_EMOTIONS:
+        if v.lower() == candidate.lower():
+            return v
+    # Try remap table
+    if bare in _EMOTION_REMAP:
+        return _EMOTION_REMAP[bare]
+    print(f"[StoryTags] unknown emotion '{name}' — skipping (no remap)")
+    return None
+
+
+def _play_tags(gestures, emotions):
+    """Fire gesture/emotion via rostopic pub and wait briefly for them to start."""
+    import time
+    import threading
+
+    if not gestures and not emotions:
+        return
+
+    def _rostopic_pub(topic, data):
+        try:
+            subprocess.Popen(
+                ['rostopic', 'pub', '--once', topic, 'std_msgs/String', f'data: \'{data}\''],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+            print(f"[StoryTags] published {topic}: {data}")
+        except Exception as e:
+            print(f"[StoryTags] rostopic pub failed: {e}")
+
+    for g in gestures:
+        name = g.strip()
+        if not name.startswith("QT/"):
+            name = "QT/" + name
+        threading.Thread(target=_rostopic_pub, args=('/qt_robot/gesture/play', name), daemon=True).start()
+
+    for e in emotions:
+        resolved = _resolve_emotion(e)
+        if not resolved:
+            continue
+        threading.Thread(target=_rostopic_pub, args=('/qt_robot/emotion/show', resolved), daemon=True).start()
+
+    # Wait for gesture/emotion to begin before speech starts
+    time.sleep(1.0)
+
+
 @app.route('/api/speak_sentence', methods=['POST'])
 def api_speak_sentence():
     username = session.get('username')
@@ -3723,10 +4507,7 @@ def api_speak_sentence():
     filename = data.get('filename', '')
     if not username or not sentence:
         return jsonify({'success': False, 'error': 'Missing username or sentence'})
-    
-    # Clean the sentence before speaking
-    cleaned_sentence = clean_story_text(sentence)
-    
+
     # Optionally get language from story metadata
     language = 'en-US'
     if filename:
@@ -3740,8 +4521,8 @@ def api_speak_sentence():
                 language = metadata.get('language', 'en-US')
             except:
                 pass
-    
-    # Track while speaking this sentence
+
+    # Track while speaking
     tracker = None
     try:
         tracker = _ensure_human_tracker()
@@ -3750,8 +4531,18 @@ def api_speak_sentence():
             tracker.track(person)
     except Exception:
         pass
+
     try:
-        _with_asr_suspended(lambda: tts_helper.speak_story(cleaned_sentence, language))
+        # Split the page into segments at tag boundaries
+        # Each segment is spoken separately with its gesture/emotion fired right before
+        segments = _split_page_into_segments(sentence)
+        for text, gestures, emotions in segments:
+            cleaned = clean_story_text(text)
+            if not cleaned:
+                continue
+            # Fire gesture/emotion right before this segment is spoken
+            _play_tags(gestures, emotions)
+            _with_asr_suspended(lambda c=cleaned: tts_helper.speak_story(c, language))
     finally:
         try:
             if tracker:
@@ -3963,7 +4754,8 @@ def api_scene_start():
         if username:
             child_age, learning_goals = _get_user_age_and_goals(username)
 
-        result = _scene_game_generate_question(toy_list, child_age, learning_goals)
+        persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
+        result = _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=persona_ctx)
         question = result['question']
         try:
             _with_asr_suspended(lambda: tts_helper.speak(question))

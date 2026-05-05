@@ -4,7 +4,7 @@
     "age": 5,
     "password_hash": "",
     "created_at": "2025-07-02T22:58:11.712838",
-    "last_login": "2026-03-31T19:57:31.491249",
+    "last_login": "2026-04-21T18:09:05.691783",
     "user_dir": "user_data/soomin",
     "chat_dir": "user_data/soomin/chat_history",
     "display_name": "soomin",
@@ -36,15 +36,37 @@
   },
   "amy": {
     "username": "amy",
-    "age": 8,
+    "age": 3,
     "password_hash": "",
     "created_at": "2026-03-26T19:28:22.447603",
-    "last_login": "2026-03-31T20:50:54.463957",
+    "last_login": "2026-05-05T23:09:03.560660",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/amy",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/amy/chat_history",
     "display_name": "amy",
     "gender": "female",
     "disorder": "",
     "learning_goals": "1. learning plural forms"
+  },
+  "ethan": {
+    "username": "ethan",
+    "age": 8,
+    "password_hash": "",
+    "created_at": "2026-04-21T18:09:17.576441",
+    "last_login": "2026-04-21T18:38:19.342618",
+    "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan",
+    "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan/chat_history"
+  },
+  "ava": {
+    "username": "ava",
+    "age": 7,
+    "password_hash": "",
+    "created_at": "2026-04-21T19:24:35.803443",
+    "last_login": "2026-05-05T23:12:38.992459",
+    "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ava",
+    "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ava/chat_history",
+    "display_name": "ava",
+    "gender": "female",
+    "disorder": "",
+    "learning_goals": ""
   }
 }

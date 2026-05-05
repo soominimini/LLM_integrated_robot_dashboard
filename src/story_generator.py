@@ -9,6 +9,7 @@ import os
 import json
 import subprocess
 import tempfile
+import requests
 from typing import Dict, Any, Optional, List
 
 class StoryGenerator:
@@ -187,12 +188,32 @@ Use a clear three-act structure:
 {theme_vocabulary}
 
 {goals_section}
-
+{persona_section}
 --- TONE AND STYLE ---
 - Warm, encouraging, and gently paced.
 - Show, don't tell: use actions and dialogue to convey emotions rather than stating them.
 - Include at least one moment of humor, wonder, or sensory delight.
 - Use character names consistently (avoid pronoun ambiguity for young readers).
+
+--- ROBOT GESTURES AND EMOTIONS ---
+A robot will read this story aloud and physically act it out. Embed gesture or emotion tags INLINE in the story text so the robot's face and body match what is happening in the narrative.
+
+Available gestures (use [gesture:NAME] format):
+  hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace, patience,
+  slight_no, think, sneezing, yawn, breathing_exercise, kiss, stretching
+
+Available emotions (use [emotion:NAME] format) — use ONLY these exact names:
+  QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy
+
+Rules for tags:
+- Tag EVERY clear emotional beat. Whenever a character smiles, laughs, giggles, or feels happy/proud/excited, insert [emotion:QT/happy]. Whenever they cry, frown, or feel sad/disappointed, insert [emotion:QT/sad]. Apply the same rule for surprised, afraid, angry, calm, and shy.
+- Place the tag IMMEDIATELY BEFORE the sentence that depicts the emotion or action — not at the start of the paragraph.
+- It is fine to use the same emotion multiple times in one paragraph if the character feels it more than once.
+- Do NOT invent emotion names. If the feeling isn't in the list above, pick the closest available one (e.g. "relieved" or "proud" → QT/happy; "frustrated" → QT/angry; "nervous" → QT/afraid).
+- Use gesture tags for physical actions (waving, clapping, nodding) where they fit the story.
+- Example: 'Anna looked at the puppy. [emotion:QT/happy] She smiled brightly and laughed.'
+- Example: '[gesture:nodding-yes] [emotion:QT/happy] "Yes, I can help!" said the rabbit.'
+- Example: 'The wind blew hard. [emotion:QT/surprised] Suddenly, a big rainbow appeared in the sky!'
 
 {output_format}"""
 
@@ -293,10 +314,11 @@ Use a clear three-act structure:
         gender: str,
         topics: Optional[List[str]] = None,
         goals: Optional[str] = None,
+        persona_context: Optional[str] = None,
     ) -> str:
         """
         Build the full story generation prompt from composable components:
-        age tier -> theme guidance -> goals -> output format.
+        age tier -> theme guidance -> goals -> persona -> output format.
 
         Replaces the old _select_template() approach with a single
         master template that gets different content injected based
@@ -306,6 +328,10 @@ Use a clear three-act structure:
         min_words, max_words = age_tier["word_range"]
         theme = self._get_theme_guidance(topics)
         goals_section = self._format_goals_section(goals)
+
+        persona_section = ''
+        if persona_context and persona_context.strip():
+            persona_section = "\n" + persona_context.strip() + "\n"
 
         output_format = self.OUTPUT_FORMAT.format(
             goals=goals or "general speech-language therapy goals",
@@ -323,6 +349,7 @@ Use a clear three-act structure:
             theme_resolution=theme["resolution"],
             theme_vocabulary=theme["vocabulary_focus"],
             goals_section=goals_section,
+            persona_section=persona_section,
             output_format=output_format,
         )
 
@@ -368,6 +395,38 @@ Use a clear three-act structure:
                 except OSError:
                     pass
 
+    def _is_ollama_model(self):
+        """Check if the configured model is a local Ollama model (not a Gemini API model)."""
+        return not self.llm_model.startswith("gemini")
+
+    def _run_ollama(self, prompt: str, stream: bool = False):
+        """Run text generation via local Ollama API.
+
+        Returns story text (non-stream) or a generator of chunks (stream).
+        """
+        url = "http://localhost:11434/api/generate"
+        payload = {
+            "model": self.llm_model,
+            "prompt": prompt,
+            "stream": stream,
+            "options": {"num_predict": 2048, "temperature": 0.7},
+        }
+        if not stream:
+            resp = requests.post(url, json=payload, timeout=180)
+            resp.raise_for_status()
+            return resp.json().get("response", "")
+        else:
+            # Return a generator for streaming
+            resp = requests.post(url, json=payload, timeout=180, stream=True)
+            resp.raise_for_status()
+            return resp
+
+    def _run_llm(self, prompt: str, stream: bool = False):
+        """Route to Ollama or Gemini based on model name."""
+        if self._is_ollama_model():
+            return self._run_ollama(prompt, stream=stream)
+        return self._run_gemini(prompt, stream=stream)
+
     def generate_story(
         self,
         child_name: str,
@@ -376,6 +435,7 @@ Use a clear three-act structure:
         custom_prompt: Optional[str] = None,
         topics: Optional[List[str]] = None,
         goals: Optional[str] = None,
+        persona_context: Optional[str] = None,
     ) -> Dict[str, Any]:
 
         try:
@@ -388,11 +448,12 @@ Use a clear three-act structure:
                     gender=gender,
                     topics=topics,
                     goals=goals,
+                    persona_context=persona_context,
                 )
 
             print("[StoryGenerator] prompt: ", prompt)
 
-            story_text = self._run_gemini(prompt, stream=False)
+            story_text = self._run_llm(prompt, stream=False)
 
             age_tier = self._get_age_tier(age)
             story_metadata = {
@@ -429,6 +490,7 @@ Use a clear three-act structure:
         custom_prompt: Optional[str] = None,
         topics: Optional[List[str]] = None,
         goals: Optional[str] = None,
+        persona_context: Optional[str] = None,
     ):
         """
         Generate a therapeutic story with streaming response via Gemini API.
@@ -447,21 +509,34 @@ Use a clear three-act structure:
                     gender=gender,
                     topics=topics,
                     goals=goals,
+                    persona_context=persona_context,
                 )
 
-            proc = self._run_gemini(prompt, stream=True)
-            # Save tmp path for cleanup (stored in proc.args)
-            tmp_path = proc.args[proc.args.index('--prompt-file') + 1]
+            if self._is_ollama_model():
+                resp = self._run_ollama(prompt, stream=True)
+                for line in resp.iter_lines():
+                    if line:
+                        try:
+                            chunk_data = json.loads(line)
+                            text = chunk_data.get("response", "")
+                            if text:
+                                yield text
+                        except json.JSONDecodeError:
+                            pass
+            else:
+                proc = self._run_gemini(prompt, stream=True)
+                # Save tmp path for cleanup (stored in proc.args)
+                tmp_path = proc.args[proc.args.index('--prompt-file') + 1]
 
-            for line in proc.stdout:
-                line = line.rstrip('\n')
-                if line.startswith('CHUNK:'):
-                    yield line[6:] + '\n'
+                for line in proc.stdout:
+                    line = line.rstrip('\n')
+                    if line.startswith('CHUNK:'):
+                        yield line[6:] + '\n'
 
-            proc.wait()
-            if proc.returncode != 0:
-                err = proc.stderr.read() if proc.stderr else ''
-                yield f"Error generating story: {err}"
+                proc.wait()
+                if proc.returncode != 0:
+                    err = proc.stderr.read() if proc.stderr else ''
+                    yield f"Error generating story: {err}"
 
         except Exception as e:
             yield f"Error generating story: {str(e)}"

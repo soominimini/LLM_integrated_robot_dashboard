@@ -1,0 +1,137 @@
+{
+  "story": "Ava felt a little nervous butterflies fluttering in her tummy. Today, in science class, her teacher, Mr. Chen, announced a giant fossil dig activity. [gesture:happy] Ava was so *curious* to see the dinosaur bones they would find. Her group was Leo and Maya. They were going to work together to excavate a small, secret fossil. Ava wanted to find a fossil of a Triceratops, which was her favorite dinosaur.\n\nMr. Chen showed them small brushes and tiny shovels. \"Remember, class,\" Mr. Chen explained, \"we must *listen* to each other and *take turns* when we dig. Working together means we *share* the fun!\" Ava nodded, feeling a wave of excitement.\n\nThey began digging in the soft, brown dirt. Ava found a sparkly piece of rock. Leo found a small, curved bone. Maya pointed to a spot that looked different. They were working well at first, but then they got stuck. Ava was *frustrated* because Leo kept digging in the same spot, and Maya wanted to look at the same fossil Ava had found. \"Wait,\" Ava whispered, feeling a little overwhelmed. \"We need to *share* our ideas, too.\"\n\nLeo looked at Ava. \"I don't know what to do,\" Leo admitted. Maya gently patted Ava's arm. \"Maybe we should ask Mr. Chen for help? He knows how to make us dig better.\" Ava felt a little shy, but she knew they needed to try again. Mr. Chen smiled gently. [emotion:QT/calm] \"What do you need, little paleontologists?\" he asked. Ava took a deep breath and said, \"We need to *take turns* and we need to *listen* to everyone's ideas.\"\n\nMr. Chen smiled and showed them how to use a special brush to clean the rock carefully. He taught them that when one person is focused, the others should wait patiently. They decided that Ava would gently brush the top layer, so that Leo could dig underneath. Then, Maya would carefully sweep the dust away, so that everyone could see the fossil when it was found. They laughed when they finally revealed a perfect, small fossil! They had worked together, and they felt incredibly *proud*.\n\nAva realized that working with friends was much more fun because they helped each other. She learned that even when things feel hard, asking for help is always the smartest thing to do. She felt *grateful* to Leo and Maya for helping her remember how important it was to *share* and cooperate.",
+  "metadata": {
+    "age": 7,
+    "age_tier": "early_school_age",
+    "child_name": "ava",
+    "generated_at": null,
+    "model": "gemma4:e4b",
+    "target_word_range": [
+      400,
+      500
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 468,
+    "paragraph_count": 6,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5
+    ]
+  },
+  "pages": [
+    "Ava felt a little nervous butterflies fluttering in her tummy. Today, in science class, her teacher, Mr. Chen, announced a giant fossil dig activity. Ava was so curious to see the dinosaur bones they would find.",
+    "Her group was Leo and Maya. They were going to work together to excavate a small, secret fossil. Ava wanted to find a fossil of a Triceratops, which was her favorite dinosaur.",
+    "Mr. Chen showed them small brushes and tiny shovels. \"Remember, class,\" Mr. Chen explained, \"we must listen to each other and take turns when we dig. Working together means we share the fun!\"",
+    "Ava nodded, feeling a wave of excitement. They began digging in the soft, brown dirt. Ava found a sparkly piece of rock. Leo found a small, curved bone. Maya pointed to a spot that looked different.",
+    "They were working well at first, but then they got stuck. Ava was frustrated because Leo kept digging in the same spot, and Maya wanted to look at the same fossil Ava had found. \"Wait,\" Ava whispered, feeling a little overwhelmed. \"We need to share our ideas, too.\"",
+    "Leo looked at Ava. \"I don't know what to do,\" Leo admitted. Maya gently patted Ava's arm. \"Maybe we should ask Mr. Chen for help? He knows how to make us dig better.\"",
+    "Ava felt a little shy, but she knew they needed to try again. Mr. Chen smiled gently. \"What do you need, little paleontologists?\" he asked.",
+    "Ava took a deep breath and said, \"We need to take turns and we need to listen to everyone's ideas.\" Mr. Chen smiled and showed them how to use a special brush to clean the rock carefully. He taught them that when one person is focused, the others should wait patiently. They decided that Ava would gently brush the top layer, so that Leo could dig underneath.",
+    "Then, Maya would carefully sweep the dust away, so that everyone could see the fossil when it was found. They laughed when they finally revealed a perfect, small fossil! They had worked together, and they felt incredibly proud.",
+    "Ava realized that working with friends was much more fun because they helped each other. She learned that even when things feel hard, asking for help is always the smartest thing to do. She felt grateful to Leo and Maya for helping her remember how important it was to share and cooperate."
+  ],
+  "scenes": [
+    "Ava, Leo, and Maya are in a bustling science classroom, listening intently as Mr. Chen explains the fossil dig activity and demonstrates how to use small brushes and shovels.",
+    "The three friends are at their digging station, carefully excavating soft brown dirt, initially finding small items but soon looking frustrated as they struggle to cooperate.",
+    "Ava, Leo, and Maya are with Mr. Chen at their digging spot, where he gently guides them on teamwork and proper digging techniques, culminating in their joyful discovery of a perfect small fossil."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What did Ava's group use to dig for fossils in the dirt?",
+      "type": "detail",
+      "correct_answer": "They used small brushes and tiny shovels.",
+      "wrong_answers": [
+        "They used big hammers and strong drills.",
+        "They used their hands and long sticks."
+      ]
+    },
+    {
+      "question": "What did Ava's group find when they were digging in the dirt?",
+      "type": "detail",
+      "correct_answer": "They found a sparkly rock, a curved bone, and a small fossil.",
+      "wrong_answers": [
+        "They found a shiny coin and a lost key.",
+        "They found a big dinosaur egg and a feather."
+      ]
+    },
+    {
+      "question": "Why did Ava feel a little overwhelmed when her group got stuck digging?",
+      "type": "inference",
+      "correct_answer": "Ava felt overwhelmed because Leo kept digging and Maya wanted her fossil.",
+      "wrong_answers": [
+        "She felt overwhelmed because Mr. Chen was angry.",
+        "She felt overwhelmed because it started to rain."
+      ]
+    },
+    {
+      "question": "What happened because Ava's group asked Mr. Chen for help with their digging?",
+      "type": "inference",
+      "correct_answer": "They learned to take turns and found a perfect small fossil.",
+      "wrong_answers": [
+        "They had to stop digging and go inside.",
+        "Mr. Chen dug the whole fossil for them."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about friends who learned to work together and ask for help.",
+      "wrong_answers": [
+        "This story was about a girl who found a very big dinosaur.",
+        "This story was about a teacher who loved to dig in the dirt."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,563 @@
+{
+  "personas": [
+    {
+      "id": "maya",
+      "name": "Maya",
+      "age": {
+        "years": 3,
+        "months": 10,
+        "display": "3 years 10 months",
+        "developmental_stage": "early preschool"
+      },
+      "diagnosis": {
+        "primary": "Mild ASD (Autism Spectrum Disorder)",
+        "secondary": [
+          "delayed speech and language development"
+        ],
+        "language": [
+          "English"
+        ]
+      },
+      "therapy_goals": {
+        "summary": [
+          "Build functional language to move beyond echolalia toward spontaneous original phrases",
+          "Improve answering of yes/no and Wh- questions through visual supports and structured play",
+          "Gradual food introduction in low-stress, play-based contexts"
+        ],
+        "structured": [
+          {
+            "goal": "Present progressive -ing",
+            "examples": [
+              "eating",
+              "sleeping",
+              "building",
+              "falling"
+            ],
+            "system_prompt": "Present progressive -ing. Every robot utterance during activity should model a verb ending in -ing. E.g., 'The dog is eating.'"
+          },
+          {
+            "goal": "Regular plural -s",
+            "examples": [
+              "blocks",
+              "pieces",
+              "dogs",
+              "cups"
+            ],
+            "system_prompt": "Regular plural -s. Include at least one plural noun per question/sentence. No irregular plurals (feet, mice, children)."
+          },
+          {
+            "goal": "Core action verb vocabulary",
+            "examples": [
+              "build",
+              "stack",
+              "eat",
+              "fall",
+              "open",
+              "put"
+            ],
+            "system_prompt": "Core action verbs: build, stack, put, fall, eat, drink, open, sit — use as primary verbs across all activities"
+          },
+          {
+            "goal": "Basic adjectives — size and color",
+            "examples": [
+              "big/little",
+              "red/blue/yellow"
+            ],
+            "system_prompt": "Adjective pairs: big/little, red/blue/yellow — contrast in Object Request and Storytelling"
+          },
+          {
+            "goal": "Location prepositions",
+            "examples": [
+              "in",
+              "on",
+              "under"
+            ],
+            "system_prompt": "Prepositions: in, on, under — embed naturally in block/puzzle play context (e.g., 'put it in the box')"
+          }
+        ],
+        "communication_baseline": {
+          "primary_style": "echolalia",
+          "current_mlu_words": "2-3",
+          "notes": "Uses echolalia as bridge for communication; struggles forming original sentences"
+        }
+      },
+      "interests": [
+        {
+          "topic": "Building blocks",
+          "activity_use": "Object Request: request blocks by color/size. Yes/No: 'Do blocks fall down?'"
+        },
+        {
+          "topic": "Puzzles",
+          "activity_use": "Object Request: find the piece that fits. WH: 'Where does this piece go?'"
+        },
+        {
+          "topic": "Animals (penguins)",
+          "activity_use": "Yes/No Quiz: animal facts. WH: animal actions."
+        },
+        {
+          "topic": "Colors and shapes",
+          "activity_use": "Likely relevant given blocks/puzzles interest — SLP to confirm"
+        }
+      ],
+      "constraints": {
+        "max_robot_sentence_words": 6,
+        "max_feedback_sentence_words": 5,
+        "syntax_complexity": "no subordinate clauses, no if-then constructions",
+        "tone": "warm, calm, predictable",
+        "emotional_safety": "No content involving separation, being lost, strangers, loud sudden events, or characters in distress",
+        "pain_points": [
+          "Difficulty answering yes/no and Wh- questions",
+          "Picky eating — selective with food textures and flavors"
+        ]
+      }
+    },
+    {
+      "id": "sophie",
+      "name": "Sophie",
+      "age": {
+        "years": 5,
+        "months": 0,
+        "display": "5 years",
+        "developmental_stage": "kindergarten"
+      },
+      "diagnosis": {
+        "primary": "High-functioning Autism (HFA)",
+        "secondary": [],
+        "language": [
+          "English",
+          "Gujarati"
+        ]
+      },
+      "therapy_goals": {
+        "summary": [
+          "Improve problem-solving by breaking tasks into smaller steps with visual aids",
+          "Enhance social communication through conversation and turn-taking practice",
+          "Articulation therapy to reduce speech errors",
+          "Follow 2-3 step commands using visual supports and repetition",
+          "Manage emotional responses to tone; practice self-regulation"
+        ],
+        "structured": [
+          {
+            "goal": "Target articulation sounds",
+            "examples": [
+              "/s/",
+              "/r/",
+              "/th/"
+            ],
+            "system_prompt": "Target sound: [SLP to specify]. Stories and questions must embed words containing this sound at initial, medial, and final positions."
+          },
+          {
+            "goal": "6-8 word utterances / full sentence production",
+            "examples": [
+              "The princess found her crown in the garden"
+            ],
+            "system_prompt": "Target MLU: 6-8 words. Robot models complete sentences. Accept shorter responses; shape toward fuller sentence over multiple turns."
+          },
+          {
+            "goal": "Irregular past tense",
+            "examples": [
+              "went",
+              "fell",
+              "ran",
+              "said"
+            ],
+            "system_prompt": "Irregular past tense: embed in storytelling and WH quiz. Robot recasts any regularised error (e.g., 'goed') with the correct form in context."
+          },
+          {
+            "goal": "Conjunctions / cause-effect language",
+            "examples": [
+              "because",
+              "so",
+              "but"
+            ],
+            "system_prompt": "Conjunctions: because, so, but. Robot uses these in all explanatory sentences. Story activities must include cause-effect sequences for Sophie to describe."
+          },
+          {
+            "goal": "Third person pronouns",
+            "examples": [
+              "he",
+              "she",
+              "they"
+            ],
+            "system_prompt": "Third person pronouns: he/she/they. Use picture scenes; model correct pronoun in robot speech; accept omission without correction at this stage."
+          }
+        ],
+        "communication_baseline": {
+          "current_mlu_words": "shorter than 6-8 target",
+          "notes": "Articulation errors; hesitates to ask questions; struggles with 2-3 step commands"
+        }
+      },
+      "interests": [
+        {
+          "topic": "Princesses and fairy tales",
+          "storytelling_use": "Princess as problem-solver who must solve a puzzle or help a friend — avoids passive rescue narratives",
+          "activity_use": "Yes/No: 'Do princesses wear crowns?' WH: 'Where does the princess live?' Object Request: crown, wand, castle pieces"
+        },
+        {
+          "topic": "Animals — cats, horses, unicorns",
+          "storytelling_use": "Animal companion who helps the main character navigate a social situation",
+          "activity_use": "Yes/No: animal facts. Object Request: animal figures. WH: 'What does a horse eat?'"
+        },
+        {
+          "topic": "Helping and caring for others",
+          "storytelling_use": "Sophie's character helps a friend who is new to a group — directly targets peer interaction and social initiation",
+          "activity_use": "WH: 'How did the character help?' Image Inference: scene of someone helping a friend"
+        }
+      ],
+      "constraints": {
+        "max_question_words": 10,
+        "max_instruction_words_per_step": 8,
+        "max_feedback_sentence_words": 8,
+        "syntax_complexity": "no nested clauses in commands",
+        "tone": "HARD RULE: warm and gentle in 100% of utterances; no exceptions. Sophie becomes distressed with firm or corrective language",
+        "emotional_safety": "No content involving public embarrassment, being laughed at, or social rejection",
+        "pain_points": [
+          "Multi-step problem-solving",
+          "Initiating play and social interaction with peers",
+          "Articulation clarity",
+          "Following 2-3 step commands",
+          "Asking questions",
+          "Following game rules / accepting correction",
+          "Perseveration on tasks/topics",
+          "Emotional sensitivity to firm tone"
+        ]
+      }
+    },
+    {
+      "id": "ethan",
+      "name": "Ethan",
+      "age": {
+        "years": 8,
+        "months": 0,
+        "display": "8 years",
+        "developmental_stage": "early elementary"
+      },
+      "diagnosis": {
+        "primary": "High-functioning Autism (HFA)",
+        "secondary": [],
+        "language": [
+          "English",
+          "Gujarati"
+        ]
+      },
+      "therapy_goals": {
+        "summary": [
+          "Improve main idea identification and summarising in 1 sentence",
+          "Build expressive language with 8-10 word, grammatically correct sentences",
+          "Develop cause-effect reasoning and use of complex connectors",
+          "Reduce social anxiety through positive peer modeling in stories",
+          "Improve articulation clarity"
+        ],
+        "structured": [
+          {
+            "goal": "Main idea identification / 1-sentence summarising",
+            "examples": [
+              "This story was about ___ who ___"
+            ],
+            "system_prompt": "Every story activity must end with a main-idea question: 'What was this story mostly about?' Accept 1-sentence summaries. Model the answer structure: 'This story was about ___ who ___.'"
+          },
+          {
+            "goal": "Detail-to-main-idea scaffolding",
+            "examples": [
+              "2 detail questions → bridging question → main idea question"
+            ],
+            "system_prompt": "Scaffold sequence: (1) Ask 2 detail questions first. (2) Ask 'What do all these details tell us?' (3) Ask main idea question. Never ask main idea without prior detail warm-up."
+          },
+          {
+            "goal": "Inference from context",
+            "examples": [
+              "Why do you think the character felt that way?"
+            ],
+            "system_prompt": "Inference questions based on story content only — no prior knowledge required. Accept partial answers."
+          },
+          {
+            "goal": "Cause and effect language",
+            "examples": [
+              "because",
+              "so",
+              "that is why"
+            ],
+            "system_prompt": "Cause-effect language: because, so, that is why. Story must include at least 2 explicit cause-effect events. WH questions must include 'why' and 'what happened because...' types."
+          },
+          {
+            "goal": "8-10 word sentences / full grammatically correct",
+            "examples": [
+              "The astronaut went to Mars because it is red"
+            ],
+            "system_prompt": "Target MLU: 8-10 words. Robot models complete, grammatically correct sentences of this length."
+          },
+          {
+            "goal": "Irregular past tense",
+            "examples": [
+              "went",
+              "fell",
+              "ran",
+              "thought",
+              "said",
+              "caught"
+            ],
+            "system_prompt": "Irregular past tense verbs: went, fell, ran, thought, said, caught. Embed in story narration and WH questions."
+          },
+          {
+            "goal": "Complex sentence connectors",
+            "examples": [
+              "because",
+              "although",
+              "however",
+              "so that"
+            ],
+            "system_prompt": "Connectors: because, although, however, so that. Robot uses these in all explanatory sentences. Story WH questions must require Ethan to explain reasoning using a connector."
+          },
+          {
+            "goal": "Summarising in 1-2 sentences",
+            "examples": [
+              "This story was about ___ who ___"
+            ],
+            "system_prompt": "Summarising target: after every story, Ethan produces a 1-2 sentence summary. Provide sentence frame as scaffold. Accept partial summaries."
+          },
+          {
+            "goal": "Positive social modeling in stories",
+            "examples": [
+              "welcoming peer characters; friendly interactions"
+            ],
+            "system_prompt": "All peer characters in stories are friendly, patient, and welcoming. No bullying, teasing, or peer rejection scenarios. Social interactions always end positively."
+          },
+          {
+            "goal": "Gradual social exposure",
+            "examples": [
+              "story-first peer content, role-play later"
+            ],
+            "system_prompt": "Introduce peer interactions through story characters first (low threat). Progress to role-play scripts only when Ethan shows comfort. Never force peer simulation."
+          }
+        ],
+        "communication_baseline": {
+          "current_mlu_words": "below 8-10 target",
+          "notes": "Articulation errors; difficulty maintaining topic; drifts off-topic when excited"
+        }
+      },
+      "interests": [
+        {
+          "topic": "Dinosaurs",
+          "storytelling_use": "Palaeontologist protagonist who discovers fossils — step-by-step problem-solving; cause-effect reasoning; main idea: 'the T-Rex lived 66 million years ago'",
+          "activity_use": "Yes/No: 'Did dinosaurs lay eggs?' WH: 'Why did dinosaurs disappear?' Image Inference: dinosaur scenes. Object Request: dinosaur figures by size/type"
+        },
+        {
+          "topic": "Superheroes",
+          "storytelling_use": "Superhero who uses a special skill to solve a problem for a friend — models peer helping and social initiation",
+          "activity_use": "WH: 'What power does the hero have?' Yes/No: 'Can superheroes fly?' Image Inference: action scenes"
+        },
+        {
+          "topic": "Space and planets",
+          "storytelling_use": "Astronaut visits different planets and figures out what makes each one special — cause-effect reasoning; summarising",
+          "activity_use": "Yes/No: 'Is the moon bigger than Earth?' WH: 'Where is the sun?' Image Inference: space scenes"
+        },
+        {
+          "topic": "Animals — dogs, sharks, wild animals",
+          "storytelling_use": "Wildlife documentary-style narration — rich in cause-effect language; articulation targets in animal names",
+          "activity_use": "Yes/No: animal facts. WH: 'Why do sharks have sharp teeth?' Object Request: animal figures"
+        },
+        {
+          "topic": "Sport — football, running, swimming",
+          "storytelling_use": "A team story where a shy character finds courage to join — directly mirrors Ethan's social anxiety and peer avoidance",
+          "activity_use": "Sport vocabulary in Yes/No and WH questions"
+        }
+      ],
+      "constraints": {
+        "tone": "HARD RULE: warm always; never firm, critical, or urgent. All error feedback framed collaboratively ('Let's try together', 'I think it might be...'). Explicit praise after every on-topic exchange",
+        "social_tone_in_stories": "HARD RULE: All peer characters are friendly and welcoming. No bullying, rejection, or embarrassment scenarios. Any peer conflict must resolve warmly and quickly",
+        "main_idea_scaffolding": "Every story must include: (1) 2 detail questions, (2) a bridging question, (3) a main-idea question. Never ask only for main idea without prior warm-up",
+        "pain_points": [
+          "Letter formation, spacing, and b/d, p/q confusion in writing",
+          "Grasping main idea — focuses on details, misses overall message",
+          "Making and maintaining friendships",
+          "Avoids group settings — overwhelmed by noise/dynamics",
+          "Articulation issues",
+          "Physical clumsiness / motor coordination",
+          "Drifts off-topic in conversation",
+          "Social anxiety in group settings"
+        ]
+      }
+    },
+    {
+      "id": "leo",
+      "name": "Leo",
+      "age": {
+        "years": 2,
+        "months": 5,
+        "display": "2 years 5 months",
+        "developmental_stage": "toddler"
+      },
+      "diagnosis": {
+        "primary": "Moderate ASD (Autism Spectrum Disorder)",
+        "secondary": [
+          "delayed speech and language development"
+        ],
+        "language": [
+          "English",
+          "Gujarati"
+        ]
+      },
+      "therapy_goals": {
+        "summary": [
+          "Encourage non-verbal gestures and expand vocabulary to reduce frustration",
+          "Create structured play opportunities (bubbles, rhymes) to practice requesting and expressing emotions"
+        ],
+        "structured": [
+          {
+            "goal": "Expand 'bub' to 2-word requests",
+            "examples": [
+              "more bub",
+              "blow bub",
+              "pop bub"
+            ],
+            "system_prompt": "Target: 2-word combination built from Leo's confirmed word 'bub'. Model: 'more bubbles', 'blow bubbles', 'pop bubbles'. Accept 'bub' alone as success; reward, then model the 2-word version."
+          },
+          {
+            "goal": "Expand 'up' to verb + direction",
+            "examples": [
+              "up please",
+              "go up",
+              "come up"
+            ],
+            "system_prompt": "Target: 2-word combination from 'up'. Model: 'go up', 'up please', 'come up'. Accept 'up' alone as success; reward, then model once."
+          },
+          {
+            "goal": "Core vocabulary expansion",
+            "examples": [
+              "more",
+              "go",
+              "stop",
+              "eat",
+              "drink",
+              "no",
+              "ball",
+              "dog",
+              "up",
+              "bub"
+            ],
+            "system_prompt": "Core vocabulary targets: more, go, stop, eat, drink, no, ball, dog, up, bub. Embed as primary labels in all activities. One new word introduced per session maximum."
+          },
+          {
+            "goal": "Action verbs — early set",
+            "examples": [
+              "go",
+              "stop",
+              "eat",
+              "blow",
+              "pop",
+              "roll",
+              "fall"
+            ],
+            "system_prompt": "Action verbs: go, stop, eat, blow, pop, roll, fall. Use as single-word models during activity actions. 'Ball go!' / 'Bubbles pop!' Robot models them; accept any approximation."
+          },
+          {
+            "goal": "Present progressive -ing (modeling only)",
+            "examples": [
+              "eating",
+              "going",
+              "popping"
+            ],
+            "system_prompt": "Model -ing forms in robot narration: 'Leo is blowing!' / 'The bubble is popping!' Do not require Leo to produce -ing forms. Accept verb root ('pop') as success."
+          },
+          {
+            "goal": "Early concept words",
+            "examples": [
+              "more",
+              "all done",
+              "big",
+              "little",
+              "up",
+              "down",
+              "in",
+              "out"
+            ],
+            "system_prompt": "Concept words: more, all done, big, little, up, down, in, out. Use 'more' and 'all done' as functional request/rejection targets across ALL activities."
+          },
+          {
+            "goal": "Animal sounds as proto-words",
+            "examples": [
+              "moo",
+              "woof",
+              "quack",
+              "meow"
+            ],
+            "system_prompt": "Animal sounds are acceptable first words at Leo's MLU level. Use in rhyming stories with a fill-in-the-gap pause: 'The cow says... [pause]'."
+          },
+          {
+            "goal": "2-word combinations",
+            "examples": [
+              "more bubbles",
+              "ball go",
+              "big dog"
+            ],
+            "system_prompt": "Target MLU: 2 words. Model 2-word combinations in all robot speech: 'more bubbles', 'ball go', 'big dog'."
+          }
+        ],
+        "communication_baseline": {
+          "current_mlu_words": "1 (single words)",
+          "confirmed_words": [
+            "bub",
+            "up"
+          ],
+          "notes": "Developing meaningful non-verbal gestures (pointing, reaching). Frustration leads to meltdowns when needs aren't met"
+        }
+      },
+      "interests": [
+        {
+          "topic": "Bubbles (watching, popping, 'bub')",
+          "status": "confirmed",
+          "therapeutic_use": "Primary motivator and reward. Use bubble animations as immediate consequence of any communicative attempt",
+          "activity_use": "Object Request: 'show me bubbles'. Storytelling: bubble-blowing character. Reward stimulus after every successful interaction"
+        },
+        {
+          "topic": "Rhymes and rhythm (bouncing, hand gestures to music)",
+          "status": "confirmed",
+          "therapeutic_use": "Use rhyming sentences in all robot speech — increases attention and positive affect. Pause before the last word of a familiar rhyme",
+          "activity_use": "Storytelling: rhyming narrative. All robot feedback should have rhythmic pattern. Use as transition signal between activities"
+        },
+        {
+          "topic": "Cars and trucks",
+          "status": "age-typical — confirm",
+          "therapeutic_use": "Story character (truck/car) that goes, stops, beeps. Models early-target action verbs",
+          "activity_use": "Object Request: 'show me the car'. Yes/No (simplified): 'Does the car go fast?' with pointing response"
+        },
+        {
+          "topic": "Animals — dogs, ducks, cats",
+          "status": "age-typical — confirm",
+          "therapeutic_use": "Animal characters in rhyming stories (Old MacDonald style). Animal sounds achievable at Leo's MLU",
+          "activity_use": "Storytelling: animal sound fill-in-the-gap. Object Request: point to the duck/dog"
+        },
+        {
+          "topic": "Balls — rolling, bouncing",
+          "status": "age-typical — confirm",
+          "therapeutic_use": "Ball actions provide early verbs: roll, bounce, catch, throw, stop. Simple cause-effect mirrors communication goals",
+          "activity_use": "Object Request: 'give me the ball'. Storytelling: ball-rolling character"
+        },
+        {
+          "topic": "Music and movement",
+          "status": "age-typical — confirm",
+          "therapeutic_use": "Action songs (Wheels on the Bus, Head Shoulders) provide structured repetition Leo can anticipate",
+          "activity_use": "Open every session with a 2-line rhyme. Use consistent transition jingle. Movement prompt as engagement reset"
+        }
+      ],
+      "constraints": {
+        "max_activity_segment_seconds": 45,
+        "min_activity_segment_seconds": 30,
+        "max_segments_per_session": 3,
+        "max_session_total_minutes": 5,
+        "end_activity_rule": "Always end before Leo disengages — do not wait for disengagement",
+        "max_new_words_per_session": 1,
+        "tone": "warm, gentle, playful at all times. Sing-song, rhythmic quality matches Leo's preference for rhyme",
+        "vocabulary_anchors": [
+          "bub",
+          "up"
+        ],
+        "pain_points": [
+          "Communication frustration leading to meltdowns",
+          "Difficulty expressing emotions verbally",
+          "Cannot make needs clear when wanting an object"
+        ]
+      }
+    }
+  ]
+}

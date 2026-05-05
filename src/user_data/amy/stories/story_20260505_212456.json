@@ -1,0 +1,105 @@
+{
+  "story": "Amy and Mom sit on the floor. [emotion:QT/happy] They have big red blocks. Amy wants to build blocks. Mom says, \"Let's build blocks together.\" [gesture:clapping] Amy picks up red blocks. She places a big block. Mom is stacking blocks. Amy is putting blocks. [emotion:QT/happy]\n\nThey build a tall tower. The blocks are red and blue. Amy puts a little block on top. Mom adds more blocks. The tower gets very high. Suddenly, the blocks tumble! [emotion:QT/surprised] *Clatter!* The blocks fall down. [emotion:QT/sad] Amy looks at the fallen blocks. Mom kneels down. [emotion:QT/calm] \"We can build again,\" Mom says. \"Let's stack blocks together.\"\n\nAmy picks up blue blocks. Mom helps Amy put them on. [gesture:peekaboo] Amy stacks a piece. Mom stacks a piece. They work together. They build big towers. They build little towers. [emotion:QT/happy]\n\nFinally, they finish the tower. It is strong! Mom gives Amy a hug. [gesture:embrace] \"You are so helpful, Amy,\" Mom says. Amy feels proud. [emotion:QT/happy] They look at the blocks. They built many blocks together. Playing blocks is fun. [gesture:nodding-yes]",
+  "metadata": {
+    "age": 3,
+    "age_tier": "early_preschool",
+    "child_name": "amy",
+    "generated_at": null,
+    "model": "gemma4:e4b",
+    "target_word_range": [
+      150,
+      250
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 236,
+    "paragraph_count": 4,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "pages": [
+    "Amy and Mom sit on the floor. [emotion:QT/happy] They have big red blocks. Amy wants to build blocks. Mom says, \"Let's build blocks together.\" [gesture:clapping] Amy picks up red blocks. She places a big block. Mom is stacking blocks. Amy is putting blocks.",
+    "[emotion:QT/happy] They build a tall tower. The blocks are red and blue. Amy puts a little block on top. Mom adds more blocks. The tower gets very high.",
+    "Suddenly, the blocks tumble! Clatter! The blocks fall down. [emotion:QT/sad] Amy looks at the fallen blocks. Mom kneels down. [emotion:QT/calm] \"We can build again,\" Mom says. \"Let's stack blocks together.\"",
+    "Amy picks up blue blocks. Mom helps Amy put them on. [gesture:peekaboo] Amy stacks a piece. Mom stacks a piece. They work together. They build big towers. They build little towers.",
+    "[emotion:QT/happy] Finally, they finish the tower. It is strong! Mom gives Amy a hug. [gesture:embrace] \"You are so helpful, Amy,\" Mom says. Amy feels proud. [emotion:QT/happy] They look at the blocks. They built many blocks together. Playing blocks is fun."
+  ],
+  "scenes": [
+    "Amy and Mom sit on the floor, happily building a tall tower with red and blue blocks.",
+    "The tall block tower has suddenly tumbled down, scattering blocks on the floor. Amy looks at the fallen blocks while Mom kneels beside her.",
+    "Amy and Mom work together, rebuilding and stacking blocks to create a new, strong tower. They finish and share a proud hug."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    1,
+    2,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What are Amy and Mom doing?",
+      "type": "main_idea",
+      "correct_answer": "Building blocks.",
+      "wrong_answers": [
+        "Eating snacks.",
+        "Reading books."
+      ]
+    },
+    {
+      "question": "What blocks are Amy stacking?",
+      "type": "detail",
+      "correct_answer": "Red and blue blocks.",
+      "wrong_answers": [
+        "Green and yellow blocks.",
+        "Purple and pink blocks."
+      ]
+    },
+    {
+      "question": "What is falling down?",
+      "type": "detail",
+      "correct_answer": "The blocks.",
+      "wrong_answers": [
+        "The books.",
+        "The toys."
+      ]
+    }
+  ]
+}
