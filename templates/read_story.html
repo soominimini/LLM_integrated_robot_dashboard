@@ -145,32 +145,6 @@
             color: #28a745;
             font-size: 1.3rem;
         }
-        .takeaways-panel {
-            background: #fff8e1;
-            border: 2px solid #ffd54f;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-        }
-        .takeaways-panel h3 {
-            color: #f57c00;
-            text-align: center;
-            margin-top: 0;
-        }
-        .takeaways-panel ul {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            padding-left: 1.25rem;
-        }
-        .takeaways-panel li {
-            margin-bottom: 0.5rem;
-        }
-        .takeaways-panel li.active {
-            background: #fff3cd;
-            border-left: 4px solid #f57c00;
-            padding-left: 0.5rem;
-            font-weight: 600;
-        }
     </style>
 </head>
 <body>
@@ -193,18 +167,6 @@
             <div class="movement-indicator" id="movementIndicator" style="display: none;">
                 <div class="movement-dot"></div>
                 <span>Robot is moving while speaking...</span>
-            </div>
-        </div>
-
-        <!-- Takeaways panel (age 7+ stories) -->
-        <div id="takeawaysSection" style="display: none;">
-            <div class="takeaways-panel">
-                <h3>What did we learn?</h3>
-                <ul id="takeawaysList"></ul>
-                <div style="text-align: center; margin-top: 1rem;">
-                    <button class="btn speak" id="speakTakeawaysBtn" onclick="speakTakeaways()">Read Takeaways</button>
-                    <button class="btn" id="takeawaysContinueBtn" onclick="afterTakeaways()">Continue</button>
-                </div>
             </div>
         </div>
 

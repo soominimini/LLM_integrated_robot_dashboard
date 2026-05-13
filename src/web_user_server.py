@@ -1903,6 +1903,75 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
     return fallback
 
 
+def _generate_takeaway_question(takeaways, story_text, child_age, child_name="the child"):
+    """Build one multiple-choice "what did we learn?" question from a story's
+    takeaways. The correct answer is the most central takeaway; the two wrong
+    answers are LLM-generated plausible-but-incorrect lessons.
+
+    Returns a dict in the same shape as _generate_story_questions entries,
+    or None if takeaways is empty or generation fails.
+    """
+    if not takeaways:
+        return None
+
+    correct = str(takeaways[0]).strip()
+    if not correct:
+        return None
+
+    cleaned_story = clean_story_text(story_text)
+
+    prompt = (
+        f"You are creating ONE multiple-choice comprehension question for a {child_age}-year-old "
+        f"child named {child_name} about the LESSON of a story.\n\n"
+        f"Story:\n{cleaned_story}\n\n"
+        f"The CORRECT lesson (use exactly as the correct answer, do not rephrase):\n"
+        f"\"{correct}\"\n\n"
+        f"Your task: generate 2 plausible-but-INCORRECT lessons that a child might mistakenly pick. "
+        f"They must:\n"
+        f"- Sound like reasonable lessons in general, but be CLEARLY wrong for THIS story.\n"
+        f"- Use simple language matched to a {child_age}-year-old.\n"
+        f"- Be about the same length as the correct lesson (one short sentence).\n"
+        f"- NOT be opposites or trivially wrong (\"You should never be kind\").\n"
+        f"- NOT be other valid lessons from the same story.\n\n"
+        f"Return ONLY a JSON array of 2 strings, e.g. "
+        f"[\"Winning a race is the most important thing.\", \"You should always do your homework first.\"]"
+    )
+
+    try:
+        raw = _gemini_generate(
+            prompt,
+            system="You write multiple-choice distractor answers for children's comprehension questions. Return JSON only.",
+            max_tokens=512,
+        )
+        if not raw:
+            return None
+        # Reuse the robust JSON parser if available.
+        arr = _parse_json_array(raw) if "_parse_json_array" in globals() else None
+        if not isinstance(arr, list):
+            # Minimal inline fallback
+            start = raw.find("[")
+            end = raw.rfind("]")
+            if start != -1 and end != -1 and end > start:
+                try:
+                    arr = json.loads(raw[start:end + 1])
+                except Exception:
+                    arr = None
+        if not isinstance(arr, list):
+            return None
+        wrong = [str(x).strip() for x in arr if isinstance(x, (str, int, float)) and str(x).strip()]
+        if len(wrong) < 2:
+            return None
+        return {
+            "question": "What is the most important lesson we can learn from this story?",
+            "type": "takeaway",
+            "correct_answer": correct,
+            "wrong_answers": wrong[:2],
+        }
+    except Exception as e:
+        print(f"[TakeawayQuestion] generation failed: {e}")
+        return None
+
+
 def _apply_emotion_tags_with_gemini(story_text):
     """Run a Gemini-Flash pass over a generated story to insert correct
     [gesture:...] and [emotion:...] tags inline.
@@ -2363,6 +2432,17 @@ def api_save_story():
         persona_context=q_persona_ctx,
     )
     print(f"[StorySave] Generated {len(questions)} comprehension questions")
+
+    # If the story has takeaways (age 7+), append one multiple-choice question
+    # at the END that asks about the main lesson — uses takeaways[0] as the
+    # correct answer and LLM-generated distractors.
+    if takeaways:
+        takeaway_q = _generate_takeaway_question(
+            takeaways, story, child_age, metadata.get('child_name', 'the child'),
+        )
+        if takeaway_q:
+            questions.append(takeaway_q)
+            print(f"[StorySave] Appended takeaway question (now {len(questions)} total)")
 
     # Save story, metadata, pages, scenes, mapping, questions, and takeaways.
     # `takeaways` is only populated for age 7+ tiers (see story_generator.AGE_TIERS
