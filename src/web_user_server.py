@@ -184,7 +184,7 @@ user_manager = UserManager(
     users_file=os.path.join(BASE_DIR, 'users.json'),
     base_dir=USER_DATA_DIR
 )
-story_generator = StoryGenerator(llm_model="gemma4:e4b")
+story_generator = StoryGenerator(llm_model="gemini-2.5-flash")
 persona_rag = PersonaRAG()
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
@@ -2303,6 +2303,25 @@ def api_save_story():
         child_age = int(metadata.get('age', user.get('age', 5)))
     except (ValueError, TypeError):
         child_age = 5
+
+    # Word-count enforcement: the story_generator prompt caps body length by
+    # age tier, but the LLM still sometimes overshoots. If the saved body
+    # exceeds the tier's max_words, ask the LLM to rewrite it shorter.
+    try:
+        min_words, max_words = story_generator.get_word_range_for_age(child_age)
+        body_words = len(story.split())
+        if body_words > max_words:
+            child_name_hint = metadata.get('child_name', '') or user.get('name', '')
+            print(f"[StorySave] Body is {body_words} words, cap is {max_words}. Shortening...")
+            shortened = story_generator.shorten_story(story, child_age, child_name_hint)
+            if shortened and shortened != story:
+                new_words = len(shortened.split())
+                print(f"[StorySave] Shortened to {new_words} words")
+                story = shortened
+                metadata['word_count'] = new_words
+                metadata['shortened'] = True
+    except Exception as e:
+        print(f"[StorySave] Word-count enforcement skipped: {e}")
 
     # Run a Gemini-Flash tagging pass on the story before splitting. The
     # story-generation model (gemma4:e4b) is small and often misses or

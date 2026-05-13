@@ -1,0 +1,128 @@
+{
+  "story": "Ethan loved dinosaur day at school. [emotion:QT/happy] Today, his class would build amazing dinosaur skeletons for a special display. Ethan\u2019s goal was to construct a magnificent Tyrannosaurus Rex that stood tall and strong. He felt a little nervous [emotion:QT/afraid] because he needed to work with a partner, Maya.\n\n\"Hello, Ethan!\" said Maya, smiling brightly. [emotion:QT/happy] \"Are you ready to build our T-Rex? I'm curious about how all the bones fit together.\" Ethan nodded. They carefully opened their kit, spreading out all the pieces on the table. They identified the sharp teeth, the powerful ribs, and the huge skull. [emotion:QT/happy] But suddenly, Ethan\u2019s smile faded. [emotion:QT/sad] He looked at the instruction sheet, then at the scattered pieces. \"The long femur bone for its leg is missing,\" he mumbled, feeling frustrated [emotion:QT/angry] because their T-Rex wouldn't stand without it.\n\nMaya noticed Ethan\u2019s frown. [gesture:think] \"What's wrong, Ethan?\" she asked, her voice kind and patient. [emotion:QT/calm]\nEthan pointed. \"Our T-Rex won't stand tall because the big leg bone is not here.\"\n\"Oh no!\" Maya exclaimed. \"That is a very important part, so we need to find it.\" [gesture:patience] She suggested, \"Let's try again, and we can look together.\" They began to search, crawling carefully under their table, peering near the colorful art supplies. They took turns lifting boxes and looking inside. [emotion:QT/curious] \"Do you think Mrs. Davis might know where the extra pieces sometimes go?\" Maya asked.\nEthan felt shy [emotion:QT/shy] but nodded. Together, they walked to Mrs. Davis's desk. \"Excuse me, Mrs. Davis,\" Maya began, \"we can't find the femur bone for our dinosaur.\"\n[emotion:QT/calm] \"Ah,\" said Mrs. Davis, \"Sometimes pieces roll into our 'share and spare' box. We must always listen to the instructions and check there!\" She pointed to a green box. [emotion:QT/happy] They opened it and, sure enough, there was the long femur bone! Ethan felt a wave of relief. [emotion:QT/happy]\n\n[emotion:QT/happy] Ethan and Maya went back to their table. They worked together, carefully connecting each bone. Maya held the ribs while Ethan clicked the skull into place. They successfully built the T-Rex because they had worked as a team. [emotion:QT/happy] Ethan felt incredibly proud as they placed their magnificent dinosaur on the display. He thought, \"Working with a friend made building this dinosaur much more fun!\"",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 491,
+    "paragraph_count": 4,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "pages": [
+    "Ethan loved dinosaur day at school. [emotion:QT/happy] Today, his class would build amazing dinosaur skeletons for a special display. Ethans goal was to construct a magnificent Tyrannosaurus Rex that stood tall and strong. He felt a little nervous [emotion:QT/afraid] because he needed to work with a partner, Maya.",
+    "\"Hello, Ethan!\" said Maya, smiling brightly. [emotion:QT/happy] \"Are you ready to build our T-Rex? I'm curious about how all the bones fit together.\" Ethan nodded. They carefully opened their kit, spreading out all the pieces on the table. They identified the sharp teeth, the powerful ribs, and the huge skull. [emotion:QT/happy] But suddenly, Ethans smile faded. [emotion:QT/sad] He looked at the instruction sheet, then at the scattered pieces. \"The long femur bone for its leg is missing,\" he mumbled, feeling frustrated [emotion:QT/angry] because their T-Rex wouldn't stand without it.",
+    "Maya noticed Ethans frown. [gesture:think] \"What's wrong, Ethan?\" she asked, her voice kind and patient. [emotion:QT/calm] Ethan pointed. \"Our T-Rex won't stand tall because the big leg bone is not here.\" \"Oh no!\" Maya exclaimed. \"That is a very important part, so we need to find it.\" [gesture:patience] She suggested, \"Let's try again, and we can look together.\" They began to search, crawling carefully under their table, peering near the colorful art supplies. They took turns lifting boxes and looking inside.",
+    "[emotion:QT/curious] \"Do you think Mrs. Davis might know where the extra pieces sometimes go?\" Maya asked. Ethan felt shy [emotion:QT/shy] but nodded. Together, they walked to Mrs. Davis's desk. \"Excuse me, Mrs. Davis,\" Maya began, \"we can't find the femur bone for our dinosaur.\" [emotion:QT/calm] \"Ah,\" said Mrs. Davis, \"Sometimes pieces roll into our 'share and spare' box. We must always listen to the instructions and check there!\" She pointed to a green box. [emotion:QT/happy] They opened it and, sure enough, there was the long femur bone! Ethan felt a wave of relief.",
+    "[emotion:QT/happy] [emotion:QT/happy] Ethan and Maya went back to their table. They worked together, carefully connecting each bone. Maya held the ribs while Ethan clicked the skull into place. They successfully built the T-Rex because they had worked as a team. [emotion:QT/happy] Ethan felt incredibly proud as they placed their magnificent dinosaur on the display. He thought, \"Working with a friend made building this dinosaur much more fun!\""
+  ],
+  "scenes": [
+    "Ethan and Maya are at their classroom table, surrounded by dinosaur bone pieces, looking frustrated as they search under the table for a missing part.",
+    "Ethan and Maya stand shyly at Mrs. Davis's desk, who points to a green 'share and spare' box where they find the missing bone.",
+    "Ethan and Maya proudly place their magnificent, fully assembled T-Rex skeleton on a classroom display, smiling at their teamwork."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    1,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What important part was missing from Ethan and Maya's dinosaur kit?",
+      "type": "detail",
+      "correct_answer": "The long femur bone for its leg.",
+      "wrong_answers": [
+        "The sharp teeth for its mouth.",
+        "The powerful ribs for its body."
+      ]
+    },
+    {
+      "question": "Where did Ethan and Maya find the missing dinosaur bone?",
+      "type": "detail",
+      "correct_answer": "They found it inside the green 'share and spare' box.",
+      "wrong_answers": [
+        "They found it under their classroom table.",
+        "They found it near the colorful art supplies."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel frustrated when he saw the scattered pieces?",
+      "type": "inference",
+      "correct_answer": "He felt frustrated because the important leg bone was missing.",
+      "wrong_answers": [
+        "He felt frustrated because Maya was not helping him.",
+        "He felt frustrated because the instructions were too hard."
+      ]
+    },
+    {
+      "question": "What did Maya do to help Ethan when the leg bone was missing?",
+      "type": "inference",
+      "correct_answer": "She suggested they look together and asked Mrs. Davis for help.",
+      "wrong_answers": [
+        "She told Ethan to just build the dinosaur without it.",
+        "She started building her own dinosaur by herself."
+      ]
+    },
+    {
+      "question": "What was this story mostly about, Ethan?",
+      "type": "main_idea",
+      "correct_answer": "This story was about two friends who worked together to build a dinosaur.",
+      "wrong_answers": [
+        "This story was about a boy who loved dinosaur day at school.",
+        "This story was about finding lost items in a special green box."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help from a friend or teacher can make problems easier to solve.",
+    "Working together and taking turns helps everyone achieve their goal.",
+    "Being patient and looking carefully can help you find what you need."
+  ]
+}

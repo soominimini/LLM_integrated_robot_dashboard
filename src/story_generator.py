@@ -80,7 +80,7 @@ class StoryGenerator:
         },
         (7, 8): {
             "label": "early_school_age",
-            "word_range": (250, 350),
+            "word_range": (250, 400),
             "requires_takeaways": True,
             "guidelines": (
                 "Language level: Use varied sentence structures including relative clauses and embedded phrases. "
@@ -172,9 +172,10 @@ Return your answer EXACTLY in this format, with no other text before or after:
 <1–3 short sentences explaining how the story matches the selected topic(s) and the learning goals: {goals}>
 
 STRICT RULES:
+- HARD WORD LIMIT: The story text between ** Title ** and ** End ** MUST be {min_words}–{max_words} words. {max_words} is a CEILING you cannot exceed. Target around {mid_words} words so you have safety margin. Count as you write; if you approach {max_words}, wrap up immediately at the next natural sentence — do not start a new subplot, paragraph, or piece of dialogue.
+- Brevity beats completeness. Cut adjectives, side details, and extra dialogue exchanges before going over.
 - Do NOT include any preamble, commentary, or meta-text (no "Here is your story", "Sure!", etc.).
 - Do NOT add sections beyond Title, story text, End,{takeaways_in_rule} and Explanation.
-- Count your words before finishing. The story text (between Title and End) MUST be between {min_words} and {max_words} words. If you are over {max_words}, shorten it. If under {min_words}, expand it.
 Do not add any other sections or extra text."""
 
     # Injected into OUTPUT_FORMAT when the age tier sets requires_takeaways=True.
@@ -541,6 +542,7 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
             goals=goals or "general speech-language therapy goals",
             min_words=min_words,
             max_words=max_words,
+            mid_words=(min_words + max_words) // 2,
             takeaways_section=takeaways_section,
             takeaways_in_rule=takeaways_in_rule,
         )
@@ -567,6 +569,72 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
                 prompt += "\n\nIncorporate the following theme(s) prominently and naturally: " + ", ".join(safe_topics) + "."
 
         return prompt
+
+    # ─────────────────────────────────────────────
+    # POST-GENERATION SHORTENING
+    # Safety net for when the model overshoots its word cap despite the
+    # prompt rule. Called by api_save_story when the saved body exceeds
+    # max_words by a meaningful margin.
+    # ─────────────────────────────────────────────
+
+    def get_word_range_for_age(self, age: int):
+        """Return (min_words, max_words) for the given age, used by callers
+        that want to validate body length without rebuilding the prompt."""
+        tier = self._get_age_tier(age)
+        return tier["word_range"]
+
+    SHORTEN_TEMPLATE = """You are shortening a children's story so it fits a strict word cap.
+
+ORIGINAL STORY (with inline [gesture:...] and [emotion:...] tags):
+\"\"\"
+{body}
+\"\"\"
+
+REWRITE RULES:
+- Target length: {min_words}–{max_words} words. The {max_words} ceiling is HARD; aim for around {mid_words} words.
+- Preserve the plot, character names ({names_hint}), beginning, and ending.
+- Preserve the existing inline [gesture:...] and [emotion:...] tags — keep them attached to the same emotional/action beats.
+- Cut adjectives, side details, redundant dialogue lines, and any subplot first.
+- Do NOT add new characters, events, or sections.
+- Do NOT add commentary, preamble, or markdown headings — just return the rewritten story body.
+
+Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** End **, takeaways, or explanation — just the story text."""
+
+    def shorten_story(self, body: str, age: int, child_name: str = "") -> str:
+        """Shorten an already-generated story body to fit the age tier's word range.
+
+        Returns the shortened body on success, or the original body on any failure.
+        """
+        if not body:
+            return body
+        tier = self._get_age_tier(age)
+        min_words, max_words = tier["word_range"]
+        mid_words = (min_words + max_words) // 2
+
+        names_hint = child_name or "the protagonist"
+
+        prompt = self.SHORTEN_TEMPLATE.format(
+            body=body,
+            min_words=min_words,
+            max_words=max_words,
+            mid_words=mid_words,
+            names_hint=names_hint,
+        )
+        try:
+            shortened = self._run_llm(prompt, stream=False) or ""
+            shortened = shortened.strip()
+            # Defensive cleanup: drop any accidental markers the model added.
+            for marker in ("** Title **", "** End **", "** Takeaways **",
+                           "** Explanation of the output **"):
+                idx = shortened.find(marker)
+                if idx >= 0:
+                    shortened = shortened[:idx].strip() if marker != "** Title **" else shortened[idx + len(marker):].strip()
+            if not shortened:
+                return body
+            return shortened
+        except Exception as e:
+            print(f"[StoryGenerator] shorten_story failed: {e}")
+            return body
 
     # ─────────────────────────────────────────────
     # PUBLIC API (unchanged signatures)
