@@ -227,7 +227,6 @@ window.addEventListener('load', () => {
         let imagesAvailable = false;
         let questions = [];
         let currentQuestion = 0;
-        let takeaways = [];
 
         function fetchStory() {
             fetch(`/api/get_story_sentences?filename=${encodeURIComponent(filename)}`)
@@ -238,7 +237,6 @@ window.addEventListener('load', () => {
                         meta = data.metadata || {};
                         imagesAvailable = data.images_available || false;
                         questions = data.questions || [];
-                        takeaways = data.takeaways || [];
 
                         document.getElementById('storyMeta').innerHTML =
                             `<b>Child:</b> ${meta.child_name || ''} &nbsp; <b>Age:</b> ${meta.age || ''} &nbsp; <b>Words:</b> ${meta.word_count || ''}`;
@@ -334,11 +332,6 @@ window.addEventListener('load', () => {
 
         function showStoryEndPrompt() {
             document.getElementById('storySection').style.display = 'none';
-            // Age 7+ stories include takeaways; show them BEFORE the questions prompt.
-            if (takeaways && takeaways.length > 0) {
-                showTakeaways();
-                return;
-            }
             if (questions.length > 0) {
                 document.getElementById('storyEndSection').style.display = 'block';
                 speakSentence("The story is finished! Would you like to answer some questions about the story?");
@@ -346,59 +339,6 @@ window.addEventListener('load', () => {
                 document.getElementById('questionsCompleteSection').style.display = 'block';
                 document.getElementById('questionsCompleteSection').querySelector('h3').textContent =
                     'The story is finished!';
-            }
-        }
-
-        function showTakeaways() {
-            const list = document.getElementById('takeawaysList');
-            list.innerHTML = '';
-            takeaways.forEach((t, idx) => {
-                const li = document.createElement('li');
-                li.id = `takeaway-${idx}`;
-                li.textContent = t;
-                list.appendChild(li);
-            });
-            document.getElementById('takeawaysSection').style.display = 'block';
-            document.getElementById('progress').innerText = 'What did we learn?';
-            // Robot opens with an intro, then reads each takeaway in turn.
-            speakSentence("The story is finished! Here is what we can learn from it.");
-            setTimeout(speakTakeaways, 600);
-        }
-
-        function speakTakeaways() {
-            if (!takeaways || takeaways.length === 0) return;
-            // Highlight + speak each takeaway sequentially. The TTS endpoint is
-            // fire-and-forget here; we space items so the highlight matches the speech.
-            takeaways.forEach((t, idx) => {
-                setTimeout(() => {
-                    // Clear previous highlight
-                    takeaways.forEach((_, j) => {
-                        const prev = document.getElementById(`takeaway-${j}`);
-                        if (prev) prev.classList.remove('active');
-                    });
-                    const li = document.getElementById(`takeaway-${idx}`);
-                    if (li) li.classList.add('active');
-                    speakSentence(t);
-                }, idx * 4500);
-            });
-            // Clear final highlight after the last item finishes.
-            setTimeout(() => {
-                takeaways.forEach((_, j) => {
-                    const li = document.getElementById(`takeaway-${j}`);
-                    if (li) li.classList.remove('active');
-                });
-            }, takeaways.length * 4500 + 1000);
-        }
-
-        function afterTakeaways() {
-            document.getElementById('takeawaysSection').style.display = 'none';
-            if (questions.length > 0) {
-                document.getElementById('storyEndSection').style.display = 'block';
-                speakSentence("Would you like to answer some questions about the story?");
-            } else {
-                document.getElementById('questionsCompleteSection').style.display = 'block';
-                document.getElementById('questionsCompleteSection').querySelector('h3').textContent =
-                    'Thanks for reading the story!';
             }
         }
 

@@ -1,0 +1,117 @@
+{
+  "story": "Ethan woke up feeling excited [emotion:QT/happy] because today was picnic day! His mom had packed a big basket with crunchy sandwiches and juicy berries. Ethan wanted to be helpful. [emotion:QT/shy] \"Can I carry something?\" he asked, looking at the large, patterned blanket on the chair.\n\n[gesture:nodding-yes] [emotion:QT/happy] \"Yes, you can carry the blanket, Ethan,\" Mom said with a warm smile. \"It's soft and light.\"\n\nAt the park, they found a perfect spot under a giant oak tree. [emotion:QT/happy] The sun shone brightly. [emotion:QT/happy] Dad pointed. \"Look, Ethan! The ducks are swimming in the pond over there.\" [emotion:QT/happy] Ethan saw a mother duck and her little ducklings paddling together.\n\n\"Now for the picnic basket,\" Mom said. It was round and felt very heavy. [emotion:QT/afraid] Ethan felt a little nervous because he thought it might be too much. He carefully picked it up, but it wiggled. [emotion:QT/afraid] \"It's\u2026wobbly,\" he said, his voice quiet.\n\n[emotion:QT/calm] \"It is quite full, isn't it?\" Mom said gently. \"Let's carry it together, so that it feels safe and steady. I will hold one side, and you can hold the other.\" She showed him exactly where to grip. [gesture:embrace] [emotion:QT/happy] With Mom's strong hand beside his, Ethan felt much better. [emotion:QT/happy] He walked slowly, feeling proud that he was helping. They carefully carried the basket to the big picnic blanket.\n\nOnce everything was unpacked, Ethan helped spread out the napkins. [emotion:QT/happy] He felt so good that they worked as a caring team. [emotion:QT/happy] \"Thank you for being such a helpful boy, Ethan,\" Dad said, giving him a high-five. [emotion:QT/happy] Ethan smiled, feeling warm and content, enjoying the delicious food with his family.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 377,
+    "paragraph_count": 6,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5
+    ]
+  },
+  "pages": [
+    "Ethan woke up feeling excited [emotion:QT/happy] because today was picnic day! His mom had packed a big basket with crunchy sandwiches and juicy berries. Ethan wanted to be helpful. [emotion:QT/shy] \"Can I carry something?\" he asked, looking at the large, patterned blanket on the chair. [gesture:nodding-yes] [emotion:QT/happy] \"Yes, you can carry the blanket, Ethan,\" Mom said with a warm smile. \"It's soft and light.\"",
+    "At the park, they found a perfect spot under a giant oak tree. [emotion:QT/happy] The sun shone brightly. [emotion:QT/happy] Dad pointed. \"Look, Ethan! The ducks are swimming in the pond over there.\" [emotion:QT/happy] Ethan saw a mother duck and her little ducklings paddling together.",
+    "\"Now for the picnic basket,\" Mom said. It was round and felt very heavy. [emotion:QT/afraid] Ethan felt a little nervous because he thought it might be too much. He carefully picked it up, but it wiggled. \"It'swobbly,\" he said, his voice quiet.",
+    "[emotion:QT/calm] \"It is quite full, isn't it?\" Mom said gently. \"Let's carry it together, so that it feels safe and steady. I will hold one side, and you can hold the other.\" She showed him exactly where to grip. [gesture:embrace] [emotion:QT/happy] With Mom's strong hand beside his, Ethan felt much better. [emotion:QT/happy] He walked slowly, feeling proud that he was helping. They carefully carried the basket to the big picnic blanket.",
+    "Once everything was unpacked, Ethan helped spread out the napkins. [emotion:QT/happy] He felt so good that they worked as a caring team. [emotion:QT/happy] \"Thank you for being such a helpful boy, Ethan,\" Dad said, giving him a high-five. [emotion:QT/happy] Ethan smiled, feeling warm and content, enjoying the delicious food with his family."
+  ],
+  "scenes": [
+    "Ethan is at home, feeling excited for a picnic. He is holding a soft, patterned blanket, ready to help his mom.",
+    "Ethan, Mom, and Dad are at a sunny park under a giant oak tree, near a pond with ducks. They are setting up their picnic, carrying the basket together, and then enjoying their meal on the blanket."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    1,
+    1,
+    1
+  ],
+  "questions": [
+    {
+      "question": "What soft and light item did Ethan carry first for the picnic?",
+      "type": "detail",
+      "correct_answer": "He carried the patterned picnic blanket.",
+      "wrong_answers": [
+        "He carried the big picnic basket.",
+        "He carried his favorite toy car."
+      ]
+    },
+    {
+      "question": "What animals did Ethan see swimming in the park pond?",
+      "type": "detail",
+      "correct_answer": "He saw a mother duck and her ducklings.",
+      "wrong_answers": [
+        "He saw some playful little fish.",
+        "He saw a big, friendly dog."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel a little nervous when he picked up the picnic basket?",
+      "type": "inference",
+      "correct_answer": "He felt nervous because it was heavy and wobbly.",
+      "wrong_answers": [
+        "He felt nervous because he was hungry.",
+        "He felt nervous because it was too dark."
+      ]
+    },
+    {
+      "question": "How did Ethan feel when Mom helped him carry the wobbly picnic basket?",
+      "type": "inference",
+      "correct_answer": "He felt much better and proud to help.",
+      "wrong_answers": [
+        "He felt angry that Mom helped him.",
+        "He felt tired and wanted to rest."
+      ]
+    },
+    {
+      "question": "What was this story mostly about, Ethan?",
+      "type": "main_idea",
+      "correct_answer": "This story was about Ethan helping his family with a picnic.",
+      "wrong_answers": [
+        "This story was about ducks swimming in a pond.",
+        "This story was about finding a lost blanket."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help makes difficult tasks easier to do together.",
+    "Working with your family makes everyone feel important and cared for.",
+    "Feeling nervous is okay, and you can be brave with support."
+  ]
+}
