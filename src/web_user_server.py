@@ -310,24 +310,169 @@ def _ensure_intent_llm():
             except Exception as e:
                 print(f"Warning: failed to initialize intent LLM: {e}")
 
+class _GeminiQuizLLM:
+    """Quiz LLM backed by Gemini Flash via the gemini_general.py subprocess worker.
+
+    Exposes the same minimal `.get_response(prompt).message.content` interface
+    as the previous ChatWithRAG-based quiz LLM, so existing call sites keep working.
+    """
+    SYSTEM_ROLE = (
+        "You create short, child-friendly quiz questions. "
+        "Return JSON only. Each item must be {\"question\": \"...\", \"type\": \"yes_no\"|\"wh\"}."
+    )
+
+    def __init__(self, max_tokens=2048, temperature=0.3):
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+
+    def get_response(self, prompt):
+        text = _gemini_generate(
+            prompt,
+            system=self.SYSTEM_ROLE,
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+        ) or ""
+
+        class _Msg:
+            def __init__(self, content):
+                self.content = content
+
+        class _Resp:
+            def __init__(self, content):
+                self.message = _Msg(content)
+
+        return _Resp(text)
+
+
 def _ensure_quiz_llm():
     global _quiz_llm
-    if not LLM_AVAILABLE:
-        return
     with _quiz_llm_lock:
         if _quiz_llm is None:
             try:
-                _quiz_llm = ChatWithRAG(
-                    model="gemma4:e4b",
-                    system_role=(
-                        "You create short, child-friendly quiz questions. "
-                        "Return JSON only. Each item must be {\"question\": \"...\", \"type\": \"yes_no\"|\"wh\"}."
-                    ),
-                    disable_rag=True,
-                    max_tokens=512
-                )
+                _quiz_llm = _GeminiQuizLLM(max_tokens=8192)
             except Exception as e:
                 print(f"Warning: failed to initialize quiz LLM: {e}")
+
+
+def _parse_json_array(raw: str):
+    """
+    Robust JSON-array extractor for LLM quiz responses.
+
+    Handles the common failure modes that produced "LLM returned invalid JSON"
+    in 'both' mode:
+      - ```json ... ``` markdown code fences.
+      - Top-level object wrapping the array, e.g. {"questions": [...]}.
+      - Preamble / postamble text around the JSON.
+      - Trailing commas in arrays/objects.
+      - Truncated output (best-effort recovery via bracket slicing).
+
+    Returns a Python list on success, or None on failure.
+    """
+    if not raw:
+        return None
+
+    s = raw.strip()
+
+    # 1. Strip ```json ... ``` or ``` ... ``` code fences.
+    if s.startswith("```"):
+        # Remove first fence line (``` or ```json or ```JSON etc.)
+        first_nl = s.find("\n")
+        if first_nl != -1:
+            s = s[first_nl + 1:]
+        # Drop trailing fence.
+        if s.rstrip().endswith("```"):
+            s = s.rstrip()[:-3]
+        s = s.strip()
+    # Some models prefix the language right after a single line of backticks.
+    if s.lower().startswith("json\n"):
+        s = s[5:].lstrip()
+
+    def _try_load(text):
+        try:
+            return json.loads(text)
+        except Exception:
+            return None
+
+    def _unwrap(obj):
+        """If obj is a dict, look for the array inside it."""
+        if isinstance(obj, list):
+            return obj
+        if isinstance(obj, dict):
+            for key in ("questions", "data", "items", "result", "results", "list"):
+                v = obj.get(key)
+                if isinstance(v, list):
+                    return v
+            # Fallback: first list-valued field.
+            for v in obj.values():
+                if isinstance(v, list):
+                    return v
+        return None
+
+    # 2. Try parsing as-is.
+    obj = _try_load(s)
+    arr = _unwrap(obj)
+    if arr is not None:
+        return arr
+
+    # 3. Slice between first '[' and last ']'.
+    l = s.find("[")
+    r = s.rfind("]")
+    if l != -1 and r != -1 and r > l:
+        sliced = s[l:r + 1]
+        obj = _try_load(sliced)
+        arr = _unwrap(obj)
+        if arr is not None:
+            return arr
+
+        # 4. Light repair: drop trailing commas before } or ].
+        import re as _re
+        repaired = _re.sub(r",(\s*[\]\}])", r"\1", sliced)
+        obj = _try_load(repaired)
+        arr = _unwrap(obj)
+        if arr is not None:
+            return arr
+
+    # 5. Truncation recovery. If the array starts with '[' but is cut off
+    #    (the LLM hit the token cap mid-object), walk the string with
+    #    string-aware bracket/brace tracking, find the last position where a
+    #    top-level object closed, and synthesize the closing ']'.
+    if l != -1:
+        tail = s[l:]
+        in_string = False
+        escape = False
+        bracket_depth = 0
+        brace_depth = 0
+        last_top_close = -1
+        for i, ch in enumerate(tail):
+            if escape:
+                escape = False
+                continue
+            if in_string:
+                if ch == "\\":
+                    escape = True
+                elif ch == '"':
+                    in_string = False
+                continue
+            if ch == '"':
+                in_string = True
+            elif ch == "[":
+                bracket_depth += 1
+            elif ch == "]":
+                bracket_depth -= 1
+            elif ch == "{":
+                brace_depth += 1
+            elif ch == "}":
+                brace_depth -= 1
+                if bracket_depth == 1 and brace_depth == 0:
+                    last_top_close = i
+        if last_top_close > 0:
+            candidate = tail[: last_top_close + 1] + "]"
+            obj = _try_load(candidate)
+            arr = _unwrap(obj)
+            if arr is not None:
+                return arr
+
+    return None
 
 def _llm_canonicalize_heard(expected: str, heard: str, context: Optional[str] = None) -> Optional[str]:
     try:
@@ -1148,15 +1293,62 @@ def api_generate_quiz():
     elif difficulty.lower() == "high":
         age_hint = "Target ages 7+."
 
+    # Detect social-rules topic: triggers a specialised yes/no prompt that asks
+    # about kindness, manners, sharing, and respect. Designed for age 7+ but
+    # works at any difficulty when explicitly selected.
+    SOCIAL_RULE_KEYWORDS = (
+        "social rule", "social rules", "social norm", "social norms",
+        "etiquette", "manners", "good manners", "kindness", "behavior", "behaviour",
+    )
+    is_social_rules = any(
+        any(kw in t.lower() for kw in SOCIAL_RULE_KEYWORDS) for t in topics
+    )
+    use_social_rules_branch = is_social_rules and ("yes_no" in types)
+
     topic_text = ", ".join(topics)
+
+    if use_social_rules_branch:
+        # Specialised goal + examples for social-rules yes/no questions.
+        # Every example answer must be a clear, widely-accepted yes or no —
+        # no gray-area opinions, no "do you like…" subjectivity.
+        goal_text = (
+            "Goal: Generate yes/no questions about social rules, etiquette, kindness, and basic "
+            "social norms that a child should learn. Every question MUST have a clear, widely "
+            "accepted yes-or-no answer — not an opinion or gray-area. The aim is to make children "
+            "think about right and wrong behavior and learn social rules. "
+            "Cover a mix of: physical kindness (no hitting/kicking/pushing), sharing and taking turns, "
+            "polite words (please, thank you, sorry, excuse me), classroom behavior (listening, raising "
+            "hands, waiting), respect for others' belongings, helping others, and basic honesty. "
+            "Examples of GOOD questions and their answers: "
+            "'Is it okay to kick your friend?' → no. "
+            "'Should you say thank you when someone helps you?' → yes. "
+            "'Is it okay to take a toy without asking?' → no. "
+            "'Should you wait your turn in line?' → yes. "
+            "'Is it polite to interrupt someone speaking?' → no. "
+            "'Should you say sorry when you hurt someone?' → yes. "
+            "'Is it okay to laugh at someone who made a mistake?' → no. "
+            "'Should you share with a friend who has none?' → yes. "
+            "AVOID opinion or vague questions like 'Do you like sharing?', 'Is school fun?', "
+            "or 'Should you always be nice?' (the word 'always' makes it too strong)."
+        )
+        length_constraint = "Constraint: Questions must be short (under 12 words) and use simple language a 7-year-old understands."
+    else:
+        goal_text = (
+            "Goal: Questions must be objectively True or False based on basic object functions or category labels. "
+            "Avoid subjective questions like 'Do you like school?' or 'Are there toys?'."
+        )
+        length_constraint = "Constraint: Questions must be short (under 8 words)."
+
     prompt = (
         f"Act as a pediatric educator. Create {count} questions about the topic(s) '{topic_text}'. "
         f"{age_hint} "
         f"Use only these types: {type_hint}. "
-        "Goal: Questions must be objectively True or False based on basic object functions or category labels. "
-        "Avoid subjective questions like 'Do you like school?' or 'Are there toys?'. "
-        "Constraint: Questions must be short (under 8 words). "
-        "Return Format: JSON array of objects with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. "
+        f"{goal_text} "
+        f"{length_constraint} "
+        "Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your "
+        "response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object "
+        "(e.g. do NOT use {\"questions\": [...]}). Do NOT add commentary, markdown, or code fences. "
+        "Each array element must be an object with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. "
         "For yes_no, correct_answer must be 'yes' or 'no' and accepted_answers should be omitted. "
         "For wh, correct_answer is the primary short answer and accepted_answers must be a list of all "
         "reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). "
@@ -1171,18 +1363,10 @@ def api_generate_quiz():
         text = getattr(resp, 'message', None)
         text = getattr(text, 'content', None) if text is not None else str(resp)
         raw = (text or "").strip()
-        if raw.startswith("```"):
-            raw = raw.strip("`")
-        # Extract JSON
-        obj = None
-        try:
-            obj = json.loads(raw)
-        except Exception:
-            l = raw.find('[')
-            r = raw.rfind(']')
-            if l != -1 and r != -1 and r > l:
-                obj = json.loads(raw[l:r+1])
+        obj = _parse_json_array(raw)
         if not isinstance(obj, list):
+            snippet = raw[:500].replace("\n", " ")
+            print(f"[quiz] Failed to parse LLM JSON. Raw start: {snippet!r}")
             return jsonify({"success": False, "error": "LLM returned invalid JSON"}), 500
 
         questions = []
@@ -1233,18 +1417,7 @@ def api_generate_quiz():
                 alt_text = getattr(alt_resp, 'message', None)
                 alt_text = getattr(alt_text, 'content', None) if alt_text is not None else str(alt_resp)
                 alt_raw = (alt_text or "").strip()
-                if alt_raw.startswith("```"):
-                    alt_raw = alt_raw.strip("`")
-                    if alt_raw.startswith("json"):
-                        alt_raw = alt_raw[4:].strip()
-                alt_obj = None
-                try:
-                    alt_obj = json.loads(alt_raw)
-                except Exception:
-                    l2 = alt_raw.find('[')
-                    r2 = alt_raw.rfind(']')
-                    if l2 != -1 and r2 != -1 and r2 > l2:
-                        alt_obj = json.loads(alt_raw[l2:r2+1])
+                alt_obj = _parse_json_array(alt_raw)
                 if isinstance(alt_obj, list) and len(alt_obj) == len(wh_needing_alts):
                     for q, alts in zip(wh_needing_alts, alt_obj):
                         if isinstance(alts, list):
@@ -1425,6 +1598,114 @@ def api_generate_quiz_feedback():
         print(f"Warning: feedback generation failed: {e}")
 
     return jsonify({"success": True, "correct": [], "incorrect": []})
+
+@app.route("/api/generate_wh_options", methods=["POST"])
+def api_generate_wh_options():
+    """Generate plausible distractor options for WH-quiz questions.
+
+    Input JSON:
+        {
+            "questions": [{"question": str, "correct_answer": str,
+                            "accepted_answers": [str, ...] (optional)}, ...],
+            "num_options": 3 | 4
+        }
+    Output JSON:
+        {"success": True,
+         "options": [[opt1, opt2, opt3], ...]}  # each list contains the correct_answer
+    """
+    username = session.get('username')
+    if not username:
+        return jsonify({"success": False, "error": "Not logged in"}), 401
+    data = request.get_json() or {}
+    qs = data.get("questions") or []
+    try:
+        num_options = int(data.get("num_options", 3))
+    except (TypeError, ValueError):
+        num_options = 3
+    num_options = max(2, min(4, num_options))
+
+    if not isinstance(qs, list) or not qs:
+        return jsonify({"success": False, "error": "questions required"}), 400
+
+    _ensure_quiz_llm()
+    if _quiz_llm is None:
+        return jsonify({"success": False, "error": "Quiz LLM not available"}), 500
+
+    distractor_count = num_options - 1
+    llm_input = []
+    for q in qs:
+        if not isinstance(q, dict):
+            continue
+        question_text = (q.get("question") or "").strip()
+        correct = (q.get("correct_answer") or "").strip()
+        accepted = q.get("accepted_answers") or []
+        if not question_text or not correct:
+            continue
+        llm_input.append({
+            "question": question_text,
+            "correct_answer": correct,
+            "accepted_answers": [str(a).strip() for a in accepted if str(a).strip()],
+        })
+
+    if not llm_input:
+        return jsonify({"success": False, "error": "no valid questions"}), 400
+
+    prompt = (
+        "You are creating multiple-choice options for a child's quiz. "
+        f"For each question below, generate exactly {distractor_count} short, plausible-but-WRONG "
+        "answer options that a child might consider. "
+        "Rules:\n"
+        "- Each option must be 1-3 words, child-friendly, and clearly different from the correct answer "
+        "and from any of its accepted_answers.\n"
+        "- Options should be in the same category as the correct answer (e.g. if the answer is an animal, "
+        "give other animals).\n"
+        "- Do NOT include the correct answer or any accepted answer in the distractors.\n"
+        "- Do NOT include duplicates.\n"
+        "Return JSON only: a list of lists, in the same order as the input. "
+        f"Each inner list must contain exactly {distractor_count} distractor strings.\n"
+        f"Input: {json.dumps(llm_input)}"
+    )
+
+    try:
+        resp = _quiz_llm.get_response(prompt)
+        text = getattr(resp, 'message', None)
+        text = getattr(text, 'content', None) if text is not None else str(resp)
+        raw = (text or "").strip()
+        if raw.startswith("```"):
+            raw = raw.strip("`")
+            if raw.startswith("json"):
+                raw = raw[4:].strip()
+        obj = None
+        try:
+            obj = json.loads(raw)
+        except Exception:
+            l = raw.find('[')
+            r = raw.rfind(']')
+            if l != -1 and r != -1 and r > l:
+                obj = json.loads(raw[l:r+1])
+        if not isinstance(obj, list):
+            return jsonify({"success": False, "error": "LLM returned invalid JSON"}), 500
+
+        options_out = []
+        for i, q in enumerate(llm_input):
+            distractors = obj[i] if i < len(obj) and isinstance(obj[i], list) else []
+            distractors = [str(d).strip() for d in distractors if str(d).strip()]
+            forbidden = {q["correct_answer"].lower()} | {a.lower() for a in q["accepted_answers"]}
+            distractors = [d for d in distractors if d.lower() not in forbidden]
+            seen = set()
+            unique = []
+            for d in distractors:
+                key = d.lower()
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(d)
+            unique = unique[:distractor_count]
+            opts = [q["correct_answer"]] + unique
+            options_out.append(opts)
+
+        return jsonify({"success": True, "options": options_out})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 @app.route("/api/teach_quiz_answer", methods=["POST"])
 def api_teach_quiz_answer():
@@ -1987,6 +2268,29 @@ def api_save_story():
     if not story or not metadata:
         return jsonify({"error": "Missing story or metadata"}), 400
 
+    # Takeaways: the client (templates/index.html) extracts them from the raw
+    # LLM output and sends them. Server-side fallback parses them out of the
+    # story body in case a non-web caller forwards the full raw response.
+    takeaways = data.get("takeaways") or []
+    if isinstance(takeaways, str):
+        takeaways = [takeaways]
+    takeaways = [str(t).strip() for t in takeaways if str(t).strip()]
+    if not takeaways:
+        tk_match = re.search(
+            r"\*\*\s*Takeaways\s*\*\*\s*\n(.+?)(?=\n\s*\*\*\s*(?:Explanation|End)\b|\Z)",
+            story, flags=re.IGNORECASE | re.DOTALL,
+        )
+        if tk_match:
+            for line in tk_match.group(1).splitlines():
+                line = line.strip()
+                line = re.sub(r"^[-*•]\s*", "", line)
+                line = re.sub(r"^\d+[.)]\s*", "", line)
+                line = line.strip()
+                if line:
+                    takeaways.append(line)
+    if takeaways:
+        print(f"[StorySave] Extracted {len(takeaways)} takeaways")
+
     # Extract title from story text and store in metadata
     title, _body = _extract_story_title(story)
     if title:
@@ -2041,7 +2345,9 @@ def api_save_story():
     )
     print(f"[StorySave] Generated {len(questions)} comprehension questions")
 
-    # Save story, metadata, pages, scenes, mapping, and questions
+    # Save story, metadata, pages, scenes, mapping, questions, and takeaways.
+    # `takeaways` is only populated for age 7+ tiers (see story_generator.AGE_TIERS
+    # with requires_takeaways=True); for younger ages it is saved as [].
     with open(fpath, "w") as f:
         json.dump({
             "story": story,
@@ -2050,6 +2356,7 @@ def api_save_story():
             "scenes": scenes,
             "page_to_scene": page_to_scene,
             "questions": questions,
+            "takeaways": takeaways,
         }, f, indent=2)
 
     # Generate one image per scene (not per page)
@@ -4259,12 +4566,19 @@ def api_get_story_sentences():
                 except Exception as e:
                     print(f"[StoryQuestions] Failed to backfill questions: {e}")
 
+        # Takeaways are populated for age 7+ stories. For older stories that
+        # predate the takeaways feature, the field will be missing -> default [].
+        takeaways = story_data.get('takeaways', []) or []
+        if not isinstance(takeaways, list):
+            takeaways = []
+
         return jsonify({
             'success': True,
             'sentences': sentences,
             'metadata': metadata,
             'images_available': image_generator.is_available(),
-            'questions': questions
+            'questions': questions,
+            'takeaways': takeaways,
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
@@ -4589,7 +4903,13 @@ def api_movement_status():
 
 @app.route('/api/volume_settings', methods=['POST'])
 def api_volume_settings():
-    """Set robot speaker volume (0-100) via ROS service."""
+    """Set robot speaker volume (0-100) via ALSA hardware mixer over SSH.
+
+    /qt_robot/setting/setVolume only affects the QT TTS engine (talkText) and
+    does not change loudness for file-based playback (talkAudio used by the
+    qwen/polly engines). The ALSA Headphone mixer on the head computer is the
+    actual lever — works for all engines, real-time.
+    """
     username = session.get('username')
     if not username:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
@@ -4602,10 +4922,9 @@ def api_volume_settings():
         return jsonify({'success': False, 'error': 'Invalid volume level'}), 400
 
     try:
-        # Equivalent to: rosservice call /qt_robot/setting/setVolume "volume: <level>"
-        from qt_robot_interface.srv import setting_setVolume
-        service = rospy.ServiceProxy('/qt_robot/setting/setVolume', setting_setVolume)
-        service(level)
+        applied = tts_helper.set_hardware_volume(level)
+        if not applied:
+            return jsonify({'success': False, 'error': 'Hardware volume change failed (check ROBOT_HOST/ROBOT_USER/ROBOT_PASSWORD and sshpass)'}), 500
 
         setattr(tts_helper, 'volume_level', level)
         return jsonify({'success': True, 'volume_level': level, 'applied': True})

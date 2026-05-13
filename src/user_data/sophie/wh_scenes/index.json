@@ -1,0 +1,22 @@
+[
+  {
+    "id": "scene_1778274181_a2c695",
+    "filename": "capture_2026-05-08 23:03:12.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1778274181_a2c695.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1778274181_a2c695.jpg",
+    "scene_description": "A boy in a striped jersey and shorts is playing soccer on a green grass field during the daytime.",
+    "question_count": 5,
+    "status": "ready",
+    "created_at": "2026-05-08T23:03:12"
+  },
+  {
+    "id": "scene_1778274207_5ad6e3",
+    "filename": "capture_2026-05-08 23:03:37.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1778274207_5ad6e3.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1778274207_5ad6e3.jpg",
+    "scene_description": "A young girl rollerblading on a paved path in a park, lined with trees and streetlights, under a bright sky.",
+    "question_count": 5,
+    "status": "ready",
+    "created_at": "2026-05-08T23:03:37"
+  }
+]

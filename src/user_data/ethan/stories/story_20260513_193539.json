@@ -1,0 +1,121 @@
+{
+  "story": "Ethan loved the big, grassy corner of the park, especially the area where the big oak tree stood. [emotion:QT/happy] He had brought his favorite magnifying glass and his notebook, ready to discover something exciting. [emotion:QT/happy] Ethan was very excited to search for fossils today. His goal was to find a fossil that looked like a T-Rex tooth.\n\n[emotion:QT/calm] He started digging carefully, brushing away the dirt with a small brush. Suddenly, he saw a patch of unusually colored rocks. [emotion:QT/afraid] He knelt down, feeling a little worried because the rocks looked tricky to move. Just then, Maya, his friend, arrived. Maya was building a magnificent fort nearby. \"Ethan, what are you doing over there?\" she asked, pointing to the rocks. Ethan pointed back. \"I think... I found something important, but I can't move it,\" he explained.\n\nMaya looked closely at the rocks. She realized that the corner where Ethan was digging was steep and muddy. \"Oh,\" Maya said. \"If we work together, we could move them. I can use my shovel, and you can use your little brush to clear the edges.\" [gesture:nodding-yes] Ethan thought about this. [emotion:QT/calm] Working with Maya seemed like a good plan. So, they started digging together. Maya carefully moved the biggest rock, and Ethan gently brushed the smaller dirt clumps away. [emotion:QT/surprised] Because they worked together, they uncovered a smooth, curved piece of bone! [emotion:QT/surprised] It wasn't a tooth, but it was beautiful.\n\nA third friend, Leo, ran up. [emotion:QT/happy] \"Wow! What did you find?\" Leo asked. [emotion:QT/happy] Ethan smiled. \"A dinosaur bone!\" he said. Leo pointed to the bone. \"That is so kind of you two to share your discovery with me.\" [emotion:QT/happy] Ethan felt a burst of proud feeling. [emotion:QT/happy] He realized that finding the bone was fun, but sharing it with his friends made it even better.\n\nLater, when they walked home, Maya gave Ethan a high-five. [emotion:QT/happy] \"You were so brave to ask for help, Ethan. We did it because we worked together.\" [emotion:QT/happy] Ethan felt grateful for his friends. [emotion:QT/calm] He knew that working as a team always made difficult things easier.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemma4:e4b",
+    "target_word_range": [
+      250,
+      350
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 446,
+    "paragraph_count": 5,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4
+    ]
+  },
+  "pages": [
+    "Ethan loved the big, grassy corner of the park, especially the area where the big oak tree stood. [emotion:QT/happy] He had brought his favorite magnifying glass and his notebook, ready to discover something exciting. [emotion:QT/happy] Ethan was very excited to search for fossils today. His goal was to find a fossil that looked like a T-Rex tooth.",
+    "[emotion:QT/calm] He started digging carefully, brushing away the dirt with a small brush. Suddenly, he saw a patch of unusually colored rocks. [emotion:QT/afraid] He knelt down, feeling a little worried because the rocks looked tricky to move. Just then, Maya, his friend, arrived. Maya was building a magnificent fort nearby. \"Ethan, what are you doing over there?\" she asked, pointing to the rocks. Ethan pointed back. \"I think... I found something important, but I can't move it,\" he explained.",
+    "Maya looked closely at the rocks. She realized that the corner where Ethan was digging was steep and muddy. \"Oh,\" Maya said. \"If we work together, we could move them. I can use my shovel, and you can use your little brush to clear the edges.\" [gesture:nodding-yes] Ethan thought about this. [emotion:QT/calm] Working with Maya seemed like a good plan. So, they started digging together. Maya carefully moved the biggest rock, and Ethan gently brushed the smaller dirt clumps away. [emotion:QT/surprised] Because they worked together, they uncovered a smooth, curved piece of bone! [emotion:QT/surprised] It wasn't a tooth, but it was beautiful.",
+    "A third friend, Leo, ran up. [emotion:QT/happy] \"Wow! What did you find?\" Leo asked. [emotion:QT/happy] Ethan smiled. \"A dinosaur bone!\" he said. Leo pointed to the bone. \"That is so kind of you two to share your discovery with me.\" [emotion:QT/happy] Ethan felt a burst of proud feeling. [emotion:QT/happy] He realized that finding the bone was fun, but sharing it with his friends made it even better.",
+    "Later, when they walked home, Maya gave Ethan a high-five. [emotion:QT/happy] \"You were so brave to ask for help, Ethan. We did it because we worked together.\" [emotion:QT/happy] Ethan felt grateful for his friends. [emotion:QT/calm] He knew that working as a team always made difficult things easier."
+  ],
+  "scenes": [
+    "Ethan is at a grassy park corner near a large oak tree, digging with a small brush. He is later joined by Maya, then Leo, as they work together to uncover a dinosaur bone.",
+    "Ethan and Maya walk home, giving each other a high-five and talking about their teamwork."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "questions": [
+    {
+      "question": "What did Ethan bring to the park to help him search for fossils?",
+      "type": "detail",
+      "correct_answer": "He brought his magnifying glass and a notebook.",
+      "wrong_answers": [
+        "He brought a shovel and a big bucket.",
+        "He brought his favorite dinosaur toy."
+      ]
+    },
+    {
+      "question": "What did Ethan and Maya find when they worked together to move the rocks?",
+      "type": "detail",
+      "correct_answer": "They found a smooth, curved piece of bone.",
+      "wrong_answers": [
+        "They found a shiny, new T-Rex tooth.",
+        "They found a hidden treasure chest."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel worried when he saw the unusually colored rocks?",
+      "type": "inference",
+      "correct_answer": "He felt worried because the rocks looked tricky to move.",
+      "wrong_answers": [
+        "He felt worried because it started to rain.",
+        "He felt worried because Maya was late."
+      ]
+    },
+    {
+      "question": "How did Ethan feel after Maya praised him for being brave and working together?",
+      "type": "inference",
+      "correct_answer": "Ethan felt grateful for his friends and their teamwork.",
+      "wrong_answers": [
+        "Ethan felt confused about what Maya meant.",
+        "Ethan felt sad because he wanted a T-Rex tooth."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about Ethan who learned teamwork makes things easier.",
+      "wrong_answers": [
+        "This story was about Maya who built a big fort.",
+        "This story was about finding a very rare T-Rex tooth."
+      ]
+    }
+  ]
+}

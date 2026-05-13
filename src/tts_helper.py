@@ -14,7 +14,7 @@ import re
 import html
 import rospy
 from typing import Optional
-from qt_robot_interface.srv import behavior_talk_text, behavior_talk_audio, speech_config, setting_setVolume
+from qt_robot_interface.srv import behavior_talk_text, behavior_talk_audio, speech_config, setting_setVolume, setting_upload
 import math
 import threading
 import time
@@ -62,11 +62,19 @@ class TTSHelper:
         """Initialize TTS services and movement interface"""
         try:
             # Engine selection
-            # 'qt' (default) uses robot's built-in TTS; 'polly' uses AWS Polly with audio playback
-            self.engine = (os.environ.get('TTS_ENGINE') or 'qt').strip().lower()
+            # 'qwen' (default) uses Qwen TTS realtime with a custom voice;
+            # 'qt' uses the robot's built-in TTS; 'polly' uses AWS Polly with audio playback
+            self.engine = (os.environ.get('TTS_ENGINE') or 'qwen').strip().lower()
             self.aws_voice = os.environ.get('POLLY_VOICE', 'Justin')
             self.polly_rate = os.environ.get('POLLY_RATE')  # e.g., 'slow', 'x-slow', '85%'
             self.polly_volume = os.environ.get('POLLY_VOLUME')  # e.g., 'loud', 'x-loud', '+6dB'
+            # Qwen TTS realtime config (must match the voice you created)
+            self.qwen_api_key = os.environ.get('DASHSCOPE_API_KEY') or "sk-7a00d999dd654c1cbd82fb3693c5eadc"
+            self.qwen_voice = os.environ.get('QWEN_VOICE', 'qwen-tts-vd-myvoice-voice-20260509042601825-cfa4')
+            self.qwen_model = os.environ.get('QWEN_MODEL', 'qwen3-tts-vd-realtime-2026-01-15')
+            self.qwen_url = os.environ.get('QWEN_URL', 'wss://dashscope-intl.aliyuncs.com/api-ws/v1/realtime')
+            self.qwen_sample_rate = int(os.environ.get('QWEN_SAMPLE_RATE', '24000'))
+            self.qwen_lipsync = (os.environ.get('QWEN_LIPSYNC', '1').strip().lower() in ('1', 'true', 'yes'))
             self.robot_host = os.environ.get('ROBOT_HOST', '192.168.100.1')
             self.robot_user = os.environ.get('ROBOT_USER', 'developer')
             self.robot_qt_audio_dir = os.environ.get('ROBOT_QT_AUDIO_DIR', '/home/qtrobot/robot/data/audios/')
@@ -83,7 +91,7 @@ class TTSHelper:
             if not rospy.core.is_initialized():
                 rospy.init_node('tts_helper', anonymous=True)
 
-            # Create service proxies only for QT engine
+            # Create service proxies for QT engine
             if self.engine == 'qt':
                 self.talk_text_service = rospy.ServiceProxy('/qt_robot/behavior/talkText', behavior_talk_text)
                 self.talk_audio_service = rospy.ServiceProxy('/qt_robot/behavior/talkAudio', behavior_talk_audio)
@@ -95,6 +103,13 @@ class TTSHelper:
                 self.speech_config_service = None
                 self.volume_service = None
 
+            # Qwen engine needs talkAudio (for visemes/lip-sync) and uploadBase64 (to push WAVs to the robot)
+            self.upload_service = None
+            if self.engine == 'qwen':
+                self.talk_audio_service = rospy.ServiceProxy('/qt_robot/behavior/talkAudio', behavior_talk_audio)
+                self.upload_service = rospy.ServiceProxy('/qt_robot/setting/uploadBase64', setting_upload)
+                self.volume_service = rospy.ServiceProxy('/qt_robot/setting/setVolume', setting_setVolume)
+
             # Initialize kinematic interface for movement
             self.kinematics = None
             if KINEMATICS_AVAILABLE:
@@ -105,7 +120,8 @@ class TTSHelper:
                     print(f"Warning: Could not initialize kinematic interface: {e}")
                     self.kinematics = None
 
-            if self.engine == 'polly' and self.polly_lipsync and PYLIPS_AVAILABLE:
+            if (self.engine == 'polly' and self.polly_lipsync and PYLIPS_AVAILABLE) or \
+               (self.engine == 'qwen' and self.qwen_lipsync and PYLIPS_AVAILABLE):
                 try:
                     self.face = RobotFace()
                 except Exception as e:
@@ -163,6 +179,11 @@ class TTSHelper:
         username = self.current_user or os.environ.get('TTS_USERNAME') or 'guest'
         safe = re.sub(r'[^a-zA-Z0-9_\-]', '_', username)
         return os.path.join(self.user_data_dir, safe, 'polly')
+
+    def _qwen_output_dir(self) -> str:
+        username = self.current_user or os.environ.get('TTS_USERNAME') or 'guest'
+        safe = re.sub(r'[^a-zA-Z0-9_\-]', '_', username)
+        return os.path.join(self.user_data_dir, safe, 'qwen')
     
     def set_volume(self, level: int) -> bool:
         """
@@ -183,6 +204,35 @@ class TTSHelper:
             return False
         except Exception as e:
             print(f"Error setting volume: {e}")
+            return False
+
+    def set_hardware_volume(self, percent: int) -> bool:
+        """
+        Set the head computer's ALSA Headphone mixer level (0-100) via SSH.
+
+        Real-time and engine-agnostic. /qt_robot/setting/setVolume only affects
+        the QT TTS engine (talkText), so file-based playback (talkAudio used by
+        the qwen/polly engines) needs the hardware mixer instead. Same trick
+        pylips_basic.py uses.
+        """
+        try:
+            percent = max(0, min(100, int(percent)))
+        except Exception:
+            return False
+        try:
+            ssh_opts = ['-o', 'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null']
+            password = os.environ.get('ROBOT_PASSWORD')
+            remote_cmd = f"amixer -c 1 sset Headphone {percent}% unmute"
+            if password and shutil.which('sshpass'):
+                cmd = ['sshpass', '-p', password, 'ssh'] + ssh_opts + [f"{self.robot_user}@{self.robot_host}", remote_cmd]
+            else:
+                if password and not shutil.which('sshpass'):
+                    print("Hint: install sshpass (e.g., sudo apt-get install -y sshpass) for non-interactive auth.")
+                cmd = ['ssh'] + ssh_opts + [f"{self.robot_user}@{self.robot_host}", remote_cmd]
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Hardware volume change failed: {e}")
             return False
 
     def set_polly_volume(self, volume_db: str) -> bool:
@@ -390,6 +440,10 @@ class TTSHelper:
             if self.engine == 'polly':
                 return self._speak_with_polly(clean_text)
 
+            # If using Qwen TTS realtime path
+            if self.engine == 'qwen':
+                return self._speak_with_qwen(clean_text)
+
             # Default: QT built-in TTS
             if self.talk_text_service:
                 estimated_duration = len(clean_text) * 0.1
@@ -418,8 +472,8 @@ class TTSHelper:
             bool: True if successful, False otherwise
         """
         try:
-            # Set language for QT engine only; Polly voice is selected via env
-            if self.engine != 'polly':
+            # Set language for QT engine only; Polly/Qwen voices are selected via env
+            if self.engine == 'qt':
                 if not self.set_language(language):
                     print(f"Warning: Could not set language to {language}")
             return self.speak(story_text)
@@ -431,10 +485,12 @@ class TTSHelper:
     def is_available(self) -> bool:
         """
         Check if TTS services are available
-        
+
         Returns:
             bool: True if TTS is available, False otherwise
         """
+        if self.engine in ('polly', 'qwen'):
+            return True
         return self.talk_text_service is not None
 
     def is_speaking(self) -> bool:
@@ -494,6 +550,120 @@ class TTSHelper:
         except Exception as e:
             print(f"Error getting head position: {e}")
             return None, None 
+
+    # Internal helper for Qwen TTS realtime playback
+    # Uses /qt_robot/behavior/talkAudio so the robot's built-in visemes drive
+    # mouth movement, exactly like talkText does for the QT engine.
+    def _speak_with_qwen(self, text: str) -> bool:
+        try:
+            import wave
+            import base64
+            import threading
+            import dashscope
+            from dashscope.audio.qwen_tts_realtime import (
+                QwenTtsRealtime, QwenTtsRealtimeCallback, AudioFormat,
+            )
+        except Exception as e:
+            print(f"Qwen TTS unavailable (missing dashscope?): {e}")
+            return False
+
+        # Strip any SSML tags — Qwen takes plain text
+        plain_text = re.sub(r'<[^>]+>', ' ', text)
+        plain_text = ' '.join(plain_text.split()).strip()
+        if not plain_text:
+            return False
+
+        class _CollectingCallback(QwenTtsRealtimeCallback):
+            def __init__(self):
+                self.complete_event = threading.Event()
+                self.pcm = bytearray()
+                self.error = ""
+
+            def on_open(self):
+                pass
+
+            def on_close(self, code, msg):
+                if code not in (1000, None):
+                    self.error = f"closed code={code} msg={msg}"
+                    self.complete_event.set()
+
+            def on_event(self, response):
+                t = response.get("type", "")
+                if t == "response.audio.delta":
+                    self.pcm.extend(base64.b64decode(response["delta"]))
+                elif t == "session.finished":
+                    self.complete_event.set()
+
+            def wait(self, timeout=60):
+                return self.complete_event.wait(timeout)
+
+        ts = int(time.time())
+        out_dir = self._qwen_output_dir()
+        os.makedirs(out_dir, exist_ok=True)
+        wav_filename = f"qwen_{ts}.wav"
+        wav_path = os.path.join(out_dir, wav_filename)
+
+        try:
+            dashscope.api_key = self.qwen_api_key
+            cb = _CollectingCallback()
+            tts = QwenTtsRealtime(model=self.qwen_model, callback=cb, url=self.qwen_url)
+            tts.connect()
+            tts.update_session(
+                voice=self.qwen_voice,
+                response_format=AudioFormat.PCM_24000HZ_MONO_16BIT,
+                mode="server_commit",
+            )
+            tts.append_text(plain_text)
+            tts.finish()
+            cb.wait(timeout=60)
+            if cb.error:
+                print(f"Qwen TTS error: {cb.error}")
+                return False
+            with wave.open(wav_path, "wb") as w:
+                w.setnchannels(1)
+                w.setsampwidth(2)
+                w.setframerate(self.qwen_sample_rate)
+                w.writeframes(bytes(cb.pcm))
+            duration = len(cb.pcm) / (self.qwen_sample_rate * 2)
+        except Exception as e:
+            print(f"Qwen TTS synthesis failed: {e}")
+            return False
+
+        # Push WAV to robot's standard audio dir, then trigger talkAudio for QT visemes
+        if not self.upload_service or not self.talk_audio_service:
+            print("Qwen path: ROS upload/talkAudio services not available")
+            return False
+
+        try:
+            with open(wav_path, "rb") as f:
+                encoded = base64.b64encode(f.read()).decode("ascii")
+            remote_path = os.path.join(self.robot_qt_audio_dir, wav_filename)
+            self.upload_service.wait_for_service(timeout=5.0)
+            up = self.upload_service(data=encoded, filepath=remote_path, permission="644", append=False)
+            if not up.status:
+                print(f"Qwen path: uploadBase64 returned status=False for {remote_path}")
+                return False
+        except Exception as e:
+            print(f"Qwen path: upload failed: {e}")
+            return False
+
+        # Movement during speech
+        try:
+            self._start_movement_thread(duration)
+        except Exception:
+            pass
+
+        try:
+            # talkAudio takes the basename without extension (same convention as play_on_robot.py)
+            name_no_ext = os.path.splitext(wav_filename)[0]
+            self.talk_audio_service.wait_for_service(timeout=5.0)
+            resp = self.talk_audio_service(name_no_ext, "")
+            return bool(getattr(resp, "status", resp))
+        except Exception as e:
+            print(f"Qwen path: talkAudio failed: {e}")
+            return False
+        finally:
+            self.stop_movement = True
 
     # Internal helpers for AWS Polly playback
     def _speak_with_polly(self, text: str) -> bool:

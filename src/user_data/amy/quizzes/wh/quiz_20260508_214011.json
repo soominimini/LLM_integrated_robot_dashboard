@@ -1,0 +1,61 @@
+[
+  {
+    "question": "What do we read in school?",
+    "type": "wh",
+    "correct_answer": "books",
+    "accepted_answers": [
+      "books",
+      "stories",
+      "picture books"
+    ]
+  },
+  {
+    "question": "Who teaches us new things?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "educator",
+      "adult"
+    ]
+  },
+  {
+    "question": "Where do we wash hands?",
+    "type": "wh",
+    "correct_answer": "sink",
+    "accepted_answers": [
+      "sink",
+      "bathroom"
+    ]
+  },
+  {
+    "question": "What do we use for drawing?",
+    "type": "wh",
+    "correct_answer": "crayon",
+    "accepted_answers": [
+      "crayon",
+      "marker",
+      "pencil"
+    ]
+  },
+  {
+    "question": "What is used to write on the board?",
+    "type": "wh",
+    "correct_answer": "chalk",
+    "accepted_answers": [
+      "chalk",
+      "marker",
+      "eraser"
+    ]
+  },
+  {
+    "question": "Who helps us when we fall?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "adult",
+      "nurse"
+    ]
+  }
+]

@@ -691,6 +691,20 @@
         }
         const storyOnly = match[2].trim();
 
+        // Extract ** Takeaways ** bullets (present for age 7+ stories).
+        // Section lives between ** End ** and ** Explanation of the output **.
+        const takeaways = [];
+        const tkMatch = raw.match(/\*\*\s*Takeaways\s*\*\*\s*\n([\s\S]*?)(?=\n\s*\*\*\s*(?:Explanation|End)\b|$)/i);
+        if (tkMatch && tkMatch[1]) {
+            tkMatch[1].split('\n').forEach(line => {
+                const stripped = line.trim()
+                    .replace(/^[-*•]\s*/, '')
+                    .replace(/^\d+[.)]\s*/, '')
+                    .trim();
+                if (stripped) takeaways.push(stripped);
+            });
+        }
+
         // Build sentence -> paragraph mapping
         const paragraphs = storyOnly.split(/\n\s*\n+/).map(p => p.trim()).filter(Boolean);
         const sentenceToParagraph = [];
@@ -718,7 +732,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     story: storyOnly,
-                    metadata: window.lastStoryMetadata
+                    metadata: window.lastStoryMetadata,
+                    takeaways: takeaways
                 })
             });
 

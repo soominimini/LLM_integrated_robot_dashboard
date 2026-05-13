@@ -1,0 +1,133 @@
+{
+  "story": "Ava loved school, especially the science corner. [emotion:QT/happy] She spent hours drawing pictures of dinosaurs, the mighty creatures that once walked upon Earth. Today, Ms. Lena had organized a special group activity: building a display of fossil skeletons. Ava wanted to be the best at it, so she felt a little [emotion:QT/afraid] nervous. Ms. Lena explained, \"Today, we will work together to share our discoveries and listen to each other's ideas.\" Ava knew she wanted to build a perfect, magnificent dinosaur display.\n\nThe group gathered at a large table. There were four stations, each with different fossil pieces. Ava picked up a small, curved bone. [emotion:QT/surprised] Suddenly, she realized her favorite piece, a large Triceratops frill bone, was missing! Ava searched under the blankets and behind the bins, but the bone was nowhere to be found. [emotion:QT/angry] She felt frustrated because she needed that piece to finish her amazing display.\n\nNext to Ava, a boy named Leo was carefully arranging some tiny, colorful feathers. He noticed Ava's distress. [gesture:patience] \"What happened, Ava?\" he asked softly. Ava pointed at the empty spot. \"My Triceratops bone... it went missing! I need it for the group project.\" [gesture:think] Leo looked around the table, thinking hard. He saw a little girl named Maya struggling with a heavy box of tools. \"Maya, can you help us look?\" Leo suggested. [emotion:QT/happy] Maya smiled. She started lifting the box, and as she moved it, something shiny caught the light. It was Ava's beautiful frill bone! \"Look, Ava!\" Maya exclaimed. [emotion:QT/surprised] Ava gasped. \"It was caught in the tools box!\" she whispered.\n\nMs. Lena knelt beside them. \"You all worked together, and because you helped Maya, you found the bone! You learned how to take turns and listen to each other, didn't you?\" [emotion:QT/happy] Ava felt a wave of relief wash over her. [emotion:QT/happy] She thanked Leo and Maya, feeling wonderfully proud. Working with the bone, Ava and her friends quickly finished the display. [emotion:QT/happy] They were careful to share the remaining pieces, making the final display even more wonderful.\n\nWhen Ms. Lena declared the project complete, she asked the class a question. \"What was this story mostly about?\" [gesture:think] Ava thought for a moment. She looked at her friends. \"This story was about us who worked together and found the bone.\" [emotion:QT/happy] Ms",
+  "metadata": {
+    "age": 7,
+    "age_tier": "early_school_age",
+    "child_name": "ava",
+    "generated_at": null,
+    "model": "gemma4:e4b",
+    "target_word_range": [
+      400,
+      500
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 488,
+    "paragraph_count": 5,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ]
+  },
+  "pages": [
+    "Ava loved school, especially the science corner. [emotion:QT/happy] She spent hours drawing pictures of dinosaurs, the mighty creatures that once walked upon Earth. Today, [emotion:QT/happy] Ms. Lena had organized a special group activity: building a display of fossil skeletons. Ava wanted to be the best at it, so she felt a little [emotion:QT/afraid] nervous. Ms. Lena explained, \"Today, we will work together to share our discoveries and listen to each other's ideas.\" Ava knew she wanted to build a perfect, magnificent dinosaur display.",
+    "The group gathered at a large table. There were four stations, each with different fossil pieces. Ava picked up a small, curved bone. [emotion:QT/surprised] Suddenly, she realized her favorite piece, a large Triceratops frill bone, was missing! Ava searched under the blankets and behind the bins, but the bone was nowhere to be found. [emotion:QT/angry] She felt frustrated because she needed that piece to finish her amazing display.",
+    "Next to Ava, a boy named Leo was carefully arranging some tiny, colorful feathers. He noticed Ava's distress. [gesture:patience] \"What happened, Ava?\" he asked softly. Ava pointed at the empty spot. \"My Triceratops bone... it went missing! I need it for the group project.\" [gesture:think] Leo looked around the table, thinking hard. He saw a little girl named Maya struggling with a heavy box of tools.",
+    "\"Maya, can you help us look?\" Leo suggested. [emotion:QT/happy] Maya smiled. She started lifting the box, and as she moved it, something shiny caught the light. It was Ava's beautiful frill bone! \"Look, Ava!\" Maya exclaimed. [emotion:QT/surprised] Ava gasped. \"It was caught in the tools box!\" she whispered.",
+    "Ms. Lena knelt beside them. \"You all worked together, and because you helped Maya, you found the bone! You learned how to take turns and listen to each other, didn't you?\" [emotion:QT/happy] Ava felt a wave of relief wash over her. [emotion:QT/happy] She thanked Leo and Maya, feeling wonderfully proud. Working with the bone, Ava and her friends quickly finished the display. [emotion:QT/happy] They were careful to share the remaining pieces, making the final display even more wonderful.",
+    "When Ms. Lena declared the project complete, she asked the class a question. \"What was this story mostly about?\" [gesture:think] Ava thought for a moment. She looked at her friends. \"This story was about us who worked together and found the bone.\" Ms"
+  ],
+  "scenes": [
+    "Ava sits in a bright school science corner, drawing dinosaurs, while Ms. Lena explains a group activity to the class.",
+    "Ava, Leo, and Maya are gathered around a large table filled with fossil pieces, first searching anxiously for a missing bone, then smiling as Maya holds it up. Ms. Lena kneels beside them as they proudly finish their dinosaur display.",
+    "Ms. Lena stands before the class and their completed dinosaur fossil display, asking a concluding question. Ava looks at her friends, thoughtfully answering about their teamwork."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What was Ava's favorite part of school where she loved to draw dinosaurs?",
+      "type": "detail",
+      "correct_answer": "The science corner.",
+      "wrong_answers": [
+        "The art room.",
+        "The playground."
+      ]
+    },
+    {
+      "question": "What special group activity did Ms. Lena organize for the class to build?",
+      "type": "detail",
+      "correct_answer": "A display of fossil skeletons.",
+      "wrong_answers": [
+        "A dinosaur drawing contest.",
+        "A game about space."
+      ]
+    },
+    {
+      "question": "Why do you think Ava felt frustrated when her Triceratops frill bone went missing?",
+      "type": "inference",
+      "correct_answer": "Because she needed that piece to finish her amazing display.",
+      "wrong_answers": [
+        "Because she wanted to go home early.",
+        "Because Leo took her bone."
+      ]
+    },
+    {
+      "question": "What do you think happened because Leo and Maya worked together to help Ava?",
+      "type": "inference",
+      "correct_answer": "They found Ava's missing Triceratops frill bone.",
+      "wrong_answers": [
+        "They started a new project.",
+        "They went to play outside."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about friends who worked together and found a missing bone.",
+      "wrong_answers": [
+        "This story was about a girl who loved drawing dinosaurs.",
+        "This story was about a teacher who organized a science project."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "story": "Sophie loved visiting the garden. [emotion:QT/happy] Today, she was excited to play with Princess Lily. Lily was sitting next to a large patch of roses. Sophie wanted to play a game, so she asked Lily, \u201cCan we play a game, Princess Lily?\u201d [gesture:nodding-yes] [emotion:QT/happy] Lily smiled. [emotion:QT/happy] \u201cYes, Sophie! I need your help.\u201d Lily pointed behind a big, stone bench. \u201cMy favorite, sparkly crown rolled away.\u201d\n\nSophie looked where Lily pointed. [emotion:QT/surprised] The garden was enormous, and the crown was gone. [emotion:QT/afraid] Sophie felt worried. Suddenly, a sleek, silver cat named Luna walked past. Luna saw Sophie looking worried. [emotion:QT/calm] Luna rubbed against Sophie's leg. Sophie knelt down and whispered, \"Can you help me, Luna?\" [emotion:QT/calm] Luna purred softly and started to sniff the ground. Luna walked beside the bench, and Sophie followed. They searched near the green bushes, but they did not see the crown.\n\n\"It must be here,\" Sophie whispered. [emotion:QT/surprised] Luna pawed at the dirt, and then she saw something! Luna looked under a broad, sweeping leaf. [emotion:QT/surprised] Sophie carefully reached her hand into the leaf. She found the sparkly crown! It was sitting right beside the stone bench. [emotion:QT/surprised] Sophie gasped. [gesture:embrace] [emotion:QT/happy] Lily ran over and hugged Sophie. [emotion:QT/happy] \u201cYou found it! You are so brave!\u201d Lily said. [emotion:QT/happy] Sophie felt very proud. She realized that because Luna helped her look, she could find the crown.\n\n[emotion:QT/happy] Lily laughed, and Luna sat down nearby. [emotion:QT/happy] Sophie smiled at her friend. \u201cThank you for helping me, Luna,\u201d Sophie said. [emotion:QT/calm] Luna purred in response. [emotion:QT/happy] Sophie learned that working together was so much fun, so she played with Lily until the sun went down. [emotion:QT/happy] She felt grateful for her wonderful friends.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "late_preschool",
+    "child_name": "sophie",
+    "generated_at": null,
+    "model": "gemma4:e4b",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 344,
+    "paragraph_count": 4,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "pages": [
+    "Sophie loved visiting the garden. [emotion:QT/happy] Today, she was excited to play with Princess Lily. Lily was sitting next to a large patch of roses.",
+    "Sophie wanted to play a game, so she asked Lily, Can we play a game, Princess Lily? Lily smiled. Yes, Sophie! I need your help.",
+    "Lily pointed behind a big, stone bench. My favorite, sparkly crown rolled away.",
+    "Sophie looked where Lily pointed. [emotion:QT/surprised] The garden was enormous, and the crown was gone. [emotion:QT/afraid] Sophie felt worried.",
+    "Suddenly, a sleek, silver cat named Luna walked past. Luna saw Sophie looking worried. [emotion:QT/calm] Luna rubbed against Sophie's leg.",
+    "Sophie knelt down and whispered, \"Can you help me, Luna?\" [emotion:QT/calm] Luna purred softly and started to sniff the ground. Luna walked beside the bench, and Sophie followed.",
+    "They searched near the green bushes, but they did not see the crown.",
+    "\"It must be here,\" Sophie whispered. [emotion:QT/surprised] Luna pawed at the dirt, and then she saw something! Luna looked under a broad, sweeping leaf.",
+    "[emotion:QT/surprised] Sophie carefully reached her hand into the leaf. She found the sparkly crown! It was sitting right beside the stone bench.",
+    "[emotion:QT/surprised] Sophie gasped. [gesture:embrace] [emotion:QT/happy] Lily ran over and hugged Sophie. You found it! You are so brave! Lily said.",
+    "[emotion:QT/happy] Sophie felt very proud. She realized that because Luna helped her look, she could find the crown.",
+    "[emotion:QT/happy] Lily laughed, and Luna sat down nearby. [emotion:QT/happy] Sophie smiled at her friend. Thank you for helping me, Luna, Sophie said.",
+    "[emotion:QT/calm] Luna purred in response. [emotion:QT/happy] Sophie learned that working together was so much fun, so she played with Lily until the sun went down. [emotion:QT/happy] She felt grateful for her wonderful friends."
+  ],
+  "scenes": [
+    "Sophie and Princess Lily are in a beautiful garden near roses. Lily explains that her sparkly crown has rolled away behind a large stone bench, making Sophie feel worried.",
+    "A sleek silver cat named Luna appears and helps Sophie search for the crown. Luna sniffs the ground and eventually discovers the crown hidden under a broad leaf near the stone bench.",
+    "Sophie finds the crown, and Lily joyfully hugs her, praising her bravery. Sophie feels proud and grateful for Luna's help, realizing the value of teamwork as they continue to play in the garden until sunset."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened?",
+      "type": "main_idea",
+      "correct_answer": "Sophie and Luna found the crown.",
+      "wrong_answers": [
+        "Lily played with Sophie.",
+        "Luna played with a ball."
+      ]
+    },
+    {
+      "question": "What did Princess Lily lose?",
+      "type": "detail",
+      "correct_answer": "Lily lost her sparkly crown.",
+      "wrong_answers": [
+        "Lily lost her pretty shoes.",
+        "Lily lost her magic wand."
+      ]
+    },
+    {
+      "question": "Who helped Sophie find the crown?",
+      "type": "detail",
+      "correct_answer": "Luna the silver cat helped Sophie.",
+      "wrong_answers": [
+        "Princess Lily helped Sophie.",
+        "A big dog helped Sophie."
+      ]
+    },
+    {
+      "question": "Why was Sophie worried?",
+      "type": "detail",
+      "correct_answer": "The sparkly crown was gone.",
+      "wrong_answers": [
+        "Sophie was worried about a monster.",
+        "Sophie was worried about rain."
+      ]
+    }
+  ]
+}

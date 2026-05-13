@@ -1,0 +1,81 @@
+{
+  "story": "[emotion:QT/happy] test_for_age5 loves the big library. test_for_age5 wants the sparkly storybook about space. The book sits on a high, slippery shelf. [emotion:QT/sad] test_for_age5 reaches, but the book is too high. Lily sees test_for_age5 struggling, so she runs over. Lily says, \"I can help you, test_for_age5.\" Lily finds a sturdy step stool, because test_for_age5 needs something safe. test_for_age5 and Lily climb up together. [emotion:QT/happy] They successfully grab the beautiful book. [emotion:QT/happy] test_for_age5 smiles and says, \"Thank you, Lily!\"",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "test_for_age5",
+    "generated_at": null,
+    "model": "gemma4:e4b",
+    "target_word_range": [
+      40,
+      90
+    ],
+    "topics": [],
+    "word_count": 197,
+    "paragraph_count": 1,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "pages": [
+    "[emotion:QT/happy] test_for_age5 loves the big library. test_for_age5 wants the sparkly storybook about space. The book sits on a high, slippery shelf.",
+    "[emotion:QT/sad] test_for_age5 reaches, but the book is too high. Lily sees test_for_age5 struggling, so she runs over. Lily says, \"I can help you, test_for_age5.\"",
+    "Lily finds a sturdy step stool, because test_for_age5 needs something safe. test_for_age5 and Lily climb up together. [emotion:QT/happy] They successfully grab the beautiful book.",
+    "[emotion:QT/happy] test_for_age5 smiles and says, \"Thank you, Lily!\""
+  ],
+  "scenes": [
+    "test_for_age5 is in a big library, reaching for a sparkly space storybook on a high shelf. Lily joins and helps test_for_age5 climb a step stool to grab the book."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "Lily helped test_for_age5 get a book.",
+      "wrong_answers": [
+        "test_for_age5 played with a cat.",
+        "Lily went to the park."
+      ]
+    },
+    {
+      "question": "What kind of book did test_for_age5 want?",
+      "type": "detail",
+      "correct_answer": "A sparkly storybook about space.",
+      "wrong_answers": [
+        "A book about princesses.",
+        "A book about animals."
+      ]
+    },
+    {
+      "question": "How did Lily help test_for_age5 get the book?",
+      "type": "detail",
+      "correct_answer": "She found a sturdy step stool.",
+      "wrong_answers": [
+        "She gave test_for_age5 a snack.",
+        "She sang a song."
+      ]
+    },
+    {
+      "question": "How did test_for_age5 feel when they got the book?",
+      "type": "detail",
+      "correct_answer": "test_for_age5 felt happy and smiled.",
+      "wrong_answers": [
+        "test_for_age5 felt sleepy.",
+        "test_for_age5 felt sad."
+      ]
+    }
+  ]
+}

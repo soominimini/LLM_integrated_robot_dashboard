@@ -107,6 +107,25 @@
         .yn-btn.correct { border-color: #28a745; background: #d4edda; }
         .yn-btn.wrong { border-color: #dc3545; background: #f8d7da; }
 
+        /* WH multiple-choice buttons */
+        .wh-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .wh-options.three { grid-template-columns: 1fr; }
+        .wh-opt-btn {
+            padding: 1rem 1.2rem;
+            border: 3px solid #e9ecef;
+            border-radius: 12px;
+            background: white;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .wh-opt-btn:hover { transform: translateY(-2px); border-color: #667eea; background: #eef1ff; }
+        .wh-opt-btn.correct { border-color: #28a745; background: #d4edda; color: #155724; }
+        .wh-opt-btn.wrong { border-color: #dc3545; background: #f8d7da; color: #721c24; }
+        .wh-opt-btn:disabled { cursor: default; }
+
         .mic-btn {
             display: block;
             margin: 1.2rem auto 0;
@@ -380,6 +399,7 @@
         let score = 0;
         let answered = false;
         let currentType = '';
+        let userAge = null;
 
         // Pre-generated feedback phrases (filled at quiz load)
         const defaultCorrect = ['That is right!', 'Correct!', 'Great job!', 'Well done!', 'You got it!'];
@@ -394,9 +414,18 @@
         async function loadQuiz(type) {
             currentType = type;
             try {
-                // Fetch quiz questions (fast - just reads files)
-                const quizRes = await fetch(`/api/get_saved_quiz?type=${type}`);
+                // Fetch quiz questions and user age in parallel
+                const [quizRes, userRes] = await Promise.all([
+                    fetch(`/api/get_saved_quiz?type=${type}`),
+                    fetch('/api/current_user')
+                ]);
                 const data = await quizRes.json();
+                try {
+                    const userData = await userRes.json();
+                    userAge = (userData && userData.user && userData.user.age != null)
+                        ? Number(userData.user.age) : null;
+                } catch (e) { userAge = null; }
+
                 if (!data.success || !data.questions.length) {
                     document.getElementById('type-screen').innerHTML =
                         `<div class="empty-msg">No saved ${type === 'yes_no' ? 'Yes/No' : 'WH-'} questions found.<br>Generate some in the Quiz Builder first!</div>
@@ -409,6 +438,36 @@
                 currentIndex = 0;
                 score = 0;
                 answered = false;
+
+                // For WH questions, batch-generate multiple-choice options.
+                // Block until done so the first question can render with buttons.
+                if (type === 'wh') {
+                    const numOptions = (userAge != null && userAge >= 6) ? 4 : 3;
+                    try {
+                        const optsRes = await fetch('/api/generate_wh_options', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                questions: questions.map(q => ({
+                                    question: q.question,
+                                    correct_answer: q.correct_answer,
+                                    accepted_answers: q.accepted_answers || []
+                                })),
+                                num_options: numOptions
+                            })
+                        });
+                        const optsData = await optsRes.json();
+                        if (optsData.success && Array.isArray(optsData.options)) {
+                            optsData.options.forEach((opts, i) => {
+                                if (questions[i] && Array.isArray(opts) && opts.length >= 2) {
+                                    questions[i].options = opts.slice().sort(() => Math.random() - 0.5);
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        // Fall through — questions without options will use the text-input fallback
+                    }
+                }
 
                 // Start quiz immediately with default phrases
                 document.getElementById('type-screen').style.display = 'none';
@@ -436,6 +495,7 @@
             document.getElementById('progress-text').textContent = `Question ${currentIndex + 1} / ${total}`;
             document.getElementById('progress-fill').style.width = `${((currentIndex + 1) / total) * 100}%`;
             document.getElementById('question-text').textContent = q.question;
+            robotSpeak(q.question);
             document.getElementById('feedback').className = 'feedback';
             document.getElementById('feedback').textContent = '';
             document.getElementById('next-btn').style.display = 'none';
@@ -451,6 +511,15 @@
                     </div>
                     <button class="mic-btn" id="mic-btn" onclick="startListening()">&#127908;</button>
                     <div class="mic-label" id="mic-label">or say your answer</div>`;
+            } else if (Array.isArray(q.options) && q.options.length >= 2) {
+                const layoutClass = q.options.length === 3 ? 'three' : '';
+                const buttons = q.options.map((opt, i) =>
+                    `<button class="wh-opt-btn" data-opt-index="${i}" onclick="answerWHOption(this, ${i})">${escapeHtml(opt)}</button>`
+                ).join('');
+                section.innerHTML = `
+                    <div class="wh-options ${layoutClass}">${buttons}</div>
+                    <button class="mic-btn" id="mic-btn" onclick="startListening()">&#127908;</button>
+                    <div class="mic-label" id="mic-label">or say your answer</div>`;
             } else {
                 section.innerHTML = `
                     <input class="wh-answer-input" id="wh-input" type="text" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')submitWH()">
@@ -460,6 +529,33 @@
                     <button class="mic-btn" id="mic-btn" onclick="startListening()">&#127908;</button>
                     <div class="mic-label" id="mic-label">or say your answer</div>`;
             }
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        function answerWHOption(btn, optIndex) {
+            if (answered) return;
+            answered = true;
+            const q = questions[currentIndex];
+            const chosen = q.options[optIndex];
+            const correct = isAnswerAccepted(chosen, q);
+
+            const allBtns = btn.parentElement.querySelectorAll('.wh-opt-btn');
+            allBtns.forEach(b => {
+                b.disabled = true;
+                const text = b.textContent;
+                if (isAnswerAccepted(text, q)) {
+                    b.classList.add('correct');
+                } else if (b === btn && !correct) {
+                    b.classList.add('wrong');
+                }
+            });
+
+            showFeedback(correct, q.correct_answer);
         }
 
         function answerYN(btn, answer) {
@@ -584,6 +680,26 @@
                         if (btn) answerYN(btn, spokenAnswer);
                     } else {
                         micLabel.textContent = `Heard: "${data.text.trim()}" — say Yes or No`;
+                    }
+                } else if (Array.isArray(q.options) && q.options.length >= 2) {
+                    // WH multiple-choice — match heard text against visible options
+                    const heardNorm = normalize(data.text);
+                    const heardSing = toSingular(heardNorm);
+                    let matchIndex = -1;
+                    for (let i = 0; i < q.options.length; i++) {
+                        const optNorm = normalize(q.options[i]);
+                        const optSing = toSingular(optNorm);
+                        if (heardNorm === optNorm || heardSing === optSing ||
+                            heardNorm.includes(optNorm) || optNorm.includes(heardNorm)) {
+                            matchIndex = i;
+                            break;
+                        }
+                    }
+                    if (matchIndex >= 0) {
+                        const btn = document.querySelector(`.wh-opt-btn[data-opt-index="${matchIndex}"]`);
+                        if (btn) answerWHOption(btn, matchIndex);
+                    } else {
+                        micLabel.textContent = `Heard: "${data.text.trim()}" — pick one of the choices`;
                     }
                 } else {
                     // WH question — fill the input and auto-submit

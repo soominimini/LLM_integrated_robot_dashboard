@@ -7,6 +7,7 @@
 
 import os
 import json
+import random
 import subprocess
 import tempfile
 import requests
@@ -38,9 +39,9 @@ class StoryGenerator:
     # ─────────────────────────────────────────────
 
     AGE_TIERS = {
-        (3, 4): {
+        (3, 3): {
             "label": "early_preschool",
-            "word_range": (150, 250),
+            "word_range": (50, 100),
             "guidelines": (
                 "Language level: Use 3–5 word sentences. "
                 "Repeat key phrases and sentence patterns 2–3 times for reinforcement. "
@@ -52,22 +53,35 @@ class StoryGenerator:
                 "Dialogue: Very short exchanges, 1 sentence per turn."
             ),
         },
-        (5, 6): {
-            "label": "late_preschool",
-            "word_range": (250, 400),
+        # ─────────────────────────────────────────────
+        # WH-QUESTION FORMAT TIER (ages 4–6)
+        # Format is modelled on the curated corpus at
+        # documents/story for 4 to 6 years old/story_corpus.json
+        # ("30 Wh-Question Stories" — @TheSpeechAndSpecialNeedsSpot).
+        # Each story is a 3–4 sentence vignette describing a concrete
+        # everyday scene, followed by 5–7 WHO/WHAT/WHERE follow-up
+        # questions a clinician/robot can ask the child.
+        # ─────────────────────────────────────────────
+        (4, 6): {
+            "label": "wh_question_format",
+            "word_range": (40, 90),
             "guidelines": (
-                "Language level: Use simple compound sentences with connectors (and, but, so, because). "
-                "Include basic cause-and-effect relationships. "
-                "Introduce 2–3 new descriptive words with context clues so meaning is inferrable. "
-                "Begin using basic spatial and temporal language (behind, next to, before, after). "
-                "Story structure: Three-act structure with a clear problem and resolution. "
-                "Characters: Up to 3–4 named characters with simple traits. "
-                "Dialogue: Short exchanges of 1–2 sentences per turn, modelling target language structures."
+                "Language level: Write 3–4 short, concrete sentences in the present tense. "
+                "Use simple vocabulary a 4–6 year old already knows (ball, beach, dog, bus, kite, snow, library). "
+                "Each sentence states a single observable fact (who is there, where, what is happening, what surprises them). "
+                "Avoid abstract concepts, idioms, figurative language, and complex compound sentences. "
+                "Story structure: One small everyday scene with a tiny twist or surprise — NOT a three-act journey. "
+                "Examples of scenes: building a sandcastle and finding a crab; flying a kite and the wind blowing it onto a dog; "
+                "dropping toothpaste on the bathroom floor; spotting an unusual lunch in the cafeteria. "
+                "Characters: 1–3 named characters; refer to them by name (not pronouns) so questions are answerable. "
+                "Follow-up questions: After the story, generate 5–7 WH-questions (mostly WHO/WHAT/WHERE) whose answers are "
+                "explicitly stated in the story text — one fact per question, in roughly story order."
             ),
         },
         (7, 8): {
             "label": "early_school_age",
-            "word_range": (400, 500),
+            "word_range": (250, 350),
+            "requires_takeaways": True,
             "guidelines": (
                 "Language level: Use varied sentence structures including relative clauses and embedded phrases. "
                 "Include emotional vocabulary (frustrated, proud, nervous, relieved, grateful). "
@@ -80,7 +94,8 @@ class StoryGenerator:
         },
         (9, 12): {
             "label": "school_age",
-            "word_range": (450, 600),
+            "word_range": (400, 600),
+            "requires_takeaways": True,
             "guidelines": (
                 "Language level: Use complex sentences with subordinate clauses. "
                 "Include nuanced emotional and social vocabulary (empathy, compromise, perseverance). "
@@ -153,14 +168,72 @@ Return your answer EXACTLY in this format, with no other text before or after:
 <the full story text>
 
 ** End **
-** Explanation of the output **
+{takeaways_section}** Explanation of the output **
 <1–3 short sentences explaining how the story matches the selected topic(s) and the learning goals: {goals}>
 
 STRICT RULES:
 - Do NOT include any preamble, commentary, or meta-text (no "Here is your story", "Sure!", etc.).
-- Do NOT add sections beyond Title, story text, End, and Explanation.
+- Do NOT add sections beyond Title, story text, End,{takeaways_in_rule} and Explanation.
 - Count your words before finishing. The story text (between Title and End) MUST be between {min_words} and {max_words} words. If you are over {max_words}, shorten it. If under {min_words}, expand it.
 Do not add any other sections or extra text."""
+
+    # Injected into OUTPUT_FORMAT when the age tier sets requires_takeaways=True.
+    # Sits between ** End ** and ** Explanation of the output **, so existing
+    # parsers that look for ** Title ** / ** End ** still work unchanged.
+    TAKEAWAYS_OUTPUT_BLOCK = """** Takeaways **
+- <takeaway 1: one short, kid-friendly sentence stating a lesson the child should learn>
+- <takeaway 2: another lesson the story demonstrates>
+- <takeaway 3: another lesson (optional)>
+
+"""
+
+    # Injected into MASTER_TEMPLATE when the tier requires takeaways.
+    TAKEAWAYS_PROMPT_BLOCK = """
+--- TAKEAWAYS / LESSONS ---
+The story MUST teach 2–3 clear takeaways that the child can articulate after listening. Demonstrate them through what characters DO and the consequences they face — do NOT preach or moralise inside the narration. After the story ends, list the takeaways explicitly in a ** Takeaways ** section.
+
+Takeaway rules:
+- Each takeaway is ONE short sentence a 7-year-old can repeat back in their own words.
+- Phrase them as positive, actionable lessons or values — not as "do not" prohibitions when a positive form is natural.
+- Each takeaway must connect to a specific moment or decision in the story (cause → consequence).
+- Cover values like honesty, kindness, perseverance, asking for help, sharing, courage, patience, listening, or fairness — pick the ones that fit the plot.
+
+Examples of well-formed takeaways:
+- "Asking for help is a sign of being smart, not weak."
+- "Being patient often works better than rushing."
+- "Telling the truth is hard but builds trust."
+- "Treating others kindly makes them want to help you back."
+"""
+
+    # WH-format output adds a Questions section between End and Explanation.
+    # Title/End delimiters are preserved so existing parsers keep working.
+    WH_OUTPUT_FORMAT = """
+Return your answer EXACTLY in this format, with no other text before or after:
+
+** Title **
+<one short title>
+
+<the full story text — 3 to 4 short concrete sentences in the present tense>
+
+** End **
+** Questions **
+1. <WH-question>
+2. <WH-question>
+3. <WH-question>
+4. <WH-question>
+5. <WH-question>
+(6. and 7. optional)
+
+** Explanation of the output **
+<1–2 short sentences explaining how the story and questions match the selected topic(s) and the learning goals: {goals}>
+
+STRICT RULES:
+- Do NOT include any preamble, commentary, or meta-text (no "Here is your story", "Sure!", etc.).
+- The story text (between Title and End) MUST be between {min_words} and {max_words} words.
+- Generate {min_questions}–{max_questions} WH-questions (mostly WHO / WHAT / WHERE).
+- Every question's answer MUST appear word-for-word in the story text. Do NOT ask about anything not stated.
+- Refer to characters by name (not pronouns) in the story so questions like "WHO is in the story?" are answerable.
+- Do NOT add sections beyond Title, story text, End, Questions, and Explanation."""
 
     # ─────────────────────────────────────────────
     # MASTER PROMPT TEMPLATE
@@ -188,8 +261,7 @@ Use a clear three-act structure:
 {theme_vocabulary}
 
 {goals_section}
-{persona_section}
---- TONE AND STYLE ---
+{persona_section}{takeaways_block}--- TONE AND STYLE ---
 - Warm, encouraging, and gently paced.
 - Show, don't tell: use actions and dialogue to convey emotions rather than stating them.
 - Include at least one moment of humor, wonder, or sensory delight.
@@ -216,6 +288,58 @@ Rules for tags:
 - Example: 'The wind blew hard. [emotion:QT/surprised] Suddenly, a big rainbow appeared in the sky!'
 
 {output_format}"""
+
+    # ─────────────────────────────────────────────
+    # WH-FORMAT MASTER TEMPLATE (ages 4–6)
+    # Mirrors the corpus style: short concrete scene + WH-questions.
+    # Examples from story_corpus.json are injected into {wh_examples}.
+    # ─────────────────────────────────────────────
+
+    WH_MASTER_TEMPLATE = """Write a short illustrated-style story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story will be used by a robot to practise WH-question comprehension (WHO / WHAT / WHERE) with the child.
+
+--- STYLE REFERENCE (from the curated 4-to-6 corpus) ---
+Match the style, length, vocabulary, and structure of these reference stories EXACTLY. Each is a 3–4 sentence concrete vignette in the present tense, followed by 5–7 WH-questions whose answers appear verbatim in the story.
+
+{wh_examples}
+--- END STYLE REFERENCE ---
+
+--- AGE-APPROPRIATE LANGUAGE REQUIREMENTS ---
+{age_guidelines}
+
+--- STORY SETTING AND THEME ---
+{theme_setting}
+{theme_obstacle}
+{theme_resolution}
+
+--- VOCABULARY FOCUS ---
+{theme_vocabulary}
+
+{goals_section}
+{persona_section}
+--- TONE AND STYLE ---
+- Warm, simple, and concrete. Describe one small everyday scene with a tiny surprise or twist.
+- {child_name} should appear by name in the story (not just "she" / "he"), so WHO-questions are answerable.
+- Use observable facts only (who is there, where they are, what they are doing, what they see/find).
+- Do NOT invent moral lessons, internal monologue, or three-act structure. Keep it to the corpus style.
+
+--- ROBOT GESTURES AND EMOTIONS ---
+A robot will read this aloud and act it out. Embed gesture or emotion tags INLINE in the story so the robot's face and body match the narrative. Keep these SPARSE (at most 2–3 tags total) so the story stays short.
+
+Available gestures: [gesture:NAME] where NAME ∈ {{hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace, patience, slight_no, think, sneezing, yawn, breathing_exercise, kiss, stretching}}
+Available emotions: [emotion:NAME] where NAME ∈ {{QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy}}
+
+Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture. Do NOT include tags inside the WH-questions.
+
+{output_format}"""
+
+    # ─────────────────────────────────────────────
+    # CORPUS REFERENCE (for ages 4–6 WH-question stories)
+    # ─────────────────────────────────────────────
+
+    CORPUS_PATH = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "documents", "story for 4 to 6 years old", "story_corpus.json",
+    )
 
     # ─────────────────────────────────────────────
     # GOALS FORMATTING
@@ -293,6 +417,44 @@ Rules for tags:
             return default_theme
         return {k: " ".join(v) for k, v in merged.items()}
 
+    def _load_wh_examples(self, n: int = 2, topics: Optional[List[str]] = None) -> str:
+        """
+        Load N example stories from the WH-question corpus and format them
+        as few-shot examples for the prompt.
+
+        If `topics` is provided, prefers examples whose setting field contains
+        one of the topic keywords; otherwise samples randomly. Falls back
+        silently to an empty string if the corpus cannot be read.
+        """
+        try:
+            with open(self.CORPUS_PATH, "r", encoding="utf-8") as f:
+                corpus = json.load(f)
+            stories = corpus.get("wh_question_stories", [])
+            if not stories:
+                return ""
+
+            pool = stories
+            if topics:
+                topic_keys = [str(t).strip().lower() for t in topics if str(t).strip()]
+                matched = [s for s in stories
+                           if any(k in str(s.get("setting", "")).lower() for k in topic_keys)]
+                if matched:
+                    pool = matched
+
+            sample = random.sample(pool, min(n, len(pool)))
+
+            blocks = []
+            for i, s in enumerate(sample, 1):
+                q_lines = "\n".join(f"  - {q['q']}" for q in s.get("questions", []))
+                blocks.append(
+                    f"Example {i} (setting: {s.get('setting', 'unknown')}):\n"
+                    f"  Story: {s.get('text', '').strip()}\n"
+                    f"  Questions:\n{q_lines}"
+                )
+            return "\n\n".join(blocks) + "\n"
+        except (OSError, json.JSONDecodeError):
+            return ""
+
     def _format_goals_section(self, goals: Optional[str] = None) -> str:
         """Format therapy goals into the prompt section."""
         if goals:
@@ -333,10 +495,54 @@ Rules for tags:
         if persona_context and persona_context.strip():
             persona_section = "\n" + persona_context.strip() + "\n"
 
+        # Ages 4–6: route to the WH-question short-story format,
+        # using examples retrieved from the curated corpus.
+        if age_tier.get("label") == "wh_question_format":
+            wh_examples = self._load_wh_examples(n=2, topics=topics)
+            output_format = self.WH_OUTPUT_FORMAT.format(
+                goals=goals or "general speech-language therapy goals",
+                min_words=min_words,
+                max_words=max_words,
+                min_questions=5,
+                max_questions=7,
+            )
+            prompt = self.WH_MASTER_TEMPLATE.format(
+                child_name=child_name,
+                age=age,
+                gender=gender,
+                age_guidelines=age_tier["guidelines"],
+                theme_setting=theme["setting"],
+                theme_obstacle=theme["obstacle"],
+                theme_resolution=theme["resolution"],
+                theme_vocabulary=theme["vocabulary_focus"],
+                goals_section=goals_section,
+                persona_section=persona_section,
+                wh_examples=wh_examples,
+                output_format=output_format,
+            )
+            if topics:
+                safe_topics = [str(t).strip() for t in topics if str(t).strip()]
+                if safe_topics:
+                    prompt += "\n\nIncorporate the following theme(s) into the scene: " + ", ".join(safe_topics) + "."
+            return prompt
+
+        # Tier-gated takeaways: ages 7+ get an explicit ** Takeaways ** section
+        # and a prompt block telling the model to teach 2–3 lessons.
+        if age_tier.get("requires_takeaways"):
+            takeaways_section = self.TAKEAWAYS_OUTPUT_BLOCK
+            takeaways_block = self.TAKEAWAYS_PROMPT_BLOCK
+            takeaways_in_rule = " Takeaways,"
+        else:
+            takeaways_section = ""
+            takeaways_block = ""
+            takeaways_in_rule = ""
+
         output_format = self.OUTPUT_FORMAT.format(
             goals=goals or "general speech-language therapy goals",
             min_words=min_words,
             max_words=max_words,
+            takeaways_section=takeaways_section,
+            takeaways_in_rule=takeaways_in_rule,
         )
 
         prompt = self.MASTER_TEMPLATE.format(
@@ -350,6 +556,7 @@ Rules for tags:
             theme_vocabulary=theme["vocabulary_focus"],
             goals_section=goals_section,
             persona_section=persona_section,
+            takeaways_block=takeaways_block,
             output_format=output_format,
         )
 

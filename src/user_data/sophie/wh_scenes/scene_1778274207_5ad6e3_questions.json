@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl rollerblading on a paved path in a park, lined with trees and streetlights, under a bright sky.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "A girl",
+      "visual_choices": [
+        "A girl",
+        "A boy",
+        "A man",
+        "A woman"
+      ],
+      "evidence_hint": "Look at the person in the picture"
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl doing?",
+      "answer": "Rollerblading",
+      "visual_choices": [
+        "Rollerblading",
+        "Running",
+        "Riding a bike",
+        "Walking"
+      ],
+      "evidence_hint": "Look at what she has on her feet"
+    },
+    {
+      "wh_type": "when",
+      "question": "When is it in the picture?",
+      "answer": "Daytime",
+      "visual_choices": [
+        "Daytime",
+        "Nighttime",
+        "Morning",
+        "Evening"
+      ],
+      "evidence_hint": "Look at the sky and the light"
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl?",
+      "answer": "In a park",
+      "visual_choices": [
+        "In a park",
+        "At home",
+        "At school",
+        "In a store"
+      ],
+      "evidence_hint": "Look at the trees and the path around her"
+    },
+    {
+      "wh_type": "why",
+      "question": "Why is the girl rollerblading?",
+      "answer": "To have fun",
+      "visual_choices": [
+        "To have fun",
+        "To go to sleep",
+        "To eat food",
+        "To watch TV"
+      ],
+      "evidence_hint": "Think about why someone would rollerblade"
+    }
+  ]
+}
