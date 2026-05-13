@@ -353,6 +353,183 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 
 ### 3.6 Content Generation
 
+#### Story Pipeline — Layered View
+
+The story system is a stack of independent layers. Each layer consumes the previous layer's output and adds one concern (length safety, gesture tagging, page breaks, illustration, comprehension). The robot only ever sees the bottom layer.
+
+```
+┌────────────────────────────────────────────────────────────────────────────┐
+│ INPUT                                                                      │
+│   child_name, age, gender, topics[], goals (clinician), disorder (profile) │
+└─────────────────────────────────┬──────────────────────────────────────────┘
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 1 — GENERATION                          src/story_generator.py       ║
+║   Compose prompt → call Gemini → receive raw story                         ║
+║                                                                            ║
+║   _build_prompt():                                                         ║
+║     _get_age_tier(age)              → MASTER_TEMPLATE  (3, 7–8, 9–12)     ║
+║                                     or WH_MASTER_TEMPLATE (4–6)            ║
+║     _get_theme_guidance(topics)     → setting / obstacle / resolution      ║
+║                                       / vocabulary_focus  (merged)         ║
+║     _format_goals_section(goals)    → clinician goals + 4 default goals    ║
+║     PersonaRAG.build_story_prompt_fragment(age, disorder)                  ║
+║                                     → matched persona's goals / interests  ║
+║                                       / constraints                        ║
+║     _load_wh_examples(corpus, n=2)  → few-shot for ages 4–6 only           ║
+║                                       (story_corpus.json)                  ║
+║                                                                            ║
+║   scripts/gemini_story.py  (Python 3.9 subprocess, gemini-2.5-flash)       ║
+║       blocking → returns full text                                         ║
+║       streaming → emits "CHUNK:<line>" per token group                     ║
+║                                                                            ║
+║   RAW OUTPUT (still tagged with inline [gesture:NAME]/[emotion:QT/…]):     ║
+║     ** Title **                                                            ║
+║     <title>                                                                ║
+║     <story body with inline tags>                                          ║
+║     ** End **                                                              ║
+║     ** Takeaways **           (only when tier requires_takeaways)          ║
+║     - <lesson 1>                                                           ║
+║     - <lesson 2>                                                           ║
+║     ** Questions **           (only when tier is wh_question_format)       ║
+║     1. <WH-question whose answer is verbatim in the story>                 ║
+║     ** Explanation of the output **                                        ║
+║     <how story matches topics + goals>                                     ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │ raw story text
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 2 — STRICT RULE / SAFETY NET            api_save_story (server)      ║
+║   Enforce the contract the prompt asked for, in case the LLM ignored it.   ║
+║                                                                            ║
+║   _extract_story_title()      → pulls "** Title **" block into metadata    ║
+║   Takeaways regex             → recovers ** Takeaways ** bullets           ║
+║   StoryGenerator.get_word_range_for_age(age) → (min_words, max_words)      ║
+║   IF body.split() > max_words:                                             ║
+║       StoryGenerator.shorten_story(body, age, child_name)                  ║
+║         re-prompts Gemini with SHORTEN_TEMPLATE                            ║
+║         preserves plot + names + inline tags                               ║
+║         drops adjectives / side dialogue first                             ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │ length-safe story
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 3 — TAGGING (gesture + emotion)         web_user_server._apply_…     ║
+║   Many generators miss or invent emotion tags. A second Gemini pass        ║
+║   re-tags the story word-for-word, then positions are validated.           ║
+║                                                                            ║
+║   _apply_emotion_tags_with_gemini(story)                                   ║
+║       prompt: "return SAME story word-for-word with correct tags"          ║
+║       allowed gestures: hi, bye, nodding-yes, clapping, hoora, …           ║
+║       allowed emotions: QT/happy, QT/sad, QT/surprised, QT/afraid,         ║
+║                         QT/angry, QT/calm, QT/shy                          ║
+║       guard: reject re-tagged output if <95% of original length            ║
+║                                                                            ║
+║   _validate_tag_positions(story)                                           ║
+║       snap any tag that landed mid-word / mid-clause to the                ║
+║       nearest sentence boundary (start, end, or after , ! ?)               ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │ correctly-tagged story
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 4 — SPLITTING (pages + paragraphs)      web_user_server._split_…     ║
+║   Group sentences into "pages" the robot will read one at a time, while    ║
+║   keeping paragraph structure for image grouping.                          ║
+║                                                                            ║
+║   _split_story_into_pages(story, age)         (Gemini, JSON array out)     ║
+║       sents/page target:  ≤4 → 1–2 | ≤6 → 2–3 | 7+ → 3–5                  ║
+║       priority: scene/context coherence > sentence count                   ║
+║       hard rule: preserve [gesture/emotion] tags verbatim                  ║
+║       fallback (no LLM): paragraph-aware splitter                          ║
+║                                                                            ║
+║   _reinject_tags_into_pages(original, pages)                               ║
+║       page splitter sometimes drops tags — re-attach each tag inline       ║
+║       before the same sentence it preceded in the original                 ║
+║                                                                            ║
+║   _split_into_paragraphs(story)               (blank-line separator)       ║
+║   _map_pages_to_paragraphs(pages, paragraphs)                              ║
+║       sequential substring match — a page can only advance forward         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │ pages[], paragraphs[], page_to_paragraph[]
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 5 — SCENE & IMAGE GENERATION            web_user_server / image_gen  ║
+║   Pick where to draw illustrations (1 image per visual moment, not per     ║
+║   page) and generate them with style consistency.                          ║
+║                                                                            ║
+║   _identify_story_scenes(paragraphs)          (Gemini, JSON out)           ║
+║       returns scenes[] + paragraph_to_scene[]                              ║
+║       bias: 1 paragraph = 1 scene; merge only on identical visual          ║
+║   compose page_to_scene = paragraph_to_scene[ page_to_paragraph[p] ]       ║
+║                                                                            ║
+║   ImageGenerator.generate_story_scene_image() per scene                    ║
+║       Path A: direct google-genai SDK (if Py3.9 in-process)                ║
+║       Path B: subprocess → src/image_generator_worker.py (.venv39)         ║
+║       style: soft round shapes, pastel palette, thick outlines             ║
+║       reference: first generated image fed back as visual guide for the    ║
+║                  rest, so all scenes share style                           ║
+║                                                                            ║
+║   output: user_data/<user>/story_images/<file>/story_scene_NNN_*.png       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │ scenes[], page_to_scene[], PNGs on disk
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 6 — COMPREHENSION QUESTIONS             web_user_server._generate_…  ║
+║   Build the post-reading quiz that appears at the end of the story.        ║
+║                                                                            ║
+║   _generate_story_questions(story, age, name)         (Gemini, JSON out)   ║
+║       3 MCQs scaled to age:                                                ║
+║         young   → 1 main_idea + 2 detail                                   ║
+║         middle  → 1 main_idea + 2 detail + 1 inference                     ║
+║         older   → main_idea + detail + inference + cause/effect            ║
+║       fallback: hard-coded generic questions on Gemini failure             ║
+║                                                                            ║
+║   _generate_takeaway_questions(takeaways, story, age, name)  (ages 7+)     ║
+║       one MCQ PER takeaway: takeaway = correct answer,                     ║
+║       distractors generated to be believable-but-wrong-for-this-story      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │ questions[], takeaways[]
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 7 — PERSISTENCE                                                      ║
+║   user_data/<user>/stories/story_<ts>.json                                 ║
+║   {                                                                        ║
+║     story, metadata{title, child_name, age, age_tier, target_word_range}, ║
+║     pages[], paragraphs[], scenes[],                                       ║
+║     page_to_scene[], page_to_paragraph[], paragraph_to_scene[],            ║
+║     questions[{question,type,correct_answer,wrong_answers[]}],             ║
+║     takeaways[]                                                            ║
+║   }                                                                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │
+                                  ▼
+╔════════════════════════════════════════════════════════════════════════════╗
+║ LAYER 8 — READ-ALOUD / OUTPUT TO ROBOT        /api/speak_sentence          ║
+║   Triggered once per page on the read_story.html UI.                       ║
+║                                                                            ║
+║   _split_page_into_segments(page)                                          ║
+║       break a page into (text, gestures[], emotions[]) tuples              ║
+║       at every [gesture:…] / [emotion:…] boundary                          ║
+║                                                                            ║
+║   For each segment:                                                        ║
+║     _play_tags(gestures, emotions)                                         ║
+║       → ROS /qt_robot/gesture/play                                         ║
+║       → ROS /qt_robot/emotion/show                                         ║
+║     For each sentence in _split_into_sentences(segment.text):              ║
+║       _with_asr_suspended( tts_helper.speak_story(sentence, lang) )        ║
+║         → ROS /qt_robot/behavior/talkText  (QT) — with viseme mouth sync   ║
+║         → OR Polly + SSH upload + talkAudio   (POLLY_*) — Pylips lipsync   ║
+║                                                                            ║
+║   Concurrently: HumanTracking follows the listener's face during reading.  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                  │
+                                  ▼
+                       🤖 robot speaks the page,
+                       gestures fire at tagged sentences,
+                       facial emotion changes per tag,
+                       scene illustration is shown in the UI
+```
+
 #### `src/story_generator.py` — Therapeutic Story Generation
 
 **Class**: `StoryGenerator`
