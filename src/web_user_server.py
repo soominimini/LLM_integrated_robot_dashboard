@@ -2030,6 +2030,93 @@ def _generate_takeaway_questions(takeaways, story_text, child_age, child_name="t
         return []
 
 
+_TAG_RE_VALIDATE = re.compile(r"\[(?:gesture|emotion):[^\]]+\]\s*")
+
+
+def _validate_tag_positions(text):
+    """Ensure every [gesture:...] / [emotion:...] tag sits at a valid spot.
+
+    Valid positions:
+      - Start of the text (beginning of the first sentence).
+      - End of the text (end of the last sentence).
+      - Right after a sentence-ending punctuation: '.', '!', '?'.
+      - Right after a comma ','.
+
+    Tags found at invalid positions (mid-word, mid-clause) are MOVED to the
+    nearest valid position rather than dropped, so the emotional/gesture beat
+    is preserved but synchronized with a natural pause. Tag order is preserved
+    for tags that snap to the same position.
+    """
+    if not text or "[" not in text:
+        return text
+
+    # Phase 1 — extract tags with their position in the tag-stripped text.
+    tags = []  # list of (clean_pos, tag_text_without_trailing_ws)
+    pieces = []
+    clean_len = 0
+    last_end = 0
+    for m in _TAG_RE_VALIDATE.finditer(text):
+        between = text[last_end:m.start()]
+        pieces.append(between)
+        clean_len += len(between)
+        tags.append((clean_len, m.group(0).rstrip()))
+        last_end = m.end()
+    pieces.append(text[last_end:])
+    if not tags:
+        return text
+    clean_text = "".join(pieces)
+
+    # Phase 2 — find all valid positions in clean_text.
+    valid = {0, len(clean_text)}
+    for m in re.finditer(r"[.!?,]", clean_text):
+        i = m.end()
+        # Walk forward past whitespace so the tag sits flush before the next word.
+        while i < len(clean_text) and clean_text[i].isspace():
+            i += 1
+        valid.add(i)
+    valid_sorted = sorted(valid)
+
+    def is_valid(pos):
+        if pos == 0 or pos >= len(clean_text):
+            return True
+        i = pos - 1
+        while i >= 0 and clean_text[i].isspace():
+            i -= 1
+        return i >= 0 and clean_text[i] in ".!?,"
+
+    def snap(pos):
+        # Closest valid position by distance; on a tie prefer the EARLIER one
+        # (tags describe what's about to happen, so firing before the next
+        # sentence is more natural than after it).
+        return min(valid_sorted, key=lambda p: (abs(p - pos), p))
+
+    # Phase 3 — fix invalid positions, preserving tag order.
+    by_pos = {}
+    moved = 0
+    for pos, tag in tags:
+        new_pos = pos if is_valid(pos) else snap(pos)
+        if new_pos != pos:
+            moved += 1
+        by_pos.setdefault(new_pos, []).append(tag)
+
+    if moved:
+        print(f"[TagValidate] moved {moved} mis-placed tag(s) to nearest valid position")
+
+    # Phase 4 — reconstruct the text with tags inserted at the fixed positions.
+    out = []
+    for i in range(len(clean_text) + 1):
+        if i in by_pos:
+            for tag in by_pos[i]:
+                out.append(tag)
+                # Ensure a single space separates the tag from the following
+                # non-whitespace character.
+                if i < len(clean_text) and not clean_text[i].isspace():
+                    out.append(" ")
+        if i < len(clean_text):
+            out.append(clean_text[i])
+    return "".join(out)
+
+
 def _apply_emotion_tags_with_gemini(story_text):
     """Run a Gemini-Flash pass over a generated story to insert correct
     [gesture:...] and [emotion:...] tags inline.
@@ -2514,6 +2601,9 @@ def api_save_story():
     # invents emotion tags; Gemini Flash is used here specifically to
     # insert/correct [gesture:...] / [emotion:...] tags inline.
     story = _apply_emotion_tags_with_gemini(story)
+    # Validate tag positions: snap any tag that landed mid-word or mid-clause
+    # to the nearest valid position (start/end of sentence, after ,/!/?).
+    story = _validate_tag_positions(story)
 
     # Split story into age-appropriate pages (clean_story_text strips the title)
     pages = _split_story_into_pages(story, child_age)
@@ -5049,6 +5139,66 @@ def _play_tags(gestures, emotions):
     time.sleep(1.0)
 
 
+# Common abbreviations whose trailing period is NOT a sentence boundary.
+# Stored lowercase, without the trailing period, with internal periods kept
+# (so the multi-letter "u.s.a" matches strings ending in "U.S.A.").
+_SENTENCE_ABBREVIATIONS = {
+    "mr", "mrs", "ms", "mx", "dr", "st", "jr", "sr",
+    "prof", "rev", "hon", "sgt", "capt", "lt", "col", "gen",
+    "etc", "vs", "inc", "co", "ltd", "corp", "no",
+    "i.e", "e.g", "p.s", "p.p.s",
+    "u.s", "u.s.a", "u.k", "u.n", "e.u",
+}
+
+
+def _ends_with_abbreviation(chunk):
+    """Return True if `chunk` ends with a known abbreviation or a single
+    capital-letter + period (e.g., "T." in "T. Rex"). Both indicate that the
+    naive sentence-split regex made a false boundary here.
+    """
+    # Drop trailing closing quotes/parens so the last token is the word itself.
+    s = chunk.rstrip(' "\'”’‘“)')
+    if not s.endswith("."):
+        return False
+    # Single capital letter ending: "T.", "A." (used for initials and "T. Rex").
+    if re.search(r"(?<![A-Za-z])[A-Z]\.$", s):
+        return True
+    # Last token (letters with optional internal periods) ending in ".".
+    m = re.search(r"([A-Za-z][A-Za-z.]*)\.$", s)
+    if not m:
+        return False
+    word = m.group(1).lower().rstrip(".")
+    return word in _SENTENCE_ABBREVIATIONS
+
+
+def _split_into_sentences(text):
+    """Split a paragraph of plain (tag-stripped) text into individual sentences.
+
+    Strategy:
+      1. Split aggressively on sentence-ending punctuation followed by whitespace.
+      2. Merge adjacent parts back together when the preceding part ends with a
+         known abbreviation (Mr., Mrs., Dr., St., U.S.A., etc.) or with a single
+         capital letter + period (e.g., "T." in "T. Rex"). Both cases indicate
+         the regex made a false sentence boundary.
+
+    Strong enough for children's stories — handles titles, initials, and
+    common period-bearing abbreviations without an NLP dependency.
+    """
+    if not text or not text.strip():
+        return []
+    parts = re.split(r"(?<=[.!?])\s+", text.strip())
+    merged = []
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if merged and _ends_with_abbreviation(merged[-1]):
+            merged[-1] = merged[-1] + " " + part
+        else:
+            merged.append(part)
+    return merged
+
+
 @app.route('/api/speak_sentence', methods=['POST'])
 def api_speak_sentence():
     username = session.get('username')
@@ -5083,16 +5233,21 @@ def api_speak_sentence():
         pass
 
     try:
-        # Split the page into segments at tag boundaries
-        # Each segment is spoken separately with its gesture/emotion fired right before
+        # Split the page into segments at tag boundaries. Each segment may
+        # contain multiple sentences; fire the segment's gesture/emotion once
+        # before its first sentence, then send each sentence to Qwen TTS
+        # individually so the API receives one sentence at a time rather than
+        # a whole paragraph.
         segments = _split_page_into_segments(sentence)
         for text, gestures, emotions in segments:
             cleaned = clean_story_text(text)
             if not cleaned:
                 continue
-            # Fire gesture/emotion right before this segment is spoken
             _play_tags(gestures, emotions)
-            _with_asr_suspended(lambda c=cleaned: tts_helper.speak_story(c, language))
+            for s in _split_into_sentences(cleaned):
+                if not s:
+                    continue
+                _with_asr_suspended(lambda c=s: tts_helper.speak_story(c, language))
     finally:
         try:
             if tracker:

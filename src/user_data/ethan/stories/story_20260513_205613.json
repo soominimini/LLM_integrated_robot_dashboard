@@ -1,0 +1,182 @@
+{
+  "story": "Ethan [emotion:QT/happy] loved art class, especially when Mr. Harrison announced, \"Today, we will build amazing dinosaur models for our display board!\" [emotion:QT/afraid] Ethan felt a little nervous because he really wanted to make a perfect *Stegosaurus* with its spiky plates and long tail. He thought, \"I want mine to be the best *Stegosaurus*!\" He went to the craft table, curious about all the colorful materials.\n\nMr. Harrison explained, \"Remember to *share* the materials and *take turns* choosing what you need.\" Ethan picked up a long piece of brown construction paper for the *Stegosaurus*'s body. But then, he couldn't find any bright green pipe cleaners for the spiky plates. He looked on the tall shelf, then in the bottom drawer, but they weren't there. [emotion:QT/angry] Ethan felt frustrated, so he frowned a little, wondering where they went.\n\nA kind girl named Maya noticed Ethan looking worried. [emotion:QT/afraid] [emotion:QT/calm] \"Are you looking for something special?\" she asked, her voice gentle.\nEthan pointed to his drawing. \"Green... for the plates,\" he said, trying to make his voice clear.\n[gesture:think] Maya thought for a moment. \"Oh, I saw some shiny green pipe cleaners! They fell behind the big blue bin, that is why you didn't see them.\" [emotion:QT/happy] She went to the bin and carefully pulled out a whole bunch of bright green pipe cleaners. \"Here they are!\" she said, offering them to Ethan.\n[emotion:QT/happy] Ethan smiled. \"Thank you!\" he said.\n\"We can *share* them,\" Maya suggested. \"I need some for my *Triceratops* horns too.\"\n[gesture:nodding-yes] \"Okay,\" Ethan agreed. They sat side-by-side, carefully twisting the pipe cleaners onto their dinosaurs. They *listened* to each other's ideas about where to put the plates and horns. When a plate didn't stick well, Maya said, \"Let's *try again* with more glue.\"\n\nSoon, both dinosaurs were finished! Ethan's *Stegosaurus* had amazing, spiky green plates and a long, brown tail. Maya's *Triceratops* had shiny horns. [emotion:QT/happy] Ethan felt very proud of his dinosaur, and he was grateful Maya helped him. [emotion:QT/happy] He learned that working together made the project much easier and more fun, because they could help each other. Mr. Harrison came over. [emotion:QT/happy] \"Wow, Ethan, your *Stegosaurus* is wonderful! And Maya, your *Triceratops* looks super strong! You both did an excellent job collaborating.\" Ethan looked at Maya and gave a small, [emotion:QT/happy] [gesture:nodding-yes] happy nod.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 477,
+    "paragraph_count": 4,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "pages": [
+    "Ethan [emotion:QT/happy] loved art class, especially when Mr. Harrison announced, \"Today, we will build amazing dinosaur models for our display board!\" [emotion:QT/afraid] Ethan felt a little nervous because he really wanted to make a perfect Stegosaurus with its spiky plates and long tail. He thought, \"I want mine to be the best Stegosaurus!\" He went to the craft table, curious about all the colorful materials.",
+    "Mr. Harrison explained, \"Remember to share the materials and take turns choosing what you need.\" Ethan picked up a long piece of brown construction paper for the Stegosaurus's body. But then, he couldn't find any bright green pipe cleaners for the spiky plates. He looked on the tall shelf, then in the bottom drawer, but they weren't there. [emotion:QT/angry] Ethan felt frustrated, so he frowned a little, wondering where they went.",
+    "A kind girl named Maya noticed Ethan looking worried. [emotion:QT/afraid] [emotion:QT/calm] \"Are you looking for something special?\" she asked, her voice gentle. Ethan pointed to his drawing. \"Green... for the plates,\" he said, trying to make his voice clear.",
+    "[gesture:think] Maya thought for a moment. \"Oh, I saw some shiny green pipe cleaners! They fell behind the big blue bin, that is why you didn't see them.\" [emotion:QT/happy] She went to the bin and carefully pulled out a whole bunch of bright green pipe cleaners. \"Here they are!\" she said, offering them to Ethan.",
+    "[emotion:QT/happy] Ethan smiled. \"Thank you!\" he said. \"We can share them,\" Maya suggested. \"I need some for my Triceratops horns too.\" [gesture:nodding-yes] \"Okay,\" Ethan agreed.",
+    "They sat side-by-side, carefully twisting the pipe cleaners onto their dinosaurs. They listened to each other's ideas about where to put the plates and horns. When a plate didn't stick well, Maya said, \"Let's try again with more glue.\"",
+    "Soon, both dinosaurs were finished! Ethan's Stegosaurus had amazing, spiky green plates and a long, brown tail. Maya's Triceratops had shiny horns. [emotion:QT/happy] Ethan felt very proud of his dinosaur, and he was grateful Maya helped him. [emotion:QT/happy] He learned that working together made the project much easier and more fun, because they could help each other.",
+    "Mr. Harrison came over. [emotion:QT/happy] \"Wow, Ethan, your Stegosaurus is wonderful! And Maya, your Triceratops looks super strong! You both did an excellent job collaborating.\" Ethan looked at Maya and gave a small, [emotion:QT/happy] [gesture:nodding-yes] happy nod."
+  ],
+  "paragraphs": [
+    "Ethan loved art class, especially when Mr. Harrison announced, \"Today, we will build amazing dinosaur models for our display board!\" Ethan felt a little nervous because he really wanted to make a perfect *Stegosaurus* with its spiky plates and long tail. He thought, \"I want mine to be the best *Stegosaurus*!\" He went to the craft table, curious about all the colorful materials.",
+    "Mr. Harrison explained, \"Remember to *share* the materials and *take turns* choosing what you need.\" Ethan picked up a long piece of brown construction paper for the *Stegosaurus*'s body. But then, he couldn't find any bright green pipe cleaners for the spiky plates. He looked on the tall shelf, then in the bottom drawer, but they weren't there. Ethan felt frustrated, so he frowned a little, wondering where they went.",
+    "A kind girl named Maya noticed Ethan looking worried. \"Are you looking for something special?\" she asked, her voice gentle.\nEthan pointed to his drawing. \"Green... for the plates,\" he said, trying to make his voice clear.\nMaya thought for a moment. \"Oh, I saw some shiny green pipe cleaners! They fell behind the big blue bin, that is why you didn't see them.\" She went to the bin and carefully pulled out a whole bunch of bright green pipe cleaners. \"Here they are!\" she said, offering them to Ethan.\nEthan smiled. \"Thank you!\" he said.\n\"We can *share* them,\" Maya suggested. \"I need some for my *Triceratops* horns too.\"\n\"Okay,\" Ethan agreed. They sat side-by-side, carefully twisting the pipe cleaners onto their dinosaurs. They *listened* to each other's ideas about where to put the plates and horns. When a plate didn't stick well, Maya said, \"Let's *try again* with more glue.\"",
+    "Soon, both dinosaurs were finished! Ethan's *Stegosaurus* had amazing, spiky green plates and a long, brown tail. Maya's *Triceratops* had shiny horns. Ethan felt very proud of his dinosaur, and he was grateful Maya helped him. He learned that working together made the project much easier and more fun, because they could help each other. Mr. Harrison came over. \"Wow, Ethan, your *Stegosaurus* is wonderful! And Maya, your *Triceratops* looks super strong! You both did an excellent job collaborating.\" Ethan looked at Maya and gave a small, happy nod."
+  ],
+  "scenes": [
+    "Ethan at a craft table in art class, looking excitedly at various colorful materials, ready to start his dinosaur model.",
+    "Ethan, looking frustrated, searching for green pipe cleaners on a shelf or in a drawer near the craft table.",
+    "Maya offering green pipe cleaners to a smiling Ethan, then both children sitting side-by-side at the craft table, collaborating on their dinosaur models.",
+    "Ethan and Maya proudly presenting their finished dinosaur models (Stegosaurus and Triceratops) to Mr. Harrison, who is praising their work."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What dinosaur did Ethan want to build for the display board?",
+      "type": "detail",
+      "correct_answer": "He wanted to build a perfect Stegosaurus with spiky plates.",
+      "wrong_answers": [
+        "He wanted to build a strong Triceratops with shiny horns.",
+        "He wanted to build a fast Tyrannosaurus Rex for the board."
+      ]
+    },
+    {
+      "question": "Where did Maya find the bright green pipe cleaners for Ethan?",
+      "type": "detail",
+      "correct_answer": "She found them behind the big blue bin on the floor.",
+      "wrong_answers": [
+        "She found them on the tall shelf in the craft room.",
+        "She found them inside the bottom drawer of the table."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel frustrated when he could not find the pipe cleaners?",
+      "type": "inference",
+      "correct_answer": "He felt frustrated because he wanted his Stegosaurus to be perfect.",
+      "wrong_answers": [
+        "He felt frustrated because he did not like making dinosaurs.",
+        "He felt frustrated because Maya took all the green pipe cleaners."
+      ]
+    },
+    {
+      "question": "How did Ethan feel after Maya helped him find the green pipe cleaners?",
+      "type": "inference",
+      "correct_answer": "Ethan felt very happy and grateful that Maya helped him.",
+      "wrong_answers": [
+        "Ethan felt angry that Maya found them so easily.",
+        "Ethan felt confused about where the pipe cleaners went."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about Ethan who learned sharing makes projects more fun.",
+      "wrong_answers": [
+        "This story was about Mr. Harrison who taught art class.",
+        "This story was about Maya who built a strong Triceratops."
+      ]
+    },
+    {
+      "question": "What did Ethan learn when Maya helped him find the green pipe cleaners?",
+      "type": "takeaway",
+      "correct_answer": "Asking for help from a friend makes challenges easier to solve.",
+      "wrong_answers": [
+        "It's always best to work alone on your projects.",
+        "You should only use materials that are easy to find."
+      ]
+    },
+    {
+      "question": "What is one lesson Ethan and Maya learned by building their dinosaurs together?",
+      "type": "takeaway",
+      "correct_answer": "Working together and sharing ideas can make activities more fun.",
+      "wrong_answers": [
+        "It's important to always be the first one to finish your art project.",
+        "The best way to make art is to follow all the instructions exactly."
+      ]
+    },
+    {
+      "question": "What did Ethan and Maya show us by listening to each other's ideas?",
+      "type": "takeaway",
+      "correct_answer": "Listening to others helps everyone succeed and feel proud.",
+      "wrong_answers": [
+        "It's important to always have the most colorful materials for your art.",
+        "You should always let your friends make all the decisions."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help from a friend makes challenges easier to solve.",
+    "Working together and sharing ideas can make activities more fun.",
+    "Listening to others helps everyone succeed and feel proud."
+  ]
+}

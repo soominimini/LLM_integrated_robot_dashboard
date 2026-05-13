@@ -1,0 +1,168 @@
+{
+  "story": "Ethan loved his baby brother, Leo. Leo was a busy little crawler, always exploring their living room. Ethan wanted to make sure everything was *safe* for Leo. One sunny afternoon, Mom was humming a tune while making lunch in the kitchen, and Leo was playing on the rug.\n\nSuddenly, Leo crawled very quickly towards the big, wooden bookshelf. [emotion:QT/afraid] A tiny, shiny button had *fell* behind one of the legs! [emotion:QT/afraid] Mom came running, her face looking worried. \"Oh no, Leo! That button isn't safe for you,\" she *said*. \"It's a tricky spot, because my hand is too big to reach it.\" [gesture:think] She *thought* about what to do.\n\nEthan looked at the small gap. He *went* to his toy box, searching for something. [gesture:think] \"What are you looking for, Ethan?\" Mom asked, trying to keep Leo away from the shelf. [emotion:QT/happy] Ethan pulled out a long, thin toy fishing rod. \"Maybe this can reach it, Mom!\" he *said*.\n\n[emotion:QT/happy] \"That's a very *helpful* idea, Ethan!\" [emotion:QT/happy] Mom smiled, feeling a little relieved. \"Let's work *together* carefully, so that Leo stays safe.\" Ethan knelt down. He carefully guided the rod *under* the shelf, then *around* the thick wooden leg. He focused hard, because the space was very tight. [emotion:QT/happy] Finally, he *caught* the button's tiny loop with the hook!\n\n[emotion:QT/happy] Ethan carefully pulled the rod back, and the shiny button popped out! [gesture:clapping] Mom clapped her hands. [emotion:QT/happy] \"You are such a *caring* big brother, Ethan! I am so *proud* of how you solved that problem! We made the room *safe* for Leo *together*.\" [emotion:QT/happy] Ethan felt warm and happy inside. [emotion:QT/happy] He knew being *helpful* felt really good.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 371,
+    "paragraph_count": 5,
+    "sentence_to_paragraph": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ]
+  },
+  "pages": [
+    "Ethan loved his baby brother, Leo. Leo was a busy little crawler, always exploring their living room. Ethan wanted to make sure everything was safe for Leo. One sunny afternoon, Mom was humming a tune while making lunch in the kitchen, and Leo was playing on the rug.",
+    "Suddenly, Leo crawled very quickly towards the big, wooden bookshelf. [emotion:QT/afraid] A tiny, shiny button had fell behind one of the legs! [emotion:QT/afraid] Mom came running, her face looking worried. \"Oh no, Leo! That button isn't safe for you,\" she said. \"It's a tricky spot, because my hand is too big to reach it.\" She thought about what to do.",
+    "Ethan looked at the small gap. He went to his toy box, searching for something. [gesture:think] \"What are you looking for, Ethan?\" Mom asked, trying to keep Leo away from the shelf. [emotion:QT/happy] Ethan pulled out a long, thin toy fishing rod. \"Maybe this can reach it, Mom!\" he said.",
+    "[emotion:QT/happy] \"That's a very helpful idea, Ethan!\" [emotion:QT/happy] Mom smiled, feeling a little relieved. \"Let's work together carefully, so that Leo stays safe.\" Ethan knelt down. He carefully guided the rod under the shelf, then around the thick wooden leg. He focused hard, because the space was very tight. Finally, he caught the button's tiny loop with the hook!",
+    "[emotion:QT/happy] Ethan carefully pulled the rod back, and the shiny button popped out! [gesture:clapping] Mom clapped her hands. [emotion:QT/happy] \"You are such a caring big brother, Ethan! I am so proud of how you solved that problem! We made the room safe for Leo together.\" [emotion:QT/happy] Ethan felt warm and happy inside. He knew being helpful felt really good."
+  ],
+  "paragraphs": [
+    "Ethan loved his baby brother, Leo. Leo was a busy little crawler, always exploring their living room. Ethan wanted to make sure everything was *safe* for Leo. One sunny afternoon, Mom was humming a tune while making lunch in the kitchen, and Leo was playing on the rug.",
+    "Suddenly, Leo crawled very quickly towards the big, wooden bookshelf. A tiny, shiny button had *fell* behind one of the legs! Mom came running, her face looking worried. \"Oh no, Leo! That button isn't safe for you,\" she *said*. \"It's a tricky spot, because my hand is too big to reach it.\" She *thought* about what to do.",
+    "Ethan looked at the small gap. He *went* to his toy box, searching for something. \"What are you looking for, Ethan?\" Mom asked, trying to keep Leo away from the shelf. Ethan pulled out a long, thin toy fishing rod. \"Maybe this can reach it, Mom!\" he *said*.",
+    "\"That's a very *helpful* idea, Ethan!\" Mom smiled, feeling a little relieved. \"Let's work *together* carefully, so that Leo stays safe.\" Ethan knelt down. He carefully guided the rod *under* the shelf, then *around* the thick wooden leg. He focused hard, because the space was very tight. Finally, he *caught* the button's tiny loop with the hook!",
+    "Ethan carefully pulled the rod back, and the shiny button popped out! Mom clapped her hands. \"You are such a *caring* big brother, Ethan! I am so *proud* of how you solved that problem! We made the room *safe* for Leo *together*.\" Ethan felt warm and happy inside. He knew being *helpful* felt really good."
+  ],
+  "scenes": [
+    "Leo, a baby, crawls on a rug in the living room while his older brother Ethan watches. Mom is visible in the kitchen, humming.",
+    "Leo crawls quickly towards a large wooden bookshelf. A worried Mom kneels, trying to reach a tiny button stuck behind one of its legs.",
+    "Ethan searches his toy box and pulls out a long, thin toy fishing rod. Mom is nearby, keeping Leo away from the bookshelf.",
+    "Ethan kneels, focused, carefully guiding the toy fishing rod under the bookshelf to hook the button, while Mom watches him.",
+    "Ethan pulls the fishing rod back, successfully retrieving the shiny button. Mom claps her hands, smiling proudly at Ethan."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    2,
+    4
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    2,
+    4
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "questions": [
+    {
+      "question": "What fell behind the big wooden bookshelf?",
+      "type": "detail",
+      "correct_answer": "A tiny, shiny button.",
+      "wrong_answers": [
+        "A small toy car.",
+        "A colorful block."
+      ]
+    },
+    {
+      "question": "What did Ethan use to get the button from behind the shelf?",
+      "type": "detail",
+      "correct_answer": "A long, thin toy fishing rod.",
+      "wrong_answers": [
+        "A big, strong magnet.",
+        "His small hand."
+      ]
+    },
+    {
+      "question": "Why was Mom worried when Leo crawled towards the bookshelf?",
+      "type": "inference",
+      "correct_answer": "She was worried because the button was not safe for Leo.",
+      "wrong_answers": [
+        "She was worried because Leo was crawling too fast.",
+        "She was worried because lunch was not ready yet."
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt when he pulled the button out with the fishing rod?",
+      "type": "inference",
+      "correct_answer": "Ethan felt happy and proud because he helped.",
+      "wrong_answers": [
+        "Ethan felt tired and wanted to play.",
+        "Ethan felt confused about the button."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about Ethan who helped his baby brother Leo stay safe.",
+      "wrong_answers": [
+        "This story was about Mom making lunch in the kitchen.",
+        "This story was about a lost button under a shelf."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Working together with family helps solve tricky problems.",
+      "wrong_answers": [
+        "It's always best to let adults handle dangerous situations.",
+        "Crawling babies should always be kept in a playpen."
+      ]
+    },
+    {
+      "question": "What did Ethan show us by what he did?",
+      "type": "takeaway",
+      "correct_answer": "Being helpful to others can make you feel proud.",
+      "wrong_answers": [
+        "It's important to always have the right toy for every problem.",
+        "Adults often need children to teach them new things."
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to look in his toy box?",
+      "type": "takeaway",
+      "correct_answer": "Looking carefully for tools can help you find a solution.",
+      "wrong_answers": [
+        "Toys are sometimes more useful than grown-up tools.",
+        "Keeping your toys organized makes it easier to find what you need."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Working together with family helps solve tricky problems.",
+    "Being helpful to others can make you feel proud.",
+    "Looking carefully for tools can help you find a solution."
+  ]
+}
