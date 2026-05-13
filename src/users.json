@@ -52,7 +52,7 @@
     "age": 8,
     "password_hash": "",
     "created_at": "2026-04-21T18:09:17.576441",
-    "last_login": "2026-05-13T20:03:12.462359",
+    "last_login": "2026-05-13T20:15:10.057893",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan/chat_history"
   },

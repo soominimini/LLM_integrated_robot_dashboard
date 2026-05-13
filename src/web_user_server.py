@@ -2267,38 +2267,48 @@ def _split_story_into_pages(story_text, child_age):
     return pages
 
 
-def _identify_story_scenes(pages):
-    """Analyze story pages and identify scene/context changes.
+def _identify_story_scenes(chunks, unit_label="paragraph"):
+    """Analyze story chunks (paragraphs by default) and identify scenes.
 
-    Uses the quiz LLM to group pages by scene — a scene changes when the
-    setting, characters, or action shifts significantly.
+    For each chunk, the LLM picks a scene index. Two chunks share a scene
+    ONLY when they depict essentially the same visual moment (same setting,
+    same characters, similar action). Default bias: 1 chunk = 1 scene, so the
+    image count stays close to the chunk count while still allowing reuse for
+    truly identical visuals.
 
     Returns:
         scenes: list of scene description strings (one per unique scene)
-        page_to_scene: list of ints mapping each page index to a scene index
+        chunk_to_scene: list of ints mapping each chunk index to a scene index
     """
-    if not pages:
+    if not chunks:
         return [""], [0]
 
-    full_text = "\n\n".join(f"Page {i+1}: {p}" for i, p in enumerate(pages))
+    Unit = unit_label.capitalize()
+    full_text = "\n\n".join(f"{Unit} {i+1}: {p}" for i, p in enumerate(chunks))
 
     prompt = (
-        f"You are analyzing a children's story that has been split into {len(pages)} pages.\n"
-        f"Identify where the SCENE or CONTEXT changes — a new scene starts when the "
-        f"setting changes, new characters appear, or a significantly different action begins.\n"
-        f"Group consecutive pages that share the same scene together.\n\n"
+        f"You are choosing illustrations for a children's story that has been split "
+        f"into {len(chunks)} {unit_label}s.\n\n"
+        f"For each {unit_label}, decide which SCENE it depicts. Two {unit_label}s should "
+        f"share a scene ONLY IF they show essentially the same visual moment — same setting, "
+        f"same characters present, and similar action. If anything important changes (location, "
+        f"who is on screen, what they are doing), it is a NEW scene.\n\n"
+        f"DEFAULT BIAS: assume each {unit_label} is its own scene. Only merge {unit_label}s when "
+        f"the same illustration would clearly work for both. Do not over-merge — we want roughly "
+        f"one image per {unit_label} unless they are truly the same visual.\n\n"
         f"{full_text}\n\n"
         f"Return ONLY a JSON object with:\n"
         f"- \"scenes\": an array of short visual descriptions (1-2 sentences each) "
         f"describing what should be illustrated for each scene. Focus on setting, "
-        f"characters, and key action.\n"
-        f"- \"page_to_scene\": an array of {len(pages)} integers, where each integer "
-        f"is the 0-based scene index for that page.\n\n"
-        f"Example for 5 pages with 3 scenes:\n"
-        f"{{\"scenes\": [\"A child in a sunny garden planting seeds\", "
-        f"\"The child and a rabbit watching rain fall on the garden\", "
-        f"\"The child picking colorful flowers from the grown garden\"], "
-        f"\"page_to_scene\": [0, 0, 1, 1, 2]}}"
+        f"characters, and key action. There must be AT MOST {len(chunks)} scenes.\n"
+        f"- \"chunk_to_scene\": an array of {len(chunks)} integers, where each integer "
+        f"is the 0-based scene index for that {unit_label}.\n\n"
+        f"Example for 4 {unit_label}s with 3 scenes ({unit_label}s 0 and 1 share scene 0 "
+        f"because they're a single conversation in the same kitchen):\n"
+        f"{{\"scenes\": [\"Mom and Lily sitting at a sunny kitchen table eating breakfast\", "
+        f"\"Lily walking to school carrying her red backpack along a tree-lined sidewalk\", "
+        f"\"Lily showing her drawing to the class at the front of the classroom\"], "
+        f"\"chunk_to_scene\": [0, 0, 1, 2]}}"
     )
     raw = _gemini_generate(prompt, system="You analyze story structure. Return JSON only.", max_tokens=2048)
     if raw:
@@ -2308,19 +2318,68 @@ def _identify_story_scenes(pages):
             print(f"[StoryScenes] Parsed JSON: {json.dumps(obj, indent=2) if obj else None}")
             if obj:
                 scenes = obj.get('scenes', [])
-                mapping = obj.get('page_to_scene', [])
+                # Accept either the new key or the legacy "page_to_scene" key.
+                mapping = obj.get('chunk_to_scene') or obj.get('page_to_scene') or []
                 if (isinstance(scenes, list) and len(scenes) > 0
-                        and isinstance(mapping, list) and len(mapping) == len(pages)):
+                        and isinstance(mapping, list) and len(mapping) == len(chunks)):
                     if all(isinstance(m, int) and 0 <= m < len(scenes) for m in mapping):
                         return scenes, mapping
         except Exception as e:
             print(f"[StoryScenes] Scene identification failed: {e}")
 
-    # Fallback: treat each page as its own scene
-    print("[StoryScenes] Using fallback: one scene per page")
-    scenes = [p[:200] for p in pages]  # Use first 200 chars as scene description
-    page_to_scene = list(range(len(pages)))
-    return scenes, page_to_scene
+    # Fallback: treat each chunk as its own scene
+    print(f"[StoryScenes] Using fallback: one scene per {unit_label}")
+    scenes = [p[:200] for p in chunks]  # Use first 200 chars as scene description
+    chunk_to_scene = list(range(len(chunks)))
+    return scenes, chunk_to_scene
+
+
+def _split_into_paragraphs(story_text):
+    """Split a story body into paragraphs separated by blank lines."""
+    if not story_text:
+        return []
+    parts = re.split(r"\n\s*\n+", story_text.strip())
+    return [p.strip() for p in parts if p.strip()]
+
+
+def _map_pages_to_paragraphs(pages, paragraphs):
+    """For each page, find which paragraph it belongs to.
+
+    Pages are typically a sub-sequence of a paragraph (page splitting may
+    break a long paragraph into several pages, but it never splits a sentence
+    across paragraphs). We match by substring with a sequential constraint
+    (pages can only advance, never go back) so a page from the third
+    paragraph never gets matched to the first.
+    """
+    if not pages:
+        return []
+    if not paragraphs:
+        return [0] * len(pages)
+
+    _tag_re = re.compile(r"\[(gesture|emotion):[^\]]+\]\s*")
+    clean_paras = [_tag_re.sub("", p).strip() for p in paragraphs]
+    clean_pages = [_tag_re.sub("", p).strip() for p in pages]
+
+    page_to_para = []
+    cursor = 0  # Earliest paragraph this page can match into
+    for page in clean_pages:
+        found = None
+        # Try progressively shorter prefixes for robustness against minor diffs.
+        for snip_len in (80, 50, 30, 18):
+            snippet = page[:snip_len].strip()
+            if not snippet:
+                continue
+            for i in range(cursor, len(clean_paras)):
+                if snippet in clean_paras[i]:
+                    found = i
+                    break
+            if found is not None:
+                break
+        if found is None:
+            found = cursor  # Default to current cursor on no match
+        page_to_para.append(found)
+        cursor = found
+    return page_to_para
 
 
 @app.route("/api/save_story", methods=["POST"])
@@ -2421,9 +2480,25 @@ def api_save_story():
     _tag_re = re.compile(r'\[(gesture|emotion):[^\]]+\]\s*')
     clean_pages = [_tag_re.sub('', p).strip() for p in pages]
 
-    # Identify scene breaks and map pages to scenes
-    scenes, page_to_scene = _identify_story_scenes(clean_pages)
-    print(f"[StorySave] {len(scenes)} scenes identified, page_to_scene: {page_to_scene}")
+    # Scene identification at PARAGRAPH granularity. Pages are sub-chunks of
+    # paragraphs (one paragraph can span several pages), so identifying scenes
+    # at the page level caused over-merging and too few images. At paragraph
+    # granularity, images ≤ paragraph_count, with reuse only when paragraphs
+    # depict the same visual moment.
+    paragraphs = _split_into_paragraphs(_tag_re.sub('', story))
+    if not paragraphs:
+        paragraphs = clean_pages  # Defensive fallback for stories without blank lines
+    print(f"[StorySave] {len(paragraphs)} paragraphs detected")
+
+    scenes, paragraph_to_scene = _identify_story_scenes(paragraphs, unit_label="paragraph")
+    page_to_paragraph = _map_pages_to_paragraphs(clean_pages, paragraphs)
+    # Derive page_to_scene by composing the two mappings.
+    page_to_scene = [paragraph_to_scene[p] if 0 <= p < len(paragraph_to_scene) else 0
+                     for p in page_to_paragraph]
+    print(f"[StorySave] {len(scenes)} scenes identified across {len(paragraphs)} paragraphs")
+    print(f"[StorySave] paragraph_to_scene: {paragraph_to_scene}")
+    print(f"[StorySave] page_to_paragraph:  {page_to_paragraph}")
+    print(f"[StorySave] page_to_scene:      {page_to_scene}")
 
     # Generate comprehension questions for the story
     q_persona_ctx = _persona_context_for(username, child_age, kind="question")
@@ -2444,16 +2519,19 @@ def api_save_story():
             questions.append(takeaway_q)
             print(f"[StorySave] Appended takeaway question (now {len(questions)} total)")
 
-    # Save story, metadata, pages, scenes, mapping, questions, and takeaways.
-    # `takeaways` is only populated for age 7+ tiers (see story_generator.AGE_TIERS
-    # with requires_takeaways=True); for younger ages it is saved as [].
+    # Save story, metadata, pages, paragraphs, scenes, mappings, questions,
+    # and takeaways. paragraph_to_scene + page_to_paragraph are persisted so
+    # downstream code (image lookup, debugging) can navigate either way.
     with open(fpath, "w") as f:
         json.dump({
             "story": story,
             "metadata": metadata,
             "pages": pages,
+            "paragraphs": paragraphs,
             "scenes": scenes,
             "page_to_scene": page_to_scene,
+            "page_to_paragraph": page_to_paragraph,
+            "paragraph_to_scene": paragraph_to_scene,
             "questions": questions,
             "takeaways": takeaways,
         }, f, indent=2)

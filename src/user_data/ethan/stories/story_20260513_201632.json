@@ -1,0 +1,130 @@
+{
+  "story": "Ethan and the Lost Dino Rex\n\n[emotion:QT/happy] Ethan loved sunny afternoons at the park. [emotion:QT/happy] He carried his favorite toy, a *bright* green dinosaur named Rex, in his hand. Rex had *sharp* teeth and a *long*, *spiky* tail. [emotion:QT/happy] Ethan was excited to play with his friend, Leo, who was already waiting near the *tall* oak tree.\n\n[gesture:hi] \"Hi, Leo!\" Ethan called, walking quickly over the *soft* grass.\n[gesture:hi] [emotion:QT/happy] \"Hi, Ethan! Are you ready for our dinosaur adventure?\" Leo asked, smiling.\n[emotion:QT/happy] \"Yes! Rex wants to explore the *grassy* hills,\" Ethan said, holding up his toy.\nThey decided to build a *secret* dinosaur hideout *behind* the big slide. Ethan carefully placed Rex *next to* a *smooth*, gray rock. Then, they gathered *flat* leaves and *bumpy* sticks to make a roof.\n\nWhen they finished, [emotion:QT/surprised] Rex was gone! Ethan looked *under* the leaves. [emotion:QT/afraid] \"Where did Rex go?\" he asked, feeling a little *worried*.\n[emotion:QT/calm] Leo patted Ethan's shoulder. \"Don't worry, Ethan. We can search together. Let's look carefully *around* this area first.\"\n[emotion:QT/calm] \"Okay,\" Ethan agreed. Leo looked *near* the fence, and Ethan looked *behind* the bushes.\n\"I found a *tiny* feather!\" Leo said, picking it up. \"But not Rex.\"\nEthan peered *into* a *dark* tunnel made of branches. [emotion:QT/afraid] \"Maybe he *ran* away because he was scared of the tunnel,\" Ethan suggested, using his *brave* voice.\n\"That's a good idea, Ethan,\" Leo responded. \"Let's check *inside* it.\"\nThey both crawled into the tunnel. It was a *little* dusty, and they saw a *small* spider web.\n[emotion:QT/surprised] \"Look!\" Ethan exclaimed, pointing his finger. *Under* a big, *round* stone, Rex was waiting!\n[emotion:QT/happy] \"You found him! Rex just wanted to hide because he thought it was a *perfect* spot,\" Leo said, carefully picking up the dinosaur.\n[emotion:QT/happy] Ethan felt so *relieved* and *grateful*. \"Thank you for helping me, Leo!\"\n[emotion:QT/happy] \"Of course, Ethan! Friends help each other,\" Leo replied. [emotion:QT/happy] They spent the rest of the afternoon playing happily, making Rex fly over the *wavy* grass.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 407,
+    "paragraph_count": 4,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "title": "Ethan and the Lost Dino Rex"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan loved sunny afternoons at the park. [emotion:QT/happy] He carried his favorite toy, a bright green dinosaur named Rex, in his hand. Rex had sharp teeth and a long, spiky tail. [emotion:QT/happy] Ethan was excited to play with his friend, Leo, who was already waiting near the tall oak tree.",
+    "[gesture:hi] \"Hi, Leo!\" Ethan called, walking quickly over the soft grass. [gesture:hi] [emotion:QT/happy] \"Hi, Ethan! Are you ready for our dinosaur adventure?\" Leo asked, smiling. [emotion:QT/happy] \"Yes! Rex wants to explore the grassy hills,\" Ethan said, holding up his toy. They decided to build a secret dinosaur hideout behind the big slide. Ethan carefully placed Rex next to a smooth, gray rock. Then, they gathered flat leaves and bumpy sticks to make a roof.",
+    "When they finished, [emotion:QT/surprised] Rex was gone! Ethan looked under the leaves. [emotion:QT/afraid] \"Where did Rex go?\" he asked, feeling a little worried. [emotion:QT/calm] Leo patted Ethan's shoulder. \"Don't worry, Ethan. We can search together. Let's look carefully around this area first.\" [emotion:QT/calm] \"Okay,\" Ethan agreed.",
+    "Leo looked near the fence, and Ethan looked behind the bushes. \"I found a tiny feather!\" Leo said, picking it up. \"But not Rex.\" Ethan peered into a dark tunnel made of branches. \"Maybe he ran away because he was scared of the tunnel,\" Ethan suggested, using his brave voice. \"That's a good idea, Ethan,\" Leo responded. \"Let's check inside it.\"",
+    "They both crawled into the tunnel. It was a little dusty, and they saw a small spider web. [emotion:QT/surprised] \"Look!\" Ethan exclaimed, pointing his finger. Under a big, round stone, Rex was waiting! [emotion:QT/happy] \"You found him! Rex just wanted to hide because he thought it was a perfect spot,\" Leo said, carefully picking up the dinosaur.",
+    "Ethan felt so relieved and grateful. \"Thank you for helping me, Leo!\" [emotion:QT/happy] \"Of course, Ethan! Friends help each other,\" Leo replied. [emotion:QT/happy] They spent the rest of the afternoon playing happily, making Rex fly over the wavy grass."
+  ],
+  "scenes": [
+    "Ethan walks through a sunny park, holding his bright green dinosaur, Rex, towards Leo who waits by a tall oak tree.",
+    "Ethan and Leo build a secret dinosaur hideout behind a big slide, carefully placing Rex next to a smooth gray rock.",
+    "Ethan and Leo crawl into a dark tunnel made of branches, searching for Rex, and find him hiding under a round stone."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    2,
+    2,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What color was Ethan's favorite dinosaur toy, Rex?",
+      "type": "detail",
+      "correct_answer": "Rex was bright green.",
+      "wrong_answers": [
+        "Rex was dark blue.",
+        "Rex was shiny red."
+      ]
+    },
+    {
+      "question": "Where did Ethan and Leo decide to build their secret dinosaur hideout?",
+      "type": "detail",
+      "correct_answer": "They built it behind the big slide.",
+      "wrong_answers": [
+        "They built it under the oak tree.",
+        "They built it near the fence."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel worried and a little afraid when Rex was gone?",
+      "type": "inference",
+      "correct_answer": "He felt worried because his special toy was missing.",
+      "wrong_answers": [
+        "He felt worried because Leo was mad.",
+        "He felt worried because it was getting dark."
+      ]
+    },
+    {
+      "question": "Why do you think Rex was waiting under a big, round stone in the tunnel?",
+      "type": "inference",
+      "correct_answer": "Rex thought it was a perfect spot to hide.",
+      "wrong_answers": [
+        "Rex was scared of the spider web.",
+        "Rex wanted to go home quickly."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about two friends who helped find a lost toy.",
+      "wrong_answers": [
+        "This story was about building a very big hideout.",
+        "This story was about finding a tiny feather."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Friends help each other when things are tough.",
+    "Working together makes finding solutions easier.",
+    "It's okay to feel worried, and talking about it can help."
+  ]
+}
