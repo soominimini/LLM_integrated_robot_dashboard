@@ -356,25 +356,82 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 #### `src/story_generator.py` — Therapeutic Story Generation
 
 **Class**: `StoryGenerator`
-**LLM**: Ollama (llama3.1)
+**Default LLM**: Gemini (`gemini-2.5-flash`) invoked via Python 3.9 subprocess (`scripts/gemini_story.py`). Falls back to local Ollama when `llm_model` does not start with `gemini` (the `_is_ollama_model()` switch hits `http://localhost:11434/api/generate`).
 
-**Age Tiers**:
-| Tier | Ages | Word Count | Complexity |
-|------|------|-----------|------------|
-| 1 | 3-4 | ~100 | Simple sentences, basic vocabulary |
-| 2 | 5-6 | ~200 | Short paragraphs, common words |
-| 3 | 7-8 | ~350 | Developed narrative, richer vocabulary |
-| 4 | 9-12 | ~500 | Complex plots, varied sentence structure |
+**Age Tiers** (defined in `StoryGenerator.AGE_TIERS`):
+| Tier | Ages | Word Range | Format | Takeaways |
+|------|------|-----------|--------|-----------|
+| `early_preschool` | 3 | 50–100 | 3–5 word sentences, repeated patterns, 2–3 characters max | No |
+| `wh_question_format` | 4–6 | 40–90 | 3–4 concrete present-tense sentences + 5–7 WHO/WHAT/WHERE questions whose answers appear verbatim | No |
+| `early_school_age` | 7–8 | 250–400 | Three-act, emotional vocabulary, 4–5 characters | Yes (2–3) |
+| `school_age` | 9–12 | 400–600 | Subordinate clauses, internal conflict, figurative language | Yes (2–3) |
+
+**Prompt Assembly** (`_build_prompt()`):
+```
+age tier → theme guidance → therapy goals → persona context → output format
+```
+- **`MASTER_TEMPLATE`** — generic three-act narrative (tiers 3, 7–8, 9–12)
+- **`WH_MASTER_TEMPLATE`** — short vignette + WH-questions (ages 4–6); few-shot examples are loaded from `documents/story for 4 to 6 years old/story_corpus.json` by `_load_wh_examples()` (preferring examples whose `setting` matches the requested topics)
+- **`TAKEAWAYS_PROMPT_BLOCK`** — appended when the tier has `requires_takeaways: True`; instructs the model to emit a `** Takeaways **` section after `** End **`
+- **Inline robot tags** — every emotional beat is tagged `[gesture:NAME]` / `[emotion:QT/…]` so the reader can fire gestures and facial expressions at the right sentence
+
+**Theme Guidance** (`THEME_GUIDANCE`): per-topic `setting / obstacle / resolution / vocabulary_focus` blocks for `season`, `school`, `family`, `friends`, `animals`, `adventure`. Multiple selected topics are merged; unmatched topics fall back to a generic default.
+
+**Persona Injection**: `_persona_context_for(username, age, kind="story")` calls `PersonaRAG.build_story_prompt_fragment(age, disorder)` — see `src/persona_rag.py`. The matched persona's therapy goals, structured language targets, interests, and constraints are inlined under a `--- PERSONA CONTEXT ---` block.
+
+**Public API**:
+| Method | Purpose |
+|--------|---------|
+| `generate_story(child_name, age, gender, topics, goals, persona_context, custom_prompt)` | Blocking; returns `{success, story, metadata}` |
+| `generate_story_stream(...)` | SSE-style chunk generator — Gemini emits `CHUNK:<line>` lines; Ollama yields `response` deltas |
+| `get_word_range_for_age(age)` | Returns `(min, max)` for the tier — used by `api_save_story` to gate the shortener |
+| `shorten_story(body, age, child_name)` | Safety net: re-prompts the LLM with `SHORTEN_TEMPLATE` to rewrite the body within the cap, preserving inline tags |
+
+**Legacy variant**: `src/story_generator_ashley.py` is an older Ollama-based prototype with hard-coded school/nature templates. It is **not** imported by `web_user_server.py` and is kept only for reference.
+
+#### `scripts/gemini_story.py` — Gemini Story Worker (Python 3.9)
+
+Subprocess invoked by `StoryGenerator._run_gemini()`. Accepts the prompt via `--prompt-file` (temp file, avoids shell escaping) and `--model`. With `--stream`, prints each chunk on its own line prefixed `CHUNK:`. The system instruction frames Gemini as a "clinical storyteller for pediatric speech-language therapy" and forbids preamble.
+
+#### Post-Generation Pipeline (in `web_user_server.py` `api_save_story`)
+
+After `StoryGenerator` returns raw text, `/api/save_story` runs a multi-stage pipeline before persisting:
+
+```
+raw story
+  → extract takeaways (** Takeaways ** block) + title (** Title **)
+  → shorten_story() if body > tier max_words
+  → _apply_emotion_tags_with_gemini()       # Gemini Flash re-tags emotions/gestures
+  → _validate_tag_positions()                # snap mid-word tags to sentence boundaries
+  → _split_story_into_pages(story, age)      # Gemini groups sentences into age-appropriate pages
+  → _reinject_tags_into_pages()              # tag positions preserved across split
+  → _split_into_paragraphs() + _identify_story_scenes()
+                                             # Gemini decides which paragraphs share a visual scene
+  → _map_pages_to_paragraphs() → page_to_scene
+  → _generate_story_questions() (Gemini)     # 3 comprehension MCQs (main_idea / detail / inference)
+  → _generate_takeaway_questions() (Gemini)  # 1 MCQ per takeaway (ages 7+)
+  → persist {story, metadata, pages, paragraphs, scenes, page_to_scene,
+             page_to_paragraph, paragraph_to_scene, questions, takeaways}
+  → ImageGenerator.generate_story_scene_image() per scene
+```
+
+Page sentence-count target scales with age (1–2 for ≤4, 2–3 for ≤6, 3–5 for 7+). Scene merging is biased toward "1 paragraph = 1 scene" — paragraphs share an image only when same setting + same characters + similar action.
 
 #### `src/image_generator.py` — Story Illustration
 
 **Class**: `ImageGenerator`
-**Model**: `gemini-2.5-flash-image`
+**Model**: `gemini-2.5-flash-image` (env override: `GOOGLE_IMAGE_MODEL`)
 
-- Generates children's book-style illustrations (soft shapes, pastel colors, thick outlines)
-- Dual-path: direct SDK call (Python 3.9) or worker subprocess
-- Worker: `src/image_generator_worker.py` (runs in `.venv39`)
-- Supports reference images for style consistency
+- Generates children's book-style illustrations (soft shapes, pastel palette, thick outlines, minimal shading)
+- **Dual-path execution**:
+  - Path A: direct SDK call when `google-genai` is importable (Python 3.9+)
+  - Path B: subprocess fallback when running under Python 3.8 — spawns `.venv39/bin/python src/image_generator_worker.py` with a JSON payload on stdin
+- **Style consistency**: when the output dir already contains a PNG, that image is passed back as a reference so subsequent scenes match the established style
+- `generate_story_scene_image(sentence, story_context, …)` is the entry point used by `api_save_story`
+
+#### `src/image_generator_worker.py` — Python 3.9 Image Worker
+
+Reads a JSON payload `{prompt, output_path, reference_image}` from stdin, calls `client.models.generate_content(model="gemini-2.5-flash-image", contents=[prompt, optional_reference_image])`, saves the first inline image part to `output_path`, and prints the path on stdout.
 
 ---
 
@@ -487,10 +544,11 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 
 | Model | Provider | Runtime | Used For |
 |-------|----------|---------|----------|
-| `llama3.1` | Ollama (local) | Python 3.8/3.9 | Main conversation, story generation, RAG |
+| `llama3.1` | Ollama (local) | Python 3.8/3.9 | Main conversation, RAG (default `ChatWithRAG` LLM) |
 | `phi4:14b` | Ollama (local) | Python 3.8 | Quiz generation, feedback phrases |
 | `mxbai-embed-large:latest` | Ollama (local) | Python 3.8 | Document embeddings for RAG |
 | `moondream` | Ollama (local) | Python 3.8 | Camera scene understanding |
+| (story Ollama fallback) | Ollama (local) | Python 3.8/3.9 | `StoryGenerator` can be reconfigured to a non-`gemini-*` Ollama model; selected via `StoryGenerator(llm_model=…)` |
 
 ### 5.2 Gemini Models
 
@@ -498,6 +556,8 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 |-------|---------|------------|
 | `gemini-robotics-er-1.5-preview` | Physical object detection + localization | `scripts/gemini_analyze_image.py` → `/api/camera_capture` |
 | `gemini-2.5-flash-image` | Story scene illustration generation | `src/image_generator.py` / `src/image_generator_worker.py` |
+| `gemini-2.5-flash` | Therapeutic story generation (age-tiered, themed, WH-format) | `scripts/gemini_story.py` → `StoryGenerator` → `/api/generate_story[_stream]` |
+| `gemini-2.5-flash` | Story post-processing: emotion/gesture re-tagging, page splitting, scene identification, comprehension + takeaway MCQs | `scripts/gemini_general.py` (via `_gemini_generate()`) → `/api/save_story`, `/api/get_story_sentences` |
 | `gemini-2.5-flash` | Recovery question generation (toy/child, age-appropriate) | `scripts/gemini_recovery_question.py` → `/api/recovery/generate_question` |
 | `gemini-2.5-flash` | Conversation follow-up generation | `scripts/gemini_conversation_followup.py` → `/api/conversation/wait_for_turn` |
 | `gemini-2.5-flash` | WH-question scene analysis | `scripts/gemini_wh_scene.py` → `/api/wh_scene/capture` |
@@ -847,6 +907,62 @@ State: RESPONDING → IDLE
   └────────────────────────────────────────────────────────────┘
 ```
 
+### 8.6 Story Generation & Reading Flow
+
+```
+[Therapist clicks "Generate Story"]
+       │ {child_name, age, gender, topics, goals}
+       ▼
+POST /api/generate_story[_stream]
+       │
+       ▼
+StoryGenerator._build_prompt()
+  ├── _get_age_tier(age)             # selects MASTER_TEMPLATE vs WH_MASTER_TEMPLATE
+  ├── _get_theme_guidance(topics)    # season/school/family/friends/animals/adventure
+  ├── _format_goals_section(goals)
+  ├── PersonaRAG.build_story_prompt_fragment(age, disorder)
+  └── _load_wh_examples(corpus)      # ages 4–6 only: few-shot from story_corpus.json
+       │
+       ▼
+scripts/gemini_story.py (Python 3.9 subprocess, gemini-2.5-flash)
+  └── streams CHUNK:<line> back to SSE / returns blocking text
+       │
+       ▼ Therapist approves
+POST /api/save_story
+  ├── Extract ** Title **, ** Takeaways ** blocks
+  ├── If body > tier max_words → StoryGenerator.shorten_story()
+  ├── _apply_emotion_tags_with_gemini()   # Gemini Flash re-inserts/repairs tags
+  ├── _validate_tag_positions()           # snap tags to sentence boundaries
+  ├── _split_story_into_pages(age)        # Gemini groups sentences into pages
+  ├── _reinject_tags_into_pages()         # tags preserved across split
+  ├── _split_into_paragraphs()
+  ├── _identify_story_scenes()            # Gemini decides paragraphs sharing one image
+  ├── _map_pages_to_paragraphs() → page_to_scene
+  ├── _generate_story_questions()         # 3 comprehension MCQs
+  ├── _generate_takeaway_questions()      # 1 MCQ per takeaway (ages 7+)
+  ├── Persist user_data/<user>/stories/<file>.json
+  └── ImageGenerator.generate_story_scene_image() per scene
+       │ (Path A: direct google-genai if Py3.9; Path B: image_generator_worker.py subprocess)
+       │ first image becomes the reference for subsequent scenes
+       ▼
+GET /read_story/<file>
+       │
+       ▼
+GET /api/get_story_sentences   # returns pages + metadata + questions + takeaways
+       │
+       ▼ For each page:
+GET /api/get_sentence_image     # resolves page_to_scene → story_scene_NNN_*.png
+POST /api/speak_sentence
+  ├── _split_page_into_segments()         # break at [gesture/emotion:…] tags
+  ├── For each segment:
+  │     ├── _play_tags(gestures, emotions)
+  │     └── tts_helper.speak_story(sentence, language)   # per sentence
+  └── Robot reads with inline gestures + facial expressions
+       │
+       ▼ End of story:
+Comprehension + takeaway MCQs presented in UI
+```
+
 ---
 
 ## 9. User Data Structure
@@ -858,12 +974,16 @@ user_data/
 │   ├── chat_store.json                 # Persistent conversation memory (LlamaIndex)
 │   ├── chat_history/                   # Individual conversation logs
 │   ├── stories/
-│   │   └── story_20260324_180000.json  # {story: "...", metadata: {child_name, age, word_count}}
+│   │   └── story_20260324_180000.json  # {story, metadata{child_name, age, age_tier, target_word_range, title},
+│   │                                   #  pages[], paragraphs[], scenes[], page_to_scene[],
+│   │                                   #  page_to_paragraph[], paragraph_to_scene[],
+│   │                                   #  questions[{question, type, correct_answer, wrong_answers}],
+│   │                                   #  takeaways[]}
 │   ├── story_images/
 │   │   └── story_20260324_180000/
-│   │       ├── story_paragraph_000.png
-│   │       ├── story_paragraph_001.png
-│   │       └── ...
+│   │       ├── story_scene_000_<ts>_<uuid>.png   # one image per identified scene
+│   │       ├── story_scene_001_<ts>_<uuid>.png   # (paragraphs sharing a scene reuse the same image)
+│   │       └── ...                                # legacy stories use story_paragraph_NNN_*.png
 │   ├── quizzes/
 │   │   ├── yes_no/
 │   │   │   └── quiz_20260324_180803.json  # [{question, type, correct_answer}]
@@ -948,7 +1068,18 @@ Robot listens continuously → LLM responds → speaks + gestures → tracks gaz
 Pre-generated questions → child answers via button/speech → robot gives varied feedback with gestures → "Teach Robot" for adaptive learning
 
 ### Mode 3: Story Reading (Web Interface)
-LLM generates age-appropriate therapeutic story → Gemini generates illustrations → robot reads aloud sentence by sentence with movement
+
+Gemini generates an age-appropriate therapeutic story whose structure is selected by an age tier (`early_preschool` 3, `wh_question_format` 4–6, `early_school_age` 7–8, `school_age` 9–12). The story prompt is composed from theme guidance, the clinician's therapy goals, and a PersonaRAG fragment retrieved from `documents/personas_rag.json` based on the child's `disorder` field.
+
+**Pipeline**:
+1. `/api/generate_story[_stream]` → Gemini emits Title + body + (optional) Takeaways + Explanation, with inline `[gesture:…]` / `[emotion:QT/…]` tags
+2. `/api/save_story` runs the post-processing pipeline (shorten if over word cap → Gemini re-tag emotions → split into age-appropriate pages → identify scenes at paragraph granularity → generate comprehension MCQs → generate one MCQ per takeaway for ages 7+)
+3. `ImageGenerator` produces one illustration per **scene** (not per page), with the first image fed back as a style reference for the rest
+4. `/read_story/<file>` → robot reads each page aloud through `tts_helper.speak_story()`; gesture/emotion tags fire on the segment they precede; the matching scene image is shown via `page_to_scene` mapping; comprehension questions are presented at the end
+
+**Ages 4–6 (WH-format)** receive a short 3–4-sentence concrete vignette plus 5–7 WHO/WHAT/WHERE questions whose answers appear verbatim in the story. Few-shot examples are drawn from `documents/story for 4 to 6 years old/story_corpus.json`.
+
+**Ages 7+** additionally receive 2–3 explicit takeaways (positive, actionable lessons) and a multiple-choice "what is one lesson from this story?" question per takeaway.
 
 ### Mode 4: Scene Game / Object Detection (Web Interface)
 Camera feed shown → Gemini ER detects held objects → robot asks questions → validates answers
@@ -1012,11 +1143,18 @@ version_1_llm_gemini/
 ├── documents/
 │   ├── sar_system_prompt.md            # 4-layer system prompt
 │   ├── QTrobot.pdf                     # RAG document
-│   └── QTrobot_research_papers.txt     # RAG document
+│   ├── QTrobot_research_papers.txt     # RAG document
+│   ├── personas_rag.json               # Persona profiles retrieved by PersonaRAG
+│   └── story for 4 to 6 years old/
+│       ├── story_corpus.json           # WH-question few-shot corpus (ages 4–6)
+│       ├── story for kid.pdf
+│       └── story with wh questions.pdf
 ├── scripts/
 │   ├── autostart/
 │   │   └── start_qt_ai_data_assitant.sh
 │   ├── gemini_analyze_image.py         # Gemini ER object detection (Py3.9)
+│   ├── gemini_story.py                 # Story generation via Gemini (Py3.9)
+│   ├── gemini_general.py               # General-purpose Gemini text gen (Py3.9)
 │   ├── gemini_recovery_question.py     # Camera-based toy/child question gen (Py3.9)
 │   ├── gemini_conversation_followup.py # Conversation follow-up generation (Py3.9)
 │   ├── gemini_wh_scene.py              # WH-question scene analysis (Py3.9)
@@ -1034,10 +1172,11 @@ version_1_llm_gemini/
 │   ├── human_tracking.py              # Gaze following
 │   ├── idle_attention.py              # Idle gaze behavior
 │   ├── scene_detection.py             # Camera scene understanding
-│   ├── story_generator.py            # Therapeutic story generation
-│   ├── story_generator_ashley.py      # Story variant
-│   ├── image_generator.py            # Gemini image generation
-│   ├── image_generator_worker.py      # Py3.9 image gen subprocess
+│   ├── story_generator.py            # Therapeutic story generation (Gemini default, Ollama fallback)
+│   ├── story_generator_ashley.py      # Legacy Ollama prototype — not wired into the web server
+│   ├── persona_rag.py                # Persona retrieval + prompt fragment builder
+│   ├── image_generator.py            # Gemini image generation (direct SDK + Py3.9 worker fallback)
+│   ├── image_generator_worker.py      # Py3.9 image gen subprocess (gemini-2.5-flash-image)
 │   ├── user_management.py            # Multi-user system
 │   ├── user_interface.py             # User interface base
 │   ├── user_cli_interface.py         # CLI user selection
