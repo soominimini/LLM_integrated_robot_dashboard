@@ -36,9 +36,11 @@ Other activities follow the same pattern: the therapist authors content with the
 
 ## How it works at a glance
 
+![System architecture: therapist drives a Flask web application from a browser; the application talks to the QTrobot's perception and expression layers and to a cloud cognition layer of Google Gemini and OpenAI Whisper](ARCHITECTURE_diagram.png)
+
 The project is two cooperating Python applications that drive the same physical robot.
 
-The **web server** is the active therapist-facing application. The therapist drives every activity from a browser dashboard. The web server uses cloud artificial-intelligence models — primarily Google Gemini for content generation and OpenAI Whisper for recognizing the child's speech — to power every activity, then sends speech, gestures, and emotions to the robot.
+The **web server** is the active therapist-facing application (shown above). The therapist drives every activity from a browser dashboard. The web server uses cloud artificial-intelligence models — primarily Google Gemini for content generation and OpenAI Whisper for recognizing the child's speech — to power every activity, then sends speech, gestures, and emotions to the robot.
 
 The **free-conversation mode** is a separate, optional process for open-ended chat. It runs entirely on local models (Ollama for the language model, NVIDIA Riva for recognizing the child's speech, LlamaIndex for retrieval over a local document collection) and is independent of the web server.
 
