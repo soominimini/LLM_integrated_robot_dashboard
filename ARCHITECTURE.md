@@ -2,39 +2,67 @@
 
 ## 1. System Overview
 
-A socially assistive robot (SAR) platform for pediatric therapeutic settings, built on QTrobot hardware. The system integrates multi-modal perception (speech, vision, presence detection), LLM-powered conversation with RAG, and expressive robot behavior (speech, gestures, gaze tracking) — all governed by a layered ethical system prompt designed for child safety.
+A socially assistive robot platform for pediatric speech-language therapy, built on QTrobot hardware. The system has **two cooperating processes**:
+
+- **Flask web server** (`src/web_user_server.py`, Python 3.8) — the active therapist-facing application. Runs the story builder, quiz authoring, scene game, recovery activity builder, and conversation flow builder. Drives the robot through the Robot Operating System service calls. **All large language model calls in this process go to Google Gemini** except for one narrow Ollama use (mishearing correction in quiz answers).
+- **Robot Operating System brain** (`src/qt_ai_data_assistant.py`, Python 3.9) — a separate ROS node that runs the open-ended free-conversation mode. Uses Riva for speech recognition, Ollama for the language model, LlamaIndex for retrieval-augmented generation over local documents, and Moondream for camera scene captioning. **This process is not used by the web server.**
+
+Both are governed by a layered ethical system prompt designed for child safety.
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │                        THERAPIST / CHILD                         │
-│                    (Speech, Gestures, Objects)                    │
+│                  (Speech, Gestures, Objects, Browser)             │
 └──────────┬──────────────────────────────────────▲────────────────┘
            │ Audio / Visual Input                 │ Speech / Movement Output
            ▼                                      │
 ┌──────────────────────┐              ┌──────────────────────────┐
 │   PERCEPTION LAYER   │              │    EXPRESSION LAYER      │
 │  ┌────────────────┐  │              │  ┌────────────────────┐  │
-│  │ Riva ASR       │  │              │  │ QT TTS (ROS)       │  │
-│  │ Whisper ASR    │  │              │  │ AWS Polly (optional)│  │
-│  │ Silero VAD     │  │              │  │ Gestures (ROS)     │  │
-│  │ DeepFace       │  │              │  │ Emotions (ROS)     │  │
-│  │ Moondream      │  │              │  │ Head/Arm IK (ROS)  │  │
-│  │ Gemini ER      │  │              │  │ Pylips Lipsync     │  │
+│  │ Whisper        │  │  WEB         │  │ QTrobot Acapela    │  │
+│  │ (gpt-4o-       │  │  PATH        │  │ text-to-speech     │  │
+│  │  transcribe)   │  │              │  │ (default, mouth    │  │
+│  │ Camera frames  │  │              │  │  sync via visemes) │  │
+│  │ (Robot OS feed)│  │              │  │ Amazon Polly +     │  │
+│  │ Red-card OpenCV│  │              │  │  Pylips lipsync    │  │
+│  ├────────────────┤  │              │  │  (optional)        │  │
+│  │ Riva speech    │  │  ROBOT OS    │  │ Robot OS gestures  │  │
+│  │ Silero voice   │  │  PATH        │  │ Robot OS emotions  │  │
+│  │  activity det. │  │              │  │ Head / arm inverse │  │
+│  │ DeepFace face  │  │              │  │  kinematics        │  │
+│  │ Moondream      │  │              │  │ HumanTracking gaze │  │
 │  └────────────────┘  │              │  └────────────────────┘  │
 └──────────┬───────────┘              └──────────▲───────────────┘
            │                                     │
            ▼                                     │
 ┌──────────────────────────────────────────────────────────────────┐
 │                       COGNITION LAYER                            │
-│  ┌─────────────────┐  ┌──────────────┐  ┌───────────────────┐  │
-│  │ Ollama LLM      │  │ LlamaIndex   │  │ Gemini Vision     │  │
-│  │ (llama3.1,      │  │ RAG Engine   │  │ (robotics-er,     │  │
-│  │  phi4:14b)      │  │ (documents)  │  │  2.5-flash-image) │  │
-│  └─────────────────┘  └──────────────┘  └───────────────────┘  │
-│  ┌─────────────────┐  ┌──────────────┐  ┌───────────────────┐  │
-│  │ Chat Memory     │  │ System Prompt│  │ Scene Context     │  │
-│  │ (per-user)      │  │ (4-layer)    │  │ (camera feed)     │  │
-│  └─────────────────┘  └──────────────┘  └───────────────────┘  │
+│                                                                  │
+│  WEB PATH (web_user_server.py — almost all Google Gemini)        │
+│  ┌──────────────────────┐  ┌────────────────────────────────┐   │
+│  │ Gemini 2.5 Flash     │  │ Gemini 2.5 Flash Image         │   │
+│  │  • story generation  │  │  • story illustrations         │   │
+│  │  • quiz questions    │  │  • scene-game item cards       │   │
+│  │  • quiz feedback     │  └────────────────────────────────┘   │
+│  │  • emotion re-tagging│  ┌────────────────────────────────┐   │
+│  │  • page splitting    │  │ Gemini Robotics ER 1.5 Preview │   │
+│  │  • scene grouping    │  │  • object detection            │   │
+│  │  • comprehension Qs  │  │    (scene game)                │   │
+│  │  • follow-ups, etc.  │  └────────────────────────────────┘   │
+│  └──────────────────────┘  ┌────────────────────────────────┐   │
+│                            │ Ollama gemma4:e4b              │   │
+│                            │  • mishearing correction for   │   │
+│                            │    quiz answers (the only      │   │
+│                            │    Ollama use in the web path) │   │
+│                            └────────────────────────────────┘   │
+│                                                                  │
+│  ROBOT OS PATH (qt_ai_data_assistant.py)                         │
+│  ┌──────────────────────┐  ┌────────────────────────────────┐   │
+│  │ Ollama (config       │  │ LlamaIndex retrieval-augmented │   │
+│  │  default gemma4:e4b) │  │  generation over documents/    │   │
+│  │  conversation +      │  │ Embeddings: mxbai-embed-large  │   │
+│  │  function calling    │  │ Per-user ChatMemoryBuffer      │   │
+│  └──────────────────────┘  └────────────────────────────────┘   │
 └──────────────────────────────────────────────────────────────────┘
            │                                     ▲
            ▼                                     │
@@ -42,9 +70,9 @@ A socially assistive robot (SAR) platform for pediatric therapeutic settings, bu
 │                     ORCHESTRATION LAYER                          │
 │  ┌──────────────────────────┐  ┌─────────────────────────────┐  │
 │  │ QTAIDataAssistant        │  │ Flask Web Server             │  │
-│  │ (ROS main node)          │  │ (Therapist/User interface)   │  │
-│  │ State: IDLE → LISTENING  │  │ Routes: /api/*, pages        │  │
-│  │  → PROCESSING → RESPOND  │  │ Session-based auth           │  │
+│  │ (Robot OS node)          │  │ (Therapist / child interface)│  │
+│  │ State: IDLE → LISTENING  │  │ Routes: /api/*, page renders │  │
+│  │  → PROCESSING → RESPOND  │  │ Session-based authentication │  │
 │  └──────────────────────────┘  └─────────────────────────────┘  │
 └──────────────────────────────────────────────────────────────────┘
            │                                     │
@@ -52,8 +80,8 @@ A socially assistive robot (SAR) platform for pediatric therapeutic settings, bu
 ┌──────────────────────────────────────────────────────────────────┐
 │                        DATA LAYER                                │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────┐  │
-│  │ User Profiles │  │ Chat Memory  │  │ Quizzes / Stories /   │  │
-│  │ (users.json)  │  │ (per-user)   │  │ Activities / Learned  │  │
+│  │ User profiles │  │ Chat memory  │  │ Quizzes / stories /   │  │
+│  │ (users.json)  │  │ (per-user)   │  │ activities / learned  │  │
 │  └──────────────┘  └──────────────┘  └───────────────────────┘  │
 └──────────────────────────────────────────────────────────────────┘
 ```
@@ -167,17 +195,21 @@ Executes LLM-generated JSON commands via ROS services.
 
 ### 3.2 Language & Cognition
 
-#### `src/llamaindex_interface.py` — LLM + RAG Engine
+#### `src/llamaindex_interface.py` — Local language model + retrieval engine
 
 **Class**: `ChatWithRAG`
 
+**Where it is used**:
+- **Robot Operating System path** (`qt_ai_data_assistant.py`) — primary user; powers free-conversation mode with retrieval-augmented generation over `documents/`.
+- **Web server path** (`web_user_server.py`) — used in **one** narrow place only: the mishearing-correction helper `_ensure_intent_llm()` at `src/web_user_server.py:292`, which checks whether a Whisper transcript likely intended an expected quiz answer. This is the only place the web server touches Ollama.
+
 **Components**:
-- **LLM**: Ollama (local, default `llama3.1`)
-- **Embeddings**: OllamaEmbedding (`mxbai-embed-large:latest`)
-- **Document Loader**: SimpleDirectoryReader (PDF, TXT, MD, DOCX)
-- **Index**: VectorStoreIndex (in-memory)
-- **Memory**: ChatMemoryBuffer → SimpleChatStore (persistent per-user)
-- **Chat Engine**: CustomChatEngine (extends ContextChatEngine) with camera context injection
+- **Language model**: Ollama (local). Web server intent helper hardcodes `gemma4:e4b`. Robot Operating System path uses whatever `parameters.llm` is set to in `config/default.yaml` (current default: `gemma4:e4b`).
+- **Embeddings**: `OllamaEmbedding("mxbai-embed-large:latest")` — only loaded when retrieval-augmented generation is enabled, which the web server intent helper disables (`disable_rag=True`).
+- **Document loader**: `SimpleDirectoryReader` (PDF, TXT, MD, DOCX)
+- **Index**: `VectorStoreIndex` (in-memory)
+- **Memory**: `ChatMemoryBuffer` → `SimpleChatStore` (persisted per user)
+- **Chat engine**: `CustomChatEngine` (extends `ContextChatEngine`) with camera context injection
 
 **Key Methods**:
 | Method | Purpose |
@@ -213,28 +245,12 @@ User Query
 
 ### 3.3 Speech I/O
 
-#### `src/riva_speech_recognition_vad.py` — Primary ASR (Robot Process)
+#### `src/whisper.py` — Speech recognition for the web server (active)
 
-**Class**: `RivaSpeechRecognitionSilero`
-
-- **ASR Backend**: NVIDIA Riva (gRPC, Docker)
-- **VAD**: Silero VAD (confidence threshold: 0.6)
-- **Audio**: 16kHz, mono, from ROS topic `/qt_respeaker_app/channel0`
-- **Languages**: en-US, en-GB, ar-AR, de-DE, es-ES, fr-FR, hi-IN, it-IT, ja-JP, ru-RU, ko-KR, pt-BR, zh-CN
-
-**Event Flow**:
-```
-Audio chunks from ROS mic topic
-  → Silero VAD detects voice activity
-  → Event.RECOGNIZING fired → robot starts tracking speaker
-  → Riva ASR processes audio stream
-  → Returns recognized text + language
-```
-
-#### `src/whisper.py` — Web ASR (Quiz/Web Interface)
-
-**Type**: Subprocess (called by web server)
+**Type**: Subprocess invoked by the Flask server (`web_user_server.py:791,831`)
 **Backend**: OpenAI `gpt-4o-transcribe`
+
+This is the speech recognizer for **every** voice interaction in the web server: quiz answers, conversation flows, recovery activities, and any "press to talk" surface in the templates. Riva is **not** imported by `web_user_server.py`.
 
 **Parameters** (environment-configurable):
 | Param | Default | Env Var |
@@ -250,17 +266,37 @@ PARTIAL:<intermediate text>    (emitted every stream_interval)
 FINAL:<final transcription>    (emitted once at end)
 ```
 
-**Language**: Passed via `--language` CLI arg (ISO-639-1 code extracted from config).
+**Language**: Passed via `--language` command-line argument (ISO-639-1 code extracted from config).
 
-#### `src/tts_helper.py` — Text-to-Speech
+#### `src/riva_speech_recognition_vad.py` — Speech recognition for the Robot Operating System path (legacy / not in web server)
+
+**Class**: `RivaSpeechRecognitionSilero`
+
+Imported only by `src/qt_ai_data_assistant.py:23`. The Flask web server does **not** import or call this module.
+
+- **Speech recognizer**: NVIDIA Riva (gRPC, Docker container)
+- **Voice activity detection**: Silero (confidence threshold 0.6)
+- **Audio**: 16 kHz, mono, from Robot Operating System topic `/qt_respeaker_app/channel0`
+- **Languages**: en-US, en-GB, ar-AR, de-DE, es-ES, fr-FR, hi-IN, it-IT, ja-JP, ru-RU, ko-KR, pt-BR, zh-CN
+
+**Event flow** (free-conversation mode only):
+```
+Audio chunks from Robot Operating System microphone topic
+  → Silero voice activity detection
+  → Event.RECOGNIZING fired → robot starts tracking the speaker
+  → Riva processes the audio stream
+  → returns recognized text + language
+```
+
+#### `src/tts_helper.py` — Text-to-speech
 
 **Class**: `TTSHelper`
 
 **Engines**:
-| Engine | Service | Mouth Sync |
+| Engine | Service | Mouth synchronization |
 |--------|---------|------------|
-| `qt` (default) | ROS `/qt_robot/behavior/talkText` (Acapela) | Built-in viseme support |
-| `polly` | AWS Polly → SSH upload → robot playback | Via Pylips (socketio) |
+| `qt` (default) | Robot Operating System service `/qt_robot/behavior/talkText` (Acapela) | Built-in viseme support |
+| `polly` | Amazon Polly → SSH upload → robot playback | Via Pylips (socketio) |
 
 **Joint Limits** (for movement during speech):
 ```
@@ -273,50 +309,72 @@ Left Arm:  ShoulderPitch [-140, 140], ShoulderRoll [-75, 7], ElbowRoll [-90, -7]
 
 ### 3.4 Vision & Perception
 
-#### `src/human_presence_detection.py` — Face Detection
+The visual stack is split between the active web server path and the Robot Operating System path.
+
+#### Active in the web server
+
+##### `scripts/gemini_analyze_image.py` — Object detection (web server: scene game)
+
+**Model**: `gemini-robotics-er-1.5-preview`
+**Runtime**: Python 3.9 (subprocess)
+
+- **Input**: image file path (`--image` argument)
+- **Output**: JSON array of detected objects with normalized point coordinates
+- **Format**: `[{"point": [y, x], "label": "object_name"}]` (coordinates 0–1000)
+- **Prompt**: "Point to no more than 1 item a person is holding in the image."
+- **Called by**: scene-game answer route (`/api/scene_game/answer`) and `/api/camera_capture` in `web_user_server.py`
+
+##### Red-card detection (`web_user_server.py:678`)
+
+OpenCV thresholding in hue/saturation/value color space, used by the conversation flow builder and the recovery activity follow-up loop.
+
+- Hue ranges: `[0, 10] ∪ [165, 180]` (covers wraparound red)
+- Saturation: > 100, value: > 80
+- Triggers when red pixel ratio exceeds 3% of the frame
+
+##### Camera frames
+
+The web server pulls frames directly from a Robot Operating System camera topic via `_get_ros_frame()` and serves them on `/api/camera_frame`.
+
+#### Active in the Robot Operating System path only (not used by the web server)
+
+##### `src/human_presence_detection.py` — Face detection
 
 **Class**: `HumanPresenceDetection`
 
 - **Backend**: DeepFace + RetinaFace
-- **Input**: ROS camera topic
-- **Output**: Per-person data: face bbox, 3D position (xyz), emotions, embeddings
-- **Features**: Temporal filtering, external VAD trigger, callback-based
+- **Input**: Robot Operating System camera topic
+- **Output**: per-person face bounding box, 3D position, emotion, embedding
+- **Features**: temporal filtering, external voice-activity-detection trigger, callback-based
 
-#### `src/human_tracking.py` — Gaze Following
+##### `src/human_tracking.py` — Gaze following
 
 **Class**: `HumanTracking`
 
-- **Input**: HumanPresenceDetection callbacks
-- **Output**: Smooth head movement to follow active speaker
-- **Features**: Person ID tracking, absence memory (forgets after 10 min)
+- **Input**: `HumanPresenceDetection` callbacks
+- **Output**: smooth head movement that follows the active speaker
+- **Features**: person identity tracking, absence memory (forgets after 10 minutes)
 
-#### `src/idle_attention.py` — Idle Gaze
+> The web server *imports* `HumanTracking` lazily inside a `try/except` (`web_user_server.py:48–50`) and uses it during story read-aloud to follow the listener's face. Face detection itself is not initialized by the web server; tracking falls back gracefully when unavailable.
+
+##### `src/idle_attention.py` — Idle gaze
 
 **Class**: `IdleAttention`
 
 - Random gaze at detected persons or random directions
 - Prevents staring; creates natural "looking around" behavior
-- Active when robot is in IDLE state
+- Active only while the Robot Operating System brain is in the IDLE state
 
-#### `src/scene_detection.py` — Scene Understanding
+##### `src/scene_detection.py` — Scene captioning (Moondream)
 
 **Class**: `SceneDetection`
 
-- **Model**: Moondream (via Ollama)
-- **Input**: Camera frames at configurable framerate (default: 0.1 FPS)
-- **Output**: Scene description text → injected into LLM context
+Used **only** by `qt_ai_data_assistant.py` (free-conversation mode), and only when the `enable_scene` parameter is true. The Flask web server does not import this module.
+
+- **Model**: Moondream (run locally via Ollama)
+- **Input**: camera frames at configurable framerate (default 0.1 frames/second)
+- **Output**: scene description text → injected into the conversation language model context
 - **Prompt**: "Describe in details what you see. If you see people, also describe how they dressed and what they carry."
-
-#### `scripts/gemini_analyze_image.py` — Physical Object Detection
-
-**Model**: `gemini-robotics-er-1.5-preview`
-**Runtime**: Python 3.9 (subprocess)
-
-- **Input**: Image file path (`--image` argument)
-- **Output**: JSON array of detected objects with normalized point coordinates
-- **Format**: `[{"point": [y, x], "label": "object_name"}]` (coordinates 0-1000)
-- **Prompt**: "Point to no more than 1 item a person is holding in the image."
-- **Used by**: `/api/camera_capture` in web server for scene game / object validation
 
 ---
 
@@ -717,75 +775,86 @@ Reads a JSON payload `{prompt, output_path, reference_image}` from stdin, calls 
 
 ## 5. External Services & Models
 
-### 5.1 LLM Models
+### 5.1 Language models
 
-| Model | Provider | Runtime | Used For |
-|-------|----------|---------|----------|
-| `llama3.1` | Ollama (local) | Python 3.8/3.9 | Main conversation, RAG (default `ChatWithRAG` LLM) |
-| `phi4:14b` | Ollama (local) | Python 3.8 | Quiz generation, feedback phrases |
-| `mxbai-embed-large:latest` | Ollama (local) | Python 3.8 | Document embeddings for RAG |
-| `moondream` | Ollama (local) | Python 3.8 | Camera scene understanding |
-| (story Ollama fallback) | Ollama (local) | Python 3.8/3.9 | `StoryGenerator` can be reconfigured to a non-`gemini-*` Ollama model; selected via `StoryGenerator(llm_model=…)` |
+The web server is almost entirely a Gemini application; the Robot Operating System brain is a local Ollama application.
 
-### 5.2 Gemini Models
+#### Web server (`web_user_server.py`) — active
 
-| Model | Purpose | Called From |
-|-------|---------|------------|
-| `gemini-robotics-er-1.5-preview` | Physical object detection + localization | `scripts/gemini_analyze_image.py` → `/api/camera_capture` |
-| `gemini-2.5-flash-image` | Story scene illustration generation | `src/image_generator.py` / `src/image_generator_worker.py` |
-| `gemini-2.5-flash` | Therapeutic story generation (age-tiered, themed, WH-format) | `scripts/gemini_story.py` → `StoryGenerator` → `/api/generate_story[_stream]` |
-| `gemini-2.5-flash` | Story post-processing: emotion/gesture re-tagging, page splitting, scene identification, comprehension + takeaway MCQs | `scripts/gemini_general.py` (via `_gemini_generate()`) → `/api/save_story`, `/api/get_story_sentences` |
-| `gemini-2.5-flash` | Recovery question generation (toy/child, age-appropriate) | `scripts/gemini_recovery_question.py` → `/api/recovery/generate_question` |
-| `gemini-2.5-flash` | Conversation follow-up generation | `scripts/gemini_conversation_followup.py` → `/api/conversation/wait_for_turn` |
-| `gemini-2.5-flash` | WH-question scene analysis | `scripts/gemini_wh_scene.py` → `/api/wh_scene/capture` |
+| Model | Provider | Used for | Called from |
+|-------|----------|----------|-------------|
+| `gemini-2.5-flash` | Google Gemini | Story generation (age-tiered, themed, with-question format) | `scripts/gemini_story.py` → `StoryGenerator` → `/api/generate_story[_stream]` |
+| `gemini-2.5-flash` | Google Gemini | Story post-processing: emotion/gesture re-tagging, page splitting, scene grouping, comprehension and takeaway questions | `scripts/gemini_general.py` (via `_gemini_generate()`) → `/api/save_story`, `/api/get_story_sentences` |
+| `gemini-2.5-flash` | Google Gemini | Quiz generation and pre-generated quiz feedback phrases | `_GeminiQuizLLM` (`web_user_server.py:313`) → `scripts/gemini_general.py` |
+| `gemini-2.5-flash` | Google Gemini | Scene-game question generation | `_scene_game_generate_question` → `scripts/gemini_general.py` |
+| `gemini-2.5-flash` | Google Gemini | Recovery question generation (toy / child observation) | `scripts/gemini_recovery_question.py` → `/api/recovery/generate_question` |
+| `gemini-2.5-flash` | Google Gemini | Conversation follow-up generation (red-card turn-taking) | `scripts/gemini_conversation_followup.py` → `/api/conversation/wait_for_turn` |
+| `gemini-2.5-flash` | Google Gemini | With-question scene analysis | `scripts/gemini_wh_scene.py` → `/api/wh_scene/capture` |
+| `gemini-2.5-flash-image` | Google Gemini | Story scene illustrations and scene-game item cards | `src/image_generator.py` / `src/image_generator_worker.py` |
+| `gemini-robotics-er-1.5-preview` | Google Gemini | Object detection and localization (scene game) | `scripts/gemini_analyze_image.py` → `/api/scene_game/answer`, `/api/camera_capture` |
+| `gemma4:e4b` | Ollama (local) | Mishearing correction for quiz answers — checks whether a Whisper transcript likely intended an expected canonical answer. **The only Ollama call in the web server.** | `_ensure_intent_llm()` at `web_user_server.py:292` |
 
-### 5.3 Speech Services
+#### Robot Operating System brain (`qt_ai_data_assistant.py`) — separate process
 
-| Service | Purpose | Interface |
-|---------|---------|-----------|
-| NVIDIA Riva | Primary ASR (robot process) | gRPC (Docker container) |
-| OpenAI `gpt-4o-transcribe` | Web ASR (quiz/web interface) | REST API via subprocess |
-| QT Acapela | Default TTS (with mouth sync) | ROS service |
-| AWS Polly | Optional TTS | boto3 SDK |
+| Model | Provider | Used for |
+|-------|----------|----------|
+| `gemma4:e4b` (default) | Ollama (local) | Free-conversation language model. The default is set in `config/default.yaml` and can be overridden at the command line. |
+| `mxbai-embed-large:latest` | Ollama (local) | Document embeddings for retrieval-augmented generation over `documents/` |
+| `moondream` | Ollama (local) | Camera scene captioning (only when `enable_scene` is true) |
 
-### 5.4 Vision Services
+#### Removed / no longer used
 
-| Service | Purpose | Interface |
-|---------|---------|-----------|
-| DeepFace + RetinaFace | Face detection & recognition | Local Python library |
-| Silero VAD | Voice activity detection | Local PyTorch model |
+The following models are referenced in old documentation but not in the current source: `llama3.1` appears only in the dead `src/story_generator_ashley.py` (not imported anywhere); `phi4:14b` does not appear in any source file.
 
-### 5.5 Environment Variables
+### 5.2 Speech services
+
+| Service | Used in | Purpose | Interface |
+|---------|---------|---------|-----------|
+| OpenAI `gpt-4o-transcribe` | Web server (every voice surface) | Speech recognition | Subprocess via `src/whisper.py`; returns `PARTIAL:` / `FINAL:` lines |
+| NVIDIA Riva | Robot Operating System brain only | Speech recognition for free-conversation mode | gRPC (Docker container) |
+| QTrobot Acapela | Both processes | Default text-to-speech with viseme-driven mouth sync | Robot Operating System service `/qt_robot/behavior/talkText` |
+| Amazon Polly | Both processes (optional) | Alternative text-to-speech (paired with Pylips lipsync) | boto3 software development kit |
+
+### 5.3 Vision services
+
+| Service | Used in | Purpose | Interface |
+|---------|---------|---------|-----------|
+| Google Gemini Robotics ER 1.5 Preview | Web server | Held-object detection for the scene game | `scripts/gemini_analyze_image.py` (subprocess) |
+| OpenCV hue/saturation/value thresholding | Web server | Red-card detection for child turn-taking | `_detect_red_card()` at `web_user_server.py:678` |
+| DeepFace + RetinaFace | Robot Operating System brain only | Face detection and recognition | Local Python library |
+| Silero | Robot Operating System brain only | Voice activity detection (paired with Riva) | Local PyTorch model |
+
+### 5.4 Environment variables
 
 ```bash
-# LLM / AI APIs
-OPENAI_API_KEY=...              # Whisper ASR
-GOOGLE_API_KEY=...              # Gemini (image gen + object detection)
-GEMINI_API_KEY=...              # Gemini (alternative key name)
+# Language model and image generation keys
+OPENAI_API_KEY=...              # Whisper speech recognition
+GOOGLE_API_KEY=...              # Google Gemini (image generation + object detection)
+GEMINI_API_KEY=...              # Google Gemini (alternative key name)
 
-# TTS Engine
-TTS_ENGINE=qt                   # "qt" (default, with mouth sync) or "polly"
-POLLY_VOICE=Ivy                 # AWS Polly voice
+# Text-to-speech engine
+TTS_ENGINE=qt                   # "qt" (default, with mouth synchronization) or "polly"
+POLLY_VOICE=Ivy                 # Amazon Polly voice
 POLLY_RATE=85%                  # Polly speech rate
 POLLY_VOLUME=-10dB              # Polly volume
 
-# AWS (for Polly)
+# Amazon Web Services (for Polly)
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 AWS_DEFAULT_REGION=us-east-1
 
-# Robot Connection
+# Robot connection
 ROBOT_HOST=192.168.100.1
 ROBOT_USER=developer
 ROBOT_PASSWORD=qtrobot
 ROBOT_SUDO_PASSWORD=qtrobot
 
-# Whisper Tuning
-WHISPER_SILENCE_THRESHOLD=0.008 # RMS threshold for speech detection
-WHISPER_SILENCE_DURATION=1.5    # Seconds of silence to stop recording
-WHISPER_MAX_RECORD=15.0         # Max recording seconds
+# Whisper tuning
+WHISPER_SILENCE_THRESHOLD=0.008 # Root-mean-square threshold for speech detection
+WHISPER_SILENCE_DURATION=1.5    # Seconds of silence required to stop recording
+WHISPER_MAX_RECORD=15.0         # Maximum recording seconds
 WHISPER_STREAM_INTERVAL=2.0     # Partial transcription interval
-WHISPER_PYTHON=/usr/bin/python3 # Python binary for whisper subprocess
+WHISPER_PYTHON=/usr/bin/python3 # Python binary for the Whisper subprocess
 ```
 
 ---
@@ -1378,9 +1447,408 @@ version_1_llm_gemini/
 │   ├── conversation_builder.html     # Conversation flow builder (drag-and-drop)
 │   ├── my_games.html                 # Saved activities & conversations
 │   └── select_toy.html               # Toy selection
-├── robotics.py                       # Gemini ER demo script
-├── test.py                           # Gemini vision test
+├── robotics.py                       # Google Gemini Robotics ER demo script
+├── test.py                           # Google Gemini vision test
 ├── requirements.txt                  # Python dependencies
-├── env.polly                         # Polly TTS env vars (source manually)
+├── env.polly                         # Amazon Polly text-to-speech environment variables (source manually)
 └── ARCHITECTURE.md                   # This file
 ```
+
+---
+
+## 15. Per-activity pipelines
+
+This section walks through each user-facing activity end to end — what data goes in, which models are called in which order, what files are written, and what the robot does to close the loop. All pipelines below describe the active **web server path** unless explicitly labeled "Robot Operating System path."
+
+### 15.1 Story telling
+
+The story activity is split into a long authoring pipeline (run once, when the therapist asks for a story) and a short read-aloud loop (run page by page when the child reads).
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ INPUTS                                                              │
+│  • User profile: age, gender, disorder, learning_goals              │
+│    (users.json + user_data/<user>/profile.json)                     │
+│  • Therapist: topics[], extra goals                                 │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 1. PERSONA RETRIEVAL                                                │
+│    PersonaRAG.build_story_prompt_fragment(age, disorder)            │
+│    → matched persona's interests / language targets / constraints   │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 2. STORY GENERATION  (web_user_server.py:1132 / :1183 stream)       │
+│    StoryGenerator → scripts/gemini_story.py  [gemini-2.5-flash]     │
+│    Age tier picks the template:                                     │
+│      3 → early_preschool   4-6 → with-question format               │
+│      7-8 → early_school    9-12 → school_age                        │
+│    Output: Title + body with inline [gesture:X] [emotion:QT/X]      │
+│            + Takeaways (ages 7+)                                    │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+                    🧑 THERAPIST APPROVES
+                             │
+                             ▼ /api/save_story  (web_user_server.py:2530)
+┌─────────────────────────────────────────────────────────────────────┐
+│ POST-PROCESSING PIPELINE  (every step is Gemini Flash via           │
+│                            scripts/gemini_general.py)                │
+│                                                                     │
+│  3. Shorten if over tier word cap   StoryGenerator.shorten_story()  │
+│  4. Re-tag emotions and gestures    _apply_emotion_tags_with_gemini │
+│  5. Snap tags to sentence bounds    _validate_tag_positions         │
+│  6. Split into age-sized pages      _split_story_into_pages         │
+│  7. Re-inject tags lost in split    _reinject_tags_into_pages       │
+│  8. Paragraphs + scene grouping     _identify_story_scenes          │
+│     → page_to_scene mapping                                         │
+│  9. Comprehension questions (3)     _generate_story_questions       │
+│ 10. One question per takeaway (7+)  _generate_takeaway_questions    │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 11. PERSIST                                                         │
+│     user_data/<user>/stories/story_<ts>.json                        │
+│     {story, metadata, pages[], paragraphs[], scenes[],              │
+│      page_to_scene[], questions[], takeaways[]}                     │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 12. IMAGE GENERATION  (one image per scene, NOT per page)           │
+│     ImageGenerator → gemini-2.5-flash-image                         │
+│     The first image becomes the style reference for the rest        │
+│     Saves: user_data/<user>/story_images/<file>/story_scene_NNN.png │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+        ═══════════ READ-ALOUD on /read_story/<file> ═══════════
+                             │
+                             ▼ per page → /api/speak_sentence (5202)
+┌─────────────────────────────────────────────────────────────────────┐
+│ For each segment between [gesture:] / [emotion:] tags:              │
+│   ├── Fire Robot OS /qt_robot/gesture/play   _play_tags()  (5108)   │
+│   ├── Fire Robot OS /qt_robot/emotion/show                          │
+│   └── Per sentence: tts_helper.speak_story()                        │
+│       → Robot OS /qt_robot/behavior/talkText                        │
+│       (Whisper is suspended during text-to-speech                   │
+│        via _with_asr_suspended)                                     │
+│ HumanTracking follows the child's face throughout                   │
+└────────────────────────────┬────────────────────────────────────────┘
+                             ▼
+        📝 User interface shows comprehension questions
+            (multiple-choice; one correct answer + two
+             plausible distractors per question)
+```
+
+---
+
+### 15.2 Educational quiz
+
+The quiz activity has an **authoring phase** (therapist generates and saves a quiz) and a **play phase** (child answers questions on screen with optional voice input).
+
+```
+═══════════════════ AUTHORING PHASE ═══════════════════
+
+  Therapist picks: topic, age, type (yes_no | wh)
+                   │
+                   ▼  /api/generate_quiz  (1250)
+  ┌──────────────────────────────────────────────────┐
+  │ _GeminiQuizLLM → scripts/gemini_general.py       │
+  │                  [gemini-2.5-flash]              │
+  │ Returns JSON array of {question, type,           │
+  │ correct_answer, accepted_answers[]}              │
+  │ Special branch for "social rules" topic (1310)   │
+  └────────────────────────┬─────────────────────────┘
+                           ▼  /api/save_quiz  (1748)
+  user_data/<user>/quizzes/{yes_no|wh}/quiz_<ts>.json
+
+         ▼  optional: /api/generate_quiz_feedback (1540)
+  Pre-generates 10 correct + 10 incorrect feedback phrases
+  (varied praise / encouragement, also Gemini)
+
+
+═══════════════════ PLAY PHASE ═══════════════════
+
+  Browser /educational_quiz → loads quiz + merges
+                              learned_answers.json
+                   │
+                   ▼ shows question
+   ┌───────────────┴─────────────────┐
+   │                                 │
+[Yes/No tap]              [🎤 Mic — Whisper]
+                              POST /api/speech_recognize
+                              → src/whisper.py subprocess
+                              → OpenAI gpt-4o-transcribe
+                              → "FINAL:<text>" parsed
+   │                                 │
+   │                                 ▼
+   │                  ┌──────────────────────────────┐
+   │                  │ Match against accepted_answers│
+   │                  │  ├ exact / strip articles     │
+   │                  │  ├ singular form              │
+   │                  │  └ containment match          │
+   │                  │                                │
+   │                  │ MISS? → _llm_canonicalize_heard│
+   │                  │  ChatWithRAG model="gemma4:e4b"│
+   │                  │  (Ollama) — "did the child    │
+   │                  │  intend the expected word?"   │
+   │                  │  ← only Ollama call in the    │
+   │                  │    web server                  │
+   │                  └──────────────┬─────────────────┘
+   ▼                                 ▼
+  ┌───── Correct ─────┐    ┌───── Wrong ─────┐
+  │ Speak praise      │    │ Speak gentle hint│
+  │ Gesture: clapping │    │ Gesture: think / │
+  │   / hoora / happy │    │   patience       │
+  │ Emotion: QT/happy │    │ Emotion: QT/calm │
+  └─────────┬─────────┘    └─────────┬────────┘
+            │                        │
+            │       (with-questions  │
+            │        only)           ▼
+            │           [Teach Robot] button
+            │           POST /api/teach_quiz_answer (1710)
+            │           → append to learned_answers.json
+            ▼
+       Next question
+```
+
+---
+
+### 15.3 Scene game (object detection)
+
+The child holds an object up to the camera; the robot asks a question about what it sees, and Google Gemini Robotics decides whether the object matches.
+
+```
+   /api/scene_game/new_round  (3177)
+              │
+              ▼
+   ┌──────────────────────────────────────────────────┐
+   │ Load toy list → _load_scene_toys()               │
+   │ Generate question → _scene_game_generate_question│
+   │   gemini_general.py [gemini-2.5-flash]           │
+   │   Age tier:                                      │
+   │     2-3  → "find the carrot"                     │
+   │     4-6  → color/shape criteria                  │
+   │     7+   → inference riddle                      │
+   │ Generate item card images via                    │
+   │   ImageGenerator [gemini-2.5-flash-image]        │
+   └──────────────────────┬───────────────────────────┘
+                          ▼
+              🤖 Robot speaks the question
+                          │
+                  Child holds an object up
+                          │
+                          ▼  /api/scene_game/answer  (3309)
+   ┌──────────────────────────────────────────────────┐
+   │ _get_ros_frame()           ← grab camera frame   │
+   │ _run_gemini_detect_and_look(image)  (3341)       │
+   │   subprocess scripts/gemini_analyze_image.py     │
+   │   [gemini-robotics-er-1.5-preview]               │
+   │   Returns {label, color, shape, point[y, x]}     │
+   └──────────────────────┬───────────────────────────┘
+                          ▼
+   ┌──────────────────────────────────────────────────┐
+   │ Compare detected vs target:                      │
+   │   age 2-3   → exact label match                  │
+   │   age 4+    → criteria match (color/shape/sub)   │
+   └──────────────────────┬───────────────────────────┘
+                          ▼
+                    ┌─────┴──────┐
+                  Correct       Wrong
+                    │            │
+            "That's correct!"  "No, try again"
+              tts_helper.speak  tts_helper.speak
+```
+
+---
+
+### 15.4 Recovery activity builder ("do-it-yourself" builder)
+
+The therapist drags components onto a canvas to compose a recovery sequence (used when a child becomes distracted or distressed). Each component compiles down to a Step block on the server, optionally with a camera-driven question and a follow-up loop.
+
+```
+═══════════════════ AUTHORING (drag-and-drop user interface) ════════
+
+  Therapist composes blocks. Server-side schema (web_user_server.py
+  _execute_activity, line 4034) supports:
+   • Step block        → speak + gesture + emotion (+ optional camera)
+   • Logic block       → parallel speech recognizers → branch then-blocks
+   • Loop wrapper      → run blocks N times
+
+  Front-end "components" map to Step blocks with different settings:
+   • simple_attention      → name call / sound, no camera
+   • question_attention    → useCamera="toy" or "child"
+   • modality_switch       → speak + dance/sing gesture
+   • graceful_withdrawal   → calm exit script
+                                   │
+                                   ▼  /api/activity/save  (4473)
+  user_data/<user>/activities/activity_<ts>.json
+
+
+═══════════════════ EXECUTION ═══════════════════
+
+  /api/activity/test       → _execute_activity, no pauses
+  /api/activity/run_saved  → background thread, step-by-step
+
+  Per Step block (4151-4370):
+
+  ┌──────────────────────────────────────────────────────────┐
+  │ 1. If useCamera → _generate_recovery_question (4161)     │
+  │    _get_ros_frame() →                                    │
+  │    scripts/gemini_recovery_question.py                   │
+  │    [gemini-2.5-flash]                                    │
+  │    --mode toy | child  --child-age N  --child-name X     │
+  │    Returns {text, object}                                │
+  ├──────────────────────────────────────────────────────────┤
+  │ 2. tts_helper.speak_story(text)            🤖 SPEAK      │
+  │ 3. Robot OS gesture/play  +  emotion/show  🤖 EMOTE      │
+  ├──────────────────────────────────────────────────────────┤
+  │ 4. If num_followups > 0:  per follow-up round            │
+  │      a. Enable face tracking                             │
+  │      b. Spawn red-card watcher thread                    │
+  │           _detect_red_card(frame)                        │
+  │           hue/saturation/value [0–10] ∪ [165–180]        │
+  │           triggers when red area > 3% of frame           │
+  │      c. _whisper_recognize_once()  → child speech        │
+  │      d. Stop on red card OR speech-recognition end       │
+  │      e. scripts/gemini_conversation_followup.py          │
+  │           [gemini-2.5-flash]                             │
+  │      f. Speak follow-up → loop                           │
+  └──────────────────────┬───────────────────────────────────┘
+                         ▼
+  Therapist confirmation between steps
+   ├── /api/activity/step_status   (poll: waiting/index/labels)
+   └── /api/activity/confirm_step  (set _step_confirm_event)
+```
+
+---
+
+### 15.5 Conversation flow builder
+
+A structured back-and-forth that pairs the robot's prompts with red-card-driven turn-taking. The therapist defines each conversational theme and how many follow-up exchanges to allow per theme.
+
+```
+═══════════════════ AUTHORING ═══════════════════
+
+  Therapist drags themes (greeting, weather, weekend...)
+  Sets followups: 0-5 per theme
+                                 │
+                                 ▼
+  user_data/<user>/activities/activity_<ts>.json
+  {blocks:[{type:"step", theme, text, gesture, emotion,
+            followups:N}], activity_type:"conversation"}
+
+
+═══════════════════ EXECUTION (per theme step) ═══════════════════
+
+   ┌─ Robot speaks opening (greeting → "hi" gesture) ─┐
+   │                                                  │
+   │ /api/conversation/wait_for_turn  (3652)          │
+   │                                                  │
+   │ 1. _wait_until_robot_silent()                    │
+   │    (text-to-speech done + 1.5 s)                 │
+   │ 2. _enable_face_tracking()                       │
+   │ 3. _signal_child_can_speak()                     │
+   │      → Robot OS gesture "show_tablet"            │
+   │        (means: your turn)                        │
+   │                                                  │
+   │ 4. PARALLEL:                                     │
+   │    ┌────────────────┐   ┌────────────────────┐   │
+   │    │ Whisper speech │   │ Red-card watcher   │   │
+   │    │ recognition,   │   │ thread, polls      │   │
+   │    │ collects child │   │ camera every 0.5 s │   │
+   │    │ speech rounds  │   │                    │   │
+   │    └───────┬────────┘   └─────────┬──────────┘   │
+   │            └────────┬─────────────┘              │
+   │                 stop on red card                 │
+   │                                                  │
+   │ 5. Filter to English-only                        │
+   │ 6. scripts/gemini_conversation_followup.py       │
+   │    [gemini-2.5-flash]                            │
+   │    stdin: {theme, robot_said, child_said,        │
+   │            child_name, child_age, followup_n,    │
+   │            total_followups, history, is_closing} │
+   │ 7. Insufficient speech (< 2 English words)?      │
+   │    → Gemini generates a new on-theme question    │
+   │ 8. Robot speaks follow-up                        │
+   │                                                  │
+   │ 9. Repeat steps 1–8 for N follow-ups             │
+   │                                                  │
+   │10. CLOSING ROUND: same flow but is_closing=true  │
+   │    → warm acknowledgment, no question, no        │
+   │      farewell                                    │
+   └──────────────────────────────────────────────────┘
+
+  Red-card detection (web_user_server.py:678):
+    Hue/saturation/value thresholds
+                    hue ∈ [0, 10] ∪ [165, 180]
+                    saturation > 100, value > 80
+    Detected when red pixel ratio > 3% of frame
+```
+
+---
+
+### 15.6 Free conversation (Robot Operating System path — separate process)
+
+This is the open-ended chat mode that runs in `qt_ai_data_assistant.py`, **not** the web server. The Flask application does not invoke this state machine.
+
+```
+  Source: src/qt_ai_data_assistant.py
+  Note: This is the Robot Operating System brain, separate from
+        the web server.
+
+  ┌──────────────────────────────────────────────────────────┐
+  │  STATE: IDLE                                             │
+  │   IdleAttention.start() → random gaze                    │
+  │   asr.recognize_once()                                   │
+  └──────────────────────┬───────────────────────────────────┘
+                         │ Riva + Silero voice activity trigger
+                         ▼
+  ┌──────────────────────────────────────────────────────────┐
+  │  STATE: LISTENING                                        │
+  │   acknowledge_human() → HumanTracking.track(speaker)     │
+  │   Riva returns text + language                           │
+  └──────────────────────┬───────────────────────────────────┘
+                         ▼
+  ┌──────────────────────────────────────────────────────────┐
+  │  STATE: PROCESSING                                       │
+  │   ChatWithRAG.get_stream_response(text, user_context)    │
+  │     • Language model: Ollama                             │
+  │       (config default gemma4:e4b)                        │
+  │     • Embeddings: mxbai-embed-large (Ollama)             │
+  │     • Retrieval: VectorStoreIndex over documents/        │
+  │     • Memory: per-user ChatMemoryBuffer                  │
+  │     • Optional camera context (SceneDetection /          │
+  │       Moondream only fires if enable_scene = true)       │
+  └──────────────────────┬───────────────────────────────────┘
+                         ▼ stream of sentences
+  ┌──────────────────────────────────────────────────────────┐
+  │  STATE: RESPONDING                                       │
+  │   For each chunk:                                        │
+  │     • JSON tool call?                                    │
+  │         pause_interaction → PAUSED                       │
+  │         forget_conversation → clear memory               │
+  │         set_language → swap text-to-speech +             │
+  │           re-initialize Riva                             │
+  │     • Plain text → CommandInterface.execute(talk)        │
+  │         → Robot OS /qt_robot/behavior/talkText           │
+  │           (mouth synchronization)                        │
+  └──────────────────────┬───────────────────────────────────┘
+                         ▼
+                  rest_robot_attention()
+                         │
+                         ▼
+                   STATE: IDLE
+```
+
+---
+
+### 15.7 Cross-activity model summary
+
+| Activity | Authoring-time models | Run-time models |
+|----------|----------------------|------------------|
+| Story telling | Google Gemini 2.5 Flash (≥ 6 passes), Google Gemini 2.5 Flash Image | (none — robot reads pre-baked output) |
+| Educational quiz | Google Gemini 2.5 Flash (questions + feedback phrases) | OpenAI gpt-4o-transcribe (Whisper); Ollama gemma4:e4b (mishearing correction) |
+| Scene game | Google Gemini 2.5 Flash (questions); Google Gemini 2.5 Flash Image (cards) | Google Gemini Robotics ER 1.5 Preview (object detection) |
+| Recovery activity builder | (none — text and gestures authored manually) | Google Gemini 2.5 Flash (recovery questions, follow-ups); Whisper |
+| Conversation flow builder | (none) | Google Gemini 2.5 Flash (follow-ups); Whisper |
+| Free conversation (Robot Operating System path) | (none) | Ollama (`gemma4:e4b` per current `config/default.yaml`); Riva speech recognition; optionally Moondream |
