@@ -8,14 +8,14 @@ A socially assistive robot (SAR) platform for pediatric therapeutic settings, bu
 ┌──────────────────────────────────────────────────────────────────┐
 │                        THERAPIST / CHILD                         │
 │                    (Speech, Gestures, Objects)                    │
-└──────────┬──────────────────────────────────────┬────────────────┘
-           │ Audio / Visual Input                  │ Speech / Movement Output
-           ▼                                       ▼
+└──────────┬──────────────────────────────────────▲────────────────┘
+           │ Audio / Visual Input                 │ Speech / Movement Output
+           ▼                                      │
 ┌──────────────────────┐              ┌──────────────────────────┐
 │   PERCEPTION LAYER   │              │    EXPRESSION LAYER      │
 │  ┌────────────────┐  │              │  ┌────────────────────┐  │
-│  │ Riva ASR (ROS) │  │              │  │ QT TTS (ROS)       │  │
-│  │ Whisper (Web)  │  │              │  │ AWS Polly (optional)│  │
+│  │ Riva ASR       │  │              │  │ QT TTS (ROS)       │  │
+│  │ Whisper ASR    │  │              │  │ AWS Polly (optional)│  │
 │  │ Silero VAD     │  │              │  │ Gestures (ROS)     │  │
 │  │ DeepFace       │  │              │  │ Emotions (ROS)     │  │
 │  │ Moondream      │  │              │  │ Head/Arm IK (ROS)  │  │
