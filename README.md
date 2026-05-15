@@ -30,9 +30,9 @@ You don't need to be a roboticist to use the dashboard, but you do need access t
 4. Within seconds, the dashboard shows the draft story with inline tags telling the robot when to wave, smile, or look surprised. The therapist can edit and approve.
 5. The system illustrates each scene of the story (Google Gemini Flash Image), splits the text into kid-sized pages, and writes a short multiple-choice quiz to check the child's understanding.
 6. The child sits in front of the robot. The therapist taps "read story." The robot turns its head to follow the child, reads each page out loud, plays the matching gestures and facial expressions, and shows the scene illustration on the dashboard.
-7. At the end, the dashboard presents the comprehension questions. The child answers by tapping a button — or by speaking, in which case OpenAI Whisper transcribes their answer.
+7. At the end, the dashboard presents the comprehension questions. The child answers by tapping a button — or by speaking aloud, in which case OpenAI Whisper transcribes the child's spoken answer.
 
-Other activities follow the same pattern: the therapist authors content with the dashboard, the robot delivers it, and the system listens for the child's response.
+Other activities follow the same pattern: the therapist authors content with the dashboard, the robot delivers it, and the system listens for the **child's** spoken response. (The therapist drives the dashboard with mouse and keyboard — the microphone is always listening for the child, not the therapist.)
 
 ## How it works at a glance
 
@@ -46,18 +46,18 @@ flowchart LR
     classDef robot fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px,color:#000
     classDef optional fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000
 
-    Therapist["Therapist's<br/>laptop browser"]:::person
-    Child["Child"]:::person
+    Therapist["Therapist's<br/>laptop browser<br/>(mouse + keyboard only)"]:::person
+    Child["Child<br/>(speaks to the robot)"]:::person
     WebServer["Web server<br/>(Python + Flask)<br/>main application"]:::app
     Gemini["Google Gemini<br/>text · images · object detection"]:::cloud
-    Whisper["OpenAI Whisper<br/>speech recognition"]:::cloud
+    Whisper["OpenAI Whisper<br/>recognizes the<br/>child's speech"]:::cloud
     Robot["QTrobot<br/>speech · gestures<br/>facial expressions<br/>camera · microphone"]:::robot
     Optional["Free-conversation mode<br/>(separate optional process,<br/>fully local models)"]:::optional
 
     Therapist --> WebServer
     Child -.->|speech, objects, gestures| WebServer
     WebServer -->|generate content| Gemini
-    WebServer -->|transcribe speech| Whisper
+    WebServer -->|transcribe child's speech| Whisper
     WebServer -->|drive robot| Robot
     Optional -.->|drive robot| Robot
     Robot -.->|speech + motion| Child
@@ -99,13 +99,13 @@ Step-by-step pipelines of each activity are documented in Section 15 of [ARCHITE
 - **Google Gemini 2.5 Flash** — story generation, quiz generation, conversation follow-ups, post-processing of generated content
 - **Google Gemini 2.5 Flash Image** — story illustrations and scene-game item cards
 - **Google Gemini Robotics ER 1.5 Preview** — held-object detection for the scene game
-- **OpenAI gpt-4o-transcribe** (Whisper) — speech recognition for every voice surface in the web server
+- **OpenAI gpt-4o-transcribe** (Whisper) — recognizing the child's spoken answers and conversational turns. Whisper is the speech recognizer for every voice surface in the web server (quiz answers, conversation flows, recovery activities). The therapist does not speak to the system — they use the dashboard.
 
 **Local artificial-intelligence services** (only used by the optional free-conversation mode)
 
 - **Ollama** running `gemma4:e4b` for conversation, `mxbai-embed-large` for document embeddings, and `moondream` for camera scene captioning
 - **LlamaIndex** for retrieval-augmented generation over the project's document collection
-- **NVIDIA Riva** with **Silero** voice-activity detection for speech recognition
+- **NVIDIA Riva** with **Silero** voice-activity detection — recognizing the child's speech in free-conversation mode
 
 **Text-to-speech**
 
