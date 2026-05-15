@@ -36,38 +36,13 @@ Other activities follow the same pattern: the therapist authors content with the
 
 ## How it works at a glance
 
-The project is two cooperating Python applications that drive the same physical robot:
+The project is two cooperating Python applications that drive the same physical robot.
 
-```mermaid
-flowchart LR
-    classDef person fill:#fff4e0,stroke:#e89020,stroke-width:2px,color:#000
-    classDef app fill:#cce5ff,stroke:#0066cc,stroke-width:2px,color:#000
-    classDef cloud fill:#d4edda,stroke:#1e7e34,stroke-width:2px,color:#000
-    classDef robot fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px,color:#000
-    classDef optional fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000
+The **web server** is the active therapist-facing application. The therapist drives every activity from a browser dashboard. The web server uses cloud artificial-intelligence models — primarily Google Gemini for content generation and OpenAI Whisper for recognizing the child's speech — to power every activity, then sends speech, gestures, and emotions to the robot.
 
-    Therapist["Therapist's<br/>laptop browser<br/>(mouse + keyboard only)"]:::person
-    Child["Child<br/>(speaks to the robot)"]:::person
-    WebServer["Web server<br/>(Python + Flask)<br/>main application"]:::app
-    Gemini["Google Gemini<br/>text · images · object detection"]:::cloud
-    Whisper["OpenAI Whisper<br/>recognizes the<br/>child's speech"]:::cloud
-    Robot["QTrobot<br/>speech · gestures<br/>facial expressions<br/>camera · microphone"]:::robot
-    Optional["Free-conversation mode<br/>(separate optional process,<br/>fully local models)"]:::optional
+The **free-conversation mode** is a separate, optional process for open-ended chat. It runs entirely on local models (Ollama for the language model, NVIDIA Riva for recognizing the child's speech, LlamaIndex for retrieval over a local document collection) and is independent of the web server.
 
-    Therapist --> WebServer
-    Child -.->|speech, objects, gestures| WebServer
-    WebServer -->|generate content| Gemini
-    WebServer -->|transcribe child's speech| Whisper
-    WebServer -->|drive robot| Robot
-    Optional -.->|drive robot| Robot
-    Robot -.->|speech + motion| Child
-```
-
-The **web server** is the active therapist-facing application. It uses cloud artificial-intelligence models — primarily Google Gemini for content generation and OpenAI Whisper for speech recognition — to power every activity.
-
-The **free-conversation mode** is a separate, optional process for open-ended chat. It runs entirely on local models (Ollama for the language model, NVIDIA Riva for speech recognition, LlamaIndex for retrieval over a local document collection) and is independent of the web server.
-
-For the full architecture, see [ARCHITECTURE.md](ARCHITECTURE.md).
+For the full architecture diagram and a per-activity walk-through, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## What activities the robot supports
 
