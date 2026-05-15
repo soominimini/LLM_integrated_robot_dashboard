@@ -9,82 +9,78 @@ A socially assistive robot platform for pediatric speech-language therapy, built
 
 Both are governed by a layered ethical system prompt designed for child safety.
 
+```mermaid
+flowchart TB
+    classDef user fill:#fff4e0,stroke:#e89020,stroke-width:3px,color:#000
+    classDef gemini fill:#d4edda,stroke:#1e7e34,stroke-width:2px,color:#000
+    classDef ollama fill:#ffe4d6,stroke:#cc5500,stroke-width:2px,color:#000
+    classDef webComp fill:#cce5ff,stroke:#0066cc,stroke-width:2px,color:#000
+    classDef rosComp fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000
+    classDef robot fill:#e1bee7,stroke:#6a1b9a,stroke-width:3px,color:#000
+    classDef data fill:#eeeeee,stroke:#424242,stroke-width:2px,color:#000
+
+    User["THERAPIST + CHILD<br/>speech · gestures · objects · browser"]:::user
+
+    subgraph Web["WEB SERVER PATH — web_user_server.py · Python 3.8"]
+        direction TB
+        Flask["Flask routes /api/*<br/>session-based authentication"]:::webComp
+
+        subgraph WebSense["Perception"]
+            direction LR
+            Whisper["Whisper<br/>gpt-4o-transcribe<br/>(every voice surface)"]:::webComp
+            CamWeb["Camera frames<br/>(Robot Operating System topic)"]:::webComp
+            RedCard["OpenCV red-card<br/>hue/saturation/value"]:::webComp
+        end
+
+        subgraph WebBrain["Cognition — almost entirely Google Gemini"]
+            direction TB
+            GFlash["<b>Gemini 2.5 Flash</b><br/>· stories<br/>· quiz questions + feedback<br/>· emotion re-tagging<br/>· page splitting<br/>· scene grouping<br/>· comprehension questions<br/>· conversation follow-ups"]:::gemini
+            GImg["<b>Gemini 2.5 Flash Image</b><br/>· story illustrations<br/>· scene-game item cards"]:::gemini
+            GER["<b>Gemini Robotics ER 1.5</b><br/>· object detection<br/>(scene game)"]:::gemini
+            Gemma["<b>Ollama gemma4:e4b</b><br/>quiz mishearing correction<br/><i>only Ollama call in web server</i>"]:::ollama
+        end
+
+        Flask --> WebSense
+        Flask --> WebBrain
+    end
+
+    subgraph ROS["ROBOT OPERATING SYSTEM BRAIN — qt_ai_data_assistant.py · Python 3.9"]
+        direction TB
+        SM["State machine<br/>IDLE → LISTENING →<br/>PROCESSING → RESPONDING"]:::rosComp
+
+        subgraph ROSSense["Perception"]
+            direction LR
+            Riva["Riva +<br/>Silero voice<br/>activity detection"]:::rosComp
+            DeepFace["DeepFace +<br/>RetinaFace<br/>face detection"]:::rosComp
+            Moondream["Moondream scene<br/>captioning<br/>(only when<br/>enable_scene = true)"]:::rosComp
+        end
+
+        subgraph ROSBrain["Cognition"]
+            direction LR
+            OllamaChat["<b>Ollama gemma4:e4b</b><br/>open conversation +<br/>function calling"]:::ollama
+            RAG["<b>LlamaIndex retrieval</b><br/>VectorStoreIndex over documents/<br/>embeddings: mxbai-embed-large<br/>per-user ChatMemoryBuffer"]:::ollama
+        end
+
+        SM --> ROSSense
+        SM --> ROSBrain
+    end
+
+    Robot["QTROBOT — physical hardware via Robot Operating System services<br/>Acapela text-to-speech (mouth synchronization via visemes) · Amazon Polly + Pylips (optional)<br/>Gestures · Emotions · Head + arm inverse kinematics · HumanTracking gaze"]:::robot
+
+    Data[("user_data/  +  users.json<br/>profiles · per-user chat memory<br/>stories · quizzes · activities · learned answers")]:::data
+
+    User -->|browser, speech, objects| Web
+    User -->|speech, presence| ROS
+    Web -->|Robot Operating System service calls| Robot
+    ROS -->|Robot Operating System service calls| Robot
+    Robot -->|speech + motion| User
+    Web <--> Data
+    ROS <--> Data
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                        THERAPIST / CHILD                         │
-│                  (Speech, Gestures, Objects, Browser)             │
-└──────────┬──────────────────────────────────────▲────────────────┘
-           │ Audio / Visual Input                 │ Speech / Movement Output
-           ▼                                      │
-┌──────────────────────┐              ┌──────────────────────────┐
-│   PERCEPTION LAYER   │              │    EXPRESSION LAYER      │
-│  ┌────────────────┐  │              │  ┌────────────────────┐  │
-│  │ Whisper        │  │  WEB         │  │ QTrobot Acapela    │  │
-│  │ (gpt-4o-       │  │  PATH        │  │ text-to-speech     │  │
-│  │  transcribe)   │  │              │  │ (default, mouth    │  │
-│  │ Camera frames  │  │              │  │  sync via visemes) │  │
-│  │ (Robot OS feed)│  │              │  │ Amazon Polly +     │  │
-│  │ Red-card OpenCV│  │              │  │  Pylips lipsync    │  │
-│  ├────────────────┤  │              │  │  (optional)        │  │
-│  │ Riva speech    │  │  ROBOT OS    │  │ Robot OS gestures  │  │
-│  │ Silero voice   │  │  PATH        │  │ Robot OS emotions  │  │
-│  │  activity det. │  │              │  │ Head / arm inverse │  │
-│  │ DeepFace face  │  │              │  │  kinematics        │  │
-│  │ Moondream      │  │              │  │ HumanTracking gaze │  │
-│  └────────────────┘  │              │  └────────────────────┘  │
-└──────────┬───────────┘              └──────────▲───────────────┘
-           │                                     │
-           ▼                                     │
-┌──────────────────────────────────────────────────────────────────┐
-│                       COGNITION LAYER                            │
-│                                                                  │
-│  WEB PATH (web_user_server.py — almost all Google Gemini)        │
-│  ┌──────────────────────┐  ┌────────────────────────────────┐   │
-│  │ Gemini 2.5 Flash     │  │ Gemini 2.5 Flash Image         │   │
-│  │  • story generation  │  │  • story illustrations         │   │
-│  │  • quiz questions    │  │  • scene-game item cards       │   │
-│  │  • quiz feedback     │  └────────────────────────────────┘   │
-│  │  • emotion re-tagging│  ┌────────────────────────────────┐   │
-│  │  • page splitting    │  │ Gemini Robotics ER 1.5 Preview │   │
-│  │  • scene grouping    │  │  • object detection            │   │
-│  │  • comprehension Qs  │  │    (scene game)                │   │
-│  │  • follow-ups, etc.  │  └────────────────────────────────┘   │
-│  └──────────────────────┘  ┌────────────────────────────────┐   │
-│                            │ Ollama gemma4:e4b              │   │
-│                            │  • mishearing correction for   │   │
-│                            │    quiz answers (the only      │   │
-│                            │    Ollama use in the web path) │   │
-│                            └────────────────────────────────┘   │
-│                                                                  │
-│  ROBOT OS PATH (qt_ai_data_assistant.py)                         │
-│  ┌──────────────────────┐  ┌────────────────────────────────┐   │
-│  │ Ollama (config       │  │ LlamaIndex retrieval-augmented │   │
-│  │  default gemma4:e4b) │  │  generation over documents/    │   │
-│  │  conversation +      │  │ Embeddings: mxbai-embed-large  │   │
-│  │  function calling    │  │ Per-user ChatMemoryBuffer      │   │
-│  └──────────────────────┘  └────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────────┘
-           │                                     ▲
-           ▼                                     │
-┌──────────────────────────────────────────────────────────────────┐
-│                     ORCHESTRATION LAYER                          │
-│  ┌──────────────────────────┐  ┌─────────────────────────────┐  │
-│  │ QTAIDataAssistant        │  │ Flask Web Server             │  │
-│  │ (Robot OS node)          │  │ (Therapist / child interface)│  │
-│  │ State: IDLE → LISTENING  │  │ Routes: /api/*, page renders │  │
-│  │  → PROCESSING → RESPOND  │  │ Session-based authentication │  │
-│  └──────────────────────────┘  └─────────────────────────────┘  │
-└──────────────────────────────────────────────────────────────────┘
-           │                                     │
-           ▼                                     ▼
-┌──────────────────────────────────────────────────────────────────┐
-│                        DATA LAYER                                │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────┐  │
-│  │ User profiles │  │ Chat memory  │  │ Quizzes / stories /   │  │
-│  │ (users.json)  │  │ (per-user)   │  │ activities / learned  │  │
-│  └──────────────┘  └──────────────┘  └───────────────────────┘  │
-└──────────────────────────────────────────────────────────────────┘
-```
+
+**Color key:** orange = user; blue = web server components; pink = Robot Operating System components; green = Google Gemini models; warm orange = Ollama models; purple = robot hardware; grey = persisted data.
+
+**How to read this diagram:** the system has two cooperating processes that drive the same physical robot. The **web server path** (left) is the active therapist-facing application — almost every cognition call goes to a Google Gemini model, with one narrow Ollama exception for quiz answer mishearing correction. The **Robot Operating System brain** (right) runs the open-ended free-conversation mode in a separate process with a fully local Ollama + retrieval-augmented stack. Both paths command the same robot through Robot Operating System services and share the same per-user data directory.
 
 ---
 
