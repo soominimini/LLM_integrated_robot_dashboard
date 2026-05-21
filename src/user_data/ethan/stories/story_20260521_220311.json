@@ -1,0 +1,203 @@
+{
+  "story": "Ethan's Starry Surprise\n\nEthan sat at his art table, [emotion:QT/afraid] a little nervous. Mr. Harrison announced, \"Today, we'll make Galaxy Jars! Each one will be a miniature universe.[emotion:QT/surprised] \" Ethan's eyes widened. [emotion:QT/happy] He loved space! He wanted his jar to be deep, dark blue, like the real, [emotion:QT/calm] mysterious cosmos he saw in a book, with tiny, bright stars.\n\n\"Please find a partner,\" Mr. Harrison said. [emotion:QT/shy] Ethan felt a bit shy because sometimes it was hard to explain his ideas clearly. [gesture:think] He wondered who to ask.\n\n[emotion:QT/happy] \"Hi Ethan!\" a friendly voice said. It was Maya, a kind classmate. \"Do you want to share a table for the project? We could work together.[emotion:QT/happy] \" Ethan felt a wave of relief. \"Yes, please!\" he said.\n\nThey gathered supplies: jars, paint, glitter. Maya picked up a big pot of silver glitter. \"Let's make it super sparkly!\" she suggested. [gesture:think] Ethan thought, *too much glitter would make it look like a bright cloud, not dark space*. He wanted his galaxy to be mostly deep blue and purple.\n\n\"My galaxy... dark... few lights,\" Ethan said, trying to explain. [gesture:patience] Maya listened carefully. \"Oh, you mean a mysterious, deep space, with tiny, distant stars?\" she asked, [emotion:QT/surprised] curious about his vision. [gesture:nodding-yes] [emotion:QT/happy] Ethan nodded, very happy she understood.\n\n\"What if we use dark blue and purple paint first, then carefully add just a little bit of silver glitter for the stars?\" Maya suggested. \"We can take turns adding colors and shaking the jar.[emotion:QT/happy] \" Ethan thought this was a brilliant idea. They carefully poured the deep blue and purple paint into the jar, then added a tiny pinch of silver glitter. It was tricky to get the colors to swirl just right, so they had to try again a few times.\n\n[emotion:QT/happy] They shook the jar gently together. The colors swirled beautifully, creating a deep, dark galaxy with tiny, bright specks of glitter. [emotion:QT/happy] \"Wow, Ethan, it's wonderful!\" Maya exclaimed. \"It looks exactly like the vast, [emotion:QT/happy] dark space you imagined![emotion:QT/happy] \"\n\nEthan felt a big surge of pride. [emotion:QT/happy] \"Yes, it's perfect because we worked together,\" he said, looking at their amazing creation. [emotion:QT/happy] He realized that asking for help and sharing ideas made the project much better. [emotion:QT/happy] He knew he had made a good friend.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "early_school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "gemini-2.5-flash",
+    "target_word_range": [
+      250,
+      400
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 468,
+    "paragraph_count": 9,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      7,
+      7,
+      7,
+      7,
+      8,
+      8,
+      8,
+      8
+    ],
+    "title": "Ethan's Starry Surprise"
+  },
+  "pages": [
+    "Ethan's Starry Surprise Ethan sat at his art table, [emotion:QT/afraid] a little nervous. Mr. Harrison announced, \"Today, we'll make Galaxy Jars! Each one will be a miniature universe. [emotion:QT/surprised] \" Ethan's eyes widened. [emotion:QT/happy] He loved space! He wanted his jar to be deep, dark blue, like the real, [emotion:QT/calm] mysterious cosmos he saw in a book, with tiny, bright stars.",
+    "\"Please find a partner,\" Mr. Harrison said. [emotion:QT/shy] Ethan felt a bit shy because sometimes it was hard to explain his ideas clearly. [gesture:think] He wondered who to ask.",
+    "[emotion:QT/happy] \"Hi Ethan!\" a friendly voice said. It was Maya, a kind classmate. \"Do you want to share a table for the project? We could work together. [emotion:QT/happy] [emotion:QT/happy] \" Ethan felt a wave of relief. \"Yes, please!\" he said.",
+    "They gathered supplies: jars, paint, glitter. Maya picked up a big pot of silver glitter. \"Let's make it super sparkly!\" she suggested. [gesture:think] Ethan thought, too much glitter would make it look like a bright cloud, not dark space. He wanted his galaxy to be mostly deep blue and purple.",
+    "\"My galaxy... dark... few lights,\" Ethan said, trying to explain. [gesture:patience] Maya listened carefully. \"Oh, you mean a mysterious, deep space, with tiny, distant stars?\" she asked, [emotion:QT/surprised] curious about his vision. [gesture:nodding-yes] [emotion:QT/happy] Ethan nodded, very happy she understood.",
+    "\"What if we use dark blue and purple paint first, then carefully add just a little bit of silver glitter for the stars?\" Maya suggested. \"We can take turns adding colors and shaking the jar. [emotion:QT/happy] \" Ethan thought this was a brilliant idea. They carefully poured the deep blue and purple paint into the jar, then added a tiny pinch of silver glitter. It was tricky to get the colors to swirl just right, so they had to try again a few times.",
+    "[emotion:QT/happy] They shook the jar gently together. The colors swirled beautifully, creating a deep, dark galaxy with tiny, bright specks of glitter. [emotion:QT/happy] \"Wow, Ethan, it's wonderful!\" Maya exclaimed. \"It looks exactly like the vast, [emotion:QT/happy] dark space you imagined! \"",
+    "Ethan felt a big surge of pride. [emotion:QT/happy] \"Yes, it's perfect because we worked together,\" he said, looking at their amazing creation. [emotion:QT/happy] He realized that asking for help and sharing ideas made the project much better. [emotion:QT/happy] He knew he had made a good friend."
+  ],
+  "paragraphs": [
+    "Ethan's Starry Surprise",
+    "Ethan sat at his art table, a little nervous. Mr. Harrison announced, \"Today, we'll make Galaxy Jars! Each one will be a miniature universe.\" Ethan's eyes widened. He loved space! He wanted his jar to be deep, dark blue, like the real, mysterious cosmos he saw in a book, with tiny, bright stars.",
+    "\"Please find a partner,\" Mr. Harrison said. Ethan felt a bit shy because sometimes it was hard to explain his ideas clearly. He wondered who to ask.",
+    "\"Hi Ethan!\" a friendly voice said. It was Maya, a kind classmate. \"Do you want to share a table for the project? We could work together.\" Ethan felt a wave of relief. \"Yes, please!\" he said.",
+    "They gathered supplies: jars, paint, glitter. Maya picked up a big pot of silver glitter. \"Let's make it super sparkly!\" she suggested. Ethan thought, *too much glitter would make it look like a bright cloud, not dark space*. He wanted his galaxy to be mostly deep blue and purple.",
+    "\"My galaxy... dark... few lights,\" Ethan said, trying to explain. Maya listened carefully. \"Oh, you mean a mysterious, deep space, with tiny, distant stars?\" she asked, curious about his vision. Ethan nodded, very happy she understood.",
+    "\"What if we use dark blue and purple paint first, then carefully add just a little bit of silver glitter for the stars?\" Maya suggested. \"We can take turns adding colors and shaking the jar.\" Ethan thought this was a brilliant idea. They carefully poured the deep blue and purple paint into the jar, then added a tiny pinch of silver glitter. It was tricky to get the colors to swirl just right, so they had to try again a few times.",
+    "They shook the jar gently together. The colors swirled beautifully, creating a deep, dark galaxy with tiny, bright specks of glitter. \"Wow, Ethan, it's wonderful!\" Maya exclaimed. \"It looks exactly like the vast, dark space you imagined!\"",
+    "Ethan felt a big surge of pride. \"Yes, it's perfect because we worked together,\" he said, looking at their amazing creation. He realized that asking for help and sharing ideas made the project much better. He knew he had made a good friend."
+  ],
+  "scenes": [
+    "Ethan's Starry Surprise",
+    "Ethan sat at his art table, a little nervous. Mr. Harrison announced, \"Today, we'll make Galaxy Jars! Each one will be a miniature universe.\" Ethan's eyes widened. He loved space! He wanted his jar to",
+    "\"Please find a partner,\" Mr. Harrison said. Ethan felt a bit shy because sometimes it was hard to explain his ideas clearly. He wondered who to ask.",
+    "\"Hi Ethan!\" a friendly voice said. It was Maya, a kind classmate. \"Do you want to share a table for the project? We could work together.\" Ethan felt a wave of relief. \"Yes, please!\" he said.",
+    "They gathered supplies: jars, paint, glitter. Maya picked up a big pot of silver glitter. \"Let's make it super sparkly!\" she suggested. Ethan thought, *too much glitter would make it look like a brigh",
+    "\"My galaxy... dark... few lights,\" Ethan said, trying to explain. Maya listened carefully. \"Oh, you mean a mysterious, deep space, with tiny, distant stars?\" she asked, curious about his vision. Ethan",
+    "\"What if we use dark blue and purple paint first, then carefully add just a little bit of silver glitter for the stars?\" Maya suggested. \"We can take turns adding colors and shaking the jar.\" Ethan th",
+    "They shook the jar gently together. The colors swirled beautifully, creating a deep, dark galaxy with tiny, bright specks of glitter. \"Wow, Ethan, it's wonderful!\" Maya exclaimed. \"It looks exactly li",
+    "Ethan felt a big surge of pride. \"Yes, it's perfect because we worked together,\" he said, looking at their amazing creation. He realized that asking for help and sharing ideas made the project much be"
+  ],
+  "page_to_scene": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "page_to_paragraph": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "questions": [
+    {
+      "question": "What project did Mr. Harrison announce for the class to make?",
+      "type": "detail",
+      "correct_answer": "The class would make Galaxy Jars.",
+      "wrong_answers": [
+        "The class would draw pictures of space.",
+        "The class would build rocket ships."
+      ]
+    },
+    {
+      "question": "What colors did Ethan want for his galaxy jar to look like the mysterious cosmos?",
+      "type": "detail",
+      "correct_answer": "He wanted deep blue and purple paint.",
+      "wrong_answers": [
+        "He wanted bright yellow and orange paint.",
+        "He wanted green and red paint."
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt a wave of relief when Maya asked him to be partners?",
+      "type": "inference",
+      "correct_answer": "He was shy and worried about finding a partner.",
+      "wrong_answers": [
+        "He did not want to work alone.",
+        "He was tired of looking for supplies."
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt when Maya understood his idea for a dark, mysterious galaxy?",
+      "type": "inference",
+      "correct_answer": "He felt very happy and understood.",
+      "wrong_answers": [
+        "He felt confused by her question.",
+        "He felt a little bit angry."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about Ethan who learned to work with a friend and make a beautiful galaxy jar.",
+      "wrong_answers": [
+        "This story was about a teacher who taught about space.",
+        "This story was about two friends who made a very sparkly jar."
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to share his ideas with Maya?",
+      "type": "takeaway",
+      "correct_answer": "Asking for help and sharing ideas can make things even better.",
+      "wrong_answers": [
+        "It's always best to work alone so your ideas don't get changed.",
+        "Being shy means you won't ever get your ideas heard."
+      ]
+    },
+    {
+      "question": "What did Maya show us by listening carefully to Ethan's idea?",
+      "type": "takeaway",
+      "correct_answer": "Listening carefully to your friends helps everyone understand each other.",
+      "wrong_answers": [
+        "It's important to always agree with your friends, even if you don't understand.",
+        "The best way to get your ideas across is to speak very loudly."
+      ]
+    },
+    {
+      "question": "What is one lesson from Ethan and Maya making the galaxy jar together?",
+      "type": "takeaway",
+      "correct_answer": "Working together with others can create amazing things.",
+      "wrong_answers": [
+        "It's important to always be the leader when doing a project.",
+        "Having lots of glitter is the only way to make a project look good."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help and sharing ideas can make things even better.",
+    "Listening carefully to your friends helps everyone understand each other.",
+    "Working together with others can create amazing things."
+  ]
+}

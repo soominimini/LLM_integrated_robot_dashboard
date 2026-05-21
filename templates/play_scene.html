@@ -18,6 +18,10 @@
     .card img { width:100%; height:140px; object-fit:cover; display:block; }
     .caption { padding:8px; font-size:14px; color:#475569; text-transform:capitalize; text-align:center; }
     .status { margin-top:10px; font-size:14px; color:#64748b; text-align:center; }
+    .mode-picker { display:flex; gap:8px; justify-content:center; margin:10px 0; }
+    .mode-btn { background:#e2e8f0; color:#334155; border:0; padding:8px 14px;
+                border-radius:18px; cursor:pointer; font-weight:600; font-size:13px; }
+    .mode-btn.active { background:#667eea; color:#fff; }
   </style>
 </head>
 <body>
@@ -30,6 +34,11 @@
         <button id="hintBtn" class="btn" style="background:#f59e0b;">Hint</button>
         <button id="captureBtn" class="btn">Capture Scene</button>
       </div>
+    </div>
+    <div class="mode-picker" title="Choose the round style for the next 'Start' click">
+      <button class="mode-btn active" data-mode="auto">Auto (by age)</button>
+      <button class="mode-btn" data-mode="criteria">Criteria</button>
+      <button class="mode-btn" data-mode="direction">Direction</button>
     </div>
     <div id="question" class="question">Click "New Round" to start</div>
 
@@ -45,11 +54,23 @@
     const $cap = document.getElementById('captureBtn');
 
     // Current round state
-    window.roundMode = null;     // "exact" or "criteria"
+    window.roundMode = null;     // "exact" | "criteria" | "direction"
     window.currentTarget = null; // toy name (exact mode)
     window.currentCriteria = null; // criteria string (criteria mode)
+    window.currentObjA = null;   // moving object (direction mode)
+    window.currentObjB = null;   // reference object (direction mode)
+    window.currentRelation = null; // canonical relation key (direction mode)
+    window.requestedMode = 'auto'; // mode-picker selection for next Start
 
     const $hint = document.getElementById('hintBtn');
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        window.requestedMode = btn.dataset.mode;
+      };
+    });
 
     $new.onclick = startRound;
     $cap.onclick = captureAndValidate;
@@ -59,18 +80,34 @@
     async function startRound() {
       try {
         $status.textContent = 'Starting...';
-        const res = await fetch('/api/scene/start', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+        const res = await fetch('/api/scene/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: window.requestedMode || 'auto' })
+        });
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'Failed to start');
         window.roundMode = data.mode || 'exact';
         window.currentTarget = data.target || null;
         window.currentCriteria = data.criteria || null;
+        window.currentObjA = data.obj_a || null;
+        window.currentObjB = data.obj_b || null;
+        window.currentRelation = data.relation || null;
         $q.textContent = data.question || 'Show me an object!';
-        $status.textContent = 'Show the object to the camera and click "Capture Scene"!';
+        if (window.roundMode === 'direction') {
+          $status.textContent = 'Arrange the objects in front of the camera, then click "Capture Scene".';
+        } else {
+          $status.textContent = 'Show the object to the camera and click "Capture Scene"!';
+        }
       } catch (e) {
         $status.textContent = 'Error: ' + e.message;
       }
     }
+
+    // Relations that the server records as a short video instead of a
+    // still — keep this in sync with VIDEO_DEPTH_RELATIONS on the server.
+    // (Depth: behind/in_front_of. Containment: in/out — for ages <=3.)
+    const VIDEO_DEPTH_RELATIONS = new Set(['behind', 'in_front_of', 'in', 'out']);
 
     async function captureAndValidate() {
       if (!window.roundMode) {
@@ -78,11 +115,18 @@
         return;
       }
       try {
-        $status.textContent = 'Analyzing...';
+        if (window.roundMode === 'direction' && VIDEO_DEPTH_RELATIONS.has(window.currentRelation)) {
+          $status.textContent = 'Recording 3 seconds — hold the objects steady and tilt them slightly so I can see depth.';
+        } else {
+          $status.textContent = 'Analyzing...';
+        }
         const body = {
           mode: window.roundMode,
           target: window.currentTarget,
-          criteria: window.currentCriteria
+          criteria: window.currentCriteria,
+          obj_a: window.currentObjA,
+          obj_b: window.currentObjB,
+          relation: window.currentRelation,
         };
         const res = await fetch('/api/scene_game/answer', {
           method: 'POST',
@@ -96,6 +140,18 @@
         }
         if (data.correct === null) {
           $status.textContent = 'Could not see clearly. Try again!';
+        } else if (window.roundMode === 'direction') {
+          // Direction-mode result includes obj presence + the relation Gemini
+          // actually saw. Surface both so the therapist can debug mistakes.
+          const reason = data.reason ? ' — ' + data.reason : '';
+          if (data.correct) {
+            $status.textContent = 'Correct!' + reason;
+          } else if (!data.obj_a_found || !data.obj_b_found) {
+            const missing = !data.obj_a_found ? data.obj_a : data.obj_b;
+            $status.textContent = `I can't see the ${missing}. Try again!` + reason;
+          } else {
+            $status.textContent = `Not quite — I see "${data.actual_relation}". Try again!` + reason;
+          }
         } else if (data.correct) {
           const det = data.detected || 'that';
           $status.textContent = 'Correct! Detected: ' + det + (data.reason ? ' — ' + data.reason : '');
@@ -118,7 +174,10 @@
         const body = {
           mode: window.roundMode,
           target: window.currentTarget,
-          criteria: window.currentCriteria
+          criteria: window.currentCriteria,
+          obj_a: window.currentObjA,
+          obj_b: window.currentObjB,
+          relation: window.currentRelation,
         };
         const res = await fetch('/api/scene_game/hint', {
           method: 'POST',

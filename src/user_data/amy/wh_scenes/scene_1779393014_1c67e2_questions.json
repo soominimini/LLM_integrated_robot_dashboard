@@ -1,0 +1,65 @@
+{
+  "scene_description": "A teacher and students are in a classroom with a chalkboard.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is the grown-up?",
+      "answer": "Teacher",
+      "visual_choices": [
+        "Teacher",
+        "Student",
+        "Baby",
+        "Dog"
+      ],
+      "evidence_hint": "Look at the person in front."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children doing?",
+      "answer": "Raising hands",
+      "visual_choices": [
+        "Raising hands",
+        "Sleeping",
+        "Eating",
+        "Running"
+      ],
+      "evidence_hint": "Look at the children's arms."
+    },
+    {
+      "wh_type": "when",
+      "question": "When are they at school?",
+      "answer": "Daytime",
+      "visual_choices": [
+        "Daytime",
+        "Nighttime",
+        "Morning",
+        "Evening"
+      ],
+      "evidence_hint": "Look at the light in the room."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are they?",
+      "answer": "At school",
+      "visual_choices": [
+        "At school",
+        "At home",
+        "At park",
+        "At store"
+      ],
+      "evidence_hint": "Look at the room around them."
+    },
+    {
+      "wh_type": "why",
+      "question": "Why are hands up?",
+      "answer": "To answer",
+      "visual_choices": [
+        "To answer",
+        "To play",
+        "To eat",
+        "To sleep"
+      ],
+      "evidence_hint": "Think about what happens at school."
+    }
+  ]
+}

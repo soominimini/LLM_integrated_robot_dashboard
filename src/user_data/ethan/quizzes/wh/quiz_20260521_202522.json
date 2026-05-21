@@ -1,0 +1,97 @@
+[
+  {
+    "question": "What do you say after receiving a gift?",
+    "type": "wh",
+    "correct_answer": "thank you",
+    "accepted_answers": [
+      "thank you",
+      "thanks"
+    ]
+  },
+  {
+    "question": "When should you say",
+    "type": "wh",
+    "correct_answer": "asking",
+    "accepted_answers": [
+      "asking",
+      "requesting"
+    ]
+  },
+  {
+    "question": "Who should you listen to in class?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "adults"
+    ]
+  },
+  {
+    "question": "Where do you wait for your turn?",
+    "type": "wh",
+    "correct_answer": "line",
+    "accepted_answers": [
+      "line",
+      "queue",
+      "behind others"
+    ]
+  },
+  {
+    "question": "Why do we share toys?",
+    "type": "wh",
+    "correct_answer": "kindness",
+    "accepted_answers": [
+      "kindness",
+      "fairness"
+    ]
+  },
+  {
+    "question": "How do you greet a friend?",
+    "type": "wh",
+    "correct_answer": "hello",
+    "accepted_answers": [
+      "hello",
+      "hi"
+    ]
+  },
+  {
+    "question": "What do you say after making a mistake?",
+    "type": "wh",
+    "correct_answer": "sorry",
+    "accepted_answers": [
+      "sorry",
+      "I'm sorry",
+      "apologize"
+    ]
+  },
+  {
+    "question": "When is it okay to interrupt?",
+    "type": "wh",
+    "correct_answer": "emergency",
+    "accepted_answers": [
+      "emergency",
+      "urgent"
+    ]
+  },
+  {
+    "question": "What is a good way to help a friend?",
+    "type": "wh",
+    "correct_answer": "sharing",
+    "accepted_answers": [
+      "sharing",
+      "listening",
+      "comforting"
+    ]
+  },
+  {
+    "question": "How do you show respect?",
+    "type": "wh",
+    "correct_answer": "listening",
+    "accepted_answers": [
+      "listening",
+      "politeness",
+      "kindness",
+      "manners"
+    ]
+  }
+]

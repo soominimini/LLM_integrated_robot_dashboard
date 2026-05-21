@@ -75,6 +75,14 @@ class TTSHelper:
             self.qwen_url = os.environ.get('QWEN_URL', 'wss://dashscope-intl.aliyuncs.com/api-ws/v1/realtime')
             self.qwen_sample_rate = int(os.environ.get('QWEN_SAMPLE_RATE', '24000'))
             self.qwen_lipsync = (os.environ.get('QWEN_LIPSYNC', '1').strip().lower() in ('1', 'true', 'yes'))
+            # Playback-speed scaling applied to the rendered Qwen WAV via
+            # ffmpeg atempo (pitch preserved). 1.0 = no change.
+            try:
+                self.tts_speed = float(os.environ.get('TTS_SPEED', '1.0'))
+            except ValueError:
+                self.tts_speed = 1.0
+            if self.tts_speed <= 0:
+                self.tts_speed = 1.0
             self.robot_host = os.environ.get('ROBOT_HOST', '192.168.100.1')
             self.robot_user = os.environ.get('ROBOT_USER', 'developer')
             self.robot_qt_audio_dir = os.environ.get('ROBOT_QT_AUDIO_DIR', '/home/qtrobot/robot/data/audios/')
@@ -628,6 +636,30 @@ class TTSHelper:
         except Exception as e:
             print(f"Qwen TTS synthesis failed: {e}")
             return False
+
+        # Optional: re-encode the WAV at TTS_SPEED via ffmpeg atempo (pitch
+        # preserved). Applied after the WAV is on disk and before upload, so
+        # the robot plays the speed-adjusted file. We also scale `duration`
+        # so the movement thread length matches the shortened/lengthened
+        # playback. If ffmpeg fails we fall back to the original WAV.
+        if self.tts_speed != 1.0:
+            try:
+                from wav_speed import adjust_wav_speed
+            except Exception as e:
+                print(f"Qwen TTS: wav_speed import failed: {e}")
+                adjust_wav_speed = None
+            if adjust_wav_speed is not None:
+                tmp_path = wav_path + ".tmp.wav"
+                if adjust_wav_speed(wav_path, tmp_path, self.tts_speed):
+                    try:
+                        os.replace(tmp_path, wav_path)
+                        duration = duration / self.tts_speed
+                    except OSError as e:
+                        print(f"Qwen TTS: speed-adjust replace failed: {e}")
+                        try:
+                            os.remove(tmp_path)
+                        except OSError:
+                            pass
 
         # Push WAV to robot's standard audio dir, then trigger talkAudio for QT visemes
         if not self.upload_service or not self.talk_audio_service:

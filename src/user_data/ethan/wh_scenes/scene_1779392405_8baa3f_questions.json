@@ -1,0 +1,65 @@
+{
+  "scene_description": "A female teacher and several students are in a classroom with a chalkboard displaying math problems.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is the teacher in the classroom?",
+      "answer": "Ms. Smith",
+      "visual_choices": [
+        "Ms. Smith",
+        "a student",
+        "a principal",
+        "a parent"
+      ],
+      "evidence_hint": "Look at the name written on the chalkboard."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are many of the students doing?",
+      "answer": "Raising hands",
+      "visual_choices": [
+        "Raising hands",
+        "Eating lunch",
+        "Drawing pictures",
+        "Reading books"
+      ],
+      "evidence_hint": "Look at the students' arms and hands."
+    },
+    {
+      "wh_type": "when",
+      "question": "When do students usually go to school?",
+      "answer": "During the day",
+      "visual_choices": [
+        "During the day",
+        "At night",
+        "In the evening",
+        "At bedtime"
+      ],
+      "evidence_hint": "Think about what time of day school typically happens."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the teacher and students?",
+      "answer": "In a classroom",
+      "visual_choices": [
+        "In a classroom",
+        "At a park",
+        "At home",
+        "At a restaurant"
+      ],
+      "evidence_hint": "Look at the chalkboard, desks, and overall setting."
+    },
+    {
+      "wh_type": "why",
+      "question": "Why might the students be raising their hands?",
+      "answer": "To answer",
+      "visual_choices": [
+        "To answer",
+        "To stretch",
+        "To wave",
+        "To get water"
+      ],
+      "evidence_hint": "Think about why students raise their hands during class."
+    }
+  ]
+}

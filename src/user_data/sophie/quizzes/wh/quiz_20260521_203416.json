@@ -1,0 +1,110 @@
+[
+  {
+    "question": "What color is a banana?",
+    "type": "wh",
+    "correct_answer": "yellow",
+    "accepted_answers": [
+      "yellow",
+      "green"
+    ]
+  },
+  {
+    "question": "Where do apples grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "tree",
+      "orchard"
+    ]
+  },
+  {
+    "question": "How many seeds has a cherry?",
+    "type": "wh",
+    "correct_answer": "one",
+    "accepted_answers": [
+      "one",
+      "1"
+    ]
+  },
+  {
+    "question": "What fruit is a berry?",
+    "type": "wh",
+    "correct_answer": "strawberry",
+    "accepted_answers": [
+      "strawberry",
+      "blueberry",
+      "raspberry",
+      "blackberry",
+      "cranberry"
+    ]
+  },
+  {
+    "question": "Why do we peel oranges?",
+    "type": "wh",
+    "correct_answer": "to eat",
+    "accepted_answers": [
+      "to eat",
+      "to remove skin",
+      "to remove peel"
+    ]
+  },
+  {
+    "question": "Where do you sleep?",
+    "type": "wh",
+    "correct_answer": "bedroom",
+    "accepted_answers": [
+      "bedroom",
+      "bed",
+      "room"
+    ]
+  },
+  {
+    "question": "What room has a stove?",
+    "type": "wh",
+    "correct_answer": "kitchen",
+    "accepted_answers": [
+      "kitchen",
+      "kitchens",
+      "cooking room",
+      "galley",
+      "restaurant kitchen",
+      "home kitchen"
+    ]
+  },
+  {
+    "question": "How many walls has a room?",
+    "type": "wh",
+    "correct_answer": "four",
+    "accepted_answers": [
+      "four",
+      "4"
+    ]
+  },
+  {
+    "question": "Who lives in your house?",
+    "type": "wh",
+    "correct_answer": "family",
+    "accepted_answers": [
+      "family",
+      "parents",
+      "mom and dad",
+      "siblings",
+      "brother",
+      "sister"
+    ]
+  },
+  {
+    "question": "What do doors do?",
+    "type": "wh",
+    "correct_answer": "open",
+    "accepted_answers": [
+      "open",
+      "close",
+      "let you in",
+      "let you out",
+      "enter",
+      "exit"
+    ]
+  }
+]

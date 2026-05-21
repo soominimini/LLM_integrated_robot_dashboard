@@ -11,13 +11,22 @@ Input JSON:
     "child_age": 5,
     "difficulty": "receptive" | "expressive" }
 
-Output JSON:
+Receptive output JSON:
   { "scene_description": "A boy sleeping in bed...",
     "questions": [
       { "wh_type": "who", "question": "Who is in the picture?",
         "answer": "a boy",
         "visual_choices": ["a boy", "a girl", "a man", "a woman"],
         "evidence_hint": "Look at the person in the bed" },
+      ...
+    ] }
+
+Expressive output JSON (open-ended imagination questions; any answer is acceptable):
+  { "scene_description": "A boy playing soccer in a park...",
+    "questions": [
+      { "wh_type": "what", "question": "What would he do after playing soccer?",
+        "answer": "", "visual_choices": [],
+        "evidence_hint": "Imagine what comes next." },
       ...
     ] }
 """
@@ -61,12 +70,87 @@ def main():
 
     model_id = os.getenv("GEMINI_VISION_MODEL", "gemini-2.5-flash")
 
-    prompt = f"""You are a pediatric speech-language pathologist creating therapy materials.
+    card_framing = (
+        "IMPORTANT: The photo may show a printed card, page, or picture being held "
+        "by someone or placed on a surface. Focus ONLY on the illustration or scene "
+        "depicted ON the card/page itself. Ignore everything outside the card — "
+        "hands holding it, the person, the table, background, etc. Treat the "
+        "illustration on the card as the entire scene for your analysis."
+    )
 
-IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface.
-Focus ONLY on the illustration or scene depicted ON the card/page itself.
-Ignore everything outside the card — hands holding it, the person, the table, background, etc.
-Treat the illustration on the card as the entire scene for your analysis.
+    if difficulty == "expressive":
+        prompt = f"""You are a pediatric speech-language pathologist creating therapy materials.
+
+{card_framing}
+
+Analyze this image and generate 5 OPEN-ENDED IMAGINATION questions for a child aged {child_age}.
+These questions invite the child to imagine, predict, reflect, or share personal experience.
+THEY HAVE NO SINGLE CORRECT ANSWER — any answer the child gives is acceptable.
+
+Cover these 5 different kinds of imagination prompts (one question each, in this order):
+1. FUTURE: what might happen next or after the scene
+2. PAST: what might have happened just before the scene
+3. PERSONAL: connect the scene to the child's own life or preferences (e.g., "Do you like...?", "Have you ever...?")
+4. ALTERNATIVE: imagine a different choice, place, or outcome (e.g., "What else could they do?", "Where else could they go?")
+5. FEELING: how a character might feel, or how the child would feel in the scene
+
+Each question must:
+- Be simple and warm, age-appropriate for {child_age} years old
+- Be answerable in 1–2 spoken sentences by a child
+- NOT have a right or wrong answer
+
+Use `wh_type` from {{"what", "when", "why"}} only — pick whichever best fits the question
+(e.g., "what" for future/past/alternative/personal, "why" for feeling, "when" works for past/future timing).
+
+Leave `answer` as an empty string and `visual_choices` as an empty array — they are not used in expressive mode.
+`evidence_hint` should be a short imagination prompt (e.g., "Imagine what comes next.", "Think about how you would feel.").
+
+Return ONLY valid JSON in this exact format:
+{{
+  "scene_description": "Brief description of the scene",
+  "questions": [
+    {{
+      "wh_type": "what",
+      "question": "What do you think he will do after playing soccer?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what comes next."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What was he doing right before this picture?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what happened just before."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "Do you like playing soccer too?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Think about your own experience."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What else could he play instead of soccer?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine a different game."
+    }},
+    {{
+      "wh_type": "why",
+      "question": "How do you think he feels while playing?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Look at his face and body, and imagine the feeling."
+    }}
+  ]
+}}
+"""
+    else:
+        prompt = f"""You are a pediatric speech-language pathologist creating therapy materials.
+
+{card_framing}
 
 Analyze this image and generate WH-questions for a child aged {child_age}.
 
@@ -76,7 +160,7 @@ For EACH of the 5 WH-question types (who, what, when, where, why), generate:
 3. Four visual choices (one correct + three plausible distractors), each 1-4 words
 4. An evidence hint telling the child where to look in the picture
 
-{"For receptive mode: make questions simple with obvious visual choices." if difficulty == "receptive" else "For expressive mode: make questions slightly more challenging, requiring inference."}
+For receptive mode: make questions simple with obvious visual choices.
 
 Return ONLY valid JSON in this exact format:
 {{

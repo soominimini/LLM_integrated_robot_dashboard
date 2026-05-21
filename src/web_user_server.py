@@ -87,6 +87,39 @@ def _ensure_human_tracker():
                 return None
     return _human_tracker
 
+def _pause_human_tracking_for_capture():
+    """Stop continuous human tracking so the robot's head stays still.
+
+    Used while the therapist is framing a picture-scene shot for the WH-questions
+    inference game: head motion would blur the camera preview and the captured
+    frame. Safe to call when tracking is already off.
+    """
+    try:
+        tracker = _ensure_human_tracker()
+        if tracker and getattr(tracker, 'should_track', False):
+            tracker.untrack()
+            print("[WH-scene] Human tracking paused for scene capture")
+    except Exception as e:
+        print(f"[WH-scene] tracking pause error: {e}")
+
+
+def _resume_human_tracking_after_capture():
+    """Re-enable continuous human tracking after a scene capture click.
+
+    Mirrors the auto-start used by /play and /play_scene so the robot resumes
+    following the child once the therapist has captured the scene. Safe to call
+    when tracking is already running.
+    """
+    try:
+        tracker = _ensure_human_tracker()
+        if tracker and not getattr(tracker, 'should_track', False):
+            person = _pick_recent_person(tracker, timeout_sec=0.5)
+            tracker.track(person)
+            print("[WH-scene] Human tracking resumed after scene capture")
+    except Exception as e:
+        print(f"[WH-scene] tracking resume error: {e}")
+
+
 def _pick_recent_person(tracker, timeout_sec: float = 0.5):
     """Pick the most recent person with a face in view within timeout."""
     if not tracker:
@@ -898,6 +931,76 @@ def _extract_story_title(text):
             return candidate, working[m.end():]
 
     return '', text
+
+
+# Inline gesture/emotion tags can sit on the same line as a stray title; the
+# title-detection heuristic ignores them when measuring line length and
+# punctuation, but the title-stripping path removes the whole line (tag
+# included), since a tag bound to a title doesn't apply to the surviving body.
+_INLINE_TAG_RE = re.compile(r'\[(?:gesture|emotion):[^\]]+\]\s*', re.IGNORECASE)
+
+
+def _strip_leading_title(text):
+    """Defensive sweep that removes a stray title-like prefix from a story body.
+
+    Even though the story-generation prompt forbids a title in the body, the
+    LLM occasionally emits one. `_extract_story_title()` handles the canonical
+    "** Title **\\n<title>\\n\\n<body>" header and the loose
+    "<title>\\n\\n<body>" form (when the title has no sentence-ending
+    punctuation), but several patterns slip past it:
+      - "Title: My Adventure\\n<body>"     (inline marker, no newline split)
+      - "# My Adventure\\n<body>"          (markdown heading)
+      - "**My Adventure**\\n<body>"        (bolded line alone)
+      - "My Adventure\\n<body>"            (no blank-line separator)
+    Returns the text with the title line(s) removed when detected, or the
+    original text unchanged. Idempotent: safe to call multiple times.
+    """
+    if not text or not text.strip():
+        return text
+
+    s = text.lstrip()
+
+    # "** Title **\n<title>\n" header — drop the marker AND the title line.
+    m = re.match(r'^\*{1,3}\s*Title\s*\*{1,3}\s*\n+[^\n]+\n+', s, flags=re.IGNORECASE)
+    if m:
+        return s[m.end():]
+
+    # Markdown heading "# <title>".
+    m = re.match(r'^#{1,3}\s+[^\n]+(?:\n+|$)', s)
+    if m:
+        return s[m.end():]
+
+    # "Title: <title>" inline marker.
+    m = re.match(r'^Title\s*:\s*[^\n]+(?:\n+|$)', s, flags=re.IGNORECASE)
+    if m:
+        return s[m.end():]
+
+    # Bolded/italicized line that contains no other asterisks, alone on a line.
+    m = re.match(r'^\*{1,3}[^*\n]+\*{1,3}\s*(?:\n+|$)', s)
+    if m:
+        return s[m.end():]
+
+    # Loose heuristic: a short first line WITHOUT sentence-ending punctuation,
+    # followed by real story content. Mirrors `_extract_story_title`'s Format 2
+    # but without requiring a blank-line separator (which is the LLM behaviour
+    # that slips past it). Inline gesture/emotion tags don't count toward the
+    # title-detection metrics.
+    first_nl = s.find('\n')
+    if first_nl == -1:
+        return text  # single line — nothing to do
+    first = s[:first_nl]
+    rest = s[first_nl + 1:].lstrip('\n')
+    if not rest.strip():
+        return text  # no body after the candidate — leave alone
+
+    first_clean = _INLINE_TAG_RE.sub('', first).strip().strip('*').strip()
+
+    if (first_clean
+            and len(first_clean) < 80
+            and not re.search(r'[.!?][\'"\")\]]?\s*$', first_clean)):
+        return rest
+
+    return text
 
 
 def clean_story_text(text):
@@ -2570,6 +2673,16 @@ def api_save_story():
         metadata['title'] = title
         print(f"[StorySave] Extracted title: {title}")
 
+    # Defensive: remove a stray title-like prefix that `_extract_story_title`
+    # didn't strip out. The prompt forbids a title in the body, but the LLM
+    # still emits one occasionally in non-canonical forms ("Title:", "#",
+    # bolded line, or no blank-line separator). We do this BEFORE the Gemini
+    # tagging pass so the tagger sees the clean body, not the title.
+    stripped_story = _strip_leading_title(story)
+    if stripped_story != story:
+        print(f"[StorySave] Stripped stray title from saved story body")
+        story = stripped_story
+
     # Get child age for page splitting
     child_age = 5
     try:
@@ -2612,6 +2725,15 @@ def api_save_story():
     # The page splitter may drop tags, so we match each tag's surrounding text
     # back into the correct sentence.
     pages = _reinject_tags_into_pages(story, pages)
+
+    # Belt-and-suspenders: if a title still leads pages[0] (e.g. the page
+    # splitter copied it verbatim), strip it here so the first read page does
+    # not start by speaking the title aloud.
+    if pages:
+        cleaned_first = _strip_leading_title(pages[0])
+        if cleaned_first != pages[0]:
+            print("[StorySave] Stripped stray title from pages[0]")
+            pages[0] = cleaned_first
 
     # Prepare user stories directory
     user_dir = os.path.join(USER_DATA_DIR, username, "stories")
@@ -3019,6 +3141,242 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
     }
 
 
+# ---------- Direction mode (spatial preposition teaching) ----------
+
+# Canonical relation key -> list of natural phrases the spoken instruction
+# may use (chosen randomly per round so the child hears varied vocabulary).
+# The canonical key is the only thing passed to the worker for grounding.
+DIRECTION_RELATION_PHRASES = {
+    "next_to":     ["next to", "beside"],
+    "above":       ["on top of", "above", "on"],
+    "under":       ["under", "below"],
+    "behind":      ["behind"],
+    "in_front_of": ["in front of"],
+    # Containment relations — taught to children aged 3 and under as the
+    # first spatial concepts before they move on to the richer 2D/3D set.
+    "in":          ["in", "inside"],
+    "out":         ["out of", "outside"],
+}
+
+# Age-tiered relation pools. Children under ~3 learn containment first
+# (in / out); older children practise the full 2D + 3D set. The pools are
+# disjoint so a young learner is never given a relation they haven't been
+# introduced to yet.
+DIRECTION_RELATIONS_YOUNG = ["in", "out"]
+DIRECTION_RELATIONS_OLDER = ["next_to", "above", "under", "behind", "in_front_of"]
+
+
+def _direction_relations_for_age(child_age):
+    """Return the list of relation keys appropriate for ``child_age``."""
+    try:
+        if int(child_age) <= 3:
+            return list(DIRECTION_RELATIONS_YOUNG)
+    except (ValueError, TypeError):
+        pass
+    return list(DIRECTION_RELATIONS_OLDER)
+
+
+# Toy-list tokens that mark an item as a *container* (the natural "location"
+# for in/out instructions). Word-boundary substring match, so "small jar"
+# and "blue container" both qualify but "canary" does not.
+DIRECTION_CONTAINER_WORDS = {
+    "jar", "container", "can", "cup", "bowl", "box",
+    "basket", "bucket", "mug", "pot", "bottle", "tin",
+}
+
+
+def _is_direction_container(toy_name):
+    """True if any whole word in ``toy_name`` is a known container term."""
+    if not toy_name:
+        return False
+    tokens = re.findall(r"[a-z]+", toy_name.lower())
+    return any(tok in DIRECTION_CONTAINER_WORDS for tok in tokens)
+
+
+def _build_direction_sentence(obj_a, relation, obj_b, phrase):
+    """Imperative phrasing per relation.
+
+    Most relations read naturally as "Put the X <phrase> the Y" but the
+    containment-removal case (``out``) wants the verb "take" so the
+    sentence sounds idiomatic ("Take the ball out of the cup").
+    """
+    if relation == "out":
+        return f"Take the {obj_a} {phrase} the {obj_b}!"
+    return f"Put the {obj_a} {phrase} the {obj_b}!"
+
+
+def _scene_game_generate_direction_question(toy_list, child_age=None):
+    """Build a 'complex following direction' round.
+
+    Picks two distinct toys + a random spatial relation from the pool
+    appropriate for ``child_age``. Ages 3 and under get only the
+    containment relations (in / out); ages 4+ get the full 2D/3D set.
+
+    For in/out relations the reference object (``obj_b``) is constrained
+    to a container — jar, cup, bowl, box, etc. — so the round always
+    reads sensibly. If the toy list has no container or no non-container
+    item to put in/take out, the function returns None and the caller
+    falls back to another mode.
+
+    Returns the canonical relation key alongside the spoken phrase so the
+    validator can ground its judgement.
+    """
+    if len(toy_list) < 2:
+        return None  # caller should fall back to another mode
+
+    pool = _direction_relations_for_age(child_age)
+    relation = random.choice(pool)
+
+    if relation in {"in", "out"}:
+        containers = [t for t in toy_list if _is_direction_container(t)]
+        non_containers = [t for t in toy_list if not _is_direction_container(t)]
+        if not containers or not non_containers:
+            print(f"[SceneGame] direction '{relation}' needs at least one "
+                  f"container (matching {sorted(DIRECTION_CONTAINER_WORDS)}) "
+                  f"AND one non-container in the toy list; current toys: {toy_list}")
+            return None
+        obj_a = random.choice(non_containers)   # the thing being moved
+        obj_b = random.choice(containers)       # the container / location
+    else:
+        obj_a, obj_b = random.sample(list(toy_list), 2)
+
+    phrase = random.choice(DIRECTION_RELATION_PHRASES[relation])
+    question = _build_direction_sentence(obj_a, relation, obj_b, phrase)
+    return {
+        'question': question,
+        'mode': 'direction',
+        'obj_a': obj_a,
+        'obj_b': obj_b,
+        'relation': relation,
+        'phrase': phrase,
+        # `target` / `criteria` kept for response-shape uniformity with
+        # the other modes; downstream consumers ignore them in direction mode.
+        'target': None,
+        'criteria': None,
+    }
+
+
+def _run_gemini_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=None):
+    """Run gemini_validate_spatial.py and return its parsed JSON, or None on failure."""
+    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_validate_spatial.py')
+    if not os.path.exists(script_path):
+        print("[SceneGame] gemini_validate_spatial.py not found")
+        return None
+    cmd = [
+        WORKER_PYTHON, script_path,
+        '--image', image_path,
+        '--obj-a', obj_a,
+        '--obj-b', obj_b,
+        '--relation', relation,
+    ]
+    if toy_list:
+        cmd.extend(['--toy-list', ','.join(toy_list)])
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if proc.returncode != 0:
+            print(f"[SceneGame] validate_spatial error: {proc.stderr.strip()}")
+            return None
+        raw = (proc.stdout or '').strip()
+        print(f"[SceneGame] gemini_validate_spatial raw: {raw}")
+        if raw.startswith('```'):
+            raw = raw.strip('`').strip()
+            if raw.startswith('json'):
+                raw = raw[4:].strip()
+        return json.loads(raw)
+    except Exception as e:
+        print(f"[SceneGame] validate_spatial exec failed: {e}")
+        return None
+
+
+# Relations where a single 2D frame cannot reliably disambiguate the
+# configuration. For these we capture a short MP4 and let Gemini reason
+# over the clip using parallax/occlusion/containment across frames.
+#   - behind / in_front_of: pure depth, needs parallax cues.
+#   - in / out: containment hinges on partial occlusion of the inside
+#     object by the container, which is far easier to read across a few
+#     frames of motion than from a single static frame.
+VIDEO_DEPTH_RELATIONS = {"behind", "in_front_of", "in", "out"}
+
+DIRECTION_VIDEO_DURATION_SEC = 3.0
+DIRECTION_VIDEO_FPS = 10
+
+
+def _capture_scene_video(out_path, duration_sec=DIRECTION_VIDEO_DURATION_SEC,
+                         fps=DIRECTION_VIDEO_FPS):
+    """Record ``duration_sec`` of frames from the ROS camera into ``out_path``.
+
+    Returns True on success, False on any capture/writer failure so the
+    caller can fall back to the single-frame validator instead of erroring
+    the whole round.
+    """
+    if cv2 is None:
+        print("[SceneGame] OpenCV not available — cannot record video")
+        return False
+    first = _get_ros_frame()
+    if first is None:
+        print("[SceneGame] No initial frame for video capture")
+        return False
+    h, w = first.shape[:2]
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    writer = cv2.VideoWriter(out_path, fourcc, float(fps), (w, h))
+    if not writer.isOpened():
+        print(f"[SceneGame] VideoWriter failed to open for {out_path}")
+        return False
+    try:
+        writer.write(first)
+        n_frames = max(1, int(round(fps * duration_sec)))
+        period = 1.0 / float(fps)
+        start = time.time()
+        for i in range(1, n_frames):
+            target = start + i * period
+            now = time.time()
+            if target > now:
+                time.sleep(target - now)
+            frame = _get_ros_frame()
+            if frame is None:
+                continue
+            if frame.shape[:2] != (h, w):
+                frame = cv2.resize(frame, (w, h))
+            writer.write(frame)
+        return True
+    finally:
+        writer.release()
+
+
+def _run_gemini_validate_spatial_video(video_path, obj_a, obj_b, relation, toy_list=None):
+    """Run gemini_validate_spatial_video.py for a captured MP4 clip."""
+    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_validate_spatial_video.py')
+    if not os.path.exists(script_path):
+        print("[SceneGame] gemini_validate_spatial_video.py not found")
+        return None
+    cmd = [
+        WORKER_PYTHON, script_path,
+        '--video', video_path,
+        '--obj-a', obj_a,
+        '--obj-b', obj_b,
+        '--relation', relation,
+    ]
+    if toy_list:
+        cmd.extend(['--toy-list', ','.join(toy_list)])
+    try:
+        # Generous timeout: video upload + Files API processing + inference
+        # can take 20-60s for a 3s clip.
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        if proc.returncode != 0:
+            print(f"[SceneGame] validate_spatial_video error: {proc.stderr.strip()}")
+            return None
+        raw = (proc.stdout or '').strip()
+        print(f"[SceneGame] gemini_validate_spatial_video raw: {raw}")
+        if raw.startswith('```'):
+            raw = raw.strip('`').strip()
+            if raw.startswith('json'):
+                raw = raw[4:].strip()
+        return json.loads(raw)
+    except Exception as e:
+        print(f"[SceneGame] validate_spatial_video exec failed: {e}")
+        return None
+
+
 def _run_gemini_detect_and_look(image_path):
     """Run gemini_analyze_image.py to detect the held object and make the robot look at it.
 
@@ -3257,9 +3615,26 @@ def api_scene_game_hint():
     mode = (data.get('mode') or 'exact').strip()
     target = (data.get('target') or '').strip()
     criteria = (data.get('criteria') or '').strip()
+    obj_a = (data.get('obj_a') or '').strip()
+    obj_b = (data.get('obj_b') or '').strip()
+    relation = (data.get('relation') or '').strip()
 
     username = session['username']
     child_age, learning_goals = _get_user_age_and_goals(username)
+
+    # Direction mode hint: deterministic restatement of the spatial relation,
+    # phrased as a coaching cue. No LLM round-trip needed.
+    if mode == 'direction':
+        if not (obj_a and obj_b and relation):
+            return jsonify({'success': False, 'error': 'No active direction round'})
+        phrase = DIRECTION_RELATION_PHRASES.get(relation, [relation])[0]
+        hint = (f"Look! The {obj_a} should be {phrase} the {obj_b}. "
+                f"Try moving the {obj_a}.")
+        try:
+            _with_asr_suspended(lambda: tts_helper.speak(hint))
+        except Exception:
+            pass
+        return jsonify({'success': True, 'hint': hint})
 
     # Build the subject of the hint
     if mode == 'exact' and target:
@@ -3322,6 +3697,9 @@ def api_scene_game_answer():
     answer_mode = (data.get('mode') or 'exact').strip()
     target = (data.get('target') or '').strip()
     criteria = (data.get('criteria') or '').strip()
+    obj_a = (data.get('obj_a') or '').strip()
+    obj_b = (data.get('obj_b') or '').strip()
+    relation = (data.get('relation') or '').strip()
 
     username = session['username']
 
@@ -3336,6 +3714,70 @@ def api_scene_game_answer():
     ts = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     fpath = os.path.join(cap_dir, f'scene_answer_{ts}.jpg')
     cv2.imwrite(fpath, frame)
+
+    # Direction mode: two-object + spatial-relation validator. Different
+    # response shape from the single-object modes, so dispatch here and
+    # short-circuit the rest of the function.
+    if answer_mode == 'direction':
+        if not (obj_a and obj_b and relation):
+            return jsonify({'success': False,
+                            'error': 'Missing obj_a/obj_b/relation for direction mode'}), 400
+        toy_list = _load_scene_toys() or list(SCENE_GAME_DEFAULT_TOYS)
+        used_video = False
+        if relation in VIDEO_DEPTH_RELATIONS:
+            # Depth relations need temporal/parallax cues that a single
+            # still frame can't provide. Record a short MP4 and ship it
+            # to the video worker. Fall back to the still-frame validator
+            # if recording fails so a missing codec doesn't break the round.
+            video_path = os.path.join(cap_dir, f'scene_answer_{ts}.mp4')
+            if _capture_scene_video(video_path,
+                                    duration_sec=DIRECTION_VIDEO_DURATION_SEC,
+                                    fps=DIRECTION_VIDEO_FPS):
+                used_video = True
+                result = _run_gemini_validate_spatial_video(
+                    video_path, obj_a, obj_b, relation, toy_list=toy_list,
+                )
+            else:
+                print("[SceneGame] video capture failed for depth relation; "
+                      "falling back to still-frame validator")
+                result = _run_gemini_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
+        else:
+            result = _run_gemini_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
+        if result is None:
+            try:
+                tts_helper.speak("I couldn't see clearly. Can you show me again?")
+            except Exception:
+                pass
+            return jsonify({'success': True, 'correct': None,
+                            'obj_a': obj_a, 'obj_b': obj_b, 'relation': relation,
+                            'actual_relation': None,
+                            'error': 'Vision analysis failed'})
+        correct = bool(result.get('correct'))
+        actual_relation = result.get('actual_relation') or 'other'
+        reason = (result.get('reason') or '').strip()
+        try:
+            if correct:
+                tts_helper.speak(f"Great job! The {obj_a} is {DIRECTION_RELATION_PHRASES[relation][0]} the {obj_b}!")
+            elif not result.get('obj_a_found', True) or not result.get('obj_b_found', True):
+                missing = obj_a if not result.get('obj_a_found') else obj_b
+                tts_helper.speak(f"I can't see the {missing}. Try again!")
+            else:
+                tts_helper.speak(f"Not quite — try moving the {obj_a}.")
+        except Exception:
+            pass
+        return jsonify({
+            'success': True,
+            'correct': correct,
+            'mode': 'direction',
+            'obj_a': obj_a,
+            'obj_b': obj_b,
+            'relation': relation,
+            'actual_relation': actual_relation,
+            'obj_a_found': bool(result.get('obj_a_found', False)),
+            'obj_b_found': bool(result.get('obj_b_found', False)),
+            'reason': reason,
+            'used_video': used_video,
+        })
 
     # Step 1: detect object + robot looks at it
     detection = _run_gemini_detect_and_look(fpath)
@@ -5105,8 +5547,17 @@ def _resolve_emotion(name):
     return None
 
 
-def _play_tags(gestures, emotions):
-    """Fire gesture/emotion via rostopic pub and wait briefly for them to start."""
+def _play_tags(gestures, emotions, pre_speech_pause=1.0):
+    """Fire gesture/emotion via rostopic pub and optionally wait for the
+    motion to start before the caller continues to TTS.
+
+    `pre_speech_pause` is the number of seconds to block after publishing the
+    ROS topic(s). Use ~1.0s for sentence-boundary tags so the new face/gesture
+    is visibly set up before the next sentence is spoken. Use 0s for
+    mid-sentence tags (after a comma/semicolon/colon) so the face change lands
+    concurrently with the following clause instead of inserting a long pause
+    inside what is grammatically one sentence.
+    """
     import time
     import threading
 
@@ -5135,8 +5586,14 @@ def _play_tags(gestures, emotions):
             continue
         threading.Thread(target=_rostopic_pub, args=('/qt_robot/emotion/show', resolved), daemon=True).start()
 
-    # Wait for gesture/emotion to begin before speech starts
-    time.sleep(1.0)
+    if pre_speech_pause > 0:
+        time.sleep(pre_speech_pause)
+
+
+# Punctuation that ends a "clause but not a sentence". A tag that sits right
+# after one of these belongs to the next clause of the SAME sentence and
+# should fire concurrently with the next TTS call, not after a 1-second pause.
+_CLAUSE_INTERNAL_TERMINATORS = (",", ";", ":", "—", "–")
 
 
 # Common abbreviations whose trailing period is NOT a sentence boundary.
@@ -5238,16 +5695,28 @@ def api_speak_sentence():
         # before its first sentence, then send each sentence to Qwen TTS
         # individually so the API receives one sentence at a time rather than
         # a whole paragraph.
+        #
+        # `prev_terminator` tracks the last non-whitespace, non-quote character
+        # of the previous segment. If it's clause-internal punctuation (comma,
+        # semicolon, colon, em-dash), the upcoming tag belongs to the same
+        # sentence as the previous clause — fire it concurrently with the next
+        # TTS call (no pre-speech sleep) so we don't insert an unnatural pause
+        # in the middle of one sentence.
         segments = _split_page_into_segments(sentence)
+        prev_terminator = None
         for text, gestures, emotions in segments:
             cleaned = clean_story_text(text)
             if not cleaned:
                 continue
-            _play_tags(gestures, emotions)
+            mid_sentence = prev_terminator in _CLAUSE_INTERNAL_TERMINATORS
+            pre_pause = 0.0 if mid_sentence else 1.0
+            _play_tags(gestures, emotions, pre_speech_pause=pre_pause)
             for s in _split_into_sentences(cleaned):
                 if not s:
                     continue
                 _with_asr_suspended(lambda c=s: tts_helper.speak_story(c, language))
+            tail = cleaned.rstrip().rstrip('"\'”’')
+            prev_terminator = tail[-1] if tail else None
     finally:
         try:
             if tracker:
@@ -5464,8 +5933,29 @@ def api_scene_start():
         if username:
             child_age, learning_goals = _get_user_age_and_goals(username)
 
-        persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
-        result = _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=persona_ctx)
+        # 'auto' (default) keeps the existing age-based selection.
+        # 'direction' forces the new spatial-preposition mode; falls back to
+        # auto if the toy list has fewer than 2 entries.
+        # 'criteria' forces the criteria/riddle path (and is also picked by
+        # auto for ages 4+).
+        data = request.get_json(silent=True) or {}
+        requested_mode = (data.get('mode') or 'auto').strip().lower()
+        if requested_mode not in ('auto', 'criteria', 'direction'):
+            requested_mode = 'auto'
+
+        result = None
+        if requested_mode == 'direction':
+            result = _scene_game_generate_direction_question(toy_list, child_age=child_age)
+            if result is None:
+                # Generator bailed: either toy list <2, or in/out was the only
+                # option but the list has no container. Fall through to auto.
+                print("[SceneGame] direction mode unavailable for current toy list; falling back to auto")
+        if result is None:
+            persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
+            result = _scene_game_generate_question(
+                toy_list, child_age, learning_goals, persona_context=persona_ctx,
+            )
+
         question = result['question']
         try:
             _with_asr_suspended(lambda: tts_helper.speak(question))
@@ -5476,7 +5966,11 @@ def api_scene_start():
             'question': question,
             'target': result.get('target'),
             'criteria': result.get('criteria'),
-            'mode': result['mode']
+            'obj_a': result.get('obj_a'),
+            'obj_b': result.get('obj_b'),
+            'relation': result.get('relation'),
+            'phrase': result.get('phrase'),
+            'mode': result['mode'],
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
@@ -5544,6 +6038,43 @@ def _run_gemini_wh_analysis(image_path, child_age, difficulty):
         return None, str(e)
 
 
+def _questions_path(wh_dir, scene_id, mode):
+    """Path on disk for a scene's question set in the given mode."""
+    if mode == "expressive":
+        return os.path.join(wh_dir, f"{scene_id}_questions_expressive.json")
+    return os.path.join(wh_dir, f"{scene_id}_questions.json")
+
+
+def _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id):
+    """Generate receptive + expressive question sets and persist both.
+
+    Returns a dict describing what was produced and any per-mode errors so the
+    caller can surface partial-success states to the therapist UI.
+    """
+    summary = {
+        "scene_description": "",
+        "receptive_count": 0,
+        "expressive_count": 0,
+        "errors": {},
+    }
+    for mode in ("receptive", "expressive"):
+        result, error = _run_gemini_wh_analysis(image_path, child_age, mode)
+        if result and "questions" in result:
+            with open(_questions_path(wh_dir, scene_id, mode), "w") as f:
+                json.dump(result, f, indent=2)
+            count = len(result.get("questions", []))
+            if mode == "receptive":
+                summary["receptive_count"] = count
+                summary["scene_description"] = result.get("scene_description", "") or summary["scene_description"]
+            else:
+                summary["expressive_count"] = count
+                if not summary["scene_description"]:
+                    summary["scene_description"] = result.get("scene_description", "")
+        else:
+            summary["errors"][mode] = error or "Unknown error"
+    return summary
+
+
 @app.route("/wh_picture_scene")
 def wh_picture_scene_page():
     """WH Questions Picture Scene - Prepare (therapist uploads images)."""
@@ -5551,6 +6082,9 @@ def wh_picture_scene_page():
         return redirect(url_for('index'))
     username = session['username']
     user = user_manager.users.get(username)
+    # Hold the robot's head still while the therapist frames a new scene.
+    # Tracking resumes after the Capture Scene button is clicked.
+    _pause_human_tracking_for_capture()
     return render_template("wh_picture_scene.html", logged_in=True, user=user)
 
 
@@ -5592,53 +6126,36 @@ def api_wh_scene_upload():
     # Get user profile for age-appropriate questions
     user = user_manager.users.get(username, {})
     child_age = user.get('age', 5)
-    # Default to receptive for initial generation
-    difficulty = "receptive"
 
-    # Run Gemini analysis
-    result, error = _run_gemini_wh_analysis(image_path, child_age, difficulty)
+    # Generate both receptive and expressive question sets so the play page
+    # can switch modes without a second Gemini round-trip.
+    summary = _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id)
 
     index = _load_scene_index(username)
+    rel_path = os.path.relpath(image_path, USER_DATA_DIR)
+    ready = summary["receptive_count"] > 0 or summary["expressive_count"] > 0
+    entry = {
+        "id": scene_id,
+        "filename": file.filename,
+        "image_path": image_path,
+        "image_url": f"/images/{rel_path}",
+        "scene_description": summary["scene_description"],
+        "question_count": summary["receptive_count"],
+        "expressive_count": summary["expressive_count"],
+        "status": "ready" if ready else "error",
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+    }
+    if summary["errors"]:
+        entry["errors"] = summary["errors"]
+    index.append(entry)
+    _save_scene_index(username, index)
 
-    if result and 'questions' in result:
-        # Save questions to a separate JSON file
-        questions_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
-        with open(questions_path, 'w') as f:
-            json.dump(result, f, indent=2)
-
-        rel_path = os.path.relpath(image_path, USER_DATA_DIR)
-        entry = {
-            "id": scene_id,
-            "filename": file.filename,
-            "image_path": image_path,
-            "image_url": f"/images/{rel_path}",
-            "scene_description": result.get("scene_description", ""),
-            "question_count": len(result.get("questions", [])),
-            "status": "ready",
-            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
-        }
-        index.append(entry)
-        _save_scene_index(username, index)
-
-        return jsonify({"success": True, "scene": entry})
-    else:
-        # Save with error status so therapist can retry
-        rel_path = os.path.relpath(image_path, USER_DATA_DIR)
-        entry = {
-            "id": scene_id,
-            "filename": file.filename,
-            "image_path": image_path,
-            "image_url": f"/images/{rel_path}",
-            "scene_description": "",
-            "question_count": 0,
-            "status": "error",
-            "error": error or "Unknown error",
-            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
-        }
-        index.append(entry)
-        _save_scene_index(username, index)
-
-        return jsonify({"success": True, "scene": entry, "warning": error})
+    if ready:
+        response = {"success": True, "scene": entry}
+        if summary["errors"]:
+            response["warning"] = "; ".join(f"{m}: {e}" for m, e in summary["errors"].items())
+        return jsonify(response)
+    return jsonify({"success": True, "scene": entry, "warning": "; ".join(f"{m}: {e}" for m, e in summary["errors"].items()) or "Unknown error"})
 
 
 @app.route("/api/wh_scene/capture", methods=["POST"])
@@ -5666,51 +6183,42 @@ def api_wh_scene_capture():
     if not ok:
         return jsonify({"success": False, "error": "Failed to save captured image"}), 500
 
+    # Frame is safely on disk — resume head tracking now so the robot can follow
+    # the child again while Gemini runs (the analysis can take several seconds).
+    _resume_human_tracking_after_capture()
+
     # Get user profile for age-appropriate questions
     user = user_manager.users.get(username, {})
     child_age = user.get('age', 5)
-    difficulty = "receptive"
 
-    # Run Gemini analysis
-    result, error = _run_gemini_wh_analysis(image_path, child_age, difficulty)
+    summary = _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id)
 
     index = _load_scene_index(username)
     rel_path = os.path.relpath(image_path, USER_DATA_DIR)
     ts_label = time.strftime("%Y-%m-%d %H:%M:%S")
+    ready = summary["receptive_count"] > 0 or summary["expressive_count"] > 0
+    entry = {
+        "id": scene_id,
+        "filename": f"capture_{ts_label}.jpg",
+        "image_path": image_path,
+        "image_url": f"/images/{rel_path}",
+        "scene_description": summary["scene_description"],
+        "question_count": summary["receptive_count"],
+        "expressive_count": summary["expressive_count"],
+        "status": "ready" if ready else "error",
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+    }
+    if summary["errors"]:
+        entry["errors"] = summary["errors"]
+    index.append(entry)
+    _save_scene_index(username, index)
 
-    if result and 'questions' in result:
-        questions_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
-        with open(questions_path, 'w') as f:
-            json.dump(result, f, indent=2)
-
-        entry = {
-            "id": scene_id,
-            "filename": f"capture_{ts_label}.jpg",
-            "image_path": image_path,
-            "image_url": f"/images/{rel_path}",
-            "scene_description": result.get("scene_description", ""),
-            "question_count": len(result.get("questions", [])),
-            "status": "ready",
-            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
-        }
-        index.append(entry)
-        _save_scene_index(username, index)
-        return jsonify({"success": True, "scene": entry})
-    else:
-        entry = {
-            "id": scene_id,
-            "filename": f"capture_{ts_label}.jpg",
-            "image_path": image_path,
-            "image_url": f"/images/{rel_path}",
-            "scene_description": "",
-            "question_count": 0,
-            "status": "error",
-            "error": error or "Unknown error",
-            "created_at": time.strftime("%Y-%m-%dT%H:%M:%S")
-        }
-        index.append(entry)
-        _save_scene_index(username, index)
-        return jsonify({"success": True, "scene": entry, "warning": error})
+    if ready:
+        response = {"success": True, "scene": entry}
+        if summary["errors"]:
+            response["warning"] = "; ".join(f"{m}: {e}" for m, e in summary["errors"].items())
+        return jsonify(response)
+    return jsonify({"success": True, "scene": entry, "warning": "; ".join(f"{m}: {e}" for m, e in summary["errors"].items()) or "Unknown error"})
 
 
 @app.route("/api/wh_scene/list")
@@ -5746,14 +6254,15 @@ def api_wh_scene_delete():
     except Exception:
         pass
 
-    # Delete questions file
+    # Delete questions files (both modes)
     wh_dir = _user_wh_dir(username)
-    q_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
-    try:
-        if os.path.exists(q_path):
-            os.remove(q_path)
-    except Exception:
-        pass
+    for mode in ("receptive", "expressive"):
+        q_path = _questions_path(wh_dir, scene_id, mode)
+        try:
+            if os.path.exists(q_path):
+                os.remove(q_path)
+        except Exception:
+            pass
 
     index = [s for s in index if s['id'] != scene_id]
     _save_scene_index(username, index)
@@ -5779,47 +6288,57 @@ def api_wh_scene_regenerate():
     user = user_manager.users.get(username, {})
     child_age = user.get('age', 5)
 
-    result, error = _run_gemini_wh_analysis(scene['image_path'], child_age, "receptive")
+    wh_dir = _user_wh_dir(username)
+    summary = _generate_and_save_both_modes(scene['image_path'], child_age, wh_dir, scene_id)
+    ready = summary["receptive_count"] > 0 or summary["expressive_count"] > 0
 
-    if result and 'questions' in result:
-        wh_dir = _user_wh_dir(username)
-        q_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
-        with open(q_path, 'w') as f:
-            json.dump(result, f, indent=2)
+    if ready:
         scene['status'] = 'ready'
-        scene['scene_description'] = result.get('scene_description', '')
-        scene['question_count'] = len(result.get('questions', []))
+        scene['scene_description'] = summary['scene_description']
+        scene['question_count'] = summary['receptive_count']
+        scene['expressive_count'] = summary['expressive_count']
         scene.pop('error', None)
+        if summary['errors']:
+            scene['errors'] = summary['errors']
+        else:
+            scene.pop('errors', None)
         _save_scene_index(username, index)
         return jsonify({"success": True})
     else:
         scene['status'] = 'error'
-        scene['error'] = error or 'Unknown error'
+        scene['errors'] = summary['errors']
+        scene['error'] = "; ".join(f"{m}: {e}" for m, e in summary['errors'].items()) or 'Unknown error'
         _save_scene_index(username, index)
-        return jsonify({"success": False, "error": error})
+        return jsonify({"success": False, "error": scene['error']})
 
 
 @app.route("/api/wh_scene/get_questions", methods=["POST"])
 def api_wh_scene_get_questions():
-    """Get the generated WH questions for a scene."""
+    """Get the generated WH questions for a scene in the requested mode."""
     username = session.get('username')
     if not username:
         return jsonify({"success": False, "error": "Not logged in"}), 401
     data = request.get_json() or {}
     scene_id = data.get("scene_id")
+    mode = (data.get("mode") or "receptive").lower()
+    if mode not in ("receptive", "expressive"):
+        mode = "receptive"
     if not scene_id:
         return jsonify({"success": False, "error": "Missing scene_id"}), 400
 
     wh_dir = _user_wh_dir(username)
-    q_path = os.path.join(wh_dir, f"{scene_id}_questions.json")
+    q_path = _questions_path(wh_dir, scene_id, mode)
     if not os.path.exists(q_path):
-        return jsonify({"success": False, "error": "Questions not found"}), 404
+        msg = ("Expressive questions not generated for this scene yet. "
+               "Ask the therapist to regenerate.") if mode == "expressive" else "Questions not found"
+        return jsonify({"success": False, "error": msg}), 404
 
     with open(q_path, 'r') as f:
         result = json.load(f)
 
     return jsonify({
         "success": True,
+        "mode": mode,
         "questions": result.get("questions", []),
         "scene_description": result.get("scene_description", "")
     })

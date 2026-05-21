@@ -1,0 +1,13 @@
+[
+  {
+    "id": "scene_1779392405_8baa3f",
+    "filename": "capture_2026-05-21 21:40:29.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan/wh_scenes/images/scene_1779392405_8baa3f.jpg",
+    "image_url": "/images/ethan/wh_scenes/images/scene_1779392405_8baa3f.jpg",
+    "scene_description": "A female teacher and several students are in a classroom with a chalkboard displaying math problems.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-05-21T21:40:29"
+  }
+]

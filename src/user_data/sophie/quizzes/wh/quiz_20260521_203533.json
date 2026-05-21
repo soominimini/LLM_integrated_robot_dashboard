@@ -1,0 +1,113 @@
+[
+  {
+    "question": "What do kids learn at school?",
+    "type": "wh",
+    "correct_answer": "Learn",
+    "accepted_answers": [
+      "Learn",
+      "Play",
+      "Sing",
+      "Draw",
+      "Colors",
+      "Letters",
+      "Numbers"
+    ]
+  },
+  {
+    "question": "Where do kids play outside?",
+    "type": "wh",
+    "correct_answer": "Playground",
+    "accepted_answers": [
+      "Playground",
+      "Outside",
+      "Park",
+      "Yard"
+    ]
+  },
+  {
+    "question": "Who helps kids at school?",
+    "type": "wh",
+    "correct_answer": "Teacher",
+    "accepted_answers": [
+      "Teacher",
+      "Grown-up",
+      "Adult",
+      "Helper"
+    ]
+  },
+  {
+    "question": "What do kids draw with?",
+    "type": "wh",
+    "correct_answer": "Crayons",
+    "accepted_answers": [
+      "Crayons",
+      "Markers",
+      "Pencils",
+      "Chalk"
+    ]
+  },
+  {
+    "question": "Where do kids eat lunch?",
+    "type": "wh",
+    "correct_answer": "Cafeteria",
+    "accepted_answers": [
+      "Cafeteria",
+      "Lunchroom",
+      "Classroom",
+      "Table"
+    ]
+  },
+  {
+    "question": "What do kids sit on?",
+    "type": "wh",
+    "correct_answer": "Chair",
+    "accepted_answers": [
+      "Chair",
+      "Mat",
+      "Rug",
+      "Floor",
+      "Stool"
+    ]
+  },
+  {
+    "question": "Who reads stories to kids?",
+    "type": "wh",
+    "correct_answer": "Teacher",
+    "accepted_answers": [
+      "Teacher",
+      "Grown-up",
+      "Adult"
+    ]
+  },
+  {
+    "question": "What do kids carry books in?",
+    "type": "wh",
+    "correct_answer": "Backpack",
+    "accepted_answers": [
+      "Backpack",
+      "Bag",
+      "Schoolbag"
+    ]
+  },
+  {
+    "question": "What do kids build with?",
+    "type": "wh",
+    "correct_answer": "Blocks",
+    "accepted_answers": [
+      "Blocks",
+      "Toys",
+      "Building blocks"
+    ]
+  },
+  {
+    "question": "How do kids get to school?",
+    "type": "wh",
+    "correct_answer": "Bus",
+    "accepted_answers": [
+      "Bus",
+      "Car",
+      "Walk",
+      "Ride"
+    ]
+  }
+]

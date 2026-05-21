@@ -366,6 +366,7 @@
 
     const correctPhrases = ['That is right!','Correct!','Great job!','Well done!','You got it!'];
     const incorrectPhrases = ['Not quite.','Good try!','Almost there.','Nice effort!'];
+    const expressivePhrases = ['Great idea!','I love that answer!','What a creative thought!','Nice imagination!','Wonderful!'];
     function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
     const correctGestures = [
@@ -431,11 +432,11 @@
         const res = await fetch('/api/wh_scene/get_questions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ scene_id: selectedSceneId })
+          body: JSON.stringify({ scene_id: selectedSceneId, mode: selectedMode })
         });
         const data = await res.json();
         if (!data.success || !data.questions.length) {
-          alert('No questions available for this scene.');
+          alert(data.error || 'No questions available for this scene.');
           return;
         }
         gameQuestions = data.questions;
@@ -530,9 +531,24 @@
       if (!userAnswer) return;
       answered = true;
       input.disabled = true;
+      if (selectedMode === 'expressive') {
+        showExpressiveAck();
+        return;
+      }
       const q = gameQuestions[currentQIdx];
       const correct = isAnswerAccepted(userAnswer, q);
       showFeedback(correct, q.answer);
+    }
+
+    function showExpressiveAck() {
+      const fb = document.getElementById('feedback');
+      const phrase = pickRandom(expressivePhrases);
+      fb.className = 'feedback correct';
+      fb.textContent = phrase;
+      robotSpeak(phrase);
+      robotGesture(true);
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      document.getElementById('hintBtn').style.display = 'none';
     }
 
     function normalize(str) {
@@ -590,9 +606,18 @@
       document.getElementById('play-step-game').classList.remove('active');
       const results = document.getElementById('play-step-results');
       results.classList.add('active');
-      document.getElementById('scoreValue').textContent = `${score}/${gameQuestions.length}`;
-      document.getElementById('scoreDetail').textContent =
-        `You got ${score} out of ${gameQuestions.length} questions right!`;
+      if (selectedMode === 'expressive') {
+        // No right/wrong in expressive mode — show completion instead of a score.
+        document.getElementById('scoreValue').textContent = `${currentQIdx}`;
+        document.querySelector('.score-circle span').textContent = 'shared';
+        document.getElementById('scoreDetail').textContent =
+          `Great imagining! You shared ${currentQIdx} answers.`;
+      } else {
+        document.getElementById('scoreValue').textContent = `${score}/${gameQuestions.length}`;
+        document.querySelector('.score-circle span').textContent = 'correct';
+        document.getElementById('scoreDetail').textContent =
+          `You got ${score} out of ${gameQuestions.length} questions right!`;
+      }
       fetch('/api/wh_scene/save_result', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
