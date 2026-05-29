@@ -52,7 +52,7 @@
     "age": 8,
     "password_hash": "",
     "created_at": "2026-04-21T18:09:17.576441",
-    "last_login": "2026-05-21T23:22:53.529229",
+    "last_login": "2026-05-29T21:47:20.596673",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan/chat_history"
   },
@@ -74,7 +74,7 @@
     "age": 5,
     "password_hash": "",
     "created_at": "2026-05-08T22:55:06.004546",
-    "last_login": "2026-05-21T20:32:47.367716",
+    "last_login": "2026-05-29T21:43:59.271460",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/chat_history"
   },
@@ -83,8 +83,17 @@
     "age": 5,
     "password_hash": "",
     "created_at": "2026-05-13T18:04:58.417392",
-    "last_login": "2026-05-13T18:08:17.662738",
+    "last_login": "2026-05-29T20:32:09.845210",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/test_for_age5",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/test_for_age5/chat_history"
+  },
+  "olivia": {
+    "username": "olivia",
+    "age": 7,
+    "password_hash": "",
+    "created_at": "2026-05-29T20:53:39.364615",
+    "last_login": "2026-05-29T21:17:46.664014",
+    "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/olivia",
+    "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/olivia/chat_history"
   }
 }

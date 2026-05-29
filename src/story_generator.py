@@ -54,34 +54,43 @@ class StoryGenerator:
             ),
         },
         # ─────────────────────────────────────────────
-        # WH-QUESTION FORMAT TIER (ages 4–6)
+        # WH-QUESTION FORMAT TIER (ages 4–5)
         # Format is modelled on the curated corpus at
-        # documents/story for 4 to 6 years old/story_corpus.json
+        # documents/story for 4 to 7 years old/story_corpus.json
         # ("30 Wh-Question Stories" — @TheSpeechAndSpecialNeedsSpot).
         # Each story is a 3–4 sentence vignette describing a concrete
         # everyday scene, followed by 5–7 WHO/WHAT/WHERE follow-up
         # questions a clinician/robot can ask the child.
         # ─────────────────────────────────────────────
-        (4, 6): {
+        (4, 5): {
             "label": "wh_question_format",
-            "word_range": (40, 90),
+            "word_range": (40, 70),
             "guidelines": (
                 "Language level: Write 3–4 short, concrete sentences in the present tense. "
-                "Use simple vocabulary a 4–6 year old already knows (ball, beach, dog, bus, kite, snow, library). "
+                "Use simple vocabulary a 4–5 year old already knows (ball, beach, dog, bus, kite, snow, library). "
                 "Each sentence states a single observable fact (who is there, where, what is happening, what surprises them). "
                 "Avoid abstract concepts, idioms, figurative language, and complex compound sentences. "
                 "Story structure: One small everyday scene with a tiny twist or surprise — NOT a three-act journey. "
                 "Examples of scenes: building a sandcastle and finding a crab; flying a kite and the wind blowing it onto a dog; "
                 "dropping toothpaste on the bathroom floor; spotting an unusual lunch in the cafeteria. "
                 "Characters: 1–3 named characters; refer to them by name (not pronouns) so questions are answerable. "
-                "Follow-up questions: After the story, generate 5–7 WH-questions (mostly WHO/WHAT/WHERE) whose answers are "
-                "explicitly stated in the story text — one fact per question, in roughly story order."
+                "Follow-up questions: After the story, generate 5–7 WH-questions (WHO/WHAT/WHERE ONLY — no HOW/WHY at this age) "
+                "whose answers are explicitly stated in the story text — one fact per question, in roughly story order."
             ),
         },
-        (7, 8): {
+        # ─────────────────────────────────────────────
+        # EARLY SCHOOL AGE TIER (ages 6–7)
+        # Keeps the three-act narrative format AND appends a WH-question
+        # comprehension block. At this age the question mix expands to
+        # include HOW/WHY (cause, motivation, process). HOW/WHY few-shot
+        # examples are loaded from the `fables[*].how_why_questions`
+        # field in story_corpus.json.
+        # ─────────────────────────────────────────────
+        (6, 7): {
             "label": "early_school_age",
-            "word_range": (250, 400),
+            "word_range": (80, 120),
             "requires_takeaways": True,
+            "requires_wh_questions": True,
             "guidelines": (
                 "Language level: Use varied sentence structures including relative clauses and embedded phrases. "
                 "Include emotional vocabulary (frustrated, proud, nervous, relieved, grateful). "
@@ -89,12 +98,15 @@ class StoryGenerator:
                 "Model question forms and conversational turn-taking in dialogue. "
                 "Story structure: Three-act structure with a secondary challenge or emotional subplot. "
                 "Characters: Up to 4–5 characters with motivations and feelings. "
-                "Dialogue: Natural back-and-forth exchanges of 2–3 sentences, showing perspective-taking."
+                "Dialogue: Natural back-and-forth exchanges of 2–3 sentences, showing perspective-taking. "
+                "Comprehension questions: After the story, generate 5–7 WH-questions mixing WHO/WHAT/WHERE (concrete recall, "
+                "answers appear verbatim in the story) with 2–3 HOW/WHY questions (cause, motivation, process). "
+                "HOW/WHY answers may require short inference, but the inference must be clearly supported by what happens in the story."
             ),
         },
-        (9, 12): {
+        (8, 10): {
             "label": "school_age",
-            "word_range": (400, 600),
+            "word_range": (130, 200),
             "requires_takeaways": True,
             "guidelines": (
                 "Language level: Use complex sentences with subordinate clauses. "
@@ -168,14 +180,14 @@ Return your answer EXACTLY in this format, with no other text before or after:
 <the full story text>
 
 ** End **
-{takeaways_section}** Explanation of the output **
+{takeaways_section}{wh_questions_section}** Explanation of the output **
 <1–3 short sentences explaining how the story matches the selected topic(s) and the learning goals: {goals}>
 
 STRICT RULES:
 - HARD WORD LIMIT: The story text between ** Title ** and ** End ** MUST be {min_words}–{max_words} words. {max_words} is a CEILING you cannot exceed. Target around {mid_words} words so you have safety margin. Count as you write; if you approach {max_words}, wrap up immediately at the next natural sentence — do not start a new subplot, paragraph, or piece of dialogue.
 - Brevity beats completeness. Cut adjectives, side details, and extra dialogue exchanges before going over.
 - Do NOT include any preamble, commentary, or meta-text (no "Here is your story", "Sure!", etc.).
-- Do NOT add sections beyond Title, story text, End,{takeaways_in_rule} and Explanation.
+- Do NOT add sections beyond Title, story text, End,{takeaways_in_rule}{wh_questions_in_rule} and Explanation.
 Do not add any other sections or extra text."""
 
     # Injected into OUTPUT_FORMAT when the age tier sets requires_takeaways=True.
@@ -186,6 +198,34 @@ Do not add any other sections or extra text."""
 - <takeaway 2: another lesson the story demonstrates>
 - <takeaway 3: another lesson (optional)>
 
+"""
+
+    # Injected into OUTPUT_FORMAT when the age tier sets requires_wh_questions=True.
+    # Sits between ** End ** / ** Takeaways ** and ** Explanation of the output **.
+    # The question mix at ages 6-7 includes WHO/WHAT/WHERE (concrete recall) AND
+    # HOW/WHY (inference about cause, motivation, or process).
+    WH_QUESTIONS_OUTPUT_BLOCK = """** Questions **
+1. <WH-question — WHO/WHAT/WHERE/HOW/WHY>
+2. <WH-question>
+3. <WH-question>
+4. <WH-question>
+5. <WH-question>
+(6. and 7. optional)
+
+"""
+
+    # Injected into MASTER_TEMPLATE when the tier requires WH-questions.
+    # Few-shot HOW/WHY examples (from fables) are placed where {fable_examples}
+    # is substituted at build time.
+    WH_QUESTIONS_PROMPT_BLOCK = """
+--- COMPREHENSION QUESTIONS (WHO/WHAT/WHERE + HOW/WHY) ---
+After the story, generate 5–7 WH-questions a clinician or robot can use to check the child's comprehension:
+- Include 3–4 WHO/WHAT/WHERE questions whose answers appear verbatim in the story (concrete recall).
+- Include 2–3 HOW/WHY questions about cause, motivation, or process. Short inference is allowed, but the inference MUST be clearly supported by what happens in the story.
+- Phrase each question so a 6–7 year old can answer it in 1 short sentence. Avoid yes/no questions.
+
+HOW/WHY example questions (from the curated fable corpus — same style for {child_name}'s story):
+{fable_examples}
 """
 
     # Injected into MASTER_TEMPLATE when the tier requires takeaways.
@@ -231,7 +271,7 @@ Return your answer EXACTLY in this format, with no other text before or after:
 STRICT RULES:
 - Do NOT include any preamble, commentary, or meta-text (no "Here is your story", "Sure!", etc.).
 - The story text (between Title and End) MUST be between {min_words} and {max_words} words.
-- Generate {min_questions}–{max_questions} WH-questions (mostly WHO / WHAT / WHERE).
+- Generate {min_questions}–{max_questions} WH-questions using ONLY WHO / WHAT / WHERE (no HOW / WHY at this age tier).
 - Every question's answer MUST appear word-for-word in the story text. Do NOT ask about anything not stated.
 - Refer to characters by name (not pronouns) in the story so questions like "WHO is in the story?" are answerable.
 - Do NOT add sections beyond Title, story text, End, Questions, and Explanation."""
@@ -262,7 +302,7 @@ Use a clear three-act structure:
 {theme_vocabulary}
 
 {goals_section}
-{persona_section}{takeaways_block}--- TONE AND STYLE ---
+{persona_section}{takeaways_block}{wh_questions_block}--- TONE AND STYLE ---
 - Warm, encouraging, and gently paced.
 - Show, don't tell: use actions and dialogue to convey emotions rather than stating them.
 - Include at least one moment of humor, wonder, or sensory delight.
@@ -291,14 +331,14 @@ Rules for tags:
 {output_format}"""
 
     # ─────────────────────────────────────────────
-    # WH-FORMAT MASTER TEMPLATE (ages 4–6)
+    # WH-FORMAT MASTER TEMPLATE (ages 4–5)
     # Mirrors the corpus style: short concrete scene + WH-questions.
     # Examples from story_corpus.json are injected into {wh_examples}.
     # ─────────────────────────────────────────────
 
     WH_MASTER_TEMPLATE = """Write a short illustrated-style story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story will be used by a robot to practise WH-question comprehension (WHO / WHAT / WHERE) with the child.
 
---- STYLE REFERENCE (from the curated 4-to-6 corpus) ---
+--- STYLE REFERENCE (from the curated 4-to-7 corpus, WHO/WHAT/WHERE subset for this age) ---
 Match the style, length, vocabulary, and structure of these reference stories EXACTLY. Each is a 3–4 sentence concrete vignette in the present tense, followed by 5–7 WH-questions whose answers appear verbatim in the story.
 
 {wh_examples}
@@ -334,12 +374,12 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
 {output_format}"""
 
     # ─────────────────────────────────────────────
-    # CORPUS REFERENCE (for ages 4–6 WH-question stories)
+    # CORPUS REFERENCE (for ages 4–7 WH-question stories)
     # ─────────────────────────────────────────────
 
     CORPUS_PATH = os.path.join(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        "documents", "story for 4 to 6 years old", "story_corpus.json",
+        "documents", "story for 4 to 7 years old", "story_corpus.json",
     )
 
     # ─────────────────────────────────────────────
@@ -357,20 +397,27 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
         "- Overcoming challenges with support"
     )
 
-    def __init__(self, llm_model: str = "gemini-2.5-flash", disable_rag: bool = True):
+    def __init__(self, llm_model: str = "claude-sonnet-4-6", disable_rag: bool = True):
         """
-        Initialize the story generator with Gemini API (via subprocess).
+        Initialize the story generator.
+
+        Routes to a subprocess worker based on the model name:
+          - "claude-*" → scripts/claude_story.py (Anthropic Claude API)
+          - "gemini-*" → scripts/gemini_story.py (Google Gemini API)
+          - anything else → local Ollama at http://localhost:11434
 
         Args:
-            llm_model: The Gemini model to use (e.g. "gemini-2.5-flash")
-            disable_rag: Kept for API compatibility (unused with Gemini)
+            llm_model: The model identifier (e.g. "claude-sonnet-4-6", "gemini-2.5-flash", "gemma4:e4b")
+            disable_rag: Kept for API compatibility (unused with subprocess workers)
         """
         self.llm_model = llm_model
         self.disable_rag = disable_rag
-        self._script_path = os.path.join(
+        scripts_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            'scripts', 'gemini_story.py'
+            'scripts',
         )
+        self._gemini_script_path = os.path.join(scripts_dir, 'gemini_story.py')
+        self._claude_script_path = os.path.join(scripts_dir, 'claude_story.py')
         self._worker_python = os.getenv(
             "IMAGE_WORKER_PYTHON",
             os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -456,6 +503,34 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
         except (OSError, json.JSONDecodeError):
             return ""
 
+    def _load_fable_inferential_examples(self, n: int = 2) -> str:
+        """
+        Load N fables that carry HOW/WHY question examples (set on the
+        `how_why_questions` field) and format them as few-shot examples
+        for the ages 6-7 comprehension-question block. Falls back to an
+        empty string if the corpus cannot be read.
+        """
+        try:
+            with open(self.CORPUS_PATH, "r", encoding="utf-8") as f:
+                corpus = json.load(f)
+            fables = [f for f in corpus.get("fables", []) if f.get("how_why_questions")]
+            if not fables:
+                return ""
+            sample = random.sample(fables, min(n, len(fables)))
+            blocks = []
+            for i, f in enumerate(sample, 1):
+                q_lines = "\n".join(
+                    f"    - {q['q']}  →  {q['a']}" for q in f.get("how_why_questions", [])
+                )
+                blocks.append(
+                    f"  Example {i} (\"{f.get('title', 'untitled')}\"):\n"
+                    f"    Story summary: {f.get('text', '').strip()}\n"
+                    f"    HOW/WHY questions:\n{q_lines}"
+                )
+            return "\n\n".join(blocks)
+        except (OSError, json.JSONDecodeError):
+            return ""
+
     def _format_goals_section(self, goals: Optional[str] = None) -> str:
         """Format therapy goals into the prompt section."""
         if goals:
@@ -538,6 +613,22 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
             takeaways_block = ""
             takeaways_in_rule = ""
 
+        # Tier-gated WH-questions: ages 6-7 append a ** Questions ** block
+        # with mixed WHO/WHAT/WHERE + HOW/WHY questions. Few-shot HOW/WHY
+        # examples are mined from the fables in story_corpus.json.
+        if age_tier.get("requires_wh_questions"):
+            wh_questions_section = self.WH_QUESTIONS_OUTPUT_BLOCK
+            fable_examples = self._load_fable_inferential_examples(n=2)
+            wh_questions_block = self.WH_QUESTIONS_PROMPT_BLOCK.format(
+                child_name=child_name,
+                fable_examples=fable_examples,
+            )
+            wh_questions_in_rule = " Questions,"
+        else:
+            wh_questions_section = ""
+            wh_questions_block = ""
+            wh_questions_in_rule = ""
+
         output_format = self.OUTPUT_FORMAT.format(
             goals=goals or "general speech-language therapy goals",
             min_words=min_words,
@@ -545,6 +636,8 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
             mid_words=(min_words + max_words) // 2,
             takeaways_section=takeaways_section,
             takeaways_in_rule=takeaways_in_rule,
+            wh_questions_section=wh_questions_section,
+            wh_questions_in_rule=wh_questions_in_rule,
         )
 
         prompt = self.MASTER_TEMPLATE.format(
@@ -559,6 +652,7 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
             goals_section=goals_section,
             persona_section=persona_section,
             takeaways_block=takeaways_block,
+            wh_questions_block=wh_questions_block,
             output_format=output_format,
         )
 
@@ -640,9 +734,10 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
     # PUBLIC API (unchanged signatures)
     # ─────────────────────────────────────────────
 
-    def _run_gemini(self, prompt: str, stream: bool = False):
-        """Run the gemini_story.py script via subprocess.
+    def _run_subprocess_worker(self, script_path: str, prompt: str, stream: bool = False):
+        """Run a subprocess story worker (Gemini or Claude).
 
+        Both workers share the same CLI shape: --model, --prompt-file, --stream.
         Returns story text (non-stream) or a Popen object (stream).
         """
         # Write prompt to a temp file to avoid shell escaping issues
@@ -651,7 +746,7 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
             tmp.write(prompt)
             tmp.close()
 
-            cmd = [self._worker_python, self._script_path,
+            cmd = [self._worker_python, script_path,
                    '--model', self.llm_model,
                    '--prompt-file', tmp.name]
             if stream:
@@ -661,7 +756,7 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
 
             proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
             if proc.returncode != 0:
-                raise RuntimeError(f"gemini_story.py failed: {proc.stderr}")
+                raise RuntimeError(f"{os.path.basename(script_path)} failed: {proc.stderr}")
             return proc.stdout or ''
         finally:
             if not stream:
@@ -670,9 +765,19 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
                 except OSError:
                     pass
 
+    def _run_gemini(self, prompt: str, stream: bool = False):
+        return self._run_subprocess_worker(self._gemini_script_path, prompt, stream=stream)
+
+    def _run_claude(self, prompt: str, stream: bool = False):
+        return self._run_subprocess_worker(self._claude_script_path, prompt, stream=stream)
+
+    def _is_claude_model(self):
+        """Check if the configured model is an Anthropic Claude API model."""
+        return self.llm_model.startswith("claude")
+
     def _is_ollama_model(self):
-        """Check if the configured model is a local Ollama model (not a Gemini API model)."""
-        return not self.llm_model.startswith("gemini")
+        """Check if the configured model is a local Ollama model (not a cloud API model)."""
+        return not (self.llm_model.startswith("gemini") or self.llm_model.startswith("claude"))
 
     def _run_ollama(self, prompt: str, stream: bool = False):
         """Run text generation via local Ollama API.
@@ -697,7 +802,9 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
             return resp
 
     def _run_llm(self, prompt: str, stream: bool = False):
-        """Route to Ollama or Gemini based on model name."""
+        """Route to Claude, Gemini, or local Ollama based on model name."""
+        if self._is_claude_model():
+            return self._run_claude(prompt, stream=stream)
         if self._is_ollama_model():
             return self._run_ollama(prompt, stream=stream)
         return self._run_gemini(prompt, stream=stream)
@@ -799,7 +906,10 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
                         except json.JSONDecodeError:
                             pass
             else:
-                proc = self._run_gemini(prompt, stream=True)
+                # Claude and Gemini share the same CHUNK: line subprocess protocol
+                proc = (self._run_claude(prompt, stream=True)
+                        if self._is_claude_model()
+                        else self._run_gemini(prompt, stream=True))
                 # Save tmp path for cleanup (stored in proc.args)
                 tmp_path = proc.args[proc.args.index('--prompt-file') + 1]
 

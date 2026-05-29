@@ -8,7 +8,7 @@ from typing import Any, List, Optional, Tuple
 from threading import Lock
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings, Document
 from llama_index.embeddings.ollama import OllamaEmbedding
-from llama_index.llms.ollama import Ollama
+from llama_index.llms.anthropic import Anthropic
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.core.storage.chat_store import SimpleChatStore
 from llama_index.core.llms import ChatMessage
@@ -87,7 +87,7 @@ class ChatWithRAG:
         self.scene_procesing = scene_procesing
         self.mem_store_file = mem_store_file
 
-        Settings.llm = Ollama(model=model, request_timeout=600.0)        
+        Settings.llm = Anthropic(model=model, max_tokens=max_tokens)
         self.llm = Settings.llm
 
         self.chat_store = None

@@ -1,0 +1,136 @@
+{
+  "story": "Ethan carried his small blue backpack across the sunny park, because today was fossil-hunting day. [emotion:QT/happy] His heart felt as light as a feather. He spotted a good digging spot near the tall oak tree and knelt down carefully.\n\n[emotion:QT/surprised] Suddenly, a boy named Leo appeared beside him. \"Can I dig too?\" Leo asked, holding a red shovel hopefully.\n\n[emotion:QT/shy] Ethan felt worried at first, so he paused and looked at his hands. Leo waited patiently without rushing him.\n\n\"Okay,\" Ethan said quietly. \"You dig there, then I dig here.\"\n\nThey took turns scooping the soft, brown dirt carefully. Leo found a smooth, flat rock shaped like a triangle. [emotion:QT/surprised] [emotion:QT/happy] \"Maybe that's a tooth!\" Ethan said, eyes wide.\n\n[gesture:clapping] [emotion:QT/happy] \"We found it together!\" Leo cheered. [emotion:QT/happy] Ethan smiled because having a helper made everything feel easier.\n\n[emotion:QT/happy] Walking home, Ethan felt grateful. Digging was fun, but finding a friend felt even better.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 270,
+    "paragraph_count": 8,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      5,
+      6,
+      6,
+      7,
+      7
+    ],
+    "title": "The Dinosaur Dig"
+  },
+  "pages": [
+    "Ethan carried his small blue backpack across the sunny park, because today was fossil-hunting day. [emotion:QT/happy] His heart felt as light as a feather. He spotted a good digging spot near the tall oak tree and knelt down carefully.",
+    "[emotion:QT/surprised] Suddenly, a boy named Leo appeared beside him. \"Can I dig too?\" Leo asked, holding a red shovel hopefully. [emotion:QT/shy] Ethan felt worried at first, so he paused and looked at his hands. Leo waited patiently without rushing him. \"Okay,\" Ethan said quietly. \"You dig there, then I dig here.\"",
+    "They took turns scooping the soft, brown dirt carefully. Leo found a smooth, flat rock shaped like a triangle. [emotion:QT/surprised] [emotion:QT/happy] \"Maybe that's a tooth!\" Ethan said, eyes wide. [gesture:clapping] [emotion:QT/happy] \"We found it together!\" Leo cheered. [emotion:QT/happy] Ethan smiled because having a helper made everything feel easier.",
+    "[emotion:QT/happy] Walking home, Ethan felt grateful. Digging was fun, but finding a friend felt even better."
+  ],
+  "paragraphs": [
+    "Ethan carried his small blue backpack across the sunny park, because today was fossil-hunting day. His heart felt as light as a feather. He spotted a good digging spot near the tall oak tree and knelt down carefully.",
+    "Suddenly, a boy named Leo appeared beside him. \"Can I dig too?\" Leo asked, holding a red shovel hopefully.",
+    "Ethan felt worried at first, so he paused and looked at his hands. Leo waited patiently without rushing him.",
+    "\"Okay,\" Ethan said quietly. \"You dig there, then I dig here.\"",
+    "They took turns scooping the soft, brown dirt carefully. Leo found a smooth, flat rock shaped like a triangle. \"Maybe that's a tooth!\" Ethan said, eyes wide.",
+    "\"We found it together!\" Leo cheered. Ethan smiled because having a helper made everything feel easier.",
+    "Walking home, Ethan felt grateful. Digging was fun, but finding a friend felt even better."
+  ],
+  "scenes": [
+    "Ethan carried his small blue backpack across the sunny park, because today was fossil-hunting day. His heart felt as light as a feather. He spotted a good digging spot near the tall oak tree and knelt",
+    "Suddenly, a boy named Leo appeared beside him. \"Can I dig too?\" Leo asked, holding a red shovel hopefully.",
+    "Ethan felt worried at first, so he paused and looked at his hands. Leo waited patiently without rushing him.",
+    "\"Okay,\" Ethan said quietly. \"You dig there, then I dig here.\"",
+    "They took turns scooping the soft, brown dirt carefully. Leo found a smooth, flat rock shaped like a triangle. \"Maybe that's a tooth!\" Ethan said, eyes wide.",
+    "\"We found it together!\" Leo cheered. Ethan smiled because having a helper made everything feel easier.",
+    "Walking home, Ethan felt grateful. Digging was fun, but finding a friend felt even better."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    4,
+    6
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    4,
+    6
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "questions": [
+    {
+      "question": "What was Ethan doing at the sunny park today?",
+      "type": "detail",
+      "correct_answer": "Ethan was fossil-hunting with his blue backpack.",
+      "wrong_answers": [
+        "He was playing football with his friends.",
+        "He was looking for a lost dog."
+      ]
+    },
+    {
+      "question": "What did Leo find when he was digging with Ethan?",
+      "type": "detail",
+      "correct_answer": "Leo found a smooth, flat rock shaped like a triangle.",
+      "wrong_answers": [
+        "He found a shiny, round coin.",
+        "He found a small, blue feather."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel worried at first when Leo asked to dig?",
+      "type": "inference",
+      "correct_answer": "Ethan felt worried because he was shy about sharing his digging spot.",
+      "wrong_answers": [
+        "He was worried Leo would take his backpack.",
+        "He was worried Leo would dig too fast."
+      ]
+    },
+    {
+      "question": "How did Ethan feel about having a helper like Leo?",
+      "type": "inference",
+      "correct_answer": "Ethan felt happy because having a helper made everything easier.",
+      "wrong_answers": [
+        "He felt annoyed because Leo was too loud.",
+        "He felt confused about what to do next."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about Ethan who found a new friend while fossil-hunting.",
+      "wrong_answers": [
+        "This story was about finding many different kinds of fossils.",
+        "This story was about a boy who lost his blue backpack."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Working together with a friend helps you solve problems faster.",
+    "Giving someone a chance, even when you feel nervous, can lead to a great friendship.",
+    "Taking turns makes things fair and fun for everyone."
+  ]
+}

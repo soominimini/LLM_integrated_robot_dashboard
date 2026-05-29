@@ -217,7 +217,7 @@ user_manager = UserManager(
     users_file=os.path.join(BASE_DIR, 'users.json'),
     base_dir=USER_DATA_DIR
 )
-story_generator = StoryGenerator(llm_model="gemini-2.5-flash")
+story_generator = StoryGenerator(llm_model="claude-sonnet-4-6")
 persona_rag = PersonaRAG()
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
@@ -330,7 +330,7 @@ def _ensure_intent_llm():
         if _intent_llm is None:
             try:
                 _intent_llm = ChatWithRAG(
-                    model="gemma4:e4b",
+                    model="claude-sonnet-4-6",
                     system_role=(
                         "You correct ASR mishearings for a child's therapy robot. "
                         "Decide if the transcript likely intended the target word(s) given the immediate context. "
@@ -2224,8 +2224,8 @@ def _apply_emotion_tags_with_gemini(story_text):
     """Run a Gemini-Flash pass over a generated story to insert correct
     [gesture:...] and [emotion:...] tags inline.
 
-    Story generation uses a small local model (gemma4:e4b) which often
-    under-tags or invents emotion names. This pass uses Gemini specifically
+    Story generation may use a model that under-tags or invents emotion
+    names. This pass uses Gemini specifically
     for the tagging step: it preserves the story word-for-word and adds tags
     immediately before the sentence that depicts each emotional beat or
     physical action. Returns the tagged story, or the original on failure.
@@ -2709,10 +2709,9 @@ def api_save_story():
     except Exception as e:
         print(f"[StorySave] Word-count enforcement skipped: {e}")
 
-    # Run a Gemini-Flash tagging pass on the story before splitting. The
-    # story-generation model (gemma4:e4b) is small and often misses or
-    # invents emotion tags; Gemini Flash is used here specifically to
-    # insert/correct [gesture:...] / [emotion:...] tags inline.
+    # Run a Gemini-Flash tagging pass on the story before splitting.
+    # Gemini Flash is used here specifically to insert/correct
+    # [gesture:...] / [emotion:...] tags inline.
     story = _apply_emotion_tags_with_gemini(story)
     # Validate tag positions: snap any tag that landed mid-word or mid-clause
     # to the nearest valid position (start/end of sentence, after ,/!/?).
@@ -2746,7 +2745,6 @@ def api_save_story():
     fpath = os.path.join(user_dir, fname)
 
     # Strip tags from pages before scene identification (images don't need gesture/emotion tags)
-    import re
     _tag_re = re.compile(r'\[(gesture|emotion):[^\]]+\]\s*')
     clean_pages = [_tag_re.sub('', p).strip() for p in pages]
 

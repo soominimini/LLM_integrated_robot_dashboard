@@ -21,7 +21,7 @@ from human_tracking import HumanTracking
 from idle_attention import IdleAttention
 
 from riva_speech_recognition_vad import RivaSpeechRecognitionSilero
-from scene_detection import SceneDetection
+# from scene_detection import SceneDetection
 
 from paramify.paramify_web import ParamifyWeb
 from utils.base_node import BaseNode

@@ -601,9 +601,10 @@ The story system is a stack of independent layers. Each layer consumes the previ
 ```
 age tier → theme guidance → therapy goals → persona context → output format
 ```
-- **`MASTER_TEMPLATE`** — generic three-act narrative (tiers 3, 7–8, 9–12)
-- **`WH_MASTER_TEMPLATE`** — short vignette + WH-questions (ages 4–6); few-shot examples are loaded from `documents/story for 4 to 6 years old/story_corpus.json` by `_load_wh_examples()` (preferring examples whose `setting` matches the requested topics)
+- **`MASTER_TEMPLATE`** — generic three-act narrative (tiers 3, 6–7, 8–10)
+- **`WH_MASTER_TEMPLATE`** — short vignette + WH-questions (ages 4–5, WHO/WHAT/WHERE only); few-shot examples are loaded from `documents/story for 4 to 7 years old/story_corpus.json` by `_load_wh_examples()` (preferring examples whose `setting` matches the requested topics)
 - **`TAKEAWAYS_PROMPT_BLOCK`** — appended when the tier has `requires_takeaways: True`; instructs the model to emit a `** Takeaways **` section after `** End **`
+- **`WH_QUESTIONS_PROMPT_BLOCK`** — appended when the tier has `requires_wh_questions: True` (ages 6–7); instructs the model to emit a `** Questions **` section mixing WHO/WHAT/WHERE (concrete recall) with HOW/WHY (inference). HOW/WHY few-shot examples are loaded from the `fables[*].how_why_questions` field of the same corpus by `_load_fable_inferential_examples()`
 - **Inline robot tags** — every emotional beat is tagged `[gesture:NAME]` / `[emotion:QT/…]` so the reader can fire gestures and facial expressions at the right sentence
 
 **Theme Guidance** (`THEME_GUIDANCE`): per-topic `setting / obstacle / resolution / vocabulary_focus` blocks for `season`, `school`, `family`, `friends`, `animals`, `adventure`. Multiple selected topics are merged; unmatched topics fall back to a generic default.
@@ -1319,9 +1320,11 @@ Gemini generates an age-appropriate therapeutic story whose structure is selecte
 3. `ImageGenerator` produces one illustration per **scene** (not per page), with the first image fed back as a style reference for the rest
 4. `/read_story/<file>` → robot reads each page aloud through `tts_helper.speak_story()`; gesture/emotion tags fire on the segment they precede; the matching scene image is shown via `page_to_scene` mapping; comprehension questions are presented at the end
 
-**Ages 4–6 (WH-format)** receive a short 3–4-sentence concrete vignette plus 5–7 WHO/WHAT/WHERE questions whose answers appear verbatim in the story. Few-shot examples are drawn from `documents/story for 4 to 6 years old/story_corpus.json`.
+**Ages 4–5 (WH-format)** receive a short 3–4-sentence concrete vignette plus 5–7 **WHO/WHAT/WHERE** questions whose answers appear verbatim in the story. Few-shot examples are drawn from the `wh_question_stories` section of `documents/story for 4 to 7 years old/story_corpus.json`.
 
-**Ages 7+** additionally receive 2–3 explicit takeaways (positive, actionable lessons) and a multiple-choice "what is one lesson from this story?" question per takeaway.
+**Ages 6–7 (early_school_age)** receive a longer 80–120-word three-act story PLUS a 5–7 WH-question block that mixes WHO/WHAT/WHERE (concrete recall) with 2–3 **HOW/WHY** questions (cause, motivation, process). HOW/WHY few-shot examples are mined from the `fables[*].how_why_questions` field of the same corpus.
+
+**Ages 6+** additionally receive 2–3 explicit takeaways (positive, actionable lessons) and a multiple-choice "what is one lesson from this story?" question per takeaway.
 
 ### Mode 4: Scene Game / Object Detection (Web Interface)
 Camera feed shown → Gemini ER detects held objects → robot asks questions → validates answers
@@ -1387,8 +1390,8 @@ version_1_llm_gemini/
 │   ├── QTrobot.pdf                     # RAG document
 │   ├── QTrobot_research_papers.txt     # RAG document
 │   ├── personas_rag.json               # Persona profiles retrieved by PersonaRAG
-│   └── story for 4 to 6 years old/
-│       ├── story_corpus.json           # WH-question few-shot corpus (ages 4–6)
+│   └── story for 4 to 7 years old/
+│       ├── story_corpus.json           # WH-question few-shot corpus (ages 4–7; fables carry HOW/WHY examples)
 │       ├── story for kid.pdf
 │       └── story with wh questions.pdf
 ├── scripts/

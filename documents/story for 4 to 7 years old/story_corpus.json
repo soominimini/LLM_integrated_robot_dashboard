@@ -1,0 +1,506 @@
+{
+  "metadata": {
+    "target_age": "4-7 years old",
+    "question_type_policy": {
+      "ages_4_to_5": ["WHO", "WHAT", "WHERE"],
+      "ages_6_to_7": ["WHO", "WHAT", "WHERE", "HOW", "WHY"],
+      "note": "Ages 4-5 use concrete-recall WH-questions only (answers appear verbatim in the story). Ages 6-7 add HOW/WHY questions about cause, motivation, or process (short inference allowed but supported by the story)."
+    },
+    "sources": [
+      {
+        "file": "story for kid.pdf",
+        "type": "fables",
+        "count": 10,
+        "note": "Classic short fables, each with a moral. Page 1 is blank; content starts page 2."
+      },
+      {
+        "file": "story with wh questions.pdf",
+        "type": "wh_question_stories",
+        "count": 30,
+        "author": "@TheSpeechAndSpecialNeedsSpot",
+        "note": "Each story has an illustration, 3 short sentences, and 5-7 WH-questions (WHO/WHAT/WHERE)."
+      }
+    ]
+  },
+  "fables": [
+    {
+      "id": "fable_01",
+      "title": "The Hare and the Tortoise",
+      "text": "Once, there was a hare who was best friends with a tortoise. The hare was very proud of how fast he could run, so one day, he challenged the tortoise to a race. The tortoise agreed, even though everyone thought he was way too slow to win. The race began, and the hare raced so fast that he was far ahead of the tortoise. Feeling confident, the hare decided to take a nap under a tree while the tortoise kept going, step by step. When the hare woke up, he was shocked to see the tortoise crossing the finish line. The tortoise had won the race!",
+      "moral": "It doesn't matter how fast or strong you are—what matters is being steady and never giving up. And don't be too proud, it can cause trouble!",
+      "how_why_questions": [
+        {"q": "WHY did the hare take a nap?", "a": "because he felt confident he was far ahead"},
+        {"q": "HOW did the tortoise win the race?", "a": "by being steady and never giving up"},
+        {"q": "WHY was the hare shocked at the end?", "a": "because the tortoise was crossing the finish line first"}
+      ]
+    },
+    {
+      "id": "fable_02",
+      "title": "The Dog and the Bone",
+      "text": "One day, a dog found a big, tasty bone. He was so excited that he grabbed it and ran to find a quiet spot to chew it in peace. While crossing a river, he looked down and saw his reflection in the water. But the silly dog thought it was another dog with another bone! Greedy for more, the dog barked to snatch that \"other\" bone. But as soon as he opened his mouth, his own bone dropped into the water and sank. The poor dog lost it all and had to go home with nothing.",
+      "moral": "If you're too greedy and always want more, you might lose what you already have."
+    },
+    {
+      "id": "fable_03",
+      "title": "The Thirsty Crow",
+      "text": "A thirsty crow was flying through a forest, looking everywhere for water. Finally, he saw a pot with some water at the bottom, but his beak couldn't reach it. The crow didn't give up. He looked around and noticed some pebbles on the ground. The clever crow started dropping the pebbles into the pot one by one. Slowly, the water rose higher and higher until it was close enough for him to drink. The crow finally quenched his thirst and flew away happily.",
+      "moral": "You can solve any problem if you think smart and don't give up!",
+      "how_why_questions": [
+        {"q": "WHY couldn't the crow drink the water at first?", "a": "because his beak couldn't reach the water at the bottom of the pot"},
+        {"q": "HOW did the crow make the water rise?", "a": "by dropping pebbles into the pot one by one"},
+        {"q": "WHY did the crow drop pebbles into the pot?", "a": "to make the water rise high enough to drink"}
+      ]
+    },
+    {
+      "id": "fable_04",
+      "title": "Lazy John",
+      "text": "There was a boy named John, and he was the laziest boy in the entire town. One day, John saw their apple tree full of shiny red apples. He wanted to eat some but was too lazy to climb the tree. Instead, he lay on the grass and waited for the apples to fall down on their own. But, of course, the apples didn't fall, and soon John was very, very hungry because he hadn't worked for his food.",
+      "moral": "Laziness won't get you anywhere. You have to work hard to get what you want!"
+    },
+    {
+      "id": "fable_05",
+      "title": "The Fox and the Grapes",
+      "text": "A hungry fox was walking past a vineyard when he saw some ripe, juicy grapes hanging from a vine. They looked so delicious! The fox jumped high to grab them but couldn't reach them, no matter how hard he tried. Tired and frustrated, the fox walked away, grumbling, \"Those grapes are probably sour anyway!\" But deep down, he knew he had just given up too quickly.",
+      "moral": "Don't make excuses when something is hard—keep trying!"
+    },
+    {
+      "id": "fable_06",
+      "title": "The Ant and the Grasshopper",
+      "text": "One summer, an ant worked hard every day to gather food and store it safely for the winter. His friend, the grasshopper, however, laughed and said, \"You work too hard! Relax!\" The grasshopper spent all summer playing and singing instead of preparing. But when winter came, the grasshopper was cold and hungry, while the ant stayed cozy in his home with more than enough food.",
+      "moral": "Always plan ahead and be prepared. Life won't always be easy, so take care of your needs while you can.",
+      "how_why_questions": [
+        {"q": "WHY was the grasshopper cold and hungry in winter?", "a": "because he didn't prepare any food in the summer"},
+        {"q": "HOW did the ant stay cozy in winter?", "a": "by working hard in the summer to gather and store food"},
+        {"q": "WHY did the grasshopper laugh at the ant?", "a": "because he thought the ant was working too hard"}
+      ]
+    },
+    {
+      "id": "fable_07",
+      "title": "The Boy Who Cried Wolf",
+      "text": "There was a young boy whose job was to watch over the village sheep. One day, he was bored and wanted some fun, so he shouted, \"Wolf! Wolf!\" The villagers came running to help, only to find the boy laughing at them because there was no wolf. The next day, he did it again, and the villagers were angry. Later, a real wolf came and started attacking the sheep. The boy cried, \"Wolf! Wolf!\" But this time, no one believed him, and the wolf ran off with some sheep.",
+      "moral": "If you keep lying, no one will trust you—even when you're telling the truth!",
+      "how_why_questions": [
+        {"q": "WHY did the boy shout \"Wolf! Wolf!\" the first time?", "a": "because he was bored and wanted some fun"},
+        {"q": "WHY didn't the villagers come the third time?", "a": "because the boy had lied before and they no longer believed him"},
+        {"q": "HOW did the wolf get away with some sheep?", "a": "because no one came to help the boy"}
+      ]
+    },
+    {
+      "id": "fable_08",
+      "title": "The Ugly Duckling",
+      "text": "A little duckling was born looking very different from his siblings. The other ducklings called him ugly and made fun of him. Feeling like he didn't belong, the little duckling ran away and searched for a place where he could be accepted. Seasons passed, and one day, he saw his reflection in a lake. To his surprise, he had grown into a beautiful swan! He wasn't an ugly duckling at all—he had just been different all along.",
+      "moral": "Don't judge someone by how they look. Everyone is special in their own way, and real beauty is about being yourself."
+    },
+    {
+      "id": "fable_09",
+      "title": "The Lion and the Poor Slave",
+      "text": "A kind slave ran away from his cruel master and hid in the forest. There, he saw a lion roaring in pain because a big thorn was stuck in its paw. Even though he was scared, the slave helped the lion by pulling the thorn out. The lion went back into the woods, free and happy. Later, the slave was caught and sent to be punished by being thrown into a lion's den. But the lion didn't harm him—it was the same lion he had helped!",
+      "moral": "A good deed is never forgotten. Be kind, and kindness will come back to you."
+    },
+    {
+      "id": "fable_10",
+      "title": "The Elephant and the Ants",
+      "text": "A big, proud elephant loved bullying smaller animals. Every day, he sprayed water at the ant hill, making life difficult for the tiny ants. One day, the ants decided to teach him a lesson. They crawled into his trunk and started biting him from the inside! The elephant danced and howled in pain until he begged for forgiveness. He promised to never hurt the ants or anyone else again.",
+      "moral": "No one is too small to make a difference. Be kind to everyone, no matter how big or small they are."
+    }
+  ],
+  "wh_question_stories": [
+    {
+      "id": "wh_01",
+      "setting": "beach",
+      "text": "Katie and Madison are at the beach. They are building a sandcastle. Katie wants to put seashells on the sandcastle. She looks under a bucket for seashells. \"Eek!\" Katie screams. There is a crab under the bucket!",
+      "questions": [
+        {"q": "WHO is in the story?", "a": "Katie and Madison"},
+        {"q": "WHERE are they?", "a": "at the beach"},
+        {"q": "WHAT are they building?", "a": "a sandcastle"},
+        {"q": "WHAT does Katie want to put on the sandcastle?", "a": "seashells"},
+        {"q": "WHERE does Katie look for seashells?", "a": "under a bucket"},
+        {"q": "WHO is under the bucket?", "a": "a crab"}
+      ]
+    },
+    {
+      "id": "wh_02",
+      "setting": "backyard",
+      "text": "Josh and Derek are playing in Derek's backyard. They are catching butterflies. Derek catches butterflies in a net. Josh catches butterflies in a jar. They look at the butterflies for awhile. Then, they let them fly away into the sky.",
+      "questions": [
+        {"q": "WHO is in the story?", "a": "Josh and Derek"},
+        {"q": "WHERE are they?", "a": "in Derek's backyard"},
+        {"q": "WHAT are they catching?", "a": "butterflies"},
+        {"q": "WHERE does Derek keep the butterflies?", "a": "in a net"},
+        {"q": "WHERE does Josh keep the butterflies?", "a": "in a jar"},
+        {"q": "WHAT do they do with the butterflies?", "a": "let them fly away"},
+        {"q": "WHERE do the butterflies go when they fly away?", "a": "into the sky"}
+      ]
+    },
+    {
+      "id": "wh_03",
+      "setting": "play room",
+      "text": "Sarah and Noah are playing in the play room. Sarah is playing with a cat puppet. Noah's cat Whiskers walks over. She stands on the rug and looks at Sarah. Whiskers wants to play with the cat puppet too. She brings over a ball of yarn.",
+      "questions": [
+        {"q": "WHO is in the story?", "a": "Sarah and Noah"},
+        {"q": "WHERE are they?", "a": "in the play room"},
+        {"q": "WHAT is Sarah playing with?", "a": "a cat puppet"},
+        {"q": "WHO walks over?", "a": "Whiskers (Noah's cat)"},
+        {"q": "WHERE does Whiskers stand?", "a": "on the rug"},
+        {"q": "WHAT does Whiskers want to do?", "a": "play with the cat puppet"},
+        {"q": "WHAT does Whiskers bring over?", "a": "a ball of yarn"}
+      ]
+    },
+    {
+      "id": "wh_04",
+      "setting": "farm",
+      "text": "The farmer was stacking hay. He put the hay into a big pile. Now the farmer is finished. He wants to get in his tractor and drive home. A cow is standing in front of the tractor. She will not move out of the way!",
+      "questions": [
+        {"q": "WHO is in the story?", "a": "the farmer (and a cow)"},
+        {"q": "WHAT was the farmer stacking?", "a": "hay"},
+        {"q": "WHERE does he put the hay?", "a": "into a big pile"},
+        {"q": "WHAT will the farmer drive?", "a": "his tractor"},
+        {"q": "WHERE will the farmer go?", "a": "home"},
+        {"q": "WHO is standing in front of the tractor?", "a": "a cow"}
+      ]
+    },
+    {
+      "id": "wh_05",
+      "setting": "frozen lake",
+      "text": "The children are ice skating on the lake. The little girl has a toy penguin. The other children are surprised. The toy penguin is wearing real skates! The little girl puts her toy penguin on the ice. She holds his hand and pulls him along.",
+      "questions": [
+        {"q": "WHO is skating?", "a": "the children"},
+        {"q": "WHERE are they skating?", "a": "on the lake"},
+        {"q": "WHO has a toy penguin?", "a": "the little girl"},
+        {"q": "WHO is surprised?", "a": "the other children"},
+        {"q": "WHAT is the penguin wearing?", "a": "real skates"},
+        {"q": "WHERE does the little girl put the penguin?", "a": "on the ice"},
+        {"q": "WHAT does the little girl do with the penguin?", "a": "holds his hand and pulls him along"}
+      ]
+    },
+    {
+      "id": "wh_06",
+      "setting": "classroom",
+      "text": "The class is outside at recess. They forgot to lock the mouse cage. The mouse gets out of the cage! He starts to crawl around the room. The mouse is hungry. He sniffs a backpack, looking for food.",
+      "questions": [
+        {"q": "WHERE is the class?", "a": "outside at recess"},
+        {"q": "WHAT did they forget to lock?", "a": "the mouse cage"},
+        {"q": "WHO gets out of his cage?", "a": "the mouse"},
+        {"q": "WHERE does he go?", "a": "around the room"},
+        {"q": "WHO is hungry?", "a": "the mouse"},
+        {"q": "WHAT does the mouse sniff?", "a": "a backpack"}
+      ]
+    },
+    {
+      "id": "wh_07",
+      "setting": "living room",
+      "text": "Kevin is reading in the living room. Anna wants to read a book too. There is a stack of books on the rug. Anna decides to choose a book. Kevin's cat is sleeping on the books! Anna laughs and pets the cat.",
+      "questions": [
+        {"q": "WHERE is Kevin?", "a": "in the living room"},
+        {"q": "WHAT does Anna want to do?", "a": "read a book"},
+        {"q": "WHERE are the books?", "a": "on the rug"},
+        {"q": "WHO decides to choose a book?", "a": "Anna"},
+        {"q": "WHO is sleeping on the books?", "a": "Kevin's cat"},
+        {"q": "WHAT does Anna do?", "a": "laughs and pets the cat"}
+      ]
+    },
+    {
+      "id": "wh_08",
+      "setting": "lake",
+      "text": "George and Mason are swimming in the lake. They are having fun. Mason sees something green. \"Oh no, it's a sea monster!\" he yells. George laughs. \"It's not a sea monster, it's a frog on a lilypad,\" George says.",
+      "questions": [
+        {"q": "WHO is swimming?", "a": "George and Mason"},
+        {"q": "WHERE are they swimming?", "a": "in the lake"},
+        {"q": "WHO sees something?", "a": "Mason"},
+        {"q": "WHAT color is it?", "a": "green"},
+        {"q": "WHO laughs?", "a": "George"},
+        {"q": "WHERE is the frog?", "a": "on a lilypad"}
+      ]
+    },
+    {
+      "id": "wh_09",
+      "setting": "outside",
+      "text": "The children are outside. They are flying kites. The wind blows one kite away. It lands on the dog. The dog runs around in circles. He gets all tangled up in the kite string.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "outside"},
+        {"q": "WHAT are they doing?", "a": "flying kites"},
+        {"q": "WHAT blows the kite away?", "a": "the wind"},
+        {"q": "WHERE does the kite land?", "a": "on the dog"},
+        {"q": "WHO runs in circles?", "a": "the dog"},
+        {"q": "WHAT is the dog tangled up in?", "a": "the kite string"}
+      ]
+    },
+    {
+      "id": "wh_10",
+      "setting": "schoolyard",
+      "text": "The children are in the schoolyard. They are playing. The boys are throwing a football. The girls are jumping rope. Oh no, rain clouds are coming! Soon the children will have to go inside.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "in the schoolyard"},
+        {"q": "WHAT are they doing?", "a": "playing"},
+        {"q": "WHO is playing football?", "a": "the boys"},
+        {"q": "WHAT are the girls doing?", "a": "jumping rope"},
+        {"q": "WHAT is coming?", "a": "rain clouds"},
+        {"q": "WHERE will the children go?", "a": "inside"}
+      ]
+    },
+    {
+      "id": "wh_11",
+      "setting": "lake (pond)",
+      "text": "A family of ducks is swimming in the lake. They swim in a line. One duckling does not want to get into the water. He stands on the grass. Mother duck swims over to her duckling. She will help him learn to swim.",
+      "questions": [
+        {"q": "WHAT are the ducks doing?", "a": "swimming"},
+        {"q": "WHERE are they swimming?", "a": "in the lake"},
+        {"q": "WHO does not want to go in the water?", "a": "one duckling"},
+        {"q": "WHERE is this duckling standing?", "a": "on the grass"},
+        {"q": "WHO swims over to the duckling?", "a": "mother duck"},
+        {"q": "WHAT will she help him to learn?", "a": "to swim"}
+      ]
+    },
+    {
+      "id": "wh_12",
+      "setting": "backyard playground",
+      "text": "Today is Saturday. The children are playing in the backyard. A boy named Blake goes down the slide. Next he will play on the swings. A boy named Jack is too tired to play. He finds a blanket and takes a nap on the blanket.",
+      "questions": [
+        {"q": "WHAT day is it?", "a": "Saturday"},
+        {"q": "WHERE are the children playing?", "a": "in the backyard"},
+        {"q": "WHO is going down the slide?", "a": "Blake"},
+        {"q": "WHAT will Blake do next?", "a": "play on the swings"},
+        {"q": "WHO is too tired to play?", "a": "Jack"},
+        {"q": "WHAT does Jack do?", "a": "takes a nap"},
+        {"q": "WHERE does he sleep?", "a": "on the blanket"}
+      ]
+    },
+    {
+      "id": "wh_13",
+      "setting": "farm",
+      "text": "The cows live behind a fence on the farm. They like to walk and eat grass. One day a cow sees some flowers. She wants to taste the flowers! The cow finds an opening in the fence. She pulls a flower out of the basket and chews it.",
+      "questions": [
+        {"q": "WHERE do the cows live?", "a": "behind a fence on the farm"},
+        {"q": "WHAT do they like to do?", "a": "walk and eat grass"},
+        {"q": "WHO sees some flowers?", "a": "a cow"},
+        {"q": "WHAT does she want to do with the flowers?", "a": "taste them"},
+        {"q": "WHERE does the cow find an opening?", "a": "in the fence"},
+        {"q": "WHERE are the flowers?", "a": "in a basket"}
+      ]
+    },
+    {
+      "id": "wh_14",
+      "setting": "lake dock",
+      "text": "Sasha and Addison are playing with a boat. They put the boat into the water. The boat starts to sail away! Addison is sad. Sasha is a very good swimmer. She jumps into the lake and catches the boat.",
+      "questions": [
+        {"q": "WHAT are the girls playing with?", "a": "a boat"},
+        {"q": "WHERE do they put the boat?", "a": "into the water"},
+        {"q": "WHAT does the boat do?", "a": "starts to sail away"},
+        {"q": "WHO is sad?", "a": "Addison"},
+        {"q": "WHO is a good swimmer?", "a": "Sasha"},
+        {"q": "WHERE does Sasha jump?", "a": "into the lake"},
+        {"q": "WHAT does Sasha catch?", "a": "the boat"}
+      ]
+    },
+    {
+      "id": "wh_15",
+      "setting": "mud / dirt",
+      "text": "The boys are playing in the mud. They are pretending to dig for buried treasure. A boy named Ian finds something. He puts it into his bucket. \"Did you find treasure?\" the boys ask. \"It's not treasure,\" says Jack, \"it's a snail!\"",
+      "questions": [
+        {"q": "WHERE are the boys playing?", "a": "in the mud"},
+        {"q": "WHAT are they pretending to dig for?", "a": "buried treasure"},
+        {"q": "WHO finds something?", "a": "Ian"},
+        {"q": "WHERE does he put it?", "a": "into his bucket"},
+        {"q": "WHO asks Ian if he found treasure?", "a": "the (other) boys"},
+        {"q": "WHAT did Ian find?", "a": "a snail"}
+      ]
+    },
+    {
+      "id": "wh_16",
+      "setting": "bathroom",
+      "text": "Kelly is in the bathroom. She is brushing her teeth. Oh no! Kelly drops the toothpaste on the floor. Now there is toothpaste on the floor. Kelly needs to get a cloth to wipe up the mess.",
+      "questions": [
+        {"q": "WHERE is Kelly?", "a": "in the bathroom"},
+        {"q": "WHAT is she doing?", "a": "brushing her teeth"},
+        {"q": "WHO drops the toothpaste?", "a": "Kelly"},
+        {"q": "WHERE does the toothpaste fall?", "a": "on the floor"},
+        {"q": "WHO needs to clean up the mess?", "a": "Kelly"},
+        {"q": "WHAT will she clean with?", "a": "a cloth"}
+      ]
+    },
+    {
+      "id": "wh_17",
+      "setting": "bedroom",
+      "text": "The children are playing checkers on the rug. The girl loves checkers. One checker is missing. It is black. The children look for the checker. It is under the bed.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "on the rug (in the bedroom)"},
+        {"q": "WHAT are they playing?", "a": "checkers"},
+        {"q": "WHO loves checkers?", "a": "the girl"},
+        {"q": "WHAT is missing?", "a": "one checker"},
+        {"q": "WHAT color is it?", "a": "black"},
+        {"q": "WHO looks for the checker?", "a": "the children"},
+        {"q": "WHERE is the checker?", "a": "under the bed"}
+      ]
+    },
+    {
+      "id": "wh_18",
+      "setting": "dining room",
+      "text": "Mike is sitting in a chair. He is eating popcorn. Mike drops some popcorn on the floor. \"Oh no!\" he thinks. \"What a mess!\" Mike's dog runs over. The dog will eat the popcorn!",
+      "questions": [
+        {"q": "WHAT is Mike eating?", "a": "popcorn"},
+        {"q": "WHERE is he sitting?", "a": "in a chair"},
+        {"q": "WHO drops some popcorn?", "a": "Mike"},
+        {"q": "WHERE does the popcorn fall?", "a": "on the floor"},
+        {"q": "WHO runs over?", "a": "Mike's dog"},
+        {"q": "WHAT will the dog do?", "a": "eat the popcorn"}
+      ]
+    },
+    {
+      "id": "wh_19",
+      "setting": "space",
+      "text": "The astronauts are in space. They are wearing helmets. They see a ship! There are aliens in the ship. One alien gets out of the ship and goes outside. He reads a book in space!",
+      "questions": [
+        {"q": "WHO is in the story?", "a": "the astronauts (and aliens)"},
+        {"q": "WHAT are they wearing?", "a": "helmets"},
+        {"q": "WHERE are they?", "a": "in space"},
+        {"q": "WHAT do they see?", "a": "a ship"},
+        {"q": "WHERE does one alien go?", "a": "outside (the ship)"},
+        {"q": "WHAT does he read?", "a": "a book"}
+      ]
+    },
+    {
+      "id": "wh_20",
+      "setting": "bus stop",
+      "text": "The children are getting on the bus. Their friend Kate is not there yet. \"Kate will miss the bus!\" they say. \"She cannot walk here in time.\" Suddenly they see Kate. She did not walk, she rode her fastest scooter!",
+      "questions": [
+        {"q": "WHAT are the children getting on?", "a": "the bus"},
+        {"q": "WHO is not there yet?", "a": "Kate"},
+        {"q": "WHAT might Kate miss?", "a": "the bus"},
+        {"q": "WHO might miss the bus?", "a": "Kate"},
+        {"q": "WHO do the children see?", "a": "Kate"},
+        {"q": "WHAT is she riding?", "a": "her (fastest) scooter"}
+      ]
+    },
+    {
+      "id": "wh_21",
+      "setting": "basketball court / gym",
+      "text": "The boy and the girl are spinning basketballs. They spin them on their fingers. They do not want to drop the balls on the floor. They want them to keep spinning. Other children run past bouncing a basketball! They still do not drop the balls.",
+      "questions": [
+        {"q": "WHAT are the children doing?", "a": "spinning basketballs"},
+        {"q": "WHERE do they spin the basketballs?", "a": "on their fingers"},
+        {"q": "WHERE could the balls drop?", "a": "on the floor"},
+        {"q": "WHAT do the children want to do?", "a": "keep them spinning"},
+        {"q": "WHO runs past?", "a": "other children"},
+        {"q": "WHAT are they bouncing?", "a": "a basketball"}
+      ]
+    },
+    {
+      "id": "wh_22",
+      "setting": "science class",
+      "text": "The students are in science class. They made a model volcano. The students put in the wrong ingredient. The volcano explodes! Red goo flies out of the volcano. It goes up into the air and lands on the chalkboard.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "in science class"},
+        {"q": "WHAT did they make?", "a": "a model volcano"},
+        {"q": "WHO puts in the wrong ingredient?", "a": "the students"},
+        {"q": "WHAT explodes?", "a": "the volcano"},
+        {"q": "WHAT flies out of the volcano?", "a": "red goo"},
+        {"q": "WHERE does it land?", "a": "on the chalkboard"}
+      ]
+    },
+    {
+      "id": "wh_23",
+      "setting": "library",
+      "text": "The children are in the library. They are looking at a book. The book is about pirates. The pirates live on ships and find treasure. The children think about being pirates. They dream about finding buried treasure.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "in the library"},
+        {"q": "WHAT are they looking at?", "a": "a book"},
+        {"q": "WHO is the book about?", "a": "pirates"},
+        {"q": "WHERE do the pirates live?", "a": "on ships"},
+        {"q": "WHAT do the children think about?", "a": "being pirates"},
+        {"q": "WHAT do they dream about finding?", "a": "buried treasure"}
+      ]
+    },
+    {
+      "id": "wh_24",
+      "setting": "school hallway",
+      "text": "Today is Show And Tell. Henry's teacher told him to bring his favorite thing to school. Henry's favorite things are his pets. He brings his dog and turtle to school. Henry's teacher sees the dog and turtle. She is surprised to see animals in the hallway!",
+      "questions": [
+        {"q": "WHAT is happening today?", "a": "Show And Tell"},
+        {"q": "WHO brought his favorite things to school?", "a": "Henry"},
+        {"q": "WHAT are Henry's favorite things?", "a": "his pets (dog and turtle)"},
+        {"q": "WHERE does he bring them?", "a": "to school"},
+        {"q": "WHO sees the dog and turtle?", "a": "Henry's teacher"},
+        {"q": "WHERE are the dog and turtle?", "a": "in the hallway"}
+      ]
+    },
+    {
+      "id": "wh_25",
+      "setting": "cafeteria",
+      "text": "Rosie goes to the cafeteria. It is time for lunch. Rosie looks for a seat. She sees her friends' lunches on the table. Rosie sees a whole pineapple! She wonders who brought a whole pineapple for lunch!",
+      "questions": [
+        {"q": "WHERE does Rosie go?", "a": "to the cafeteria"},
+        {"q": "WHAT time is it?", "a": "lunch time"},
+        {"q": "WHO looks for a seat?", "a": "Rosie"},
+        {"q": "WHERE are her friends' lunches?", "a": "on the table"},
+        {"q": "WHO sees a whole pineapple?", "a": "Rosie"},
+        {"q": "WHAT does she wonder?", "a": "who brought a whole pineapple for lunch"}
+      ]
+    },
+    {
+      "id": "wh_26",
+      "setting": "music class",
+      "text": "The children are in music class. They are singing a song. The class next door is playing basketball. It is very loud! The children cannot hear their song. They start to sing louder.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "in music class"},
+        {"q": "WHAT are they doing?", "a": "singing a song"},
+        {"q": "WHERE is the other class?", "a": "next door"},
+        {"q": "WHAT is the other class playing?", "a": "basketball"},
+        {"q": "WHO cannot hear the song?", "a": "the (music class) children"},
+        {"q": "WHAT do the children do?", "a": "sing louder"}
+      ]
+    },
+    {
+      "id": "wh_27",
+      "setting": "classroom / art room",
+      "text": "The boy and the girl are playing with play dough. They keep the dough on the table. The boy is making animals. The girl is making shapes. The girl drops an orange triangle on the floor. Her pet bunny thinks it is a carrot!",
+      "questions": [
+        {"q": "WHAT are the children playing with?", "a": "play dough"},
+        {"q": "WHERE is the dough?", "a": "on the table"},
+        {"q": "WHO is making animals?", "a": "the boy"},
+        {"q": "WHAT is the girl making?", "a": "shapes"},
+        {"q": "WHAT does the girl drop?", "a": "an orange triangle"},
+        {"q": "WHERE does it land?", "a": "on the floor"},
+        {"q": "WHO thinks it is a carrot?", "a": "the pet bunny"}
+      ]
+    },
+    {
+      "id": "wh_28",
+      "setting": "stage",
+      "text": "The students are performing on the stage. They are dressed as clowns. The first clown juggles. The second clown drives a car. The audience loves the show! At the end, a clown hands out balloons.",
+      "questions": [
+        {"q": "WHERE are the students?", "a": "on the stage"},
+        {"q": "WHAT are they dressed as?", "a": "clowns"},
+        {"q": "WHO juggles?", "a": "the first clown"},
+        {"q": "WHERE is the second clown?", "a": "in a car"},
+        {"q": "WHO loves the show?", "a": "the audience"},
+        {"q": "WHAT does the clown hand out?", "a": "balloons"}
+      ]
+    },
+    {
+      "id": "wh_29",
+      "setting": "snow",
+      "text": "The children are playing in the snow. They will build a snowman. They make a large snowball for the bottom. They will put two more snowballs on top. The children find a yellow hat for the snowman's head. They find two cherries for eyes.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "in the snow"},
+        {"q": "WHAT are they doing?", "a": "building a snowman"},
+        {"q": "WHAT do they make for the bottom of the snowman?", "a": "a large snowball"},
+        {"q": "WHO will put on more snowballs?", "a": "the children"},
+        {"q": "WHERE will the children put the hat?", "a": "on the snowman's head"},
+        {"q": "WHAT will the children use for eyes?", "a": "two cherries"}
+      ]
+    },
+    {
+      "id": "wh_30",
+      "setting": "autumn / leaves",
+      "text": "The children are playing in the leaves. They are jumping in a big leaf pile. The girl in the red coat feels something under the leaves. She pulls it out. It is a pumpkin! The pumpkin was hidden in the leaf pile.",
+      "questions": [
+        {"q": "WHERE are the children?", "a": "in the leaves"},
+        {"q": "WHAT are they doing in the leaves?", "a": "jumping in a big leaf pile"},
+        {"q": "WHO feels something under the leaves?", "a": "the girl in the red coat"},
+        {"q": "WHAT does she do?", "a": "pulls it out"},
+        {"q": "WHAT does she find?", "a": "a pumpkin"},
+        {"q": "WHERE was the pumpkin?", "a": "in the leaf pile"}
+      ]
+    }
+  ]
+}

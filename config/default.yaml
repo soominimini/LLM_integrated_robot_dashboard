@@ -28,8 +28,8 @@ parameters:
 
 - name: "llm"
   type: "str"
-  default: "gemma4:e4b"
-  description: "LLM model to use. Default is gemma4:e4b."
+  default: "claude-sonnet-4-6"
+  description: "LLM model to use. Default is claude-sonnet-4-6 (Anthropic API)."
   scope: "cli"
 
 - name: "mem_store"
