@@ -535,6 +535,202 @@ positive ack, **no scoring**. Results → `/api/wh_scene/save_result`.
 
 ---
 
+### 16.5 Activity flow diagrams
+
+Sequence diagrams for each activity. Lanes: Browser (UI), Flask
+(`web_user_server.py`), the `.venv39` model workers, Robot (ROS), and Disk.
+(Renders graphically on GitHub.)
+
+**Storytelling — authoring**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant T as Therapist
+    participant F as Flask
+    participant C as Claude worker
+    participant G as Gemini worker
+    participant I as Image worker
+    participant D as Disk
+    T->>F: POST /api/generate_story
+    Note over F: build prompt persona+theme+goals, age tier
+    F->>C: claude_story.py claude-sonnet-4-6
+    C-->>F: tagged story (CHUNK stream)
+    F-->>T: story for review
+    T->>F: POST /api/save_story approved
+    opt body over word cap
+        F->>C: shorten_story Claude
+        C-->>F: shortened body
+    end
+    F->>G: emotion re-tag Gemini 2.5 Flash
+    G-->>F: re-tagged story
+    Note over F: snap tag positions, local
+    F->>G: page split Gemini
+    G-->>F: pages
+    Note over F: reinject tags, local
+    F->>G: scene-ID Gemini
+    G-->>F: scenes + page_to_scene
+    F->>G: comprehension + takeaway questions
+    G-->>F: questions
+    F->>D: write story_ts.json
+    loop per scene
+        F->>I: gemini-2.5-flash-image
+        I-->>D: story_scene_N.png
+    end
+    F-->>T: saved
+```
+
+**Storytelling — read-aloud**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Child
+    participant F as Flask
+    participant R as Robot
+    participant D as Disk
+    C->>F: GET /api/get_story_sentences
+    F->>D: read story_ts.json
+    F-->>C: pages + questions + page_to_scene
+    loop per page
+        C->>F: POST /api/get_sentence_image
+        F->>D: resolve page_to_scene to PNG
+        F-->>C: image URL
+        C->>F: POST /api/speak_sentence
+        Note over F: split page into text/gesture/emotion segments
+        F->>R: _play_tags gesture/play + emotion/show
+        F->>R: tts_helper.speak_story Qwen to talkAudio
+        Note over R: HumanTracking follows child face 10Hz
+    end
+    Note over C: comprehension MCQs at end
+```
+
+**Object request (scene-detection game)**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Child
+    participant F as Flask
+    participant G as Gemini worker
+    participant R as Robot+camera
+    participant D as Disk
+    Note over C,D: setup manage toys to scene_game_toys.json, pick mode
+    C->>F: POST /api/scene/start
+    alt age 3 or under
+        Note over F: template question, no LLM
+    else age 4-6 criteria / 7+ riddle / direction
+        F->>G: gemini_general.py Gemini 2.5 Flash
+        G-->>F: question
+    end
+    F->>R: speak prompt Qwen TTS
+    F-->>C: question text
+    C->>F: POST /api/scene_game/answer
+    F->>R: _get_ros_frame
+    R-->>F: frame
+    F->>D: save jpg
+    alt exact / criteria
+        F->>G: gemini_analyze_image.py er-1.6
+        G-->>F: label/color/shape + point
+        F->>R: look_at_pixel gaze to object
+    else direction flat next_to/above/under
+        F->>G: gemini_validate_spatial.py still
+        G-->>F: relation verdict
+    else direction DEPTH behind/in_front_of/in
+        F->>R: record 3s clip
+        R-->>F: frames
+        F->>D: save mp4
+        F->>G: gemini_validate_spatial_video.py Files API
+        G-->>F: relation verdict
+    end
+    F->>R: speak feedback Qwen TTS
+    F-->>C: verdict + reason, no result persisted
+```
+
+**Educational quiz (yes/no + WH)**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as Therapist/Child
+    participant F as Flask
+    participant G as Gemini worker
+    participant W as Whisper worker
+    participant R as Robot
+    participant D as Disk
+    Note over U,D: AUTHORING
+    U->>F: POST /api/generate_quiz, +Social-Rules branch
+    F->>G: gemini_general.py Gemini 2.5 Flash
+    G-->>F: questions JSON
+    F-->>U: list
+    U->>F: POST /api/save_quiz
+    F->>D: write quizzes/yes_no + quizzes/wh
+    Note over U,D: PLAY
+    U->>F: loadQuiz
+    F->>D: read quiz + learned_answers.json
+    F-->>U: merged questions
+    opt WH type
+        U->>F: POST /api/generate_wh_options
+        F->>G: distractors Gemini
+        G-->>F: options
+    end
+    F->>R: /api/speak_sentence read question Qwen
+    opt mic answer
+        U->>F: POST /api/speech_recognize
+        F->>W: whisper.py OpenAI gpt-4o-transcribe
+        W-->>F: FINAL text
+    end
+    Note over U: client-side match normalize, exact, singular, containment
+    F->>R: speak feedback Qwen + robot_gesture emotion+gesture
+    opt WH Teach Robot
+        U->>F: POST /api/teach_quiz_answer
+        F->>D: append learned_answers.json
+    end
+```
+
+**WH picture scene**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant T as Therapist/Child
+    participant F as Flask
+    participant G as Gemini worker
+    participant W as Whisper worker
+    participant R as Robot+camera
+    participant D as Disk
+    Note over T,D: PREPARE
+    T->>F: GET /wh_picture_scene
+    F->>R: PAUSE head tracking
+    T->>F: POST /api/wh_scene/capture
+    F->>R: _get_ros_frame
+    R-->>F: frame
+    F->>D: save images/id.jpg
+    F->>R: RESUME head tracking
+    F->>G: gemini_wh_scene.py receptive, Gemini Flash 0.4
+    G-->>F: receptive questions
+    F->>G: gemini_wh_scene.py expressive
+    G-->>F: expressive questions
+    F->>D: write questions + expressive + index.json
+    F-->>T: scene ready
+    Note over T,D: PLAY
+    T->>F: list then pick scene+mode
+    T->>F: POST /api/wh_scene/get_questions
+    F->>D: read questions file
+    F-->>T: questions + image
+    F->>R: /api/speak_sentence read question Qwen
+    opt mic answer
+        T->>F: POST /api/speech_recognize
+        F->>W: whisper.py gpt-4o-transcribe
+        W-->>F: FINAL text
+    end
+    Note over T: receptive scored cards, expressive positive ack no score
+    T->>F: POST /api/wh_scene/save_result
+    F->>D: append results.json
+```
+
+---
+
 ## 17. File index (live code)
 
 ```
