@@ -393,7 +393,149 @@ These had zero live references and were deleted:
 
 ---
 
-## 16. File index (live code)
+## 16. Per-activity pipelines (App B)
+
+For each child-facing activity: which on-disk files are read, which models run at
+each step, and the end-to-end mechanism. `file:line` refs are into
+`src/web_user_server.py` unless another file is named.
+
+### Cross-activity matrix
+
+| | Storytelling | Object request | Quiz (yes/no + wh) | WH picture scene |
+|---|---|---|---|---|
+| Docs read | `story_corpus.json`, `personas_rag.json`, users/profile | `scene_game_toys.json`, `personas_rag.json` (age ≥4), users/profile | `sar_system_prompt.md` (feedback only), `learned_answers.json`, users (age) | `wh_scenes/*` (index/questions/results), users (age) |
+| Gen LLM | **Claude `claude-sonnet-4-6`** (story + shorten); Gemini 2.5 Flash (all post-passes) | Gemini 2.5 Flash (questions/hints) | Gemini 2.5 Flash (questions, distractors, feedback) | Gemini 2.5 Flash @ temp 0.4 (×2) |
+| Vision | — | `gemini-robotics-er-1.6-preview` (object+gaze); Gemini 2.5 Flash (spatial still/video) | — | Gemini 2.5 Flash (image→questions) |
+| Image gen | `gemini-2.5-flash-image` (per scene) | `gemini-2.5-flash-image` (decorative toy cards) | — | — |
+| ASR | — | — | OpenAI `gpt-4o-transcribe` | OpenAI `gpt-4o-transcribe` |
+| TTS | Qwen realtime | Qwen realtime | Qwen realtime | Qwen realtime |
+| Persona RAG? | yes | yes (age ≥4) | no | no |
+| Persists results? | story JSON + images | no (only captured frames/clips) | `learned_answers.json` | `results.json` |
+
+> All Gemini/Claude/OpenAI work runs in `.venv39` subprocesses (`WORKER_PYTHON`,
+> `:232-235`). Every Gemini-Flash text pass funnels through `_gemini_generate`
+> (`:2895`) → `scripts/gemini_general.py`; the server never passes `--model`, so
+> the model is the script default `gemini-2.5-flash`.
+
+### 16.1 Storytelling
+
+**Documents:** `documents/story for 4 to 7 years old/story_corpus.json`
+(`story_generator.py:380`) — `wh_question_stories` (2 sampled, topic-filtered on
+`setting`) as few-shot for ages 4–5; `fables[*].how_why_questions` (2 sampled)
+for the ages 6–7 HOW/WHY block. `documents/personas_rag.json`
+(`persona_rag.py:30`) → persona context block. `users.json` / per-user
+`profile.json` (`:1273-1285`, `_load_user_profile:257`) → age (tier + word range),
+gender, learning_goals, disorder (→ persona). `sar_system_prompt.md` is **not**
+used here.
+
+**Models:** story generation + shorten = **Claude `claude-sonnet-4-6`** via
+`scripts/claude_story.py` (routing `story_generator.py:804-810`; server sets
+`llm_model="claude-sonnet-4-6"` `:241`). Emotion re-tag, page split, scene-ID,
+comprehension + takeaway questions = `gemini-2.5-flash`. Illustrations =
+`gemini-2.5-flash-image`, one per *scene*, first image reused as a style
+reference.
+
+**Mechanism:** (1) `/api/generate_story[_stream]` (`:1256/:1307`) builds the
+prompt (`story_generator._build_prompt:548`) — `WH_MASTER_TEMPLATE` for ages 4–5
+else `MASTER_TEMPLATE` — and returns tagged text (no persistence). (2)
+`/api/save_story` (`:2654`) runs the pipeline in order: shorten via Claude if body
+> tier `max_words` (`:2717`) → Gemini emotion re-tag (`:2736`) → snap tag
+positions (`:2739`) → page-split by age (`:2742`) → re-inject tags (`:2747`) →
+paragraph split + scene-ID → `page_to_scene` (`:2777-2786`) → comprehension +
+per-takeaway questions (`:2793-2810`). (3) Persist
+`user_data/<user>/stories/story_<ts>.json` (`:2815`) + one PNG per scene. (4)
+Read-aloud (`/read_story/<f>`): `/api/get_sentence_image` resolves
+`page_to_scene`; `/api/speak_sentence` (`:5806`) splits a page into
+`(text,gestures,emotions)` segments, fires `_play_tags` (`rostopic pub` to
+`/qt_robot/gesture/play` + `/qt_robot/emotion/show`), speaks each sentence via
+`tts_helper.speak_story` (Qwen). HumanTracking follows the child throughout.
+
+### 16.2 Object request (scene-detection game)
+
+**Documents:** `src/user_data/scene_game_toys.json` (`_load_scene_toys:6009`) —
+the physical-toy list. `personas_rag.json` for ages ≥4 question gen
+(`_persona_context_for:269`). `users.json` / `profile.json`
+(`_get_user_age_and_goals:3651`) → age (difficulty tier), goals, disorder.
+**Written, not read:** `captured_scenes/scene_answer_<ts>.jpg` (every answer,
+`:3848`) and `….mp4` (depth relations, `:3868`); decorative `activity_images/`
+toy cards. **No scores/results are persisted.**
+
+**Models:** question / criteria / riddle / hint = `gemini-2.5-flash` via
+`gemini_general.py` (ages ≤3 are template-only, no LLM). Held-object detection +
+gaze = `gemini-robotics-er-1.6-preview` via `gemini_analyze_image.py` (returns a
+`[y,x]` point that drives `kinematics.look_at_pixel:3560`). Spatial validation
+still = `gemini_validate_spatial.py`; video/depth = `gemini_validate_spatial_video.py`
+(uploads MP4 via the Files API, then deletes it) — both `gemini-2.5-flash`.
+
+**Mechanism:** difficulty branches in `_scene_game_generate_question` (`:2960`):
+≤3 exact name, 4–6 color/shape criteria, 7+ riddle (questions leak-checked so the
+target isn't named). Direction mode (`:3268`) picks a supported relation
+(`in/on/next_to/under/behind/in_front_of`); `username=='olivia'` → 4 fixed rounds
+(`:3374`). A round: robot speaks the prompt (Qwen) → child shows the object →
+`/api/scene_game/answer` (`:3820`) grabs a ROS frame → **dispatch**: depth
+relations (`behind/in_front_of/in/out`) record a 3 s MP4 (`_capture_scene_video:3440`)
+→ video validator; other relations → still validator; exact/criteria →
+`gemini_analyze_image.py` + robot looks at the point. Feedback is **TTS-only**.
+Hints (`/api/scene_game/hint`) are deterministic for direction mode, Gemini
+age-graded otherwise.
+
+### 16.3 Educational quiz (yes/no + WH)
+
+**Documents:** `documents/sar_system_prompt.md` (`:1676-1688`) injected into the
+**feedback-phrase** prompt only. `quizzes/{yes_no,wh}/quiz_*.json` (written
+`:1891/:1898`, read `:1628`). `quizzes/learned_answers.json` (written by
+`/api/teach_quiz_answer:1850`, merged into `accepted_answers` on load
+`:1651-1660`). `users.json` → `age` (client: age ≥6 → 4 options else 3). Persona
+RAG is **not** used.
+
+**Models:** question generation (both types) = `gemini-2.5-flash` via
+`_GeminiQuizLLM`→`gemini_general.py`; yes/no has a "Social Rules" special branch
+(`:1423-1458`). WH distractors = `gemini-2.5-flash` (`/api/generate_wh_options:1794`).
+Feedback phrases = `gemini-2.5-flash` with `sar_system_prompt.md` injected.
+Spoken-answer ASR = OpenAI `gpt-4o-transcribe` (`whisper.py`). TTS = Qwen.
+**Answer matching uses no LLM.**
+
+**Mechanism:** (1) Authoring (`/quiz_generation`): generate (Gemini) → robust JSON
+parse → normalize per type → `/api/save_quiz` splits into `yes_no/` vs `wh/`.
+(2) Play (`/educational_quiz`): `loadQuiz` concatenates files + merges
+`learned_answers` + shuffles; WH blocks on `/api/generate_wh_options`. Robot
+speaks the question (Qwen). Answer by tap or mic (`/api/speech_recognize`→whisper).
+(3) **Matching is client-side JS** (`educational_quiz.html:582-619`): normalize
+(lowercase, strip leading articles/punctuation) → exact → singular → bidirectional
+containment, against `accepted_answers`. (4) Feedback: random LLM phrase spoken;
+gesture+emotion via `/api/robot_gesture` — correct → `clapping/hoora/happy` +
+`QT/happy`; wrong → `patience/think/slight_no` + `QT/calm`. (5) "Teach Robot" (WH
+only) appends to `learned_answers.json`.
+
+### 16.4 WH picture scene
+
+**Documents** (all under `user_data/<user>/wh_scenes/`): `images/<scene_id>.<ext>`
+(written on upload `:6274` / capture `:6332`; **read as model input** by
+`gemini_wh_scene.py:62`); `<scene_id>_questions.json` (receptive) and
+`<scene_id>_questions_expressive.json` (written `:6214`, read `:6487`);
+`index.json` (scene registry, `:6139/6150`); `results.json` (`/save_result:6510`).
+`users.json` → `age` read directly (`:6278/6342`) — **not** profile.json, **not**
+persona RAG.
+
+**Models:** WH-question generation = `gemini-2.5-flash` (`GEMINI_VISION_MODEL`) at
+**temperature 0.4**, run **twice per scene** (`_generate_and_save_both_modes`
+loop `:6211`): receptive = 5 questions each with `answer` + 4 `visual_choices`;
+expressive = 5 open-ended, no answer. Verbal-answer ASR = OpenAI
+`gpt-4o-transcribe`. TTS = Qwen.
+
+**Mechanism:** (1) Prepare (`/wh_picture_scene`, therapist): page load **pauses
+head tracking** (`:6238`) → live preview → **Capture** (`/api/wh_scene/capture`)
+grabs a ROS frame, saves JPEG, **resumes tracking** → runs Gemini twice → writes
+both question files + an `index.json` entry. Upload is an alternate input;
+Retry/Delete regenerate or prune. (2) Play (`/wh_picture_play`, child): pick
+scene+mode → `/api/wh_scene/get_questions` → robot reads each question (Qwen).
+**Receptive** = shuffled visual-choice cards, scored by normalized match (also
+accepts spoken/typed answers). **Expressive** = free-text/mic, unconditional
+positive ack, **no scoring**. Results → `/api/wh_scene/save_result`.
+
+---
+
+## 17. File index (live code)
 
 ```
 src/
