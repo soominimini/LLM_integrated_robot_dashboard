@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children, a boy and a girl, are on an amusement park ride, looking excited and laughing. A Ferris wheel and other rides are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is on the ride?",
+      "answer": "Two children",
+      "visual_choices": [
+        "Two children",
+        "A dog",
+        "An adult",
+        "A baby"
+      ],
+      "evidence_hint": "Look at the people in the picture"
+    },
+    {
+      "wh_type": "what",
+      "question": "What are they doing?",
+      "answer": "Riding a ride",
+      "visual_choices": [
+        "Riding a ride",
+        "Eating food",
+        "Sleeping",
+        "Reading a book"
+      ],
+      "evidence_hint": "Look at what the children are doing"
+    },
+    {
+      "wh_type": "when",
+      "question": "When are they at the park?",
+      "answer": "During the day",
+      "visual_choices": [
+        "During the day",
+        "At night",
+        "In the rain",
+        "In winter"
+      ],
+      "evidence_hint": "Look at the light and sky"
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children?",
+      "answer": "At an amusement park",
+      "visual_choices": [
+        "At an amusement park",
+        "At school",
+        "At home",
+        "At the store"
+      ],
+      "evidence_hint": "Look at the rides around them"
+    },
+    {
+      "wh_type": "why",
+      "question": "Why are they laughing?",
+      "answer": "Because it's fun",
+      "visual_choices": [
+        "Because it's fun",
+        "Because they're sad",
+        "Because they're hungry",
+        "Because it's boring"
+      ],
+      "evidence_hint": "Look at their happy faces"
+    }
+  ]
+}

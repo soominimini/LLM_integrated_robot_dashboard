@@ -9,6 +9,7 @@ Reads JSON config from stdin, prints JSON result to stdout.
 Input JSON:
   { "image_path": "/path/to/image.jpg",
     "child_age": 5,
+    "language_age": 5,   # optional; developmental age driving question complexity
     "difficulty": "receptive" | "expressive" }
 
 Receptive output JSON:
@@ -53,6 +54,13 @@ def main():
     cfg = json.loads(raw)
     image_path = cfg.get("image_path")
     child_age = cfg.get("child_age", 5)
+    # Pitch question complexity at the child's developmental/language age when
+    # provided (e.g. a 9-year-old with an MLU-6-8 target -> language_age 5),
+    # otherwise fall back to chronological age. The age below is used only as a
+    # complexity cue (never as identity), so a single effective age suffices.
+    language_age = cfg.get("language_age")
+    if language_age is not None:
+        child_age = language_age
     difficulty = cfg.get("difficulty", "receptive")
 
     if not image_path or not os.path.exists(image_path):

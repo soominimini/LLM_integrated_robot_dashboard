@@ -22,6 +22,40 @@
     .mode-btn { background:#e2e8f0; color:#334155; border:0; padding:8px 14px;
                 border-radius:18px; cursor:pointer; font-weight:600; font-size:13px; }
     .mode-btn.active { background:#667eea; color:#fff; }
+
+    /* Live camera preview — shows the real-time angle the robot sees */
+    .camera-wrap { margin:12px 0; text-align:center; }
+    .camera-wrap img { width:100%; max-width:520px; border-radius:12px;
+                       border:2px solid #cbd5e1; background:#000;
+                       aspect-ratio:4/3; object-fit:contain; }
+    .camera-wrap .cam-label { font-size:12px; color:#64748b; margin-top:4px; }
+    .cam-dot { display:inline-block; width:8px; height:8px; border-radius:50%;
+               background:#ef4444; margin-right:5px; vertical-align:middle;
+               animation: camblink 1s infinite; }
+    @keyframes camblink { 50% { opacity:0.25; } }
+
+    /* Gemini inference panel — what the model saw, was asked, and answered */
+    .inference { display:none; margin-top:16px; background:#fff;
+                 border:1px solid #e5e7eb; border-radius:12px; padding:14px; }
+    .inference h3 { margin:0 0 10px; font-size:15px; color:#334155; }
+    .inference .infgrid { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+    @media (max-width:680px){ .inference .infgrid { grid-template-columns:1fr; } }
+    .inference img, .inference video { width:100%; border-radius:8px;
+                 border:1px solid #e5e7eb; background:#000; display:block; }
+    .verdict { font-weight:700; padding:6px 10px; border-radius:8px;
+               display:inline-block; margin-bottom:8px; }
+    .verdict.ok { background:#dcfce7; color:#166534; }
+    .verdict.no { background:#fee2e2; color:#991b1b; }
+    .verdict.unk { background:#fef9c3; color:#854d0e; }
+    .kv { font-size:13px; color:#475569; margin:3px 0; }
+    .kv b { color:#334155; }
+    .codebox { background:#0f172a; color:#e2e8f0; font-family:ui-monospace,
+               SFMono-Regular,Menlo,Consolas,monospace; font-size:12px;
+               white-space:pre-wrap; word-break:break-word; padding:10px;
+               border-radius:8px; max-height:240px; overflow:auto; margin:4px 0; }
+    .inference details { margin-top:8px; }
+    .inference summary { cursor:pointer; font-size:13px; color:#667eea;
+                         font-weight:600; }
   </style>
 </head>
 <body>
@@ -42,6 +76,12 @@
     </div>
     <div id="question" class="question">Click "New Round" to start</div>
 
+    <!-- Live camera feed: see the real-time angle the robot's camera sees -->
+    <div class="camera-wrap">
+      <img id="camera-frame" alt="Live camera feed" />
+      <div class="cam-label"><span class="cam-dot"></span>Live camera — check the angle before capturing</div>
+    </div>
+
     <div id="cards" class="grid" style="display:none"></div>
     <div id="status" class="status"></div>
   </div>
@@ -61,6 +101,14 @@
     window.currentObjB = null;   // reference object (direction mode)
     window.currentRelation = null; // canonical relation key (direction mode)
     window.requestedMode = 'auto'; // mode-picker selection for next Start
+
+    // Relations that the server records as a short video instead of a still —
+    // keep this in sync with VIDEO_DEPTH_RELATIONS on the server.
+    // (Depth: behind/in_front_of. Containment: in/out — for ages <=3.)
+    // Declared here, before the click handlers below are wired up, so it is
+    // never read while still in the temporal dead zone (a click on Capture
+    // could otherwise fire captureAndValidate before the old declaration ran).
+    const VIDEO_DEPTH_RELATIONS = new Set(['behind', 'in_front_of', 'in', 'out']);
 
     const $hint = document.getElementById('hintBtn');
 
@@ -104,11 +152,6 @@
       }
     }
 
-    // Relations that the server records as a short video instead of a
-    // still — keep this in sync with VIDEO_DEPTH_RELATIONS on the server.
-    // (Depth: behind/in_front_of. Containment: in/out — for ages <=3.)
-    const VIDEO_DEPTH_RELATIONS = new Set(['behind', 'in_front_of', 'in', 'out']);
-
     async function captureAndValidate() {
       if (!window.roundMode) {
         $status.textContent = 'Click "Start" first to begin a round.';
@@ -138,6 +181,7 @@
           $status.textContent = 'Error: ' + (data.error || 'Unknown');
           return;
         }
+        renderInference(data);
         if (data.correct === null) {
           $status.textContent = 'Could not see clearly. Try again!';
         } else if (window.roundMode === 'direction') {
@@ -197,14 +241,44 @@
 
     function back() { window.location.href = '/play'; }
 
-    // Live camera preview
+    // The "How Gemini decided" panel was removed from the visible page. We
+    // still want this debug detail when running locally, so log it to the
+    // browser console (open DevTools to inspect). Only direction mode returns
+    // these fields; for other modes there is nothing to log.
+    function renderInference(data) {
+      if (!data || (!data.image_url && !data.video_url && !data.prompt)) return;
+      const instr = (data.obj_a && data.obj_b)
+        ? `Put the ${data.obj_a} (${data.relation}) the ${data.obj_b}` : '—';
+      const verdict = data.correct === true ? '✓ Correct'
+        : data.correct === false ? '✗ Not quite' : '? Unclear';
+      console.groupCollapsed('🔎 How Gemini decided —', verdict);
+      console.log('Instruction:', instr);
+      console.log('Gemini saw relation:', data.actual_relation || '—');
+      console.log('Objects found:',
+        `${data.obj_a || 'obj A'}: ${data.obj_a_found ? 'yes' : 'no'}, ` +
+        `${data.obj_b || 'obj B'}: ${data.obj_b_found ? 'yes' : 'no'}`);
+      console.log('Reason:', data.reason || '—');
+      if (data.video_url) console.log('Clip:', data.video_url);
+      if (data.image_url) console.log('Frame:', data.image_url);
+      console.log('Prompt sent to Gemini:', data.prompt || '(not available)');
+      console.log('Gemini raw response:', data.raw_response || '(not available)');
+      console.groupEnd();
+    }
+
+    // Live camera preview — poll the single-frame endpoint for a near-real-time
+    // view (the dev server is single-threaded, so MJPEG streaming would block
+    // every other request; rapid polling keeps the UI responsive).
     let camTimer = null;
     function startCamera() {
       const img = document.getElementById('camera-frame');
       if (!img) return;
-      const tick = () => { img.src = '/api/camera_frame?t=' + Date.now(); };
+      const tick = () => {
+        const next = new Image();
+        next.onload = () => { img.src = next.src; };
+        next.src = '/api/camera_frame?t=' + Date.now();
+      };
       tick();
-      camTimer = setInterval(tick, 600);
+      camTimer = setInterval(tick, 300);
     }
     function stopCamera() { if (camTimer) { clearInterval(camTimer); camTimer = null; } }
   </script>

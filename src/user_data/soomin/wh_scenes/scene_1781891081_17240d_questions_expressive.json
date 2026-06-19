@@ -1,0 +1,40 @@
+{
+  "scene_description": "Two children, a boy and a girl, are riding an amusement park ride, possibly a roller coaster, and appear to be laughing and having fun. A Ferris wheel and other rides are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What do you think the children will do after their ride is over?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what comes next."
+    },
+    {
+      "wh_type": "what",
+      "question": "What do you think the children did right before they got on this ride?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what happened just before."
+    },
+    {
+      "wh_type": "what",
+      "question": "Have you ever been on a fun ride like this? What was your favorite part?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Think about your own experience."
+    },
+    {
+      "wh_type": "what",
+      "question": "What other kind of ride do you think the children might want to go on at the amusement park?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine a different ride they could choose."
+    },
+    {
+      "wh_type": "why",
+      "question": "Why do you think the children are laughing and smiling so much on the ride?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Look at their faces and imagine how they feel."
+    }
+  ]
+}

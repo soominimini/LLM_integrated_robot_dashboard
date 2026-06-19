@@ -147,6 +147,10 @@ def main():
             "correct": False,
             "reason": raw or "Could not parse vision response",
         }
+    # Surface what was sent to / returned by Gemini so the UI can show the
+    # therapist exactly how the verdict was reached.
+    result["prompt"] = prompt
+    result["raw_response"] = raw
     print(json.dumps(result))
     return 0
 

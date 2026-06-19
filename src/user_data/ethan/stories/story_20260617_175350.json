@@ -1,0 +1,137 @@
+{
+  "story": "[emotion:QT/happy] Ethan ran across the school field because he spotted something interesting near the big oak tree \u2014 a small, smooth rock that looked like a bone.\n\n[emotion:QT/surprised] \"That could be a dinosaur fossil!\" Ethan said quietly, his eyes wide as saucers.\n\n[emotion:QT/shy] A boy named Marcus walked over slowly. \"I found one too, but mine is behind the tree,\" he said, pointing left.\n\n[emotion:QT/afraid] Ethan felt worried because he usually worked alone. [emotion:QT/happy] [gesture:patience] However, Marcus smiled and sat beside him patiently.\n\n\"If we put them together,\" Marcus said, \"we might see what the whole dinosaur looked like.[gesture:think] [emotion:QT/calm] \"\n\nEthan thought carefully, then nodded. [gesture:nodding-yes] \"Okay. Yours is behind the tree, mine is round and flat. So that means two different parts.[emotion:QT/happy] \"\n\nTogether, they drew the pieces in Ethan's notebook. [emotion:QT/happy] Marcus laughed because his sketch looked wobbly, [emotion:QT/happy] and Ethan laughed too.\n\n[gesture:hoora] [emotion:QT/happy] \"We found it together,\" Ethan said, feeling warm and grateful.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 270,
+    "paragraph_count": 9,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      6,
+      6,
+      6,
+      6,
+      7,
+      7,
+      8
+    ],
+    "title": "The Fossil Hunt"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan ran across the school field because he spotted something interesting near the big oak tree a small, smooth rock that looked like a bone. [emotion:QT/surprised] \"That could be a dinosaur fossil!\" Ethan said quietly, his eyes wide as saucers.",
+    "[emotion:QT/shy] A boy named Marcus walked over slowly. \"I found one too, but mine is behind the tree,\" he said, pointing left. [emotion:QT/afraid] Ethan felt worried because he usually worked alone. [emotion:QT/happy] [gesture:patience] However, Marcus smiled and sat beside him patiently.",
+    "\"If we put them together,\" Marcus said, \"we might see what the whole dinosaur looked like. [gesture:think] [emotion:QT/calm] \" Ethan thought carefully, then nodded. [gesture:nodding-yes] \"Okay. Yours is behind the tree, mine is round and flat. So that means two different parts. \"",
+    "Together, they drew the pieces in Ethan's notebook. [emotion:QT/happy] Marcus laughed because his sketch looked wobbly, [emotion:QT/happy] and Ethan laughed too. [gesture:hoora] [emotion:QT/happy] \"We found it together,\" Ethan said, feeling warm and grateful."
+  ],
+  "paragraphs": [
+    "Ethan ran across the school field because he spotted something interesting near the big oak tree \u2014 a small, smooth rock that looked like a bone.",
+    "\"That could be a dinosaur fossil!\" Ethan said quietly, his eyes wide as saucers.",
+    "A boy named Marcus walked over slowly. \"I found one too, but mine is behind the tree,\" he said, pointing left.",
+    "Ethan felt worried because he usually worked alone. However, Marcus smiled and sat beside him patiently.",
+    "\"If we put them together,\" Marcus said, \"we might see what the whole dinosaur looked like.\"",
+    "Ethan thought carefully, then nodded. \"Okay. Yours is behind the tree, mine is round and flat. So that means two different parts.\"",
+    "Together, they drew the pieces in Ethan's notebook. Marcus laughed because his sketch looked wobbly, and Ethan laughed too.",
+    "\"We found it together,\" Ethan said, feeling warm and grateful."
+  ],
+  "scenes": [
+    "Ethan ran across the school field because he spotted something interesting near the big oak tree \u2014 a small, smooth rock that looked like a bone.",
+    "\"That could be a dinosaur fossil!\" Ethan said quietly, his eyes wide as saucers.",
+    "A boy named Marcus walked over slowly. \"I found one too, but mine is behind the tree,\" he said, pointing left.",
+    "Ethan felt worried because he usually worked alone. However, Marcus smiled and sat beside him patiently.",
+    "\"If we put them together,\" Marcus said, \"we might see what the whole dinosaur looked like.\"",
+    "Ethan thought carefully, then nodded. \"Okay. Yours is behind the tree, mine is round and flat. So that means two different parts.\"",
+    "Together, they drew the pieces in Ethan's notebook. Marcus laughed because his sketch looked wobbly, and Ethan laughed too.",
+    "\"We found it together,\" Ethan said, feeling warm and grateful."
+  ],
+  "page_to_scene": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "page_to_paragraph": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "questions": [
+    {
+      "question": "What did Ethan find near the big oak tree on the school field?",
+      "type": "detail",
+      "correct_answer": "He found a small, smooth rock that looked like a bone.",
+      "wrong_answers": [
+        "He found a shiny, green leaf for his collection.",
+        "He found a lost dinosaur toy hidden in the grass."
+      ]
+    },
+    {
+      "question": "What did Ethan and Marcus do together with their special rocks?",
+      "type": "detail",
+      "correct_answer": "They drew the pieces of their rocks in Ethan's notebook.",
+      "wrong_answers": [
+        "They buried their rocks in the dirt under the tree.",
+        "They showed their rocks to a teacher during playtime."
+      ]
+    },
+    {
+      "question": "Why did Ethan feel worried when Marcus walked over to him at first?",
+      "type": "inference",
+      "correct_answer": "He usually worked alone and was not used to sharing his discoveries.",
+      "wrong_answers": [
+        "Marcus looked angry and scary, which made Ethan nervous.",
+        "Marcus wanted to take Ethan's rock and keep it for himself."
+      ]
+    },
+    {
+      "question": "How did Ethan feel at the very end of the story, and why did he feel that way?",
+      "type": "inference",
+      "correct_answer": "He felt warm and grateful because they found the dinosaur pieces together.",
+      "wrong_answers": [
+        "He felt tired from running and drawing all of the pictures.",
+        "He felt sad because Marcus had to leave and go home soon."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about two boys who found dinosaur fossils together.",
+      "wrong_answers": [
+        "This story was about finding a lost dog at the school field.",
+        "This story was about drawing pictures in a special notebook."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Working together with a friend helps you solve problems you cannot solve alone.",
+    "Trying something new, even when you feel worried, can lead to something wonderful.",
+    "Sharing your ideas with a friend makes the friendship grow stronger."
+  ]
+}

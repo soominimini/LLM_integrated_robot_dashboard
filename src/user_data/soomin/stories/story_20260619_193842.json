@@ -1,0 +1,92 @@
+{
+  "story": "Soomin is in the classroom. Soomin and her friend Mia are making big, colorful pictures. [emotion:QT/surprised] The crayons are on the table, but some crayons are missing! Mia asks the teacher for more crayons. [emotion:QT/happy] Soomin and Mia share the crayons and finish their pictures together.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "soomin",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      40,
+      70
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 154,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Soomin Finds the Crayons"
+  },
+  "pages": [
+    "Soomin is in the classroom. Soomin and her friend Mia are making big, colorful pictures.",
+    "[emotion:QT/surprised] The crayons are on the table, but some crayons are missing! Mia asks the teacher for more crayons.",
+    "[emotion:QT/happy] Soomin and Mia share the crayons and finish their pictures together."
+  ],
+  "paragraphs": [
+    "Soomin is in the classroom. Soomin and her friend Mia are making big, colorful pictures. The crayons are on the table, but some crayons are missing! Mia asks the teacher for more crayons. Soomin and Mia share the crayons and finish their pictures together."
+  ],
+  "scenes": [
+    "Soomin and Mia are in a classroom, sitting at a table and making colorful pictures with crayons."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What were Soomin and Mia doing in the classroom?",
+      "type": "main_idea",
+      "correct_answer": "They were making colorful pictures.",
+      "wrong_answers": [
+        "They were playing with a dog.",
+        "They were looking for a magic wand."
+      ]
+    },
+    {
+      "question": "What were Soomin and Mia making?",
+      "type": "detail",
+      "correct_answer": "Big, colorful pictures.",
+      "wrong_answers": [
+        "A tall castle.",
+        "A superhero cape."
+      ]
+    },
+    {
+      "question": "What was missing from the table?",
+      "type": "detail",
+      "correct_answer": "Some crayons.",
+      "wrong_answers": [
+        "Their pet hamster.",
+        "A princess crown."
+      ]
+    },
+    {
+      "question": "What did Soomin and Mia do with the crayons?",
+      "type": "detail",
+      "correct_answer": "They were sharing the crayons.",
+      "wrong_answers": [
+        "They were hiding them.",
+        "They were giving them to a fairy."
+      ]
+    }
+  ],
+  "takeaways": []
+}

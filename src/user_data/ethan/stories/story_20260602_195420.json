@@ -1,0 +1,139 @@
+{
+  "story": "[emotion:QT/happy] Ethan loved dinosaurs more than almost anything. One sunny afternoon, he went to the school's outdoor sandbox, where a sign said: *Dinosaur Dig Today![emotion:QT/shy] *\n\nEthan stopped near the edge. Another boy was already digging \u2014 carefully, slowly, using a small brush.\n\n[emotion:QT/happy] \"I'm Leo,\" the boy said, looking up with a wide smile. \"I found something bumpy and brown. Do you want to help me figure out what it is?[emotion:QT/calm] \"\n\nEthan stepped closer. \"It looks like a long, flat bone,\" Ethan said, because he had studied dinosaur shapes for months.\n\n[emotion:QT/surprised] \"Whoa!\" Leo said. \"So that is why it curved like that!\"\n\nThey took turns brushing away the sand \u2014 Ethan brushed, then Leo brushed \u2014 until a whole plastic T-Rex skeleton appeared beneath the surface.\n\n[emotion:QT/happy] Ethan felt something warm and bright inside, like sunshine after a rainy morning.\n\n[emotion:QT/happy] \"We did it together,\" Leo said, grinning.\n\n[emotion:QT/happy] [gesture:hoora] Ethan grinned back. \"We really did.\"",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 286,
+    "paragraph_count": 10,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6,
+      7,
+      8,
+      9,
+      9
+    ],
+    "title": "Ethan and the Dinosaur Dig"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan loved dinosaurs more than almost anything. One sunny afternoon, he went to the school's outdoor sandbox, where a sign said: Dinosaur Dig Today! Ethan stopped near the edge. Another boy was already digging carefully, slowly, using a small brush.",
+    "[emotion:QT/happy] \"I'm Leo,\" the boy said, looking up with a wide smile. \"I found something bumpy and brown. Do you want to help me figure out what it is? [emotion:QT/calm] \" Ethan stepped closer. \"It looks like a long, flat bone,\" Ethan said, because he had studied dinosaur shapes for months. [emotion:QT/surprised] \"Whoa!\" Leo said. \"So that is why it curved like that!\"",
+    "They took turns brushing away the sand Ethan brushed, then Leo brushed until a whole plastic T-Rex skeleton appeared beneath the surface. [emotion:QT/happy] Ethan felt something warm and bright inside, like sunshine after a rainy morning. [emotion:QT/happy] \"We did it together,\" Leo said, grinning. [emotion:QT/happy] [gesture:hoora] Ethan grinned back. \"We really did.\""
+  ],
+  "paragraphs": [
+    "Ethan loved dinosaurs more than almost anything. One sunny afternoon, he went to the school's outdoor sandbox, where a sign said: *Dinosaur Dig Today!*",
+    "Ethan stopped near the edge. Another boy was already digging \u2014 carefully, slowly, using a small brush.",
+    "\"I'm Leo,\" the boy said, looking up with a wide smile. \"I found something bumpy and brown. Do you want to help me figure out what it is?\"",
+    "Ethan stepped closer. \"It looks like a long, flat bone,\" Ethan said, because he had studied dinosaur shapes for months.",
+    "\"Whoa!\" Leo said. \"So that is why it curved like that!\"",
+    "They took turns brushing away the sand \u2014 Ethan brushed, then Leo brushed \u2014 until a whole plastic T-Rex skeleton appeared beneath the surface.",
+    "Ethan felt something warm and bright inside, like sunshine after a rainy morning.",
+    "\"We did it together,\" Leo said, grinning.",
+    "Ethan grinned back. \"We really did.\""
+  ],
+  "scenes": [
+    "Ethan loved dinosaurs more than almost anything. One sunny afternoon, he went to the school's outdoor sandbox, where a sign said: *Dinosaur Dig Today!*",
+    "Ethan stopped near the edge. Another boy was already digging \u2014 carefully, slowly, using a small brush.",
+    "\"I'm Leo,\" the boy said, looking up with a wide smile. \"I found something bumpy and brown. Do you want to help me figure out what it is?\"",
+    "Ethan stepped closer. \"It looks like a long, flat bone,\" Ethan said, because he had studied dinosaur shapes for months.",
+    "\"Whoa!\" Leo said. \"So that is why it curved like that!\"",
+    "They took turns brushing away the sand \u2014 Ethan brushed, then Leo brushed \u2014 until a whole plastic T-Rex skeleton appeared beneath the surface.",
+    "Ethan felt something warm and bright inside, like sunshine after a rainy morning.",
+    "\"We did it together,\" Leo said, grinning.",
+    "Ethan grinned back. \"We really did.\""
+  ],
+  "page_to_scene": [
+    0,
+    2,
+    5
+  ],
+  "page_to_paragraph": [
+    0,
+    2,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "questions": [
+    {
+      "question": "Where did Ethan go one sunny afternoon?",
+      "type": "detail",
+      "correct_answer": "He went to the school's outdoor sandbox.",
+      "wrong_answers": [
+        "He went to the big park.",
+        "He went to his house."
+      ]
+    },
+    {
+      "question": "What did Ethan and Leo find together in the sandbox?",
+      "type": "detail",
+      "correct_answer": "They found a whole plastic T-Rex skeleton.",
+      "wrong_answers": [
+        "They found a shiny rock.",
+        "They found a small toy car."
+      ]
+    },
+    {
+      "question": "Why did Ethan know the bumpy brown thing was a bone when Leo found it?",
+      "type": "inference",
+      "correct_answer": "Ethan knew it was a bone because he studied dinosaur shapes.",
+      "wrong_answers": [
+        "He knew it was a bone because Leo told him.",
+        "He knew it was a bone because it was very big."
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt when Leo asked him to help dig?",
+      "type": "inference",
+      "correct_answer": "Ethan felt happy and maybe a little less shy.",
+      "wrong_answers": [
+        "Ethan felt very angry.",
+        "Ethan felt tired and wanted to go home."
+      ]
+    },
+    {
+      "question": "What was this story mostly about?",
+      "type": "main_idea",
+      "correct_answer": "This story was about two boys who found a dinosaur together.",
+      "wrong_answers": [
+        "This story was about a boy who loved to run.",
+        "This story was about a school trip."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Working together with a friend helps you do things you cannot do alone.",
+    "Being brave enough to take one small step toward someone new can start a real friendship.",
+    "Sharing what you know is a kind and generous thing to do."
+  ]
+}

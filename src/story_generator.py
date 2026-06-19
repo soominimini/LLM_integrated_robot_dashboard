@@ -553,6 +553,7 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
         topics: Optional[List[str]] = None,
         goals: Optional[str] = None,
         persona_context: Optional[str] = None,
+        language_age: Optional[int] = None,
     ) -> str:
         """
         Build the full story generation prompt from composable components:
@@ -561,8 +562,15 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
         Replaces the old _select_template() approach with a single
         master template that gets different content injected based
         on the child's age and selected topics.
+
+        ``age`` is the chronological age used for the child's stated identity in
+        the prose. ``language_age`` (when given) is the developmental/language
+        age that selects the complexity tier — sentence length, structure, and
+        word range. This decouples a child's identity from their language level
+        (e.g. a 9-year-old targeted at an MLU-6-8 / language-age-5 tier).
         """
-        age_tier = self._get_age_tier(age)
+        tier_age = language_age if language_age is not None else age
+        age_tier = self._get_age_tier(tier_age)
         min_words, max_words = age_tier["word_range"]
         theme = self._get_theme_guidance(topics)
         goals_section = self._format_goals_section(goals)
@@ -818,6 +826,7 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
         topics: Optional[List[str]] = None,
         goals: Optional[str] = None,
         persona_context: Optional[str] = None,
+        language_age: Optional[int] = None,
     ) -> Dict[str, Any]:
 
         try:
@@ -831,16 +840,19 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
                     topics=topics,
                     goals=goals,
                     persona_context=persona_context,
+                    language_age=language_age,
                 )
 
             print("[StoryGenerator] prompt: ", prompt)
 
             story_text = self._run_llm(prompt, stream=False)
 
-            age_tier = self._get_age_tier(age)
+            tier_age = language_age if language_age is not None else age
+            age_tier = self._get_age_tier(tier_age)
             story_metadata = {
                 "child_name": child_name,
                 "age": age,
+                "language_age": language_age,
                 "age_tier": age_tier["label"],
                 "target_word_range": list(age_tier["word_range"]),
                 "word_count": len(story_text.split()),
@@ -873,6 +885,7 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
         topics: Optional[List[str]] = None,
         goals: Optional[str] = None,
         persona_context: Optional[str] = None,
+        language_age: Optional[int] = None,
     ):
         """
         Generate a therapeutic story with streaming response via Gemini API.
@@ -892,6 +905,7 @@ Return ONLY the rewritten story body. No "Here is" preamble. No ** Title **, ** 
                     topics=topics,
                     goals=goals,
                     persona_context=persona_context,
+                    language_age=language_age,
                 )
 
             if self._is_ollama_model():

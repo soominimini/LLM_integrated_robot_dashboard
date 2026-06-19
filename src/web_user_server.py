@@ -4,7 +4,7 @@ import os
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, send_from_directory, send_file,make_response
 from user_management import UserManager
 from story_generator import StoryGenerator
-from persona_rag import PersonaRAG
+from knowledge_base import LanguageInterestKB
 from tts_helper import TTSHelper
 from image_generator import ImageGenerator
 from flask_cors import CORS
@@ -64,6 +64,13 @@ _ros_cam_lock = Lock()
 # HumanTracking singleton
 _human_tracker = None
 _human_tracker_lock = Lock()
+# When init fails (e.g. the robot motor controllers aren't running, so the
+# head-command topic has no subscriber) every request that wants tracking
+# would otherwise re-attempt and block ~5s on the ROS timeout, then re-log the
+# same scary error. Remember the failure and skip retrying for a cooldown, so
+# the app stays responsive but still self-heals once the motors come back.
+_human_tracker_failed_at = 0.0
+_HUMAN_TRACKER_RETRY_COOLDOWN = 60.0  # seconds
 
 # V4L2 camera handle (non-ROS fallback)
 _v4l_cap = None
@@ -75,16 +82,30 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def _ensure_human_tracker():
-    global _human_tracker
+    global _human_tracker, _human_tracker_failed_at
     if not HUMAN_TRACKING_AVAILABLE:
         return None
     with _human_tracker_lock:
-        if _human_tracker is None:
-            try:
-                _human_tracker = HumanTracking()
-            except Exception as e:
-                print(f"HumanTracking init failed: {e}")
-                return None
+        if _human_tracker is not None:
+            return _human_tracker
+        # Don't keep re-attempting (each try blocks ~5s on the ROS timeout)
+        # while we're inside the cooldown after a recent failure.
+        if _human_tracker_failed_at and (
+                time.time() - _human_tracker_failed_at < _HUMAN_TRACKER_RETRY_COOLDOWN):
+            return None
+        try:
+            _human_tracker = HumanTracking()
+            _human_tracker_failed_at = 0.0
+        except Exception as e:
+            _human_tracker_failed_at = time.time()
+            print(
+                "[HumanTracking] Robot motors not available — head tracking "
+                "disabled. The '/qt_robot/head_position/command' topic has no "
+                "subscriber, so the QTrobot motor controllers are likely not "
+                f"running. The app will keep working without head movement and "
+                f"retry in {int(_HUMAN_TRACKER_RETRY_COOLDOWN)}s. (detail: {e})"
+            )
+            return None
     return _human_tracker
 
 def _pause_human_tracking_for_capture():
@@ -218,7 +239,7 @@ user_manager = UserManager(
     base_dir=USER_DATA_DIR
 )
 story_generator = StoryGenerator(llm_model="claude-sonnet-4-6")
-persona_rag = PersonaRAG()
+knowledge_base = LanguageInterestKB()
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
@@ -231,13 +252,14 @@ def _load_user_profile(username):
         "gender": user.get("gender", ""),
         "disorder": user.get("disorder", ""),
         "learning_goals": user.get("learning_goals", ""),
+        "language_age": user.get("language_age"),
     }
     try:
         profile_path = os.path.join(USER_DATA_DIR, username, "profile.json")
         if os.path.exists(profile_path):
             with open(profile_path, "r") as pf:
                 pdata = json.load(pf)
-            for key in ("age", "gender", "disorder", "learning_goals"):
+            for key in ("age", "gender", "disorder", "learning_goals", "language_age"):
                 if pdata.get(key) not in (None, ""):
                     profile[key] = pdata[key]
     except Exception as e:
@@ -246,28 +268,56 @@ def _load_user_profile(username):
 
 
 def _persona_context_for(username, age, kind="story"):
-    """Look up profile.disorder for `username` and build a persona RAG fragment.
+    """Build a language + interest knowledge-base fragment for `username`.
+
+    Derives developmentally-appropriate language targets (by age) and interest
+    themes (by age + gender) from the SLP co-design knowledge base.
 
     kind: "story" -> narrative-shaped fragment; "question" -> compact fragment.
-    Returns an empty string if no persona can be matched.
+    Returns an empty string if nothing can be derived.
     """
     try:
         profile = _load_user_profile(username)
-        disorder = profile.get("disorder", "") or ""
+        gender = profile.get("gender", "") or ""
         effective_age = age if age is not None else profile.get("age") or 0
+        # Optional developmental/language age: when a child's language level
+        # differs from their chronological age (e.g. a 9-year-old targeted at
+        # MLU 6-8), profile.json may carry "language_age". None -> use age.
+        language_age = profile.get("language_age")
         if kind == "question":
-            fragment = persona_rag.build_question_prompt_fragment(effective_age, disorder)
+            fragment = knowledge_base.build_question_prompt_fragment(
+                effective_age, gender, language_age=language_age)
         else:
-            fragment = persona_rag.build_story_prompt_fragment(effective_age, disorder)
+            fragment = knowledge_base.build_story_prompt_fragment(
+                effective_age, gender, language_age=language_age)
         if fragment:
-            matched = persona_rag.match(effective_age, disorder)
-            if matched:
-                print(f"[PersonaRAG] matched persona '{matched.get('name')}' for "
-                      f"user={username} age={effective_age} disorder='{disorder}' kind={kind}")
+            info = knowledge_base.describe(effective_age, gender, language_age=language_age)
+            print(f"[KB] derived level_age={info.get('level_age')} mlu={info.get('mlu_range')} "
+                  f"targets={info.get('targets')} interests={info.get('interests')} for "
+                  f"user={username} age={effective_age} language_age={language_age} "
+                  f"gender='{gender}' kind={kind}")
         return fragment or ''
     except Exception as e:
-        print(f"[PersonaRAG] context build failed for {username}: {e}")
+        print(f"[KB] context build failed for {username}: {e}")
         return ''
+
+
+def _language_age_for(username, age):
+    """Effective developmental/language age for activity complexity decisions.
+
+    Returns profile.language_age when set (a child whose language level differs
+    from their chronological age, e.g. a 9-year-old targeted at MLU 6-8), else
+    the chronological age. Used so question/scene/image activities pitch their
+    complexity at the child's language level — consistent with how the story
+    generator and the knowledge base treat language_age.
+    """
+    try:
+        la = _load_user_profile(username).get("language_age")
+        if la is not None:
+            return int(la)
+    except Exception:
+        pass
+    return age
 
 # Gemini analysis is delegated to external script (Python 3.9) when requested
 
@@ -1252,7 +1302,9 @@ def api_generate_story():
     # Load learning goals from profile.json if available
     gender = user.get("gender", "")
     learning_goals = user.get("learning_goals", "")
-    
+    # Optional developmental/language age (decoupled from chronological age).
+    language_age = data.get("language_age", user.get("language_age"))
+
     try:
         profile_path = os.path.join(USER_DATA_DIR, username, "profile.json")
         if os.path.exists(profile_path):
@@ -1260,6 +1312,8 @@ def api_generate_story():
                 profile = json.load(pf)
             learning_goals = profile.get("learning_goals", learning_goals)
             gender = profile.get("gender", gender)
+            if data.get("language_age") is None and profile.get("language_age") is not None:
+                language_age = profile.get("language_age")
     except Exception as e:
         print(f"Warning: failed to read profile.json: {e}")
     persona_context = _persona_context_for(username, age, kind="story")
@@ -1273,6 +1327,7 @@ def api_generate_story():
             topics=topics,
             goals=learning_goals,
             persona_context=persona_context,
+            language_age=language_age,
         )
         if result["success"]:
             return jsonify(result), 200
@@ -1302,6 +1357,7 @@ def api_generate_story_stream():
 
     learning_goals = user.get("learning_goals", "")
     gender = user.get("gender", "")
+    language_age = data.get("language_age", user.get("language_age"))
     try:
         profile_path = os.path.join(USER_DATA_DIR, username, "profile.json")
         if os.path.exists(profile_path):
@@ -1309,15 +1365,18 @@ def api_generate_story_stream():
                 profile = json.load(pf)
             learning_goals = profile.get("learning_goals", learning_goals)
             gender = profile.get("gender", gender)
+            if data.get("language_age") is None and profile.get("language_age") is not None:
+                language_age = profile.get("language_age")
     except Exception as e:
         print(f"Warning: failed to read profile.json: {e}")
-        
+
     def generate():
         try:
             # Send initial metadata event for streaming clients
             meta = {
                 "child_name": child_name,
                 "age": age,
+                "language_age": language_age,
                 "gender": gender,
                 "topics": topics or [],
             }
@@ -1330,6 +1389,7 @@ def api_generate_story_stream():
                 topics=topics,
                 goals=learning_goals,
                 persona_context=_persona_context_for(username, age, kind="story"),
+                language_age=language_age,
             ):
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         except Exception as e:
@@ -1889,11 +1949,18 @@ def api_save_quiz():
         "files": saved
     })
 
-def _generate_story_questions(story_text, child_age, child_name="the child", persona_context=""):
+def _generate_story_questions(story_text, child_age, child_name="the child", persona_context="",
+                              language_age=None):
     """Generate comprehension questions for a story using Gemini.
 
     For all ages: questions about main idea and story details.
     For ages > 7: also include inference questions (e.g. character feelings/motivations).
+
+    ``child_age`` is chronological (used for the child's stated identity).
+    ``language_age`` (when given) is the developmental/language age that drives
+    question complexity — count, wording, and whether deeper inference questions
+    are included — so an older child with a language delay gets questions pitched
+    at their language level. Falls back to ``child_age`` when None.
 
     Each question has 3 answer options (1 correct, 2 incorrect).
 
@@ -1904,7 +1971,8 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
     if not cleaned.strip():
         return []
 
-    if child_age <= 4:
+    complexity_age = language_age if language_age is not None else child_age
+    if complexity_age <= 4:
         num_questions = 3
         detail_guidance = (
             "- 1 main idea question (e.g. 'What was the story about?')\n"
@@ -1912,7 +1980,7 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
             "Use very simple language with short sentences (3-6 words per question).\n"
             "Keep answer options very short (1-5 words each)."
         )
-    elif child_age <= 6:
+    elif complexity_age <= 6:
         num_questions = 4
         detail_guidance = (
             "- 1 main idea question (e.g. 'What was the main thing that happened in the story?')\n"
@@ -1998,7 +2066,7 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
         {"question": "What happened at the end of the story?", "type": "detail",
          "correct_answer": "Everyone was happy", "wrong_answers": ["Everyone was sad", "Nothing happened"]},
     ]
-    if child_age > 7:
+    if complexity_age > 7:
         fallback.append({"question": "Why do you think the main character felt happy at the end?", "type": "inference",
                          "correct_answer": "Because they helped someone", "wrong_answers": ["Because they got a prize", "Because they went home"]})
         fallback.append({"question": "What do you think the story is trying to teach us?", "type": "inference",
@@ -2773,6 +2841,7 @@ def api_save_story():
     questions = _generate_story_questions(
         story, child_age, metadata.get('child_name', 'the child'),
         persona_context=q_persona_ctx,
+        language_age=_language_age_for(username, child_age),
     )
     print(f"[StorySave] Generated {len(questions)} comprehension questions")
 
@@ -2936,12 +3005,18 @@ def _extract_json(raw):
     return None
 
 
-def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=""):
+def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context="",
+                                  language_age=None):
     """Use the quiz LLM to generate a scene-game question.
 
     For ages 2-3: direct request naming one specific object.
     For ages 4-6: criteria-based (e.g. "a red fruit") — multiple toys may match.
     For ages 7+:  complex inference riddle — child must reason about properties.
+
+    Complexity (the exact/criteria/riddle tier and the level cue given to the
+    LLM) follows ``language_age`` when provided — the child's developmental
+    language age — so an older child with a language delay is not handed a 7+
+    riddle. Falls back to ``child_age`` when None.
 
     Returns dict with keys:
         question  – the text to speak
@@ -2952,8 +3027,11 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
     # Pick one toy as the primary target (always used as fallback)
     target = random.choice(toy_list)
 
+    # Complexity tier follows the developmental/language age, not chronological.
+    complexity_age = language_age if language_age is not None else child_age
+
     # Determine mode based on age
-    if child_age <= 3:
+    if complexity_age <= 3:
         mode = "exact"
     else:
         mode = "criteria"
@@ -2988,10 +3066,10 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             'criteria': None,
             'mode': 'exact',
         }
-    elif child_age <= 6:
+    elif complexity_age <= 6:
         prompt = (
             f"You are generating a question for an object detection game for a "
-            f"{child_age}-year-old child.\n"
+            f"{complexity_age}-year-old child.\n"
             f"Available physical toys: {', '.join(toy_list)}.\n"
             f"{goals_clause}"
             f"Generate ONE inference-style request that lets the child figure\n"
@@ -3032,7 +3110,7 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
     else:
         prompt = (
             f"You are generating a question for an object detection game for a "
-            f"{child_age}-year-old child.\n"
+            f"{complexity_age}-year-old child.\n"
             f"Available physical toys: {', '.join(toy_list)}.\n"
             f"{goals_clause}"
             f"Generate ONE riddle that requires the child to reason about\n"
@@ -3156,90 +3234,165 @@ DIRECTION_RELATION_PHRASES = {
     "out":         ["out of", "outside"],
 }
 
-# Age-tiered relation pools. Children under ~3 learn containment first
-# (in / out); older children practise the full 2D + 3D set. The pools are
-# disjoint so a young learner is never given a relation they haven't been
-# introduced to yet.
-DIRECTION_RELATIONS_YOUNG = ["in", "out"]
-DIRECTION_RELATIONS_OLDER = ["next_to", "above", "under", "behind", "in_front_of"]
-
-
-def _direction_relations_for_age(child_age):
-    """Return the list of relation keys appropriate for ``child_age``."""
-    try:
-        if int(child_age) <= 3:
-            return list(DIRECTION_RELATIONS_YOUNG)
-    except (ValueError, TypeError):
-        pass
-    return list(DIRECTION_RELATIONS_OLDER)
-
-
-# Toy-list tokens that mark an item as a *container* (the natural "location"
-# for in/out instructions). Word-boundary substring match, so "small jar"
-# and "blue container" both qualify but "canary" does not.
-DIRECTION_CONTAINER_WORDS = {
-    "jar", "container", "can", "cup", "bowl", "box",
-    "basket", "bucket", "mug", "pot", "bottle", "tin",
+# ---------- Toy categorisation ----------
+#
+# Every toy is sorted into a semantic category. The "container" category is
+# special: it supplies the *destination* of a spatial-reasoning round (the
+# place an object is put into / onto). Every other category supplies the
+# *object* being moved. Matching is whole-word and case-insensitive, so
+# "blue dinosaur" -> dinosaur and "red block" -> block.
+#
+# Order matters: "container" is checked first so e.g. a "lunch box" is treated
+# as a container rather than food.
+SCENE_TOY_CATEGORIES = {
+    "container": {
+        "tray", "box", "bowl", "basket", "bucket", "cup", "jar", "pot",
+        "tin", "can", "mug", "plate", "dish", "crate", "container",
+        "pan", "saucer", "pail", "vase", "carton", "tub", "glass", "bin",
+    },
+    "fruit": {
+        "apple", "banana", "orange", "lemon", "lime", "grape", "grapes",
+        "strawberry", "pear", "peach", "cherry", "watermelon", "melon",
+        "mango", "tomato", "pineapple", "kiwi", "plum", "blueberry",
+        "raspberry", "blackberry", "apricot", "fig", "papaya", "avocado",
+        "pomegranate", "coconut",
+    },
+    "dinosaur": {
+        "dinosaur", "dino", "trex", "rex", "raptor", "triceratops",
+        "stegosaurus", "brontosaurus", "velociraptor", "pterodactyl",
+        "diplodocus", "spinosaurus", "ankylosaurus", "pterosaur",
+    },
+    "food": {
+        "cookie", "cake", "bread", "pizza", "sandwich", "donut", "doughnut",
+        "egg", "carrot", "broccoli", "candy", "biscuit", "cheese", "hotdog",
+        "burger", "muffin", "pretzel", "cupcake", "lollipop", "icecream",
+        "cracker", "popcorn", "fries", "waffle", "pancake", "taco", "noodle",
+        "noodles", "corn", "chocolate", "jelly", "sausage", "meatball",
+        "pasta", "rice", "sushi", "pie",
+    },
+    "animal": {
+        "dog", "puppy", "cat", "kitten", "bear", "teddy", "lion", "tiger",
+        "elephant", "giraffe", "monkey", "rabbit", "bunny", "duck", "cow",
+        "horse", "pig", "sheep", "frog", "fox", "panda", "zebra", "penguin",
+        "owl", "fish", "shark", "whale", "dolphin", "turtle", "snake", "bird",
+        "chicken", "goat", "mouse", "hamster", "koala", "hippo", "rhino",
+        "deer", "wolf", "crocodile", "alligator", "lizard", "butterfly",
+        "bee", "ladybug", "snail", "crab", "octopus", "unicorn", "dragon",
+    },
+    "vehicle": {
+        "car", "truck", "bus", "train", "plane", "airplane", "helicopter",
+        "boat", "ship", "rocket", "bike", "bicycle", "motorcycle", "tractor",
+        "van", "taxi", "ambulance", "firetruck", "digger", "excavator",
+        "scooter", "jet", "submarine",
+    },
+    "block": {
+        "block", "blocks", "cube", "cubes", "lego", "legos", "brick", "bricks",
+        "domino", "dominoes", "duplo", "duplos", "jenga",
+    },
+    "toy": {
+        "doll", "ball", "robot", "book", "puzzle", "balloon", "top", "spinner",
+        "kite", "crayon", "marker", "drum", "bell", "whistle", "slinky",
+        "figure", "figurine", "yoyo",
+    },
 }
+
+# Containers that are flat surfaces use the preposition "on"; everything else
+# is an enclosing container and uses "in".
+SCENE_SURFACE_CONTAINERS = {"tray", "plate", "dish", "mat", "table"}
+
+
+def _categorize_toy(toy_name):
+    """Return the category key for a toy name, or ``'other'`` if unmatched.
+
+    Matching is whole-word and case-insensitive. The first category in
+    ``SCENE_TOY_CATEGORIES`` order with a matching word wins (container first),
+    so "blue dinosaur" -> 'dinosaur' and "red block" -> 'block'.
+    """
+    if not toy_name:
+        return "other"
+    tokens = set(re.findall(r"[a-z]+", toy_name.lower()))
+    for category, words in SCENE_TOY_CATEGORIES.items():
+        if tokens & words:
+            return category
+    return "other"
 
 
 def _is_direction_container(toy_name):
-    """True if any whole word in ``toy_name`` is a known container term."""
-    if not toy_name:
-        return False
-    tokens = re.findall(r"[a-z]+", toy_name.lower())
-    return any(tok in DIRECTION_CONTAINER_WORDS for tok in tokens)
-
-
-def _build_direction_sentence(obj_a, relation, obj_b, phrase):
-    """Imperative phrasing per relation.
-
-    Most relations read naturally as "Put the X <phrase> the Y" but the
-    containment-removal case (``out``) wants the verb "take" so the
-    sentence sounds idiomatic ("Take the ball out of the cup").
-    """
-    if relation == "out":
-        return f"Take the {obj_a} {phrase} the {obj_b}!"
-    return f"Put the {obj_a} {phrase} the {obj_b}!"
+    """True if a toy is a container (the destination of a direction round)."""
+    return _categorize_toy(toy_name) == "container"
 
 
 def _scene_game_generate_direction_question(toy_list, child_age=None):
-    """Build a 'complex following direction' round.
+    """Build a spatial-reasoning round of the form
+    "Let's put the <object> <relation> the <reference>".
 
-    Picks two distinct toys + a random spatial relation from the pool
-    appropriate for ``child_age``. Ages 3 and under get only the
-    containment relations (in / out); ages 4+ get the full 2D/3D set.
+    A relation is chosen at random from whatever the current toys can support:
 
-    For in/out relations the reference object (``obj_b``) is constrained
-    to a container — jar, cup, bowl, box, etc. — so the round always
-    reads sensibly. If the toy list has no container or no non-container
-    item to put in/take out, the function returns None and the caller
-    falls back to another mode.
+      * Containment ("in", "on") needs a container destination plus a different
+        object to move into / onto it. Enclosing containers (box, bowl, basket)
+        read as "in" (canonical ``in``); flat surfaces (tray, plate) read as
+        "on" (canonical ``above``).
+      * Positional ("next to" / "beside", "under" / "below", "behind") works
+        with any two distinct toys — the reference need not be a container.
 
-    Returns the canonical relation key alongside the spoken phrase so the
-    validator can ground its judgement.
+    Returns None — so the caller falls back to another mode — when the toy
+    list cannot support any relation (fewer than two toys, and no
+    container+object pair).
+
+    ``child_age`` is accepted for call-site compatibility but no longer steers
+    relation choice; difficulty now comes from the object/relation mix.
     """
-    if len(toy_list) < 2:
-        return None  # caller should fall back to another mode
+    # Group toys by category.
+    by_category = {}
+    for toy in toy_list:
+        by_category.setdefault(_categorize_toy(toy), []).append(toy)
 
-    pool = _direction_relations_for_age(child_age)
-    relation = random.choice(pool)
+    containers = by_category.get("container", [])
+    non_containers = [t for c, toys in by_category.items()
+                      if c != "container" for t in toys]
+    all_toys = list(toy_list)
 
-    if relation in {"in", "out"}:
-        containers = [t for t in toy_list if _is_direction_container(t)]
-        non_containers = [t for t in toy_list if not _is_direction_container(t)]
-        if not containers or not non_containers:
-            print(f"[SceneGame] direction '{relation}' needs at least one "
-                  f"container (matching {sorted(DIRECTION_CONTAINER_WORDS)}) "
-                  f"AND one non-container in the toy list; current toys: {toy_list}")
-            return None
-        obj_a = random.choice(non_containers)   # the thing being moved
-        obj_b = random.choice(containers)       # the container / location
+    # Split containers into flat surfaces ("on" / canonical 'above') and
+    # enclosing containers ("in" / canonical 'in').
+    surface_containers, enclosing_containers = [], []
+    for c in containers:
+        tokens = set(re.findall(r"[a-z]+", c.lower()))
+        (surface_containers if tokens & SCENE_SURFACE_CONTAINERS
+         else enclosing_containers).append(c)
+
+    # Build the menu of relations the current toys can actually pose. Each key
+    # is a canonical relation; containment relations carry their destination
+    # pool so we don't re-derive it below.
+    candidates = []
+    if enclosing_containers and non_containers:
+        candidates.append("in")
+    if surface_containers and non_containers:
+        candidates.append("on")          # canonical 'above', spoken "on"
+    if len(all_toys) >= 2:
+        candidates.extend(["next_to", "under", "behind"])
+
+    if not candidates:
+        print(f"[SceneGame] direction mode needs two distinct toys, or a "
+              f"container plus an object; current toys: {toy_list}")
+        return None
+
+    choice = random.choice(candidates)
+
+    if choice == "in":
+        obj_a = random.choice(non_containers)
+        obj_b = random.choice(enclosing_containers)
+        relation, phrase = "in", "in"
+    elif choice == "on":
+        obj_a = random.choice(non_containers)
+        obj_b = random.choice(surface_containers)
+        relation, phrase = "above", "on"
     else:
-        obj_a, obj_b = random.sample(list(toy_list), 2)
+        # Positional relation: any two distinct toys; varied spoken vocabulary.
+        obj_a, obj_b = random.sample(all_toys, 2)
+        relation = choice
+        phrase = random.choice(DIRECTION_RELATION_PHRASES[relation])
 
-    phrase = random.choice(DIRECTION_RELATION_PHRASES[relation])
-    question = _build_direction_sentence(obj_a, relation, obj_b, phrase)
+    question = f"Let's put the {obj_a} {phrase} the {obj_b}."
     return {
         'question': question,
         'mode': 'direction',
@@ -3247,8 +3400,50 @@ def _scene_game_generate_direction_question(toy_list, child_age=None):
         'obj_b': obj_b,
         'relation': relation,
         'phrase': phrase,
+        'category': _categorize_toy(obj_a),
         # `target` / `criteria` kept for response-shape uniformity with
         # the other modes; downstream consumers ignore them in direction mode.
+        'target': None,
+        'criteria': None,
+    }
+
+
+# Reverse of DIRECTION_RELATION_PHRASES: spoken phrase -> canonical relation.
+# Longer phrases listed naturally (lookup is exact on the phrase string).
+DIRECTION_PHRASE_TO_RELATION = {
+    phrase: relation
+    for relation, phrases in DIRECTION_RELATION_PHRASES.items()
+    for phrase in phrases
+}
+
+# Olivia plays a fixed, curated set of direction-mode rounds instead of the
+# randomly generated ones. Each entry is (obj_a, spoken phrase, obj_b); the
+# canonical relation is derived from the phrase so the round still validates
+# through the normal spatial validator (api_scene_game_answer).
+OLIVIA_DIRECTION_ROUNDS = [
+    ("grape", "in", "box"),
+    ("tray", "in front of", "box"),
+    ("lemon", "on", "tray"),
+    ("banana", "in", "bowl"),
+]
+
+
+def _scene_game_olivia_direction_question():
+    """Return one fixed direction-mode round for Olivia, chosen at random.
+
+    Mirrors the result shape of ``_scene_game_generate_direction_question`` so
+    the round behaves like any other (spoken prompt, spatial validation, hints).
+    """
+    obj_a, phrase, obj_b = random.choice(OLIVIA_DIRECTION_ROUNDS)
+    relation = DIRECTION_PHRASE_TO_RELATION.get(phrase, phrase)
+    return {
+        'question': f"Let's put the {obj_a} {phrase} the {obj_b}.",
+        'mode': 'direction',
+        'obj_a': obj_a,
+        'obj_b': obj_b,
+        'relation': relation,
+        'phrase': phrase,
+        'category': _categorize_toy(obj_a),
         'target': None,
         'criteria': None,
     }
@@ -3546,7 +3741,8 @@ def api_scene_game_new_round():
 
         # Generate age/goal-appropriate question
         persona_ctx = _persona_context_for(username, child_age, kind="question")
-        result = _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=persona_ctx)
+        result = _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=persona_ctx,
+                                               language_age=_language_age_for(username, child_age))
         question = result['question']
 
         # Make the robot ask the question
@@ -3753,6 +3949,12 @@ def api_scene_game_answer():
         correct = bool(result.get('correct'))
         actual_relation = result.get('actual_relation') or 'other'
         reason = (result.get('reason') or '').strip()
+        # Served URL of the exact media Gemini analysed, so the UI can show the
+        # captured frame/clip next to the prompt and the model's raw response.
+        image_url = '/images/' + os.path.relpath(fpath, USER_DATA_DIR)
+        video_url = None
+        if used_video:
+            video_url = '/images/' + os.path.relpath(video_path, USER_DATA_DIR)
         try:
             if correct:
                 tts_helper.speak(f"Great job! The {obj_a} is {DIRECTION_RELATION_PHRASES[relation][0]} the {obj_b}!")
@@ -3775,6 +3977,11 @@ def api_scene_game_answer():
             'obj_b_found': bool(result.get('obj_b_found', False)),
             'reason': reason,
             'used_video': used_video,
+            # Inference transparency: the exact media, prompt and model output.
+            'image_url': image_url,
+            'video_url': video_url,
+            'prompt': result.get('prompt'),
+            'raw_response': result.get('raw_response'),
         })
 
     # Step 1: detect object + robot looks at it
@@ -5321,6 +5528,7 @@ def api_get_story_sentences():
             questions = _generate_story_questions(
                 story_text, child_age, child_name,
                 persona_context=q_persona_ctx,
+                language_age=_language_age_for(username, child_age),
             )
             # Save back to the story file so we don't regenerate next time
             if questions:
@@ -5854,7 +6062,7 @@ def api_head_position():
 
 # ===================== SCENE GAME TOY LIST =====================
 
-SCENE_GAME_DEFAULT_TOYS = ['lemon', 'tomato', 'apple', 'banana']
+SCENE_GAME_DEFAULT_TOYS = ['lemon', 'tomato', 'apple', 'banana', 'tray', 'box','bowl']
 SCENE_GAME_TOYS_FILE = os.path.join(USER_DATA_DIR, 'scene_game_toys.json')
 
 def _load_scene_toys():
@@ -5943,7 +6151,11 @@ def api_scene_start():
 
         result = None
         if requested_mode == 'direction':
-            result = _scene_game_generate_direction_question(toy_list, child_age=child_age)
+            # Olivia always plays the fixed, curated set of direction rounds.
+            if username == 'olivia':
+                result = _scene_game_olivia_direction_question()
+            else:
+                result = _scene_game_generate_direction_question(toy_list, child_age=child_age)
             if result is None:
                 # Generator bailed: either toy list <2, or in/out was the only
                 # option but the list has no container. Fall through to auto.
@@ -5952,6 +6164,7 @@ def api_scene_start():
             persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
             result = _scene_game_generate_question(
                 toy_list, child_age, learning_goals, persona_context=persona_ctx,
+                language_age=_language_age_for(username, child_age) if username else None,
             )
 
         question = result['question']
@@ -6000,14 +6213,20 @@ def _save_scene_index(username, index):
     with open(idx_path, 'w') as f:
         json.dump(index, f, indent=2)
 
-def _run_gemini_wh_analysis(image_path, child_age, difficulty):
-    """Run the Gemini vision worker to analyze a scene and generate WH questions."""
+def _run_gemini_wh_analysis(image_path, child_age, difficulty, language_age=None):
+    """Run the Gemini vision worker to analyze a scene and generate WH questions.
+
+    ``language_age`` (developmental/language age) is forwarded to the worker so
+    image questions are pitched at the child's language level rather than their
+    chronological age. The worker falls back to ``child_age`` when it is absent.
+    """
     script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_wh_scene.py')
     if not os.path.exists(script_path):
         return None, "Worker script not found"
     payload = json.dumps({
         "image_path": image_path,
         "child_age": child_age,
+        "language_age": language_age,
         "difficulty": difficulty
     })
     try:
@@ -6043,8 +6262,11 @@ def _questions_path(wh_dir, scene_id, mode):
     return os.path.join(wh_dir, f"{scene_id}_questions.json")
 
 
-def _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id):
+def _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id, language_age=None):
     """Generate receptive + expressive question sets and persist both.
+
+    ``language_age`` (when given) pitches question complexity at the child's
+    developmental language age instead of their chronological age.
 
     Returns a dict describing what was produced and any per-mode errors so the
     caller can surface partial-success states to the therapist UI.
@@ -6056,7 +6278,7 @@ def _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id):
         "errors": {},
     }
     for mode in ("receptive", "expressive"):
-        result, error = _run_gemini_wh_analysis(image_path, child_age, mode)
+        result, error = _run_gemini_wh_analysis(image_path, child_age, mode, language_age=language_age)
         if result and "questions" in result:
             with open(_questions_path(wh_dir, scene_id, mode), "w") as f:
                 json.dump(result, f, indent=2)
@@ -6127,7 +6349,8 @@ def api_wh_scene_upload():
 
     # Generate both receptive and expressive question sets so the play page
     # can switch modes without a second Gemini round-trip.
-    summary = _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id)
+    summary = _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id,
+                                            language_age=_language_age_for(username, child_age))
 
     index = _load_scene_index(username)
     rel_path = os.path.relpath(image_path, USER_DATA_DIR)
@@ -6189,7 +6412,8 @@ def api_wh_scene_capture():
     user = user_manager.users.get(username, {})
     child_age = user.get('age', 5)
 
-    summary = _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id)
+    summary = _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id,
+                                            language_age=_language_age_for(username, child_age))
 
     index = _load_scene_index(username)
     rel_path = os.path.relpath(image_path, USER_DATA_DIR)
@@ -6287,7 +6511,8 @@ def api_wh_scene_regenerate():
     child_age = user.get('age', 5)
 
     wh_dir = _user_wh_dir(username)
-    summary = _generate_and_save_both_modes(scene['image_path'], child_age, wh_dir, scene_id)
+    summary = _generate_and_save_both_modes(scene['image_path'], child_age, wh_dir, scene_id,
+                                            language_age=_language_age_for(username, child_age))
     ready = summary["receptive_count"] > 0 or summary["expressive_count"] > 0
 
     if ready:

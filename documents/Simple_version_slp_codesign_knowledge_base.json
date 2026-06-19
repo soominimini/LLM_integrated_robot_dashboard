@@ -1,0 +1,397 @@
+{
+  "language_development_framework": {
+    "version": "1.0",
+
+    "language_targets": {
+      "action_verbs_basic": {
+        "description": "Common everyday actions",
+        "examples": ["eat", "drink", "sleep", "run", "jump", "sit"]
+      },
+
+      "action_verbs_higher_level": {
+        "description": "Less frequent and cognitively more complex verbs",
+        "examples": [
+          "climb",
+          "chase",
+          "carry",
+          "deliver",
+          "rescue",
+          "build",
+          "search",
+          "discover"
+        ]
+      },
+
+      "basic_adjectives": {
+        "description": "Descriptive words for size, color, and shape",
+        "examples": [
+          "big",
+          "small",
+          "long",
+           "short",
+          "red",
+          "blue",
+          "green",
+        "yellow",
+          "round",
+          "square",
+          "triangle-shaped"
+        ]
+      },
+
+      "pronouns_early": {
+        "description": "Early personal and possessive pronouns",
+        "examples": [
+          "I",
+          "me",
+          "my",
+          "mine",
+          "you"
+        ]
+      },
+
+      "pronouns_later": {
+        "description": "Later developing pronouns",
+        "examples": [
+          "he",
+          "she",
+          "they",
+          "her",
+          "his",
+          "their"
+        ]
+      },
+
+      "location_prepositions": {
+        "description": "Spatial relationships",
+        "examples": [
+          "in",
+          "on",
+          "under"
+        ]
+      },
+
+      "size_noun": {
+        "description": "Adjective + noun combinations",
+        "examples": [
+          "big pig",
+          "small monkey",
+          "big dinosaur"
+        ]
+      },
+
+      "person_noun": {
+        "description": "Possessive determiner + noun combinations",
+        "examples": [
+          "my apple",
+          "your car",
+          "his dinosaur"
+        ]
+      },
+
+      "location_noun": {
+        "description": "Location concept expressed with a noun phrase",
+        "examples": [
+          "in the box",
+          "on the table",
+          "under the chair"
+        ]
+      },
+
+      "plural_forms": {
+        "description": "Regular plural nouns",
+        "examples": [
+          "dogs",
+          "cars",
+          "apples",
+          "cats",
+          "toys"
+        ]
+      },
+
+      "ing_form": {
+        "description": "Present participle/progressive verb form",
+        "examples": [
+          "running",
+          "jumping",
+          "eating",
+          "playing"
+        ]
+      },
+
+      "simple_conjunction": {
+        "description": "Early conjunction use",
+        "examples": [
+          "and",
+          "or"
+        ]
+      },
+      "intermeidate_conjunction": {
+        "description": "pre-school conjunction use",
+        "examples": [
+          "because",
+          "but",
+          "so",
+          "if"
+        ]
+      },
+
+      "advanced_conjunction": {
+        "description": "More complex conjunction structures",
+        "examples": [
+          "while",
+          "although",
+          "before",
+          "after"
+        ]
+      },
+
+      "irregular_past_tense": {
+        "description": "Irregular past tense verbs",
+        "examples": [
+          "went",
+          "ate",
+          "saw",
+          "gave"
+        ]
+      },
+
+      "auxiliary_verbs": {
+        "description": "Helping verbs",
+        "examples": [
+          "is",
+          "are",
+          "was",
+          "were",
+          "has",
+          "have"
+        ]
+      },
+
+      "copula_verbs": {
+        "description": "Linking verbs",
+        "examples": [
+          "is",
+          "am",
+          "are",
+          "was",
+          "were"
+        ]
+      },
+
+      "verb_tense_concepts": {
+        "description": "Past, present, future, and progressive tense usage",
+        "examples": [
+          "I play",
+          "I played",
+          "I will play",
+          "I am playing"
+        ]
+      }
+    },
+
+    "developmental_levels": [
+      {
+        "age": 2,
+        "mlu_range": "1-3",
+        "targets": [
+          "action_verbs_basic",
+          "basic_adjectives",
+          "pronouns_early"
+        ]
+      },
+
+      {
+        "age": 3,
+        "mlu_range": "4",
+        "targets": [
+          "action_verbs_higher_level",
+          "basic_adjectives",
+          "pronouns_early",
+          "location_prepositions",
+          "size_noun",
+          "person_noun"
+        ]
+      },
+
+      {
+        "age": 4,
+        "mlu_range": "5-6",
+        "targets": [
+          "action_verbs_higher_level",
+          "basic_adjectives",
+          "pronouns_later",
+          "location_prepositions",
+          "size_noun",
+          "location_noun",
+          "ing_form"
+        ]
+      },
+
+      {
+        "age": 5,
+        "mlu_range": "6-8",
+        "targets": [
+          "plural_forms",
+          "ing_form",
+          "pronouns_later",
+          "location_noun",
+          "simple_conjunction"
+        ]
+      },
+
+      {
+        "age": 6,
+        "mlu_range": "8-10",
+        "targets": [
+          "plural_forms",
+          "ing_form",
+          "advanced_conjunction"
+        ]
+      },
+
+      {
+        "age": 8,
+        "mlu_range": "11+",
+        "targets": [
+          "irregular_past_tense",
+          "advanced_conjunction",
+          "auxiliary_verbs",
+          "copula_verbs",
+          "verb_tense_concepts"
+        ]
+      }
+    ]
+  },
+
+  "interest_framework": {
+    "themes": {
+      "animals": [
+        "pig",
+        "dog",
+        "cat",
+        "horse",
+        "rabbit"
+      ],
+
+      "pets": [
+        "dog",
+        "cat",
+        "hamster",
+        "fish"
+      ],
+
+      "vehicles": [
+        "car",
+        "truck",
+        "bus",
+        "train",
+        "airplane"
+      ],
+
+      "dinosaurs": [
+        "trex",
+        "triceratops",
+        "stegosaurus"
+      ],
+
+      "princesses": [
+        "princess",
+        "castle",
+        "crown"
+      ],
+
+      "fairies": [
+        "fairy",
+        "magic wand",
+        "wings"
+      ],
+
+      "superheroes": [
+        "superhero",
+        "cape",
+        "rescue mission"
+      ],
+
+      "video_game_characters": [
+        "game hero",
+        "game creature",
+        "game vehicle"
+      ],
+
+      "pretend_play": [
+        "tea party",
+        "grocery store",
+        "doctor",
+        "chef"
+      ]
+    },
+
+    "age_preferences": [
+      {
+        "age": 2,
+        "girls": [],
+        "boys": [
+          "dinosaurs",
+          "vehicles"
+        ]
+      },
+
+      {
+        "age": 3,
+        "girls": [
+          "unicorns",
+          "animals",
+          "pets",
+          "princesses",
+          "pretend_play"
+        ],
+        "boys": [
+          "pets",
+          "pretend_play",
+          "vehicles"
+        ]
+      },
+
+      {
+        "age": 5,
+        "girls": [
+          "fairies",
+          "princesses",
+          "pets",
+          "superheroes"
+        ],
+        "boys": [
+          "pets",
+          "vehicles",
+          "dinosaurs",
+          "superheroes"
+        ]
+      },
+
+      {
+        "age": 6,
+        "girls": [
+          "fairies",
+          "superheroes"
+        ],
+        "boys": [
+          "superheroes",
+          "vehicles"
+        ]
+      },
+
+      {
+        "age": 8,
+        "girls": [
+          "fairies"
+        ],
+        "boys": [
+          "superheroes",
+          "video_game_characters",
+          "vehicles"
+        ]
+      }
+    ]
+  }
+}
