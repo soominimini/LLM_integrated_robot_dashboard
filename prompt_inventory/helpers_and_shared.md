@@ -36,7 +36,7 @@ explicit age tiers.
 > wrapper **template**; for the **actual resolved data per age** (MLU ranges, target
 > lists, interest themes) see [`knowledge_base_data.md`](knowledge_base_data.md).
 
-- **Source data:** `documents/Simple_version_slp_codesign_knowledge_base.json`.
+- **Source data:** `documents/SLP_codesign_knowledge_base_integrated_v1_1.json`.
 - **Driven by:** `language_age` (or chronological age) for the developmental level / MLU / language targets; chronological age + gender for interest themes. Built by `_persona_context_for(username, age, kind=...)` in the server.
 
 ### Story fragment (`build_story_prompt_fragment`) — template (verbatim)

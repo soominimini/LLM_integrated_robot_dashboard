@@ -1,0 +1,132 @@
+{
+  "story": "Ethan went to the park carrying a big, crinkled map he had drawn himself. [emotion:QT/happy] The map showed a secret superhero trail with five hidden checkpoints, and Ethan was buzzing with excitement like a rocket before takeoff.\n\n[emotion:QT/sad] But when Ethan reached the tall, twisted oak tree, he saw that the wooden sign pointing to checkpoint three was completely gone.\n\n[emotion:QT/afraid] Ethan froze. He had worked so hard on this trail, and now it was broken.\n\nA girl named Maya was sitting nearby, sketching vehicles in a small notebook. [gesture:hi] [emotion:QT/happy] \"Hey! I am really good at finding things,\" she said cheerfully. \"Can I help you look?[emotion:QT/shy] [gesture:nodding-yes] \"\n\nEthan nodded slowly, although he felt a little nervous about asking. While Maya searched behind the bushes, Ethan described exactly where the sign had been standing before it fell.\n\n[emotion:QT/happy] Together, they found the sign beneath a pile of crunchy leaves. [gesture:clapping] [emotion:QT/happy] \"We did it!\" Maya cheered, and Ethan laughed so loudly that two squirrels ran away.\n\n[emotion:QT/happy] Ethan felt proud and grateful, because he had asked for help and gained a friend.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 290,
+    "paragraph_count": 8,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6,
+      7
+    ],
+    "title": "Ethan and the Superhero Map"
+  },
+  "pages": [
+    "Ethan went to the park carrying a big, crinkled map he had drawn himself. [emotion:QT/happy] The map showed a secret superhero trail with five hidden checkpoints, and Ethan was buzzing with excitement like a rocket before takeoff.",
+    "[emotion:QT/sad] But when Ethan reached the tall, twisted oak tree, he saw that the wooden sign pointing to checkpoint three was completely gone. [emotion:QT/afraid] Ethan froze. He had worked so hard on this trail, and now it was broken.",
+    "A girl named Maya was sitting nearby, sketching vehicles in a small notebook. [gesture:hi] [emotion:QT/happy] \"Hey! I am really good at finding things,\" she said cheerfully. \"Can I help you look? [emotion:QT/shy] [gesture:nodding-yes] \" Ethan nodded slowly, although he felt a little nervous about asking. While Maya searched behind the bushes, Ethan described exactly where the sign had been standing before it fell.",
+    "[emotion:QT/happy] Together, they found the sign beneath a pile of crunchy leaves. [gesture:clapping] [emotion:QT/happy] \"We did it!\" Maya cheered, and Ethan laughed so loudly that two squirrels ran away. [emotion:QT/happy] Ethan felt proud and grateful, because he had asked for help and gained a friend."
+  ],
+  "paragraphs": [
+    "Ethan went to the park carrying a big, crinkled map he had drawn himself. The map showed a secret superhero trail with five hidden checkpoints, and Ethan was buzzing with excitement like a rocket before takeoff.",
+    "But when Ethan reached the tall, twisted oak tree, he saw that the wooden sign pointing to checkpoint three was completely gone.",
+    "Ethan froze. He had worked so hard on this trail, and now it was broken.",
+    "A girl named Maya was sitting nearby, sketching vehicles in a small notebook. \"Hey! I am really good at finding things,\" she said cheerfully. \"Can I help you look?\"",
+    "Ethan nodded slowly, although he felt a little nervous about asking. While Maya searched behind the bushes, Ethan described exactly where the sign had been standing before it fell.",
+    "Together, they found the sign beneath a pile of crunchy leaves. \"We did it!\" Maya cheered, and Ethan laughed so loudly that two squirrels ran away.",
+    "Ethan felt proud and grateful, because he had asked for help and gained a friend."
+  ],
+  "scenes": [
+    "Ethan at the park, holding his large, crinkled map, looking excited and buzzing with anticipation.",
+    "Ethan standing by a tall, twisted oak tree, looking dismayed at the empty spot where a wooden sign should be.",
+    "A girl named Maya sitting nearby, sketching in a notebook, looking up to speak cheerfully to Ethan.",
+    "Maya actively searching behind bushes while Ethan stands nearby, gesturing and describing the sign's location.",
+    "Ethan and Maya kneeling together, pointing at the sign they found beneath a pile of leaves, both cheering happily.",
+    "Ethan and Maya standing together, smiling at each other, reflecting their new friendship and Ethan's pride."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    3,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his superhero trail?",
+      "type": "main_idea",
+      "correct_answer": "It is good to ask for help and make new friends.",
+      "wrong_answers": [
+        "Ethan found a lost map in the park.",
+        "Maya was drawing a new game vehicle."
+      ]
+    },
+    {
+      "question": "What was Ethan carrying when he went to the park to find his hidden checkpoints?",
+      "type": "detail",
+      "correct_answer": "A big, crinkled map he had drawn himself.",
+      "wrong_answers": [
+        "A small notebook with drawings.",
+        "A toy superhero action figure."
+      ]
+    },
+    {
+      "question": "What was Maya doing while Ethan was looking for the missing sign near the twisted oak tree?",
+      "type": "detail",
+      "correct_answer": "She was sketching game vehicles in a notebook.",
+      "wrong_answers": [
+        "She was reading a book about superheroes.",
+        "She was playing a video game on her phone."
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt a little nervous about asking Maya for help, although she offered cheerfully?",
+      "type": "inference",
+      "correct_answer": "He did not know her well yet.",
+      "wrong_answers": [
+        "He was afraid of the squirrels.",
+        "He wanted to find it all by himself."
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Ethan had not asked Maya for help to find the checkpoint sign?",
+      "type": "inference",
+      "correct_answer": "He might not have found the sign and felt sad.",
+      "wrong_answers": [
+        "He would have drawn a new map.",
+        "Maya would have left the park right away."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help when something is hard makes you smarter and stronger.",
+    "Working together with a friend helps you solve problems faster.",
+    "Being kind to someone new is how great friendships start."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "story": "[emotion:QT/happy] Sophie and her friend Mia are playing in the crisp autumn leaves. [emotion:QT/surprised] A big gust of wind blows the golden leaves up into the air! The leaves are swirling and rustling all around Sophie and Mia. [emotion:QT/happy] [gesture:clapping] Sophie and Mia catch the shimmering leaves together and put them in a big pile on the soft green grass.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      40,
+      70
+    ],
+    "topics": [
+      "season"
+    ],
+    "word_count": 178,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Falling Leaves"
+  },
+  "pages": [
+    "[emotion:QT/happy] Sophie and her friend Mia are playing in the crisp autumn leaves. [emotion:QT/surprised] A big gust of wind blows the golden leaves up into the air! The leaves are swirling and rustling all around Sophie and Mia. [emotion:QT/happy] [gesture:clapping] Sophie and Mia catch the shimmering leaves together and put them in a big pile on the soft green grass."
+  ],
+  "paragraphs": [
+    "Sophie and her friend Mia are playing in the crisp autumn leaves. A big gust of wind blows the golden leaves up into the air! The leaves are swirling and rustling all around Sophie and Mia. Sophie and Mia catch the shimmering leaves together and put them in a big pile on the soft green grass."
+  ],
+  "scenes": [
+    "Sophie and Mia are playing in a field of crisp autumn leaves. A gust of wind blows the golden leaves around them as they catch and pile them on the green grass."
+  ],
+  "page_to_scene": [
+    0
+  ],
+  "page_to_paragraph": [
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What were Sophie and Mia doing in the story?",
+      "type": "main_idea",
+      "correct_answer": "Playing with autumn leaves.",
+      "wrong_answers": [
+        "Building a big castle.",
+        "Looking for a lost puppy."
+      ]
+    },
+    {
+      "question": "What blew the leaves up?",
+      "type": "detail",
+      "correct_answer": "A big gust of wind.",
+      "wrong_answers": [
+        "A magic fairy wand.",
+        "A superhero's cape."
+      ]
+    },
+    {
+      "question": "What were Sophie and Mia catching?",
+      "type": "detail",
+      "correct_answer": "Shimmering leaves.",
+      "wrong_answers": [
+        "Little toy cars.",
+        "Pretty blue flowers."
+      ]
+    },
+    {
+      "question": "Where did they put the leaves?",
+      "type": "detail",
+      "correct_answer": "In a big pile on the grass.",
+      "wrong_answers": [
+        "Under a tall castle.",
+        "Inside a dog house."
+      ]
+    }
+  ],
+  "takeaways": []
+}

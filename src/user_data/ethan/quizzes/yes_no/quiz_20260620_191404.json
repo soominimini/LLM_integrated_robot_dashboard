@@ -1,0 +1,44 @@
+[
+  {
+    "question": "Is it okay to push a friend?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it right to take turns playing a game?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can you take a friend's toy without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you raise your hand to speak?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ever kick someone?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you help a friend who fell down?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it good to tell the truth?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

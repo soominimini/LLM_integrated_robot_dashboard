@@ -1,0 +1,156 @@
+{
+  "story": "Ethan ran toward the big, red track in the middle of the school gym. [emotion:QT/happy] He was so excited because the Rocket Car Race was starting soon, and his shiny blue car was the fastest one he had ever built.\n\n[emotion:QT/sad] Then Ethan saw that one silver wheel had fallen off, and the race was beginning in ten minutes. His stomach felt like it sank all the way to the floor.\n\n[emotion:QT/shy] A girl named Maya walked over carefully. \"I noticed your wheel came off,\" she said. \"I have extra parts, although I was saving them for my own car.[emotion:QT/surprised] \"\n\nEthan looked up. \"You would give those to me?[gesture:nodding-yes] [emotion:QT/happy] \"\n\n\"We can fix it together,\" Maya said warmly, \"before the race starts.\"\n\nWhile Maya held the wheel steady, Ethan clicked it into place. [gesture:clapping] [emotion:QT/happy] The car went straight and fast across the track, and both of them cheered louder than anyone else in the room.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 260,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4,
+      5,
+      6,
+      6
+    ],
+    "title": "Ethan and the Rocket Car Race"
+  },
+  "pages": [
+    "Ethan ran toward the big, red track in the middle of the school gym. [emotion:QT/happy] He was so excited because the Rocket Car Race was starting soon, and his shiny blue car was the fastest one he had ever built.",
+    "[emotion:QT/sad] Then Ethan saw that one silver wheel had fallen off, and the race was beginning in ten minutes. His stomach felt like it sank all the way to the floor.",
+    "[emotion:QT/shy] A girl named Maya walked over carefully. \"I noticed your wheel came off,\" she said. \"I have extra parts, although I was saving them for my own car. \"",
+    "Ethan looked up. \"You would give those to me? [gesture:nodding-yes] [emotion:QT/happy] \" \"We can fix it together,\" Maya said warmly, \"before the race starts.\"",
+    "While Maya held the wheel steady, Ethan clicked it into place. [gesture:clapping] [emotion:QT/happy] The car went straight and fast across the track, and both of them cheered louder than anyone else in the room."
+  ],
+  "paragraphs": [
+    "Ethan ran toward the big, red track in the middle of the school gym. He was so excited because the Rocket Car Race was starting soon, and his shiny blue car was the fastest one he had ever built.",
+    "Then Ethan saw that one silver wheel had fallen off, and the race was beginning in ten minutes. His stomach felt like it sank all the way to the floor.",
+    "A girl named Maya walked over carefully. \"I noticed your wheel came off,\" she said. \"I have extra parts, although I was saving them for my own car.\"",
+    "Ethan looked up. \"You would give those to me?\"",
+    "\"We can fix it together,\" Maya said warmly, \"before the race starts.\"",
+    "While Maya held the wheel steady, Ethan clicked it into place. The car went straight and fast across the track, and both of them cheered louder than anyone else in the room."
+  ],
+  "scenes": [
+    "Ethan, full of excitement, runs towards a big red track in a school gym, holding his shiny blue rocket car.",
+    "Ethan stands dejectedly by his blue rocket car on the gym floor, staring at its missing silver wheel.",
+    "Maya approaches Ethan, who is looking at his broken car, and they talk as she offers him parts and help.",
+    "Ethan and Maya work together to fix the car, then test it on the track, cheering loudly as it races perfectly."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    2,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    2,
+    2,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What is the main idea of this story about Ethan and his game vehicle?",
+      "type": "main_idea",
+      "correct_answer": "A friend helped Ethan fix his car before the race.",
+      "wrong_answers": [
+        "Ethan won the Rocket Car Race all by himself.",
+        "Maya was sad that her car broke down."
+      ]
+    },
+    {
+      "question": "What was wrong with Ethan's shiny blue car right before the Rocket Car Race was starting?",
+      "type": "detail",
+      "correct_answer": "One silver wheel had fallen off.",
+      "wrong_answers": [
+        "The engine was not working correctly.",
+        "It was the wrong color for the race."
+      ]
+    },
+    {
+      "question": "What did Maya do to help Ethan fix his car, even though she was saving parts for her own game vehicle?",
+      "type": "detail",
+      "correct_answer": "She gave him extra parts and helped him fix it.",
+      "wrong_answers": [
+        "She told him to build a new car.",
+        "She just watched him try to fix it alone."
+      ]
+    },
+    {
+      "question": "Why do you think Ethan's stomach felt like it sank to the floor when he saw his car's wheel had fallen off?",
+      "type": "inference",
+      "correct_answer": "He was worried he could not race his car.",
+      "wrong_answers": [
+        "He was hungry for a big snack.",
+        "He was excited to build a different car."
+      ]
+    },
+    {
+      "question": "Why do you think Maya decided to help Ethan, even though she was saving her extra parts for her own car?",
+      "type": "inference",
+      "correct_answer": "She wanted to be a good friend and help him race.",
+      "wrong_answers": [
+        "She wanted to take Ethan's car for herself.",
+        "She thought her own car did not need the parts."
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to let Maya help him with his car?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help makes hard things much easier.",
+      "wrong_answers": [
+        "It's always best to try to fix things by yourself first.",
+        "You should only race cars that are shiny and blue."
+      ]
+    },
+    {
+      "question": "What did Maya show us by giving Ethan her extra car parts?",
+      "type": "takeaway",
+      "correct_answer": "Sharing what you have is a superpower that helps everyone.",
+      "wrong_answers": [
+        "It's important to save your best things for yourself.",
+        "Always make sure you have a fast car for the race."
+      ]
+    },
+    {
+      "question": "What can you learn from how Ethan and Maya fixed the car together?",
+      "type": "takeaway",
+      "correct_answer": "Working together and taking turns gets the job done faster.",
+      "wrong_answers": [
+        "It's important to always win every race you enter.",
+        "You should only fix things when you have ten minutes left."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help makes hard things much easier.",
+    "Sharing what you have is a superpower that helps everyone.",
+    "Working together and taking turns gets the job done faster."
+  ]
+}

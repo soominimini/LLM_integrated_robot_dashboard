@@ -1,0 +1,85 @@
+{
+  "story": "Sophie and her mum are sitting on the big, soft sofa. [emotion:QT/surprised] Sophie finds a little fairy doll under the cushion! The fairy doll has tiny pink wings and a small crown. [emotion:QT/happy] [gesture:clapping] Sophie and her mum clap their hands together and put the fairy doll on the table.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      40,
+      70
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 171,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Wings"
+  },
+  "pages": [
+    "Sophie and her mum are sitting on the big, soft sofa. [emotion:QT/surprised] Sophie finds a little fairy doll under the cushion! The fairy doll has tiny pink wings and a small crown. [emotion:QT/happy] [gesture:clapping] Sophie and her mum clap their hands together and put the fairy doll on the table."
+  ],
+  "paragraphs": [
+    "Sophie and her mum are sitting on the big, soft sofa. Sophie finds a little fairy doll under the cushion! The fairy doll has tiny pink wings and a small crown. Sophie and her mum clap their hands together and put the fairy doll on the table."
+  ],
+  "scenes": [
+    "Sophie and her mum are sitting on a sofa, finding a fairy doll under a cushion, then placing it on a table."
+  ],
+  "page_to_scene": [
+    0
+  ],
+  "page_to_paragraph": [
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What did Sophie find under the sofa cushion?",
+      "type": "main_idea",
+      "correct_answer": "A little fairy doll.",
+      "wrong_answers": [
+        "A big toy car.",
+        "A fluffy cat."
+      ]
+    },
+    {
+      "question": "What kind of wings did the fairy doll have?",
+      "type": "detail",
+      "correct_answer": "Tiny pink wings.",
+      "wrong_answers": [
+        "Big blue wings.",
+        "No wings at all."
+      ]
+    },
+    {
+      "question": "Where were Sophie and her mum sitting?",
+      "type": "detail",
+      "correct_answer": "On the big, soft sofa.",
+      "wrong_answers": [
+        "In the kitchen.",
+        "Under a tree."
+      ]
+    },
+    {
+      "question": "What did Sophie and Mum do with their hands?",
+      "type": "detail",
+      "correct_answer": "They clapped their hands.",
+      "wrong_answers": [
+        "They waved hello.",
+        "They ate some snacks."
+      ]
+    }
+  ],
+  "takeaways": []
+}

@@ -1,0 +1,132 @@
+{
+  "story": "[emotion:QT/happy] Ethan went to school feeling excited because his class was building a model rocket together. He ran to the big table and saw colorful pieces laid out in neat, organized rows.\n\n[emotion:QT/afraid] Then Ethan realized the most important piece \u2014 the shiny, silver nose cone \u2014 was missing. He searched under the table, beside the chairs, and behind the bookshelf, but he couldn't find it anywhere.\n\n[emotion:QT/sad] Ethan felt small and stuck, like a car without wheels.\n\nA girl named Maya walked over slowly. [emotion:QT/calm] \"I was looking at the pieces before,\" she said carefully, \"and I think I saw something silver near the window.[emotion:QT/happy] \"\n\nEthan smiled gratefully and followed Maya across the room. Together they found the cone sitting quietly on the windowsill.\n\n[gesture:hoora] The whole class cheered while they attached the final piece. [emotion:QT/happy] Ethan felt warm and proud, like a real superhero who had just completed a rescue mission.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 281,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6
+    ],
+    "title": "Ethan and the Missing Rocket Piece"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan went to school feeling excited because his class was building a model rocket together. He ran to the big table and saw colorful pieces laid out in neat, organized rows.",
+    "[emotion:QT/afraid] Then Ethan realized the most important piece the shiny, silver nose cone was missing. He searched under the table, beside the chairs, and behind the bookshelf, but he couldn't find it anywhere. [emotion:QT/sad] Ethan felt small and stuck, like a car without wheels.",
+    "A girl named Maya walked over slowly. [emotion:QT/calm] \"I was looking at the pieces before,\" she said carefully, \"and I think I saw something silver near the window. \"",
+    "Ethan smiled gratefully and followed Maya across the room. Together they found the cone sitting quietly on the windowsill.",
+    "[gesture:hoora] The whole class cheered while they attached the final piece. [emotion:QT/happy] Ethan felt warm and proud, like a real superhero who had just completed a rescue mission."
+  ],
+  "paragraphs": [
+    "Ethan went to school feeling excited because his class was building a model rocket together. He ran to the big table and saw colorful pieces laid out in neat, organized rows.",
+    "Then Ethan realized the most important piece \u2014 the shiny, silver nose cone \u2014 was missing. He searched under the table, beside the chairs, and behind the bookshelf, but he couldn't find it anywhere.",
+    "Ethan felt small and stuck, like a car without wheels.",
+    "A girl named Maya walked over slowly. \"I was looking at the pieces before,\" she said carefully, \"and I think I saw something silver near the window.\"",
+    "Ethan smiled gratefully and followed Maya across the room. Together they found the cone sitting quietly on the windowsill.",
+    "The whole class cheered while they attached the final piece. Ethan felt warm and proud, like a real superhero who had just completed a rescue mission."
+  ],
+  "scenes": [
+    "Ethan stands excitedly at a large table in a classroom, looking at colorful model rocket pieces laid out.",
+    "Ethan actively searches around the classroom, looking under tables, beside chairs, and behind a bookshelf for a missing rocket piece.",
+    "Ethan stands alone in the classroom, looking small and dejected, reflecting his feeling of being stuck.",
+    "A girl named Maya walks slowly towards Ethan in the classroom, speaking to him carefully.",
+    "Ethan and Maya walk together across the classroom and find the silver nose cone sitting on a windowsill.",
+    "The whole class cheers as Ethan and Maya attach the final piece to the model rocket at a table."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    3,
+    4,
+    5
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    3,
+    4,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "questions": [
+    {
+      "question": "What was the main idea of the story about Ethan and his class, and what were they doing?",
+      "type": "main_idea",
+      "correct_answer": "Ethan helping to find a missing rocket piece.",
+      "wrong_answers": [
+        "A class building a new car.",
+        "A girl who was lost at school."
+      ]
+    },
+    {
+      "question": "What important piece was missing from the model rocket while Ethan was building it with his class?",
+      "type": "detail",
+      "correct_answer": "The shiny, silver nose cone.",
+      "wrong_answers": [
+        "A colorful rocket fin.",
+        "The rocket's big engine."
+      ]
+    },
+    {
+      "question": "After Ethan searched everywhere, where did Maya say she saw something silver before they found it?",
+      "type": "detail",
+      "correct_answer": "Near the window.",
+      "wrong_answers": [
+        "Under the teacher's desk.",
+        "Inside the supply closet."
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt small and stuck, like a car without wheels, when he could not find the nose cone?",
+      "type": "inference",
+      "correct_answer": "He was frustrated and didn't know what to do.",
+      "wrong_answers": [
+        "He was tired from running around.",
+        "He wanted to go home and play games."
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt at the end of the story, when he was feeling warm and proud like a real superhero?",
+      "type": "inference",
+      "correct_answer": "Very happy and accomplished for helping.",
+      "wrong_answers": [
+        "A little bit sleepy.",
+        "Ready to build another rocket."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help is a brave and smart thing to do.",
+    "Working together with a friend helps you solve hard problems faster.",
+    "Looking carefully and staying curious helps you find what you need."
+  ]
+}

@@ -1,0 +1,221 @@
+[
+  {
+    "question": "What color is a banana?",
+    "type": "wh",
+    "correct_answer": "yellow",
+    "accepted_answers": [
+      "yellow",
+      "gold"
+    ]
+  },
+  {
+    "question": "What fruit is red?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "strawberry",
+      "cherry",
+      "raspberry",
+      "watermelon"
+    ]
+  },
+  {
+    "question": "Where do fruits grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "bushes",
+      "plants",
+      "vines",
+      "ground"
+    ]
+  },
+  {
+    "question": "What fruit is long?",
+    "type": "wh",
+    "correct_answer": "banana",
+    "accepted_answers": [
+      "banana",
+      "bananas",
+      "plantain",
+      "cucumber",
+      "zucchini"
+    ]
+  },
+  {
+    "question": "What fruit is round?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "orange",
+      "grape",
+      "cherry",
+      "plum"
+    ]
+  },
+  {
+    "question": "What fruit is small?",
+    "type": "wh",
+    "correct_answer": "grape",
+    "accepted_answers": [
+      "grape",
+      "berry",
+      "cherry",
+      "blueberry",
+      "raspberry"
+    ]
+  },
+  {
+    "question": "What fruit is big?",
+    "type": "wh",
+    "correct_answer": "watermelon",
+    "accepted_answers": [
+      "watermelon",
+      "pineapple",
+      "cantaloupe"
+    ]
+  },
+  {
+    "question": "What fruit has seeds?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "orange",
+      "watermelon",
+      "grape",
+      "pear",
+      "strawberry"
+    ]
+  },
+  {
+    "question": "What fruit is a berry?",
+    "type": "wh",
+    "correct_answer": "strawberry",
+    "accepted_answers": [
+      "strawberry",
+      "blueberry",
+      "raspberry",
+      "blackberry"
+    ]
+  },
+  {
+    "question": "What color is an orange?",
+    "type": "wh",
+    "correct_answer": "orange",
+    "accepted_answers": [
+      "orange"
+    ]
+  },
+  {
+    "question": "What color is a grape?",
+    "type": "wh",
+    "correct_answer": "purple",
+    "accepted_answers": [
+      "purple",
+      "green",
+      "red"
+    ]
+  },
+  {
+    "question": "What fruit is yellow?",
+    "type": "wh",
+    "correct_answer": "banana",
+    "accepted_answers": [
+      "banana",
+      "lemon",
+      "pineapple"
+    ]
+  },
+  {
+    "question": "What fruit is green?",
+    "type": "wh",
+    "correct_answer": "lime",
+    "accepted_answers": [
+      "lime",
+      "kiwi",
+      "apple",
+      "grape"
+    ]
+  },
+  {
+    "question": "How do we eat fruit?",
+    "type": "wh",
+    "correct_answer": "eat it",
+    "accepted_answers": [
+      "eat it",
+      "bite it",
+      "chew it"
+    ]
+  },
+  {
+    "question": "What fruit is sour?",
+    "type": "wh",
+    "correct_answer": "lemon",
+    "accepted_answers": [
+      "lemon",
+      "lime",
+      "grapefruit"
+    ]
+  },
+  {
+    "question": "What fruit is sweet?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "banana",
+      "strawberry",
+      "grape",
+      "mango"
+    ]
+  },
+  {
+    "question": "Where do we buy fruit?",
+    "type": "wh",
+    "correct_answer": "store",
+    "accepted_answers": [
+      "store",
+      "market",
+      "farm"
+    ]
+  },
+  {
+    "question": "What fruit is a citrus?",
+    "type": "wh",
+    "correct_answer": "orange",
+    "accepted_answers": [
+      "orange",
+      "lemon",
+      "lime",
+      "grapefruit"
+    ]
+  },
+  {
+    "question": "What fruit grows on trees?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "orange",
+      "pear",
+      "banana",
+      "cherry"
+    ]
+  },
+  {
+    "question": "What fruit has a peel?",
+    "type": "wh",
+    "correct_answer": "banana",
+    "accepted_answers": [
+      "banana",
+      "orange",
+      "apple",
+      "pear",
+      "kiwi"
+    ]
+  }
+]

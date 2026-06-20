@@ -1,0 +1,90 @@
+{
+  "story": "Sophie and Lily are playing in the garden. Sophie is holding a red ball and three flowers. [emotion:QT/surprised] A tiny fairy is sitting on the big green leaf! The fairy has shiny wings and a little crown. [emotion:QT/happy] [gesture:clapping] Sophie and Lily clap their hands together.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      40,
+      70
+    ],
+    "topics": [],
+    "word_count": 158,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "Sophie and Lily are playing in the garden. Sophie is holding a red ball and three flowers.",
+    "[emotion:QT/surprised] A tiny fairy is sitting on the big green leaf! The fairy has shiny wings and a little crown.",
+    "[emotion:QT/happy] [gesture:clapping] Sophie and Lily clap their hands together."
+  ],
+  "paragraphs": [
+    "Sophie and Lily are playing in the garden. Sophie is holding a red ball and three flowers. A tiny fairy is sitting on the big green leaf! The fairy has shiny wings and a little crown. Sophie and Lily clap their hands together."
+  ],
+  "scenes": [
+    "Sophie and Lily are playing in a garden. Sophie holds a red ball and three flowers, while a tiny fairy with shiny wings and a crown sits on a big green leaf. Sophie and Lily are clapping."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What did Sophie and Lily see in the garden?",
+      "type": "main_idea",
+      "correct_answer": "A tiny fairy",
+      "wrong_answers": [
+        "A big dog",
+        "A pretty bird"
+      ]
+    },
+    {
+      "question": "What was Sophie holding in her hands?",
+      "type": "detail",
+      "correct_answer": "A red ball and three flowers",
+      "wrong_answers": [
+        "A magic wand",
+        "A blue toy car"
+      ]
+    },
+    {
+      "question": "Where was the tiny fairy sitting?",
+      "type": "detail",
+      "correct_answer": "On a big green leaf",
+      "wrong_answers": [
+        "In a tree",
+        "Under a flower"
+      ]
+    },
+    {
+      "question": "What did the fairy have that was shiny?",
+      "type": "detail",
+      "correct_answer": "Shiny wings",
+      "wrong_answers": [
+        "A magic wand",
+        "A pretty dress"
+      ]
+    }
+  ],
+  "takeaways": []
+}

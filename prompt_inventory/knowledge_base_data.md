@@ -5,7 +5,7 @@ text it produces once resolved for a child's age/gender — i.e. the real conten
 that fills the `{persona_section}` / `persona_block` / `goals_clause` placeholders
 referenced in the activity files.
 
-- **Source data:** `documents/Simple_version_slp_codesign_knowledge_base.json`
+- **Source data:** `documents/SLP_codesign_knowledge_base_integrated_v1_1.json`
 - **Loader:** `src/knowledge_base.py` → `LanguageInterestKB`
 - **Instantiated:** `web_user_server.py:242` → `knowledge_base = LanguageInterestKB()`
 - **Builder used by the server:** `_persona_context_for(username, age, kind)` →

@@ -1,0 +1,152 @@
+[
+  {
+    "question": "What do bees make?",
+    "type": "wh",
+    "correct_answer": "honey",
+    "accepted_answers": [
+      "honey",
+      "honeycomb",
+      "wax"
+    ]
+  },
+  {
+    "question": "Where do birds live?",
+    "type": "wh",
+    "correct_answer": "nest",
+    "accepted_answers": [
+      "nest",
+      "nests",
+      "tree",
+      "trees"
+    ]
+  },
+  {
+    "question": "What color is grass?",
+    "type": "wh",
+    "correct_answer": "green",
+    "accepted_answers": [
+      "green",
+      "light green",
+      "dark green",
+      "lime green",
+      "emerald green"
+    ]
+  },
+  {
+    "question": "How many legs does a spider have?",
+    "type": "wh",
+    "correct_answer": "eight",
+    "accepted_answers": [
+      "eight",
+      "8"
+    ]
+  },
+  {
+    "question": "What gives us light and warmth?",
+    "type": "wh",
+    "correct_answer": "sun",
+    "accepted_answers": [
+      "sun",
+      "the sun"
+    ]
+  },
+  {
+    "question": "Where do fish swim?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "ocean",
+      "river",
+      "lake",
+      "pond",
+      "sea"
+    ]
+  },
+  {
+    "question": "What do trees have?",
+    "type": "wh",
+    "correct_answer": "leaves",
+    "accepted_answers": [
+      "leaves",
+      "branches",
+      "trunk",
+      "roots",
+      "bark"
+    ]
+  },
+  {
+    "question": "What sound does a frog make?",
+    "type": "wh",
+    "correct_answer": "ribbit",
+    "accepted_answers": [
+      "ribbit",
+      "croak"
+    ]
+  },
+  {
+    "question": "What do caterpillars become?",
+    "type": "wh",
+    "correct_answer": "butterfly",
+    "accepted_answers": [
+      "butterfly",
+      "butterflies",
+      "moth",
+      "moths"
+    ]
+  },
+  {
+    "question": "Why do plants need water?",
+    "type": "wh",
+    "correct_answer": "grow",
+    "accepted_answers": [
+      "grow",
+      "live",
+      "survive"
+    ]
+  },
+  {
+    "question": "How do birds fly?",
+    "type": "wh",
+    "correct_answer": "wings",
+    "accepted_answers": [
+      "wings",
+      "with wings"
+    ]
+  },
+  {
+    "question": "What animal says 'moo'?",
+    "type": "wh",
+    "correct_answer": "cow",
+    "accepted_answers": [
+      "cow",
+      "cows"
+    ]
+  },
+  {
+    "question": "What fruit grows on trees?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "apples",
+      "orange",
+      "oranges",
+      "pear",
+      "pears",
+      "cherry",
+      "cherries",
+      "peach",
+      "peaches"
+    ]
+  },
+  {
+    "question": "When do stars appear?",
+    "type": "wh",
+    "correct_answer": "night",
+    "accepted_answers": [
+      "night",
+      "evening"
+    ]
+  }
+]

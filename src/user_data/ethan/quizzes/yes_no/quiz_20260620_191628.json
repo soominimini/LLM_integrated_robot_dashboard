@@ -1,0 +1,110 @@
+[
+  {
+    "question": "Is it okay to push a friend?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ever hit another child?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is kicking others a kind choice?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is throwing things at friends right?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you share your treats with friends?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are we supposed to take turns fairly?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay if you ate all the snacks?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you wait your turn in line?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say sorry after bumping someone?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you listen when the teacher talks?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it good to raise your hand first?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are you quiet while others are working?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you talk while others are speaking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to break a friend's toy?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ask before taking a thing?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you help a friend who fell down?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you tell the truth?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

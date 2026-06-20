@@ -1,0 +1,119 @@
+{
+  "story": "It was a crisp autumn morning, and golden leaves were rustling through the air like tiny falling superheroes. [emotion:QT/happy] Ethan ran outside, holding his favorite toy airplane high above his head. [emotion:QT/happy] He was going to build the tallest leaf pile anyone had ever seen.\nBefore Ethan gathered even five leaves, a strong gust of wind swept his careful pile away. [emotion:QT/sad] He stood there, shoulders drooping, watching the shimmering leaves scatter across the yard.\nA girl named Maya was watching from next door. [gesture:hi] \"Want help?\" she called. \"Two people work faster than one.[emotion:QT/shy] \"\nEthan hesitated, [gesture:nodding-yes] then nodded slowly. Together, they took turns raking \u2014 first Ethan, then Maya, while the gentle breeze swirled blooming orange colors around them. [emotion:QT/happy] They laughed when a leaf landed on Maya's nose.\n[emotion:QT/happy] When the pile grew tall and wide, Ethan jumped in first, then gave Maya a turn. [gesture:hoora] [emotion:QT/happy] The wind had changed everything \u2014 and somehow, that made it even better.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "season"
+    ],
+    "word_count": 291,
+    "paragraph_count": 6,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      5,
+      5
+    ],
+    "title": "Ethan and the Wind That Wouldn't Wait"
+  },
+  "pages": [
+    "It was a crisp autumn morning, and golden leaves were rustling through the air like tiny falling superheroes. [emotion:QT/happy] Ethan ran outside, holding his favorite toy airplane high above his head. [emotion:QT/happy] He was going to build the tallest leaf pile anyone had ever seen.",
+    "Before Ethan gathered even five leaves, a strong gust of wind swept his careful pile away. [emotion:QT/sad] He stood there, shoulders drooping, watching the shimmering leaves scatter across the yard.",
+    "A girl named Maya was watching from next door. [gesture:hi] \"Want help?\" she called. \"Two people work faster than one. \"",
+    "Ethan hesitated, [gesture:nodding-yes] then nodded slowly. Together, they took turns raking first Ethan, then Maya, while the gentle breeze swirled blooming orange colors around them. [emotion:QT/happy] They laughed when a leaf landed on Maya's nose.",
+    "[emotion:QT/happy] When the pile grew tall and wide, Ethan jumped in first, then gave Maya a turn. [gesture:hoora] [emotion:QT/happy] The wind had changed everything and somehow, that made it even better."
+  ],
+  "paragraphs": [
+    "It was a crisp autumn morning, and golden leaves were rustling through the air like tiny falling superheroes. Ethan ran outside, holding his favorite toy airplane high above his head. He was going to build the tallest leaf pile anyone had ever seen.\nBefore Ethan gathered even five leaves, a strong gust of wind swept his careful pile away. He stood there, shoulders drooping, watching the shimmering leaves scatter across the yard.\nA girl named Maya was watching from next door. \"Want help?\" she called. \"Two people work faster than one.\"\nEthan hesitated, then nodded slowly. Together, they took turns raking \u2014 first Ethan, then Maya, while the gentle breeze swirled blooming orange colors around them. They laughed when a leaf landed on Maya's nose.\nWhen the pile grew tall and wide, Ethan jumped in first, then gave Maya a turn. The wind had changed everything \u2014 and somehow, that made it even better."
+  ],
+  "scenes": [
+    "Ethan and Maya are in a vibrant autumn yard, surrounded by golden leaves. They are actively raking leaves into a large pile, laughing, and eventually jumping into the finished pile together."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "How did Ethan learn that working with a friend was better than working alone, even when the wind was blowing like a supervillain?",
+      "type": "main_idea",
+      "correct_answer": "Teamwork made building the leaf pile more fun and successful.",
+      "wrong_answers": [
+        "He learned that the wind always wins.",
+        "He found a new toy airplane."
+      ]
+    },
+    {
+      "question": "What was Ethan holding high above his head when he ran outside, just like a game hero flying through the air?",
+      "type": "detail",
+      "correct_answer": "His favorite toy airplane.",
+      "wrong_answers": [
+        "A big rake for leaves.",
+        "A superhero cape."
+      ]
+    },
+    {
+      "question": "Before Maya came to help, what happened to Ethan's first pile of leaves that made him feel sad?",
+      "type": "detail",
+      "correct_answer": "A strong gust of wind swept it away.",
+      "wrong_answers": [
+        "A squirrel took all the leaves.",
+        "He was tired and stopped raking."
+      ]
+    },
+    {
+      "question": "Why do you think Ethan hesitated before he nodded slowly to Maya's offer for help, even though he was sad about his leaves?",
+      "type": "inference",
+      "correct_answer": "He was shy or used to working alone.",
+      "wrong_answers": [
+        "He didn't like Maya at first.",
+        "He already had a secret plan to get more leaves."
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt when he and Maya were laughing and a leaf landed on her nose, after he had been sad about his pile?",
+      "type": "inference",
+      "correct_answer": "He felt happy and glad to have a friend.",
+      "wrong_answers": [
+        "He was still sad about the wind.",
+        "He wanted to jump in the pile right away."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help makes hard things easier and more fun.",
+    "Taking turns makes both people feel important and included.",
+    "Sometimes surprises, like a gust of wind, can lead to something even better than you planned."
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Is an apple a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can you eat a banana?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a carrot a fruit?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do grapes grow on trees?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a strawberry red?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are lemons sweet?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do oranges have seeds?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a pear a vegetable?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can you peel a banana?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is watermelon a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

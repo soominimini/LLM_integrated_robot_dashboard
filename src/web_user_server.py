@@ -244,6 +244,95 @@ tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
 
+# ===== live step tracing (added for debugging visibility) =====
+# Mirrors every print()/stderr line into logs/trace.log with a timestamp and a
+# per-request id, and frames each HTTP "work" with begin/done markers + timing.
+# Fully additive: if this block is removed the app behaves exactly as before.
+import threading as _threading
+
+TRACE_DIR = os.path.join(BASE_DIR, "logs")
+os.makedirs(TRACE_DIR, exist_ok=True)
+TRACE_FILE = os.path.join(TRACE_DIR, "trace.log")
+_trace_local = _threading.local()
+
+# High-frequency polling endpoints we don't want to frame (keeps the trace readable).
+_TRACE_SKIP = {
+    "/api/movement_status", "/api/volume_status", "/api/current_user",
+    "/api/camera_frame", "/api/human_tracking/status", "/generate",
+    "/play", "/favicon.ico",
+}
+
+
+class _Tee:
+    """Write to the original stream and also to the trace file, timestamping at line boundaries."""
+    def __init__(self, original, fh):
+        self._original = original
+        self._fh = fh
+        self._buf = ""
+        self._lock = _threading.Lock()
+
+    def write(self, data):
+        self._original.write(data)
+        with self._lock:
+            self._buf += data
+            while "\n" in self._buf:
+                line, self._buf = self._buf.split("\n", 1)
+                rid = getattr(_trace_local, "rid", "----")
+                self._fh.write(f"{time.strftime('%H:%M:%S')} [{rid}] {line}\n")
+                self._fh.flush()
+
+    def flush(self):
+        self._original.flush()
+        try:
+            self._fh.flush()
+        except Exception:
+            pass
+
+    def isatty(self):
+        return getattr(self._original, "isatty", lambda: False)()
+
+    def fileno(self):
+        return self._original.fileno()
+
+
+if not getattr(sys, "_trace_installed", False):
+    _trace_fh = open(TRACE_FILE, "a", buffering=1)
+    sys.stdout = _Tee(sys.stdout, _trace_fh)
+    sys.stderr = _Tee(sys.stderr, _trace_fh)
+    sys._trace_installed = True
+    print(f"[trace] step tracing active -> {TRACE_FILE}")
+
+
+@app.before_request
+def _trace_begin():
+    _trace_local.rid = uuid.uuid4().hex[:4]
+    _trace_local.t0 = time.time()
+    if request.path in _TRACE_SKIP or request.path.startswith("/static"):
+        _trace_local.framed = False
+        return
+    _trace_local.framed = True
+    detail = ""
+    try:
+        if request.method in ("POST", "PUT", "PATCH"):
+            j = request.get_json(silent=True)
+            if isinstance(j, dict) and j:
+                detail = " | fields: " + ", ".join(list(j.keys())[:12])
+        elif request.args:
+            detail = " | args: " + ", ".join(list(request.args.keys())[:12])
+    except Exception:
+        pass
+    print(f"┌─ WORK  {request.method} {request.path}{detail}")
+
+
+@app.after_request
+def _trace_end(resp):
+    if getattr(_trace_local, "framed", False):
+        dt = (time.time() - getattr(_trace_local, "t0", time.time())) * 1000.0
+        print(f"└─ DONE  {request.method} {request.path} -> {resp.status_code} in {dt:.0f}ms")
+    return resp
+# ===== end live step tracing =====
+
+
 def _load_user_profile(username):
     """Merge user_manager entry with any profile.json overrides. Returns a dict."""
     user = user_manager.users.get(username) or {}
@@ -293,7 +382,9 @@ def _persona_context_for(username, age, kind="story"):
         if fragment:
             info = knowledge_base.describe(effective_age, gender, language_age=language_age)
             print(f"[KB] derived level_age={info.get('level_age')} mlu={info.get('mlu_range')} "
-                  f"targets={info.get('targets')} interests={info.get('interests')} for "
+                  f"targets={info.get('targets')} "
+                  f"speech[{info.get('speech_age_range')}]={info.get('speech_sounds')} "
+                  f"interests={info.get('interests')} for "
                   f"user={username} age={effective_age} language_age={language_age} "
                   f"gender='{gender}' kind={kind}")
         return fragment or ''
@@ -1472,16 +1563,31 @@ def api_generate_quiz():
 
     if use_social_rules_branch:
         # Specialised goal + examples for social-rules yes/no questions.
-        # Every example answer must be a clear, widely-accepted yes or no —
-        # no gray-area opinions, no "do you like…" subjectivity.
+        # Every example answer must be a clear, widely accepted yes or no.
+        # Avoid subjective, vague, culturally specific, or gray-area questions.
         goal_text = (
-            "Goal: Generate yes/no questions about social rules, etiquette, kindness, and basic "
-            "social norms that a child should learn. Every question MUST have a clear, widely "
-            "accepted yes-or-no answer — not an opinion or gray-area. The aim is to make children "
-            "think about right and wrong behavior and learn social rules. "
-            "Cover a mix of: physical kindness (no hitting/kicking/pushing), sharing and taking turns, "
-            "polite words (please, thank you, sorry, excuse me), classroom behavior (listening, raising "
-            "hands, waiting), respect for others' belongings, helping others, and basic honesty. "
+            "Goal: Generate diverse yes/no questions about social rules, etiquette, kindness, "
+            "safety, and basic social norms that a child should learn. Every question MUST have "
+            "a clear, widely accepted yes-or-no answer, not an opinion, preference, or gray-area "
+            "judgment. The aim is to help children think about expected vs. unexpected behavior, "
+            "right vs. wrong actions, and how their behavior affects others. "
+
+            "Cover a diverse mix of the following categories: "
+            "1) physical kindness and safety, such as no hitting, kicking, pushing, biting, or throwing objects at people; "
+            "2) sharing, turn-taking, and fairness, such as waiting, taking turns, and playing fairly; "
+            "3) polite words and manners, such as please, thank you, sorry, excuse me, and greetings; "
+            "4) classroom and group behavior, such as listening, raising hands, following rules, and not disrupting others; "
+            "5) respecting belongings and personal space, such as asking before touching, borrowing, or entering someone's space; "
+            "6) helping and caring for others, such as helping someone who falls or comforting someone who is sad; "
+            "7) honesty and responsibility, such as telling the truth, admitting mistakes, and cleaning up after oneself; "
+            "8) inclusion and friendship, such as inviting others, not excluding someone, and using kind words; "
+            "9) privacy and boundaries, such as not opening private bags, not touching others without permission, and respecting 'no'; "
+            "10) community rules and public behavior, such as waiting in line, using an indoor voice, and being careful in shared spaces. "
+
+            "Generate questions from multiple categories rather than repeating the same type of rule. "
+            "Use concrete child-friendly situations. Prefer questions about observable actions, not feelings or preferences. "
+            "Each question should test one rule only. Do not use complicated moral dilemmas. "
+
             "Examples of GOOD questions and their answers: "
             "'Is it okay to kick your friend?' → no. "
             "'Should you say thank you when someone helps you?' → yes. "
@@ -1491,10 +1597,31 @@ def api_generate_quiz():
             "'Should you say sorry when you hurt someone?' → yes. "
             "'Is it okay to laugh at someone who made a mistake?' → no. "
             "'Should you share with a friend who has none?' → yes. "
-            "AVOID opinion or vague questions like 'Do you like sharing?', 'Is school fun?', "
-            "or 'Should you always be nice?' (the word 'always' makes it too strong)."
+            "'Is it okay to push someone to go first?' → no. "
+            "'Should you raise your hand before speaking in class?' → yes. "
+            "'Is it okay to open someone's backpack without asking?' → no. "
+            "'Should you help someone who dropped their crayons?' → yes. "
+            "'Is it okay to tell a lie to avoid trouble?' → no. "
+            "'Should you include a classmate who is left out?' → yes. "
+            "'Is it okay to grab a toy from someone?' → no. "
+            "'Should you use a quiet voice in the library?' → yes. "
+            "'Is it okay to call someone a mean name?' → no. "
+            "'Should you clean up after making a mess?' → yes. "
+            "'Is it okay to touch someone who says stop?' → no. "
+            "'Should you say excuse me when you need to pass?' → yes. "
+
+            "AVOID opinion, vague, absolute, or culturally dependent questions such as: "
+            "'Do you like sharing?', 'Is school fun?', 'Should you always be nice?', "
+            "'Is it bad to be angry?', 'Is it okay to be sad?', 'Should everyone be your friend?', "
+            "'Is it okay to never say no?', or 'Should you give away all your toys?'. "
+            "Avoid the word 'always' unless the rule is truly absolute. Avoid questions where the correct "
+            "answer depends on context, culture, family rules, or personal preference."
         )
-        length_constraint = "Constraint: Questions must be short (under 12 words) and use simple language a 7-year-old understands."
+
+        length_constraint = (
+            "Constraint: Questions must be short, under 12 words, and use simple language "
+            "a 7- to 8-year-old child can understand."
+        )
     else:
         goal_text = (
             "Goal: Questions must be objectively True or False based on basic object functions or category labels. "
@@ -1502,12 +1629,29 @@ def api_generate_quiz():
         )
         length_constraint = "Constraint: Questions must be short (under 8 words)."
 
+    # Knowledge-base guidance (developmental language targets, articulation /
+    # speech-sound targets, MLU sentence-length) derived from the child's profile
+    # age / language_age — the same source the story-comprehension and scene-game
+    # questions use, so the educational quiz pitches its wording and target speech
+    # sounds to the same developmental level. The selected topic still governs the
+    # question *content*, so the fragment's interest-theme suggestions are ignored.
+    kb_context = _persona_context_for(username, None, kind="question")
+    kb_block = ""
+    if kb_context:
+        kb_block = (
+            "Developmental guidance for this child (from the SLP knowledge base) — use it ONLY "
+            "to set the question wording level and to favour the target speech sounds; the "
+            "questions must still be about the topic(s) above, so ignore its interest-theme "
+            f"suggestions for this quiz:\n{kb_context}\n"
+        )
+
     prompt = (
         f"Act as a pediatric educator. Create {count} questions about the topic(s) '{topic_text}'. "
         f"{age_hint} "
         f"Use only these types: {type_hint}. "
         f"{goal_text} "
         f"{length_constraint} "
+        f"{kb_block}"
         "Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your "
         "response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object "
         "(e.g. do NOT use {\"questions\": [...]}). Do NOT add commentary, markdown, or code fences. "
@@ -1796,7 +1940,8 @@ def api_generate_wh_options():
 
     distractor_count = num_options - 1
     llm_input = []
-    for q in qs:
+    index_map = []  # llm_input position -> original index in `qs` (for alignment)
+    for idx, q in enumerate(qs):
         if not isinstance(q, dict):
             continue
         question_text = (q.get("question") or "").strip()
@@ -1804,6 +1949,7 @@ def api_generate_wh_options():
         accepted = q.get("accepted_answers") or []
         if not question_text or not correct:
             continue
+        index_map.append(idx)
         llm_input.append({
             "question": question_text,
             "correct_answer": correct,
@@ -1849,7 +1995,12 @@ def api_generate_wh_options():
         if not isinstance(obj, list):
             return jsonify({"success": False, "error": "LLM returned invalid JSON"}), 500
 
-        options_out = []
+        # Align options to the ORIGINAL input order so the client can map
+        # options[i] -> questions[i] positionally. Questions that were skipped
+        # (missing question text or correct_answer) keep an empty list, which the
+        # client renders as the text-input fallback. Without this, dropping any
+        # earlier question shifts every later question onto the wrong options.
+        options_out = [[] for _ in qs]
         for i, q in enumerate(llm_input):
             distractors = obj[i] if i < len(obj) and isinstance(obj[i], list) else []
             distractors = [str(d).strip() for d in distractors if str(d).strip()]
@@ -1864,7 +2015,7 @@ def api_generate_wh_options():
                     unique.append(d)
             unique = unique[:distractor_count]
             opts = [q["correct_answer"]] + unique
-            options_out.append(opts)
+            options_out[index_map[i]] = opts
 
         return jsonify({"success": True, "options": options_out})
     except Exception as e:

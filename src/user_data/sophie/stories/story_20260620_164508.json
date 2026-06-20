@@ -1,0 +1,92 @@
+{
+  "story": "Sophie and her friend Mia are at the park. [emotion:QT/surprised] Sophie's big yellow kite is stuck in a tall tree. Mia finds a long stick on the grass. [gesture:clapping] Sophie and Mia use the stick together and the kite comes down. [emotion:QT/happy] [gesture:embrace] Sophie is so happy and hugs her kind friend Mia.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      40,
+      70
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 173,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Stuck Kite"
+  },
+  "pages": [
+    "Sophie and her friend Mia are at the park. [emotion:QT/surprised] Sophie's big yellow kite is stuck in a tall tree.",
+    "Mia finds a long stick on the grass. [gesture:clapping] Sophie and Mia use the stick together and the kite comes down.",
+    "[emotion:QT/happy] [gesture:embrace] Sophie is so happy and hugs her kind friend Mia."
+  ],
+  "paragraphs": [
+    "Sophie and her friend Mia are at the park. Sophie's big yellow kite is stuck in a tall tree. Mia finds a long stick on the grass. Sophie and Mia use the stick together and the kite comes down. Sophie is so happy and hugs her kind friend Mia."
+  ],
+  "scenes": [
+    "Sophie and Mia are at the park, working together to get a big yellow kite down from a tall tree using a long stick, with Sophie happily hugging Mia."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing Sophie and Mia were doing?",
+      "type": "main_idea",
+      "correct_answer": "Getting the kite down from the tree.",
+      "wrong_answers": [
+        "Playing with their superhero capes.",
+        "Looking for lost puppies."
+      ]
+    },
+    {
+      "question": "What was stuck in the tall tree?",
+      "type": "detail",
+      "correct_answer": "Sophie's yellow kite.",
+      "wrong_answers": [
+        "A magic wand.",
+        "Mia's toy cars."
+      ]
+    },
+    {
+      "question": "What did Mia find on the grass?",
+      "type": "detail",
+      "correct_answer": "A long stick.",
+      "wrong_answers": [
+        "Some pretty flowers.",
+        "Her princess crown."
+      ]
+    },
+    {
+      "question": "How was Sophie feeling when the kite came down?",
+      "type": "detail",
+      "correct_answer": "She was very happy.",
+      "wrong_answers": [
+        "She was feeling sleepy.",
+        "She was a little bit mad."
+      ]
+    }
+  ],
+  "takeaways": []
+}

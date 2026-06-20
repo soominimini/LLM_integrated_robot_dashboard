@@ -4,10 +4,12 @@
 
 Replaces the older persona-matching RAG (``persona_rag.py``). Instead of
 selecting one of a handful of fixed clinical personas by ``(age, diagnosis)``,
-this loads ``documents/Simple_version_slp_codesign_knowledge_base.json`` and,
+this loads ``documents/SLP_codesign_knowledge_base_integrated_v1_1.json`` and,
 given a child's age and gender, derives:
 
-  * the developmentally-appropriate **language targets** (with an MLU range), and
+  * the developmentally-appropriate **language targets** (with an MLU range),
+  * the developmentally-appropriate **articulation / speech-sound targets**
+    (phonemes + example words), and
   * age / gender-appropriate **interest themes**,
 
 then formats them into prompt fragments ready to be injected into the story /
@@ -27,7 +29,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 DEFAULT_JSON_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    'documents', 'Simple_version_slp_codesign_knowledge_base.json'
+    'documents', 'SLP_codesign_knowledge_base_integrated_v1_1.json'
 )
 
 
@@ -50,6 +52,8 @@ class LanguageInterestKB:
         self.json_path = json_path
         self._language_targets: Dict[str, Any] = {}
         self._levels: List[Dict[str, Any]] = []
+        self._articulation_targets: Dict[str, Any] = {}
+        self._speech_levels: List[Dict[str, Any]] = []
         self._themes: Dict[str, List[str]] = {}
         self._age_prefs: List[Dict[str, Any]] = []
         self._load()
@@ -61,6 +65,9 @@ class LanguageInterestKB:
             ldf = data.get('language_development_framework', {}) or {}
             self._language_targets = ldf.get('language_targets', {}) or {}
             self._levels = ldf.get('developmental_levels', []) or []
+            ssf = data.get('speech_sound_development_framework', {}) or {}
+            self._articulation_targets = ssf.get('articulation_targets', {}) or {}
+            self._speech_levels = ssf.get('developmental_levels', []) or []
             intf = data.get('interest_framework', {}) or {}
             self._themes = intf.get('themes', {}) or {}
             self._age_prefs = intf.get('age_preferences', []) or []
@@ -109,6 +116,64 @@ class LanguageInterestKB:
             out.append((key, spec.get('description', ''), spec.get('examples', []) or []))
         return out
 
+    @staticmethod
+    def _range_lower_bound(age_range: str) -> int:
+        """Leading integer of an age-range string like '2-3' or '5+' (0 if none)."""
+        s = (age_range or '').strip()
+        num = ''
+        for ch in s:
+            if ch.isdigit():
+                num += ch
+            else:
+                break
+        try:
+            return int(num)
+        except ValueError:
+            return 0
+
+    def resolve_speech_level(self, age: Any) -> Optional[Dict[str, Any]]:
+        """The articulation level (age_range, difficulty_level, targets) for this child.
+
+        Speech levels use overlapping ranges ('2-3','3-4','4-5','5+'); we target
+        the stage that *begins* at or just below the child's age — i.e. the stage
+        currently being developed — mirroring ``resolve_level``'s at-or-just-below
+        philosophy for language.
+        """
+        if not self._speech_levels:
+            return None
+        try:
+            a = int(age)
+        except (TypeError, ValueError):
+            a = 0
+        eligible = [e for e in self._speech_levels
+                    if self._range_lower_bound(e.get('age_range', '')) <= a]
+        pool = eligible or self._speech_levels
+        key = lambda e: self._range_lower_bound(e.get('age_range', ''))
+        return (max if eligible else min)(pool, key=key)
+
+    def resolve_articulation(
+            self, age: Any) -> List[Tuple[str, str, List[str], List[str], List[str]]]:
+        """List of (key, description, phonemes, example_words, example_phrases).
+
+        Target keys missing from ``articulation_targets`` are skipped gracefully.
+        """
+        level = self.resolve_speech_level(age)
+        out: List[Tuple[str, str, List[str], List[str], List[str]]] = []
+        if not level:
+            return out
+        for key in level.get('targets', []) or []:
+            spec = self._articulation_targets.get(key)
+            if not spec:
+                continue
+            out.append((
+                key,
+                spec.get('description', ''),
+                spec.get('phonemes', []) or [],
+                spec.get('example_words', []) or [],
+                spec.get('example_activity_phrases', []) or [],
+            ))
+        return out
+
     def resolve_interests(self, age: Any, gender: str) -> List[Tuple[str, List[str]]]:
         """List of (theme, items) appropriate to age + gender.
 
@@ -146,6 +211,27 @@ class LanguageInterestKB:
                 lines.append(f"- {label}:{ex}" if ex else f"- {label}")
         return '\n'.join(lines)
 
+    def _articulation_block(self, age: Any) -> str:
+        lines: List[str] = []
+        for key, desc, phonemes, words, _phrases in self.resolve_articulation(age):
+            label = key.replace('_', ' ')
+            head = f"{label} [{', '.join(phonemes)}]" if phonemes else label
+            ex = f" e.g. {', '.join(words)}" if words else ''
+            if desc:
+                lines.append(f"- {head} ({desc}):{ex}" if ex else f"- {head} ({desc})")
+            else:
+                lines.append(f"- {head}:{ex}" if ex else f"- {head}")
+        return '\n'.join(lines)
+
+    def _articulation_line(self, age: Any) -> str:
+        parts: List[str] = []
+        for key, _desc, phonemes, words, _phrases in self.resolve_articulation(age):
+            label = key.replace('_', ' ')
+            head = f"{label} [{', '.join(phonemes)}]" if phonemes else label
+            ex = f" (e.g. {', '.join(words[:3])})" if words else ''
+            parts.append(f"{head}{ex}")
+        return '; '.join(parts)
+
     def _interests_line(self, age: Any, gender: str) -> str:
         parts: List[str] = []
         for theme, items in self.resolve_interests(age, gender):
@@ -168,7 +254,13 @@ class LanguageInterestKB:
         if not level:
             return ''
         targets = self._targets_block(lang_age)
+        sounds = self._articulation_block(lang_age)
         interests = self._interests_line(age, gender)
+        sounds_section = (
+            "\nPractise these target speech sounds by naturally featuring words "
+            "that contain them (do not turn the story into a pronunciation drill):\n"
+            f"{sounds}\n"
+        ) if sounds else ""
         return (
             "--- LANGUAGE & INTEREST GUIDANCE (knowledge base) ---\n"
             f"Target developmental level: age {level.get('age')}, "
@@ -176,8 +268,9 @@ class LanguageInterestKB:
             "Keep sentences at or near this length.\n\n"
             "Weave these language targets naturally into narration and dialogue "
             "(model them in context; do not drill or quiz them in the story):\n"
-            f"{targets or '- (none specified)'}\n\n"
-            "Use these interest themes as story hooks, characters, and settings:\n"
+            f"{targets or '- (none specified)'}\n"
+            f"{sounds_section}"
+            "\nUse these interest themes as story hooks, characters, and settings:\n"
             f"- {interests or '(none specified)'}\n"
         )
 
@@ -193,14 +286,20 @@ class LanguageInterestKB:
         if not level:
             return ''
         targets = self._targets_block(lang_age)
+        sounds_line = self._articulation_line(lang_age)
         interests = self._interests_line(age, gender)
+        sounds_section = (
+            "\nFavour words that use these target speech sounds where natural: "
+            f"{sounds_line}\n"
+        ) if sounds_line else ""
         return (
             "--- LANGUAGE & INTEREST GUIDANCE (knowledge base) ---\n"
             f"Target level: age {level.get('age')}, approx MLU "
             f"{level.get('mlu_range', '')} words. Match question wording to this length.\n\n"
             "Embed these language targets in the question wording where natural:\n"
-            f"{targets or '- (none specified)'}\n\n"
-            f"Draw question content from these interests: {interests or '(none specified)'}\n"
+            f"{targets or '- (none specified)'}\n"
+            f"{sounds_section}"
+            f"\nDraw question content from these interests: {interests or '(none specified)'}\n"
         )
 
     # ─────────────────────────────────────────────
@@ -212,9 +311,12 @@ class LanguageInterestKB:
         """Compact summary of what was derived — handy for logging."""
         lang_age = language_age if language_age is not None else age
         level = self.resolve_level(lang_age)
+        speech_level = self.resolve_speech_level(lang_age)
         return {
             'level_age': level.get('age') if level else None,
             'mlu_range': level.get('mlu_range') if level else None,
             'targets': [k for (k, _, _) in self.resolve_targets(lang_age)],
+            'speech_age_range': speech_level.get('age_range') if speech_level else None,
+            'speech_sounds': [k for (k, *_rest) in self.resolve_articulation(lang_age)],
             'interests': [t for (t, _) in self.resolve_interests(age, gender)],
         }

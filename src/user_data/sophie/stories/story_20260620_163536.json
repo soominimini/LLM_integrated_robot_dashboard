@@ -1,0 +1,89 @@
+{
+  "story": "Sophie and her friend Mia are in the park. [emotion:QT/surprised] Sophie sees a big pink kite stuck in a tall tree. Mia has a long stick and Sophie has a blue ribbon. Sophie and Mia work together and the kite comes down. [emotion:QT/happy] Sophie feels happy and Mia feels happy too.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      40,
+      70
+    ],
+    "topics": [
+      "friends"
+    ],
+    "word_count": 183,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Stuck Kite"
+  },
+  "pages": [
+    "Sophie and her friend Mia are in the park. [emotion:QT/surprised] Sophie sees a big pink kite stuck in a tall tree.",
+    "Mia has a long stick and Sophie has a blue ribbon. Sophie and Mia work together and the kite comes down. [emotion:QT/happy] Sophie feels happy and Mia feels happy too."
+  ],
+  "paragraphs": [
+    "Sophie and her friend Mia are in the park. Sophie sees a big pink kite stuck in a tall tree. Mia has a long stick and Sophie has a blue ribbon. Sophie and Mia work together and the kite comes down. Sophie feels happy and Mia feels happy too."
+  ],
+  "scenes": [
+    "Sophie and Mia in a park, happily working together to retrieve a pink kite stuck in a tall tree, using a long stick and a blue ribbon."
+  ],
+  "page_to_scene": [
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What were Sophie and Mia doing in the park?",
+      "type": "main_idea",
+      "correct_answer": "Helping a kite come down",
+      "wrong_answers": [
+        "Playing with their pets",
+        "Looking for a princess"
+      ]
+    },
+    {
+      "question": "What was stuck in the tall tree?",
+      "type": "detail",
+      "correct_answer": "A big pink kite",
+      "wrong_answers": [
+        "A magic wand",
+        "A lost toy car"
+      ]
+    },
+    {
+      "question": "What did Mia have for helping the kite?",
+      "type": "detail",
+      "correct_answer": "A long stick",
+      "wrong_answers": [
+        "A blue ribbon",
+        "A superhero cape"
+      ]
+    },
+    {
+      "question": "How were they feeling after getting the kite?",
+      "type": "detail",
+      "correct_answer": "Happy",
+      "wrong_answers": [
+        "Surprised",
+        "Sleepy"
+      ]
+    }
+  ],
+  "takeaways": []
+}

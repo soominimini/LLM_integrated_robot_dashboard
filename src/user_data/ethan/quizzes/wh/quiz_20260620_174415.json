@@ -1,0 +1,59 @@
+[
+  {
+    "question": "What should you say after someone helps you?",
+    "type": "wh",
+    "correct_answer": "thank you",
+    "accepted_answers": [
+      "thank you",
+      "thanks"
+    ]
+  },
+  {
+    "question": "Why should you wait your turn?",
+    "type": "wh",
+    "correct_answer": "fairness",
+    "accepted_answers": [
+      "fairness",
+      "politeness",
+      "respect",
+      "so everyone gets a turn",
+      "to be fair",
+      "it's fair"
+    ]
+  },
+  {
+    "question": "Who should you ask before taking a toy?",
+    "type": "wh",
+    "correct_answer": "owner",
+    "accepted_answers": [
+      "owner",
+      "friend",
+      "teacher",
+      "parent",
+      "the person who owns it"
+    ]
+  },
+  {
+    "question": "How do you show you are listening?",
+    "type": "wh",
+    "correct_answer": "eyes on speaker",
+    "accepted_answers": [
+      "eyes on speaker",
+      "stay quiet",
+      "look at them",
+      "sit still",
+      "don't talk",
+      "look at the person"
+    ]
+  },
+  {
+    "question": "What word do you say if you bump someone?",
+    "type": "wh",
+    "correct_answer": "sorry",
+    "accepted_answers": [
+      "sorry",
+      "excuse me",
+      "I'm sorry"
+    ]
+  }
+]

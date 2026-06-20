@@ -1,62 +1,62 @@
 [
   {
-    "question": "Is it okay to push someone when you are angry?",
+    "question": "Is it okay to push a friend?",
     "type": "yes_no",
     "correct_answer": "no",
     "accepted_answers": []
   },
   {
-    "question": "Should you share your toys with a friend?",
+    "question": "Should you share your toys with friends?",
     "type": "yes_no",
     "correct_answer": "yes",
     "accepted_answers": []
   },
   {
-    "question": "Is it polite to say 'please' when you ask for something?",
+    "question": "Should you say",
     "type": "yes_no",
     "correct_answer": "yes",
     "accepted_answers": []
   },
   {
-    "question": "Should you raise your hand before speaking in class?",
+    "question": "Should you listen when your teacher talks?",
     "type": "yes_no",
     "correct_answer": "yes",
     "accepted_answers": []
   },
   {
-    "question": "Is it okay to take someone's pencil without asking?",
+    "question": "Is it okay to take someone's toy without asking?",
     "type": "yes_no",
     "correct_answer": "no",
     "accepted_answers": []
   },
   {
-    "question": "Should you help a friend who drops their books?",
+    "question": "Should you help a friend who falls down?",
     "type": "yes_no",
     "correct_answer": "yes",
     "accepted_answers": []
   },
   {
-    "question": "Is it okay to tell a lie to avoid trouble?",
+    "question": "Is it okay to tell a lie?",
     "type": "yes_no",
     "correct_answer": "no",
     "accepted_answers": []
   },
   {
-    "question": "Should you say 'excuse me' if you bump into someone?",
+    "question": "Should you say",
     "type": "yes_no",
     "correct_answer": "yes",
     "accepted_answers": []
   },
   {
-    "question": "Is it okay to talk loudly while the teacher is speaking?",
+    "question": "Should you raise your hand to speak in class?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to hit someone when you are angry?",
     "type": "yes_no",
     "correct_answer": "no",
-    "accepted_answers": []
-  },
-  {
-    "question": "Should you wait for your turn on the swing?",
-    "type": "yes_no",
-    "correct_answer": "yes",
     "accepted_answers": []
   }
 ]

@@ -1,0 +1,132 @@
+{
+  "story": "[emotion:QT/happy] Ethan loved Saturday mornings because the whole family stayed home together. [emotion:QT/happy] While Dad cooked breakfast, Ethan wore a red cape and pretended he was a superhero called Thunder Three.\n\n[emotion:QT/sad] Then Mom came downstairs looking tired. [emotion:QT/sad] She had searched everywhere for her car keys before the big family trip, but they were gone.\n\n[emotion:QT/calm] \"I think I can help,\" Ethan said carefully. He remembered something. Before dinner last night, he saw Mom place the keys near the tall, brown chair in the corner.\n\n[gesture:think] [emotion:QT/surprised] \"They might be behind the chair!\" he told Dad. Together, they moved the heavy chair slowly, [emotion:QT/surprised] and there were the shiny keys, sitting right on the floor. [emotion:QT/happy] [gesture:embrace] [emotion:QT/happy] Mom hugged Ethan tightly. [emotion:QT/happy] \"You found them! That was really thoughtful and brave,\" she said, smiling.\n\n[gesture:hoora] [emotion:QT/happy] Ethan felt proud and warm inside, like sunshine had filled the room. [gesture:hoora] [emotion:QT/happy] His whole family cheered together.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 284,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      5,
+      6,
+      6
+    ],
+    "title": "Ethan and the Rescue Plan"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan loved Saturday mornings because the whole family stayed home together. [emotion:QT/happy] While Dad cooked breakfast, Ethan wore a red cape and pretended he was a superhero called Thunder Three.",
+    "[emotion:QT/sad] Then Mom came downstairs looking tired. [emotion:QT/sad] She had searched everywhere for her car keys before the big family trip, but they were gone.",
+    "[emotion:QT/calm] \"I think I can help,\" Ethan said carefully. He remembered something. Before dinner last night, he saw Mom place the keys near the tall, brown chair in the corner.",
+    "[gesture:think] [emotion:QT/surprised] \"They might be behind the chair!\" he told Dad. Together, they moved the heavy chair slowly, [emotion:QT/surprised] and there were the shiny keys, sitting right on the floor. [emotion:QT/happy] [gesture:embrace] [emotion:QT/happy] Mom hugged Ethan tightly. [emotion:QT/happy] \"You found them! That was really thoughtful and brave,\" she said, smiling.",
+    "[gesture:hoora] [emotion:QT/happy] Ethan felt proud and warm inside, like sunshine had filled the room. [gesture:hoora] [emotion:QT/happy] His whole family cheered together."
+  ],
+  "paragraphs": [
+    "Ethan loved Saturday mornings because the whole family stayed home together. While Dad cooked breakfast, Ethan wore a red cape and pretended he was a superhero called Thunder Three.",
+    "Then Mom came downstairs looking tired. She had searched everywhere for her car keys before the big family trip, but they were gone.",
+    "\"I think I can help,\" Ethan said carefully. He remembered something. Before dinner last night, he saw Mom place the keys near the tall, brown chair in the corner.",
+    "\"They might be behind the chair!\" he told Dad. Together, they moved the heavy chair slowly, and there were the shiny keys, sitting right on the floor. Mom hugged Ethan tightly. \"You found them! That was really thoughtful and brave,\" she said, smiling.",
+    "Ethan felt proud and warm inside, like sunshine had filled the room. His whole family cheered together."
+  ],
+  "scenes": [
+    "Ethan in a red cape playing superhero while Dad cooks breakfast in a cozy family kitchen.",
+    "Mom, looking tired and worried, joins Ethan (still in his cape) and Dad in the living area, expressing her frustration about lost keys.",
+    "Ethan, thoughtful and still in his cape, speaks to his parents, pointing towards a tall, brown chair in the corner as he remembers where the keys might be.",
+    "Ethan and Dad strain to move a heavy, tall brown chair, revealing shiny car keys on the floor, while Mom watches excitedly and then hugs Ethan.",
+    "Ethan, beaming with pride, stands with his smiling parents as the whole family cheers together in the living room."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in this story, where Ethan was a brave hero?",
+      "type": "main_idea",
+      "correct_answer": "Ethan helped his mom find her car keys.",
+      "wrong_answers": [
+        "Dad cooked a yummy breakfast for the family.",
+        "The family went on a big trip in their car."
+      ]
+    },
+    {
+      "question": "While Dad was cooking breakfast, what kind of superhero was Ethan pretending to be, wearing his red cape?",
+      "type": "detail",
+      "correct_answer": "Thunder Three.",
+      "wrong_answers": [
+        "Captain Courage.",
+        "The Key Finder."
+      ]
+    },
+    {
+      "question": "Where did Ethan remember seeing the car keys before dinner, which helped them find them?",
+      "type": "detail",
+      "correct_answer": "Behind the tall, brown chair.",
+      "wrong_answers": [
+        "Under the kitchen table.",
+        "In Mom's purse."
+      ]
+    },
+    {
+      "question": "Why do you think Mom was feeling so tired and sad when she came downstairs that morning?",
+      "type": "inference",
+      "correct_answer": "She had searched everywhere for her lost car keys.",
+      "wrong_answers": [
+        "She didn't sleep well last night.",
+        "She was hungry for breakfast."
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt inside when his mom hugged him and said he was thoughtful and brave?",
+      "type": "inference",
+      "correct_answer": "Proud and warm, like sunshine.",
+      "wrong_answers": [
+        "Surprised and a little scared.",
+        "Happy but a bit sleepy."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help and sharing what you know makes things better for everyone.",
+    "Working together as a family helps solve problems faster than working alone.",
+    "Paying attention to the world around you can help the people you love."
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "story": "[emotion:QT/happy] Ethan loved pretending he was a superhero with a bright red cape. One Saturday morning, while his dad was fixing the car in the driveway, [emotion:QT/sad] Ethan noticed his little sister, Rosie, was crying near the front steps.\n\n[emotion:QT/sad] Rosie had dropped her favorite toy truck into the tall, thick bushes beside the house. [emotion:QT/afraid] \"I can't reach it,\" she said quietly. \"It went too far inside.[gesture:think] \"\n\nEthan thought carefully before he ran to the garage and grabbed a long, wooden stick. \"If we both work together,\" he told Rosie, \"we can reach it faster.[gesture:nodding-yes] \" Rosie held the branches back while Ethan stretched the stick forward, slowly and patiently, until the red truck rolled free.\n\n[emotion:QT/happy] [gesture:embrace] Rosie threw her arms around Ethan and laughed. Their dad had watched everything from the driveway. [emotion:QT/happy] \"That was the most caring rescue mission I have ever seen,\" he said, [gesture:embrace] pulling them both into a warm, safe hug.\n\n[emotion:QT/happy] Ethan felt proud, because he had chosen to help someone he loved.",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 292,
+    "paragraph_count": 6,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4,
+      5
+    ],
+    "title": "Ethan and the Rescue Mission at Home"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan loved pretending he was a superhero with a bright red cape. One Saturday morning, while his dad was fixing the car in the driveway, [emotion:QT/sad] Ethan noticed his little sister, Rosie, was crying near the front steps.",
+    "[emotion:QT/sad] Rosie had dropped her favorite toy truck into the tall, thick bushes beside the house. [emotion:QT/afraid] \"I can't reach it,\" she said quietly. \"It went too far inside. \"",
+    "Ethan thought carefully before he ran to the garage and grabbed a long, wooden stick. \"If we both work together,\" he told Rosie, \"we can reach it faster. [gesture:nodding-yes] \" Rosie held the branches back while Ethan stretched the stick forward, slowly and patiently, until the red truck rolled free.",
+    "[emotion:QT/happy] [gesture:embrace] Rosie threw her arms around Ethan and laughed. Their dad had watched everything from the driveway. [emotion:QT/happy] \"That was the most caring rescue mission I have ever seen,\" he said, [gesture:embrace] pulling them both into a warm, safe hug.",
+    "[emotion:QT/happy] Ethan felt proud, because he had chosen to help someone he loved."
+  ],
+  "paragraphs": [
+    "Ethan loved pretending he was a superhero with a bright red cape. One Saturday morning, while his dad was fixing the car in the driveway, Ethan noticed his little sister, Rosie, was crying near the front steps.",
+    "Rosie had dropped her favorite toy truck into the tall, thick bushes beside the house. \"I can't reach it,\" she said quietly. \"It went too far inside.\"",
+    "Ethan thought carefully before he ran to the garage and grabbed a long, wooden stick. \"If we both work together,\" he told Rosie, \"we can reach it faster.\" Rosie held the branches back while Ethan stretched the stick forward, slowly and patiently, until the red truck rolled free.",
+    "Rosie threw her arms around Ethan and laughed. Their dad had watched everything from the driveway. \"That was the most caring rescue mission I have ever seen,\" he said, pulling them both into a warm, safe hug.",
+    "Ethan felt proud, because he had chosen to help someone he loved."
+  ],
+  "scenes": [
+    "Ethan, in a red cape, notices his little sister Rosie crying near the front steps, while their dad works on a car in the driveway.",
+    "Rosie points into tall, thick bushes beside the house, explaining to Ethan that her toy truck is stuck inside.",
+    "Ethan and Rosie work together, with Ethan using a long stick to retrieve the red toy truck from the bushes.",
+    "Rosie, Ethan, and their dad share a warm group hug in the driveway, with Ethan looking proud."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What was the story about?",
+      "type": "main_idea",
+      "correct_answer": "Helping a friend",
+      "wrong_answers": [
+        "Going to the store",
+        "Playing alone"
+      ]
+    },
+    {
+      "question": "Who was the main character in the story?",
+      "type": "detail",
+      "correct_answer": "ethan",
+      "wrong_answers": [
+        "A teacher",
+        "A stranger"
+      ]
+    },
+    {
+      "question": "What happened at the end of the story?",
+      "type": "detail",
+      "correct_answer": "Everyone was happy",
+      "wrong_answers": [
+        "Everyone was sad",
+        "Nothing happened"
+      ]
+    },
+    {
+      "question": "Why do you think the main character felt happy at the end?",
+      "type": "inference",
+      "correct_answer": "Because they helped someone",
+      "wrong_answers": [
+        "Because they got a prize",
+        "Because they went home"
+      ]
+    },
+    {
+      "question": "What do you think the story is trying to teach us?",
+      "type": "inference",
+      "correct_answer": "Being kind to others is important",
+      "wrong_answers": [
+        "Being fast is the best",
+        "You should always be alone"
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help and working together makes hard things easier.",
+    "Being patient and thinking before you act helps you solve problems.",
+    "Helping the people you love makes everyone feel safe and proud."
+  ]
+}

@@ -84,7 +84,7 @@ is treated as a local **Ollama** model.
 | ASR intent correction | No | — |
 
 **Structured knowledge base (extra age/gender variation).** Beyond the tiers above,
-a developmental knowledge base (`knowledge_base.py` + `Simple_version_slp_codesign_knowledge_base.json`)
+a developmental knowledge base (`knowledge_base.py` + `SLP_codesign_knowledge_base_integrated_v1_1.json`)
 is resolved by age/gender and **injected into the prompt** of three activities —
 **story generation, story comprehension questions, and scene/object-game question
 generation** — supplying an MLU target, age-appropriate language targets, and
