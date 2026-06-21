@@ -1,0 +1,99 @@
+{
+  "story": "Sophie is in the garden. Sophie has a red chair and a little table. Sophie is making a crown with yellow flowers. [emotion:QT/surprised] A tiny fairy lands on the table! The fairy has bright purple wings. The fairy is holding three small flowers. Sophie puts the flowers on the crown. Now the crown is big and beautiful. [emotion:QT/happy] [gesture:clapping] The fairy claps her hands. Sophie and the fairy are sitting in the garden together. [emotion:QT/happy] Sophie is smiling and the fairy is smiling too.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 209,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "Sophie is in the garden. Sophie has a red chair and a little table. Sophie is making a crown with yellow flowers.",
+    "[emotion:QT/surprised] A tiny fairy lands on the table! The fairy has bright purple wings. The fairy is holding three small flowers.",
+    "Sophie puts the flowers on the crown. Now the crown is big and beautiful.",
+    "[emotion:QT/happy] [gesture:clapping] The fairy claps her hands. Sophie and the fairy are sitting in the garden together. [emotion:QT/happy] Sophie is smiling and the fairy is smiling too."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Sophie has a red chair and a little table. Sophie is making a crown with yellow flowers. A tiny fairy lands on the table! The fairy has bright purple wings. The fairy is holding three small flowers. Sophie puts the flowers on the crown. Now the crown is big and beautiful. The fairy claps her hands. Sophie and the fairy are sitting in the garden together. Sophie is smiling and the fairy is smiling too."
+  ],
+  "scenes": [
+    "Sophie is sitting at a small table in a garden, making a flower crown. A tiny fairy with bright purple wings is on the table, and both Sophie and the fairy are smiling."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What were Sophie and the fairy making?",
+      "type": "main_idea",
+      "correct_answer": "A flower crown",
+      "wrong_answers": [
+        "A magic wand",
+        "A yummy cake"
+      ]
+    },
+    {
+      "question": "Where did the tiny fairy land?",
+      "type": "detail",
+      "correct_answer": "On the little table",
+      "wrong_answers": [
+        "In the red chair",
+        "Under a big tree"
+      ]
+    },
+    {
+      "question": "What color were the fairy's wings?",
+      "type": "detail",
+      "correct_answer": "Bright purple",
+      "wrong_answers": [
+        "Shiny red",
+        "Sparkly blue"
+      ]
+    },
+    {
+      "question": "What did the fairy do with her hands?",
+      "type": "detail",
+      "correct_answer": "She clapped them",
+      "wrong_answers": [
+        "She waved goodbye",
+        "She held a toy"
+      ]
+    }
+  ],
+  "takeaways": []
+}

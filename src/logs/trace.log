@@ -3585,3 +3585,369 @@
 19:58:06 [----] --- Logging error ---
 19:58:06 [----] --- Logging error ---
 19:58:06 [----] --- Logging error ---
+19:59:36 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace.log
+19:59:36 [----]  * Serving Flask app 'web_user_server'
+19:59:36 [----]  * Debug mode: on
+19:59:52 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace.log
+19:59:52 [2679] ┌─ WORK  GET /
+19:59:52 [2679] └─ DONE  GET / -> 200 in 13ms
+20:00:03 [d330] ┌─ WORK  POST /api/login | fields: username
+20:00:03 [d330] └─ DONE  POST /api/login -> 200 in 7ms
+20:00:04 [6c5b] ┌─ WORK  GET /
+20:00:04 [6c5b] └─ DONE  GET / -> 200 in 7ms
+20:00:09 [fce2] ┌─ WORK  POST /api/generate_story | fields: child_name, age, custom_prompt, topics
+20:00:09 [fce2] [KB] derived level_age=5 mlu=6-8 targets=['plural_forms', 'ing_form', 'pronouns_later', 'location_noun', 'simple_conjunction'] speech[5+]=['advanced_sounds'] interests=['fairies', 'princesses', 'pets', 'superheroes'] for user=sophie age=5 language_age=None gender='female' kind=story
+20:00:09 [fce2] [StoryGenerator] prompt:  Write a short story for a 5-year-old female named sophie, who has speech delay. The story will be used by a robot to practise WH-question comprehension (WHO / WHAT / WHERE) with the child.
+20:00:09 [fce2] 
+20:00:09 [fce2] --- STYLE REFERENCE (from the curated 4-to-7 corpus, WHO/WHAT/WHERE subset for this age) ---
+20:00:09 [fce2] Follow the general style, length, vocabulary, and structure of these examples. Each story is followed by 5–7 WH-questions whose answers are explicitly stated in the story.
+20:00:09 [fce2] Example 1 (setting: cafeteria):
+20:00:09 [fce2]   Story: Rosie goes to the cafeteria. It is time for lunch. Rosie looks for a seat. She sees her friends' lunches on the table. Rosie sees a whole pineapple! She wonders who brought a whole pineapple for lunch!
+20:00:09 [fce2]   Questions:
+20:00:09 [fce2]   - WHERE does Rosie go?
+20:00:09 [fce2]   - WHAT time is it?
+20:00:09 [fce2]   - WHO looks for a seat?
+20:00:09 [fce2]   - WHERE are her friends' lunches?
+20:00:09 [fce2]   - WHO sees a whole pineapple?
+20:00:09 [fce2]   - WHAT does she wonder?
+20:00:09 [fce2] 
+20:00:09 [fce2] Example 2 (setting: lake (pond)):
+20:00:09 [fce2]   Story: A family of ducks is swimming in the lake. They swim in a line. One duckling does not want to get into the water. He stands on the grass. Mother duck swims over to her duckling. She will help him learn to swim.
+20:00:09 [fce2]   Questions:
+20:00:09 [fce2]   - WHAT are the ducks doing?
+20:00:09 [fce2]   - WHERE are they swimming?
+20:00:09 [fce2]   - WHO does not want to go in the water?
+20:00:09 [fce2]   - WHERE is this duckling standing?
+20:00:09 [fce2]   - WHO swims over to the duckling?
+20:00:09 [fce2]   - WHAT will she help him to learn?
+20:00:09 [fce2] 
+20:00:09 [fce2] --- END STYLE REFERENCE ---
+20:00:09 [fce2] 
+20:00:09 [fce2] --- AGE-APPROPRIATE LANGUAGE REQUIREMENTS ---
+20:00:09 [fce2] Language level: Write concrete sentences in the present tense. Use simple vocabulary a 4–5 year old already knows (ball, beach, dog, bus, kite, snow, library). Each sentence states a single observable fact (who is there, where, what is happening, what surprises them). Avoid abstract concepts, idioms, figurative language, and complex compound sentences. Story structure: One small everyday scene with a tiny twist or surprise.Examples of scenes: building a sandcastle and finding a crab; flying a kite and the wind blowing it onto a dog; dropping toothpaste on the bathroom floor; spotting an unusual lunch in the cafeteria. Characters: 1–3 named characters; refer to them by name (not pronouns) so questions are answerable. Follow-up questions: After the story, generate 5–7 WH-questions (WHO/WHAT/WHERE ONLY — no HOW/WHY at this age) whose answers are explicitly stated in the story text — one fact per question, in roughly story order.
+20:00:09 [fce2] 
+20:00:09 [fce2] --- STORY SETTING AND THEME ---
+20:00:09 [fce2] Set the story in a familiar, child-friendly environment.
+20:00:09 [fce2] The obstacle should involve a manageable challenge that requires help from others.
+20:00:09 [fce2] The resolution should leave the protagonist feeling proud, grateful, and connected.
+20:00:09 [fce2] 
+20:00:09 [fce2] Therapy goals to integrate naturally into the story (do NOT list them explicitly — weave them into narrative, dialogue, and action):
+20:00:09 [fce2] 
+20:00:09 [fce2] - Learning descriptive words (adjectives, spatial terms)
+20:00:09 [fce2] - Collaboration and turn-taking
+20:00:09 [fce2] - Importance of friendships and relationships
+20:00:09 [fce2] - Overcoming challenges with support
+20:00:09 [fce2] 
+20:00:09 [fce2] --- LANGUAGE & INTEREST GUIDANCE (knowledge base) ---
+20:00:09 [fce2] Target developmental level: age 5, approx MLU 6-8 words per utterance. Keep sentences at or near this length.
+20:00:09 [fce2] 
+20:00:09 [fce2] Weave these language targets naturally into narration and dialogue (model them in context; do not drill or quiz them in the story):
+20:00:09 [fce2] - plural forms (Regular plural nouns): e.g. dogs, cars, apples, cats, toys
+20:00:09 [fce2] - ing form (Present participle/progressive verb form): e.g. running, jumping, eating, playing
+20:00:09 [fce2] - pronouns later (Later developing pronouns): e.g. he, she, they, her, his, their
+20:00:09 [fce2] - location noun (Location concept expressed with a noun phrase): e.g. in the box, on the table, under the chair
+20:00:09 [fce2] - simple conjunction (Early conjunction use): e.g. and, or
+20:00:09 [fce2] 
+20:00:09 [fce2] Practise these target speech sounds by naturally featuring words that contain them (do not turn the story into a pronunciation drill):
+20:00:09 [fce2] - advanced sounds [th, r, ch] (Late-developing speech sounds for articulation practice.): e.g. thumb, three, rabbit, red, chair, cheese
+20:00:09 [fce2] 
+20:00:09 [fce2] Use these interest themes as story hooks, characters, and settings:
+20:00:09 [fce2] - fairies (fairy, magic wand, wings); princesses (princess, castle, crown); pets (dog, cat, hamster, fish); superheroes (superhero, cape, rescue mission)
+20:00:09 [fce2] 
+20:00:09 [fce2] --- TONE AND STYLE ---
+20:00:09 [fce2] - Warm, simple, and concrete. Describe one small everyday scene with a tiny surprise or twist.
+20:00:09 [fce2] - sophie should appear by name in the story (not just "she" / "he"), so WHO-questions are answerable.
+20:00:09 [fce2] - Use observable facts only (who is there, where they are, what they are doing, what they see/find).
+20:00:09 [fce2] - Do NOT invent moral lessons, internal monologue, or three-act structure. Keep it to the corpus style.
+20:00:09 [fce2] 
+20:00:09 [fce2] --- ROBOT GESTURES AND EMOTIONS ---
+20:00:09 [fce2] A robot will read this aloud and act it out. Embed gesture or emotion tags INLINE in the story so the robot's face and body match the narrative. Keep these SPARSE (at most 2–3 tags total) so the story stays short.
+20:00:09 [fce2] 
+20:00:09 [fce2] Available gestures: [gesture:NAME] where NAME ∈ {hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace, patience, slight_no, think, sneezing, yawn, breathing_exercise, kiss, stretching}
+20:00:09 [fce2] Available emotions: [emotion:NAME] where NAME ∈ {QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy}
+20:00:09 [fce2] 
+20:00:09 [fce2] Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture. Do NOT include tags inside the WH-questions.
+20:00:09 [fce2] 
+20:00:09 [fce2] 
+20:00:09 [fce2] Return your answer EXACTLY in this format, with no other text before or after:
+20:00:09 [fce2] 
+20:00:09 [fce2] ** Title **
+20:00:09 [fce2] <one short title>
+20:00:09 [fce2] 
+20:00:09 [fce2] <the full story text>
+20:00:09 [fce2] 
+20:00:09 [fce2] ** End **
+20:00:09 [fce2] ** Questions **
+20:00:09 [fce2] 1. <WH-question>
+20:00:09 [fce2] 2. <WH-question>
+20:00:09 [fce2] 3. <WH-question>
+20:00:09 [fce2] 4. <WH-question>
+20:00:09 [fce2] 5. <WH-question>
+20:00:09 [fce2] (6. and 7. optional)
+20:00:09 [fce2] 
+20:00:09 [fce2] ** Explanation of the output **
+20:00:09 [fce2] <1–2 short sentences explaining how the story and questions match the selected topic(s) and the learning goals: general speech-language therapy goals>
+20:00:09 [fce2] 
+20:00:09 [fce2] STRICT RULES:
+20:00:09 [fce2] - Do NOT include any preamble, commentary, or meta-text (no "Here is your story", "Sure!", etc.).
+20:00:09 [fce2] - The story text (between Title and End) MUST be between 70 and 100 words.
+20:00:09 [fce2] - Generate 5–7 WH-questions using ONLY WHO / WHAT / WHERE (no HOW / WHY at this age tier).
+20:00:09 [fce2] - Every question's answer MUST appear word-for-word in the story text. Do NOT ask about anything not stated.
+20:00:09 [fce2] - Refer to characters by name (not pronouns) in the story so questions like "WHO is in the story?" are answerable.
+20:00:09 [fce2] - Do NOT add sections beyond Title, story text, End, Questions, and Explanation.
+20:00:17 [fce2] └─ DONE  POST /api/generate_story -> 200 in 7996ms
+20:00:40 [ba14] ┌─ WORK  POST /api/save_story | fields: story, metadata, takeaways
+20:00:40 [ba14] [StorySave] Extracted title: Sophie and the Tiny Crown
+20:00:40 [ba14] [StorySave] Stripped stray title from saved story body
+20:00:47 [ba14] [StoryTagger] Gemini tagging pass succeeded (442 chars)
+20:00:55 [ba14] [StoryPages] Gemini raw response: ```json
+20:00:55 [ba14] [
+20:00:55 [ba14]   "Sophie is in the garden. Sophie sees a little fairy sitting on a red flower.",
+20:00:55 [ba14]   "The fairy has a tiny crown. The crown is on the grass.",
+20:00:55 [ba14]   "[emotion:QT/surprised] Sophie picks up the tiny crown. Sophie holds it out to the fairy. [gesture:clapping] The fairy takes the crown and claps her small hands.",
+20:00:55 [ba14]   "Sophie and the fairy sit on the big green chair. The fairy puts three shiny stars on Sophie's hand. [emotion:QT/happy] Sophie is happy in the garden."
+20:00:55 [ba14] ]
+20:00:55 [ba14] ```
+20:00:55 [ba14] [StoryPages] Split into 4 pages (age 5)
+20:00:55 [ba14] [StorySave] 1 paragraphs detected
+20:01:02 [ba14] [StoryScenes] Gemini raw response: ```json
+20:01:02 [ba14] {
+20:01:02 [ba14]   "scenes": [
+20:01:02 [ba14]     "Sophie and a fairy interact in a vibrant garden, exchanging a tiny crown and later sitting on a green chair where the fairy gives Sophie shiny stars."
+20:01:02 [ba14]   ],
+20:01:02 [ba14]   "chunk_to_scene": [
+20:01:02 [ba14]     0
+20:01:02 [ba14]   ]
+20:01:02 [ba14] }
+20:01:02 [ba14] ```
+20:01:02 [ba14] [StoryScenes] Parsed JSON: {
+20:01:02 [ba14]   "scenes": [
+20:01:02 [ba14]     "Sophie and a fairy interact in a vibrant garden, exchanging a tiny crown and later sitting on a green chair where the fairy gives Sophie shiny stars."
+20:01:02 [ba14]   ],
+20:01:02 [ba14]   "chunk_to_scene": [
+20:01:02 [ba14]     0
+20:01:02 [ba14]   ]
+20:01:02 [ba14] }
+20:01:02 [ba14] [StorySave] 1 scenes identified across 1 paragraphs
+20:01:02 [ba14] [StorySave] paragraph_to_scene: [0]
+20:01:02 [ba14] [StorySave] page_to_paragraph:  [0, 0, 0, 0]
+20:01:02 [ba14] [StorySave] page_to_scene:      [0, 0, 0, 0]
+20:01:02 [ba14] [KB] derived level_age=5 mlu=6-8 targets=['plural_forms', 'ing_form', 'pronouns_later', 'location_noun', 'simple_conjunction'] speech[5+]=['advanced_sounds'] interests=['fairies', 'princesses', 'pets', 'superheroes'] for user=sophie age=5 language_age=None gender='female' kind=question
+20:01:13 [ba14] [StoryQuestions] Gemini raw response: ```json
+20:01:13 [ba14] [
+20:01:13 [ba14]   {
+20:01:13 [ba14]     "question": "What was the main thing happening in the story?",
+20:01:13 [ba14]     "type": "main_idea",
+20:01:13 [ba14]     "correct_answer": "Sophie helped a fairy.",
+20:01:13 [ba14]     "wrong_answers": [
+20:01:13 [ba14]       "Sophie played with a dog.",
+20:01:13 [ba14]       "Sophie went to a castle."
+20:01:13 [ba14]     ]
+20:01:13 [ba14]   },
+20:01:13 [ba14]   {
+20:01:13 [ba14]     "question": "Who was Sophie helping in the garden?",
+20:01:13 [ba14]     "type": "detail",
+20:01:13 [ba14]     "correct_answer": "A little fairy.",
+20:01:13 [ba14]     "wrong_answers": [
+20:01:13 [ba14]       "Her friend.",
+20:01:13 [ba14]       "A princess."
+20:01:13 [ba14]     ]
+20:01:13 [ba14]   },
+20:01:13 [ba14]   {
+20:01:13 [ba14]     "question": "What did Sophie find on 
+20:01:13 [ba14] [StoryQuestions] Generated 4 questions for age 5
+20:01:13 [ba14] [StorySave] Generated 4 comprehension questions
+20:01:13 [ba14] Generating image for prompt: You are an illustrator. Use a consistent, children's-book illustration style: soft round shapes, pas...
+20:01:21 [ba14] Image saved to: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:01:21 [ba14] [StorySave] Generated 1 scene images for story story_20260621_200055.json
+20:01:21 [ba14] └─ DONE  POST /api/save_story -> 200 in 40840ms
+20:01:53 [dee9] ┌─ WORK  GET /
+20:01:53 [dee9] └─ DONE  GET / -> 200 in 1ms
+20:03:11 [01a3] ┌─ WORK  GET /api/get_user_stories
+20:03:11 [01a3] Looking for stories in: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/stories
+20:03:11 [01a3] Files found: ['story_20260529_214440.json', 'story_20260620_163734.json', 'story_20260620_172018.json', 'story_20260620_173129.json', 'story_20260508_225818.json', 'story_20260621_200055.json', 'story_20260620_163900.json', 'story_20260620_163536.json', 'story_20260620_182554.json', 'story_20260620_164508.json', 'story_20260620_164017.json']
+20:03:11 [01a3] Processing file: story_20260529_214440.json
+20:03:11 [01a3] Successfully loaded story_20260529_214440.json
+20:03:11 [01a3] Added story: story_20260529_214440.json
+20:03:11 [01a3] Processing file: story_20260620_163734.json
+20:03:11 [01a3] Successfully loaded story_20260620_163734.json
+20:03:11 [01a3] Added story: story_20260620_163734.json
+20:03:11 [01a3] Processing file: story_20260620_172018.json
+20:03:11 [01a3] Successfully loaded story_20260620_172018.json
+20:03:11 [01a3] Added story: story_20260620_172018.json
+20:03:11 [01a3] Processing file: story_20260620_173129.json
+20:03:11 [01a3] Successfully loaded story_20260620_173129.json
+20:03:11 [01a3] Added story: story_20260620_173129.json
+20:03:11 [01a3] Processing file: story_20260508_225818.json
+20:03:11 [01a3] Successfully loaded story_20260508_225818.json
+20:03:11 [01a3] Added story: story_20260508_225818.json
+20:03:11 [01a3] Processing file: story_20260621_200055.json
+20:03:11 [01a3] Successfully loaded story_20260621_200055.json
+20:03:11 [01a3] Added story: story_20260621_200055.json
+20:03:11 [01a3] Processing file: story_20260620_163900.json
+20:03:11 [01a3] Successfully loaded story_20260620_163900.json
+20:03:11 [01a3] Added story: story_20260620_163900.json
+20:03:11 [01a3] Processing file: story_20260620_163536.json
+20:03:11 [01a3] Successfully loaded story_20260620_163536.json
+20:03:11 [01a3] Added story: story_20260620_163536.json
+20:03:11 [01a3] Processing file: story_20260620_182554.json
+20:03:11 [01a3] Successfully loaded story_20260620_182554.json
+20:03:11 [01a3] Added story: story_20260620_182554.json
+20:03:11 [01a3] Processing file: story_20260620_164508.json
+20:03:11 [01a3] Successfully loaded story_20260620_164508.json
+20:03:11 [01a3] Added story: story_20260620_164508.json
+20:03:11 [01a3] Processing file: story_20260620_164017.json
+20:03:11 [01a3] Successfully loaded story_20260620_164017.json
+20:03:11 [01a3] Added story: story_20260620_164017.json
+20:03:11 [01a3] Returning 11 stories: [{'filename': 'story_20260621_200055.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 184, 'created_at': '20260621 _2:00:05', 'preview': 'Sophie is in the garden. Sophie sees a little fairy sitting on a red flower. The fairy has a tiny cr...'}, {'filename': 'story_20260620_182554.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 158, 'created_at': '20260620 _1:82:55', 'preview': 'Sophie and Lily are playing in the garden. Sophie is holding a red ball and three flowers. emotion:Q...'}, {'filename': 'story_20260620_173129.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 155, 'created_at': '20260620 _1:73:12', 'preview': 'Sophie is in the garden with her friend Mia. emotion:QTsurprised Sophie finds a tiny pair of sparkly...'}, {'filename': 'story_20260620_172018.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 149, 'created_at': '20260620 _1:72:01', 'preview': 'Sophie and her friend Mia are in the garden. emotion:QTsurprised Sophie finds a sparkly golden crown...'}, {'filename': 'story_20260620_164508.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 173, 'created_at': '20260620 _1:64:50', 'preview': "Sophie and her friend Mia are at the park. emotion:QTsurprised Sophie's big yellow kite is stuck in ..."}, {'filename': 'story_20260620_164017.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 178, 'created_at': '20260620 _1:64:01', 'preview': 'emotion:QThappy Sophie and her friend Mia are playing in the crisp autumn leaves. emotion:QTsurprise...'}, {'filename': 'story_20260620_163900.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 171, 'created_at': '20260620 _1:63:90', 'preview': 'Sophie and her friend Mia are sitting at the big art table. emotion:QTsad Sophie is looking for her ...'}, {'filename': 'story_20260620_163734.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 171, 'created_at': '20260620 _1:63:73', 'preview': 'Sophie and her mum are sitting on the big, soft sofa. emotion:QTsurprised Sophie finds a little fair...'}, {'filename': 'story_20260620_163536.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 183, 'created_at': '20260620 _1:63:53', 'preview': 'Sophie and her friend Mia are in the park. emotion:QTsurprised Sophie sees a big pink kite stuck in ...'}, {'filename': 'story_20260529_214440.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 167, 'created_at': '20260529 _2:14:44', 'preview': 'Sophie and Lily are in the classroom. emotion:QTsurprised Sophie sees her red crayon is not on the t...'}, {'filename': 'story_20260508_225818.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 344, 'created_at': '20260508 _2:25:81', 'preview': 'Sophie loved visiting the garden. emotion:QThappy Today, she was excited to play with Princess Lily....'}]
+20:03:11 [01a3] └─ DONE  GET /api/get_user_stories -> 200 in 5ms
+20:03:21 [2588] ┌─ WORK  GET /read_story/story_20260621_200055.json
+20:03:21 [8ec3] ┌─ WORK  POST /api/get_specific_story_details | fields: filename
+20:03:21 [2588] └─ DONE  GET /read_story/story_20260621_200055.json -> 200 in 6ms
+20:03:21 [8ec3] └─ DONE  POST /api/get_specific_story_details -> 200 in 6ms
+20:03:22 [6169] ┌─ WORK  POST /api/human_tracking/start
+20:03:22 [6169] api_human_tracking_start
+20:03:22 [6169] api_human_tracking_start try
+20:03:22 [6169] └─ DONE  POST /api/human_tracking/start -> 500 in 3ms
+20:03:22 [2ad3] ┌─ WORK  GET /api/get_story_sentences | args: filename
+20:03:22 [2ad3] └─ DONE  GET /api/get_story_sentences -> 200 in 9ms
+20:03:22 [da0d] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:22 [da0d] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:03:22 [bef0] ┌─ WORK  GET /images/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:22 [bef0] Serving image: sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:22 [bef0] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:22 [bef0] File exists: True
+20:03:22 [bef0] └─ DONE  GET /images/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png -> 200 in 1ms
+20:03:24 [fcac] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:24 [fcac] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:03:25 [e5d1] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:25 [e5d1] └─ DONE  POST /api/get_sentence_image -> 200 in 3ms
+20:03:26 [caa5] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:26 [caa5] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:03:27 [1789] ┌─ WORK  POST /api/speak_sentence | fields: sentence, filename
+20:03:27 [1789] self.engine :  qwen
+20:03:31 [8ee0] ┌─ WORK  GET /api/get_user_stories
+20:03:31 [8ee0] Looking for stories in: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/stories
+20:03:31 [8ee0] Files found: ['story_20260529_214440.json', 'story_20260620_163734.json', 'story_20260620_172018.json', 'story_20260620_173129.json', 'story_20260508_225818.json', 'story_20260621_200055.json', 'story_20260620_163900.json', 'story_20260620_163536.json', 'story_20260620_182554.json', 'story_20260620_164508.json', 'story_20260620_164017.json']
+20:03:31 [8ee0] Processing file: story_20260529_214440.json
+20:03:31 [8ee0] Successfully loaded story_20260529_214440.json
+20:03:31 [8ee0] Added story: story_20260529_214440.json
+20:03:31 [8ee0] Processing file: story_20260620_163734.json
+20:03:31 [8ee0] Successfully loaded story_20260620_163734.json
+20:03:31 [8ee0] Added story: story_20260620_163734.json
+20:03:31 [8ee0] Processing file: story_20260620_172018.json
+20:03:31 [8ee0] Successfully loaded story_20260620_172018.json
+20:03:31 [8ee0] Added story: story_20260620_172018.json
+20:03:31 [8ee0] Processing file: story_20260620_173129.json
+20:03:31 [8ee0] Successfully loaded story_20260620_173129.json
+20:03:31 [8ee0] Added story: story_20260620_173129.json
+20:03:31 [8ee0] Processing file: story_20260508_225818.json
+20:03:31 [8ee0] Successfully loaded story_20260508_225818.json
+20:03:31 [8ee0] Added story: story_20260508_225818.json
+20:03:31 [8ee0] Processing file: story_20260621_200055.json
+20:03:31 [8ee0] Successfully loaded story_20260621_200055.json
+20:03:31 [8ee0] Added story: story_20260621_200055.json
+20:03:31 [8ee0] Processing file: story_20260620_163900.json
+20:03:31 [8ee0] Successfully loaded story_20260620_163900.json
+20:03:31 [8ee0] Added story: story_20260620_163900.json
+20:03:31 [8ee0] Processing file: story_20260620_163536.json
+20:03:31 [8ee0] Successfully loaded story_20260620_163536.json
+20:03:31 [8ee0] Added story: story_20260620_163536.json
+20:03:31 [8ee0] Processing file: story_20260620_182554.json
+20:03:31 [8ee0] Successfully loaded story_20260620_182554.json
+20:03:31 [8ee0] Added story: story_20260620_182554.json
+20:03:31 [8ee0] Processing file: story_20260620_164508.json
+20:03:31 [8ee0] Successfully loaded story_20260620_164508.json
+20:03:31 [8ee0] Added story: story_20260620_164508.json
+20:03:31 [8ee0] Processing file: story_20260620_164017.json
+20:03:31 [8ee0] Successfully loaded story_20260620_164017.json
+20:03:31 [8ee0] Added story: story_20260620_164017.json
+20:03:31 [8ee0] Returning 11 stories: [{'filename': 'story_20260621_200055.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 184, 'created_at': '20260621 _2:00:05', 'preview': 'Sophie is in the garden. Sophie sees a little fairy sitting on a red flower. The fairy has a tiny cr...'}, {'filename': 'story_20260620_182554.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 158, 'created_at': '20260620 _1:82:55', 'preview': 'Sophie and Lily are playing in the garden. Sophie is holding a red ball and three flowers. emotion:Q...'}, {'filename': 'story_20260620_173129.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 155, 'created_at': '20260620 _1:73:12', 'preview': 'Sophie is in the garden with her friend Mia. emotion:QTsurprised Sophie finds a tiny pair of sparkly...'}, {'filename': 'story_20260620_172018.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 149, 'created_at': '20260620 _1:72:01', 'preview': 'Sophie and her friend Mia are in the garden. emotion:QTsurprised Sophie finds a sparkly golden crown...'}, {'filename': 'story_20260620_164508.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 173, 'created_at': '20260620 _1:64:50', 'preview': "Sophie and her friend Mia are at the park. emotion:QTsurprised Sophie's big yellow kite is stuck in ..."}, {'filename': 'story_20260620_164017.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 178, 'created_at': '20260620 _1:64:01', 'preview': 'emotion:QThappy Sophie and her friend Mia are playing in the crisp autumn leaves. emotion:QTsurprise...'}, {'filename': 'story_20260620_163900.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 171, 'created_at': '20260620 _1:63:90', 'preview': 'Sophie and her friend Mia are sitting at the big art table. emotion:QTsad Sophie is looking for her ...'}, {'filename': 'story_20260620_163734.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 171, 'created_at': '20260620 _1:63:73', 'preview': 'Sophie and her mum are sitting on the big, soft sofa. emotion:QTsurprised Sophie finds a little fair...'}, {'filename': 'story_20260620_163536.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 183, 'created_at': '20260620 _1:63:53', 'preview': 'Sophie and her friend Mia are in the park. emotion:QTsurprised Sophie sees a big pink kite stuck in ...'}, {'filename': 'story_20260529_214440.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 167, 'created_at': '20260529 _2:14:44', 'preview': 'Sophie and Lily are in the classroom. emotion:QTsurprised Sophie sees her red crayon is not on the t...'}, {'filename': 'story_20260508_225818.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 344, 'created_at': '20260508 _2:25:81', 'preview': 'Sophie loved visiting the garden. emotion:QThappy Today, she was excited to play with Princess Lily....'}]
+20:03:31 [8ee0] └─ DONE  GET /api/get_user_stories -> 200 in 21ms
+20:03:32 [36e7] ┌─ WORK  GET /read_story/story_20260621_200055.json
+20:03:32 [36e7] └─ DONE  GET /read_story/story_20260621_200055.json -> 200 in 2ms
+20:03:32 [164b] ┌─ WORK  POST /api/get_specific_story_details | fields: filename
+20:03:32 [164b] └─ DONE  POST /api/get_specific_story_details -> 200 in 4ms
+20:03:32 [c7dc] ┌─ WORK  POST /api/human_tracking/start
+20:03:32 [c7dc] api_human_tracking_start
+20:03:32 [c7dc] api_human_tracking_start try┌─ WORK  GET /api/get_story_sentences | args: filename
+20:03:32 [d0b8] └─ DONE  POST /api/human_tracking/start -> 500 in 5ms
+20:03:32 [c7dc] 
+20:03:32 [d0b8] └─ DONE  GET /api/get_story_sentences -> 200 in 3ms
+20:03:32 [9afd] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:32 [9afd] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:03:32 [45be] ┌─ WORK  GET /images/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:32 [45be] Serving image: sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:32 [45be] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:32 [45be] File exists: True
+20:03:32 [45be] └─ DONE  GET /images/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png -> 304 in 1ms
+20:03:34 [1789] self.engine :  qwen
+20:03:38 [7a63] ┌─ WORK  GET /api/get_user_stories
+20:03:38 [7a63] Looking for stories in: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/stories
+20:03:38 [7a63] Files found: ['story_20260529_214440.json', 'story_20260620_163734.json', 'story_20260620_172018.json', 'story_20260620_173129.json', 'story_20260508_225818.json', 'story_20260621_200055.json', 'story_20260620_163900.json', 'story_20260620_163536.json', 'story_20260620_182554.json', 'story_20260620_164508.json', 'story_20260620_164017.json']
+20:03:38 [7a63] Processing file: story_20260529_214440.json
+20:03:38 [7a63] Successfully loaded story_20260529_214440.json
+20:03:38 [7a63] Added story: story_20260529_214440.json
+20:03:38 [7a63] Processing file: story_20260620_163734.json
+20:03:38 [7a63] Successfully loaded story_20260620_163734.json
+20:03:38 [7a63] Added story: story_20260620_163734.json
+20:03:38 [7a63] Processing file: story_20260620_172018.json
+20:03:38 [7a63] Successfully loaded story_20260620_172018.json
+20:03:38 [7a63] Added story: story_20260620_172018.json
+20:03:38 [7a63] Processing file: story_20260620_173129.json
+20:03:38 [7a63] Successfully loaded story_20260620_173129.json
+20:03:38 [7a63] Added story: story_20260620_173129.json
+20:03:38 [7a63] Processing file: story_20260508_225818.json
+20:03:38 [7a63] Successfully loaded story_20260508_225818.json
+20:03:38 [7a63] Added story: story_20260508_225818.json
+20:03:38 [7a63] Processing file: story_20260621_200055.json
+20:03:38 [7a63] Successfully loaded story_20260621_200055.json
+20:03:38 [7a63] Added story: story_20260621_200055.json
+20:03:38 [7a63] Processing file: story_20260620_163900.json
+20:03:38 [7a63] Successfully loaded story_20260620_163900.json
+20:03:38 [7a63] Added story: story_20260620_163900.json
+20:03:38 [7a63] Processing file: story_20260620_163536.json
+20:03:38 [7a63] Successfully loaded story_20260620_163536.json
+20:03:38 [7a63] Added story: story_20260620_163536.json
+20:03:38 [7a63] Processing file: story_20260620_182554.json
+20:03:38 [7a63] Successfully loaded story_20260620_182554.json
+20:03:38 [7a63] Added story: story_20260620_182554.json
+20:03:38 [7a63] Processing file: story_20260620_164508.json
+20:03:38 [7a63] Successfully loaded story_20260620_164508.json
+20:03:38 [7a63] Added story: story_20260620_164508.json
+20:03:38 [7a63] Processing file: story_20260620_164017.json
+20:03:38 [7a63] Successfully loaded story_20260620_164017.json
+20:03:38 [7a63] Added story: story_20260620_164017.json
+20:03:38 [7a63] Returning 11 stories: [{'filename': 'story_20260621_200055.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 184, 'created_at': '20260621 _2:00:05', 'preview': 'Sophie is in the garden. Sophie sees a little fairy sitting on a red flower. The fairy has a tiny cr...'}, {'filename': 'story_20260620_182554.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 158, 'created_at': '20260620 _1:82:55', 'preview': 'Sophie and Lily are playing in the garden. Sophie is holding a red ball and three flowers. emotion:Q...'}, {'filename': 'story_20260620_173129.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 155, 'created_at': '20260620 _1:73:12', 'preview': 'Sophie is in the garden with her friend Mia. emotion:QTsurprised Sophie finds a tiny pair of sparkly...'}, {'filename': 'story_20260620_172018.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 149, 'created_at': '20260620 _1:72:01', 'preview': 'Sophie and her friend Mia are in the garden. emotion:QTsurprised Sophie finds a sparkly golden crown...'}, {'filename': 'story_20260620_164508.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 173, 'created_at': '20260620 _1:64:50', 'preview': "Sophie and her friend Mia are at the park. emotion:QTsurprised Sophie's big yellow kite is stuck in ..."}, {'filename': 'story_20260620_164017.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 178, 'created_at': '20260620 _1:64:01', 'preview': 'emotion:QThappy Sophie and her friend Mia are playing in the crisp autumn leaves. emotion:QTsurprise...'}, {'filename': 'story_20260620_163900.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 171, 'created_at': '20260620 _1:63:90', 'preview': 'Sophie and her friend Mia are sitting at the big art table. emotion:QTsad Sophie is looking for her ...'}, {'filename': 'story_20260620_163734.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 171, 'created_at': '20260620 _1:63:73', 'preview': 'Sophie and her mum are sitting on the big, soft sofa. emotion:QTsurprised Sophie finds a little fair...'}, {'filename': 'story_20260620_163536.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 183, 'created_at': '20260620 _1:63:53', 'preview': 'Sophie and her friend Mia are in the park. emotion:QTsurprised Sophie sees a big pink kite stuck in ...'}, {'filename': 'story_20260529_214440.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 167, 'created_at': '20260529 _2:14:44', 'preview': 'Sophie and Lily are in the classroom. emotion:QTsurprised Sophie sees her red crayon is not on the t...'}, {'filename': 'story_20260508_225818.json', 'title': 'Story for sophie', 'age': 5, 'word_count': 344, 'created_at': '20260508 _2:25:81', 'preview': 'Sophie loved visiting the garden. emotion:QThappy Today, she was excited to play with Princess Lily....'}]
+20:03:38 [7a63] └─ DONE  GET /api/get_user_stories -> 200 in 20ms
+20:03:39 [5d37] ┌─ WORK  POST /api/get_specific_story_details | fields: filename
+20:03:39 [5d37] └─ DONE  POST /api/get_specific_story_details -> 200 in 1ms
+20:03:40 [1789] └─ DONE  POST /api/speak_sentence -> 200 in 13300ms
+20:03:42 [8379] ┌─ WORK  GET /read_story/story_20260621_200055.json
+20:03:42 [8379] └─ DONE  GET /read_story/story_20260621_200055.json -> 200 in 1ms
+20:03:42 [309d] ┌─ WORK  POST /api/human_tracking/start
+20:03:42 [309d] api_human_tracking_start
+20:03:42 [309d] api_human_tracking_start try
+20:03:42 [309d] └─ DONE  POST /api/human_tracking/start -> 500 in 1ms
+20:03:42 [cfb7] ┌─ WORK  GET /api/get_story_sentences | args: filename
+20:03:42 [cfb7] └─ DONE  GET /api/get_story_sentences -> 200 in 1ms
+20:03:42 [db38] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:42 [db38] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:03:42 [2bdd] ┌─ WORK  GET /images/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:42 [2bdd] Serving image: sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:42 [2bdd] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png
+20:03:42 [2bdd] File exists: True
+20:03:42 [2bdd] └─ DONE  GET /images/sophie/story_images/story_20260621_200055/story_scene_000_20260621_200113_e7ba9ebb.png -> 304 in 3ms
+20:03:50 [18c9] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:50 [18c9] └─ DONE  POST /api/get_sentence_image -> 200 in 2ms
+20:03:55 [b71e] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:03:55 [b71e] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:04:00 [0fc5] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+20:04:00 [0fc5] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+20:04:06 [6995] ┌─ WORK  POST /api/speak_sentence | fields: sentence, filename
+20:04:06 [6995] self.engine :  qwen
+20:04:11 [6995] self.engine :  qwen
+20:04:18 [6995] └─ DONE  POST /api/speak_sentence -> 200 in 11661ms
+20:10:35 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace.log
+20:11:01 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace.log
+20:13:25 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace.log

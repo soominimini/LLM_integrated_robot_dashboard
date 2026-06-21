@@ -252,8 +252,42 @@ import threading as _threading
 
 TRACE_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(TRACE_DIR, exist_ok=True)
-TRACE_FILE = os.path.join(TRACE_DIR, "trace.log")
 _trace_local = _threading.local()
+
+# Daily-rotated trace files: a new logs/trace-YYYY-MM-DD.log is opened whenever
+# the calendar date changes (checked at each line write), so each day's logs
+# land in their own file.
+_trace_rotate_lock = _threading.Lock()
+_trace_state = {"date": None, "fh": None}
+
+
+def _trace_path_for(date_str):
+    return os.path.join(TRACE_DIR, f"trace-{date_str}.log")
+
+
+def _trace_fh_for_today():
+    """Append handle for today's dated trace file.
+
+    Opens a new file (closing the previous one) the first time a line is logged
+    on a new calendar date — i.e. when the date differs from the currently-open
+    log's date.
+    """
+    today = time.strftime('%Y-%m-%d')
+    fh = _trace_state["fh"]
+    if _trace_state["date"] == today and fh is not None:
+        return fh
+    with _trace_rotate_lock:
+        if _trace_state["date"] != today or _trace_state["fh"] is None:
+            old = _trace_state["fh"]
+            _trace_state["fh"] = open(_trace_path_for(today), "a", buffering=1)
+            _trace_state["date"] = today
+            if old is not None:
+                try:
+                    old.flush()
+                    old.close()
+                except Exception:
+                    pass
+        return _trace_state["fh"]
 
 # High-frequency polling endpoints we don't want to frame (keeps the trace readable).
 _TRACE_SKIP = {
@@ -265,9 +299,8 @@ _TRACE_SKIP = {
 
 class _Tee:
     """Write to the original stream and also to the trace file, timestamping at line boundaries."""
-    def __init__(self, original, fh):
+    def __init__(self, original):
         self._original = original
-        self._fh = fh
         self._buf = ""
         self._lock = _threading.Lock()
 
@@ -278,15 +311,18 @@ class _Tee:
             while "\n" in self._buf:
                 line, self._buf = self._buf.split("\n", 1)
                 rid = getattr(_trace_local, "rid", "----")
-                self._fh.write(f"{time.strftime('%H:%M:%S')} [{rid}] {line}\n")
-                self._fh.flush()
+                fh = _trace_fh_for_today()
+                fh.write(f"{time.strftime('%H:%M:%S')} [{rid}] {line}\n")
+                fh.flush()
 
     def flush(self):
         self._original.flush()
-        try:
-            self._fh.flush()
-        except Exception:
-            pass
+        fh = _trace_state["fh"]
+        if fh is not None:
+            try:
+                fh.flush()
+            except Exception:
+                pass
 
     def isatty(self):
         return getattr(self._original, "isatty", lambda: False)()
@@ -296,11 +332,11 @@ class _Tee:
 
 
 if not getattr(sys, "_trace_installed", False):
-    _trace_fh = open(TRACE_FILE, "a", buffering=1)
-    sys.stdout = _Tee(sys.stdout, _trace_fh)
-    sys.stderr = _Tee(sys.stderr, _trace_fh)
+    _trace_fh_for_today()  # open today's dated file up front
+    sys.stdout = _Tee(sys.stdout)
+    sys.stderr = _Tee(sys.stderr)
     sys._trace_installed = True
-    print(f"[trace] step tracing active -> {TRACE_FILE}")
+    print(f"[trace] step tracing active -> {_trace_path_for(time.strftime('%Y-%m-%d'))} (daily rotation)")
 
 
 @app.before_request
@@ -2461,8 +2497,8 @@ def _apply_emotion_tags_with_gemini(story_text):
         "ALLOWED EMOTION NAMES (use ONLY these — exact match):\n"
         "  QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy\n\n"
         "ALLOWED GESTURE NAMES:\n"
-        "  hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace,\n"
-        "  patience, slight_no, think, sneezing, yawn, breathing_exercise,\n"
+        "  hi, bye, nodding-yes, clapping, emotions/hoora, emotions/happy, emotions/calm, emotions/shy,\n"
+        "  slight_no, think, sneezing, yawn, breathing_exercise,\n"
         "   kiss, stretching\n\n"
         "RULES:\n"
         "- Tag EVERY clear emotional beat. Whenever a character smiles, laughs,\n"
@@ -2473,10 +2509,16 @@ def _apply_emotion_tags_with_gemini(story_text):
         "  calm (peaceful/content), shy (embarrassed/bashful).\n"
         "- Never invent emotion names. If a feeling is not in the allowlist,\n"
         "  pick the closest one.\n"
-        "- Place each tag IMMEDIATELY BEFORE the sentence it describes —\n"
-        "  not at the start of the paragraph. The same emotion may appear\n"
-        "  multiple times in one paragraph if the character feels it more\n"
-        "  than once.\n"
+        "- PLACEMENT — put each tag at a SENTENCE BOUNDARY (never mid-word),\n"
+        "  chosen by WHERE the emotion/action word sits in its sentence:\n"
+        "    * EARLY in the sentence (first half) -> put the tag IMMEDIATELY\n"
+        "      BEFORE that sentence.\n"
+        "    * LATER in the sentence (second half) -> put the tag at the END\n"
+        "      of that sentence, immediately AFTER its closing . ! or ?\n"
+        "  Anchor tags to the specific sentence (and the half of it) where the\n"
+        "  feeling or action occurs, not to the start of the paragraph. The same\n"
+        "  emotion may appear multiple times in one paragraph if the character\n"
+        "  feels it more than once.\n"
         "- Use gesture tags for physical actions where they fit (waving,\n"
         "  clapping, nodding, hugging, stretching, etc.).\n"
         "- DO NOT change, add, remove, rephrase, or reorder ANY of the\n"
@@ -2486,6 +2528,13 @@ def _apply_emotion_tags_with_gemini(story_text):
         "  for emotional beats that are currently untagged.\n"
         "- Return ONLY the tagged story text. No JSON, no explanation, no\n"
         "  preamble, no code fences.\n\n"
+        "EXAMPLES (tag position follows the emotion word's position):\n"
+        "  Early in sentence -> tag BEFORE the sentence:\n"
+        "    'Mia felt happy when she saw the puppy.'\n"
+        "    => '[emotion:QT/happy] Mia felt happy when she saw the puppy.'\n"
+        "  Late in sentence -> tag at the END of the sentence:\n"
+        "    'The puppy ran to Mia and she smiled.'\n"
+        "    => 'The puppy ran to Mia and she smiled. [emotion:QT/happy]'\n\n"
         f"STORY:\n{story_text}"
     )
 
@@ -2494,6 +2543,7 @@ def _apply_emotion_tags_with_gemini(story_text):
         system="You add inline gesture/emotion tags to children's stories. Return only the tagged story.",
         temperature=0.2,
         max_tokens=4096,
+        label="emotion-tagger",
     )
     if not tagged:
         print("[StoryTagger] Gemini returned nothing — keeping original story untagged")
@@ -3091,11 +3141,33 @@ def play_scene_page():
         print(f"HumanTracking auto-start (/play_scene) error: {e}")
     return render_template("play_scene.html", logged_in=True, user=user)
 
+def _log_gemini_io(system, prompt, response=None, label=None):
+    """Trace an in-process Gemini call to stdout so its prompt/response land in
+    the daily trace log — the same way story generation logs its prompt.
+    Covers the emotion tagger and every other _gemini_generate() pass.
+    Gated by LOG_LLM_PROMPTS (default on); set LOG_LLM_PROMPTS=0 to silence.
+    """
+    if os.getenv("LOG_LLM_PROMPTS", "1") == "0":
+        return
+    tag = f"Gemini:{label}" if label else "Gemini"
+    if response is None:
+        print(f"[{tag}] >>> PROMPT ({len(prompt)} chars) | system: {system}")
+        print(prompt)
+    else:
+        preview = response if len(response) <= 1500 else (
+            response[:1500] + f"\n...(+{len(response) - 1500} more chars)")
+        print(f"[{tag}] <<< RESPONSE ({len(response)} chars):")
+        print(preview)
+
+
 def _gemini_generate(prompt, system="You are a helpful assistant. Return JSON only when asked.",
-                     temperature=0.3, max_tokens=2048):
+                     temperature=0.3, max_tokens=2048, label=None):
     """Call Gemini via subprocess for general-purpose text generation.
 
     Returns the raw response text, or None on failure.
+
+    Set the optional ``label`` to name the call site in the trace log
+    (e.g. label="emotion-tagger"); otherwise the system prompt identifies it.
     """
     script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_general.py')
     if not os.path.exists(script_path):
@@ -3106,6 +3178,7 @@ def _gemini_generate(prompt, system="You are a helpful assistant. Return JSON on
     try:
         tmp.write(prompt)
         tmp.close()
+        _log_gemini_io(system, prompt, label=label)
         cmd = [WORKER_PYTHON, script_path,
                '--prompt-file', tmp.name,
                '--system', system,
@@ -3115,7 +3188,9 @@ def _gemini_generate(prompt, system="You are a helpful assistant. Return JSON on
         if proc.returncode != 0:
             print(f"[Gemini] Script error: {proc.stderr[:300]}")
             return None
-        return (proc.stdout or '').strip()
+        out = (proc.stdout or '').strip()
+        _log_gemini_io(system, prompt, response=out, label=label)
+        return out
     except Exception as e:
         print(f"[Gemini] Error: {e}")
         return None
@@ -5865,7 +5940,7 @@ def _split_page_into_segments(page_text):
 # Valid robot emotions (must match the set the QT robot can actually display).
 # Anything else is remapped to the closest available expression so hallucinated
 # names from the LLM (e.g. "QT/relieved") don't silently fail.
-_VALID_EMOTIONS = {"QT/happy", "QT/sad", "QT/surprised", "QT/afraid", "QT/angry", "QT/calm", "QT/shy"}
+_VALID_EMOTIONS = {"QT/happy", "QT/sad", "QT/surprise", "QT/afraid", "QT/angry", "QT/calm", "QT/shy"}
 _EMOTION_REMAP = {
     "relieved": "QT/happy", "joyful": "QT/happy", "excited": "QT/happy",
     "proud": "QT/happy", "grateful": "QT/happy", "delighted": "QT/happy",
@@ -5874,7 +5949,7 @@ _EMOTION_REMAP = {
     "scared": "QT/afraid", "fearful": "QT/afraid", "nervous": "QT/afraid",
     "worried": "QT/afraid", "anxious": "QT/afraid",
     "upset": "QT/sad", "disappointed": "QT/sad", "lonely": "QT/sad",
-    "shocked": "QT/surprised", "amazed": "QT/surprised", "astonished": "QT/surprised",
+    "shocked": "QT/surprise", "amazed": "QT/surprise", "astonished": "QT/surprise",
     "embarrassed": "QT/shy", "bashful": "QT/shy",
 }
 

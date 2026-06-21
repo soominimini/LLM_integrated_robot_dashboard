@@ -1,0 +1,100 @@
+{
+  "story": "[emotion:QT/happy] Sophie is making a fairy crown for her cat, Rosie. Sophie puts three red flowers on the crown. [emotion:QT/surprised] Oh no! The crown falls under the chair. [emotion:QT/sad] Sophie cannot reach it. A fairy with bright wings is sitting on the chair. The fairy reaches under the chair and picks up the crown. The fairy gives the crown to Sophie. [emotion:QT/happy] Sophie puts the crown on Rosie. Rosie the cat is wearing a beautiful crown in the garden. [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 204,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Fairy Crown"
+  },
+  "pages": [
+    "[emotion:QT/happy] Sophie is making a fairy crown for her cat, Rosie. Sophie puts three red flowers on the crown.",
+    "[emotion:QT/surprised] Oh no! The crown falls under the chair. [emotion:QT/sad] Sophie cannot reach it.",
+    "A fairy with bright wings is sitting on the chair. The fairy reaches under the chair and picks up the crown. The fairy gives the crown to Sophie.",
+    "[emotion:QT/happy] Sophie puts the crown on Rosie. Rosie the cat is wearing a beautiful crown in the garden."
+  ],
+  "paragraphs": [
+    "Sophie is making a fairy crown for her cat, Rosie. Sophie puts three red flowers on the crown. Oh no! The crown falls under the chair. Sophie cannot reach it. A fairy with bright wings is sitting on the chair. The fairy reaches under the chair and picks up the crown. The fairy gives the crown to Sophie. Sophie puts the crown on Rosie. Rosie the cat is wearing a beautiful crown in the garden."
+  ],
+  "scenes": [
+    "Sophie, with a fairy nearby, puts a crown on Rosie the cat, who is now wearing it in a whimsical garden setting."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the story mostly about, Sophie making a crown for her cat Rosie?",
+      "type": "main_idea",
+      "correct_answer": "Sophie making a crown for Rosie",
+      "wrong_answers": [
+        "A fairy flying in the garden",
+        "Rosie playing with a ball"
+      ]
+    },
+    {
+      "question": "How many red flowers was Sophie putting on the crown?",
+      "type": "detail",
+      "correct_answer": "Three red flowers",
+      "wrong_answers": [
+        "Two blue flowers",
+        "Four yellow flowers"
+      ]
+    },
+    {
+      "question": "Where did the crown fall when Sophie was making it?",
+      "type": "detail",
+      "correct_answer": "Under the chair",
+      "wrong_answers": [
+        "On the table",
+        "In the garden"
+      ]
+    },
+    {
+      "question": "Who was helping Sophie reach the crown under the chair?",
+      "type": "detail",
+      "correct_answer": "A fairy with bright wings",
+      "wrong_answers": [
+        "Rosie the cat",
+        "Sophie's mom"
+      ]
+    }
+  ],
+  "takeaways": []
+}

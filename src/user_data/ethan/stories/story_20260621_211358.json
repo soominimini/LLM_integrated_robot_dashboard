@@ -1,0 +1,122 @@
+{
+  "story": "Ethan ran three quick laps around the green, checkered track he had built on the kitchen floor. His red rocket car was the fastest thing he had ever seen, and the championship race was tomorrow. [emotion:QT/happy] While Ethan was arranging the tall, yellow ramps, one snapped right in the middle. [emotion:QT/sad] He sat back and frowned, because without that ramp, the whole track was broken.\n\n\"That ramp went crooked before mine did too,\" said his neighbor, Theo, who had walked over carrying a blue repair kit. \"I think we can fix it together.[emotion:QT/happy] [emotion:QT/afraid] \" Ethan held the pieces steady although his hands were shaking, while Theo clicked everything into place. They took turns checking each corner carefully, then tried three practice runs.\n\nThe rocket car flew over the ramp smoothly and landed with a satisfying *thwack* on the other side. [emotion:QT/happy] [emotion:QT/happy] \"We did it![emotion:QT/happy] [gesture:hoora] \" Ethan cheered, throwing his arms up wide.\n\n[emotion:QT/happy] Theo grinned. \"We were a really great team.\" [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 288,
+    "paragraph_count": 8,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      6,
+      7,
+      7
+    ],
+    "title": "The Rocket Car Race"
+  },
+  "pages": [
+    "Ethan ran three quick laps around the green, checkered track he had built on the kitchen floor. His red rocket car was the fastest thing he had ever seen, and the championship race was tomorrow. [emotion:QT/happy] While Ethan was arranging the tall, yellow ramps, one snapped right in the middle. [emotion:QT/sad] He sat back and frowned, because without that ramp, the whole track was broken.",
+    "\"That ramp went crooked before mine did too,\" said his neighbor, Theo, who had walked over carrying a blue repair kit. \"I think we can fix it together. [emotion:QT/happy] [emotion:QT/afraid] \" Ethan held the pieces steady although his hands were shaking, while Theo clicked everything into place. They took turns checking each corner carefully, then tried three practice runs.",
+    "The rocket car flew over the ramp smoothly and landed with a satisfying thwack on the other side. \"We did it! [emotion:QT/happy] [gesture:hoora] \" Ethan cheered, throwing his arms up wide.",
+    "[emotion:QT/happy] Theo grinned. \"We were a really great team.\""
+  ],
+  "paragraphs": [
+    "Ethan ran three quick laps around the green, checkered track he had built on the kitchen floor. His red rocket car was the fastest thing he had ever seen, and the championship race was tomorrow. While Ethan was arranging the tall, yellow ramps, one snapped right in the middle. He sat back and frowned, because without that ramp, the whole track was broken.",
+    "\"That ramp went crooked before mine did too,\" said his neighbor, Theo, who had walked over carrying a blue repair kit. \"I think we can fix it together.\" Ethan held the pieces steady although his hands were shaking, while Theo clicked everything into place. They took turns checking each corner carefully, then tried three practice runs.",
+    "The rocket car flew over the ramp smoothly and landed with a satisfying *thwack* on the other side. \"We did it!\" Ethan cheered, throwing his arms up wide.",
+    "Theo grinned. \"We were a really great team.\""
+  ],
+  "scenes": [
+    "Ethan on the kitchen floor, frowning at his broken yellow ramp amidst his green checkered track and red rocket car.",
+    "Ethan and Theo on the kitchen floor, working together to fix the broken ramp with Theo's blue repair kit.",
+    "The red rocket car soaring over the repaired ramp, with Ethan cheering enthusiastically in the background.",
+    "Theo grinning broadly on the kitchen floor, looking at Ethan, after their successful teamwork."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What is the main idea of this story about Ethan's red rocket car, although his ramp went crooked?",
+      "type": "main_idea",
+      "correct_answer": "Friends can work together to solve problems.",
+      "wrong_answers": [
+        "Ethan was sad about his broken toy.",
+        "Theo helped Ethan build a new track."
+      ]
+    },
+    {
+      "question": "What part of Ethan's championship track had snapped right in the middle?",
+      "type": "detail",
+      "correct_answer": "One of the tall, yellow ramps.",
+      "wrong_answers": [
+        "The red rocket car.",
+        "The green, checkered track."
+      ]
+    },
+    {
+      "question": "What was Theo carrying when he walked over to help Ethan?",
+      "type": "detail",
+      "correct_answer": "A blue repair kit.",
+      "wrong_answers": [
+        "A new rocket car.",
+        "Some tall, yellow ramps."
+      ]
+    },
+    {
+      "question": "Why do you think Ethan's hands were shaking although he held the pieces steady for their repair mission?",
+      "type": "inference",
+      "correct_answer": "He was afraid they might not fix it.",
+      "wrong_answers": [
+        "He was cold in the kitchen.",
+        "He was excited to race his car."
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Theo, the game hero, had not walked over to help Ethan fix the ramp that went crooked?",
+      "type": "inference",
+      "correct_answer": "Ethan would not have been able to race.",
+      "wrong_answers": [
+        "Ethan would have built a new track.",
+        "Theo would have fixed his own ramp."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help is a smart and brave thing to do.",
+    "Taking turns and working together gets things done faster.",
+    "Real friends make challenges feel smaller and victories feel bigger."
+  ]
+}

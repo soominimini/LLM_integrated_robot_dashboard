@@ -289,6 +289,12 @@ LibreOffice lock file is junk — safe to delete.)
   `OPENAI_API_KEY`, `QWEN_API_KEY`, `ANTHROPIC_API_KEY`, AWS Polly creds,
   `TTS_ENGINE`/`TTS_SPEED`, robot connection vars.
 - **`env.polly`** (gitignored) — Polly-specific overrides.
+- **Logging / observability** — stdout/stderr is teed (`web_user_server.py` `_Tee`)
+  to a **daily-rotated** trace file `src/logs/trace-YYYY-MM-DD.log` (a new file
+  opens when the calendar date changes). `LOG_LLM_PROMPTS` (env, default **on**)
+  traces every in-process Gemini prompt + response via `_gemini_generate`
+  (emotion-tagger, comprehension questions, page-split, scene-ID, hints, spatial
+  validation); set `LOG_LLM_PROMPTS=0` to silence.
 
 ---
 
@@ -391,6 +397,26 @@ These had zero live references and were deleted:
 - `src/version.py` — standalone `torch` version print, never imported.
 - `scripts/gemini_validate_object.py` — superseded by `gemini_validate_spatial.py`; never invoked.
 
+### Prompt, tagging & logging changes (2026-06-21)
+- **Generation no longer emits robot tags.** The `--- ROBOT GESTURES AND EMOTIONS ---`
+  block was removed from `MASTER_TEMPLATE`, `WH_MASTER_TEMPLATE`, and the new
+  `SIMPLE_MASTER_TEMPLATE` (`story_generator.py`); the story model writes prose only.
+  `[emotion:…]` / `[gesture:…]` tags are now added **solely** by the save-time Gemini
+  pass `_apply_emotion_tags_with_gemini` (`web_user_server.py:2478`), which places each
+  tag by the emotional word's position — **before** the sentence if the word is early,
+  at the **end** (after `.!?`) if it is late.
+- **Age-tier prompts realigned to the knowledge base.** Three-act narrative now starts
+  at **age 6**; ages **≤3** use the new linear `SIMPLE_MASTER_TEMPLATE` (no three-act);
+  ages **4–5** word range widened to **70–100** with sentence length governed by the KB
+  **MLU** rather than a fixed "3–4 sentences" count. The per-prompt `VOCABULARY FOCUS`
+  block was removed. The developmental knowledge base (`knowledge_base.py` +
+  `documents/SLP_codesign_knowledge_base_integrated_v1_1.json`, injected as the
+  `persona_context` block) is **authoritative** — tiers defer to its MLU / language &
+  speech targets / interest themes on any conflict.
+- **Daily-rotated trace log.** `src/logs/trace-YYYY-MM-DD.log` (one file per date)
+  replaces the single `trace.log`; `LOG_LLM_PROMPTS` (default on) traces every
+  `_gemini_generate` prompt + response (see §10).
+
 ---
 
 ## 16. Per-activity pipelines (App B)
@@ -430,17 +456,24 @@ used here.
 
 **Models:** story generation + shorten = **Claude `claude-sonnet-4-6`** via
 `scripts/claude_story.py` (routing `story_generator.py:804-810`; server sets
-`llm_model="claude-sonnet-4-6"` `:241`). Emotion re-tag, page split, scene-ID,
-comprehension + takeaway questions = `gemini-2.5-flash`. Illustrations =
+`llm_model="claude-sonnet-4-6"` `:241`). Emotion/gesture tagging (sole pass),
+page split, scene-ID, comprehension + takeaway questions = `gemini-2.5-flash`. Illustrations =
 `gemini-2.5-flash-image`, one per *scene*, first image reused as a style
 reference.
 
 **Mechanism:** (1) `/api/generate_story[_stream]` (`:1256/:1307`) builds the
-prompt (`story_generator._build_prompt:548`) — `WH_MASTER_TEMPLATE` for ages 4–5
-else `MASTER_TEMPLATE` — and returns tagged text (no persistence). (2)
+prompt (`story_generator._build_prompt:548`), routing by **language-age tier**:
+≤3 → `SIMPLE_MASTER_TEMPLATE` (linear *first/then/finally*, no three-act),
+4–5 → `WH_MASTER_TEMPLATE` (concrete WH-question vignette, 70–100 words),
+6+ → `MASTER_TEMPLATE` (three-act). Generation now returns **untagged** prose —
+the gesture/emotion tag instructions were removed from every template (no
+persistence). (2)
 `/api/save_story` (`:2654`) runs the pipeline in order: shorten via Claude if body
-> tier `max_words` (`:2717`) → Gemini emotion re-tag (`:2736`) → snap tag
-positions (`:2739`) → page-split by age (`:2742`) → re-inject tags (`:2747`) →
+> tier `max_words` (`:2717`) → **Gemini emotion/gesture tagging** (`_apply_emotion_tags_with_gemini:2478`) —
+the **sole** tagger now that generation emits none, placing each tag by its
+emotion word's position (early → **before** the sentence; late → at the **end**,
+after `.!?`) → snap positions (`_validate_tag_positions:2394`) → page-split by age
+(`:2742`) → re-inject tags (`_reinject_tags_into_pages:2559`) →
 paragraph split + scene-ID → `page_to_scene` (`:2777-2786`) → comprehension +
 per-takeaway questions (`:2793-2810`). (3) Persist
 `user_data/<user>/stories/story_<ts>.json` (`:2815`) + one PNG per scene. (4)
@@ -553,17 +586,17 @@ sequenceDiagram
     participant I as Image worker
     participant D as Disk
     T->>F: POST /api/generate_story
-    Note over F: build prompt persona+theme+goals, age tier
+    Note over F: build prompt; tier 3-and-under simple / 4-5 WH / 6+ three-act
     F->>C: claude_story.py claude-sonnet-4-6
-    C-->>F: tagged story (CHUNK stream)
+    C-->>F: untagged story (CHUNK stream)
     F-->>T: story for review
     T->>F: POST /api/save_story approved
     opt body over word cap
         F->>C: shorten_story Claude
         C-->>F: shortened body
     end
-    F->>G: emotion re-tag Gemini 2.5 Flash
-    G-->>F: re-tagged story
+    F->>G: emotion/gesture tagging (sole pass) Gemini 2.5 Flash
+    G-->>F: tagged story (tag before or after sentence by emotion-word position)
     Note over F: snap tag positions, local
     F->>G: page split Gemini
     G-->>F: pages

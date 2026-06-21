@@ -58,19 +58,19 @@ class StoryGenerator:
         # Format is modelled on the curated corpus at
         # documents/story for 4 to 7 years old/story_corpus.json
         # ("30 Wh-Question Stories" — @TheSpeechAndSpecialNeedsSpot).
-        # Each story is a 3–4 sentence vignette describing a concrete
+        # Each story is a short vignette describing a concrete
         # everyday scene, followed by 5–7 WHO/WHAT/WHERE follow-up
         # questions a clinician/robot can ask the child.
         # ─────────────────────────────────────────────
         (4, 5): {
             "label": "wh_question_format",
-            "word_range": (40, 70),
+            "word_range": (70, 100),
             "guidelines": (
-                "Language level: Write 3–4 short, concrete sentences in the present tense. "
+                "Language level: Write concrete sentences in the present tense. "
                 "Use simple vocabulary a 4–5 year old already knows (ball, beach, dog, bus, kite, snow, library). "
                 "Each sentence states a single observable fact (who is there, where, what is happening, what surprises them). "
                 "Avoid abstract concepts, idioms, figurative language, and complex compound sentences. "
-                "Story structure: One small everyday scene with a tiny twist or surprise — NOT a three-act journey. "
+                "Story structure: One small scene — everyday or imaginative — with a tiny twist or surprise. "
                 "Examples of scenes: building a sandcastle and finding a crab; flying a kite and the wind blowing it onto a dog; "
                 "dropping toothpaste on the bathroom floor; spotting an unusual lunch in the cafeteria. "
                 "Characters: 1–3 named characters; refer to them by name (not pronouns) so questions are answerable. "
@@ -92,9 +92,8 @@ class StoryGenerator:
             "requires_takeaways": True,
             "requires_wh_questions": True,
             "guidelines": (
-                "Language level: Use varied sentence structures including relative clauses and embedded phrases. "
+                "Language level: Vary sentence structure, but keep sentences within the MLU sentence-length target in the language guidance below; use relative clauses or embedded phrases only when they fit that length. "
                 "Include emotional vocabulary (frustrated, proud, nervous, relieved, grateful). "
-                "Weave in 3–5 target vocabulary words with natural contextual support. "
                 "Model question forms and conversational turn-taking in dialogue. "
                 "Story structure: Three-act structure with a secondary challenge or emotional subplot. "
                 "Characters: Up to 4–5 characters with motivations and feelings. "
@@ -254,7 +253,7 @@ Return your answer EXACTLY in this format, with no other text before or after:
 ** Title **
 <one short title>
 
-<the full story text — 3 to 4 short concrete sentences in the present tense>
+<the full story text>
 
 ** End **
 ** Questions **
@@ -283,7 +282,7 @@ STRICT RULES:
     # structure is injected via THEME_GUIDANCE fields.
     # ─────────────────────────────────────────────
 
-    MASTER_TEMPLATE = """Write a short therapeutic story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development.
+    MASTER_TEMPLATE = """Write a short story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development.
 
 --- AGE-APPROPRIATE LANGUAGE REQUIREMENTS ---
 {age_guidelines}
@@ -298,35 +297,12 @@ Use a clear three-act structure:
 2. MIDDLE: {child_name} encounters an obstacle. {child_name} meets a supportive character who helps. Show the process of overcoming the challenge together.
 3. END: {child_name} achieves the goal, learns something, and feels positive about the experience.
 
---- VOCABULARY AND LANGUAGE TARGETS ---
-{theme_vocabulary}
-
 {goals_section}
 {persona_section}{takeaways_block}{wh_questions_block}--- TONE AND STYLE ---
 - Warm, encouraging, and gently paced.
 - Show, don't tell: use actions and dialogue to convey emotions rather than stating them.
 - Include at least one moment of humor, wonder, or sensory delight.
 - Use character names consistently (avoid pronoun ambiguity for young readers).
-
---- ROBOT GESTURES AND EMOTIONS ---
-A robot will read this story aloud and physically act it out. Embed gesture or emotion tags INLINE in the story text so the robot's face and body match what is happening in the narrative.
-
-Available gestures (use [gesture:NAME] format):
-  hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace, patience,
-  slight_no, think, sneezing, yawn, breathing_exercise, kiss, stretching
-
-Available emotions (use [emotion:NAME] format) — use ONLY these exact names:
-  QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy
-
-Rules for tags:
-- Tag EVERY clear emotional beat. Whenever a character smiles, laughs, giggles, or feels happy/proud/excited, insert [emotion:QT/happy]. Whenever they cry, frown, or feel sad/disappointed, insert [emotion:QT/sad]. Apply the same rule for surprised, afraid, angry, calm, and shy.
-- Place the tag IMMEDIATELY BEFORE the sentence that depicts the emotion or action — not at the start of the paragraph.
-- It is fine to use the same emotion multiple times in one paragraph if the character feels it more than once.
-- Do NOT invent emotion names. If the feeling isn't in the list above, pick the closest available one (e.g. "relieved" or "proud" → QT/happy; "frustrated" → QT/angry; "nervous" → QT/afraid).
-- Use gesture tags for physical actions (waving, clapping, nodding) where they fit the story.
-- Example: 'Anna looked at the puppy. [emotion:QT/happy] She smiled brightly and laughed.'
-- Example: '[gesture:nodding-yes] [emotion:QT/happy] "Yes, I can help!" said the rabbit.'
-- Example: 'The wind blew hard. [emotion:QT/surprised] Suddenly, a big rainbow appeared in the sky!'
 
 {output_format}"""
 
@@ -336,11 +312,10 @@ Rules for tags:
     # Examples from story_corpus.json are injected into {wh_examples}.
     # ─────────────────────────────────────────────
 
-    WH_MASTER_TEMPLATE = """Write a short illustrated-style story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story will be used by a robot to practise WH-question comprehension (WHO / WHAT / WHERE) with the child.
+    WH_MASTER_TEMPLATE = """Write a short story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story will be used by a robot to practise WH-question comprehension (WHO / WHAT / WHERE) with the child.
 
 --- STYLE REFERENCE (from the curated 4-to-7 corpus, WHO/WHAT/WHERE subset for this age) ---
-Match the style, length, vocabulary, and structure of these reference stories EXACTLY. Each is a 3–4 sentence concrete vignette in the present tense, followed by 5–7 WH-questions whose answers appear verbatim in the story.
-
+Follow the general style, length, vocabulary, and structure of these examples. Each story is followed by 5–7 WH-questions whose answers are explicitly stated in the story.
 {wh_examples}
 --- END STYLE REFERENCE ---
 
@@ -352,24 +327,43 @@ Match the style, length, vocabulary, and structure of these reference stories EX
 {theme_obstacle}
 {theme_resolution}
 
---- VOCABULARY FOCUS ---
-{theme_vocabulary}
-
 {goals_section}
 {persona_section}
 --- TONE AND STYLE ---
-- Warm, simple, and concrete. Describe one small everyday scene with a tiny surprise or twist.
+- Warm, simple, and concrete. Describe one small scene — everyday or imaginative — with a tiny surprise or twist.
 - {child_name} should appear by name in the story (not just "she" / "he"), so WHO-questions are answerable.
-- Use observable facts only (who is there, where they are, what they are doing, what they see/find).
+- Use observable facts only (who is there, where they are, what they are doing, what they see/find) — even imaginative characters must do concrete, observable things so the questions are answerable.
 - Do NOT invent moral lessons, internal monologue, or three-act structure. Keep it to the corpus style.
 
---- ROBOT GESTURES AND EMOTIONS ---
-A robot will read this aloud and act it out. Embed gesture or emotion tags INLINE in the story so the robot's face and body match the narrative. Keep these SPARSE (at most 2–3 tags total) so the story stays short.
+{output_format}"""
 
-Available gestures: [gesture:NAME] where NAME ∈ {{hi, bye, nodding-yes, clapping, hoora, happy, calm, shy, embrace, patience, slight_no, think, sneezing, yawn, breathing_exercise, kiss, stretching}}
-Available emotions: [emotion:NAME] where NAME ∈ {{QT/happy, QT/sad, QT/surprised, QT/afraid, QT/angry, QT/calm, QT/shy}}
+    # ─────────────────────────────────────────────
+    # SIMPLE MASTER TEMPLATE (early preschool, ages ≤3)
+    # Linear "first / then / finally" sequence — NOT the three-act
+    # narrative used at ages 6+. No obstacle, helper character, or
+    # lesson. Reuses OUTPUT_FORMAT (no takeaways / questions).
+    # ─────────────────────────────────────────────
 
-Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture. Do NOT include tags inside the WH-questions.
+    SIMPLE_MASTER_TEMPLATE = """Write a very short, simple story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story should be gentle, soothing, and supportive of very early language development.
+
+--- AGE-APPROPRIATE LANGUAGE REQUIREMENTS ---
+{age_guidelines}
+
+--- STORY SETTING ---
+{theme_setting}
+
+--- STORY SHAPE (simple linear sequence — do NOT use a three-act narrative) ---
+Tell ONE small, happy everyday moment as a simple sequence — first, then, finally:
+1. FIRST: {child_name} is doing something simple and familiar.
+2. THEN: one small, gentle thing happens (a tiny action or pleasant surprise).
+3. FINALLY: {child_name} feels happy and the story ends warmly.
+Do NOT add a problem to solve, a conflict, a helper character who rescues {child_name}, a moral/lesson, or any subplot.
+
+{goals_section}
+{persona_section}--- TONE AND STYLE ---
+- Warm, gentle, and repetitive: reuse the same simple words and sentence patterns.
+- Concrete only: name familiar objects and animals the child can picture; onomatopoeia is welcome.
+- Use {child_name}'s name consistently instead of pronouns.
 
 {output_format}"""
 
@@ -579,6 +573,35 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
         if persona_context and persona_context.strip():
             persona_section = "\n" + persona_context.strip() + "\n"
 
+        # Ages ≤3 (early preschool): simple linear story — NOT the three-act
+        # narrative format, which begins at age 6.
+        if age_tier.get("label") == "early_preschool":
+            output_format = self.OUTPUT_FORMAT.format(
+                goals=goals or "general speech-language therapy goals",
+                min_words=min_words,
+                max_words=max_words,
+                mid_words=(min_words + max_words) // 2,
+                takeaways_section="",
+                takeaways_in_rule="",
+                wh_questions_section="",
+                wh_questions_in_rule="",
+            )
+            prompt = self.SIMPLE_MASTER_TEMPLATE.format(
+                child_name=child_name,
+                age=age,
+                gender=gender,
+                age_guidelines=age_tier["guidelines"],
+                theme_setting=theme["setting"],
+                goals_section=goals_section,
+                persona_section=persona_section,
+                output_format=output_format,
+            )
+            if topics:
+                safe_topics = [str(t).strip() for t in topics if str(t).strip()]
+                if safe_topics:
+                    prompt += "\n\nGently include the following theme(s): " + ", ".join(safe_topics) + "."
+            return prompt
+
         # Ages 4–6: route to the WH-question short-story format,
         # using examples retrieved from the curated corpus.
         if age_tier.get("label") == "wh_question_format":
@@ -598,7 +621,6 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
                 theme_setting=theme["setting"],
                 theme_obstacle=theme["obstacle"],
                 theme_resolution=theme["resolution"],
-                theme_vocabulary=theme["vocabulary_focus"],
                 goals_section=goals_section,
                 persona_section=persona_section,
                 wh_examples=wh_examples,
@@ -656,7 +678,6 @@ Place a tag IMMEDIATELY before the sentence that depicts the emotion or gesture.
             theme_setting=theme["setting"],
             theme_obstacle=theme["obstacle"],
             theme_resolution=theme["resolution"],
-            theme_vocabulary=theme["vocabulary_focus"],
             goals_section=goals_section,
             persona_section=persona_section,
             takeaways_block=takeaways_block,
