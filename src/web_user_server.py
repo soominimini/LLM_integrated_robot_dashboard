@@ -3201,6 +3201,76 @@ def _gemini_generate(prompt, system="You are a helpful assistant. Return JSON on
             pass
 
 
+# ── Claude one-shot generation ───────────────────────────────────────────────
+# The object-request (scene) game generates its questions with Claude rather
+# than Gemini. The Anthropic SDK is called in-process (same venv, same
+# ANTHROPIC_API_KEY loaded via load_dotenv) — the pattern the intent/quiz/story
+# Claude paths already use. Override the model via the SCENE_GAME_LLM_MODEL env.
+SCENE_GAME_LLM_MODEL = os.getenv("SCENE_GAME_LLM_MODEL", "claude-sonnet-4-6")
+
+_anthropic_client = None
+_anthropic_client_lock = Lock()
+
+
+def _get_anthropic_client():
+    """Lazily build a shared Anthropic client (reads ANTHROPIC_API_KEY)."""
+    global _anthropic_client
+    with _anthropic_client_lock:
+        if _anthropic_client is None:
+            import anthropic
+            _anthropic_client = anthropic.Anthropic()
+    return _anthropic_client
+
+
+def _log_claude_io(system, prompt, response=None, label=None):
+    """Trace a Claude call to the daily trace log, mirroring _log_gemini_io."""
+    if os.getenv("LOG_LLM_PROMPTS", "1") == "0":
+        return
+    tag = f"Claude:{label}" if label else "Claude"
+    if response is None:
+        print(f"[{tag}] >>> PROMPT ({len(prompt)} chars) | system: {system}")
+        print(prompt)
+    else:
+        preview = response if len(response) <= 1500 else (
+            response[:1500] + f"\n...(+{len(response) - 1500} more chars)")
+        print(f"[{tag}] <<< RESPONSE ({len(response)} chars):")
+        print(preview)
+
+
+def _claude_generate(prompt, system="You are a helpful assistant. Return JSON only when asked.",
+                     temperature=0.3, max_tokens=2048, label=None, model=None):
+    """Call Claude for general-purpose text generation.
+
+    Drop-in replacement for _gemini_generate(): same signature, returns the raw
+    response text or None on failure. Runs in-process via the Anthropic SDK.
+    """
+    model = model or SCENE_GAME_LLM_MODEL
+    try:
+        _log_claude_io(system, prompt, label=label)
+        kwargs = dict(
+            model=model,
+            max_tokens=max_tokens,
+            system=system,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        # Sonnet/Haiku accept temperature; Opus 4.7+/Fable reject sampling params.
+        if temperature is not None and not (
+                model.startswith("claude-opus-4-7")
+                or model.startswith("claude-opus-4-8")
+                or model.startswith("claude-fable")):
+            kwargs["temperature"] = temperature
+        resp = _get_anthropic_client().messages.create(**kwargs)
+        out = "".join(
+            getattr(b, "text", "") for b in resp.content
+            if getattr(b, "type", None) == "text"
+        ).strip()
+        _log_claude_io(system, prompt, response=out, label=label)
+        return out
+    except Exception as e:
+        print(f"[Claude] Error: {e}")
+        return None
+
+
 def _extract_json(raw):
     """Extract the first JSON object from a string that may contain extra text."""
     raw = raw.strip()
@@ -3233,7 +3303,10 @@ def _extract_json(raw):
 
 def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context="",
                                   language_age=None):
-    """Use the quiz LLM to generate a scene-game question.
+    """Use Claude to generate a scene-game question.
+
+    The question wording is pitched at the child's target MLU (mean length of
+    utterance), which is read directly from the knowledge base.
 
     For ages 2-3: direct request naming one specific object.
     For ages 4-6: criteria-based (e.g. "a red fruit") — multiple toys may match.
@@ -3256,6 +3329,22 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
     # Complexity tier follows the developmental/language age, not chronological.
     complexity_age = language_age if language_age is not None else child_age
 
+    # Pull the target MLU (mean length of utterance) directly from the knowledge
+    # base so the question is pitched at the child's language level — referenced
+    # explicitly in the prompt rather than relying only on the persona blob.
+    mlu_clause = ""
+    try:
+        kb_info = knowledge_base.describe(complexity_age)
+        mlu_range = kb_info.get('mlu_range') if kb_info else None
+        if mlu_range:
+            mlu_clause = (
+                f"TARGET MLU (knowledge base): the child's mean length of utterance "
+                f"is about {mlu_range} words. Keep the question within that length and "
+                f"use sentence structures a child at this language level produces.\n"
+            )
+    except Exception as e:
+        print(f"[SceneGame] MLU lookup failed: {e}")
+
     # Determine mode based on age
     if complexity_age <= 3:
         mode = "exact"
@@ -3269,8 +3358,12 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             "Weave these goals naturally into the question (e.g. target vocabulary, "
             "sentence structure, or concepts relevant to the goals). "
         )
-    if persona_context and str(persona_context).strip():
-        goals_clause = (goals_clause + "\n" + str(persona_context).strip() + "\n").strip() + " "
+    # Knowledge-base guidance is intentionally limited to the MLU only (the
+    # mlu_clause built above). The full persona context — language targets
+    # (pronouns, -ing forms), speech sounds, and interests — is deliberately
+    # NOT woven into the question, so target-driven phrasings like
+    # "She is carrying ..." no longer appear. `persona_context` is still
+    # accepted for call-site compatibility but is not used here.
 
     if mode == "exact":
         # For age <=3 we DO NOT call the LLM. Skip it and pick one of the four
@@ -3297,6 +3390,7 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"You are generating a question for an object detection game for a "
             f"{complexity_age}-year-old child.\n"
             f"Available physical toys: {', '.join(toy_list)}.\n"
+            f"{mlu_clause}"
             f"{goals_clause}"
             f"Generate ONE inference-style request that lets the child figure\n"
             f"out the target object from its observable properties.\n"
@@ -3338,6 +3432,7 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"You are generating a question for an object detection game for a "
             f"{complexity_age}-year-old child.\n"
             f"Available physical toys: {', '.join(toy_list)}.\n"
+            f"{mlu_clause}"
             f"{goals_clause}"
             f"Generate ONE riddle that requires the child to reason about\n"
             f"properties (color, shape, size, function, where it is found) to\n"
@@ -3384,7 +3479,8 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
 
     last_obj = None
     for attempt in range(2):
-        raw = _gemini_generate(prompt, system="You generate game questions for children. Return JSON only.")
+        raw = _claude_generate(prompt, system="You generate game questions for children. Return JSON only.",
+                               label="scene-game-question")
         if not raw:
             continue
         try:
@@ -3887,7 +3983,7 @@ def _check_criteria_match(detected_label, criteria, detected_color=None, detecte
         if all_satisfied:
             return True, f"matched via attributes (label={detected_label!r}, color={detected_color!r}, shape={detected_shape!r})"
 
-    # LLM path: ask Gemini to reason across all attributes
+    # LLM path: ask Claude to reason across all attributes
     prompt = (
         f"A child showed a physical object. The vision system detected:\n"
         f"  label: \"{detected_label or 'unknown'}\"\n"
@@ -3912,10 +4008,11 @@ def _check_criteria_match(detected_label, criteria, detected_color=None, detecte
         f"\n"
         f"Return ONLY a JSON object: {{\"match\": true or false, \"reason\": \"<brief explanation>\"}}"
     )
-    raw = _gemini_generate(prompt, system="You validate object matches. Return JSON only.")
+    raw = _claude_generate(prompt, system="You validate object matches. Return JSON only.",
+                           label="scene-game-criteria-match")
     if raw:
         try:
-            print(f"[SceneGame] Criteria match Gemini raw: {raw}")
+            print(f"[SceneGame] Criteria match Claude raw: {raw}")
             obj = _extract_json(raw)
             print(f"[SceneGame] Criteria match parsed: {json.dumps(obj, indent=2) if obj else None}")
             if obj:
@@ -3950,81 +4047,6 @@ def _get_user_age_and_goals(username):
         pass
     return child_age, learning_goals
 
-
-@app.route('/api/scene_game/new_round', methods=['POST'])
-def api_scene_game_new_round():
-    """Start a new scene detection round using the configured toy list."""
-    if 'username' not in session:
-        return jsonify({'success': False, 'error': 'Not logged in'}), 401
-    try:
-        username = session['username']
-        child_age, learning_goals = _get_user_age_and_goals(username)
-
-        # Use the configured toy list
-        toy_list = _load_scene_toys()
-        if not toy_list:
-            toy_list = list(SCENE_GAME_DEFAULT_TOYS)
-
-        # Generate age/goal-appropriate question
-        persona_ctx = _persona_context_for(username, child_age, kind="question")
-        result = _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context=persona_ctx,
-                                               language_age=_language_age_for(username, child_age))
-        question = result['question']
-
-        # Make the robot ask the question
-        try:
-            _with_asr_suspended(lambda: tts_helper.speak_story(question, 'en-US'))
-        except Exception:
-            pass
-
-        # Start human tracking during play mode (non-blocking)
-        try:
-            tracker = _ensure_human_tracker()
-            if tracker:
-                person = _pick_recent_person(tracker, timeout_sec=0.5)
-                tracker.track(person)
-        except Exception as e:
-            print(f"HumanTracking start error: {e}")
-
-        # Build item cards from the toy list
-        items = []
-        img_dir = os.path.join(USER_DATA_DIR, 'activity_images')
-        os.makedirs(img_dir, exist_ok=True)
-        shuffled = list(toy_list)
-        random.shuffle(shuffled)
-        for label in shuffled:
-            img_url = None
-            if image_generator.is_available():
-                safe = re.sub(r"[^A-Za-z0-9_-]+", "_", label)
-                dest = os.path.join(img_dir, f"{safe}.png")
-                if not os.path.exists(dest):
-                    path = image_generator.generate_image(
-                        prompt=f"{label}, single object on simple background, children's book illustration",
-                        output_dir=img_dir,
-                        filename_prefix=f"scene_{safe}"
-                    )
-                    if path and not os.path.exists(dest):
-                        try:
-                            os.replace(path, dest)
-                        except Exception:
-                            dest = path
-                rel = os.path.relpath(dest, USER_DATA_DIR)
-                img_url = f"/images/{rel}"
-            items.append({
-                'label': label,
-                'image_path': img_url
-            })
-
-        return jsonify({
-            'success': True,
-            'question': question,
-            'items': items,
-            'target': result.get('target'),
-            'criteria': result.get('criteria'),
-            'mode': result['mode']
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/scene_game/hint', methods=['POST'])
 def api_scene_game_hint():
@@ -4077,10 +4099,11 @@ def api_scene_game_hint():
         f"Example: \"You might put this in a salad. It grows on a vine.\"\n"
         f"Return ONLY a JSON object: {{\"hint\": \"<the hint sentence>\"}}"
     )
-    raw = _gemini_generate(prompt, system="You generate game hints for children. Return JSON only.")
+    raw = _claude_generate(prompt, system="You generate game hints for children. Return JSON only.",
+                           label="scene-game-hint")
     if raw:
         try:
-            print(f"[SceneGame] Gemini raw hint response: {raw}")
+            print(f"[SceneGame] Claude raw hint response: {raw}")
             obj = _extract_json(raw)
             print(f"[SceneGame] Parsed hint JSON: {json.dumps(obj, indent=2) if obj else None}")
             hint = (obj.get('hint', '') if obj else '').strip()

@@ -23,16 +23,16 @@
   },
   "maya": {
     "username": "maya",
-    "age": 3,
+    "age": 4,
     "password_hash": "",
     "created_at": "2026-03-26T18:21:59.973312",
-    "last_login": "2026-05-10T22:14:44.464609",
+    "last_login": "2026-06-24T17:55:38.227741",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/chat_history",
     "display_name": "maya",
     "gender": "female",
     "disorder": "ASD",
-    "learning_goals": "learning color vocab"
+    "learning_goals": ""
   },
   "amy": {
     "username": "amy",
@@ -78,7 +78,7 @@
     "age": 5,
     "password_hash": "",
     "created_at": "2026-05-08T22:55:06.004546",
-    "last_login": "2026-06-21T21:05:02.359810",
+    "last_login": "2026-06-24T17:06:51.044978",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/chat_history",
     "display_name": "sophie",
