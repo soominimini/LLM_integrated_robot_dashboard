@@ -1,9 +1,17 @@
 # QTrobot — System Architecture
 
-> Regenerated 2026-06-17 from a direct read of the source tree. This document
-> replaces the previous `ARCHITECTURE.md`. File/line references point at the
-> code as it exists in `src/`, `scripts/`, `config/`, `documents/`, and
-> `templates/`.
+> Regenerated 2026-06-17 from a direct read of the source tree; **model wiring
+> re-verified and revised 2026-06-29** (see the changelog at the end of §15).
+> File/line references point at the code in `src/`, `scripts/`, `config/`,
+> `documents/`, and `templates/`. Line numbers drift as the ~7k-line server
+> grows; refs in the model-related sections were refreshed on 2026-06-29, others
+> may be approximate.
+>
+> **2026-06-29 headline change:** the quiz, the scene-game text (question/
+> hint/criteria), and the still-frame spatial validation moved off Gemini Flash
+> onto **Claude Sonnet 4.6, run in-process** via the Anthropic SDK. Gemini now
+> covers only the story post-passes, the WH-picture & object-detection vision,
+> depth-video validation, image generation, and conversation/recovery.
 
 ---
 
@@ -19,24 +27,37 @@ stacks, and separate LLM wiring, and **neither imports the other**:
 | How it runs | ROS node, autostarted (`scripts/autostart/`) | `python3 web_user_server.py`, Flask on `:8080` |
 | Audience | End user talking to the robot | Therapist/clinician in a browser + child via robot |
 | ASR | NVIDIA Riva + Silero VAD | `whisper.py` subprocess (OpenAI `gpt-4o-transcribe`) |
-| Conversational LLM | Claude `claude-sonnet-4-6` via LlamaIndex (+ RAG) | per-feature: Claude/Gemini story + Gemini vision scripts |
+| Conversational LLM | Claude `claude-sonnet-4-6` via LlamaIndex (+ RAG) | Claude `claude-sonnet-4-6` in-process (quiz, scene-game text, still-spatial, intent) + Gemini subprocesses (story post-passes, vision, images) |
 | TTS | Robot built-in voice (ROS `behavior/talkText`) | `tts_helper` (Qwen / Polly / QT) |
 | Vision | DeepFace (face detect + re-ID) | Gemini vision scripts on camera frames |
 | Config | `config/default.yaml` via ParamifyWeb | env vars + on-disk JSON |
 
-**The directory name (`version_1_llm_gemini`) is misleading.** App A's
-conversational model defaults to **Anthropic Claude**, its embeddings are
-**local Ollama**, its ASR is **NVIDIA Riva**, and its TTS is the **robot's own
-voice**. Gemini is used heavily, but mostly by App B's vision/validation/quiz
-subprocess scripts.
+**The directory name (`version_1_llm_gemini`) is misleading — more so since the
+2026-06-29 migration.** App A's conversational model defaults to **Anthropic
+Claude**, its embeddings are **local Ollama**, its ASR is **NVIDIA Riva**, and
+its TTS is the **robot's own voice**. In App B, **Claude now does the bulk of
+the language and still-image reasoning** (story, quiz, scene-game text,
+still-frame spatial validation, ASR intent-correction). Gemini remains for the
+story post-passes, the WH-picture / object-detection vision, depth-video
+validation, image generation, and conversation/recovery follow-ups.
 
-### The subprocess pattern (important)
+### The subprocess pattern (important) — and the in-process exception
 
-Both servers run under a Python (3.8 / 3.9-ROS) environment that does **not**
-have `google-genai`, `anthropic`, or `openai` installed. Therefore all heavy AI
-work is **shelled out to Python-3.9 subprocesses** (`.venv39`). This is why
-`scripts/gemini_*.py`, `scripts/claude_story.py`, `src/whisper.py`, and
-`src/image_generator_worker.py` are "used" without ever being `import`ed.
+Historically the servers ran under a ROS Python that lacked `google-genai`,
+`anthropic`, and `openai`, so all heavy AI work was **shelled out to Python
+subprocesses** (`WORKER_PYTHON`, `web_user_server.py:232`; the `.venv39` env).
+That is still why `scripts/gemini_*.py`, `scripts/claude_story.py`,
+`src/whisper.py`, and `src/image_generator_worker.py` are "used" without ever
+being `import`ed.
+
+**The current App B runtime venv DOES have `anthropic` (and `openai`) but NOT
+`google-genai`.** So the split today is:
+- **In-process (Anthropic SDK, `_get_anthropic_client` → `messages.create`):**
+  Claude text (`_claude_generate`, `web_user_server.py:3287`) and Claude vision
+  (`_claude_generate_image`, `:3321`) — used by the quiz (`_ClaudeQuizLLM`),
+  scene-game text, still-frame spatial validation, and the intent LLM.
+- **Subprocess workers:** all Gemini scripts, `claude_story.py` (story stream),
+  `whisper.py` (OpenAI ASR), and `image_generator_worker.py`.
 
 Standardized subprocess contract:
 - **Input:** `--prompt-file` / `--image` / `--video` CLI args, or a JSON object on stdin.
@@ -54,10 +75,10 @@ Standardized subprocess contract:
    │                                   │   │                                          │
    │  ASR: Riva + Silero VAD           │   │  ASR: whisper.py subprocess              │
    │   (riva_speech_recognition_vad)   │   │       (OpenAI gpt-4o-transcribe)         │
-   │  LLM: Claude via LlamaIndex       │   │  LLM: story_generator -> claude/gemini   │
-   │   (+ Ollama embeds, RAG over PDFs)│   │       scripts; gemini_* vision scripts   │
+   │  LLM: Claude via LlamaIndex       │   │  LLM: Claude in-proc (quiz/scene/spatial)│
+   │   (+ Ollama embeds, RAG over PDFs)│   │   + story claude/gemini + gemini_* vision│
    │  TTS: ROS behavior/talkText       │   │  TTS: tts_helper (Qwen/Polly/QT)         │
-   │  Vision: DeepFace faces           │   │  Vision: Gemini scripts on camera frames │
+   │  Vision: DeepFace faces           │   │  Vision: Gemini (object/WH) + Claude(still)│
    │  Behaviors: idle_attention,       │   │  Images: image_generator -> worker(.venv39)│
    │   human_tracking, command_iface   │   │  Personas: persona_rag                   │
    │  Config: ParamifyWeb + default.yaml│   │  UI: templates/*.html                    │
@@ -185,8 +206,9 @@ While paused, utterances are routed through a `WakeupPrompt` classifier
   save JPEG under `user_data/<user>/captured_scenes/` → run
   `gemini_analyze_image.py` (label/color/shape + a point) → robot looks at the
   object via `kinematics.look_at_pixel` → match vs target/criteria → TTS feedback.
-  "Direction" mode records a 3 s MP4 and uses `gemini_validate_spatial_video.py`;
-  flat relations use `gemini_validate_spatial.py`.
+  "Direction" mode depth relations record a 3 s MP4 and use
+  `gemini_validate_spatial_video.py` (Gemini); flat relations now use
+  **Claude Sonnet in-process** (`_run_claude_validate_spatial`, `:3880`).
 - **WH-picture:** therapist uploads/captures an image → `gemini_wh_scene.py` runs
   twice (receptive + expressive) → child answers verbally (Whisper) → score saved.
 - **Conversation turn** (`/api/conversation/wait_for_turn`): wait for TTS to
@@ -245,9 +267,9 @@ All are `#!/usr/bin/env python3.9`, invoked as subprocesses. Gemini scripts read
 |---|---|---|---|
 | `claude_story.py` | `story_generator` | `claude-sonnet-4-6` (prompt caching) | `--prompt-file [--stream]` → text / `CHUNK:` |
 | `gemini_story.py` | `story_generator` | `gemini-2.5-flash` | `--prompt-file [--stream]` → text / `CHUNK:` |
-| `gemini_general.py` | App B (quiz/scene text) | `gemini-2.5-flash` | `--prompt-file --system …` → text |
+| `gemini_general.py` | App B (story post-passes only) | `gemini-2.5-flash` | `--prompt-file --system …` → text |
 | `gemini_analyze_image.py` | App B (object detect + gaze) | `gemini-robotics-er-1.6-preview` | `--image` → JSON `[{point,label,color,shape}]` |
-| `gemini_validate_spatial.py` | App B (still spatial) | `gemini-2.5-flash` | `--image --obj-a --obj-b --relation` → JSON verdict |
+| `gemini_validate_spatial.py` | **orphaned (2026-06-29)** — still-spatial moved to in-process Claude | `gemini-2.5-flash` | `--image --obj-a --obj-b --relation` → JSON verdict |
 | `gemini_validate_spatial_video.py` | App B (depth relations) | `gemini-2.5-flash` | `--video …` → JSON verdict |
 | `gemini_recovery_question.py` | App B | `gemini-2.5-flash` | `--image --mode …` → JSON `{text,object}` |
 | `gemini_wh_scene.py` | App B (WH questions) | `gemini-2.5-flash` | stdin JSON → JSON `{scene_description,questions}` |
@@ -260,6 +282,10 @@ uses the `CHUNK:`-prefixed line protocol (`story_generator.py:909`).
 a.k.a. "nanobanana"); the first existing image in the output dir is passed as a
 reference for style consistency.
 
+**Not in this table (no subprocess):** the quiz, the scene-game text, the
+still-frame spatial validation, and the intent LLM run **in-process** on Claude
+Sonnet 4.6 via the Anthropic SDK — see §11 and the in-process note in §1.
+
 ---
 
 ## 9. `documents/` — what is read, and when
@@ -267,7 +293,7 @@ reference for style consistency.
 | File | Read by | When / how |
 |---|---|---|
 | `personas_rag.json` | `persona_rag.py:30` (App B) | 4 reference clinical personas. `match(age, disorder)` keyword-scores the best one; `build_story_context` / `build_question_context` inject a `--- PERSONA CONTEXT ---` block into story/quiz prompts. Keyword matching, **not** vector RAG. |
-| `sar_system_prompt.md` | **Both apps** — `config/default.yaml` `system_prompt_file` (A) and `web_user_server.py:1676` (B) | "Socially Assistive Robot" framing prompt (child-safety / therapist-authority guidance). App A prepends it to the robot role; App B prepends it in `/api/generate_quiz_feedback` for child-friendly feedback phrasing. |
+| `sar_system_prompt.md` | **Both apps** — `config/default.yaml` `system_prompt_file` (A) and `web_user_server.py:1942` (B) | "Socially Assistive Robot" framing prompt (child-safety / therapist-authority guidance). App A prepends it to the robot role; App B prepends it in `/api/generate_quiz_feedback` (now a **Claude** `_quiz_llm` call) for child-friendly feedback phrasing. |
 | `story for 4 to 7 years old/story_corpus.json` | `story_generator.py:380` (App B) | 10 fables + 30 WH-question stories used as **few-shot examples** in story prompts for ages 4–7. Not vector RAG. |
 | `QTrobot.pdf` | App A RAG (`llamaindex_interface.py:116`) | Intended retrieval corpus for the robot's conversation **only if** the config `docs` path points here. By default `docs` points at the deployed path `/home/qtrobot/robot/code/.../documents`, so in this repo it is ingested only if `docs` is repointed. RAG loads `.pdf` only. |
 | `QTrobot_research_papers.txt` | — | Not ingested (RAG `formats` default = `['.pdf']`). Reference material. |
@@ -287,14 +313,20 @@ LibreOffice lock file is junk — safe to delete.)
   `enable_scene`, `hold_on`, `volume`, `role` (the full system prompt).
 - **`src/.env`** (gitignored) — `GOOGLE_API_KEY`, `GEMINI_API_KEY`,
   `OPENAI_API_KEY`, `QWEN_API_KEY`, `ANTHROPIC_API_KEY`, AWS Polly creds,
-  `TTS_ENGINE`/`TTS_SPEED`, robot connection vars.
+  `TTS_ENGINE`/`TTS_SPEED`, robot connection vars. **Model overrides:**
+  `SCENE_GAME_LLM_MODEL` (default `claude-sonnet-4-6`), `SPATIAL_VALIDATION_MODEL`
+  (default `claude-sonnet-4-6`; set to e.g. `claude-haiku-4-5` for faster
+  still-frame validation), `GEMINI_VISION_MODEL` (default `gemini-2.5-flash`).
 - **`env.polly`** (gitignored) — Polly-specific overrides.
 - **Logging / observability** — stdout/stderr is teed (`web_user_server.py` `_Tee`)
   to a **daily-rotated** trace file `src/logs/trace-YYYY-MM-DD.log` (a new file
   opens when the calendar date changes). `LOG_LLM_PROMPTS` (env, default **on**)
-  traces every in-process Gemini prompt + response via `_gemini_generate`
-  (emotion-tagger, comprehension questions, page-split, scene-ID, hints, spatial
-  validation); set `LOG_LLM_PROMPTS=0` to silence.
+  traces every prompt + response for **both** providers: Gemini via
+  `_gemini_generate`/`_log_gemini_io` (story post-passes — emotion-tagger,
+  comprehension/takeaway questions, page-split, scene-ID) and Claude via
+  `_claude_generate`/`_claude_generate_image`/`_log_claude_io` (quiz, scene-game
+  question/criteria/hint, still-frame spatial validation). Set `LOG_LLM_PROMPTS=0`
+  to silence.
 
 ---
 
@@ -302,8 +334,8 @@ LibreOffice lock file is junk — safe to delete.)
 
 | Service | SDK / access | Models | Used by |
 |---|---|---|---|
-| Anthropic Claude | `anthropic` / LlamaIndex | `claude-sonnet-4-6` | A (conversation), B (story, quiz) |
-| Google Gemini | `google-genai` | `gemini-2.5-flash`, `gemini-2.5-flash-image`, `gemini-robotics-er-1.6-preview` | B (vision, validation, text, images) |
+| Anthropic Claude | `anthropic` (in-process) / LlamaIndex (A) | `claude-sonnet-4-6` | A (conversation); B (story, **quiz**, **scene-game text**, **still-frame spatial validation**, intent/ASR-correction) |
+| Google Gemini | `google-genai` (subprocess) | `gemini-2.5-flash`, `gemini-2.5-flash-image`, `gemini-robotics-er-1.6-preview` | B (story post-passes text, WH-picture & object-detection vision, depth-video validation, images, conversation/recovery) |
 | OpenAI | `openai` | `gpt-4o-transcribe` (via `whisper.py`) | B (ASR) |
 | Qwen / Alibaba DashScope | `dashscope` | `qwen3-tts-vd-realtime-…` | B (default TTS) |
 | AWS Polly | `boto3` | neural, voice `Justin` | B (alt TTS) |
@@ -379,16 +411,22 @@ App B also fires story emotion/gesture tags via `rostopic pub` subprocesses to
    must be restored (or the references removed) before App A can run.
 2. **Hardcoded secret:** `tts_helper.py:72` contains a fallback DashScope API key
    in a git-tracked file. Revoke and remove it.
-3. **`debug=True` + `host=0.0.0.0`** (`web_user_server.py:6535`) exposes the
+3. **`debug=True` + `host=0.0.0.0`** (`web_user_server.py:7033`) exposes the
    Werkzeug debugger on the network — an RCE risk on a deployed robot.
 4. **Auth is cosmetic:** `password_hash` values in `users.json` are empty strings
    — it is a profile selector, not real authentication.
 5. **Arity bug:** `_function_call_response_callback` calls `proccess_response`
    with 3 args (`qt_ai_data_assistant.py:178`) but the method takes 2 (`:322`) —
    `TypeError` on the `get_datetime` command path.
-6. Residual commented-out code inside live files: Riva ASR block and IdleAttention
-   in `web_user_server.py`; `/start_assistant` stub; duplicated
-   camera-analysis route (`/api/camera_capture`); legacy DIY block handlers.
+6. Residual commented-out code inside live files: Riva ASR block
+   (`web_user_server.py:476-488`) and IdleAttention import (`:55`);
+   `/start_assistant` stub (`:1535-1539`); legacy DIY block handlers. *(The
+   previously-noted duplicate `/api/camera_capture` route is resolved — it is now
+   defined once, at `:4559`.)*
+
+> **Note (2026-06-29):** items 1–5 above were re-verified and are all still
+> present. The hardcoded DashScope key (item 2) and the live API keys in
+> `src/.env` should be rotated and removed from tracked files.
 
 ### Dead files removed in this cleanup (2026-06-17)
 These had zero live references and were deleted:
@@ -417,6 +455,29 @@ These had zero live references and were deleted:
   replaces the single `trace.log`; `LOG_LLM_PROMPTS` (default on) traces every
   `_gemini_generate` prompt + response (see §10).
 
+### Model migration & quiz changes (2026-06-29)
+- **Quiz → Claude.** `_GeminiQuizLLM` (Gemini Flash via `gemini_general.py`) was
+  replaced by `_ClaudeQuizLLM` → `_claude_generate` (in-process Claude Sonnet
+  4.6). Covers question generation, WH distractors, and feedback phrases.
+- **Quiz KB wording.** The educational quiz now injects the SLP KB fragment with
+  `include_targets=False` — wording-level (MLU) calibration only, dropping the
+  speech-sound / grammar / interest targeting (which had produced distorted
+  questions like *"Do three cherries grow underground?"*). Story-comprehension
+  and scene-game questions are unchanged (`include_targets=True`).
+- **Open-ended social-emotional WH.** High (7+) WH quizzes now blend in
+  open-ended perspective-taking questions (`open_ended:true`), graded accept-any
+  in `educational_quiz.html`.
+- **Photo spatial validation → Claude.** The still-frame Direction-mode validator
+  moved from the `gemini_validate_spatial.py` subprocess (Gemini Flash) to
+  in-process Claude Sonnet 4.6 (`_run_claude_validate_spatial` +
+  `_claude_generate_image`, env `SPATIAL_VALIDATION_MODEL`). The subprocess script
+  is now orphaned. Depth-relation **video** validation and the Robotics-ER
+  object-detection/gaze model remain on Gemini (Claude can't ingest video or
+  produce pixel-grounded points).
+- **Scene-game text already on Claude.** Question/criteria/hint generation runs on
+  Claude Sonnet 4.6 (`SCENE_GAME_LLM_MODEL`) — corrected here; earlier revisions
+  of this doc mislabeled it as Gemini.
+
 ---
 
 ## 16. Per-activity pipelines (App B)
@@ -430,18 +491,22 @@ each step, and the end-to-end mechanism. `file:line` refs are into
 | | Storytelling | Object request | Quiz (yes/no + wh) | WH picture scene |
 |---|---|---|---|---|
 | Docs read | `story_corpus.json`, `personas_rag.json`, users/profile | `scene_game_toys.json`, `personas_rag.json` (age ≥4), users/profile | `sar_system_prompt.md` (feedback only), `learned_answers.json`, users (age) | `wh_scenes/*` (index/questions/results), users (age) |
-| Gen LLM | **Claude `claude-sonnet-4-6`** (story + shorten); Gemini 2.5 Flash (all post-passes) | Gemini 2.5 Flash (questions/hints) | Gemini 2.5 Flash (questions, distractors, feedback) | Gemini 2.5 Flash @ temp 0.4 (×2) |
-| Vision | — | `gemini-robotics-er-1.6-preview` (object+gaze); Gemini 2.5 Flash (spatial still/video) | — | Gemini 2.5 Flash (image→questions) |
+| Gen LLM | **Claude `claude-sonnet-4-6`** (story + shorten); Gemini 2.5 Flash (all post-passes) | **Claude Sonnet 4.6** (questions/criteria/hints) | **Claude Sonnet 4.6** (questions, distractors, feedback) | Gemini 2.5 Flash @ temp 0.4 (×2) |
+| Vision | — | `gemini-robotics-er-1.6-preview` (object+gaze); **Claude Sonnet 4.6 (spatial still)**; Gemini 2.5 Flash (spatial video) | — | Gemini 2.5 Flash (image→questions) |
 | Image gen | `gemini-2.5-flash-image` (per scene) | `gemini-2.5-flash-image` (decorative toy cards) | — | — |
 | ASR | — | — | OpenAI `gpt-4o-transcribe` | OpenAI `gpt-4o-transcribe` |
 | TTS | Qwen realtime | Qwen realtime | Qwen realtime | Qwen realtime |
 | Persona RAG? | yes | yes (age ≥4) | no | no |
 | Persists results? | story JSON + images | no (only captured frames/clips) | `learned_answers.json` | `results.json` |
 
-> All Gemini/Claude/OpenAI work runs in `.venv39` subprocesses (`WORKER_PYTHON`,
-> `:232-235`). Every Gemini-Flash text pass funnels through `_gemini_generate`
-> (`:2895`) → `scripts/gemini_general.py`; the server never passes `--model`, so
-> the model is the script default `gemini-2.5-flash`.
+> **As of 2026-06-29 the providers split by transport.** Gemini and OpenAI work
+> still runs in subprocesses (`WORKER_PYTHON`, `:232`); the remaining Gemini-Flash
+> text passes (story post-passes only) funnel through `_gemini_generate` →
+> `scripts/gemini_general.py` (no `--model`, so the script default
+> `gemini-2.5-flash`). **Claude work runs in-process** via the Anthropic SDK:
+> `_claude_generate` (text) and `_claude_generate_image` (vision) — used by the
+> quiz (`_ClaudeQuizLLM`), scene-game text (`SCENE_GAME_LLM_MODEL`), and
+> still-frame spatial validation (`SPATIAL_VALIDATION_MODEL`).
 
 ### 16.1 Storytelling
 
@@ -493,12 +558,17 @@ the physical-toy list. `personas_rag.json` for ages ≥4 question gen
 `:3848`) and `….mp4` (depth relations, `:3868`); decorative `activity_images/`
 toy cards. **No scores/results are persisted.**
 
-**Models:** question / criteria / riddle / hint = `gemini-2.5-flash` via
-`gemini_general.py` (ages ≤3 are template-only, no LLM). Held-object detection +
-gaze = `gemini-robotics-er-1.6-preview` via `gemini_analyze_image.py` (returns a
-`[y,x]` point that drives `kinematics.look_at_pixel:3560`). Spatial validation
-still = `gemini_validate_spatial.py`; video/depth = `gemini_validate_spatial_video.py`
-(uploads MP4 via the Files API, then deletes it) — both `gemini-2.5-flash`.
+**Models:** question / criteria / riddle / hint = **Claude Sonnet 4.6**
+in-process via `_claude_generate` (`SCENE_GAME_LLM_MODEL`; labels
+`scene-game-question` `:3571`, `scene-game-criteria-match` `:4188`,
+`scene-game-hint` `:4279`) — ages ≤3 are template-only, no LLM. Held-object
+detection + gaze = `gemini-robotics-er-1.6-preview` via `gemini_analyze_image.py`
+(returns a `[y,x]` point that drives `kinematics.look_at_pixel`). Spatial
+validation still-frame = **Claude Sonnet 4.6** in-process
+(`_run_claude_validate_spatial:3880` → `_claude_generate_image`,
+`SPATIAL_VALIDATION_MODEL`); video/depth = `gemini_validate_spatial_video.py`
+(`gemini-2.5-flash`, uploads MP4 via the Files API, then deletes it). The old
+`gemini_validate_spatial.py` subprocess is **no longer invoked**.
 
 **Mechanism:** difficulty branches in `_scene_game_generate_question` (`:2960`):
 ≤3 exact name, 4–6 color/shape criteria, 7+ riddle (questions leak-checked so the
@@ -514,22 +584,37 @@ age-graded otherwise.
 
 ### 16.3 Educational quiz (yes/no + WH)
 
-**Documents:** `documents/sar_system_prompt.md` (`:1676-1688`) injected into the
+**Documents:** `documents/sar_system_prompt.md` (`:1942`) injected into the
 **feedback-phrase** prompt only. `quizzes/{yes_no,wh}/quiz_*.json` (written
 `:1891/:1898`, read `:1628`). `quizzes/learned_answers.json` (written by
 `/api/teach_quiz_answer:1850`, merged into `accepted_answers` on load
 `:1651-1660`). `users.json` → `age` (client: age ≥6 → 4 options else 3). Persona
 RAG is **not** used.
 
-**Models:** question generation (both types) = `gemini-2.5-flash` via
-`_GeminiQuizLLM`→`gemini_general.py`; yes/no has a "Social Rules" special branch
-(`:1423-1458`). WH distractors = `gemini-2.5-flash` (`/api/generate_wh_options:1794`).
-Feedback phrases = `gemini-2.5-flash` with `sar_system_prompt.md` injected.
-Spoken-answer ASR = OpenAI `gpt-4o-transcribe` (`whisper.py`). TTS = Qwen.
-**Answer matching uses no LLM.**
+**Models (all Claude as of 2026-06-29):** question generation (both types) =
+**Claude Sonnet 4.6** in-process via `_ClaudeQuizLLM`→`_claude_generate`
+(`:526`); yes/no has a "Social Rules" special branch. WH distractors = Claude
+(`/api/generate_wh_options:1992`). Feedback phrases = Claude with
+`sar_system_prompt.md` injected. Spoken-answer ASR = OpenAI `gpt-4o-transcribe`
+(`whisper.py`). TTS = Qwen. **Answer matching uses no LLM** (client-side JS).
 
-**Mechanism:** (1) Authoring (`/quiz_generation`): generate (Gemini) → robust JSON
-parse → normalize per type → `/api/save_quiz` splits into `yes_no/` vs `wh/`.
+**Knowledge-base wording (2026-06-29):** the quiz injects the SLP KB fragment
+with `include_targets=False` (`_persona_context_for(..., include_targets=False)`,
+`knowledge_base.build_question_prompt_fragment`) — i.e. **only the developmental
+MLU wording-length** calibration, **not** the speech-sound / grammar / interest
+targeting that the story and scene-game questions still use. This was changed
+because embedding target sounds/plurals into short quiz questions distorted the
+content (e.g. *"Do three cherries grow underground?"*).
+
+**Social-emotional WH blend (2026-06-29):** for High (7+) difficulty with WH
+selected, the prompt blends in a few **open-ended** social-emotional
+perspective-taking questions (e.g. *"Who would you hug when you feel scared?"*),
+flagged `open_ended:true` with no fixed answer. The play page grades these
+**accept-any** (`educational_quiz.html`: `submitWH` short-circuits when
+`q.open_ended`), shows a "sharing" acknowledgement, and hides the Teach button.
+
+**Mechanism:** (1) Authoring (`/quiz_generation`): generate (Claude) → robust JSON
+parse → normalize per type (open-ended WH preserved) → `/api/save_quiz` splits into `yes_no/` vs `wh/`.
 (2) Play (`/educational_quiz`): `loadQuiz` concatenates files + merges
 `learned_answers` + shuffles; WH blocks on `/api/generate_wh_options`. Robot
 speaks the question (Qwen). Answer by tap or mic (`/api/speech_recognize`→whisper).
@@ -645,6 +730,7 @@ sequenceDiagram
     autonumber
     participant C as Child
     participant F as Flask
+    participant CL as Claude (in-proc)
     participant G as Gemini worker
     participant R as Robot+camera
     participant D as Disk
@@ -653,8 +739,8 @@ sequenceDiagram
     alt age 3 or under
         Note over F: template question, no LLM
     else age 4-6 criteria / 7+ riddle / direction
-        F->>G: gemini_general.py Gemini 2.5 Flash
-        G-->>F: question
+        F->>CL: Claude Sonnet question (in-process)
+        CL-->>F: question
     end
     F->>R: speak prompt Qwen TTS
     F-->>C: question text
@@ -667,8 +753,8 @@ sequenceDiagram
         G-->>F: label/color/shape + point
         F->>R: look_at_pixel gaze to object
     else direction flat next_to/above/under
-        F->>G: gemini_validate_spatial.py still
-        G-->>F: relation verdict
+        F->>CL: Claude Sonnet still-spatial (in-process)
+        CL-->>F: relation verdict
     else direction DEPTH behind/in_front_of/in
         F->>R: record 3s clip
         R-->>F: frames
@@ -687,14 +773,14 @@ sequenceDiagram
     autonumber
     participant U as Therapist/Child
     participant F as Flask
-    participant G as Gemini worker
+    participant CL as Claude (in-proc)
     participant W as Whisper worker
     participant R as Robot
     participant D as Disk
     Note over U,D: AUTHORING
-    U->>F: POST /api/generate_quiz, +Social-Rules branch
-    F->>G: gemini_general.py Gemini 2.5 Flash
-    G-->>F: questions JSON
+    U->>F: POST /api/generate_quiz, +Social-Rules branch, 7+ blends open-ended WH
+    F->>CL: _ClaudeQuizLLM Claude Sonnet 4.6 (in-process)
+    CL-->>F: questions JSON
     F-->>U: list
     U->>F: POST /api/save_quiz
     F->>D: write quizzes/yes_no + quizzes/wh
@@ -702,10 +788,10 @@ sequenceDiagram
     U->>F: loadQuiz
     F->>D: read quiz + learned_answers.json
     F-->>U: merged questions
-    opt WH type
+    opt WH type (skips open-ended questions)
         U->>F: POST /api/generate_wh_options
-        F->>G: distractors Gemini
-        G-->>F: options
+        F->>CL: distractors Claude (in-process)
+        CL-->>F: options
     end
     F->>R: /api/speak_sentence read question Qwen
     opt mic answer
@@ -794,7 +880,8 @@ scripts/
   claude_story.py, gemini_story.py            story workers
   gemini_general.py                           general text LLM
   gemini_analyze_image.py                     object detect + point-to-gaze
-  gemini_validate_spatial.py, *_video.py      spatial relation validation
+  gemini_validate_spatial.py                  spatial validation (ORPHANED — still-frame moved to in-process Claude)
+  gemini_validate_spatial_video.py            depth-relation video validation (Gemini)
   gemini_recovery_question.py                 recovery prompts
   gemini_wh_scene.py                          WH-question generation
   gemini_conversation_followup.py             conversation follow-ups

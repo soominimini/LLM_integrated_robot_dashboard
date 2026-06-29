@@ -275,16 +275,32 @@ class LanguageInterestKB:
         )
 
     def build_question_prompt_fragment(self, age: Any, gender: str = '',
-                                       language_age: Any = None) -> str:
+                                       language_age: Any = None,
+                                       include_targets: bool = True) -> str:
         """Compact guidance block for question generation.
 
         ``language_age`` (developmental age) drives MLU + targets; falls back to
         chronological ``age``. ``age`` drives interest selection.
+
+        ``include_targets`` controls whether the speech-sound / grammar / interest
+        targeting is included. When False, only the developmental wording-level
+        (MLU length) calibration is returned — used by the educational quiz, where
+        embedding target sounds/plurals into short questions distorts the content
+        (e.g. "Do three cherries grow underground?").
         """
         lang_age = language_age if language_age is not None else age
         level = self.resolve_level(lang_age)
         if not level:
             return ''
+        level_line = (
+            f"Target level: age {level.get('age')}, approx MLU "
+            f"{level.get('mlu_range', '')} words. Match question wording to this length.\n"
+        )
+        if not include_targets:
+            return (
+                "--- LANGUAGE GUIDANCE (knowledge base) ---\n"
+                f"{level_line}"
+            )
         targets = self._targets_block(lang_age)
         sounds_line = self._articulation_line(lang_age)
         interests = self._interests_line(age, gender)
@@ -294,8 +310,7 @@ class LanguageInterestKB:
         ) if sounds_line else ""
         return (
             "--- LANGUAGE & INTEREST GUIDANCE (knowledge base) ---\n"
-            f"Target level: age {level.get('age')}, approx MLU "
-            f"{level.get('mlu_range', '')} words. Match question wording to this length.\n\n"
+            f"{level_line}\n"
             "Embed these language targets in the question wording where natural:\n"
             f"{targets or '- (none specified)'}\n"
             f"{sounds_section}"

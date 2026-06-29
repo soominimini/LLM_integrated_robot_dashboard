@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Is an apple a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do bananas grow on trees?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a strawberry a vegetable?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we sleep in the kitchen?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is bread a food we eat?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fish live in the ocean?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a lemon a sweet fruit?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we cook food in the kitchen?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a grape a tiny fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees grow inside the house?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is milk a food we drink?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do oranges have a peel?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a bedroom used for sleeping?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do flowers grow in the ground?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a watermelon a small fruit?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we wash hands in the bathroom?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is rice a food people eat?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do birds live inside refrigerators?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a mango a juicy fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we eat food at the table?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

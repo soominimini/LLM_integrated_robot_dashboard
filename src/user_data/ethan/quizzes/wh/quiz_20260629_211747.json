@@ -1,0 +1,280 @@
+[
+  {
+    "question": "What do you say when someone gives you a gift?",
+    "type": "wh",
+    "correct_answer": "thank you",
+    "accepted_answers": [
+      "thank you",
+      "thanks",
+      "I appreciate it",
+      "thank you so much"
+    ]
+  },
+  {
+    "question": "When should you raise your hand in class?",
+    "type": "wh",
+    "correct_answer": "when you want to speak",
+    "accepted_answers": [
+      "when you want to speak",
+      "when you have a question",
+      "when you know the answer",
+      "before talking",
+      "when you want to answer"
+    ]
+  },
+  {
+    "question": "Where should you use a quiet voice indoors?",
+    "type": "wh",
+    "correct_answer": "library",
+    "accepted_answers": [
+      "library",
+      "classroom",
+      "hospital",
+      "church",
+      "museum",
+      "inside"
+    ]
+  },
+  {
+    "question": "What would you say to comfort a friend who feels sad?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [
+      "it's okay",
+      "I'm here for you",
+      "don't worry",
+      "everything will be okay",
+      "I care about you",
+      "you're not alone",
+      "I love you",
+      "do you want a hug",
+      "want to talk about it",
+      "I'm your friend",
+      "cheer up",
+      "things will get better",
+      "I'll help you",
+      "you're my best friend",
+      "I'm sorry you feel sad"
+    ]
+  },
+  {
+    "question": "Who should you tell if someone is being bullied at school?",
+    "type": "wh",
+    "correct_answer": "a teacher",
+    "accepted_answers": [
+      "a teacher",
+      "an adult",
+      "a parent",
+      "the principal",
+      "a trusted adult",
+      "teacher"
+    ]
+  },
+  {
+    "question": "What do you say when you bump into someone by accident?",
+    "type": "wh",
+    "correct_answer": "sorry",
+    "accepted_answers": [
+      "sorry",
+      "excuse me",
+      "I'm sorry",
+      "pardon me",
+      "my bad"
+    ]
+  },
+  {
+    "question": "How would you make a new student feel welcome in your class?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [
+      "say hello",
+      "smile at them",
+      "introduce yourself",
+      "show them around",
+      "sit with them",
+      "invite them to play",
+      "be their friend",
+      "share your lunch",
+      "help them find their seat",
+      "introduce them to others",
+      "talk to them",
+      "include them in games",
+      "give them a tour",
+      "ask their name",
+      "be kind to them"
+    ]
+  },
+  {
+    "question": "When is it polite to wait your turn in a line?",
+    "type": "wh",
+    "correct_answer": "always",
+    "accepted_answers": [
+      "always",
+      "every time",
+      "all the time",
+      "whenever there is a line",
+      "when others are waiting"
+    ]
+  },
+  {
+    "question": "What should you do when someone is talking to you?",
+    "type": "wh",
+    "correct_answer": "listen",
+    "accepted_answers": [
+      "listen",
+      "pay attention",
+      "look at them",
+      "make eye contact",
+      "be quiet and listen"
+    ]
+  },
+  {
+    "question": "Where is it important to follow rules and take turns?",
+    "type": "wh",
+    "correct_answer": "playground",
+    "accepted_answers": [
+      "playground",
+      "school",
+      "classroom",
+      "games",
+      "sports",
+      "everywhere"
+    ]
+  },
+  {
+    "question": "Why is it important to share with your friends?",
+    "type": "wh",
+    "correct_answer": "to be kind",
+    "accepted_answers": [
+      "to be kind",
+      "to be fair",
+      "so everyone gets a turn",
+      "it is polite",
+      "to make friends happy",
+      "to show you care"
+    ]
+  },
+  {
+    "question": "What do you say before entering someone else's room?",
+    "type": "wh",
+    "correct_answer": "knock",
+    "accepted_answers": [
+      "knock",
+      "knock first",
+      "ask permission",
+      "may I come in",
+      "excuse me"
+    ]
+  },
+  {
+    "question": "Who should you greet when you arrive at school each day?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "friends",
+      "classmates",
+      "everyone",
+      "adults",
+      "your teacher"
+    ]
+  },
+  {
+    "question": "What could you do to help a friend who feels left out?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [
+      "invite them to play",
+      "include them in the game",
+      "sit with them",
+      "talk to them",
+      "ask them to join",
+      "be their friend",
+      "share your toys",
+      "introduce them to others",
+      "play with them",
+      "cheer them up",
+      "give them a hug",
+      "stand up for them",
+      "spend time with them",
+      "make them feel included",
+      "ask them to join our group"
+    ]
+  },
+  {
+    "question": "When should you use the word please when asking for something?",
+    "type": "wh",
+    "correct_answer": "always",
+    "accepted_answers": [
+      "always",
+      "every time",
+      "whenever you ask for something",
+      "all the time"
+    ]
+  },
+  {
+    "question": "What should you do when you disagree with a friend?",
+    "type": "wh",
+    "correct_answer": "talk calmly",
+    "accepted_answers": [
+      "talk calmly",
+      "use your words",
+      "talk it out",
+      "discuss it",
+      "be respectful",
+      "stay calm"
+    ]
+  },
+  {
+    "question": "Where should you put your trash after eating lunch?",
+    "type": "wh",
+    "correct_answer": "trash can",
+    "accepted_answers": [
+      "trash can",
+      "garbage can",
+      "bin",
+      "rubbish bin",
+      "waste bin",
+      "the trash"
+    ]
+  },
+  {
+    "question": "Why is it important to listen when others are speaking?",
+    "type": "wh",
+    "correct_answer": "to be respectful",
+    "accepted_answers": [
+      "to be respectful",
+      "to show respect",
+      "to understand them",
+      "it is polite",
+      "to be kind",
+      "so you know what they are saying"
+    ]
+  },
+  {
+    "question": "What should you do when you need to interrupt a conversation?",
+    "type": "wh",
+    "correct_answer": "say excuse me",
+    "accepted_answers": [
+      "say excuse me",
+      "excuse me",
+      "wait for a pause",
+      "politely say excuse me",
+      "tap gently and say excuse me"
+    ]
+  },
+  {
+    "question": "How do you show someone that you are a good friend?",
+    "type": "wh",
+    "correct_answer": "be kind",
+    "accepted_answers": [
+      "be kind",
+      "be helpful",
+      "share",
+      "listen to them",
+      "support them",
+      "care about them",
+      "be honest"
+    ]
+  }
+]

@@ -392,14 +392,16 @@ def _load_user_profile(username):
     return profile
 
 
-def _persona_context_for(username, age, kind="story"):
+def _persona_context_for(username, age, kind="story", include_targets=True):
     """Build a language + interest knowledge-base fragment for `username`.
 
     Derives developmentally-appropriate language targets (by age) and interest
     themes (by age + gender) from the SLP co-design knowledge base.
 
     kind: "story" -> narrative-shaped fragment; "question" -> compact fragment.
-    Returns an empty string if nothing can be derived.
+    include_targets (question kind only): when False, drop the speech-sound /
+    grammar / interest targeting and keep only the wording-level (MLU length)
+    calibration. Returns an empty string if nothing can be derived.
     """
     try:
         profile = _load_user_profile(username)
@@ -411,7 +413,8 @@ def _persona_context_for(username, age, kind="story"):
         language_age = profile.get("language_age")
         if kind == "question":
             fragment = knowledge_base.build_question_prompt_fragment(
-                effective_age, gender, language_age=language_age)
+                effective_age, gender, language_age=language_age,
+                include_targets=include_targets)
         else:
             fragment = knowledge_base.build_story_prompt_fragment(
                 effective_age, gender, language_age=language_age)
@@ -520,27 +523,32 @@ def _ensure_intent_llm():
             except Exception as e:
                 print(f"Warning: failed to initialize intent LLM: {e}")
 
-class _GeminiQuizLLM:
-    """Quiz LLM backed by Gemini Flash via the gemini_general.py subprocess worker.
+class _ClaudeQuizLLM:
+    """Quiz LLM backed by Claude (Sonnet 4.6) via the in-process Anthropic SDK.
 
+    Uses the same model as the story generator (StoryGenerator(llm_model=...)).
     Exposes the same minimal `.get_response(prompt).message.content` interface
-    as the previous ChatWithRAG-based quiz LLM, so existing call sites keep working.
+    as the previous Gemini-backed quiz LLM, so existing call sites keep working.
     """
     SYSTEM_ROLE = (
         "You create short, child-friendly quiz questions. "
         "Return JSON only. Each item must be {\"question\": \"...\", \"type\": \"yes_no\"|\"wh\"}."
     )
 
+    # Match the story generator's model.
+    MODEL = "claude-sonnet-4-6"
+
     def __init__(self, max_tokens=2048, temperature=0.3):
         self.max_tokens = max_tokens
         self.temperature = temperature
 
     def get_response(self, prompt):
-        text = _gemini_generate(
+        text = _claude_generate(
             prompt,
             system=self.SYSTEM_ROLE,
             temperature=self.temperature,
             max_tokens=self.max_tokens,
+            model=self.MODEL,
         ) or ""
 
         class _Msg:
@@ -559,7 +567,7 @@ def _ensure_quiz_llm():
     with _quiz_llm_lock:
         if _quiz_llm is None:
             try:
-                _quiz_llm = _GeminiQuizLLM(max_tokens=8192)
+                _quiz_llm = _ClaudeQuizLLM(max_tokens=8192)
             except Exception as e:
                 print(f"Warning: failed to initialize quiz LLM: {e}")
 
@@ -1539,7 +1547,7 @@ def quiz_generation_page():
 
 @app.route("/api/generate_quiz", methods=["POST"])
 def api_generate_quiz():
-    """Generate quiz questions using Llama."""
+    """Generate quiz questions using Claude (Sonnet 4.6)."""
     username = session.get('username')
     if not username:
         return jsonify({"success": False, "error": "Not logged in"}), 401
@@ -1594,6 +1602,11 @@ def api_generate_quiz():
         any(kw in t.lower() for kw in SOCIAL_RULE_KEYWORDS) for t in topics
     )
     use_social_rules_branch = is_social_rules and ("yes_no" in types)
+
+    # For older children (High / 7+), blend a few OPEN-ENDED social-emotional WH
+    # questions (empathy, comfort, perspective-taking) into the WH set regardless
+    # of topic. These have no single correct answer and are graded accept-any.
+    blend_social_emotional = (difficulty.lower() == "high") and ("wh" in types)
 
     topic_text = ", ".join(topics)
 
@@ -1665,20 +1678,44 @@ def api_generate_quiz():
         )
         length_constraint = "Constraint: Questions must be short (under 8 words)."
 
-    # Knowledge-base guidance (developmental language targets, articulation /
-    # speech-sound targets, MLU sentence-length) derived from the child's profile
-    # age / language_age — the same source the story-comprehension and scene-game
-    # questions use, so the educational quiz pitches its wording and target speech
-    # sounds to the same developmental level. The selected topic still governs the
-    # question *content*, so the fragment's interest-theme suggestions are ignored.
-    kb_context = _persona_context_for(username, None, kind="question")
+    # Knowledge-base guidance: ONLY the developmental wording-level (MLU
+    # sentence-length) calibration, derived from the child's profile age /
+    # language_age. We deliberately drop the speech-sound / grammar / interest
+    # targeting here (include_targets=False) for BOTH yes_no and wh questions:
+    # cramming target sounds/plurals into a short quiz question distorts the
+    # content (e.g. "Do three cherries grow underground?"). The selected topic
+    # governs the content; the KB only sets how long/simple the wording should be.
+    kb_context = _persona_context_for(username, None, kind="question", include_targets=False)
     kb_block = ""
     if kb_context:
         kb_block = (
             "Developmental guidance for this child (from the SLP knowledge base) — use it ONLY "
-            "to set the question wording level and to favour the target speech sounds; the "
-            "questions must still be about the topic(s) above, so ignore its interest-theme "
-            f"suggestions for this quiz:\n{kb_context}\n"
+            "to set how long and simple the question wording should be. Do NOT bend the question "
+            "toward particular words or sounds; the questions must stay natural, general, and "
+            f"about the topic(s) above:\n{kb_context}\n"
+        )
+
+    # Open-ended social-emotional WH questions, blended in for older children.
+    # No single correct answer — flagged so the play page accepts any thoughtful
+    # response. The remaining WH questions stay factual with a real answer.
+    social_emotional_text = ""
+    open_ended_format = ""
+    if blend_social_emotional:
+        n_se = max(2, min(3, count // 2)) if count >= 4 else 1
+        social_emotional_text = (
+            f"IMPORTANT: Because these are for an older child (7+), {n_se} of the WH questions must be "
+            "OPEN-ENDED social-emotional questions, blended in among the others. These ask the child to "
+            "imagine, reflect, or share how they would respond to feelings and social situations "
+            "(empathy, comfort, kindness, perspective-taking). They have NO single correct answer — any "
+            "thoughtful answer is acceptable. They must begin with what/who/how/why and address the child "
+            "directly ('you'). Examples: 'What would you say when someone says they feel sad?', "
+            "'Who would you hug when you feel scared?', 'What could you do to help a friend who is crying?', "
+            "'How would you make a new classmate feel welcome?', 'What would you do if a friend lost their toy?'. "
+            "Mark EACH such question with \"open_ended\": true. Keep the remaining WH questions factual. "
+        )
+        open_ended_format = (
+            "For open-ended social-emotional wh questions, set \"open_ended\": true, \"correct_answer\" to \"\", "
+            "and \"accepted_answers\" to []. "
         )
 
     prompt = (
@@ -1687,6 +1724,7 @@ def api_generate_quiz():
         f"Use only these types: {type_hint}. "
         f"{goal_text} "
         f"{length_constraint} "
+        f"{social_emotional_text}"
         f"{kb_block}"
         "Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your "
         "response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object "
@@ -1697,6 +1735,7 @@ def api_generate_quiz():
         "reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). "
         "Example: if question is 'Where do kids read books in school?', correct_answer is 'classroom' and "
         "accepted_answers could be ['classroom', 'library', 'reading room', 'classrooms']. "
+        f"{open_ended_format}"
         f"{rule_text}"
     )
     print("education question prompt: ", prompt)
@@ -1718,6 +1757,7 @@ def api_generate_quiz():
                 continue
             q = (item.get("question") or "").strip()
             t = (item.get("type") or "").strip().lower()
+            open_ended = bool(item.get("open_ended"))
             correct_answer = (item.get("correct_answer") or "").strip()
             accepted_answers = item.get("accepted_answers") or []
             if not isinstance(accepted_answers, list):
@@ -1733,6 +1773,11 @@ def api_generate_quiz():
                 if correct_answer not in ("yes", "no"):
                     correct_answer = ""
                 entry = {"question": q, "type": t, "correct_answer": correct_answer}
+            elif open_ended:
+                # Open-ended social-emotional WH: no single correct answer; graded
+                # accept-any on the play page via the open_ended flag.
+                entry = {"question": q, "type": t, "correct_answer": "",
+                         "accepted_answers": [], "open_ended": True}
             else:
                 if not correct_answer:
                     correct_answer = ""
@@ -1742,8 +1787,10 @@ def api_generate_quiz():
                 entry = {"question": q, "type": t, "correct_answer": correct_answer, "accepted_answers": accepted_answers}
             questions.append(entry)
 
-        # Post-process: generate accepted_answers for WH questions that have empty/insufficient lists
-        wh_needing_alts = [q for q in questions if q.get("type") == "wh" and len(q.get("accepted_answers", [])) <= 1]
+        # Post-process: generate accepted_answers for WH questions that have empty/insufficient lists.
+        # Open-ended questions are excluded — they intentionally have no correct answer.
+        wh_needing_alts = [q for q in questions if q.get("type") == "wh"
+                           and not q.get("open_ended") and len(q.get("accepted_answers", [])) <= 1]
         if wh_needing_alts and _quiz_llm is not None:
             try:
                 alt_input = [{"question": q["question"], "correct_answer": q["correct_answer"]} for q in wh_needing_alts]
@@ -3271,6 +3318,47 @@ def _claude_generate(prompt, system="You are a helpful assistant. Return JSON on
         return None
 
 
+def _claude_generate_image(image_bytes, prompt,
+                           system="You are a helpful assistant. Return JSON only when asked.",
+                           temperature=0.2, max_tokens=1024, label=None, model=None,
+                           mime_type="image/jpeg"):
+    """Vision variant of _claude_generate: send ONE image + a text prompt to
+    Claude and return the raw response text (or None on failure). Runs
+    in-process via the Anthropic SDK, same client/key as the text path.
+    """
+    import base64
+    model = model or SCENE_GAME_LLM_MODEL
+    b64 = base64.standard_b64encode(image_bytes).decode("ascii")
+    try:
+        _log_claude_io(system, prompt, label=label)
+        kwargs = dict(
+            model=model,
+            max_tokens=max_tokens,
+            system=system,
+            messages=[{"role": "user", "content": [
+                {"type": "image", "source": {
+                    "type": "base64", "media_type": mime_type, "data": b64}},
+                {"type": "text", "text": prompt},
+            ]}],
+        )
+        # Sonnet/Haiku accept temperature; Opus 4.7+/Fable reject sampling params.
+        if temperature is not None and not (
+                model.startswith("claude-opus-4-7")
+                or model.startswith("claude-opus-4-8")
+                or model.startswith("claude-fable")):
+            kwargs["temperature"] = temperature
+        resp = _get_anthropic_client().messages.create(**kwargs)
+        out = "".join(
+            getattr(b, "text", "") for b in resp.content
+            if getattr(b, "type", None) == "text"
+        ).strip()
+        _log_claude_io(system, prompt, response=out, label=label)
+        return out
+    except Exception as e:
+        print(f"[Claude] Image error: {e}")
+        return None
+
+
 def _extract_json(raw):
     """Extract the first JSON object from a string that may contain extra text."""
     raw = raw.strip()
@@ -3771,36 +3859,124 @@ def _scene_game_olivia_direction_question():
     }
 
 
-def _run_gemini_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=None):
-    """Run gemini_validate_spatial.py and return its parsed JSON, or None on failure."""
-    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_validate_spatial.py')
-    if not os.path.exists(script_path):
-        print("[SceneGame] gemini_validate_spatial.py not found")
+# Photo (single-frame) spatial validation runs on Claude vision in-process —
+# Sonnet by default; override via SPATIAL_VALIDATION_MODEL. The video-clip
+# validator and the Robotics-ER object detector stay on Gemini.
+SPATIAL_VALIDATION_LLM_MODEL = os.getenv("SPATIAL_VALIDATION_MODEL", "claude-sonnet-4-6")
+
+# Canonical relation key -> grounding phrase. Mirrors RELATION_PHRASE in
+# scripts/gemini_validate_spatial.py so the wording the model sees is identical.
+_SPATIAL_RELATION_PHRASE = {
+    "next_to": "next to",
+    "above": "on top of",
+    "under": "under",
+    "behind": "behind",
+    "in_front_of": "in front of",
+    "in": "in",
+    "out": "out of",
+}
+
+
+def _run_claude_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=None):
+    """Validate a single-frame spatial arrangement with Claude (vision).
+
+    Drop-in replacement for the former Gemini still-frame validator: same
+    inputs, same returned dict shape (obj_a_found, obj_b_found, actual_relation,
+    correct, reason, plus prompt/raw_response for the therapist UI), or None on
+    failure. Runs in-process via the Anthropic SDK.
+    """
+    if not image_path or not os.path.exists(image_path):
+        print(f"[SceneGame] validate_spatial image not found: {image_path}")
         return None
-    cmd = [
-        WORKER_PYTHON, script_path,
-        '--image', image_path,
-        '--obj-a', obj_a,
-        '--obj-b', obj_b,
-        '--relation', relation,
-    ]
-    if toy_list:
-        cmd.extend(['--toy-list', ','.join(toy_list)])
     try:
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-        if proc.returncode != 0:
-            print(f"[SceneGame] validate_spatial error: {proc.stderr.strip()}")
-            return None
-        raw = (proc.stdout or '').strip()
-        print(f"[SceneGame] gemini_validate_spatial raw: {raw}")
-        if raw.startswith('```'):
-            raw = raw.strip('`').strip()
-            if raw.startswith('json'):
-                raw = raw[4:].strip()
-        return json.loads(raw)
+        with open(image_path, 'rb') as f:
+            image_bytes = f.read()
     except Exception as e:
-        print(f"[SceneGame] validate_spatial exec failed: {e}")
+        print(f"[SceneGame] validate_spatial read failed: {e}")
         return None
+
+    rel_phrase = _SPATIAL_RELATION_PHRASE.get(relation, relation)
+    toy_clause = ""
+    if toy_list:
+        toys = ','.join(toy_list) if isinstance(toy_list, (list, tuple)) else str(toy_list)
+        toy_clause = (
+            f"The valid game objects are: {toys}. "
+            "Only identify objects from this list.\n"
+        )
+
+    prompt = (
+        "You are judging a children's spatial-direction game.\n"
+        f"{toy_clause}"
+        f"The child was asked to arrange the scene so that the {obj_a} is "
+        f"{rel_phrase} the {obj_b}.\n"
+        "\n"
+        "The image is taken from the front of the child (camera-facing view).\n"
+        "Decide:\n"
+        f"1. Is the {obj_a} present in the scene?\n"
+        f"2. Is the {obj_b} present in the scene?\n"
+        f"3. What is the actual spatial relation of the {obj_a} TO the "
+        f"{obj_b}? Pick ONE:\n"
+        "   - next_to       (side by side, roughly same height)\n"
+        "   - above         (higher than / on top of)\n"
+        "   - under         (lower than / underneath)\n"
+        "   - behind        (further from the camera, partially hidden)\n"
+        "   - in_front_of   (closer to camera, may partially block the other)\n"
+        "   - in            (inside / contained by the other; partially hidden by its walls or rim)\n"
+        "   - out           (outside / not contained by the other; fully visible and separate)\n"
+        "   - other         (none of the above clearly applies)\n"
+        f"4. Does that match the requested relation '{relation}'?\n"
+        "\n"
+        "Tips:\n"
+        "- 'behind' means partially hidden by the reference object, or visibly\n"
+        "  smaller/further along the camera's depth axis.\n"
+        "- 'in_front_of' means the moving object partly occludes or sits\n"
+        "  closer to the camera than the reference object.\n"
+        "- 'in' means the moving object is contained by the reference object\n"
+        "  (e.g. ball inside a cup or box) — typically partly hidden by the\n"
+        "  rim/walls of the container.\n"
+        "- 'out' means the moving object is clearly outside the reference\n"
+        "  object, fully visible, with a visible gap between them.\n"
+        "If you cannot tell confidently, return 'other'.\n"
+        "\n"
+        "Return ONLY a JSON object with no markdown fences:\n"
+        "{\n"
+        "  \"obj_a_found\": true|false,\n"
+        "  \"obj_b_found\": true|false,\n"
+        "  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n"
+        "  \"correct\": true|false,\n"
+        "  \"reason\": \"<short, child-friendly explanation>\"\n"
+        "}\n"
+        "If either object is missing, set correct=false."
+    )
+
+    raw = _claude_generate_image(
+        image_bytes, prompt,
+        system="You judge a children's spatial-direction game from one photo. Return JSON only.",
+        temperature=0.2, max_tokens=1024,
+        label="scene-game-validate-spatial",
+        model=SPATIAL_VALIDATION_LLM_MODEL,
+    )
+    raw = (raw or '').strip()
+    print(f"[SceneGame] claude_validate_spatial raw: {raw}")
+    if raw.startswith('```'):
+        raw = raw.strip('`').strip()
+        if raw.startswith('json'):
+            raw = raw[4:].strip()
+    try:
+        result = json.loads(raw)
+    except Exception:
+        result = {
+            "obj_a_found": False,
+            "obj_b_found": False,
+            "actual_relation": "other",
+            "correct": False,
+            "reason": raw or "Could not parse vision response",
+        }
+    # Surface the exact prompt + raw model response for the therapist UI,
+    # matching the Gemini worker's output contract.
+    result["prompt"] = prompt
+    result["raw_response"] = raw
+    return result
 
 
 # Relations where a single 2D frame cannot reliably disambiguate the
@@ -4183,9 +4359,9 @@ def api_scene_game_answer():
             else:
                 print("[SceneGame] video capture failed for depth relation; "
                       "falling back to still-frame validator")
-                result = _run_gemini_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
+                result = _run_claude_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
         else:
-            result = _run_gemini_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
+            result = _run_claude_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
         if result is None:
             try:
                 tts_helper.speak("I couldn't see clearly. Can you show me again?")
@@ -4198,8 +4374,9 @@ def api_scene_game_answer():
         correct = bool(result.get('correct'))
         actual_relation = result.get('actual_relation') or 'other'
         reason = (result.get('reason') or '').strip()
-        # Served URL of the exact media Gemini analysed, so the UI can show the
-        # captured frame/clip next to the prompt and the model's raw response.
+        # Served URL of the exact media the model analysed (Claude for the still
+        # frame, Gemini for the video clip), so the UI can show the captured
+        # frame/clip next to the prompt and the model's raw response.
         image_url = '/images/' + os.path.relpath(fpath, USER_DATA_DIR)
         video_url = None
         if used_video:

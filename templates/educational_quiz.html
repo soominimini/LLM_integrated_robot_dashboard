@@ -627,7 +627,8 @@
             input.disabled = true;
 
             const q = questions[currentIndex];
-            const correct = isAnswerAccepted(userAnswer, q);
+            // Open-ended social-emotional WH: any thoughtful answer is accepted.
+            const correct = q.open_ended ? true : isAnswerAccepted(userAnswer, q);
 
             showFeedback(correct, q.correct_answer);
         }
@@ -761,9 +762,12 @@
 
         function showFeedback(correct, correctAnswer) {
             const fb = document.getElementById('feedback');
+            const openEnded = questions[currentIndex] && questions[currentIndex].open_ended;
             if (correct) {
                 score++;
-                const phrase = pickRandom(correctPhrases);
+                const sharingPhrases = ['Thank you for sharing!', 'What a thoughtful answer!',
+                    'That is very kind!', 'I love your idea!', 'Great thinking!'];
+                const phrase = openEnded ? pickRandom(sharingPhrases) : pickRandom(correctPhrases);
                 fb.className = 'feedback correct';
                 fb.textContent = phrase;
                 robotSpeak(phrase);
@@ -777,9 +781,10 @@
             }
             document.getElementById('next-btn').style.display = 'inline-block';
 
-            // Show teach button for WH questions (yes/no answers are fixed)
+            // Show teach button for WH questions (yes/no answers are fixed;
+            // open-ended questions have no fixed answer to teach).
             const q = questions[currentIndex];
-            if (q.type === 'wh') {
+            if (q.type === 'wh' && !q.open_ended) {
                 document.getElementById('teach-btn').style.display = 'inline-block';
             }
             // Reset teach panel
