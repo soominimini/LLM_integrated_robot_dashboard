@@ -59,6 +59,9 @@ class LanguageInterestKB:
         self._age_prefs: List[Dict[str, Any]] = []
         self._wh_hierarchy: Dict[str, Any] = {}
         self._image_card_wh: Dict[str, Any] = {}
+        self._concept_targets: Dict[str, Any] = {}
+        self._concept_levels: List[Dict[str, Any]] = []
+        self._concept_topics: Dict[str, Any] = {}
         self._load()
 
     def _load(self) -> None:
@@ -95,6 +98,11 @@ class LanguageInterestKB:
             self._wh_hierarchy = lang.get('wh_question_hierarchy', {}) or {}
             self._image_card_wh = data.get(
                 'image_card_wh_question_generation_guidance', {}) or {}
+            # Conceptual-knowledge framework (educational quiz difficulty).
+            concept = fw.get('concept', {}) or {}
+            self._concept_targets = concept.get('targets', {}) or {}
+            self._concept_levels = concept.get('developmental_levels', []) or []
+            self._concept_topics = concept.get('topic_mapping', {}) or {}
         except (OSError, json.JSONDecodeError) as e:
             print(f"[KB] Failed to load {self.json_path}: {e}")
 
@@ -427,6 +435,101 @@ class LanguageInterestKB:
                 lines.append("Evidence rules:")
                 lines.extend(f"- {r}" for r in icw['evidence_rules'])
         return '\n'.join(lines) + '\n' if len(lines) > 1 else ''
+
+    def resolve_concept_level(self, age: Any) -> Optional[Dict[str, Any]]:
+        """Concept developmental level for this age.
+
+        Concept levels use range strings ('2-3','4','5','6-7','8','9+'); pick
+        the level whose lower bound is at or just below the age, mirroring
+        ``resolve_speech_level``.
+        """
+        if not self._concept_levels:
+            return None
+        try:
+            a = int(age)
+        except (TypeError, ValueError):
+            a = 0
+        eligible = [e for e in self._concept_levels
+                    if self._range_lower_bound(e.get('age_range', '')) <= a]
+        pool = eligible or self._concept_levels
+        key = lambda e: self._range_lower_bound(e.get('age_range', ''))
+        return (max if eligible else min)(pool, key=key)
+
+    def build_concept_prompt_fragment(self, concept_age: Any,
+                                      topics: Optional[List[str]] = None,
+                                      max_targets: int = 8) -> str:
+        """Conceptual-difficulty guidance block for the educational quiz.
+
+        ``concept_age`` drives the concept level (typically mapped from the
+        quiz difficulty tier, NOT the child's language age — wording level and
+        concept level are independent KB domains). ``topics`` selects
+        per-topic recommended targets from ``topic_mapping`` (Fruit, School,
+        Home, Food, Nature); topics without a mapping fall back to the level's
+        primary targets. Returns '' when the KB has no concept framework.
+        """
+        level = self.resolve_concept_level(concept_age)
+        if not level:
+            return ''
+        try:
+            young = int(concept_age) <= 5
+        except (TypeError, ValueError):
+            young = True
+        band = 'recommended_targets_age_4_5' if young else 'recommended_targets_age_8'
+
+        lines: List[str] = ["--- CONCEPT GUIDANCE (knowledge base) ---"]
+        desc = level.get('description', '')
+        lines.append(f"Concept level (ages {level.get('age_range')}): {desc}")
+        qg = level.get('question_guidance', {}) or {}
+        if qg.get('wording'):
+            lines.append(f"Wording: {qg['wording']}")
+        if qg.get('recommended_question_length'):
+            lines.append(f"Question length: {qg['recommended_question_length']}.")
+        avoid = qg.get('avoid') or []
+        if avoid:
+            lines.append("Avoid: " + "; ".join(avoid))
+        patterns = qg.get('recommended_question_patterns') or []
+        if patterns:
+            lines.append("Use these simple question frames (one clause each): "
+                         + " | ".join(patterns))
+
+        # Collect target ids: per-topic recommendations where mapped, level
+        # primaries otherwise. Order-preserving dedupe, capped at max_targets.
+        topic_items: List[str] = []
+        target_ids: List[str] = []
+        matched_topic = False
+        for topic in topics or []:
+            spec = next((v for k, v in self._concept_topics.items()
+                         if k.lower() == str(topic).lower()), None)
+            if not spec:
+                continue
+            matched_topic = True
+            for t in spec.get(band, []) or []:
+                if t not in target_ids:
+                    target_ids.append(t)
+            items = spec.get('example_items') or []
+            if items:
+                topic_items.append(f"{topic}: {', '.join(items[:6])}")
+            if young and spec.get('avoid_for_younger_children'):
+                lines.append(f"For '{topic}', avoid: "
+                             + "; ".join(spec['avoid_for_younger_children']))
+        if not matched_topic:
+            target_ids = list(level.get('primary_targets', []) or [])
+        target_ids = target_ids[:max_targets]
+
+        if target_ids:
+            lines.append("Target these concepts (vary across the question set):")
+            for tid in target_ids:
+                spec = self._concept_targets.get(tid) or {}
+                label = tid.replace('_', ' ')
+                goal = spec.get('question_goal') or spec.get('description') or ''
+                exq = (spec.get('example_questions') or [''])[0]
+                ex = f" e.g. {exq}" if exq else ''
+                lines.append(f"- {label}: {goal}{ex}")
+        if topic_items:
+            lines.append("Familiar items per topic: " + " | ".join(topic_items))
+        for exq in (level.get('example_questions') or [])[:3]:
+            lines.append(f"Example question at this level: {exq}")
+        return '\n'.join(lines) + '\n'
 
     # ─────────────────────────────────────────────
     # DIAGNOSTICS

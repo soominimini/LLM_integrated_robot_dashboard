@@ -1035,7 +1035,7 @@
        "compare",
        "explain"
       ],
-      "wording": "Questions can be longer and can ask for explanation, comparison, or reasoning, but should remain concrete and contextually grounded.",
+      "wording": "Questions can be longer and can ask for explanation, comparison, or reasoning, but should remain concrete and contextually grounded. Phrase every question as ONE simple spoken clause a child would hear in conversation; split complex ideas into the question frames below instead of packing them into one sentence.",
       "recommended_question_length": "8-14 words when expressive language level supports it",
       "recommended_question_patterns": [
        "How are X and Y alike?",
@@ -1060,7 +1060,9 @@
        "adult-level nutrition or biology mechanisms",
        "technical food production",
        "highly ambiguous category exceptions",
-       "complex social inference without story support"
+       "complex social inference without story support",
+       "academic connector phrases such as 'in terms of', 'with respect to', 'in what way'",
+       "two asks packed into one question (e.g. 'How are X and Y alike in terms of what they are made from?' — use 'What are X and Y both made from?' instead)"
       ],
       "wh_question_guidance": {
        "recommended_wh_types": [
@@ -1111,7 +1113,7 @@
        "explain",
        "predict"
       ],
-      "wording": "Can include multi-step explanations if the child’s language and attention profile supports it.",
+      "wording": "Can include multi-step explanations if the child’s language and attention profile supports it. Phrase every question as ONE simple spoken clause a child would hear in conversation; split complex ideas into the question frames below instead of packing them into one sentence.",
       "recommended_question_length": "Flexible, based on language profile",
       "recommended_content": [
        "less typical but valid category members",
@@ -1123,7 +1125,9 @@
       "avoid": [
        "adult-level scientific detail",
        "unscaffolded abstract explanation",
-       "questions requiring specialized knowledge"
+       "questions requiring specialized knowledge",
+       "academic connector phrases such as 'in terms of', 'with respect to', 'in what way'",
+       "two asks packed into one question (e.g. 'How are X and Y alike in terms of what they are made from?' — use 'What are X and Y both made from?' instead)"
       ]
      },
      "example_questions": [

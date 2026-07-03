@@ -129,7 +129,7 @@ age (9) · **rule_11: follow the WH-question hierarchy for image-card/WH generat
 | `frameworks.interests.themes` | `_themes` (normalized to string lists; branded dict entries skipped) | story hooks, question content |
 | `frameworks.interests.co_design_observed_age_preferences` | `_age_prefs` | interest selection by age(+gender; unknown gender merges) |
 | `image_card_wh_question_generation_guidance` | `_image_card_wh` | WH picture-scene receptive prompts (`build_wh_question_guidance_fragment(image_card=True)`) |
-| `frameworks.concept.*` | — **not consumed by code yet** | (candidate: educational quiz topics/templates) |
+| `frameworks.concept` (`targets`, `developmental_levels`, `topic_mapping`) | `_concept_targets`, `_concept_levels`, `_concept_topics` | educational quiz (`build_concept_prompt_fragment()` — level keyed off difficulty tier Low→3 / Med→5 / High→8, per-topic targets + avoid lists; since 2026-07-04) |
 | `frameworks.social_communication.*` | — **not consumed by code yet** | (candidate: social-skills activities) |
 | `global_generation_rules`, examples/schema | — reference for authors/LLM designers, not parsed | |
 

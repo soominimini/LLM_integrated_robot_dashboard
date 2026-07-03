@@ -1561,7 +1561,13 @@ def api_generate_quiz():
     if isinstance(topics, str):
         topics = [topics]
     topics = [str(t).strip() for t in topics if str(t).strip()]
-    difficulty = (data.get("difficulty") or "Med").strip()
+    # Difficulty tier removed (2026-07-04): the child's profile age is the
+    # single source of truth for target-age hint, wording tier, social-emotional
+    # blending, and conceptual level. Any legacy "difficulty" field is ignored.
+    try:
+        profile_age = int(user_manager.users.get(username, {}).get('age') or 5)
+    except (TypeError, ValueError):
+        profile_age = 5
     count = int(data.get("count") or 5)
     types = data.get("types") or []
 
@@ -1588,17 +1594,11 @@ def api_generate_quiz():
             "questions must begin with one of: what, when, where, why, who, how."
         )
 
-    age_hint = ""
-    if difficulty.lower() == "low":
-        age_hint = "Target ages 2-3."
-    elif difficulty.lower() == "med":
-        age_hint = "Target ages 4-5."
-    elif difficulty.lower() == "high":
-        age_hint = "Target ages 7+."
+    age_hint = f"Target age {profile_age}."
 
     # Detect social-rules topic: triggers a specialised yes/no prompt that asks
     # about kindness, manners, sharing, and respect. Designed for age 7+ but
-    # works at any difficulty when explicitly selected.
+    # works at any age when explicitly selected.
     SOCIAL_RULE_KEYWORDS = (
         "social rule", "social rules", "social norm", "social norms",
         "etiquette", "manners", "good manners", "kindness", "behavior", "behaviour",
@@ -1608,10 +1608,10 @@ def api_generate_quiz():
     )
     use_social_rules_branch = is_social_rules and ("yes_no" in types)
 
-    # For older children (High / 7+), blend a few OPEN-ENDED social-emotional WH
+    # For older children (7+), blend a few OPEN-ENDED social-emotional WH
     # questions (empathy, comfort, perspective-taking) into the WH set regardless
     # of topic. These have no single correct answer and are graded accept-any.
-    blend_social_emotional = (difficulty.lower() == "high") and ("wh" in types)
+    blend_social_emotional = (profile_age >= 7) and ("wh" in types)
 
     topic_text = ", ".join(topics)
 
@@ -1672,9 +1672,17 @@ def api_generate_quiz():
             "answer depends on context, culture, family rules, or personal preference."
         )
 
+        # Wording level follows the child's profile age (was hardcoded to
+        # "7- to 8-year-old", which contradicted the age hint).
+        if profile_age <= 3:
+            _max_words = "under 8 words"
+        elif profile_age <= 6:
+            _max_words = "under 10 words"
+        else:
+            _max_words = "under 12 words"
         length_constraint = (
-            "Constraint: Questions must be short, under 12 words, and use simple language "
-            "a 7- to 8-year-old child can understand."
+            f"Constraint: Questions must be short, {_max_words}, and use simple "
+            f"language a child aged {profile_age} can understand."
         )
     else:
         # non social rules
@@ -1704,6 +1712,25 @@ def api_generate_quiz():
             "toward particular words or sounds; the questions must stay natural, general, and "
             f"about the topic(s) above:\n{kb_context}\n"
         )
+
+    # Conceptual-difficulty guidance (KB frameworks.concept): WHAT the questions
+    # may test at this child's level — per-topic recommended concept targets
+    # (topic_mapping), level wording/length/avoid rules, and example questions.
+    # Keyed off the child's profile age, NOT their language age: concept level
+    # and wording level are independent KB domains. The social-rules branch
+    # keeps its own goal text.
+    if not use_social_rules_branch:
+        try:
+            concept_frag = knowledge_base.build_concept_prompt_fragment(
+                profile_age, topics)
+            if concept_frag:
+                kb_block += (
+                    "Use this conceptual-difficulty guidance to choose WHAT the "
+                    "questions test (content and reasoning level):\n"
+                    f"{concept_frag}\n"
+                )
+        except Exception as e:
+            print(f"[quiz] concept guidance unavailable: {e}")
 
     # WH-type developmental guidance (KB wh_question_hierarchy): which WH types
     # suit this child's level (what/who -> where -> when -> why/how). Only
@@ -1850,7 +1877,7 @@ def api_generate_quiz():
             "success": True,
             "questions": questions,
             "topics": topics,
-            "difficulty": difficulty
+            "target_age": profile_age
         })
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500

@@ -29,6 +29,8 @@ Gemini calls run through worker scripts in `scripts/` (Python 3.9 venv).
 | Task | Model | Where | Trace tag |
 |---|---|---|---|
 | KB wording-level calibration (MLU only — `include_targets=False`, so no sound/interest steering; not an LLM call) | — (v2 knowledge base, local lookup) | `build_question_prompt_fragment()` | `[KB] derived ... kind=question` |
+| KB conceptual-difficulty guidance (per-topic concept targets, avoid lists; keyed off difficulty tier; not an LLM call) | — (v2 KB `frameworks.concept`) | `build_concept_prompt_fragment()` | `CONCEPT GUIDANCE` block in prompt |
+| KB WH-type guidance for `wh` quizzes (developmental hierarchy; not an LLM call) | — (v2 KB `wh_question_hierarchy`) | `build_wh_question_guidance_fragment()` | `WH-QUESTION GUIDANCE` block in prompt |
 | Yes/No question batch (up to 100 per call) | **Claude Sonnet 4.6** | `_ClaudeQuizLLM` (`MODEL = "claude-sonnet-4-6"`, `max_tokens=16384`) | `[Claude]` |
 | WH question batch with `accepted_answers` lists (up to 100 per call) | **Claude Sonnet 4.6** | same `_ClaudeQuizLLM` instance | `[Claude]` |
 | WH `accepted_answers` backfill (repair pass for questions returned with missing/thin alternative lists) | **Claude Sonnet 4.6** | follow-up call in `api_generate_quiz()` | `[Claude]` |
