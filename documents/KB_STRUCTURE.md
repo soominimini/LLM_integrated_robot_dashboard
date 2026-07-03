@@ -4,6 +4,20 @@
 Loaded by `src/knowledge_base.py` (`LanguageInterestKB`); consumed by story generation,
 educational quiz, and the WH picture-scene activity (see "Who reads what" at the bottom).
 
+## What's in this document
+
+- **Top-level tree** — the 7 top-level sections at a glance
+- **Per-framework detail** — all 5 frameworks with exact counts and field shapes:
+  - `language`: 25 targets (21 grammar + 4 WH-question targets), 6 MLU levels with a table showing which levels carry `wh_question_guidance`, plus the `wh_question_hierarchy`
+  - `speech_sound`: the 4 phoneme groups with their actual phonemes
+  - `concept`: 21 targets, 6 levels (ages 2-3 → 9+), topic_mapping, the 4 question-template families
+  - `social_communication`: 10 targets, the age-8 ASD level and its activity types
+  - `interests`: 10 themes, noting the branded `{name, type, usable_themes}` entries and the three age-preference lists
+- **`image_card_wh_question_generation_guidance`** — both age blocks including `default_for_age_5_plus` (exactly-one-why/how rule, added 2026-07-04) and how the code age-gates them (≤4 vs ≥5)
+- **The 11 global rules** compressed to one paragraph
+- **"Who reads what"** — a mapping from each KB section to the loader attribute and the activities that consume it, explicitly flagging that `concept` and `social_communication` are not consumed by any code yet (the two biggest untapped sections — natural candidates for the educational quiz and a future social-skills activity)
+- **Editing tips** — the practical gotchas (target ids must appear in a level's list to take effect; only plain-string theme examples reach prompts; the WH precedence order: level guidance → hierarchy age buckets → image-card blocks)
+
 ## Top-level map
 
 ```
