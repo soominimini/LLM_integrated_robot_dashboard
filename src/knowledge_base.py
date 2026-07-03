@@ -4,8 +4,9 @@
 
 Replaces the older persona-matching RAG (``persona_rag.py``). Instead of
 selecting one of a handful of fixed clinical personas by ``(age, diagnosis)``,
-this loads ``documents/SLP_codesign_knowledge_base_integrated_v1_1.json`` and,
-given a child's age and gender, derives:
+this loads ``documents/restructured_knowledge_base_v2.json`` (everything lives
+under its top-level ``frameworks`` key) and, given a child's age and gender,
+derives:
 
   * the developmentally-appropriate **language targets** (with an MLU range),
   * the developmentally-appropriate **articulation / speech-sound targets**
@@ -29,7 +30,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 DEFAULT_JSON_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    'documents', 'SLP_codesign_knowledge_base_integrated_v1_1.json'
+    'documents', 'restructured_knowledge_base_v2.json'
 )
 
 
@@ -56,21 +57,44 @@ class LanguageInterestKB:
         self._speech_levels: List[Dict[str, Any]] = []
         self._themes: Dict[str, List[str]] = {}
         self._age_prefs: List[Dict[str, Any]] = []
+        self._wh_hierarchy: Dict[str, Any] = {}
+        self._image_card_wh: Dict[str, Any] = {}
         self._load()
 
     def _load(self) -> None:
         try:
             with open(self.json_path, 'r') as f:
                 data = json.load(f)
-            ldf = data.get('language_development_framework', {}) or {}
-            self._language_targets = ldf.get('language_targets', {}) or {}
-            self._levels = ldf.get('developmental_levels', []) or []
-            ssf = data.get('speech_sound_development_framework', {}) or {}
-            self._articulation_targets = ssf.get('articulation_targets', {}) or {}
-            self._speech_levels = ssf.get('developmental_levels', []) or []
-            intf = data.get('interest_framework', {}) or {}
-            self._themes = intf.get('themes', {}) or {}
-            self._age_prefs = intf.get('age_preferences', []) or []
+            fw = data.get('frameworks', {}) or {}
+            lang = fw.get('language', {}) or {}
+            self._language_targets = lang.get('targets', {}) or {}
+            self._levels = lang.get('developmental_levels', []) or []
+            speech = fw.get('speech_sound', {}) or {}
+            self._articulation_targets = speech.get('targets', {}) or {}
+            self._speech_levels = speech.get('developmental_levels', []) or []
+            intf = fw.get('interests', {}) or {}
+            # v2 themes are rich objects ({description, generic_examples,
+            # specific_examples, generation_constraints}); downstream code only
+            # needs the example items, so normalize to theme -> [items].
+            # Dict-shaped specific_examples are branded characters (Superman,
+            # Roblox, ...) which the KB's own rules reserve for children whose
+            # profile explicitly names that interest — we have no such signal
+            # here, so keep only plain-string items.
+            self._themes = {}
+            for key, spec in (intf.get('themes', {}) or {}).items():
+                if isinstance(spec, dict):
+                    items = [x for x in (spec.get('generic_examples', []) or [])
+                             if isinstance(x, str)]
+                    items += [x for x in (spec.get('specific_examples', []) or [])
+                              if isinstance(x, str) and x not in items]
+                    self._themes[key] = items
+                else:  # tolerate the old plain-list shape
+                    self._themes[key] = spec or []
+            self._age_prefs = intf.get('co_design_observed_age_preferences', []) or []
+            # WH-question developmental hierarchy + image-card generation rules.
+            self._wh_hierarchy = lang.get('wh_question_hierarchy', {}) or {}
+            self._image_card_wh = data.get(
+                'image_card_wh_question_generation_guidance', {}) or {}
         except (OSError, json.JSONDecodeError) as e:
             print(f"[KB] Failed to load {self.json_path}: {e}")
 
@@ -196,13 +220,43 @@ class LanguageInterestKB:
                     theme_keys.append(k)
         return [(k, self._themes.get(k, [])) for k in theme_keys]
 
+    def resolve_wh_guidance(self, age: Any) -> Optional[Dict[str, Any]]:
+        """WH-question guidance for this age.
+
+        Prefers the developmental level's own ``wh_question_guidance`` block;
+        falls back to ``wh_question_hierarchy.age_guidance`` buckets
+        (age_2_3 / age_4 / age_5 / age_6_8) when the level carries none.
+        """
+        level = self.resolve_level(age)
+        if level and level.get('wh_question_guidance'):
+            return level['wh_question_guidance']
+        buckets = self._wh_hierarchy.get('age_guidance', {}) or {}
+        try:
+            a = int(age)
+        except (TypeError, ValueError):
+            a = 0
+        if a <= 3:
+            key = 'age_2_3'
+        elif a == 4:
+            key = 'age_4'
+        elif a == 5:
+            key = 'age_5'
+        else:
+            key = 'age_6_8'
+        return buckets.get(key)
+
     # ─────────────────────────────────────────────
     # FORMATTING
     # ─────────────────────────────────────────────
 
-    def _targets_block(self, age: Any) -> str:
+    def _targets_block(self, age: Any, include_wh: bool = True) -> str:
         lines: List[str] = []
         for key, desc, examples in self.resolve_targets(age):
+            # WH-question targets are comprehension-question material, not
+            # narration material — callers building story-narration guidance
+            # exclude them (the WH hierarchy governs questions separately).
+            if not include_wh and (self._language_targets.get(key) or {}).get('wh_types'):
+                continue
             label = key.replace('_', ' ')
             ex = f" e.g. {', '.join(examples)}" if examples else ''
             if desc:
@@ -253,7 +307,7 @@ class LanguageInterestKB:
         level = self.resolve_level(lang_age)
         if not level:
             return ''
-        targets = self._targets_block(lang_age)
+        targets = self._targets_block(lang_age, include_wh=False)
         sounds = self._articulation_block(lang_age)
         interests = self._interests_line(age, gender)
         sounds_section = (
@@ -316,6 +370,63 @@ class LanguageInterestKB:
             f"{sounds_section}"
             f"\nDraw question content from these interests: {interests or '(none specified)'}\n"
         )
+
+    def build_wh_question_guidance_fragment(self, age: Any, language_age: Any = None,
+                                            image_card: bool = False) -> str:
+        """Compact WH-question TYPE guidance block from the KB hierarchy.
+
+        Used by WH-flavoured generators (educational quiz `wh` questions, WH
+        picture-scene) so question types follow the developmental order
+        (what/who -> where -> when -> why/how) at the child's level.
+
+        ``language_age`` (developmental age) drives selection; falls back to
+        chronological ``age``. ``image_card`` appends the image-card selection
+        steps and evidence rules. Returns '' when the KB carries no guidance.
+        """
+        lang_age = language_age if language_age is not None else age
+        g = self.resolve_wh_guidance(lang_age) or {}
+        if not g and not self._image_card_wh:
+            return ''
+        lines: List[str] = ["--- WH-QUESTION GUIDANCE (knowledge base) ---"]
+        order = g.get('developmental_order') or \
+            self._wh_hierarchy.get('developmental_order') or []
+        if order:
+            lines.append(
+                "Developmental order (easiest first): " + " -> ".join(order) + ".")
+        for key, label in (
+                ('recommended_wh_types', 'Recommended WH types'),
+                ('recommended_primary_wh_types', 'Primary WH types (prefer these)'),
+                ('recommended_secondary_wh_types', 'Secondary WH types'),
+                ('use_with_support', 'Use only with clear support'),
+                ('emerging_or_optional', 'Emerging / optional'),
+                ('avoid_or_use_with_support', 'Avoid or use only with support'),
+                ('avoid_or_use_only_with_strong_support', 'Avoid without strong support'),
+        ):
+            vals = g.get(key) or []
+            if vals:
+                lines.append(f"{label}: {', '.join(vals)}.")
+        for note in g.get('notes') or []:
+            lines.append(f"- {note}")
+        if image_card and self._image_card_wh:
+            icw = self._image_card_wh
+            # <=4: gentle what/who/where selection; >=5: additionally require
+            # exactly ONE evidence-supported why/how question per set.
+            try:
+                a = int(lang_age)
+            except (TypeError, ValueError):
+                a = 0
+            block = (icw.get('default_for_age_4_5', {}) if a <= 4
+                     else icw.get('default_for_age_5_plus', {})
+                     or icw.get('default_for_age_4_5', {})) or {}
+            if block.get('question_selection'):
+                lines.append("Question selection for this picture:")
+                lines.extend(f"- {s}" for s in block['question_selection'])
+            if block.get('fallback_rule'):
+                lines.append(f"Fallback: {block['fallback_rule']}")
+            if icw.get('evidence_rules'):
+                lines.append("Evidence rules:")
+                lines.extend(f"- {r}" for r in icw['evidence_rules'])
+        return '\n'.join(lines) + '\n' if len(lines) > 1 else ''
 
     # ─────────────────────────────────────────────
     # DIAGNOSTICS

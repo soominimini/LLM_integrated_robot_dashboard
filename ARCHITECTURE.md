@@ -448,7 +448,8 @@ These had zero live references and were deleted:
   ages **4–5** word range widened to **70–100** with sentence length governed by the KB
   **MLU** rather than a fixed "3–4 sentences" count. The per-prompt `VOCABULARY FOCUS`
   block was removed. The developmental knowledge base (`knowledge_base.py` +
-  `documents/SLP_codesign_knowledge_base_integrated_v1_1.json`, injected as the
+  `documents/restructured_knowledge_base_v2.json` — since 2026-07-03; previously
+  `SLP_codesign_knowledge_base_integrated_v1_1.json` — injected as the
   `persona_context` block) is **authoritative** — tiers defer to its MLU / language &
   speech targets / interest themes on any conflict.
 - **Daily-rotated trace log.** `src/logs/trace-YYYY-MM-DD.log` (one file per date)

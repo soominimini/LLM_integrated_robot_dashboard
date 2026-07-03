@@ -1,0 +1,40 @@
+{
+  "scene_description": "A smiling teacher stands at a chalkboard with math problems written on it, while several young students raise their hands eagerly to answer her question in a classroom.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What do you think the teacher will do after she picks a student to answer?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what happens next in the classroom."
+    },
+    {
+      "wh_type": "what",
+      "question": "What do you think the teacher was doing right before the kids raised their hands?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what happened just before this moment."
+    },
+    {
+      "wh_type": "what",
+      "question": "Have you ever raised your hand in class or at school like these kids?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Think about your own time at school."
+    },
+    {
+      "wh_type": "what",
+      "question": "What else could the teacher write on the board instead of math problems?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine something different on the chalkboard."
+    },
+    {
+      "wh_type": "why",
+      "question": "How do you think the kids feel when they raise their hands to answer?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Think about how you would feel if you really wanted to answer."
+    }
+  ]
+}

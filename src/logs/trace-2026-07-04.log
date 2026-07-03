@@ -1,0 +1,636 @@
+00:15:27 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-04.log (daily rotation)
+00:15:27 [----]  * Serving Flask app 'web_user_server'
+00:15:27 [----]  * Debug mode: on
+00:15:43 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-04.log (daily rotation)
+00:15:50 [ed00] ┌─ WORK  GET /
+00:15:50 [ed00] └─ DONE  GET / -> 200 in 11ms
+00:15:58 [4acd] ┌─ WORK  POST /api/login | fields: username
+00:15:58 [4acd] └─ DONE  POST /api/login -> 200 in 7ms
+00:15:59 [bde2] ┌─ WORK  GET /
+00:15:59 [bde2] └─ DONE  GET / -> 200 in 7ms
+00:16:01 [1ae7] ┌─ WORK  GET /wh_picture_scene
+00:16:11 [1ae7] └─ DONE  GET /wh_picture_scene -> 200 in 10489ms
+00:16:12 [e47e] ┌─ WORK  GET /api/wh_scene/list
+00:16:12 [e47e] └─ DONE  GET /api/wh_scene/list -> 200 in 14ms
+00:16:13 [1e13] ┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783116512_e6de9e.jpg
+00:16:13 [1e13] Serving image: sophie/wh_scenes/images/scene_1783116512_e6de9e.jpg
+00:16:13 [1e13] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783116512_e6de9e.jpg┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783116536_8f0a7a.jpg
+00:16:13 [ebcc] 
+00:16:13 [ebcc] Serving image: sophie/wh_scenes/images/scene_1783116536_8f0a7a.jpg
+00:16:13 [1e13] File exists: TrueFull path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783116536_8f0a7a.jpg
+00:16:13 [ebcc] 
+00:16:13 [ebcc] File exists: True
+00:16:13 [1e13] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783116512_e6de9e.jpg -> 304 in 23ms
+00:16:13 [ebcc] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783116536_8f0a7a.jpg -> 304 in 22ms
+00:16:16 [b7a4] ┌─ WORK  POST /api/wh_scene/delete | fields: scene_id
+00:16:16 [b7a4] └─ DONE  POST /api/wh_scene/delete -> 200 in 10ms
+00:16:16 [298b] ┌─ WORK  GET /api/wh_scene/list
+00:16:16 [298b] └─ DONE  GET /api/wh_scene/list -> 200 in 1ms
+00:16:17 [8648] ┌─ WORK  POST /api/wh_scene/delete | fields: scene_id
+00:16:17 [8648] └─ DONE  POST /api/wh_scene/delete -> 200 in 6ms
+00:16:17 [3936] ┌─ WORK  GET /api/wh_scene/list
+00:16:17 [3936] └─ DONE  GET /api/wh_scene/list -> 200 in 3ms
+00:16:31 [da31] ┌─ WORK  POST /api/wh_scene/capture
+00:16:31 [da31] [WH-scene] Human tracking resumed after scene capture
+00:16:31 [da31] [Claude:wh-scene-receptive] >>> PROMPT (4086 chars) | system: You create speech-therapy materials from scene images. Return JSON only.
+00:16:31 [da31] You are a pediatric speech-language pathologist creating therapy materials.
+00:16:31 [da31] 
+00:16:31 [da31] IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface. Focus ONLY on the illustration or scene depicted ON the card/page itself. Ignore everything outside the card — hands holding it, the person, the table, background, etc. Treat the illustration on the card as the entire scene for your analysis.
+00:16:31 [da31] 
+00:16:31 [da31] Analyze this image and generate 5 WH-questions for a child aged 5.
+00:16:31 [da31] 
+00:16:31 [da31] --- WH-QUESTION GUIDANCE (knowledge base) ---
+00:16:31 [da31] Developmental order (easiest first): what -> who -> where -> when -> why -> how.
+00:16:31 [da31] Primary WH types (prefer these): what, who, where.
+00:16:31 [da31] Use only with clear support: when.
+00:16:31 [da31] Emerging / optional: why, how.
+00:16:31 [da31] - WH-questions are appropriate around ages 4-5, but should follow a difficulty hierarchy.
+00:16:31 [da31] - Begin with what/who questions, then where, then when, then why/how.
+00:16:31 [da31] - Why and how questions should be simple, concrete, and supported by visible evidence or familiar routines.
+00:16:31 [da31] Question selection for this picture:
+00:16:31 [da31] - Include exactly ONE simple why or how question per question set — not zero, not more than one.
+00:16:31 [da31] - Choose the why/how relation most clearly supported by visible evidence in the picture (a shown action, feeling, or means).
+00:16:31 [da31] - Use what/who/where questions for the remaining slots.
+00:16:31 [da31] - Add when only if there are visible time, routine, season, weather, or event cues.
+00:16:31 [da31] Fallback: Prefer a simple, visually grounded why (about an action or feeling shown in the picture) whenever possible; only if the picture truly supports no why/how relation at all, replace it with another what/who/where question.
+00:16:31 [da31] Evidence rules:
+00:16:31 [da31] - Who/what/where answers should be directly visible.
+00:16:31 [da31] - When answers require visual or routine cues.
+00:16:31 [da31] - Why/how answers require visible evidence, familiar routine support, or story context.
+00:16:31 [da31] - Do not assume hidden intentions, emotions, or background events without evidence.
+00:16:31 [da31] 
+00:16:31 [da31] Choose the five question TYPES according to the guidance above: favour the primary/recommended
+00:16:31 [da31] types, and repeat an easier type (an extra what/who/where question about a different detail)
+00:16:31 [da31] instead of using a harder type the picture does not clearly support. Types may repeat, but each
+00:16:31 [da31] question must ask about a DIFFERENT detail of the scene. The JSON example below shows one
+00:16:31 [da31] question per type — your actual wh_type values must follow the guidance above.
+00:16:31 [da31] 
+00:16:31 [da31] For EACH of the 5 questions, generate:
+00:16:31 [da31] 1. A simple, clear question about the scene
+00:16:31 [da31] 2. The correct answer (short, 1-5 words)
+00:16:31 [da31] 3. Four visual choices (one correct + three plausible distractors), each 1-4 words
+00:16:31 [da31] 4. An evidence hint telling the child where to look in the picture
+00:16:31 [da31] 
+00:16:31 [da31] For receptive mode: make questions simple with obvious visual choices.
+00:16:31 [da31] 
+00:16:31 [da31] Return ONLY valid JSON in this exact format:
+00:16:31 [da31] {
+00:16:31 [da31]   "scene_description": "Brief description of the scene",
+00:16:31 [da31]   "questions": [
+00:16:31 [da31]     {
+00:16:31 [da31]       "wh_type": "who",
+00:16:31 [da31]       "question": "Who is in the picture?",
+00:16:31 [da31]       "answer": "a boy",
+00:16:31 [da31]       "visual_choices": ["a boy", "a girl", "a man", "a dog"],
+00:16:31 [da31]       "evidence_hint": "Look at the person in the picture"
+00:16:31 [da31]     },
+00:16:31 [da31]     {
+00:16:31 [da31]       "wh_type": "what",
+00:16:31 [da31]       "question": "What is he doing?",
+00:16:31 [da31]       "answer": "sleeping",
+00:16:31 [da31]       "visual_choices": ["sleeping", "eating", "running", "reading"],
+00:16:31 [da31]       "evidence_hint": "Look at what the person is doing"
+00:16:31 [da31]     },
+00:16:31 [da31]     {
+00:16:31 [da31]       "wh_type": "when",
+00:16:31 [da31]       "question": "When is it?",
+00:16:31 [da31]       "answer": "nighttime",
+00:16:31 [da31]       "visual_choices": ["nighttime", "morning", "afternoon", "lunchtime"],
+00:16:31 [da31]       "evidence_hint": "Look at the light and setting"
+00:16:31 [da31]     },
+00:16:31 [da31]     {
+00:16:31 [da31]       "wh_type": "where",
+00:16:31 [da31]       "question": "Where is he?",
+00:16:31 [da31]       "answer": "in bed",
+00:16:31 [da31]       "visual_choices": ["in bed", "at school", "in the park", "at the store"],
+00:16:31 [da31]       "evidence_hint": "Look at the place around the person"
+00:16:31 [da31]     },
+00:16:31 [da31]     {
+00:16:31 [da31]       "wh_type": "why",
+00:16:31 [da31]       "question": "Why is he sleeping?",
+00:16:31 [da31]       "answer": "because he is tired",
+00:16:31 [da31]       "visual_choices": ["because he is tired", "because he is hungry", "because he is sad", "because it is raining"],
+00:16:31 [da31]       "evidence_hint": "Think about why someone would do this"
+00:16:31 [da31]     }
+00:16:31 [da31]   ]
+00:16:31 [da31] }
+00:16:31 [da31] 
+00:16:39 [da31] [Claude:wh-scene-receptive] <<< RESPONSE (1567 chars):
+00:16:39 [da31] ```json
+00:16:39 [da31] {
+00:16:39 [da31]   "scene_description": "A boy in a red and white soccer uniform is kicking a soccer ball on a green grass field, with other players visible in the background.",
+00:16:39 [da31]   "questions": [
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "who",
+00:16:39 [da31]       "question": "Who is playing in the picture?",
+00:16:39 [da31]       "answer": "a boy",
+00:16:39 [da31]       "visual_choices": ["a boy", "a girl", "a man", "a baby"],
+00:16:39 [da31]       "evidence_hint": "Look at the person kicking the ball"
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "what",
+00:16:39 [da31]       "question": "What is the boy kicking?",
+00:16:39 [da31]       "answer": "a soccer ball",
+00:16:39 [da31]       "visual_choices": ["a soccer ball", "a basketball", "a balloon", "a helmet"],
+00:16:39 [da31]       "evidence_hint": "Look at what is near the boy's foot"
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "where",
+00:16:39 [da31]       "question": "Where is the boy playing?",
+00:16:39 [da31]       "answer": "on a grass field",
+00:16:39 [da31]       "visual_choices": ["on a grass field", "at the beach", "in a gym", "on a playground"],
+00:16:39 [da31]       "evidence_hint": "Look at the ground and area around the boy"
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "what",
+00:16:39 [da31]       "question": "What color is the boy's shirt?",
+00:16:39 [da31]       "answer": "red and white",
+00:16:39 [da31]       "visual_choices": ["red and white", "blue and yellow", "green and black", "orange and purple"],
+00:16:39 [da31]       "evidence_hint": "Look at the shirt the boy is wearing"
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "why",
+00:16:39 [da31]       "question": "Why is the boy running fast?",
+00:16:39 [da31]       "answer": "to kick the ball",
+00:16:39 [da31]       "visual_choices": ["to kick the ball", "to eat a snack", "to find his mom", "to go to sleep"],
+00:16:39 [da31]       "evidence_hint": "
+00:16:39 [da31] ...(+67 more chars)
+00:16:39 [da31] [Claude:wh-scene-expressive] >>> PROMPT (2978 chars) | system: You create speech-therapy materials from scene images. Return JSON only.
+00:16:39 [da31] You are a pediatric speech-language pathologist creating therapy materials.
+00:16:39 [da31] 
+00:16:39 [da31] IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface. Focus ONLY on the illustration or scene depicted ON the card/page itself. Ignore everything outside the card — hands holding it, the person, the table, background, etc. Treat the illustration on the card as the entire scene for your analysis.
+00:16:39 [da31] 
+00:16:39 [da31] Analyze this image and generate 5 OPEN-ENDED IMAGINATION questions for a child aged 5.
+00:16:39 [da31] These questions invite the child to imagine, predict, reflect, or share personal experience.
+00:16:39 [da31] THEY HAVE NO SINGLE CORRECT ANSWER — any answer the child gives is acceptable.
+00:16:39 [da31] 
+00:16:39 [da31] Cover these 5 different kinds of imagination prompts (one question each, in this order):
+00:16:39 [da31] 1. FUTURE: what might happen next or after the scene
+00:16:39 [da31] 2. PAST: what might have happened just before the scene
+00:16:39 [da31] 3. PERSONAL: connect the scene to the child's own life or preferences (e.g., "Do you like...?", "Have you ever...?")
+00:16:39 [da31] 4. ALTERNATIVE: imagine a different choice, place, or outcome (e.g., "What else could they do?", "Where else could they go?")
+00:16:39 [da31] 5. FEELING: how a character might feel, or how the child would feel in the scene
+00:16:39 [da31] 
+00:16:39 [da31] Each question must:
+00:16:39 [da31] - Be simple and warm, age-appropriate for 5 years old
+00:16:39 [da31] - Be answerable in 1–2 spoken sentences by a child
+00:16:39 [da31] - NOT have a right or wrong answer
+00:16:39 [da31] 
+00:16:39 [da31] Use `wh_type` from {"what", "when", "why"} only — pick whichever best fits the question
+00:16:39 [da31] (e.g., "what" for future/past/alternative/personal, "why" for feeling, "when" works for past/future timing).
+00:16:39 [da31] 
+00:16:39 [da31] Leave `answer` as an empty string and `visual_choices` as an empty array — they are not used in expressive mode.
+00:16:39 [da31] `evidence_hint` should be a short imagination prompt (e.g., "Imagine what comes next.", "Think about how you would feel.").
+00:16:39 [da31] 
+00:16:39 [da31] Return ONLY valid JSON in this exact format:
+00:16:39 [da31] {
+00:16:39 [da31]   "scene_description": "Brief description of the scene",
+00:16:39 [da31]   "questions": [
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "what",
+00:16:39 [da31]       "question": "What do you think he will do after playing soccer?",
+00:16:39 [da31]       "answer": "",
+00:16:39 [da31]       "visual_choices": [],
+00:16:39 [da31]       "evidence_hint": "Imagine what comes next."
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "what",
+00:16:39 [da31]       "question": "What was he doing right before this picture?",
+00:16:39 [da31]       "answer": "",
+00:16:39 [da31]       "visual_choices": [],
+00:16:39 [da31]       "evidence_hint": "Imagine what happened just before."
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "what",
+00:16:39 [da31]       "question": "Do you like playing soccer too?",
+00:16:39 [da31]       "answer": "",
+00:16:39 [da31]       "visual_choices": [],
+00:16:39 [da31]       "evidence_hint": "Think about your own experience."
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "what",
+00:16:39 [da31]       "question": "What else could he play instead of soccer?",
+00:16:39 [da31]       "answer": "",
+00:16:39 [da31]       "visual_choices": [],
+00:16:39 [da31]       "evidence_hint": "Imagine a different game."
+00:16:39 [da31]     },
+00:16:39 [da31]     {
+00:16:39 [da31]       "wh_type": "why",
+00:16:39 [da31]       "question": "How do you think he feels while playing?",
+00:16:39 [da31]       "answer": "",
+00:16:39 [da31]       "visual_choices": [],
+00:16:39 [da31]       "evidence_hint": "Look at his face and body, and imagine the feeling."
+00:16:39 [da31]     }
+00:16:39 [da31]   ]
+00:16:39 [da31] }
+00:16:39 [da31] 
+00:16:45 [da31] [Claude:wh-scene-expressive] <<< RESPONSE (1399 chars):
+00:16:45 [da31] ```json
+00:16:45 [da31] {
+00:16:45 [da31]   "scene_description": "A young boy in a red and blue soccer uniform is running and about to kick a soccer ball on a green grassy field. Other players can be seen in the background.",
+00:16:45 [da31]   "questions": [
+00:16:45 [da31]     {
+00:16:45 [da31]       "wh_type": "what",
+00:16:45 [da31]       "question": "What do you think will happen after he kicks the soccer ball?",
+00:16:45 [da31]       "answer": "",
+00:16:45 [da31]       "visual_choices": [],
+00:16:45 [da31]       "evidence_hint": "Imagine what comes next after he kicks it."
+00:16:45 [da31]     },
+00:16:45 [da31]     {
+00:16:45 [da31]       "wh_type": "what",
+00:16:45 [da31]       "question": "What do you think he was doing before he ran up to the ball?",
+00:16:45 [da31]       "answer": "",
+00:16:45 [da31]       "visual_choices": [],
+00:16:45 [da31]       "evidence_hint": "Imagine what happened just before this moment."
+00:16:45 [da31]     },
+00:16:45 [da31]     {
+00:16:45 [da31]       "wh_type": "what",
+00:16:45 [da31]       "question": "Have you ever played soccer or kicked a ball outside?",
+00:16:45 [da31]       "answer": "",
+00:16:45 [da31]       "visual_choices": [],
+00:16:45 [da31]       "evidence_hint": "Think about a time you played outside."
+00:16:45 [da31]     },
+00:16:45 [da31]     {
+00:16:45 [da31]       "wh_type": "what",
+00:16:45 [da31]       "question": "What other sport could this boy play instead of soccer?",
+00:16:45 [da31]       "answer": "",
+00:16:45 [da31]       "visual_choices": [],
+00:16:45 [da31]       "evidence_hint": "Imagine a different sport he could try."
+00:16:45 [da31]     },
+00:16:45 [da31]     {
+00:16:45 [da31]       "wh_type": "why",
+00:16:45 [da31]       "question": "How do you think this boy feels while he is playing soccer?",
+00:16:45 [da31]       "answer": "",
+00:16:45 [da31]       "visual_choices": [],
+00:16:45 [da31]       "evidence_hint": "Think about how you would feel running and playing a game."
+00:16:45 [da31]     }
+00:16:45 [da31]   ]
+00:16:45 [da31] }
+00:16:45 [da31] ```
+00:16:45 [da31] └─ DONE  POST /api/wh_scene/capture -> 200 in 14564ms
+00:16:45 [242a] ┌─ WORK  GET /api/wh_scene/list
+00:16:45 [242a] └─ DONE  GET /api/wh_scene/list -> 200 in 1ms
+00:16:45 [54e4] ┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:16:45 [54e4] Serving image: sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:16:45 [54e4] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:16:45 [54e4] File exists: True
+00:16:45 [54e4] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783116991_74f078.jpg -> 200 in 1ms
+00:16:53 [a0b6] ┌─ WORK  POST /api/wh_scene/capture
+00:16:53 [a0b6] [Claude:wh-scene-receptive] >>> PROMPT (4086 chars) | system: You create speech-therapy materials from scene images. Return JSON only.
+00:16:53 [a0b6] You are a pediatric speech-language pathologist creating therapy materials.
+00:16:53 [a0b6] 
+00:16:53 [a0b6] IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface. Focus ONLY on the illustration or scene depicted ON the card/page itself. Ignore everything outside the card — hands holding it, the person, the table, background, etc. Treat the illustration on the card as the entire scene for your analysis.
+00:16:53 [a0b6] 
+00:16:53 [a0b6] Analyze this image and generate 5 WH-questions for a child aged 5.
+00:16:53 [a0b6] 
+00:16:53 [a0b6] --- WH-QUESTION GUIDANCE (knowledge base) ---
+00:16:53 [a0b6] Developmental order (easiest first): what -> who -> where -> when -> why -> how.
+00:16:53 [a0b6] Primary WH types (prefer these): what, who, where.
+00:16:53 [a0b6] Use only with clear support: when.
+00:16:53 [a0b6] Emerging / optional: why, how.
+00:16:53 [a0b6] - WH-questions are appropriate around ages 4-5, but should follow a difficulty hierarchy.
+00:16:53 [a0b6] - Begin with what/who questions, then where, then when, then why/how.
+00:16:53 [a0b6] - Why and how questions should be simple, concrete, and supported by visible evidence or familiar routines.
+00:16:53 [a0b6] Question selection for this picture:
+00:16:53 [a0b6] - Include exactly ONE simple why or how question per question set — not zero, not more than one.
+00:16:53 [a0b6] - Choose the why/how relation most clearly supported by visible evidence in the picture (a shown action, feeling, or means).
+00:16:53 [a0b6] - Use what/who/where questions for the remaining slots.
+00:16:53 [a0b6] - Add when only if there are visible time, routine, season, weather, or event cues.
+00:16:53 [a0b6] Fallback: Prefer a simple, visually grounded why (about an action or feeling shown in the picture) whenever possible; only if the picture truly supports no why/how relation at all, replace it with another what/who/where question.
+00:16:53 [a0b6] Evidence rules:
+00:16:53 [a0b6] - Who/what/where answers should be directly visible.
+00:16:53 [a0b6] - When answers require visual or routine cues.
+00:16:53 [a0b6] - Why/how answers require visible evidence, familiar routine support, or story context.
+00:16:53 [a0b6] - Do not assume hidden intentions, emotions, or background events without evidence.
+00:16:53 [a0b6] 
+00:16:53 [a0b6] Choose the five question TYPES according to the guidance above: favour the primary/recommended
+00:16:53 [a0b6] types, and repeat an easier type (an extra what/who/where question about a different detail)
+00:16:53 [a0b6] instead of using a harder type the picture does not clearly support. Types may repeat, but each
+00:16:53 [a0b6] question must ask about a DIFFERENT detail of the scene. The JSON example below shows one
+00:16:53 [a0b6] question per type — your actual wh_type values must follow the guidance above.
+00:16:53 [a0b6] 
+00:16:53 [a0b6] For EACH of the 5 questions, generate:
+00:16:53 [a0b6] 1. A simple, clear question about the scene
+00:16:53 [a0b6] 2. The correct answer (short, 1-5 words)
+00:16:53 [a0b6] 3. Four visual choices (one correct + three plausible distractors), each 1-4 words
+00:16:53 [a0b6] 4. An evidence hint telling the child where to look in the picture
+00:16:53 [a0b6] 
+00:16:53 [a0b6] For receptive mode: make questions simple with obvious visual choices.
+00:16:53 [a0b6] 
+00:16:53 [a0b6] Return ONLY valid JSON in this exact format:
+00:16:53 [a0b6] {
+00:16:53 [a0b6]   "scene_description": "Brief description of the scene",
+00:16:53 [a0b6]   "questions": [
+00:16:53 [a0b6]     {
+00:16:53 [a0b6]       "wh_type": "who",
+00:16:53 [a0b6]       "question": "Who is in the picture?",
+00:16:53 [a0b6]       "answer": "a boy",
+00:16:53 [a0b6]       "visual_choices": ["a boy", "a girl", "a man", "a dog"],
+00:16:53 [a0b6]       "evidence_hint": "Look at the person in the picture"
+00:16:53 [a0b6]     },
+00:16:53 [a0b6]     {
+00:16:53 [a0b6]       "wh_type": "what",
+00:16:53 [a0b6]       "question": "What is he doing?",
+00:16:53 [a0b6]       "answer": "sleeping",
+00:16:53 [a0b6]       "visual_choices": ["sleeping", "eating", "running", "reading"],
+00:16:53 [a0b6]       "evidence_hint": "Look at what the person is doing"
+00:16:53 [a0b6]     },
+00:16:53 [a0b6]     {
+00:16:53 [a0b6]       "wh_type": "when",
+00:16:53 [a0b6]       "question": "When is it?",
+00:16:53 [a0b6]       "answer": "nighttime",
+00:16:53 [a0b6]       "visual_choices": ["nighttime", "morning", "afternoon", "lunchtime"],
+00:16:53 [a0b6]       "evidence_hint": "Look at the light and setting"
+00:16:53 [a0b6]     },
+00:16:53 [a0b6]     {
+00:16:53 [a0b6]       "wh_type": "where",
+00:16:53 [a0b6]       "question": "Where is he?",
+00:16:53 [a0b6]       "answer": "in bed",
+00:16:53 [a0b6]       "visual_choices": ["in bed", "at school", "in the park", "at the store"],
+00:16:53 [a0b6]       "evidence_hint": "Look at the place around the person"
+00:16:53 [a0b6]     },
+00:16:53 [a0b6]     {
+00:16:53 [a0b6]       "wh_type": "why",
+00:16:53 [a0b6]       "question": "Why is he sleeping?",
+00:16:53 [a0b6]       "answer": "because he is tired",
+00:16:53 [a0b6]       "visual_choices": ["because he is tired", "because he is hungry", "because he is sad", "because it is raining"],
+00:16:53 [a0b6]       "evidence_hint": "Think about why someone would do this"
+00:16:53 [a0b6]     }
+00:16:53 [a0b6]   ]
+00:16:53 [a0b6] }
+00:16:53 [a0b6] 
+00:17:01 [a0b6] [Claude:wh-scene-receptive] <<< RESPONSE (1705 chars):
+00:17:01 [a0b6] ```json
+00:17:01 [a0b6] {
+00:17:01 [a0b6]   "scene_description": "A classroom scene where a smiling female teacher stands at a chalkboard with math problems written on it. Several children are seated with their hands raised to answer a question.",
+00:17:01 [a0b6]   "questions": [
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "who",
+00:17:01 [a0b6]       "question": "Who is standing at the chalkboard?",
+00:17:01 [a0b6]       "answer": "the teacher",
+00:17:01 [a0b6]       "visual_choices": ["the teacher", "a student", "a principal", "a parent"],
+00:17:01 [a0b6]       "evidence_hint": "Look at the person standing in front of the chalkboard"
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "what",
+00:17:01 [a0b6]       "question": "What is written on the chalkboard?",
+00:17:01 [a0b6]       "answer": "math problems",
+00:17:01 [a0b6]       "visual_choices": ["math problems", "the alphabet", "a story", "a drawing"],
+00:17:01 [a0b6]       "evidence_hint": "Look at the big green board behind the teacher"
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "where",
+00:17:01 [a0b6]       "question": "Where are the children?",
+00:17:01 [a0b6]       "answer": "in a classroom",
+00:17:01 [a0b6]       "visual_choices": ["in a classroom", "at the park", "in a library", "at home"],
+00:17:01 [a0b6]       "evidence_hint": "Look at the room around the children and teacher"
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "who",
+00:17:01 [a0b6]       "question": "Who has their hands up in the air?",
+00:17:01 [a0b6]       "answer": "the children",
+00:17:01 [a0b6]       "visual_choices": ["the children", "the teacher", "nobody", "a parent"],
+00:17:01 [a0b6]       "evidence_hint": "Look at the students sitting in front of the teacher"
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "why",
+00:17:01 [a0b6]       "question": "Why are the children raising their hands?",
+00:17:01 [a0b6]       "answer": "to answer a question",
+00:17:01 [a0b6]       "
+00:17:01 [a0b6] ...(+205 more chars)
+00:17:01 [a0b6] [Claude:wh-scene-expressive] >>> PROMPT (2978 chars) | system: You create speech-therapy materials from scene images. Return JSON only.
+00:17:01 [a0b6] You are a pediatric speech-language pathologist creating therapy materials.
+00:17:01 [a0b6] 
+00:17:01 [a0b6] IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface. Focus ONLY on the illustration or scene depicted ON the card/page itself. Ignore everything outside the card — hands holding it, the person, the table, background, etc. Treat the illustration on the card as the entire scene for your analysis.
+00:17:01 [a0b6] 
+00:17:01 [a0b6] Analyze this image and generate 5 OPEN-ENDED IMAGINATION questions for a child aged 5.
+00:17:01 [a0b6] These questions invite the child to imagine, predict, reflect, or share personal experience.
+00:17:01 [a0b6] THEY HAVE NO SINGLE CORRECT ANSWER — any answer the child gives is acceptable.
+00:17:01 [a0b6] 
+00:17:01 [a0b6] Cover these 5 different kinds of imagination prompts (one question each, in this order):
+00:17:01 [a0b6] 1. FUTURE: what might happen next or after the scene
+00:17:01 [a0b6] 2. PAST: what might have happened just before the scene
+00:17:01 [a0b6] 3. PERSONAL: connect the scene to the child's own life or preferences (e.g., "Do you like...?", "Have you ever...?")
+00:17:01 [a0b6] 4. ALTERNATIVE: imagine a different choice, place, or outcome (e.g., "What else could they do?", "Where else could they go?")
+00:17:01 [a0b6] 5. FEELING: how a character might feel, or how the child would feel in the scene
+00:17:01 [a0b6] 
+00:17:01 [a0b6] Each question must:
+00:17:01 [a0b6] - Be simple and warm, age-appropriate for 5 years old
+00:17:01 [a0b6] - Be answerable in 1–2 spoken sentences by a child
+00:17:01 [a0b6] - NOT have a right or wrong answer
+00:17:01 [a0b6] 
+00:17:01 [a0b6] Use `wh_type` from {"what", "when", "why"} only — pick whichever best fits the question
+00:17:01 [a0b6] (e.g., "what" for future/past/alternative/personal, "why" for feeling, "when" works for past/future timing).
+00:17:01 [a0b6] 
+00:17:01 [a0b6] Leave `answer` as an empty string and `visual_choices` as an empty array — they are not used in expressive mode.
+00:17:01 [a0b6] `evidence_hint` should be a short imagination prompt (e.g., "Imagine what comes next.", "Think about how you would feel.").
+00:17:01 [a0b6] 
+00:17:01 [a0b6] Return ONLY valid JSON in this exact format:
+00:17:01 [a0b6] {
+00:17:01 [a0b6]   "scene_description": "Brief description of the scene",
+00:17:01 [a0b6]   "questions": [
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "what",
+00:17:01 [a0b6]       "question": "What do you think he will do after playing soccer?",
+00:17:01 [a0b6]       "answer": "",
+00:17:01 [a0b6]       "visual_choices": [],
+00:17:01 [a0b6]       "evidence_hint": "Imagine what comes next."
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "what",
+00:17:01 [a0b6]       "question": "What was he doing right before this picture?",
+00:17:01 [a0b6]       "answer": "",
+00:17:01 [a0b6]       "visual_choices": [],
+00:17:01 [a0b6]       "evidence_hint": "Imagine what happened just before."
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "what",
+00:17:01 [a0b6]       "question": "Do you like playing soccer too?",
+00:17:01 [a0b6]       "answer": "",
+00:17:01 [a0b6]       "visual_choices": [],
+00:17:01 [a0b6]       "evidence_hint": "Think about your own experience."
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "what",
+00:17:01 [a0b6]       "question": "What else could he play instead of soccer?",
+00:17:01 [a0b6]       "answer": "",
+00:17:01 [a0b6]       "visual_choices": [],
+00:17:01 [a0b6]       "evidence_hint": "Imagine a different game."
+00:17:01 [a0b6]     },
+00:17:01 [a0b6]     {
+00:17:01 [a0b6]       "wh_type": "why",
+00:17:01 [a0b6]       "question": "How do you think he feels while playing?",
+00:17:01 [a0b6]       "answer": "",
+00:17:01 [a0b6]       "visual_choices": [],
+00:17:01 [a0b6]       "evidence_hint": "Look at his face and body, and imagine the feeling."
+00:17:01 [a0b6]     }
+00:17:01 [a0b6]   ]
+00:17:01 [a0b6] }
+00:17:01 [a0b6] 
+00:17:09 [a0b6] [Claude:wh-scene-expressive] <<< RESPONSE (1497 chars):
+00:17:09 [a0b6] ```json
+00:17:09 [a0b6] {
+00:17:09 [a0b6]   "scene_description": "A smiling teacher stands at a chalkboard with math problems written on it, while several young students raise their hands eagerly to answer her question in a classroom.",
+00:17:09 [a0b6]   "questions": [
+00:17:09 [a0b6]     {
+00:17:09 [a0b6]       "wh_type": "what",
+00:17:09 [a0b6]       "question": "What do you think the teacher will do after she picks a student to answer?",
+00:17:09 [a0b6]       "answer": "",
+00:17:09 [a0b6]       "visual_choices": [],
+00:17:09 [a0b6]       "evidence_hint": "Imagine what happens next in the classroom."
+00:17:09 [a0b6]     },
+00:17:09 [a0b6]     {
+00:17:09 [a0b6]       "wh_type": "what",
+00:17:09 [a0b6]       "question": "What do you think the teacher was doing right before the kids raised their hands?",
+00:17:09 [a0b6]       "answer": "",
+00:17:09 [a0b6]       "visual_choices": [],
+00:17:09 [a0b6]       "evidence_hint": "Imagine what happened just before this moment."
+00:17:09 [a0b6]     },
+00:17:09 [a0b6]     {
+00:17:09 [a0b6]       "wh_type": "what",
+00:17:09 [a0b6]       "question": "Have you ever raised your hand in class or at school like these kids?",
+00:17:09 [a0b6]       "answer": "",
+00:17:09 [a0b6]       "visual_choices": [],
+00:17:09 [a0b6]       "evidence_hint": "Think about your own time at school."
+00:17:09 [a0b6]     },
+00:17:09 [a0b6]     {
+00:17:09 [a0b6]       "wh_type": "what",
+00:17:09 [a0b6]       "question": "What else could the teacher write on the board instead of math problems?",
+00:17:09 [a0b6]       "answer": "",
+00:17:09 [a0b6]       "visual_choices": [],
+00:17:09 [a0b6]       "evidence_hint": "Imagine something different on the chalkboard."
+00:17:09 [a0b6]     },
+00:17:09 [a0b6]     {
+00:17:09 [a0b6]       "wh_type": "why",
+00:17:09 [a0b6]       "question": "How do you think the kids feel when they raise their hands to answer?",
+00:17:09 [a0b6]       "answer": "",
+00:17:09 [a0b6]       "visual_choices": [],
+00:17:09 [a0b6]       "evidence_hint": "Think about how you would feel if you really wanted to answer."
+00:17:09 [a0b6]     }
+00:17:09 [a0b6]   ]
+00:17:09 [a0b6] }
+00:17:09 [a0b6] ```
+00:17:09 [a0b6] └─ DONE  POST /api/wh_scene/capture -> 200 in 16011ms
+00:17:09 [dcf4] ┌─ WORK  GET /api/wh_scene/list
+00:17:09 [dcf4] └─ DONE  GET /api/wh_scene/list -> 200 in 1ms
+00:17:09 [036b] ┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:09 [036b] Serving image: sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:09 [036b] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:09 [036b] File exists: True
+00:17:09 [036b] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg -> 200 in 1ms
+00:17:12 [c8be] ┌─ WORK  GET /
+00:17:12 [c8be] └─ DONE  GET / -> 200 in 1ms
+00:17:15 [a612] ┌─ WORK  GET /wh_picture_play
+00:17:15 [a612] └─ DONE  GET /wh_picture_play -> 200 in 5ms
+00:17:15 [ce64] ┌─ WORK  GET /api/wh_scene/list
+00:17:15 [ce64] └─ DONE  GET /api/wh_scene/list -> 200 in 1ms
+00:17:15 [ef14] ┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:17:15 [ef14] Serving image: sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:17:15 [ef14] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:17:15 [ef14] File exists: True
+00:17:15 [ef14] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783116991_74f078.jpg -> 304 in 2ms
+00:17:15 [b3ab] ┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:15 [b3ab] Serving image: sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:15 [b3ab] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:15 [b3ab] File exists: True
+00:17:15 [b3ab] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg -> 304 in 1ms
+00:17:17 [eeb5] ┌─ WORK  POST /api/wh_scene/get_questions | fields: scene_id, mode
+00:17:17 [eeb5] └─ DONE  POST /api/wh_scene/get_questions -> 200 in 1ms
+00:17:17 [dbfe] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:17 [dbfe] self.engine :  qwen
+00:17:21 [b817] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:21 [8907] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:17:21 [b817] self.engine :  qwen
+00:17:22 [dbfe] └─ DONE  POST /api/speak_sentence -> 200 in 5163ms
+00:17:22 [26ce] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:22 [26ce] self.engine :  qwen
+00:17:23 [8907] └─ DONE  POST /api/robot_gesture -> 200 in 1499ms
+00:17:24 [b817] └─ DONE  POST /api/speak_sentence -> 200 in 3176ms
+00:17:25 [5d4f] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:25 [5d4f] self.engine :  qwen
+00:17:25 [9d87] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:17:26 [26ce] └─ DONE  POST /api/speak_sentence -> 200 in 3879ms
+00:17:26 [e258] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:26 [e258] self.engine :  qwen
+00:17:27 [9d87] └─ DONE  POST /api/robot_gesture -> 200 in 2268ms
+00:17:28 [f837] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:28 [353d] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:17:28 [f837] self.engine :  qwen
+00:17:29 [5d4f] self.engine :  qwen
+00:17:29 [9bb1] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:29 [9bb1] self.engine :  qwen
+00:17:30 [353d] └─ DONE  POST /api/robot_gesture -> 200 in 1672ms
+00:17:31 [8ff8] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:31 [d820] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:17:31 [8ff8] self.engine :  qwen
+00:17:31 [e258] └─ DONE  POST /api/speak_sentence -> 200 in 4572ms
+00:17:31 [5db8] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:31 [5db8] self.engine :  qwen
+00:17:32 [f837] self.engine :  qwen
+00:17:32 [d820] └─ DONE  POST /api/robot_gesture -> 200 in 1993ms
+00:17:35 [5d4f] └─ DONE  POST /api/speak_sentence -> 200 in 9710ms
+00:17:37 [9bb1] └─ DONE  POST /api/speak_sentence -> 200 in 8524ms
+00:17:40 [8ff8] └─ DONE  POST /api/speak_sentence -> 200 in 9317ms
+00:17:40 [a6d3] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:40 [52aa] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speedself.engine :  qwen
+00:17:40 [a6d3] 
+00:17:41 [52aa] └─ DONE  POST /api/robot_gesture -> 200 in 497ms
+00:17:43 [5db8] └─ DONE  POST /api/speak_sentence -> 200 in 11050ms
+00:17:45 [f837] └─ DONE  POST /api/speak_sentence -> 200 in 16985ms
+00:17:46 [a6d3] └─ DONE  POST /api/speak_sentence -> 200 in 5511ms
+00:17:49 [6228] ┌─ WORK  GET /wh_picture_play
+00:17:49 [6228] └─ DONE  GET /wh_picture_play -> 200 in 1ms
+00:17:49 [2d70] ┌─ WORK  GET /api/wh_scene/list
+00:17:49 [2d70] └─ DONE  GET /api/wh_scene/list -> 200 in 1ms
+00:17:49 [f2af] ┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:17:49 [f2af] Serving image: sophie/wh_scenes/images/scene_1783116991_74f078.jpg
+00:17:49 [f2af] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783116991_74f078.jpg┌─ WORK  GET /images/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:49 [c8cf] 
+00:17:49 [c8cf] Serving image: sophie/wh_scenes/images/scene_1783117013_91cd7e.jpgFile exists: True
+00:17:49 [f2af] 
+00:17:49 [c8cf] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg
+00:17:49 [c8cf] File exists: True
+00:17:49 [f2af] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783116991_74f078.jpg -> 304 in 3ms
+00:17:49 [c8cf] └─ DONE  GET /images/sophie/wh_scenes/images/scene_1783117013_91cd7e.jpg -> 304 in 2ms
+00:17:51 [262b] ┌─ WORK  POST /api/wh_scene/get_questions | fields: scene_id, mode
+00:17:51 [262b] └─ DONE  POST /api/wh_scene/get_questions -> 200 in 1ms
+00:17:51 [cab0] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:51 [cab0] self.engine :  qwen
+00:17:55 [9ac6] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:55 [ab34] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:17:55 [9ac6] self.engine :  qwen
+00:17:56 [85f2] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:17:57 [cab0] └─ DONE  POST /api/speak_sentence -> 200 in 5439msself.engine :  qwen
+00:17:57 [85f2] 
+00:17:57 [ab34] └─ DONE  POST /api/robot_gesture -> 200 in 1805ms
+00:17:59 [9ac6] └─ DONE  POST /api/speak_sentence -> 200 in 3119ms
+00:18:00 [d4a6] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:00 [d4a6] self.engine :  qwen┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:18:00 [86ce] 
+00:18:01 [8ccd] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:01 [8ccd] self.engine :  qwen
+00:18:01 [85f2] └─ DONE  POST /api/speak_sentence -> 200 in 4962ms
+00:18:02 [86ce] └─ DONE  POST /api/robot_gesture -> 200 in 1728ms
+00:18:04 [d4a6] └─ DONE  POST /api/speak_sentence -> 200 in 3202ms
+00:18:04 [388a] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:04 [388a] self.engine :  qwen
+00:18:04 [5299] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:18:05 [2648] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:05 [2648] self.engine :  qwen
+00:18:06 [8ccd] └─ DONE  POST /api/speak_sentence -> 200 in 4571ms
+00:18:07 [5299] └─ DONE  POST /api/robot_gesture -> 200 in 2463ms
+00:18:08 [95ec] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:08 [95ec] self.engine :  qwen
+00:18:08 [b6a9] ┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:18:08 [388a] └─ DONE  POST /api/speak_sentence -> 200 in 3589ms
+00:18:08 [8de2] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:08 [8de2] self.engine :  qwen
+00:18:09 [b6a9] └─ DONE  POST /api/robot_gesture -> 200 in 1694ms
+00:18:10 [2648] └─ DONE  POST /api/speak_sentence -> 200 in 5169ms
+00:18:12 [95ec] └─ DONE  POST /api/speak_sentence -> 200 in 3945ms
+00:18:14 [c5f4] ┌─ WORK  POST /api/speak_sentence | fields: sentence
+00:18:14 [c5f4] self.engine :  qwen┌─ WORK  POST /api/robot_gesture | fields: gesture, emotion, speed
+00:18:14 [49fd] 
+00:18:15 [8de2] └─ DONE  POST /api/speak_sentence -> 200 in 6482ms
+00:18:16 [49fd] └─ DONE  POST /api/robot_gesture -> 200 in 1764ms
+00:18:17 [c5f4] └─ DONE  POST /api/speak_sentence -> 200 in 3015ms

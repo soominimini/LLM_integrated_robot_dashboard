@@ -1,0 +1,24 @@
+[
+  {
+    "id": "scene_1783116352_4f5c1e",
+    "filename": "capture_2026-07-04 00:06:08.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783116352_4f5c1e.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1783116352_4f5c1e.jpg",
+    "scene_description": "A classroom scene where a smiling female teacher stands at a green chalkboard with math problems written on it. Several children are seated facing her, and multiple students have their hands raised to answer a question.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-07-04T00:06:08"
+  },
+  {
+    "id": "scene_1783116444_859b1c",
+    "filename": "capture_2026-07-04 00:07:38.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783116444_859b1c.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1783116444_859b1c.jpg",
+    "scene_description": "A boy in a red and white striped soccer uniform is kicking a soccer ball on a green grass field during a soccer game. Other players are visible in the background.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-07-04T00:07:38"
+  }
+]

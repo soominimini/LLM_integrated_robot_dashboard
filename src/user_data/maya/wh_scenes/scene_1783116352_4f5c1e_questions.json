@@ -1,0 +1,65 @@
+{
+  "scene_description": "A classroom scene where a smiling female teacher stands at a green chalkboard with math problems written on it. Several children are seated facing her, and multiple students have their hands raised to answer a question.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is standing at the chalkboard?",
+      "answer": "a teacher",
+      "visual_choices": [
+        "a teacher",
+        "a student",
+        "a doctor",
+        "a mom"
+      ],
+      "evidence_hint": "Look at the grown-up standing in front of the big green board"
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children doing with their arms?",
+      "answer": "raising their hands",
+      "visual_choices": [
+        "raising their hands",
+        "clapping",
+        "waving goodbye",
+        "pointing outside"
+      ],
+      "evidence_hint": "Look at the children's arms in the picture"
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are these children?",
+      "answer": "in a classroom",
+      "visual_choices": [
+        "in a classroom",
+        "at a park",
+        "in a kitchen",
+        "at a store"
+      ],
+      "evidence_hint": "Look at the big green board and the desks around the children"
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the big green board?",
+      "answer": "numbers and math",
+      "visual_choices": [
+        "numbers and math",
+        "drawings",
+        "letters",
+        "a map"
+      ],
+      "evidence_hint": "Look at what is written on the green board behind the teacher"
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is smiling in the front of the room?",
+      "answer": "the teacher",
+      "visual_choices": [
+        "the teacher",
+        "a little boy",
+        "a little girl",
+        "a principal"
+      ],
+      "evidence_hint": "Look at the person standing up near the chalkboard"
+    }
+  ]
+}

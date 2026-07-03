@@ -1,0 +1,102 @@
+{
+  "story": "Sophie is in the garden. Sophie is looking at the big red flowers. [emotion:QT/surprised] A tiny fairy is sitting on a flower! The fairy has bright yellow wings. Sophie and the fairy are picking flowers together. Sophie puts the flowers in a round basket. The basket is on the grass. A little dog runs into the garden. The dog jumps on the basket! [emotion:QT/sad] The flowers are on the grass now. The fairy and Sophie put the flowers back in the basket together.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 211,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "Sophie is in the garden. Sophie is looking at the big red flowers.",
+    "[emotion:QT/surprised] A tiny fairy is sitting on a flower! The fairy has bright yellow wings.",
+    "Sophie and the fairy are picking flowers together. Sophie puts the flowers in a round basket. The basket is on the grass.",
+    "A little dog runs into the garden. The dog jumps on the basket! [emotion:QT/sad] The flowers are on the grass now.",
+    "The fairy and Sophie put the flowers back in the basket together."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Sophie is looking at the big red flowers. A tiny fairy is sitting on a flower! The fairy has bright yellow wings. Sophie and the fairy are picking flowers together. Sophie puts the flowers in a round basket. The basket is on the grass. A little dog runs into the garden. The dog jumps on the basket! The flowers are on the grass now. The fairy and Sophie put the flowers back in the basket together."
+  ],
+  "scenes": [
+    "Sophie and a fairy are in a garden, picking red flowers and putting them into a basket. A little dog jumps on the basket, scattering the flowers, which Sophie and the fairy then put back."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What were Sophie and the fairy doing in the garden?",
+      "type": "main_idea",
+      "correct_answer": "Picking flowers.",
+      "wrong_answers": [
+        "Playing with a cat.",
+        "Eating yummy treats."
+      ]
+    },
+    {
+      "question": "What color were the fairy's bright wings?",
+      "type": "detail",
+      "correct_answer": "Yellow.",
+      "wrong_answers": [
+        "Red.",
+        "Blue."
+      ]
+    },
+    {
+      "question": "What did the little dog do to the basket?",
+      "type": "detail",
+      "correct_answer": "Jumped on it.",
+      "wrong_answers": [
+        "Carried it away.",
+        "Put more flowers in."
+      ]
+    },
+    {
+      "question": "Where was the round basket sitting?",
+      "type": "detail",
+      "correct_answer": "On the grass.",
+      "wrong_answers": [
+        "Under a tree.",
+        "In Sophie's hand."
+      ]
+    }
+  ],
+  "takeaways": []
+}

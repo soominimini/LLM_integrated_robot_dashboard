@@ -1,0 +1,3283 @@
+{
+ "knowledge_base_metadata": {
+  "name": "Unified SLP Co-design Knowledge Base",
+  "version": "2.2",
+  "description": "A unified knowledge base derived from SLP co-design data and developmental literature for selecting language, speech-sound, conceptual, social-communication, and interest-personalization targets for robot-mediated pediatric speech-language therapy activities.",
+  "source_note": "Restructured from the user-provided previous knowledge base version 1.1 and expanded with concept-development and social-communication frameworks. Version 2.2 incorporates an SLP-informed WH-question developmental hierarchy for image-card and question-generation tasks.",
+  "frameworks": [
+   "language",
+   "speech_sound",
+   "concept",
+   "social_communication",
+   "interests"
+  ],
+  "design_principles": [
+   "Keep clinical target domains separate: language form, speech sound, conceptual knowledge, social communication, and interests.",
+   "Use child interests for personalization, not for determining clinical targets.",
+   "Use developmental levels flexibly with SLP judgment and child-specific profile data.",
+   "Use concept and social frameworks to control reasoning/social demand; use language framework to control wording complexity.",
+   "Avoid gender-restricted personalization and diagnostic assumptions.",
+   "For WH-question generation around ages 4-5, follow the developmental order: what/who first, then where, then when, then why/how."
+  ]
+ },
+ "frameworks": {
+  "language": {
+   "version": "1.1",
+   "description": "Developmental language targets for controlling grammar, phrase length, sentence complexity, and response demand in generated therapy activities.",
+   "notes": [
+    "Use language targets to control wording and expressive/receptive language demand, not to determine conceptual difficulty by itself.",
+    "MLU ranges are approximate developmental guidance and should be interpreted with SLP judgment.",
+    "When combining with concept or social targets, keep the language form natural and clinically appropriate.",
+    "WH-question targets are organized developmentally: what/who are easiest, followed by where, then when, then why/how."
+   ],
+   "targets": {
+    "action_verbs_basic": {
+     "description": "Common everyday actions",
+     "examples": [
+      "eat",
+      "drink",
+      "sleep",
+      "run",
+      "jump",
+      "sit"
+     ]
+    },
+    "action_verbs_higher_level": {
+     "description": "Less frequent and cognitively more complex verbs",
+     "examples": [
+      "climb",
+      "chase",
+      "carry",
+      "deliver",
+      "rescue",
+      "build",
+      "search",
+      "discover"
+     ]
+    },
+    "basic_adjectives": {
+     "description": "Descriptive words for size, color, and shape",
+     "examples": [
+      "big",
+      "small",
+      "long",
+      "short",
+      "red",
+      "blue",
+      "green",
+      "yellow",
+      "round",
+      "square",
+      "triangle-shaped"
+     ]
+    },
+    "pronouns_early": {
+     "description": "Early personal and possessive pronouns",
+     "examples": [
+      "I",
+      "me",
+      "my",
+      "mine",
+      "you"
+     ]
+    },
+    "pronouns_later": {
+     "description": "Later developing pronouns",
+     "examples": [
+      "he",
+      "she",
+      "they",
+      "her",
+      "his",
+      "their"
+     ]
+    },
+    "location_prepositions": {
+     "description": "Spatial relationships",
+     "examples": [
+      "in",
+      "on",
+      "under"
+     ]
+    },
+    "size_noun": {
+     "description": "Adjective + noun combinations",
+     "examples": [
+      "big pig",
+      "small monkey",
+      "big dinosaur"
+     ]
+    },
+    "person_noun": {
+     "description": "Possessive determiner + noun combinations",
+     "examples": [
+      "my apple",
+      "your car",
+      "his dinosaur"
+     ]
+    },
+    "location_noun": {
+     "description": "Location concept expressed with a noun phrase",
+     "examples": [
+      "in the box",
+      "on the table",
+      "under the chair"
+     ]
+    },
+    "plural_forms": {
+     "description": "Regular plural nouns",
+     "examples": [
+      "dogs",
+      "cars",
+      "apples",
+      "cats",
+      "toys"
+     ]
+    },
+    "ing_form": {
+     "description": "Present participle/progressive verb form",
+     "examples": [
+      "running",
+      "jumping",
+      "eating",
+      "playing"
+     ]
+    },
+    "simple_conjunction": {
+     "description": "Early conjunction use",
+     "examples": [
+      "and",
+      "or"
+     ]
+    },
+    "intermediate_conjunction": {
+     "description": "Pre-school conjunction use",
+     "examples": [
+      "because",
+      "but",
+      "so",
+      "if"
+     ]
+    },
+    "advanced_conjunction": {
+     "description": "More complex conjunction structures",
+     "examples": [
+      "while",
+      "although",
+      "before",
+      "after"
+     ]
+    },
+    "irregular_past_tense": {
+     "description": "Irregular past tense verbs",
+     "examples": [
+      "went",
+      "ate",
+      "saw",
+      "gave"
+     ]
+    },
+    "auxiliary_verbs": {
+     "description": "Helping verbs",
+     "examples": [
+      "is",
+      "are",
+      "was",
+      "were",
+      "has",
+      "have"
+     ]
+    },
+    "copula_verbs": {
+     "description": "Linking verbs",
+     "examples": [
+      "is",
+      "am",
+      "are",
+      "was",
+      "were"
+     ]
+    },
+    "verb_tense_concepts": {
+     "description": "Past, present, future, and progressive tense usage",
+     "examples": [
+      "I play",
+      "I played",
+      "I will play",
+      "I am playing"
+     ]
+    },
+    "causal_explanation_language": {
+     "description": "Language forms used to explain cause-effect relationships.",
+     "examples": [
+      "because",
+      "so",
+      "if...then",
+      "that happened because..."
+     ]
+    },
+    "narrative_sequence_language": {
+     "description": "Language forms used to organize story events and sequences.",
+     "examples": [
+      "first",
+      "then",
+      "next",
+      "after that",
+      "finally"
+     ]
+    },
+    "perspective_taking_language": {
+     "description": "Language forms used to discuss thoughts, feelings, beliefs, and perspectives.",
+     "examples": [
+      "he thinks",
+      "she feels",
+      "they know",
+      "I wonder",
+      "maybe"
+     ]
+    },
+    "wh_questions_early": {
+     "description": "Early WH-question comprehension and response targets using concrete, visually grounded what/who questions.",
+     "examples": [
+      "What is this?",
+      "What is the child doing?",
+      "Who is this?",
+      "Who is eating?"
+     ],
+     "wh_types": [
+      "what",
+      "who"
+     ],
+     "difficulty_level": 1,
+     "recommended_use": "Use first when introducing WH-questions, especially for children around ages 4-5."
+    },
+    "wh_questions_location": {
+     "description": "Location-based WH-question comprehension and response targets using clearly visible locations.",
+     "examples": [
+      "Where is the dog?",
+      "Where is the child sitting?",
+      "Where are they playing?"
+     ],
+     "wh_types": [
+      "where"
+     ],
+     "difficulty_level": 2,
+     "recommended_use": "Use after what/who questions when the location is visually clear."
+    },
+    "wh_questions_time": {
+     "description": "Time, routine, season, weather, or event-context WH-question comprehension and response targets.",
+     "examples": [
+      "When do we sleep?",
+      "When do we eat breakfast?",
+      "When is it raining?"
+     ],
+     "wh_types": [
+      "when"
+     ],
+     "difficulty_level": 3,
+     "recommended_use": "Use only when the picture or routine provides clear time/context cues."
+    },
+    "wh_questions_reasoning": {
+     "description": "Causal, explanatory, and action-means WH-question comprehension and response targets.",
+     "examples": [
+      "Why is the child crying?",
+      "Why does he need an umbrella?",
+      "How does she open the box?",
+      "How can he fix it?"
+     ],
+     "wh_types": [
+      "why",
+      "how"
+     ],
+     "difficulty_level": 4,
+     "recommended_use": "Use after what/who, where, and when questions; require visible evidence, familiar routine support, or a simple story context."
+    }
+   },
+   "developmental_levels": [
+    {
+     "level_id": "language_age_2_mlu_1_3",
+     "age": 2,
+     "mlu_range": "1-3",
+     "targets": [
+      "action_verbs_basic",
+      "basic_adjectives",
+      "pronouns_early"
+     ]
+    },
+    {
+     "level_id": "language_age_3_mlu_4",
+     "age": 3,
+     "mlu_range": "4",
+     "targets": [
+      "action_verbs_higher_level",
+      "basic_adjectives",
+      "pronouns_early",
+      "location_prepositions",
+      "size_noun",
+      "person_noun"
+     ]
+    },
+    {
+     "level_id": "language_age_4_mlu_5_6",
+     "age": 4,
+     "mlu_range": "5-6",
+     "targets": [
+      "action_verbs_higher_level",
+      "basic_adjectives",
+      "pronouns_later",
+      "location_prepositions",
+      "size_noun",
+      "location_noun",
+      "ing_form",
+      "wh_questions_early",
+      "wh_questions_location"
+     ],
+     "wh_question_guidance": {
+      "developmental_order": [
+       "what",
+       "who",
+       "where"
+      ],
+      "recommended_primary_wh_types": [
+       "what",
+       "who"
+      ],
+      "recommended_secondary_wh_types": [
+       "where"
+      ],
+      "avoid_or_use_with_support": [
+       "when",
+       "why",
+       "how"
+      ],
+      "notes": [
+       "Start with visually grounded what/who questions.",
+       "Use where questions when the location is clearly visible.",
+       "Use when, why, and how only with strong visual/contextual support."
+      ]
+     }
+    },
+    {
+     "level_id": "language_age_5_mlu_6_8",
+     "age": 5,
+     "mlu_range": "6-8",
+     "targets": [
+      "plural_forms",
+      "ing_form",
+      "pronouns_later",
+      "location_noun",
+      "simple_conjunction",
+      "intermediate_conjunction",
+      "wh_questions_early",
+      "wh_questions_location",
+      "wh_questions_time"
+     ],
+     "optional_targets": [
+      "wh_questions_reasoning"
+     ],
+     "wh_question_guidance": {
+      "developmental_order": [
+       "what",
+       "who",
+       "where",
+       "when",
+       "why",
+       "how"
+      ],
+      "recommended_primary_wh_types": [
+       "what",
+       "who",
+       "where"
+      ],
+      "use_with_support": [
+       "when"
+      ],
+      "emerging_or_optional": [
+       "why",
+       "how"
+      ],
+      "notes": [
+       "WH-questions are appropriate around ages 4-5, but should follow a difficulty hierarchy.",
+       "Begin with what/who questions, then where, then when, then why/how.",
+       "Why and how questions should be simple, concrete, and supported by visible evidence or familiar routines."
+      ]
+     }
+    },
+    {
+     "level_id": "language_age_6_mlu_8_10",
+     "age": 6,
+     "mlu_range": "8-10",
+     "targets": [
+      "plural_forms",
+      "ing_form",
+      "advanced_conjunction",
+      "intermediate_conjunction",
+      "wh_questions_early",
+      "wh_questions_location",
+      "wh_questions_time"
+     ],
+     "optional_targets": [
+      "wh_questions_reasoning"
+     ],
+     "wh_question_guidance": {
+      "developmental_order": [
+       "what",
+       "who",
+       "where",
+       "when",
+       "why",
+       "how"
+      ],
+      "recommended_wh_types": [
+       "what",
+       "who",
+       "where",
+       "when"
+      ],
+      "use_with_support": [
+       "why",
+       "how"
+      ],
+      "notes": [
+       "Use why/how for simple causal, problem-solution, and routine-based reasoning when supported."
+      ]
+     }
+    },
+    {
+     "level_id": "language_age_8_mlu_11_plus",
+     "age": 8,
+     "mlu_range": "11+",
+     "targets": [
+      "irregular_past_tense",
+      "advanced_conjunction",
+      "auxiliary_verbs",
+      "copula_verbs",
+      "verb_tense_concepts",
+      "causal_explanation_language",
+      "narrative_sequence_language",
+      "perspective_taking_language",
+      "wh_questions_early",
+      "wh_questions_location",
+      "wh_questions_time",
+      "wh_questions_reasoning"
+     ],
+     "discourse_guidance": "Use connected sentences, explanations, narratives, and simple reasoning when appropriate.",
+     "wh_question_guidance": {
+      "developmental_order": [
+       "what",
+       "who",
+       "where",
+       "when",
+       "why",
+       "how"
+      ],
+      "recommended_wh_types": [
+       "what",
+       "who",
+       "where",
+       "when",
+       "why",
+       "how"
+      ],
+      "notes": [
+       "Use why/how for explanation, comparison, problem solving, social inference, and narrative reasoning when clinically appropriate.",
+       "Keep questions concrete and contextually grounded."
+      ]
+     }
+    }
+   ],
+   "wh_question_hierarchy": {
+    "version": "1.0",
+    "description": "SLP-informed developmental hierarchy for WH-question generation and therapy activities.",
+    "developmental_order": [
+     "what",
+     "who",
+     "where",
+     "when",
+     "why",
+     "how"
+    ],
+    "difficulty_levels": [
+     {
+      "level": 1,
+      "wh_types": [
+       "what",
+       "who"
+      ],
+      "description": "Concrete identification/action/person questions; easiest and most visually grounded."
+     },
+     {
+      "level": 2,
+      "wh_types": [
+       "where"
+      ],
+      "description": "Location questions; use when place or spatial relation is clearly visible."
+     },
+     {
+      "level": 3,
+      "wh_types": [
+       "when"
+      ],
+      "description": "Time, routine, season, weather, or event-context questions; use only with clear visual or routine cues."
+     },
+     {
+      "level": 4,
+      "wh_types": [
+       "why",
+       "how"
+      ],
+      "description": "Reasoning and action-means questions; hardest and should be supported by visible evidence, familiar routines, or story context."
+     }
+    ],
+    "age_guidance": {
+     "age_2_3": {
+      "recommended_wh_types": [],
+      "notes": [
+       "WH-questions may be emerging but should not be the main task unless child-specific SLP guidance supports it.",
+       "Use pointing, labeling, choice-based responses, or yes/no questions instead of open WH demands."
+      ]
+     },
+     "age_4": {
+      "recommended_primary_wh_types": [
+       "what",
+       "who"
+      ],
+      "recommended_secondary_wh_types": [
+       "where"
+      ],
+      "use_with_support": [
+       "when"
+      ],
+      "avoid_or_use_only_with_strong_support": [
+       "why",
+       "how"
+      ],
+      "notes": [
+       "Start with what/who questions.",
+       "Use where questions when location is obvious.",
+       "Use when only with clear visual routine/time cues.",
+       "Avoid unsupported why/how questions."
+      ]
+     },
+     "age_5": {
+      "recommended_primary_wh_types": [
+       "what",
+       "who",
+       "where"
+      ],
+      "use_with_support": [
+       "when"
+      ],
+      "emerging_or_optional": [
+       "why",
+       "how"
+      ],
+      "notes": [
+       "WH-questions are appropriate around ages 4-5, but difficulty should follow the hierarchy.",
+       "Begin with what/who, then where, then when, then why/how.",
+       "Why/how questions should be simple, concrete, and supported by visible evidence or familiar routines."
+      ]
+     },
+     "age_6_8": {
+      "recommended_wh_types": [
+       "what",
+       "who",
+       "where",
+       "when",
+       "why",
+       "how"
+      ],
+      "notes": [
+       "Why/how questions can be used for simple inference, causal reasoning, problem solving, and narrative reasoning when the child’s language level supports it.",
+       "Maintain concrete context and provide visual choices or scaffolds when needed."
+      ]
+     }
+    },
+    "image_card_guidance": {
+     "description": "Guidance for generating WH-questions from illustrated image cards.",
+     "rules": [
+      "Do not force all WH types if the image does not support them.",
+      "For children aged 4-5, prioritize what, who, and where questions.",
+      "Include when only if time, routine, weather, season, or event context is visually supported.",
+      "Include why/how only if the reason or action-means relation is obvious from the picture, a familiar routine, or a short story context.",
+      "When a harder WH type is not supported, replace it with an additional what/who/where question rather than inventing an answer."
+     ]
+    }
+   }
+  },
+  "speech_sound": {
+   "version": "1.0",
+   "description": "Articulation targets organized by approximate developmental age range and difficulty level.",
+   "notes": [
+    "Speech sound targets should be treated separately from language and conceptual targets because they represent a different clinical domain.",
+    "When combined with language or concept targets, do not distort natural wording just to force target sounds.",
+    "Age ranges are approximate and should be adjusted using SLP judgment and child-specific articulation profile."
+   ],
+   "targets": {
+    "early_sounds": {
+     "difficulty_level": 1,
+     "age_range": "2-3",
+     "description": "Early developing consonants for articulation practice.",
+     "phonemes": [
+      "p",
+      "b",
+      "m",
+      "n",
+      "d"
+     ],
+     "example_words": [
+      "pig",
+      "ball",
+      "mom",
+      "nose",
+      "dog"
+     ],
+     "example_activity_phrases": [
+      "big pig",
+      "my ball",
+      "mommy dog",
+      "blue bus"
+     ]
+    },
+    "middle_sounds": {
+     "difficulty_level": 2,
+     "age_range": "3-4",
+     "description": "Middle developing consonants for articulation practice.",
+     "phonemes": [
+      "k",
+      "g",
+      "f"
+     ],
+     "example_words": [
+      "cat",
+      "go",
+      "fish",
+      "frog",
+      "car"
+     ],
+     "example_activity_phrases": [
+      "green frog",
+      "go car",
+      "fish game",
+      "cat in the box"
+     ]
+    },
+    "later_sounds": {
+     "difficulty_level": 3,
+     "age_range": "4-5",
+     "description": "Later developing consonants for articulation practice.",
+     "phonemes": [
+      "sh",
+      "s"
+     ],
+     "example_words": [
+      "shoe",
+      "sheep",
+      "sun",
+      "snake",
+      "bus"
+     ],
+     "example_activity_phrases": [
+      "small sheep",
+      "sun is shining",
+      "snake on the table"
+     ]
+    },
+    "advanced_sounds": {
+     "difficulty_level": 4,
+     "age_range": "5+",
+     "description": "Late-developing speech sounds for articulation practice.",
+     "phonemes": [
+      "th",
+      "r",
+      "ch"
+     ],
+     "example_words": [
+      "thumb",
+      "three",
+      "rabbit",
+      "red",
+      "chair",
+      "cheese"
+     ],
+     "example_activity_phrases": [
+      "three red cars",
+      "rabbit is running",
+      "chair under the table"
+     ]
+    }
+   },
+   "developmental_levels": [
+    {
+     "level_id": "speech_age_2_3",
+     "age_range": "2-3",
+     "difficulty_level": 1,
+     "targets": [
+      "early_sounds"
+     ]
+    },
+    {
+     "level_id": "speech_age_3_4",
+     "age_range": "3-4",
+     "difficulty_level": 2,
+     "targets": [
+      "middle_sounds"
+     ]
+    },
+    {
+     "level_id": "speech_age_4_5",
+     "age_range": "4-5",
+     "difficulty_level": 3,
+     "targets": [
+      "later_sounds"
+     ]
+    },
+    {
+     "level_id": "speech_age_5_plus",
+     "age_range": "5+",
+     "difficulty_level": 4,
+     "targets": [
+      "advanced_sounds"
+     ]
+    }
+   ]
+  },
+  "concept": {
+   "version": "1.1",
+   "description": "A structured framework for selecting developmentally appropriate conceptual knowledge targets for educational quiz generation and robot-mediated therapy activities. This framework covers object identity, category hierarchy, object function, perceptual attributes, food categorization, food origins, familiar event scripts, causal reasoning, and narrative reasoning.",
+   "notes": [
+    "Conceptual-development targets should be stored separately from language-development targets and speech-sound targets.",
+    "Language guidance such as MLU should control wording length and syntactic complexity, not the conceptual content itself.",
+    "Conceptual difficulty should be selected based on developmental age, familiarity, child profile, therapy goal, and SLP judgment.",
+    "For younger children, prioritize concrete, familiar, visible, typical, and everyday examples.",
+    "For older children, gradually introduce cross-classification, hierarchy, explanation, causal reasoning, and event/narrative structure.",
+    "Avoid ambiguous, exception-based, culturally dependent, overly technical, or intentionally tricky questions unless the activity specifically targets advanced reasoning.",
+    "When generating WH-questions, use the language framework’s WH hierarchy to control question difficulty separately from conceptual difficulty."
+   ],
+   "developmental_levels": [
+    {
+     "level_id": "concept_age_2_3_concrete_identity_function",
+     "age_range": "2-3",
+     "description": "Concrete object identity, simple object function, and food/non-food distinction using highly familiar items.",
+     "primary_targets": [
+      "object_identity",
+      "object_function",
+      "food_nonfood_distinction"
+     ],
+     "optional_targets": [
+      "perceptual_attribute"
+     ],
+     "question_guidance": {
+      "recommended_question_types": [
+       "yes_no",
+       "simple_wh"
+      ],
+      "wording": "Very short, concrete, and familiar wording.",
+      "recommended_question_length": "2-5 words when possible",
+      "recommended_content": [
+       "familiar objects",
+       "familiar actions",
+       "visible features",
+       "simple food/non-food distinction"
+      ],
+      "avoid": [
+       "abstract categories",
+       "superordinate labels if unfamiliar",
+       "processed food origins",
+       "why questions",
+       "tricky false questions",
+       "multi-step event sequence"
+      ]
+     },
+     "example_questions": [
+      "Is this an apple?",
+      "Can we eat bread?",
+      "Do we sleep in beds?",
+      "Is soap food?"
+     ]
+    },
+    {
+     "level_id": "concept_age_4_basic_category_attribute_script",
+     "age_range": "4",
+     "description": "Basic category membership, object function, visible attributes, and familiar event-script knowledge.",
+     "primary_targets": [
+      "object_identity",
+      "basic_category_membership",
+      "object_function",
+      "perceptual_attribute",
+      "familiar_event_script"
+     ],
+     "optional_targets": [
+      "food_nonfood_distinction",
+      "within_food_category"
+     ],
+     "question_guidance": {
+      "recommended_question_types": [
+       "yes_no",
+       "simple_wh"
+      ],
+      "wording": "Short questions with familiar category labels and visible properties.",
+      "recommended_question_length": "3-6 words when possible",
+      "recommended_content": [
+       "typical category members",
+       "basic object functions",
+       "common routines",
+       "visible attributes"
+      ],
+      "avoid": [
+       "atypical category members",
+       "exception-based facts",
+       "complex food-origin questions",
+       "multi-step production chains",
+       "ambiguous category labels"
+      ],
+      "wh_question_guidance": {
+       "recommended_primary_wh_types": [
+        "what",
+        "who"
+       ],
+       "recommended_secondary_wh_types": [
+        "where"
+       ],
+       "use_with_strong_support_only": [
+        "when",
+        "why",
+        "how"
+       ],
+       "notes": [
+        "Use WH-questions mainly for visible people, objects, actions, and clear locations."
+       ]
+      }
+     },
+     "example_questions": [
+      "Is an apple a fruit?",
+      "Do cups hold water?",
+      "Do birds have wings?",
+      "Do books go in backpacks?"
+     ]
+    },
+    {
+     "level_id": "concept_age_5_category_food_origin_event",
+     "age_range": "5",
+     "description": "Age-appropriate category hierarchy, familiar food categories, direct food origins, object functions, and familiar event scripts.",
+     "primary_targets": [
+      "basic_category_membership",
+      "within_food_category",
+      "object_function",
+      "direct_food_origin",
+      "familiar_event_script"
+     ],
+     "optional_targets": [
+      "ingredient_to_food_pathway",
+      "event_sequence_and_planning",
+      "typicality_reasoning"
+     ],
+     "question_guidance": {
+      "recommended_question_types": [
+       "yes_no",
+       "wh"
+      ],
+      "wording": "Use simple, natural questions aligned with the child’s language level.",
+      "recommended_question_length": "4-8 words when aligned with age-5 MLU guidance",
+      "recommended_yes_no_question_types": [
+       "object_to_category",
+       "object_function",
+       "direct_food_origin",
+       "familiar_event_prop",
+       "simple_food_category"
+      ],
+      "recommended_content": [
+       "typical fruits and vegetables",
+       "school and home routines",
+       "direct origins such as milk from cows",
+       "object functions such as beds for sleeping"
+      ],
+      "avoid": [
+       "botanical exceptions",
+       "rare foods",
+       "atypical food colors",
+       "technical food production",
+       "multi-step production chains unless explicitly targeted",
+       "preference-based questions",
+       "subjective questions"
+      ],
+      "wh_question_guidance": {
+       "developmental_order": [
+        "what",
+        "who",
+        "where",
+        "when",
+        "why",
+        "how"
+       ],
+       "recommended_primary_wh_types": [
+        "what",
+        "who",
+        "where"
+       ],
+       "use_with_support": [
+        "when"
+       ],
+       "emerging_or_optional": [
+        "why",
+        "how"
+       ],
+       "notes": [
+        "Use what/who first, then where.",
+        "Use when only with clear time, routine, season, weather, or event cues.",
+        "Use why/how only for simple and visually or routinely supported reasoning."
+       ]
+      }
+     },
+     "example_questions": [
+      "Is an apple a fruit?",
+      "Is a carrot a vegetable?",
+      "Does milk come from cows?",
+      "Do we sleep in beds?",
+      "Do books go in backpacks?"
+     ]
+    },
+    {
+     "level_id": "concept_age_6_7_hierarchy_origin_sequence",
+     "age_range": "6-7",
+     "description": "More explicit category hierarchy, simple ingredient-to-food pathways, source-type reasoning, event sequence, and early causal reasoning.",
+     "primary_targets": [
+      "within_food_category",
+      "typicality_reasoning",
+      "direct_food_origin",
+      "ingredient_to_food_pathway",
+      "grown_made_animal_source",
+      "event_sequence_and_planning"
+     ],
+     "optional_targets": [
+      "causal_explanation",
+      "problem_solution_reasoning",
+      "superordinate_subordinate_reasoning"
+     ],
+     "question_guidance": {
+      "recommended_question_types": [
+       "yes_no",
+       "wh",
+       "simple_why",
+       "simple_how"
+      ],
+      "wording": "Questions may include simple because, before, after, made from, and comes from relations.",
+      "recommended_question_length": "6-10 words when appropriate",
+      "recommended_content": [
+       "simple category hierarchy",
+       "direct and simple processed food origins",
+       "event order",
+       "simple cause-effect"
+      ],
+      "avoid": [
+       "highly technical food-system concepts",
+       "adult-level nutrition mechanisms",
+       "abstract reasoning without context",
+       "ambiguous category exceptions"
+      ],
+      "wh_question_guidance": {
+       "developmental_order": [
+        "what",
+        "who",
+        "where",
+        "when",
+        "why",
+        "how"
+       ],
+       "recommended_wh_types": [
+        "what",
+        "who",
+        "where",
+        "when"
+       ],
+       "use_with_support": [
+        "why",
+        "how"
+       ],
+       "notes": [
+        "Use why/how for concrete cause-effect, problem-solution, and routine-based reasoning."
+       ]
+      }
+     },
+     "example_questions": [
+      "Is cheese made from milk?",
+      "Does flour come from wheat?",
+      "Do we pay before leaving the store?",
+      "Why do plants need water?"
+     ]
+    },
+    {
+     "level_id": "concept_age_8_semantic_reasoning",
+     "age_range": "8",
+     "description": "School-age conceptual reasoning involving explicit category relations, cross-classification, hierarchical reasoning, causal explanation, food-origin/processing reasoning, problem-solution reasoning, and structured narrative understanding.",
+     "primary_targets": [
+      "taxonomic_thematic_relation",
+      "cross_classification",
+      "superordinate_subordinate_reasoning",
+      "multi_attribute_categorization",
+      "origin_and_processing_reasoning",
+      "ingredient_to_food_pathway",
+      "causal_explanation",
+      "problem_solution_reasoning",
+      "narrative_goal_attempt_outcome"
+     ],
+     "optional_targets": [
+      "prediction_inference",
+      "event_sequence_and_planning",
+      "typicality_reasoning"
+     ],
+     "question_guidance": {
+      "recommended_question_types": [
+       "yes_no",
+       "wh",
+       "why",
+       "how",
+       "compare",
+       "explain"
+      ],
+      "wording": "Questions can be longer and can ask for explanation, comparison, or reasoning, but should remain concrete and contextually grounded.",
+      "recommended_question_length": "8-14 words when expressive language level supports it",
+      "recommended_question_patterns": [
+       "How are X and Y alike?",
+       "Why does X belong to this category?",
+       "Can X belong to two categories?",
+       "What is X made from?",
+       "Why did the character do that?",
+       "What happened after X?",
+       "What should the character do next?"
+      ],
+      "recommended_content": [
+       "taxonomic and thematic semantic relations",
+       "multiple category membership",
+       "superordinate-basic-subordinate hierarchy",
+       "simple food processing",
+       "cause-effect explanations",
+       "problem-solution reasoning",
+       "story goal-attempt-outcome structure"
+      ],
+      "avoid": [
+       "fully abstract reasoning without concrete context",
+       "adult-level nutrition or biology mechanisms",
+       "technical food production",
+       "highly ambiguous category exceptions",
+       "complex social inference without story support"
+      ],
+      "wh_question_guidance": {
+       "recommended_wh_types": [
+        "what",
+        "who",
+        "where",
+        "when",
+        "why",
+        "how"
+       ],
+       "notes": [
+        "Why/how questions can target causal explanation, social reasoning, problem solving, and narrative reasoning when the child’s expressive language supports it."
+       ]
+      }
+     },
+     "example_questions": [
+      "How are apples and bananas alike?",
+      "Is an apple both fruit and food?",
+      "Is a poodle a kind of dog?",
+      "Is bread made from flour?",
+      "Why do we use umbrellas in rain?",
+      "What did the character want?",
+      "What happened after the ramp broke?"
+     ]
+    },
+    {
+     "level_id": "concept_age_9_plus_advanced_explanation_systems",
+     "age_range": "9+",
+     "description": "More advanced conceptual reasoning involving flexible categorization, less typical examples, multi-step causal chains, simple systems thinking, and more explicit explanation.",
+     "primary_targets": [
+      "cross_classification",
+      "superordinate_subordinate_reasoning",
+      "origin_and_processing_reasoning",
+      "causal_explanation",
+      "prediction_inference",
+      "narrative_goal_attempt_outcome"
+     ],
+     "optional_targets": [
+      "typicality_reasoning",
+      "multi_attribute_categorization",
+      "problem_solution_reasoning"
+     ],
+     "question_guidance": {
+      "recommended_question_types": [
+       "why",
+       "how",
+       "compare",
+       "explain",
+       "predict"
+      ],
+      "wording": "Can include multi-step explanations if the child’s language and attention profile supports it.",
+      "recommended_question_length": "Flexible, based on language profile",
+      "recommended_content": [
+       "less typical but valid category members",
+       "multi-step food pathways",
+       "simple systems reasoning",
+       "compare and contrast",
+       "explicit narrative reasoning"
+      ],
+      "avoid": [
+       "adult-level scientific detail",
+       "unscaffolded abstract explanation",
+       "questions requiring specialized knowledge"
+      ]
+     },
+     "example_questions": [
+      "Can a tomato be both fruit and food?",
+      "How does wheat become bread?",
+      "Why might the character ask for help?",
+      "What could happen if the plant gets no water?"
+     ]
+    }
+   ],
+   "topic_mapping": {
+    "Fruit": {
+     "recommended_targets_age_4_5": [
+      "object_identity",
+      "basic_category_membership",
+      "perceptual_attribute",
+      "within_food_category",
+      "direct_food_origin"
+     ],
+     "recommended_targets_age_8": [
+      "within_food_category",
+      "typicality_reasoning",
+      "cross_classification",
+      "superordinate_subordinate_reasoning",
+      "origin_and_processing_reasoning",
+      "causal_explanation"
+     ],
+     "example_items": [
+      "apple",
+      "banana",
+      "orange",
+      "grape",
+      "strawberry"
+     ],
+     "avoid_for_younger_children": [
+      "tomato as fruit",
+      "avocado as fruit",
+      "botanical definitions",
+      "rare fruits",
+      "atypical colors"
+     ]
+    },
+    "School": {
+     "recommended_targets_age_4_5": [
+      "object_function",
+      "familiar_event_script",
+      "basic_category_membership"
+     ],
+     "recommended_targets_age_8": [
+      "familiar_event_script",
+      "event_sequence_and_planning",
+      "taxonomic_thematic_relation",
+      "problem_solution_reasoning",
+      "causal_explanation"
+     ],
+     "example_items": [
+      "backpack",
+      "book",
+      "pencil",
+      "teacher",
+      "classroom",
+      "paper"
+     ],
+     "avoid_for_younger_children": [
+      "abstract school rules",
+      "complex schedules",
+      "social conflict without support"
+     ]
+    },
+    "Home": {
+     "recommended_targets_age_4_5": [
+      "object_function",
+      "familiar_event_script",
+      "basic_category_membership",
+      "event_sequence_and_planning"
+     ],
+     "recommended_targets_age_8": [
+      "event_sequence_and_planning",
+      "problem_solution_reasoning",
+      "causal_explanation",
+      "prediction_inference"
+     ],
+     "example_items": [
+      "bed",
+      "cup",
+      "table",
+      "chair",
+      "toothbrush",
+      "clothes",
+      "toys"
+     ],
+     "avoid_for_younger_children": [
+      "household safety scenarios that may be frightening",
+      "complex chores",
+      "culturally specific routines unless provided"
+     ]
+    },
+    "Food": {
+     "recommended_targets_age_4_5": [
+      "food_nonfood_distinction",
+      "object_function",
+      "within_food_category",
+      "direct_food_origin"
+     ],
+     "recommended_targets_age_8": [
+      "within_food_category",
+      "cross_classification",
+      "ingredient_to_food_pathway",
+      "grown_made_animal_source",
+      "origin_and_processing_reasoning",
+      "causal_explanation"
+     ],
+     "example_items": [
+      "bread",
+      "milk",
+      "cheese",
+      "eggs",
+      "flour",
+      "pasta",
+      "chicken"
+     ],
+     "avoid_for_younger_children": [
+      "processed food with unclear ingredients",
+      "nutrition mechanisms",
+      "moralized healthy/unhealthy wording",
+      "diet or weight-related content"
+     ]
+    },
+    "Nature": {
+     "recommended_targets_age_4_5": [
+      "object_identity",
+      "basic_category_membership",
+      "perceptual_attribute",
+      "direct_food_origin"
+     ],
+     "recommended_targets_age_8": [
+      "superordinate_subordinate_reasoning",
+      "causal_explanation",
+      "prediction_inference",
+      "origin_and_processing_reasoning"
+     ],
+     "example_items": [
+      "tree",
+      "flower",
+      "bird",
+      "fish",
+      "rain",
+      "sun",
+      "plant"
+     ],
+     "avoid_for_younger_children": [
+      "advanced ecology",
+      "exception-based animal facts",
+      "technical plant biology"
+     ]
+    }
+   },
+   "targets": {
+    "object_identity": {
+     "difficulty_level": 1,
+     "developmental_position": "earliest_concrete_concept",
+     "description": "Recognizing or naming familiar concrete objects, people, animals, foods, places, and everyday items.",
+     "question_goal": "Check whether the child understands what an object is.",
+     "conceptual_relation": "item_identity",
+     "recommended_age_range": "2+",
+     "examples": [
+      "apple",
+      "banana",
+      "cup",
+      "spoon",
+      "chair",
+      "bed",
+      "book",
+      "pencil",
+      "dog",
+      "cat",
+      "tree",
+      "flower"
+     ],
+     "example_questions": [
+      "Is this an apple?",
+      "Is this a chair?",
+      "Is this a dog?"
+     ],
+     "generation_constraints": [
+      "Use highly familiar items.",
+      "Use concrete visible objects.",
+      "Avoid rare or visually confusing items.",
+      "Avoid items that require technical knowledge."
+     ]
+    },
+    "basic_category_membership": {
+     "difficulty_level": 2,
+     "developmental_position": "basic_item_to_broader_category",
+     "description": "Understanding that a familiar item belongs to a broader everyday category.",
+     "question_goal": "Ask whether a familiar item belongs to a familiar superordinate category.",
+     "conceptual_relation": "basic_level_item_to_superordinate_category",
+     "recommended_age_range": "4+",
+     "examples": [
+      {
+       "item": "apple",
+       "category": "fruit"
+      },
+      {
+       "item": "banana",
+       "category": "fruit"
+      },
+      {
+       "item": "carrot",
+       "category": "vegetable"
+      },
+      {
+       "item": "dog",
+       "category": "animal"
+      },
+      {
+       "item": "bed",
+       "category": "furniture"
+      },
+      {
+       "item": "pencil",
+       "category": "school_supply"
+      },
+      {
+       "item": "shirt",
+       "category": "clothing"
+      }
+     ],
+     "example_questions": [
+      "Is an apple a fruit?",
+      "Is a dog an animal?",
+      "Is a pencil for school?",
+      "Is a bed a piece of furniture?"
+     ],
+     "generation_constraints": [
+      "Use typical category members first.",
+      "Avoid borderline or exception-based category members.",
+      "Avoid overly abstract category labels for preschool children.",
+      "Prefer everyday category labels over technical labels."
+     ]
+    },
+    "object_function": {
+     "difficulty_level": 2,
+     "developmental_position": "function_use_relation",
+     "description": "Understanding common object functions and everyday uses.",
+     "question_goal": "Ask what familiar objects are used for in daily routines.",
+     "conceptual_relation": "object_to_function",
+     "recommended_age_range": "3+",
+     "examples": [
+      {
+       "object": "bed",
+       "function": "sleeping"
+      },
+      {
+       "object": "cup",
+       "function": "drinking"
+      },
+      {
+       "object": "spoon",
+       "function": "eating"
+      },
+      {
+       "object": "backpack",
+       "function": "carrying school things"
+      },
+      {
+       "object": "umbrella",
+       "function": "staying dry in rain"
+      },
+      {
+       "object": "book",
+       "function": "reading"
+      },
+      {
+       "object": "toothbrush",
+       "function": "brushing teeth"
+      }
+     ],
+     "example_questions": [
+      "Do we sleep in beds?",
+      "Do we drink from cups?",
+      "Do spoons help us eat?",
+      "Do backpacks carry books?"
+     ],
+     "generation_constraints": [
+      "Use familiar object-function pairs.",
+      "Avoid unusual or secondary functions.",
+      "Avoid questions where more than one answer could be reasonable."
+     ]
+    },
+    "perceptual_attribute": {
+     "difficulty_level": 2,
+     "developmental_position": "visible_attribute_reasoning",
+     "description": "Understanding or describing objects using visible features such as color, size, shape, texture, or parts.",
+     "question_goal": "Ask about directly observable and typical object features.",
+     "conceptual_relation": "object_to_attribute",
+     "recommended_age_range": "3+",
+     "attribute_types": [
+      "color",
+      "size",
+      "shape",
+      "parts",
+      "texture"
+     ],
+     "examples": [
+      {
+       "object": "banana",
+       "attribute": "yellow"
+      },
+      {
+       "object": "apple",
+       "attribute": "round"
+      },
+      {
+       "object": "bird",
+       "attribute": "wings"
+      },
+      {
+       "object": "fish",
+       "attribute": "fins"
+      },
+      {
+       "object": "tree",
+       "attribute": "leaves"
+      }
+     ],
+     "example_questions": [
+      "Are bananas usually yellow?",
+      "Are apples usually round?",
+      "Do birds have wings?",
+      "Do trees have leaves?"
+     ],
+     "generation_constraints": [
+      "Use typical attributes only for younger children.",
+      "Avoid atypical color examples unless targeting advanced typicality reasoning.",
+      "Avoid exception-based questions such as 'Do all birds fly?'",
+      "Use 'usually' when a property has common exceptions."
+     ]
+    },
+    "food_nonfood_distinction": {
+     "difficulty_level": 2,
+     "developmental_position": "edible_vs_nonedible",
+     "description": "Distinguishing edible items from non-edible items.",
+     "question_goal": "Ask whether familiar items are food or not food.",
+     "conceptual_relation": "edible_status",
+     "recommended_age_range": "2+",
+     "examples": [
+      {
+       "food": "apple",
+       "non_food": "rock"
+      },
+      {
+       "food": "bread",
+       "non_food": "pencil"
+      },
+      {
+       "food": "milk",
+       "non_food": "soap"
+      },
+      {
+       "food": "banana",
+       "non_food": "shoe"
+      }
+     ],
+     "example_questions": [
+      "Is an apple food?",
+      "Is soap food?",
+      "Can we eat bread?",
+      "Can we eat pencils?"
+     ],
+     "generation_constraints": [
+      "Use clear food and non-food examples.",
+      "Avoid items that are culturally variable or ambiguous.",
+      "False questions should be plausible but not silly or random."
+     ]
+    },
+    "within_food_category": {
+     "difficulty_level": 3,
+     "developmental_position": "food_taxonomic_category",
+     "description": "Distinguishing between familiar food categories such as fruit, vegetable, dairy, grain food, meat, and drink.",
+     "question_goal": "Ask whether a food belongs to a specific food category.",
+     "conceptual_relation": "food_item_to_food_category",
+     "recommended_age_range": "4+",
+     "examples": [
+      {
+       "item": "apple",
+       "category": "fruit"
+      },
+      {
+       "item": "banana",
+       "category": "fruit"
+      },
+      {
+       "item": "carrot",
+       "category": "vegetable"
+      },
+      {
+       "item": "broccoli",
+       "category": "vegetable"
+      },
+      {
+       "item": "milk",
+       "category": "dairy"
+      },
+      {
+       "item": "bread",
+       "category": "grain_food"
+      },
+      {
+       "item": "chicken",
+       "category": "meat"
+      },
+      {
+       "item": "water",
+       "category": "drink"
+      }
+     ],
+     "example_questions": [
+      "Is an apple a fruit?",
+      "Is a carrot a vegetable?",
+      "Is milk a dairy food?",
+      "Is bread a grain food?"
+     ],
+     "generation_constraints": [
+      "Use highly familiar and typical foods first.",
+      "Avoid botanical exceptions such as tomato as fruit for younger children.",
+      "Avoid processed or mixed foods unless explicitly targeting harder food knowledge.",
+      "Avoid questions that require adult-level nutrition knowledge."
+     ]
+    },
+    "typicality_reasoning": {
+     "difficulty_level": 4,
+     "developmental_position": "representative_vs_less_representative_category_members",
+     "description": "Understanding that some category members are more typical or expected than others.",
+     "question_goal": "Use typical examples for simple quizzes; use less typical examples only for advanced reasoning or discussion.",
+     "conceptual_relation": "category_typicality",
+     "recommended_age_range": "5+ with caution; stronger for 6+",
+     "examples": [
+      {
+       "category": "fruit",
+       "typical_examples": [
+        "apple",
+        "banana",
+        "orange"
+       ],
+       "less_typical_or_potentially_confusing": [
+        "tomato",
+        "avocado"
+       ]
+      },
+      {
+       "category": "vegetable",
+       "typical_examples": [
+        "carrot",
+        "broccoli",
+        "lettuce"
+       ],
+       "less_typical_or_potentially_confusing": [
+        "mushroom",
+        "corn"
+       ]
+      },
+      {
+       "category": "animal",
+       "typical_examples": [
+        "dog",
+        "cat",
+        "bird"
+       ],
+       "less_typical_or_potentially_confusing": [
+        "bat",
+        "whale",
+        "penguin"
+       ]
+      }
+     ],
+     "example_questions": [
+      "Is an apple a fruit?",
+      "Is broccoli a vegetable?",
+      "Is a dog an animal?"
+     ],
+     "advanced_example_questions": [
+      "Can a tomato be a fruit?",
+      "Can a penguin be a bird?",
+      "Why is a whale an animal?"
+     ],
+     "generation_constraints": [
+      "For ages 4-5, use typical category members.",
+      "For age 8, less typical examples can be used if the goal is explanation or flexible reasoning.",
+      "Do not use tricky category cases in simple yes/no quizzes unless explicitly requested."
+     ]
+    },
+    "direct_food_origin": {
+     "difficulty_level": 4,
+     "developmental_position": "direct_source_relation",
+     "description": "Understanding where familiar foods come from.",
+     "question_goal": "Ask direct source-origin relationships.",
+     "conceptual_relation": "food_to_direct_source",
+     "recommended_age_range": "5+",
+     "examples": [
+      {
+       "food": "milk",
+       "origin": "cow"
+      },
+      {
+       "food": "eggs",
+       "origin": "chicken"
+      },
+      {
+       "food": "apple",
+       "origin": "tree"
+      },
+      {
+       "food": "banana",
+       "origin": "plant"
+      },
+      {
+       "food": "fish",
+       "origin": "water"
+      },
+      {
+       "food": "wheat flour",
+       "origin": "wheat"
+      }
+     ],
+     "example_questions": [
+      "Does milk come from cows?",
+      "Do eggs come from chickens?",
+      "Do apples grow on trees?",
+      "Does flour come from wheat?"
+     ],
+     "generation_constraints": [
+      "Prefer direct and familiar source relationships.",
+      "Use food items likely to be familiar in the child’s cultural context.",
+      "Avoid multi-step production chains for younger children.",
+      "Avoid origins that vary by region or product type unless context is provided."
+     ]
+    },
+    "ingredient_to_food_pathway": {
+     "difficulty_level": 5,
+     "developmental_position": "simple_processed_food_relation",
+     "description": "Understanding that some foods are made from ingredients through preparation or production.",
+     "question_goal": "Ask simple ingredient-to-product relationships.",
+     "conceptual_relation": "ingredient_to_product",
+     "recommended_age_range": "5+ if familiar; stronger for 6+",
+     "examples": [
+      {
+       "ingredient": "flour",
+       "food": "bread"
+      },
+      {
+       "ingredient": "milk",
+       "food": "cheese"
+      },
+      {
+       "ingredient": "wheat",
+       "food": "flour"
+      },
+      {
+       "ingredient": "tomato",
+       "food": "tomato sauce"
+      },
+      {
+       "ingredient": "fruit",
+       "food": "jam"
+      }
+     ],
+     "example_questions": [
+      "Is bread made from flour?",
+      "Is cheese made from milk?",
+      "Is pasta made from wheat?",
+      "Is jam made from fruit?"
+     ],
+     "generation_constraints": [
+      "Treat processed foods as harder than direct food-origin questions.",
+      "Use only common ingredient-product relationships for age 5.",
+      "For age 8, simple multi-step pathways can be introduced.",
+      "Avoid technical production details such as fermentation, additives, or processing chemistry."
+     ]
+    },
+    "grown_made_animal_source": {
+     "difficulty_level": 5,
+     "developmental_position": "food_source_type",
+     "description": "Understanding whether foods are grown, come from animals, or are made from ingredients.",
+     "question_goal": "Classify foods by broad source type.",
+     "conceptual_relation": "food_to_source_type",
+     "recommended_age_range": "6+",
+     "source_types": [
+      "grown_from_plants",
+      "comes_from_animals",
+      "made_from_ingredients"
+     ],
+     "examples": [
+      {
+       "food": "apple",
+       "source_type": "grown_from_plants"
+      },
+      {
+       "food": "milk",
+       "source_type": "comes_from_animals"
+      },
+      {
+       "food": "bread",
+       "source_type": "made_from_ingredients"
+      },
+      {
+       "food": "cheese",
+       "source_type": "made_from_animal_source_ingredient"
+      }
+     ],
+     "example_questions": [
+      "Do apples grow on trees?",
+      "Does milk come from animals?",
+      "Is bread made from ingredients?",
+      "Is cheese made from milk?"
+     ],
+     "generation_constraints": [
+      "Use simple source categories.",
+      "Avoid complex industrial food-system explanations for younger children.",
+      "For age 8, compare grown foods and made foods using concrete examples."
+     ]
+    },
+    "familiar_event_script": {
+     "difficulty_level": 3,
+     "developmental_position": "routine_event_knowledge",
+     "description": "Understanding familiar routines as sequences involving actions, actors, props, and places.",
+     "question_goal": "Ask about common actions, objects, people, or places in familiar events.",
+     "conceptual_relation": "event_to_actor_prop_action_place",
+     "recommended_age_range": "4+",
+     "examples": [
+      {
+       "event": "school",
+       "actors": [
+        "child",
+        "teacher",
+        "classmate"
+       ],
+       "props": [
+        "backpack",
+        "book",
+        "pencil",
+        "paper"
+       ],
+       "actions": [
+        "read",
+        "draw",
+        "write",
+        "listen",
+        "play"
+       ],
+       "place": "classroom"
+      },
+      {
+       "event": "home",
+       "actors": [
+        "child",
+        "family"
+       ],
+       "props": [
+        "bed",
+        "table",
+        "cup",
+        "toys",
+        "clothes"
+       ],
+       "actions": [
+        "eat",
+        "sleep",
+        "clean",
+        "play",
+        "wash"
+       ],
+       "place": "home"
+      },
+      {
+       "event": "grocery_shopping",
+       "actors": [
+        "child",
+        "adult",
+        "cashier"
+       ],
+       "props": [
+        "cart",
+        "food",
+        "bag",
+        "money",
+        "list"
+       ],
+       "actions": [
+        "choose food",
+        "put food in cart",
+        "pay",
+        "bring food home"
+       ],
+       "place": "store"
+      },
+      {
+       "event": "going_outside",
+       "actors": [
+        "child",
+        "adult"
+       ],
+       "props": [
+        "shoes",
+        "coat",
+        "hat"
+       ],
+       "actions": [
+        "put on shoes",
+        "open the door",
+        "walk outside"
+       ],
+       "place": "outside"
+      }
+     ],
+     "example_questions": [
+      "Do books go in backpacks?",
+      "Do we pay at stores?",
+      "Do we sleep in beds?",
+      "Do shoes go on before outside?"
+     ],
+     "generation_constraints": [
+      "Use familiar, everyday events.",
+      "Use expected actions, actors, props, and places.",
+      "Avoid unfamiliar or culturally specific routines unless provided in the child profile.",
+      "For simple yes/no quizzes, ask about one event relation at a time."
+     ]
+    },
+    "event_sequence_and_planning": {
+     "difficulty_level": 5,
+     "developmental_position": "temporal_event_order_and_preparation",
+     "description": "Understanding simple event order, preparation, and prevention within familiar routines.",
+     "question_goal": "Ask whether an action happens before, after, or to prepare for a familiar event.",
+     "conceptual_relation": "event_sequence_preparation_prevention",
+     "recommended_age_range": "5+ with familiar events; stronger for 6+",
+     "examples": [
+      {
+       "event": "going_to_school",
+       "preparation": [
+        "pack backpack",
+        "put on shoes",
+        "bring lunch"
+       ],
+       "sequence": [
+        "go to school",
+        "do activities",
+        "come home"
+       ]
+      },
+      {
+       "event": "grocery_shopping",
+       "preparation": [
+        "make a list",
+        "bring a bag"
+       ],
+       "sequence": [
+        "get cart",
+        "choose food",
+        "pay",
+        "go home"
+       ]
+      },
+      {
+       "event": "going_to_bed",
+       "preparation": [
+        "put on pajamas",
+        "brush teeth"
+       ],
+       "sequence": [
+        "get in bed",
+        "sleep",
+        "wake up"
+       ]
+      }
+     ],
+     "example_questions": [
+      "Do we pack before school?",
+      "Do we pay before leaving?",
+      "Do shoes go on before outside?",
+      "Do we brush teeth before bed?"
+     ],
+     "generation_constraints": [
+      "Use only simple familiar sequences for age 5.",
+      "Use before/after language carefully if the child’s language profile supports it.",
+      "Avoid complex prevention or multi-goal planning unless the child is older or advanced."
+     ]
+    },
+    "taxonomic_thematic_relation": {
+     "difficulty_level": 6,
+     "developmental_position": "semantic_relation_comparison",
+     "description": "Understanding both category-based relations and event-based or context-based relations.",
+     "question_goal": "Ask how two items are related by category or by everyday use/event context.",
+     "conceptual_relation": "taxonomic_relation_vs_thematic_relation",
+     "recommended_age_range": "7+; especially appropriate for 8+",
+     "examples": [
+      {
+       "target": "dog",
+       "taxonomic_match": "cat",
+       "thematic_match": "leash"
+      },
+      {
+       "target": "apple",
+       "taxonomic_match": "banana",
+       "thematic_match": "lunchbox"
+      },
+      {
+       "target": "pencil",
+       "taxonomic_match": "crayon",
+       "thematic_match": "paper"
+      },
+      {
+       "target": "teacher",
+       "taxonomic_match": "doctor",
+       "thematic_match": "classroom"
+      }
+     ],
+     "example_questions": [
+      "How are apples and bananas alike?",
+      "Why do pencils and paper go together?",
+      "Are dogs and cats both animals?",
+      "Does a leash go with a dog?"
+     ],
+     "generation_constraints": [
+      "For age 8, allow both category-based and event-based relations.",
+      "Ask for explanation only when the child’s expressive language level supports it.",
+      "Avoid abstract semantic relations without concrete examples."
+     ]
+    },
+    "cross_classification": {
+     "difficulty_level": 6,
+     "developmental_position": "multiple_category_membership",
+     "description": "Understanding that one item can belong to more than one category at the same time.",
+     "question_goal": "Ask whether one item can be classified in multiple valid ways.",
+     "conceptual_relation": "item_to_multiple_categories",
+     "recommended_age_range": "7+; especially appropriate for 8+",
+     "examples": [
+      {
+       "item": "apple",
+       "categories": [
+        "fruit",
+        "food",
+        "snack",
+        "plant_food"
+       ]
+      },
+      {
+       "item": "cereal",
+       "categories": [
+        "food",
+        "breakfast_food",
+        "grain_food"
+       ]
+      },
+      {
+       "item": "backpack",
+       "categories": [
+        "school_item",
+        "container",
+        "thing_for_carrying"
+       ]
+      },
+      {
+       "item": "carrot",
+       "categories": [
+        "vegetable",
+        "food",
+        "plant_food"
+       ]
+      }
+     ],
+     "example_questions": [
+      "Is an apple both fruit and food?",
+      "Is cereal both food and breakfast food?",
+      "Is a backpack for school and carrying things?",
+      "Can a carrot be food and a vegetable?"
+     ],
+     "generation_constraints": [
+      "Use cross-classification with familiar items.",
+      "Avoid rare or technical category labels.",
+      "For yes/no quizzes, make both categories clearly valid.",
+      "For WH or why questions, ask the child to explain one category relation at a time."
+     ]
+    },
+    "superordinate_subordinate_reasoning": {
+     "difficulty_level": 6,
+     "developmental_position": "hierarchical_category_reasoning",
+     "description": "Understanding broader and narrower category labels.",
+     "question_goal": "Ask whether an item is a kind of another category, or whether one category is broader than another.",
+     "conceptual_relation": "superordinate_basic_subordinate_hierarchy",
+     "recommended_age_range": "7+; especially appropriate for 8+",
+     "examples": [
+      {
+       "superordinate": "animal",
+       "basic_level": "dog",
+       "subordinate": "poodle"
+      },
+      {
+       "superordinate": "food",
+       "basic_level": "fruit",
+       "subordinate": "apple"
+      },
+      {
+       "superordinate": "school_supply",
+       "basic_level": "pencil",
+       "subordinate": "colored_pencil"
+      },
+      {
+       "superordinate": "furniture",
+       "basic_level": "chair",
+       "subordinate": "rocking_chair"
+      }
+     ],
+     "example_questions": [
+      "Is a poodle a kind of dog?",
+      "Is an apple a kind of fruit?",
+      "Is a pencil a school supply?",
+      "Is a chair a kind of furniture?"
+     ],
+     "generation_constraints": [
+      "Use familiar hierarchies first.",
+      "Avoid rare subordinate categories.",
+      "Do not force technical labels if everyday wording is clearer.",
+      "For age 8, include 'kind of' questions and simple category explanations."
+     ]
+    },
+    "multi_attribute_categorization": {
+     "difficulty_level": 6,
+     "developmental_position": "categorization_by_multiple_features",
+     "description": "Classifying or comparing items using more than one attribute, such as category, function, color, size, material, or context.",
+     "question_goal": "Ask the child to reason using two or more features.",
+     "conceptual_relation": "item_to_multiple_attributes",
+     "recommended_age_range": "7+; especially appropriate for 8+",
+     "examples": [
+      {
+       "item": "apple",
+       "attributes": [
+        "fruit",
+        "round",
+        "food",
+        "grows_on_tree"
+       ]
+      },
+      {
+       "item": "backpack",
+       "attributes": [
+        "school_item",
+        "container",
+        "used_for_carrying"
+       ]
+      },
+      {
+       "item": "umbrella",
+       "attributes": [
+        "object",
+        "used_in_rain",
+        "keeps_people_dry"
+       ]
+      }
+     ],
+     "example_questions": [
+      "Is an apple round and edible?",
+      "Does a backpack hold school things?",
+      "Why do umbrellas help in rain?"
+     ],
+     "generation_constraints": [
+      "Use only two attributes at a time for simpler activities.",
+      "Avoid long chains of attributes in yes/no questions.",
+      "Use WH or compare questions when targeting explicit reasoning."
+     ]
+    },
+    "origin_and_processing_reasoning": {
+     "difficulty_level": 7,
+     "developmental_position": "food_system_reasoning",
+     "description": "Understanding whether foods are grown, come from animals, or are made through human preparation or processing.",
+     "question_goal": "Ask about natural source, animal source, ingredient source, or simple processing pathway.",
+     "conceptual_relation": "food_origin_processing",
+     "recommended_age_range": "8+",
+     "examples": [
+      {
+       "food": "apple",
+       "origin": "tree",
+       "process_type": "grown"
+      },
+      {
+       "food": "milk",
+       "origin": "cow",
+       "process_type": "animal_source"
+      },
+      {
+       "food": "bread",
+       "origin": "flour",
+       "process_type": "made_from_ingredient"
+      },
+      {
+       "food": "cheese",
+       "origin": "milk",
+       "process_type": "processed_from_animal_source"
+      },
+      {
+       "food": "pasta",
+       "origin": "wheat",
+       "process_type": "made_from_ingredient"
+      }
+     ],
+     "example_questions": [
+      "Do apples grow on trees?",
+      "Does milk come from cows?",
+      "Is bread made from flour?",
+      "Is cheese made from milk?",
+      "Is pasta made from wheat?"
+     ],
+     "generation_constraints": [
+      "For age 8, allow simple processing concepts such as made from, grown from, and comes from.",
+      "Avoid industrial production details unless explicitly requested.",
+      "Avoid foods with highly variable ingredients unless context is provided.",
+      "Use familiar examples before less familiar processed foods."
+     ]
+    },
+    "causal_explanation": {
+     "difficulty_level": 7,
+     "developmental_position": "simple_cause_effect_reasoning",
+     "description": "Explaining simple cause-effect relationships in everyday events, stories, object functions, and food/nature concepts.",
+     "question_goal": "Ask why something happens or why an object/action is useful.",
+     "conceptual_relation": "cause_to_effect",
+     "recommended_age_range": "6+; especially appropriate for 8+",
+     "examples": [
+      {
+       "cause": "It rains",
+       "effect": "We use an umbrella"
+      },
+      {
+       "cause": "The toy breaks",
+       "effect": "The child asks for help"
+      },
+      {
+       "cause": "We feel hungry",
+       "effect": "We eat food"
+      },
+      {
+       "cause": "Plants need water",
+       "effect": "They can grow"
+      },
+      {
+       "cause": "A child forgets a backpack",
+       "effect": "The child may not have school supplies"
+      }
+     ],
+     "example_questions": [
+      "Why do we use umbrellas?",
+      "Why did the child ask for help?",
+      "Why do people eat food?",
+      "Why do plants need water?"
+     ],
+     "generation_constraints": [
+      "Use concrete cause-effect relations.",
+      "Use why/how questions only when expressive language supports explanation.",
+      "Avoid abstract science or moral reasoning without contextual support.",
+      "For yes/no quizzes, convert causal targets into simpler forms."
+     ]
+    },
+    "problem_solution_reasoning": {
+     "difficulty_level": 7,
+     "developmental_position": "everyday_problem_solving",
+     "description": "Understanding simple problems and appropriate solutions in familiar contexts.",
+     "question_goal": "Ask what someone should do when a familiar problem occurs.",
+     "conceptual_relation": "problem_to_solution",
+     "recommended_age_range": "6+; especially appropriate for 8+",
+     "examples": [
+      {
+       "problem": "The pencil breaks",
+       "solution": "sharpen it or get another pencil"
+      },
+      {
+       "problem": "The child is thirsty",
+       "solution": "drink water"
+      },
+      {
+       "problem": "It is raining",
+       "solution": "use an umbrella"
+      },
+      {
+       "problem": "The child forgets lunch",
+       "solution": "ask an adult for help"
+      }
+     ],
+     "example_questions": [
+      "What can you do if a pencil breaks?",
+      "What should you do if you are thirsty?",
+      "What helps when it rains?",
+      "Who can help if lunch is missing?"
+     ],
+     "generation_constraints": [
+      "Use familiar and safe problems.",
+      "Avoid emergency or frightening scenarios unless therapeutically appropriate.",
+      "For age 5, use simple object-function solutions.",
+      "For age 8, allow short explanations of why the solution works."
+     ]
+    },
+    "narrative_goal_attempt_outcome": {
+     "difficulty_level": 7,
+     "developmental_position": "story_macrostructure_reasoning",
+     "description": "Understanding story structure through character goals, attempts, outcomes, and internal states.",
+     "question_goal": "Ask about what a character wanted, what they did, what happened, and how they felt.",
+     "conceptual_relation": "goal_attempt_outcome_internal_state",
+     "recommended_age_range": "6+; especially appropriate for 8+",
+     "examples": [
+      {
+       "goal": "The child wants the toy",
+       "attempt": "The child reaches for it",
+       "outcome": "The child gets the toy",
+       "internal_state": "happy"
+      },
+      {
+       "goal": "The character wants to fix the ramp",
+       "attempt": "A friend helps",
+       "outcome": "The car goes over the ramp",
+       "internal_state": "proud"
+      },
+      {
+       "goal": "The girl wants to find her book",
+       "attempt": "She looks in her backpack",
+       "outcome": "She finds it",
+       "internal_state": "relieved"
+      }
+     ],
+     "example_questions": [
+      "What did the child want?",
+      "How did the child try?",
+      "What happened at the end?",
+      "Why was the character happy?"
+     ],
+     "generation_constraints": [
+      "Use short, concrete stories for younger children.",
+      "For age 8, include goal, attempt, outcome, and feeling questions.",
+      "Avoid stories with too many characters or hidden motives unless explicitly targeting advanced inference."
+     ]
+    },
+    "prediction_inference": {
+     "difficulty_level": 8,
+     "developmental_position": "predictive_and_inferential_reasoning",
+     "description": "Using context to infer what might happen next or what someone might think, feel, or need.",
+     "question_goal": "Ask the child to make a simple prediction or inference from a familiar context.",
+     "conceptual_relation": "context_to_inference",
+     "recommended_age_range": "8+",
+     "examples": [
+      {
+       "context": "The sky is dark and cloudy",
+       "inference": "It might rain"
+      },
+      {
+       "context": "The child dropped the ice cream",
+       "inference": "The child may feel sad"
+      },
+      {
+       "context": "The backpack is empty before school",
+       "inference": "The child needs books or supplies"
+      },
+      {
+       "context": "The plant is dry",
+       "inference": "It needs water"
+      }
+     ],
+     "example_questions": [
+      "What might happen when clouds get dark?",
+      "How might the child feel?",
+      "What does the plant need?",
+      "What should go in the backpack?"
+     ],
+     "generation_constraints": [
+      "Use visible or explicitly stated clues.",
+      "Avoid inference questions requiring hidden cultural knowledge.",
+      "For children with language difficulties, provide choices or visual support."
+     ]
+    }
+   },
+   "question_templates": {
+    "yes_no": {
+     "object_identity": [
+      "Is this a {item}?"
+     ],
+     "basic_category_membership": [
+      "Is a {item} a {category}?",
+      "Is {item} a kind of {category}?"
+     ],
+     "object_function": [
+      "Do we use {object} to {function}?",
+      "Does a {object} help us {function}?"
+     ],
+     "perceptual_attribute": [
+      "Are {items} usually {attribute}?",
+      "Do {items} have {part}?"
+     ],
+     "direct_food_origin": [
+      "Does {food} come from {origin}?",
+      "Do {food_plural} grow on {origin}?"
+     ],
+     "ingredient_to_food_pathway": [
+      "Is {food} made from {ingredient}?"
+     ],
+     "familiar_event_script": [
+      "Do we use {prop} at {event}?",
+      "Do we {action} at {place}?"
+     ],
+     "cross_classification": [
+      "Is {item} both {category_1} and {category_2}?"
+     ]
+    },
+    "wh": {
+     "object_function": [
+      "What do we use {object} for?"
+     ],
+     "direct_food_origin": [
+      "Where does {food} come from?"
+     ],
+     "familiar_event_script": [
+      "What do we bring to {event}?",
+      "Who helps at {place}?"
+     ],
+     "event_sequence_and_planning": [
+      "What do we do before {event}?",
+      "What happens after {action}?"
+     ],
+     "narrative_goal_attempt_outcome": [
+      "What did the character want?",
+      "What happened at the end?"
+     ]
+    },
+    "why_how_compare": {
+     "taxonomic_thematic_relation": [
+      "How are {item_1} and {item_2} alike?",
+      "Why do {item_1} and {item_2} go together?"
+     ],
+     "causal_explanation": [
+      "Why do we {action}?",
+      "Why did {event} happen?"
+     ],
+     "problem_solution_reasoning": [
+      "What should {character} do if {problem}?",
+      "Why would that help?"
+     ],
+     "narrative_goal_attempt_outcome": [
+      "Why did the character {action}?",
+      "How did the character solve the problem?"
+     ],
+     "origin_and_processing_reasoning": [
+      "How does {ingredient} become {food}?"
+     ]
+    },
+    "wh_developmental_hierarchy": {
+     "level_1_what_who": {
+      "wh_types": [
+       "what",
+       "who"
+      ],
+      "templates": [
+       "What is this?",
+       "What is {character} doing?",
+       "Who is in the picture?",
+       "Who is {action}?"
+      ]
+     },
+     "level_2_where": {
+      "wh_types": [
+       "where"
+      ],
+      "templates": [
+       "Where is {character}?",
+       "Where is the {object}?",
+       "Where are they playing?"
+      ]
+     },
+     "level_3_when": {
+      "wh_types": [
+       "when"
+      ],
+      "templates": [
+       "When do we {routine_action}?",
+       "When is it {weather_or_time_cue}?",
+       "When does this happen?"
+      ],
+      "constraints": [
+       "Use only with clear visual or routine cues."
+      ]
+     },
+     "level_4_why_how": {
+      "wh_types": [
+       "why",
+       "how"
+      ],
+      "templates": [
+       "Why is {character} {action}?",
+       "Why does {character} need {object}?",
+       "How does {character} {action}?",
+       "How can {character} fix it?"
+      ],
+      "constraints": [
+       "Use only with visible evidence, familiar routines, or story context."
+      ]
+     }
+    }
+   },
+   "generation_rules": {
+    "rule_1": {
+     "name": "Separate conceptual targets from language targets",
+     "description": "Select conceptual targets from this framework independently from grammar, MLU, and articulation targets. Use language guidance only to control wording length, grammatical complexity, and response demand."
+    },
+    "rule_2": {
+     "name": "Prioritize basic-level and typical examples first",
+     "description": "For preschool children, use familiar basic-level items and typical category members before using superordinate, subordinate, atypical, or exception-based examples."
+    },
+    "rule_3": {
+     "name": "Use a developmental hierarchy of conceptual difficulty",
+     "description": "For educational quiz generation, order difficulty from object identity, object function, and food/non-food distinction to category membership, within-food category distinction, direct origin, ingredient-to-food pathway, event sequence, causal explanation, and cross-classification."
+    },
+    "rule_4": {
+     "name": "Avoid ambiguous yes/no questions",
+     "description": "Yes/no questions must have a clearly correct expected answer. Avoid questions that depend on preference, culture, exception cases, or incomplete context."
+    },
+    "rule_5": {
+     "name": "Avoid silly false questions",
+     "description": "False yes/no questions should use plausible category or function contrasts rather than random mismatches. For example, prefer 'Is pizza a vegetable?' over 'Is a chair a cloud?'"
+    },
+    "rule_6": {
+     "name": "Match conceptual target to question type",
+     "description": "Use yes/no questions for simple category, function, and origin checks. Use WH questions for naming, function, and event-script recall. Use why/how/compare questions for age 8+ reasoning, explanation, and narrative structure."
+    },
+    "rule_7": {
+     "name": "Use direct food origins before processed food pathways",
+     "description": "For age 5, prioritize direct origins such as milk from cows or apples from trees. For age 8, allow simple processing pathways such as wheat to flour to bread."
+    },
+    "rule_8": {
+     "name": "Use event scripts for familiar routines",
+     "description": "For school, home, shopping, bedtime, or outdoor routines, generate questions about expected actors, props, actions, places, and simple sequences."
+    },
+    "rule_9": {
+     "name": "Use explanation only when developmentally appropriate",
+     "description": "For children around age 8, include explanation, comparison, prediction, and story-structure questions when the child’s language profile supports expressive reasoning."
+    },
+    "rule_10": {
+     "name": "Avoid diagnostic assumptions",
+     "description": "Do not assume conceptual level from diagnosis alone. Use child profile, observed language level, SLP input, task performance, and age together."
+    },
+    "rule_11": {
+     "name": "Follow WH-question developmental hierarchy",
+     "description": "For children around ages 4-5, introduce WH-questions in the order what/who, then where, then when, then why/how. Prioritize visually grounded what, who, and where questions before inferential when, why, and how questions."
+    }
+   }
+  },
+  "social_communication": {
+   "version": "1.0",
+   "description": "Developmentally appropriate social-communication and peer-interaction targets for children with ASD or related social-pragmatic communication needs.",
+   "notes": [
+    "Use these targets to support functional participation, self-advocacy, emotional understanding, peer interaction, and mutual communication.",
+    "Do not force eye contact, masking, or neurotypical-style social behavior.",
+    "Use concrete school, recess, home, therapy, and peer-play scenarios.",
+    "Select targets based on child profile, SLP judgment, observed social-communication needs, and family/child priorities.",
+    "When possible, support communication partners and peers, not only the autistic child."
+   ],
+   "targets": {
+    "reciprocal_conversation": {
+     "description": "Starting, maintaining, and ending a conversation with a peer.",
+     "skills": [
+      "greeting",
+      "asking a relevant question",
+      "answering on topic",
+      "trading information",
+      "taking turns",
+      "not dominating the conversation",
+      "repairing misunderstandings"
+     ],
+     "example_activity": "Practice a short peer conversation about a shared interest."
+    },
+    "peer_entry_and_group_joining": {
+     "description": "Joining an ongoing peer activity or group interaction.",
+     "skills": [
+      "watching what the group is doing",
+      "waiting for an appropriate moment",
+      "asking to join",
+      "joining without interrupting",
+      "accepting yes/no responses"
+     ],
+     "example_activity": "Role-play joining a game at recess."
+    },
+    "friendship_development": {
+     "description": "Understanding how to make and maintain friendships.",
+     "skills": [
+      "finding common interests",
+      "choosing appropriate peers",
+      "inviting someone to play",
+      "being a good host",
+      "sharing preferred activities",
+      "following up after a playdate"
+     ],
+     "example_activity": "Choose which classmate might enjoy the same activity and explain why."
+    },
+    "emotion_understanding": {
+     "description": "Recognizing and discussing emotions in self and others.",
+     "skills": [
+      "identifying basic emotions",
+      "linking emotions to causes",
+      "noticing facial, body, and context cues",
+      "expressing one's own feeling",
+      "asking how someone feels"
+     ],
+     "example_activity": "Look at a story scene and identify how each character feels."
+    },
+    "perspective_taking_theory_of_mind": {
+     "description": "Understanding that another person may think, know, feel, or want something different.",
+     "skills": [
+      "identifying another person's belief",
+      "understanding different preferences",
+      "predicting how someone may react",
+      "explaining why someone acted a certain way"
+     ],
+     "example_activity": "Ask: 'What does the character think happened?'"
+    },
+    "cooperative_play_and_group_participation": {
+     "description": "Participating in games, group tasks, and shared activities.",
+     "skills": [
+      "following game rules",
+      "taking turns",
+      "sharing materials",
+      "being flexible",
+      "showing good sportsmanship",
+      "coping with losing or mistakes"
+     ],
+     "example_activity": "Practice a board-game scenario with winning, losing, and turn-taking."
+    },
+    "conflict_resolution": {
+     "description": "Handling disagreement with peers in a safe and socially functional way.",
+     "skills": [
+      "staying calm",
+      "using words to explain the problem",
+      "listening to the other person",
+      "suggesting a solution",
+      "asking an adult for help when needed"
+     ],
+     "example_activity": "Role-play what to do when two children want the same toy."
+    },
+    "teasing_bullying_and_rejection_response": {
+     "description": "Responding to teasing, exclusion, or bullying safely.",
+     "skills": [
+      "distinguishing playful joking from hurtful teasing",
+      "using a short response",
+      "walking away",
+      "seeking adult support",
+      "knowing when a situation is unsafe"
+     ],
+     "example_activity": "Choose the safest response when someone says something unkind."
+    },
+    "social_problem_solving": {
+     "description": "Understanding a social problem and selecting an appropriate response.",
+     "skills": [
+      "identifying the problem",
+      "thinking of possible solutions",
+      "predicting consequences",
+      "choosing a safe solution",
+      "reflecting on what happened"
+     ],
+     "example_activity": "Ask: 'What should Ethan do if his friend is upset?'"
+    },
+    "self_advocacy_and_communication_of_needs": {
+     "description": "Expressing needs, boundaries, preferences, and requests for help.",
+     "skills": [
+      "asking for a break",
+      "saying no appropriately",
+      "asking for clarification",
+      "explaining sensory needs",
+      "requesting help",
+      "stating preferences"
+     ],
+     "example_activity": "Practice saying, 'I need a break' or 'Can you explain that again?'"
+    }
+   },
+   "developmental_levels": [
+    {
+     "level_id": "social_age_8_asd_peer_interaction",
+     "age_range": "8",
+     "profile": "school-age child with ASD or social-pragmatic communication needs",
+     "description": "Peer-interaction and social-communication targets appropriate for an older child who is beginning to manage school, recess, group activities, friendship, emotional understanding, and self-advocacy demands.",
+     "primary_targets": [
+      "reciprocal_conversation",
+      "peer_entry_and_group_joining",
+      "friendship_development",
+      "emotion_understanding",
+      "perspective_taking_theory_of_mind",
+      "cooperative_play_and_group_participation",
+      "conflict_resolution",
+      "teasing_bullying_and_rejection_response",
+      "social_problem_solving",
+      "self_advocacy_and_communication_of_needs"
+     ],
+     "recommended_activity_types": [
+      "role_play",
+      "social_story",
+      "comic_strip_conversation",
+      "scenario_question",
+      "emotion_inference",
+      "problem_solution",
+      "conversation_practice",
+      "peer_game_practice"
+     ],
+     "generation_guidance": {
+      "recommended_contexts": [
+       "school",
+       "recess",
+       "home",
+       "group activity",
+       "friendship",
+       "game play",
+       "therapy session"
+      ],
+      "avoid": [
+       "forcing eye contact",
+       "punishing autistic communication style",
+       "violent or unsafe peer scenarios",
+       "complex social inference without story support",
+       "assuming social goals from diagnosis alone"
+      ]
+     }
+    }
+   ],
+   "generation_rules": {
+    "rule_1": {
+     "name": "Prioritize functional participation",
+     "description": "Generate activities that support communication, safety, self-advocacy, participation, and mutual understanding."
+    },
+    "rule_2": {
+     "name": "Use concrete scenarios",
+     "description": "Use school, recess, home, game, and peer scenarios rather than abstract social rules."
+    },
+    "rule_3": {
+     "name": "Adapt response demand",
+     "description": "Use choices, visual supports, or short answers when expressive language demand is high."
+    },
+    "rule_4": {
+     "name": "Avoid masking-oriented goals",
+     "description": "Do not generate goals that require forced eye contact, suppressing stims, or imitating neurotypical behavior without a functional reason."
+    }
+   }
+  },
+  "interests": {
+   "version": "1.1",
+   "description": "Interest and theme library used to personalize activities after clinical and developmental targets have been selected.",
+   "notes": [
+    "Interest themes personalize materials; they should not determine the therapy goal by themselves.",
+    "Specific branded examples should be used only when the child profile explicitly includes that interest.",
+    "Generic alternatives are preferred for public, formal, or copyright-sensitive materials.",
+    "Gender-based lists are preserved only as co-design observations and should not restrict theme selection."
+   ],
+   "themes": {
+    "unicorns": {
+     "description": "Child-preferred unicorns theme used for activity personalization.",
+     "generic_examples": [
+      "unicorn",
+      "rainbow",
+      "magic horn"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "animals": {
+     "description": "Child-preferred animals theme used for activity personalization.",
+     "generic_examples": [
+      "pig",
+      "dog",
+      "cat",
+      "horse",
+      "rabbit"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "pets": {
+     "description": "Child-preferred pets theme used for activity personalization.",
+     "generic_examples": [
+      "dog",
+      "cat",
+      "hamster",
+      "fish"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "vehicles": {
+     "description": "Child-preferred vehicles theme used for activity personalization.",
+     "generic_examples": [
+      "car",
+      "truck",
+      "bus",
+      "train",
+      "airplane"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "dinosaurs": {
+     "description": "Child-preferred dinosaurs theme used for activity personalization.",
+     "generic_examples": [
+      "trex",
+      "triceratops",
+      "stegosaurus"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "princesses": {
+     "description": "Child-preferred princesses theme used for activity personalization.",
+     "generic_examples": [
+      "princess",
+      "castle",
+      "crown"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "fairies": {
+     "description": "Child-preferred fairies theme used for activity personalization.",
+     "generic_examples": [
+      "fairy",
+      "magic wand",
+      "wings"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    },
+    "superheroes": {
+     "description": "Child-preferred superhero characters, roles, and adventure themes used for activity personalization.",
+     "generic_examples": [
+      "superhero",
+      "hero",
+      "sidekick",
+      "villain",
+      "cape",
+      "rescue mission",
+      "secret base",
+      "superpower",
+      "helping people",
+      "saving the day",
+      "team mission"
+     ],
+     "specific_examples": [
+      {
+       "name": "Superman",
+       "type": "superhero_character",
+       "usable_themes": [
+        "cape",
+        "strength",
+        "rescue mission",
+        "helping people",
+        "saving the city"
+       ]
+      },
+      {
+       "name": "Spider-Man",
+       "type": "superhero_character",
+       "usable_themes": [
+        "climbing",
+        "city adventure",
+        "helping a friend",
+        "stopping a problem"
+       ]
+      },
+      {
+       "name": "Iron Man",
+       "type": "superhero_character",
+       "usable_themes": [
+        "robot suit",
+        "technology",
+        "team mission",
+        "problem solving"
+       ]
+      },
+      {
+       "name": "Batman",
+       "type": "superhero_character",
+       "usable_themes": [
+        "detective work",
+        "vehicle",
+        "night mission"
+       ]
+      }
+     ],
+     "generation_constraints": [
+      "Use specific superhero names only when the child profile explicitly indicates interest in that character.",
+      "Use generic superhero themes when no specific character preference is known.",
+      "Avoid violent battle-focused scenarios; prefer helping, rescuing, teamwork, problem solving, and emotion regulation.",
+      "Avoid assuming superhero interests based on age or gender.",
+      "For formal/public materials, consider using generic alternatives rather than copyrighted character names."
+     ]
+    },
+    "video_game_characters": {
+     "description": "Child-preferred video game characters, worlds, and play themes used for activity personalization.",
+     "generic_examples": [
+      "game hero",
+      "game creature",
+      "avatar",
+      "player character",
+      "helper character",
+      "monster",
+      "treasure",
+      "level",
+      "quest",
+      "race",
+      "power-up"
+     ],
+     "specific_examples": [
+      {
+       "name": "Roblox",
+       "type": "game_platform",
+       "usable_themes": [
+        "avatar",
+        "obby",
+        "building",
+        "pets",
+        "race",
+        "role-play game",
+        "team challenge"
+       ]
+      },
+      {
+       "name": "Super Mario",
+       "type": "game_franchise",
+       "usable_themes": [
+        "Mario",
+        "Luigi",
+        "Princess Peach",
+        "castle",
+        "rescue adventure"
+       ]
+      },
+      {
+       "name": "Minecraft",
+       "type": "game_franchise",
+       "usable_themes": [
+        "Steve",
+        "Alex",
+        "creeper",
+        "blocks",
+        "building",
+        "mining",
+        "farm",
+        "village",
+        "crafting"
+       ]
+      },
+      {
+       "name": "Pokemon",
+       "type": "game_franchise",
+       "usable_themes": [
+        "Pikachu",
+        "Eevee",
+        "trainer",
+        "battle",
+        "evolution",
+        "catching creatures"
+       ]
+      }
+     ],
+     "generation_constraints": [
+      "Use specific examples only when the child profile explicitly indicates interest in that game or character.",
+      "Use generic game themes when no specific preference is known.",
+      "Avoid assuming video game interests based on age or gender.",
+      "For formal/public materials, consider using generic alternatives rather than copyrighted character names."
+     ]
+    },
+    "pretend_play": {
+     "description": "Child-preferred pretend play theme used for activity personalization.",
+     "generic_examples": [
+      "tea party",
+      "grocery store",
+      "doctor",
+      "chef"
+     ],
+     "specific_examples": [],
+     "generation_constraints": [
+      "Use this theme only for personalization after the clinical or developmental target has been selected.",
+      "Do not assume this interest based on age or gender.",
+      "Replace or avoid any example that is unfamiliar, disliked, or culturally inappropriate for the child."
+     ]
+    }
+   },
+   "neutral_age_recommendations": [
+    {
+     "age": 2,
+     "recommended_themes": [
+      "dinosaurs",
+      "vehicles"
+     ],
+     "source": "combined_from_co_design_observed_preferences",
+     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
+    },
+    {
+     "age": 3,
+     "recommended_themes": [
+      "unicorns",
+      "animals",
+      "pets",
+      "princesses",
+      "pretend_play",
+      "vehicles"
+     ],
+     "source": "combined_from_co_design_observed_preferences",
+     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
+    },
+    {
+     "age": 5,
+     "recommended_themes": [
+      "fairies",
+      "princesses",
+      "pets",
+      "vehicles",
+      "dinosaurs",
+      "superheroes"
+     ],
+     "source": "combined_from_co_design_observed_preferences",
+     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
+    },
+    {
+     "age": 6,
+     "recommended_themes": [
+      "fairies",
+      "princesses",
+      "superheroes",
+      "video_game_characters",
+      "vehicles"
+     ],
+     "source": "combined_from_co_design_observed_preferences",
+     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
+    },
+    {
+     "age": 8,
+     "recommended_themes": [
+      "fairies",
+      "superheroes",
+      "video_game_characters",
+      "vehicles"
+     ],
+     "source": "combined_from_co_design_observed_preferences",
+     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
+    }
+   ],
+   "co_design_observed_age_preferences": [
+    {
+     "age": 2,
+     "girls": [],
+     "boys": [
+      "dinosaurs",
+      "vehicles"
+     ]
+    },
+    {
+     "age": 3,
+     "girls": [
+      "unicorns",
+      "animals",
+      "pets",
+      "princesses",
+      "pretend_play"
+     ],
+     "boys": [
+      "pets",
+      "pretend_play",
+      "vehicles"
+     ]
+    },
+    {
+     "age": 5,
+     "girls": [
+      "fairies",
+      "princesses",
+      "pets"
+     ],
+     "boys": [
+      "pets",
+      "vehicles",
+      "dinosaurs",
+      "superheroes"
+     ]
+    },
+    {
+     "age": 6,
+     "girls": [
+      "fairies",
+      "princesses"
+     ],
+     "boys": [
+      "superheroes",
+      "video_game_characters",
+      "vehicles"
+     ]
+    },
+    {
+     "age": 8,
+     "girls": [
+      "fairies"
+     ],
+     "boys": [
+      "superheroes",
+      "video_game_characters",
+      "vehicles"
+     ]
+    }
+   ],
+   "selection_rules": {
+    "rule_1": {
+     "name": "Clinical target before interest theme",
+     "description": "Select the language, concept, social-communication, or speech-sound target first; then use an interest theme to personalize the content."
+    },
+    "rule_2": {
+     "name": "Specific interest only when provided",
+     "description": "Use branded or named characters only when the child profile explicitly indicates interest in that character, game, or franchise."
+    },
+    "rule_3": {
+     "name": "Gender-neutral application",
+     "description": "Allow any child to use any theme regardless of gender."
+    },
+    "rule_4": {
+     "name": "Avoid unsafe or inappropriate scenarios",
+     "description": "When using superheroes or game themes, prefer helping, teamwork, problem solving, building, racing, friendship, and emotion regulation over violence."
+    }
+   },
+   "source_age_preferences_from_previous_kb": [
+    {
+     "age": 2,
+     "girls": [],
+     "boys": [
+      "dinosaurs",
+      "vehicles"
+     ]
+    },
+    {
+     "age": 3,
+     "girls": [
+      "unicorns",
+      "animals",
+      "pets",
+      "princesses",
+      "pretend_play"
+     ],
+     "boys": [
+      "pets",
+      "pretend_play",
+      "vehicles"
+     ]
+    },
+    {
+     "age": 5,
+     "girls": [
+      "fairies",
+      "princesses",
+      "pets",
+      "superheroes"
+     ],
+     "boys": [
+      "pets",
+      "vehicles",
+      "dinosaurs",
+      "superheroes"
+     ]
+    },
+    {
+     "age": 6,
+     "girls": [
+      "fairies",
+      "superheroes"
+     ],
+     "boys": [
+      "superheroes",
+      "vehicles"
+     ]
+    },
+    {
+     "age": 8,
+     "girls": [
+      "fairies"
+     ],
+     "boys": [
+      "superheroes",
+      "video_game_characters",
+      "vehicles"
+     ]
+    }
+   ]
+  }
+ },
+ "global_generation_rules": {
+  "rule_1": {
+   "name": "Select target domain first",
+   "description": "Choose whether the activity targets language form, conceptual knowledge, social communication, or a combined target before selecting topic or interest theme."
+  },
+  "rule_2": {
+   "name": "Separate wording level from concept level",
+   "description": "Use language guidance to control wording length and grammar; use the concept framework to control conceptual difficulty."
+  },
+  "rule_3": {
+   "name": "Allow combined targets only when clinically appropriate",
+   "description": "Combine language, concept, social, and interest dimensions only when the resulting activity remains natural, clear, and developmentally appropriate."
+  },
+  "rule_4": {
+   "name": "Avoid diagnostic assumptions",
+   "description": "Do not infer conceptual, social, or language ability from diagnosis alone."
+  },
+  "rule_5": {
+   "name": "Use expected answer metadata",
+   "description": "For yes/no quiz generation, include expected_answer and avoid ambiguous, preference-based, or exception-based questions."
+  },
+  "rule_6": {
+   "name": "Use interest themes safely",
+   "description": "Avoid violent, frightening, or overly branded content unless explicitly appropriate and requested."
+  },
+  "rule_7": {
+   "name": "Preserve speech sound domain",
+   "description": "When articulation is selected as a target, use the speech sound framework to select phonemes and example words, then combine with language, concept, or interest themes only if natural."
+  },
+  "rule_8": {
+   "name": "Select clinical target before theme",
+   "description": "Select the language or articulation target based on developmental level first, then select the activity theme based on child interests."
+  },
+  "rule_9": {
+   "name": "Use developmental level flexibly",
+   "description": "Use developmental age, MLU, and SLP judgment rather than chronological age alone."
+  },
+  "rule_10": {
+   "name": "Avoid gender-restricted personalization",
+   "description": "Gender-based interest lists are retained from co-design data, but the system should allow any child to use any interest theme."
+  },
+  "rule_11": {
+   "name": "Follow WH-question hierarchy",
+   "description": "For image-card and WH-question generation, use the developmental hierarchy what/who → where → when → why/how. Do not force harder WH types when the image or context does not support them."
+  }
+ },
+ "example_activity_selection_workflow": [
+  "1. Read child profile: chronological age, developmental language level, speech sound profile, diagnosis/profile if provided, and interests.",
+  "2. Select the primary clinical target domain: language, speech sound, concept, social communication, or a clinically appropriate combination.",
+  "3. Select target level and target IDs from the relevant framework using developmental guidance and SLP judgment.",
+  "4. Select an interest theme or specific interest only for personalization.",
+  "5. Generate the activity using the appropriate question/activity template and include expected-answer metadata when relevant.",
+  "6. Check output against global rules: natural wording, non-ambiguous answer, developmentally appropriate demand, and safe personalization.",
+  "7. For WH-question or image-card activities, apply the WH-question hierarchy: what/who first, then where, then when, then why/how; avoid unsupported when/why/how questions."
+ ],
+ "example_child_profile_schema": {
+  "chronological_age": "number",
+  "diagnosis_or_profile": "optional string, e.g., ASD, speech sound delay, language delay",
+  "developmental_language_level": "language developmental level id",
+  "speech_sound_level": "optional speech developmental level id",
+  "concept_development_level": "optional concept developmental level id",
+  "social_communication_level": "optional social developmental level id",
+  "mlu": "optional number or range",
+  "preferred_themes": [
+   "theme_id or specific interest name"
+  ],
+  "language_targets": [
+   "target ids from frameworks.language.targets"
+  ],
+  "speech_sound_targets": [
+   "target ids from frameworks.speech_sound.targets"
+  ],
+  "concept_targets": [
+   "target ids from frameworks.concept.targets"
+  ],
+  "social_targets": [
+   "target ids from frameworks.social_communication.targets"
+  ],
+  "activity_type": "yes_no_quiz | wh_question | role_play | story | instruction_following | image_inference | conversation_practice",
+  "wh_question_level": "optional WH-question level id or allowed WH types from frameworks.language.wh_question_hierarchy",
+  "allowed_wh_types": [
+   "optional list such as what, who, where"
+  ]
+ },
+ "example_child_profile": {
+  "chronological_age": 5,
+  "developmental_language_level": "language_age_5_mlu_6_8",
+  "mlu": 6,
+  "preferred_themes": [
+   "dinosaurs",
+   "vehicles"
+  ],
+  "language_targets": [
+   "plural_forms",
+   "simple_conjunction"
+  ],
+  "speech_sound_targets": [
+   "advanced_sounds"
+  ],
+  "example_generated_phrase": "Three red dinosaurs are running and jumping.",
+  "concept_development_level": "concept_age_5_category_food_origin_event",
+  "concept_targets": [
+   "basic_category_membership",
+   "object_function"
+  ],
+  "activity_type": "educational_quiz",
+  "expected_output_metadata": [
+   "question",
+   "type",
+   "expected_answer",
+   "target_domain",
+   "target_id"
+  ]
+ },
+ "image_card_wh_question_generation_guidance": {
+  "version": "1.0",
+  "description": "Operational guidance for generating WH-questions from image cards. default_for_age_4_5 applies to language age 4 and below; default_for_age_5_plus applies from language age 5 upward.",
+  "default_for_age_4_5": {
+   "question_selection": [
+    "Start with what/who questions.",
+    "Add where if location is clear.",
+    "Add when only if there are visible time, routine, season, weather, or event cues.",
+    "Add why/how only if the picture supports a simple reason or action-means relation."
+   ],
+   "fallback_rule": "If when, why, or how is not supported by the image, replace it with another what/who/where question instead of inventing an answer."
+  },
+  "default_for_age_5_plus": {
+   "question_selection": [
+    "Include exactly ONE simple why or how question per question set — not zero, not more than one.",
+    "Choose the why/how relation most clearly supported by visible evidence in the picture (a shown action, feeling, or means).",
+    "Use what/who/where questions for the remaining slots.",
+    "Add when only if there are visible time, routine, season, weather, or event cues."
+   ],
+   "fallback_rule": "Prefer a simple, visually grounded why (about an action or feeling shown in the picture) whenever possible; only if the picture truly supports no why/how relation at all, replace it with another what/who/where question."
+  },
+  "evidence_rules": [
+   "Who/what/where answers should be directly visible.",
+   "When answers require visual or routine cues.",
+   "Why/how answers require visible evidence, familiar routine support, or story context.",
+   "Do not assume hidden intentions, emotions, or background events without evidence."
+  ]
+ }
+}

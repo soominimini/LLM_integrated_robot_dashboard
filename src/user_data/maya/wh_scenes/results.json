@@ -1,0 +1,23 @@
+[
+  {
+    "scene_id": "scene_1783115673_fafe3e",
+    "mode": "receptive",
+    "score": 5,
+    "total": 5,
+    "timestamp": "2026-07-03T23:56:06"
+  },
+  {
+    "scene_id": "scene_1783116352_4f5c1e",
+    "mode": "receptive",
+    "score": 5,
+    "total": 5,
+    "timestamp": "2026-07-04T00:06:45"
+  },
+  {
+    "scene_id": "scene_1783116444_859b1c",
+    "mode": "receptive",
+    "score": 5,
+    "total": 5,
+    "timestamp": "2026-07-04T00:08:09"
+  }
+]

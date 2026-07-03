@@ -86,6 +86,8 @@ def main():
         "illustration on the card as the entire scene for your analysis."
     )
 
+
+
     if difficulty == "expressive":
         prompt = f"""You are a pediatric speech-language pathologist creating therapy materials.
 
@@ -160,58 +162,97 @@ Return ONLY valid JSON in this exact format:
 
 {card_framing}
 
-Analyze this image and generate WH-questions for a child aged {child_age}.
+Analyze the illustration and generate WH-questions for a child aged {child_age}.
 
-For EACH of the 5 WH-question types (who, what, when, where, why), generate:
-1. A simple, clear question about the scene
-2. The correct answer (short, 1-5 words)
-3. Four visual choices (one correct + three plausible distractors), each 1-4 words
-4. An evidence hint telling the child where to look in the picture
+Generate exactly 5 questions: one each for who, what, when, where, and why.
 
-For receptive mode: make questions simple with obvious visual choices.
+Developmental guidance:
+- For ages 3: use very short, concrete questions with directly visible answers.
+- For ages 4: use simple WH-questions with obvious visual choices.
+- For ages 5: simple inference questions are allowed when supported by the picture.
+- For receptive mode, keep questions simple and make the choices visually distinguishable.
 
-Return ONLY valid JSON in this exact format:
-{{
+Grounding rules:
+- Do not invent details that are not visible or strongly supported by the scene.
+- Do not assume gender unless clearly shown. Use “the child,” “the person,” “the animal,” or “the character” when gender is unclear.
+- For “when” questions, use only visually supported time/context cues such as nighttime, morning, winter, bedtime, mealtime, or rainy day.
+- For “why” questions, use only simple everyday reasoning supported by visible evidence.
+- If a WH type is difficult for the image, generate the safest simple question possible.
+- Do not refer to the card, page, photo, or illustration in the questions.
+
+For each question, provide:
+1. wh_type
+2. question
+3. answer: short, 1–5 words
+4. visual_choices: exactly 4 choices, each 1–4 words
+5. evidence_type: "visible" or "simple_inference"
+6. evidence_hint: tell the child where to look in the picture
+
+Choice rules:
+- The correct answer must appear exactly once in visual_choices.
+- Include one correct answer and three plausible distractors.
+- Distractors should be from the same general category when possible.
+- Avoid silly, random, or obviously impossible distractors.
+- Keep all choices child-friendly and concrete.
+
+Return ONLY valid JSON. Do not include markdown or explanations.
+
+Use this exact format:
+{
   "scene_description": "Brief description of the scene",
   "questions": [
-    {{
+    {
       "wh_type": "who",
-      "question": "Who is in the picture?",
-      "answer": "a boy",
-      "visual_choices": ["a boy", "a girl", "a man", "a dog"],
-      "evidence_hint": "Look at the person in the picture"
-    }},
-    {{
+      "question": "...",
+      "answer": "...",
+      "visual_choices": ["...", "...", "...", "..."],
+      "evidence_type": "visible",
+      "evidence_hint": "..."
+    },
+    {
       "wh_type": "what",
-      "question": "What is he doing?",
-      "answer": "sleeping",
-      "visual_choices": ["sleeping", "eating", "running", "reading"],
-      "evidence_hint": "Look at what the person is doing"
-    }},
-    {{
+      "question": "...",
+      "answer": "...",
+      "visual_choices": ["...", "...", "...", "..."],
+      "evidence_type": "visible",
+      "evidence_hint": "..."
+    },
+    {
       "wh_type": "when",
-      "question": "When is it?",
-      "answer": "nighttime",
-      "visual_choices": ["nighttime", "morning", "afternoon", "lunchtime"],
-      "evidence_hint": "Look at the light and setting"
-    }},
-    {{
+      "question": "...",
+      "answer": "...",
+      "visual_choices": ["...", "...", "...", "..."],
+      "evidence_type": "visible",
+      "evidence_hint": "..."
+    },
+    {
       "wh_type": "where",
-      "question": "Where is he?",
-      "answer": "in bed",
-      "visual_choices": ["in bed", "at school", "in the park", "at the store"],
-      "evidence_hint": "Look at the place around the person"
-    }},
-    {{
+      "question": "...",
+      "answer": "...",
+      "visual_choices": ["...", "...", "...", "..."],
+      "evidence_type": "visible",
+      "evidence_hint": "..."
+    },
+    {
       "wh_type": "why",
-      "question": "Why is he sleeping?",
-      "answer": "because he is tired",
-      "visual_choices": ["because he is tired", "because he is hungry", "because he is sad", "because it is raining"],
-      "evidence_hint": "Think about why someone would do this"
-    }}
+      "question": "...",
+      "answer": "...",
+      "visual_choices": ["...", "...", "...", "..."],
+      "evidence_type": "simple_inference",
+      "evidence_hint": "..."
+    }
   ]
-}}
+}
 """
+
+    # Emit the prompt on stderr (stdout must stay pure JSON) so the server can
+    # trace it into the daily trace log like every other LLM call. Printed
+    # before the API call so failed calls still leave the prompt in the trace.
+    print(
+        f"[wh-scene-prompt]\nmodel={model_id} difficulty={difficulty} "
+        f"effective_age={child_age}\n{prompt}\n[/wh-scene-prompt]",
+        file=sys.stderr,
+    )
 
     client = genai.Client(api_key=api_key)
 

@@ -1,0 +1,103 @@
+{
+  "story": "Sophie is in the garden. Sophie has a red crown and big sparkly wings. [emotion:QT/happy] Sophie is a fairy princess today! Sophie finds a small brown rabbit under the rose bush. [emotion:QT/surprised] The rabbit is sitting on Sophie's magic wand! [emotion:QT/afraid] Sophie cannot reach the wand. Sophie's friend Mia is in the garden too. Mia picks up the rabbit very gently. Sophie takes the wand. [emotion:QT/happy] Sophie and Mia are jumping and laughing together. [gesture:clapping] Sophie puts the crown on Mia's head. [gesture:emotions/hoora] The two friends are dancing in the garden. [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 216,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Red Crown"
+  },
+  "pages": [
+    "Sophie is in the garden. Sophie has a red crown and big sparkly wings. [emotion:QT/happy] Sophie is a fairy princess today!",
+    "Sophie finds a small brown rabbit under the rose bush. [emotion:QT/surprised] The rabbit is sitting on Sophie's magic wand!",
+    "[emotion:QT/afraid] Sophie cannot reach the wand.",
+    "Sophie's friend Mia is in the garden too. Mia picks up the rabbit very gently. Sophie takes the wand.",
+    "[emotion:QT/happy] Sophie and Mia are jumping and laughing together. [gesture:clapping] Sophie puts the crown on Mia's head. [gesture:emotions/hoora] The two friends are dancing in the garden."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Sophie has a red crown and big sparkly wings. Sophie is a fairy princess today! Sophie finds a small brown rabbit under the rose bush. The rabbit is sitting on Sophie's magic wand! Sophie cannot reach the wand. Sophie's friend Mia is in the garden too. Mia picks up the rabbit very gently. Sophie takes the wand. Sophie and Mia are jumping and laughing together. Sophie puts the crown on Mia's head. The two friends are dancing in the garden."
+  ],
+  "scenes": [
+    "Sophie and Mia are in a sunny garden, dressed up with a red crown and sparkly wings, dancing and laughing together near a rose bush with a small brown rabbit nearby and a magic wand in hand."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in the story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie and her friend played in the garden",
+      "wrong_answers": [
+        "Sophie and her rabbit went to a castle",
+        "Sophie lost her crown and wings"
+      ]
+    },
+    {
+      "question": "Where was the rabbit sitting?",
+      "type": "detail",
+      "correct_answer": "On Sophie's magic wand",
+      "wrong_answers": [
+        "On Sophie's red crown",
+        "Under Sophie's sparkly wings"
+      ]
+    },
+    {
+      "question": "What did Sophie put on Mia's head?",
+      "type": "detail",
+      "correct_answer": "Her red crown",
+      "wrong_answers": [
+        "Her sparkly wings",
+        "Her magic wand"
+      ]
+    },
+    {
+      "question": "What were Sophie and Mia doing and laughing together?",
+      "type": "detail",
+      "correct_answer": "Jumping",
+      "wrong_answers": [
+        "Running",
+        "Eating"
+      ]
+    }
+  ],
+  "takeaways": []
+}

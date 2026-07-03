@@ -1308,3 +1308,979 @@
 21:37:08 [e8ed] }
 21:37:08 [e8ed] self.engine :  qwen
 21:37:15 [e8ed] └─ DONE  POST /api/scene_game/answer -> 200 in 8583ms
+21:55:42 [9ead] ┌─ WORK  POST /api/logout
+21:55:42 [9ead] └─ DONE  POST /api/logout -> 200 in 6ms
+21:55:42 [2e8f] ┌─ WORK  GET /
+21:55:42 [2e8f] └─ DONE  GET / -> 200 in 1ms
+21:55:48 [0ce4] ┌─ WORK  POST /api/login | fields: username
+21:55:48 [0ce4] └─ DONE  POST /api/login -> 200 in 7ms
+21:55:49 [ad69] ┌─ WORK  GET /
+21:55:49 [ad69] └─ DONE  GET / -> 200 in 1ms
+21:56:08 [2bcd] ┌─ WORK  GET /play_scene
+21:56:08 [2bcd] └─ DONE  GET /play_scene -> 200 in 1ms
+21:56:11 [5693] ┌─ WORK  POST /api/scene/start | fields: mode
+21:56:11 [5693] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:56:11 [5693] [Claude:scene-game-question] >>> PROMPT (2009 chars) | system: You generate game questions for children. Return JSON only.
+21:56:11 [5693] You are generating a question for an object detection game for a 4-year-old child.
+21:56:11 [5693] Available physical toys: lemon, banana, tray, box, grape, carrot, corn.
+21:56:11 [5693] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:56:11 [5693] Generate ONE inference-style request that lets the child figure
+21:56:11 [5693] out the target object from its observable properties.
+21:56:11 [5693] 
+21:56:11 [5693] HARD RULE — the QUESTION text must NOT name the target object.
+21:56:11 [5693] It must NEVER contain any of these noun names from the toy list:
+21:56:11 [5693]   lemon, banana, tray, box, grape, carrot, corn
+21:56:11 [5693] Refer to the target only as "it", "something", "one", or by
+21:56:11 [5693] a generic placeholder like "a fruit" or "a vehicle". The child
+21:56:11 [5693] must INFER which object you mean from the description.
+21:56:11 [5693] 
+21:56:11 [5693] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:56:11 [5693] - A single noun (the object type) with at most ONE adjective
+21:56:11 [5693]   describing color, size, or category.
+21:56:11 [5693] - Good criteria: "banana", "red car", "green dinosaur",
+21:56:11 [5693]   "tomato", "yellow fruit", "round ball".
+21:56:11 [5693] - BAD criteria (do NOT produce these):
+21:56:11 [5693]     * "red car moving block" (compound / multi-object)
+21:56:11 [5693]     * "big round shiny red fruit on a tree" (too many properties)
+21:56:11 [5693]     * "toy that you can stack" (function-based, vague)
+21:56:11 [5693] - Do not chain multiple objects or stack three+ adjectives.
+21:56:11 [5693] 
+21:56:11 [5693] The criteria MUST match at least one toy from the list above.
+21:56:11 [5693] Use simple, clear language appropriate for ages 4-6.
+21:56:11 [5693] Good examples (target NOT named in the question):
+21:56:11 [5693] - Question: "I want a red fruit!" (criteria: red fruit)
+21:56:11 [5693] - Question: "Can you find something yellow?" (criteria: yellow)
+21:56:11 [5693] - Question: "Show me something green that goes ROAR!"
+21:56:11 [5693]   (criteria: green dinosaur)
+21:56:11 [5693] BAD example (do NOT do this — names the target):
+21:56:11 [5693] - Question: "Show me the red apple!" — "apple" is the target name.
+21:56:11 [5693] 
+21:56:11 [5693] Return ONLY a JSON object:
+21:56:11 [5693] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:56:12 [5693] [Claude:scene-game-question] <<< RESPONSE (84 chars):
+21:56:12 [5693] {"question": "Can you find something long and yellow?", "criteria": "yellow banana"}
+21:56:12 [5693] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something long and yellow?", "criteria": "yellow banana"}
+21:56:12 [5693] [SceneGame] Parsed question JSON: {
+21:56:12 [5693]   "question": "Can you find something long and yellow?",
+21:56:12 [5693]   "criteria": "yellow banana"
+21:56:12 [5693] }
+21:56:12 [5693] self.engine :  qwen
+21:56:18 [5693] └─ DONE  POST /api/scene/start -> 200 in 7240ms
+21:56:23 [2af4] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:56:27 [2af4] [SceneGame] gemini_analyze_image raw: ```json
+21:56:27 [2af4] [
+21:56:27 [2af4]   {"point": [516, 584], "label": "banana", "color": "yellow", "shape": "curved"}
+21:56:27 [2af4] ]
+21:56:27 [2af4] ```
+21:56:27 [2af4] [SceneGame] Detected object: banana, color: yellow, shape: curved, point: [516, 584]
+21:56:27 [2af4] [SceneGame] Robot looking at pixel (374, 248)
+21:56:27 [2af4] [SceneGame] Detected object: banana, color: yellow, shape: curved
+21:56:27 [2af4] self.engine :  qwen
+21:56:35 [2af4] └─ DONE  POST /api/scene_game/answer -> 200 in 11484ms
+21:56:41 [a3a7] ┌─ WORK  POST /api/scene/start | fields: mode
+21:56:41 [a3a7] self.engine :  qwen
+21:56:46 [a3a7] └─ DONE  POST /api/scene/start -> 200 in 5122ms
+21:57:03 [9c36] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:57:03 [9c36] [Claude:scene-game-validate-spatial] >>> PROMPT (1914 chars) | system: You judge a children's spatial-direction game from one photo. Return JSON only.
+21:57:03 [9c36] You are judging a children's spatial-direction game.
+21:57:03 [9c36] The valid game objects are: lemon,banana,tray,box,grape,carrot,corn. Only identify objects from this list.
+21:57:03 [9c36] The child was asked to arrange the scene so that the tray is under the lemon.
+21:57:03 [9c36] 
+21:57:03 [9c36] The image is taken from the front of the child (camera-facing view).
+21:57:03 [9c36] Decide:
+21:57:03 [9c36] 1. Is the tray present in the scene?
+21:57:03 [9c36] 2. Is the lemon present in the scene?
+21:57:03 [9c36] 3. What is the actual spatial relation of the tray TO the lemon? Pick ONE:
+21:57:03 [9c36]    - next_to       (side by side, roughly same height)
+21:57:03 [9c36]    - above         (higher than / on top of)
+21:57:03 [9c36]    - under         (lower than / underneath)
+21:57:03 [9c36]    - behind        (further from the camera, partially hidden)
+21:57:03 [9c36]    - in_front_of   (closer to camera, may partially block the other)
+21:57:03 [9c36]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:57:03 [9c36]    - out           (outside / not contained by the other; fully visible and separate)
+21:57:03 [9c36]    - other         (none of the above clearly applies)
+21:57:03 [9c36] 4. Does that match the requested relation 'under'?
+21:57:03 [9c36] 
+21:57:03 [9c36] Tips:
+21:57:03 [9c36] - 'behind' means partially hidden by the reference object, or visibly
+21:57:03 [9c36]   smaller/further along the camera's depth axis.
+21:57:03 [9c36] - 'in_front_of' means the moving object partly occludes or sits
+21:57:03 [9c36]   closer to the camera than the reference object.
+21:57:03 [9c36] - 'in' means the moving object is contained by the reference object
+21:57:03 [9c36]   (e.g. ball inside a cup or box) — typically partly hidden by the
+21:57:03 [9c36]   rim/walls of the container.
+21:57:03 [9c36] - 'out' means the moving object is clearly outside the reference
+21:57:03 [9c36]   object, fully visible, with a visible gap between them.
+21:57:03 [9c36] If you cannot tell confidently, return 'other'.
+21:57:03 [9c36] 
+21:57:03 [9c36] Return ONLY a JSON object with no markdown fences:
+21:57:03 [9c36] {
+21:57:03 [9c36]   "obj_a_found": true|false,
+21:57:03 [9c36]   "obj_b_found": true|false,
+21:57:03 [9c36]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:57:03 [9c36]   "correct": true|false,
+21:57:03 [9c36]   "reason": "<short, child-friendly explanation>"
+21:57:03 [9c36] }
+21:57:03 [9c36] If either object is missing, set correct=false.
+21:57:06 [9c36] [Claude:scene-game-validate-spatial] <<< RESPONSE (231 chars):
+21:57:06 [9c36] {
+21:57:06 [9c36]   "obj_a_found": true,
+21:57:06 [9c36]   "obj_b_found": true,
+21:57:06 [9c36]   "actual_relation": "under",
+21:57:06 [9c36]   "correct": true,
+21:57:06 [9c36]   "reason": "Great job! The tray is holding the lemon from below, so the tray is under the lemon — just like the instructions said!"
+21:57:06 [9c36] }
+21:57:06 [9c36] [SceneGame] claude_validate_spatial raw: {
+21:57:06 [9c36]   "obj_a_found": true,
+21:57:06 [9c36]   "obj_b_found": true,
+21:57:06 [9c36]   "actual_relation": "under",
+21:57:06 [9c36]   "correct": true,
+21:57:06 [9c36]   "reason": "Great job! The tray is holding the lemon from below, so the tray is under the lemon — just like the instructions said!"
+21:57:06 [9c36] }
+21:57:06 [9c36] self.engine :  qwen
+21:57:12 [9c36] └─ DONE  POST /api/scene_game/answer -> 200 in 8935ms
+22:04:30 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-06-29.log (daily rotation)
+22:04:30 [----]  * Serving Flask app 'web_user_server'
+22:04:30 [----]  * Debug mode: on
+22:04:45 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-06-29.log (daily rotation)
+22:04:46 [3309] ┌─ WORK  GET /
+22:04:46 [3309] └─ DONE  GET / -> 200 in 29ms
+22:05:06 [99be] ┌─ WORK  POST /api/login | fields: username
+22:05:06 [99be] └─ DONE  POST /api/login -> 200 in 8ms
+22:05:07 [2faa] ┌─ WORK  GET /
+22:05:07 [2faa] └─ DONE  GET / -> 200 in 10ms
+22:09:32 [3d1c] ┌─ WORK  GET /play_scene
+22:09:32 [3d1c] └─ DONE  GET /play_scene -> 200 in 5ms
+22:10:03 [434c] ┌─ WORK  POST /api/scene/start | fields: mode
+22:10:03 [434c] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+22:10:03 [434c] [Claude:scene-game-question] >>> PROMPT (2009 chars) | system: You generate game questions for children. Return JSON only.
+22:10:03 [434c] You are generating a question for an object detection game for a 4-year-old child.
+22:10:03 [434c] Available physical toys: lemon, banana, tray, box, grape, carrot, corn.
+22:10:03 [434c] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+22:10:03 [434c] Generate ONE inference-style request that lets the child figure
+22:10:03 [434c] out the target object from its observable properties.
+22:10:03 [434c] 
+22:10:03 [434c] HARD RULE — the QUESTION text must NOT name the target object.
+22:10:03 [434c] It must NEVER contain any of these noun names from the toy list:
+22:10:03 [434c]   lemon, banana, tray, box, grape, carrot, corn
+22:10:03 [434c] Refer to the target only as "it", "something", "one", or by
+22:10:03 [434c] a generic placeholder like "a fruit" or "a vehicle". The child
+22:10:03 [434c] must INFER which object you mean from the description.
+22:10:03 [434c] 
+22:10:03 [434c] CRITICAL — the criteria must describe ONE simple, concrete object:
+22:10:03 [434c] - A single noun (the object type) with at most ONE adjective
+22:10:03 [434c]   describing color, size, or category.
+22:10:03 [434c] - Good criteria: "banana", "red car", "green dinosaur",
+22:10:03 [434c]   "tomato", "yellow fruit", "round ball".
+22:10:03 [434c] - BAD criteria (do NOT produce these):
+22:10:03 [434c]     * "red car moving block" (compound / multi-object)
+22:10:03 [434c]     * "big round shiny red fruit on a tree" (too many properties)
+22:10:03 [434c]     * "toy that you can stack" (function-based, vague)
+22:10:03 [434c] - Do not chain multiple objects or stack three+ adjectives.
+22:10:03 [434c] 
+22:10:03 [434c] The criteria MUST match at least one toy from the list above.
+22:10:03 [434c] Use simple, clear language appropriate for ages 4-6.
+22:10:03 [434c] Good examples (target NOT named in the question):
+22:10:03 [434c] - Question: "I want a red fruit!" (criteria: red fruit)
+22:10:03 [434c] - Question: "Can you find something yellow?" (criteria: yellow)
+22:10:03 [434c] - Question: "Show me something green that goes ROAR!"
+22:10:03 [434c]   (criteria: green dinosaur)
+22:10:03 [434c] BAD example (do NOT do this — names the target):
+22:10:03 [434c] - Question: "Show me the red apple!" — "apple" is the target name.
+22:10:03 [434c] 
+22:10:03 [434c] Return ONLY a JSON object:
+22:10:03 [434c] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+22:10:06 [434c] [Claude:scene-game-question] <<< RESPONSE (84 chars):
+22:10:06 [434c] {"question": "Can you find something long and yellow?", "criteria": "yellow banana"}
+22:10:06 [434c] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something long and yellow?", "criteria": "yellow banana"}
+22:10:06 [434c] [SceneGame] Parsed question JSON: {
+22:10:06 [434c]   "question": "Can you find something long and yellow?",
+22:10:06 [434c]   "criteria": "yellow banana"
+22:10:06 [434c] }
+22:10:06 [434c] self.engine :  qwen
+22:10:11 [434c] └─ DONE  POST /api/scene/start -> 200 in 8159ms
+22:10:40 [24c9] ┌─ WORK  POST /api/scene/start | fields: mode
+22:10:40 [24c9] self.engine :  qwen
+22:10:45 [24c9] └─ DONE  POST /api/scene/start -> 200 in 4877ms
+22:15:06 [7188] ┌─ WORK  GET /
+22:15:06 [7188] └─ DONE  GET / -> 200 in 1ms
+22:15:10 [4b1b] ┌─ WORK  GET /object_game_generate
+22:15:10 [4b1b] └─ DONE  GET /object_game_generate -> 200 in 4ms
+22:15:10 [c2de] ┌─ WORK  GET /api/scene_game/toys
+22:15:10 [c2de] └─ DONE  GET /api/scene_game/toys -> 200 in 1ms
+22:15:49 [eb97] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:15:49 [eb97] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:15:51 [b199] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:15:51 [b199] └─ DONE  POST /api/scene_game/toys -> 200 in 4ms
+22:15:52 [a52e] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:15:52 [a52e] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:15:56 [b0de] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:15:56 [b0de] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:16:00 [2926] ┌─ WORK  GET /play_scene
+22:16:00 [2926] └─ DONE  GET /play_scene -> 200 in 1ms
+22:16:03 [31db] ┌─ WORK  POST /api/scene/start | fields: mode
+22:16:03 [31db] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+22:16:03 [31db] [Claude:scene-game-question] >>> PROMPT (1955 chars) | system: You generate game questions for children. Return JSON only.
+22:16:03 [31db] You are generating a question for an object detection game for a 4-year-old child.
+22:16:03 [31db] Available physical toys: box, grape, carrot.
+22:16:03 [31db] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+22:16:03 [31db] Generate ONE inference-style request that lets the child figure
+22:16:03 [31db] out the target object from its observable properties.
+22:16:03 [31db] 
+22:16:03 [31db] HARD RULE — the QUESTION text must NOT name the target object.
+22:16:03 [31db] It must NEVER contain any of these noun names from the toy list:
+22:16:03 [31db]   box, grape, carrot
+22:16:03 [31db] Refer to the target only as "it", "something", "one", or by
+22:16:03 [31db] a generic placeholder like "a fruit" or "a vehicle". The child
+22:16:03 [31db] must INFER which object you mean from the description.
+22:16:03 [31db] 
+22:16:03 [31db] CRITICAL — the criteria must describe ONE simple, concrete object:
+22:16:03 [31db] - A single noun (the object type) with at most ONE adjective
+22:16:03 [31db]   describing color, size, or category.
+22:16:03 [31db] - Good criteria: "banana", "red car", "green dinosaur",
+22:16:03 [31db]   "tomato", "yellow fruit", "round ball".
+22:16:03 [31db] - BAD criteria (do NOT produce these):
+22:16:03 [31db]     * "red car moving block" (compound / multi-object)
+22:16:03 [31db]     * "big round shiny red fruit on a tree" (too many properties)
+22:16:03 [31db]     * "toy that you can stack" (function-based, vague)
+22:16:03 [31db] - Do not chain multiple objects or stack three+ adjectives.
+22:16:03 [31db] 
+22:16:03 [31db] The criteria MUST match at least one toy from the list above.
+22:16:03 [31db] Use simple, clear language appropriate for ages 4-6.
+22:16:03 [31db] Good examples (target NOT named in the question):
+22:16:03 [31db] - Question: "I want a red fruit!" (criteria: red fruit)
+22:16:03 [31db] - Question: "Can you find something yellow?" (criteria: yellow)
+22:16:03 [31db] - Question: "Show me something green that goes ROAR!"
+22:16:03 [31db]   (criteria: green dinosaur)
+22:16:03 [31db] BAD example (do NOT do this — names the target):
+22:16:03 [31db] - Question: "Show me the red apple!" — "apple" is the target name.
+22:16:03 [31db] 
+22:16:03 [31db] Return ONLY a JSON object:
+22:16:03 [31db] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+22:16:04 [31db] [Claude:scene-game-question] <<< RESPONSE (84 chars):
+22:16:04 [31db] {"question": "Can you find something orange and long?", "criteria": "orange carrot"}
+22:16:04 [31db] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something orange and long?", "criteria": "orange carrot"}
+22:16:04 [31db] [SceneGame] Parsed question JSON: {
+22:16:04 [31db]   "question": "Can you find something orange and long?",
+22:16:04 [31db]   "criteria": "orange carrot"
+22:16:04 [31db] }
+22:16:04 [31db] self.engine :  qwen
+22:16:10 [31db] └─ DONE  POST /api/scene/start -> 200 in 7427ms
+22:16:21 [ad4f] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+22:16:24 [ad4f] [SceneGame] gemini_analyze_image raw: ```json
+22:16:24 [ad4f] [
+22:16:24 [ad4f]   {"point": [587, 539], "label": "carrot toy", "color": "orange", "shape": "carrot-shaped"}
+22:16:24 [ad4f] ]
+22:16:24 [ad4f] ```
+22:16:24 [ad4f] [SceneGame] Detected object: carrot toy, color: orange, shape: carrot-shaped, point: [587, 539]
+22:16:24 [ad4f] [SceneGame] Robot looking at pixel (345, 282)
+22:16:24 [ad4f] [SceneGame] Detected object: carrot toy, color: orange, shape: carrot-shaped
+22:16:24 [ad4f] self.engine :  qwen
+22:16:32 [ad4f] └─ DONE  POST /api/scene_game/answer -> 200 in 10632ms
+22:20:30 [8e5a] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:20:30 [8e5a] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:20:31 [b784] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:20:31 [b784] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:20:32 [d839] ┌─ WORK  GET /play_scene
+22:20:32 [d839] └─ DONE  GET /play_scene -> 200 in 5ms
+22:20:34 [af87] ┌─ WORK  POST /api/scene/start | fields: mode
+22:20:34 [af87] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+22:20:34 [af87] [Claude:scene-game-question] >>> PROMPT (1931 chars) | system: You generate game questions for children. Return JSON only.
+22:20:34 [af87] You are generating a question for an object detection game for a 4-year-old child.
+22:20:34 [af87] Available physical toys: carrot.
+22:20:34 [af87] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+22:20:34 [af87] Generate ONE inference-style request that lets the child figure
+22:20:34 [af87] out the target object from its observable properties.
+22:20:34 [af87] 
+22:20:34 [af87] HARD RULE — the QUESTION text must NOT name the target object.
+22:20:34 [af87] It must NEVER contain any of these noun names from the toy list:
+22:20:34 [af87]   carrot
+22:20:34 [af87] Refer to the target only as "it", "something", "one", or by
+22:20:34 [af87] a generic placeholder like "a fruit" or "a vehicle". The child
+22:20:34 [af87] must INFER which object you mean from the description.
+22:20:34 [af87] 
+22:20:34 [af87] CRITICAL — the criteria must describe ONE simple, concrete object:
+22:20:34 [af87] - A single noun (the object type) with at most ONE adjective
+22:20:34 [af87]   describing color, size, or category.
+22:20:34 [af87] - Good criteria: "banana", "red car", "green dinosaur",
+22:20:34 [af87]   "tomato", "yellow fruit", "round ball".
+22:20:34 [af87] - BAD criteria (do NOT produce these):
+22:20:34 [af87]     * "red car moving block" (compound / multi-object)
+22:20:34 [af87]     * "big round shiny red fruit on a tree" (too many properties)
+22:20:34 [af87]     * "toy that you can stack" (function-based, vague)
+22:20:34 [af87] - Do not chain multiple objects or stack three+ adjectives.
+22:20:34 [af87] 
+22:20:34 [af87] The criteria MUST match at least one toy from the list above.
+22:20:34 [af87] Use simple, clear language appropriate for ages 4-6.
+22:20:34 [af87] Good examples (target NOT named in the question):
+22:20:34 [af87] - Question: "I want a red fruit!" (criteria: red fruit)
+22:20:34 [af87] - Question: "Can you find something yellow?" (criteria: yellow)
+22:20:34 [af87] - Question: "Show me something green that goes ROAR!"
+22:20:34 [af87]   (criteria: green dinosaur)
+22:20:34 [af87] BAD example (do NOT do this — names the target):
+22:20:34 [af87] - Question: "Show me the red apple!" — "apple" is the target name.
+22:20:34 [af87] 
+22:20:34 [af87] Return ONLY a JSON object:
+22:20:34 [af87] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+22:20:36 [af87] [Claude:scene-game-question] <<< RESPONSE (87 chars):
+22:20:36 [af87] {"question": "Can you find something long and orange?", "criteria": "orange vegetable"}
+22:20:36 [af87] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something long and orange?", "criteria": "orange vegetable"}
+22:20:36 [af87] [SceneGame] Parsed question JSON: {
+22:20:36 [af87]   "question": "Can you find something long and orange?",
+22:20:36 [af87]   "criteria": "orange vegetable"
+22:20:36 [af87] }
+22:20:36 [af87] self.engine :  qwen
+22:20:41 [af87] └─ DONE  POST /api/scene/start -> 200 in 6829ms
+22:23:10 [efc3] ┌─ WORK  GET /object_game_generate
+22:23:10 [efc3] └─ DONE  GET /object_game_generate -> 200 in 0ms
+22:23:10 [039d] ┌─ WORK  GET /api/scene_game/toys
+22:23:10 [039d] └─ DONE  GET /api/scene_game/toys -> 200 in 2ms
+22:23:26 [adfc] ┌─ WORK  GET /play_scene
+22:23:26 [adfc] └─ DONE  GET /play_scene -> 200 in 3ms
+22:24:43 [763c] ┌─ WORK  GET /
+22:24:43 [763c] └─ DONE  GET / -> 200 in 1ms
+22:24:46 [fd56] ┌─ WORK  GET /play_scene
+22:24:46 [fd56] └─ DONE  GET /play_scene -> 200 in 1ms
+22:29:18 [dec0] ┌─ WORK  GET /
+22:29:18 [dec0] └─ DONE  GET / -> 200 in 1ms
+22:41:29 [2d27] ┌─ WORK  GET /play_scene
+22:41:29 [2d27] └─ DONE  GET /play_scene -> 200 in 1ms
+22:41:33 [bf13] ┌─ WORK  POST /api/scene/start | fields: mode
+22:41:33 [bf13] [SceneGame] direction mode needs two distinct toys, or a container plus an object; current toys: ['carrot']
+22:41:33 [bf13] [SceneGame] direction mode unavailable for current toy list; falling back to auto
+22:41:33 [bf13] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+22:41:33 [bf13] [Claude:scene-game-question] >>> PROMPT (1931 chars) | system: You generate game questions for children. Return JSON only.
+22:41:33 [bf13] You are generating a question for an object detection game for a 4-year-old child.
+22:41:33 [bf13] Available physical toys: carrot.
+22:41:33 [bf13] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+22:41:33 [bf13] Generate ONE inference-style request that lets the child figure
+22:41:33 [bf13] out the target object from its observable properties.
+22:41:33 [bf13] 
+22:41:33 [bf13] HARD RULE — the QUESTION text must NOT name the target object.
+22:41:33 [bf13] It must NEVER contain any of these noun names from the toy list:
+22:41:33 [bf13]   carrot
+22:41:33 [bf13] Refer to the target only as "it", "something", "one", or by
+22:41:33 [bf13] a generic placeholder like "a fruit" or "a vehicle". The child
+22:41:33 [bf13] must INFER which object you mean from the description.
+22:41:33 [bf13] 
+22:41:33 [bf13] CRITICAL — the criteria must describe ONE simple, concrete object:
+22:41:33 [bf13] - A single noun (the object type) with at most ONE adjective
+22:41:33 [bf13]   describing color, size, or category.
+22:41:33 [bf13] - Good criteria: "banana", "red car", "green dinosaur",
+22:41:33 [bf13]   "tomato", "yellow fruit", "round ball".
+22:41:33 [bf13] - BAD criteria (do NOT produce these):
+22:41:33 [bf13]     * "red car moving block" (compound / multi-object)
+22:41:33 [bf13]     * "big round shiny red fruit on a tree" (too many properties)
+22:41:33 [bf13]     * "toy that you can stack" (function-based, vague)
+22:41:33 [bf13] - Do not chain multiple objects or stack three+ adjectives.
+22:41:33 [bf13] 
+22:41:33 [bf13] The criteria MUST match at least one toy from the list above.
+22:41:33 [bf13] Use simple, clear language appropriate for ages 4-6.
+22:41:33 [bf13] Good examples (target NOT named in the question):
+22:41:33 [bf13] - Question: "I want a red fruit!" (criteria: red fruit)
+22:41:33 [bf13] - Question: "Can you find something yellow?" (criteria: yellow)
+22:41:33 [bf13] - Question: "Show me something green that goes ROAR!"
+22:41:33 [bf13]   (criteria: green dinosaur)
+22:41:33 [bf13] BAD example (do NOT do this — names the target):
+22:41:33 [bf13] - Question: "Show me the red apple!" — "apple" is the target name.
+22:41:33 [bf13] 
+22:41:33 [bf13] Return ONLY a JSON object:
+22:41:33 [bf13] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+22:41:35 [bf13] [Claude:scene-game-question] <<< RESPONSE (87 chars):
+22:41:35 [bf13] {"question": "Can you find something long and orange?", "criteria": "orange vegetable"}
+22:41:35 [bf13] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something long and orange?", "criteria": "orange vegetable"}
+22:41:35 [bf13] [SceneGame] Parsed question JSON: {
+22:41:35 [bf13]   "question": "Can you find something long and orange?",
+22:41:35 [bf13]   "criteria": "orange vegetable"
+22:41:35 [bf13] }
+22:41:35 [bf13] self.engine :  qwen
+22:41:40 [bf13] └─ DONE  POST /api/scene/start -> 200 in 7054ms
+22:41:43 [b58e] ┌─ WORK  GET /play_scene
+22:41:43 [b58e] └─ DONE  GET /play_scene -> 200 in 1ms
+22:41:46 [678c] ┌─ WORK  POST /api/scene/start | fields: mode
+22:41:46 [678c] [SceneGame] direction mode needs two distinct toys, or a container plus an object; current toys: ['carrot']
+22:41:46 [678c] [SceneGame] direction mode unavailable for current toy list; falling back to auto
+22:41:46 [678c] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+22:41:46 [678c] [Claude:scene-game-question] >>> PROMPT (1931 chars) | system: You generate game questions for children. Return JSON only.
+22:41:46 [678c] You are generating a question for an object detection game for a 4-year-old child.
+22:41:46 [678c] Available physical toys: carrot.
+22:41:46 [678c] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+22:41:46 [678c] Generate ONE inference-style request that lets the child figure
+22:41:46 [678c] out the target object from its observable properties.
+22:41:46 [678c] 
+22:41:46 [678c] HARD RULE — the QUESTION text must NOT name the target object.
+22:41:46 [678c] It must NEVER contain any of these noun names from the toy list:
+22:41:46 [678c]   carrot
+22:41:46 [678c] Refer to the target only as "it", "something", "one", or by
+22:41:46 [678c] a generic placeholder like "a fruit" or "a vehicle". The child
+22:41:46 [678c] must INFER which object you mean from the description.
+22:41:46 [678c] 
+22:41:46 [678c] CRITICAL — the criteria must describe ONE simple, concrete object:
+22:41:46 [678c] - A single noun (the object type) with at most ONE adjective
+22:41:46 [678c]   describing color, size, or category.
+22:41:46 [678c] - Good criteria: "banana", "red car", "green dinosaur",
+22:41:46 [678c]   "tomato", "yellow fruit", "round ball".
+22:41:46 [678c] - BAD criteria (do NOT produce these):
+22:41:46 [678c]     * "red car moving block" (compound / multi-object)
+22:41:46 [678c]     * "big round shiny red fruit on a tree" (too many properties)
+22:41:46 [678c]     * "toy that you can stack" (function-based, vague)
+22:41:46 [678c] - Do not chain multiple objects or stack three+ adjectives.
+22:41:46 [678c] 
+22:41:46 [678c] The criteria MUST match at least one toy from the list above.
+22:41:46 [678c] Use simple, clear language appropriate for ages 4-6.
+22:41:46 [678c] Good examples (target NOT named in the question):
+22:41:46 [678c] - Question: "I want a red fruit!" (criteria: red fruit)
+22:41:46 [678c] - Question: "Can you find something yellow?" (criteria: yellow)
+22:41:46 [678c] - Question: "Show me something green that goes ROAR!"
+22:41:46 [678c]   (criteria: green dinosaur)
+22:41:46 [678c] BAD example (do NOT do this — names the target):
+22:41:46 [678c] - Question: "Show me the red apple!" — "apple" is the target name.
+22:41:46 [678c] 
+22:41:46 [678c] Return ONLY a JSON object:
+22:41:46 [678c] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+22:41:47 [678c] [Claude:scene-game-question] <<< RESPONSE (87 chars):
+22:41:47 [678c] {"question": "Can you find something long and orange?", "criteria": "orange vegetable"}
+22:41:47 [678c] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something long and orange?", "criteria": "orange vegetable"}
+22:41:47 [678c] [SceneGame] Parsed question JSON: {
+22:41:47 [678c]   "question": "Can you find something long and orange?",
+22:41:47 [678c]   "criteria": "orange vegetable"
+22:41:47 [678c] }
+22:41:47 [678c] self.engine :  qwen
+22:41:53 [678c] └─ DONE  POST /api/scene/start -> 200 in 7200ms
+22:41:57 [54de] ┌─ WORK  GET /play_scene
+22:41:57 [54de] └─ DONE  GET /play_scene -> 200 in 1ms
+22:42:02 [bd76] ┌─ WORK  GET /object_game_generate
+22:42:02 [bd76] └─ DONE  GET /object_game_generate -> 200 in 1ms
+22:42:02 [0df1] ┌─ WORK  GET /api/scene_game/toys
+22:42:02 [0df1] └─ DONE  GET /api/scene_game/toys -> 200 in 1ms
+22:42:55 [657f] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:42:55 [657f] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:42:56 [3e29] ┌─ WORK  GET /play_scene
+22:42:56 [3e29] └─ DONE  GET /play_scene -> 200 in 1ms
+22:42:58 [8e09] ┌─ WORK  POST /api/scene/start | fields: mode
+22:42:58 [8e09] self.engine :  qwen
+22:43:02 [8e09] └─ DONE  POST /api/scene/start -> 200 in 4744ms
+22:43:07 [10da] ┌─ WORK  POST /api/scene/start | fields: mode
+22:43:07 [10da] self.engine :  qwen
+22:43:12 [10da] └─ DONE  POST /api/scene/start -> 200 in 5159ms
+22:46:20 [c4f0] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:46:20 [c4f0] └─ DONE  POST /api/scene_game/toys -> 200 in 4ms
+22:46:35 [9072] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:46:35 [9072] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+22:46:37 [a65a] ┌─ WORK  GET /play_scene
+22:46:37 [a65a] └─ DONE  GET /play_scene -> 200 in 1ms
+22:46:41 [6a05] ┌─ WORK  POST /api/scene/start | fields: mode
+22:46:41 [6a05] self.engine :  qwen
+22:46:46 [6a05] └─ DONE  POST /api/scene/start -> 200 in 5353ms
+22:46:49 [8b62] ┌─ WORK  POST /api/scene/start | fields: mode
+22:46:49 [8b62] self.engine :  qwen
+22:46:54 [8b62] └─ DONE  POST /api/scene/start -> 200 in 5397ms
+22:47:08 [9ccb] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+22:47:22 [9ccb] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "in", "correct": false, "reason": "The carrot is inside the box, but you were asked to put it behind the box.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: carrot,box. Only identify objects from this list.\nThe child was asked to arrange the scene so that the carrot is behind the box.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the carrot present in the scene?\n2. Is the box present in the scene?\n3. What is the actual spatial relation of the carrot TO the box? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"in\",\n  \"correct\": false,\n  \"reason\": \"The carrot is inside the box, but you were asked to put it behind the box.\"\n}"}
+22:47:22 [9ccb] self.engine :  qwen
+22:47:28 [9ccb] └─ DONE  POST /api/scene_game/answer -> 200 in 19528ms
+22:47:58 [0786] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+22:48:12 [0786] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "behind", "correct": true, "reason": "Great job! The carrot is behind the box, just as requested.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: carrot,box. Only identify objects from this list.\nThe child was asked to arrange the scene so that the carrot is behind the box.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the carrot present in the scene?\n2. Is the box present in the scene?\n3. What is the actual spatial relation of the carrot TO the box? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"behind\",\n  \"correct\": true,\n  \"reason\": \"Great job! The carrot is behind the box, just as requested.\"\n}"}
+22:48:12 [0786] self.engine :  qwen
+22:48:18 [0786] └─ DONE  POST /api/scene_game/answer -> 200 in 19854ms
+22:57:54 [6085] ┌─ WORK  POST /api/logout
+22:57:54 [6085] └─ DONE  POST /api/logout -> 200 in 6ms
+22:59:43 [c7c7] ┌─ WORK  POST /api/login | fields: username
+22:59:43 [c7c7] └─ DONE  POST /api/login -> 200 in 6ms
+22:59:44 [35fc] ┌─ WORK  GET /
+22:59:44 [35fc] └─ DONE  GET / -> 200 in 1ms
+23:00:13 [d72a] ┌─ WORK  GET /api/get_user_stories
+23:00:13 [d72a] Looking for stories in: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan/stories
+23:00:13 [d72a] Files found: ['story_20260513_203039.json', 'story_20260620_165654.json', 'story_20260620_194518.json', 'story_20260421_181010.json', 'story_20260621_211358.json', 'story_20260513_195327.json', 'story_20260513_201632.json', 'story_20260513_192412.json', 'story_20260521_222948.json', 'story_20260620_170939.json', 'story_20260620_173631.json', 'story_20260620_165945.json', 'story_20260521_220311.json', 'story_20260513_203952.json', 'story_20260513_200430.json', 'story_20260421_183933.json', 'story_20260620_193537.json', 'story_20260602_195420.json', 'story_20260620_173850.json', 'story_20260513_205613.json', 'story_20260617_175350.json', 'story_20260513_211131.json', 'story_20260529_212454.json', 'story_20260620_171205.json', 'story_20260513_193539.json', 'story_20260620_194934.json']
+23:00:13 [d72a] Processing file: story_20260513_203039.json
+23:00:13 [d72a] Successfully loaded story_20260513_203039.json
+23:00:13 [d72a] Added story: story_20260513_203039.json
+23:00:13 [d72a] Processing file: story_20260620_165654.json
+23:00:13 [d72a] Successfully loaded story_20260620_165654.json
+23:00:13 [d72a] Added story: story_20260620_165654.json
+23:00:13 [d72a] Processing file: story_20260620_194518.json
+23:00:13 [d72a] Successfully loaded story_20260620_194518.json
+23:00:13 [d72a] Added story: story_20260620_194518.json
+23:00:13 [d72a] Processing file: story_20260421_181010.json
+23:00:13 [d72a] Successfully loaded story_20260421_181010.json
+23:00:13 [d72a] Added story: story_20260421_181010.json
+23:00:13 [d72a] Processing file: story_20260621_211358.json
+23:00:13 [d72a] Successfully loaded story_20260621_211358.json
+23:00:13 [d72a] Added story: story_20260621_211358.json
+23:00:13 [d72a] Processing file: story_20260513_195327.json
+23:00:13 [d72a] Successfully loaded story_20260513_195327.json
+23:00:13 [d72a] Added story: story_20260513_195327.json
+23:00:13 [d72a] Processing file: story_20260513_201632.json
+23:00:13 [d72a] Successfully loaded story_20260513_201632.json
+23:00:13 [d72a] Added story: story_20260513_201632.json
+23:00:13 [d72a] Processing file: story_20260513_192412.json
+23:00:13 [d72a] Successfully loaded story_20260513_192412.json
+23:00:13 [d72a] Added story: story_20260513_192412.json
+23:00:13 [d72a] Processing file: story_20260521_222948.json
+23:00:13 [d72a] Successfully loaded story_20260521_222948.json
+23:00:13 [d72a] Added story: story_20260521_222948.json
+23:00:13 [d72a] Processing file: story_20260620_170939.json
+23:00:13 [d72a] Successfully loaded story_20260620_170939.json
+23:00:13 [d72a] Added story: story_20260620_170939.json
+23:00:13 [d72a] Processing file: story_20260620_173631.json
+23:00:13 [d72a] Successfully loaded story_20260620_173631.json
+23:00:13 [d72a] Added story: story_20260620_173631.json
+23:00:13 [d72a] Processing file: story_20260620_165945.json
+23:00:13 [d72a] Successfully loaded story_20260620_165945.json
+23:00:13 [d72a] Added story: story_20260620_165945.json
+23:00:13 [d72a] Processing file: story_20260521_220311.json
+23:00:13 [d72a] Successfully loaded story_20260521_220311.json
+23:00:13 [d72a] Added story: story_20260521_220311.json
+23:00:13 [d72a] Processing file: story_20260513_203952.json
+23:00:13 [d72a] Successfully loaded story_20260513_203952.json
+23:00:13 [d72a] Added story: story_20260513_203952.json
+23:00:13 [d72a] Processing file: story_20260513_200430.json
+23:00:13 [d72a] Successfully loaded story_20260513_200430.json
+23:00:13 [d72a] Added story: story_20260513_200430.json
+23:00:13 [d72a] Processing file: story_20260421_183933.json
+23:00:13 [d72a] Successfully loaded story_20260421_183933.json
+23:00:13 [d72a] Added story: story_20260421_183933.json
+23:00:13 [d72a] Processing file: story_20260620_193537.json
+23:00:13 [d72a] Successfully loaded story_20260620_193537.json
+23:00:13 [d72a] Added story: story_20260620_193537.json
+23:00:13 [d72a] Processing file: story_20260602_195420.json
+23:00:13 [d72a] Successfully loaded story_20260602_195420.json
+23:00:13 [d72a] Added story: story_20260602_195420.json
+23:00:13 [d72a] Processing file: story_20260620_173850.json
+23:00:13 [d72a] Successfully loaded story_20260620_173850.json
+23:00:13 [d72a] Added story: story_20260620_173850.json
+23:00:13 [d72a] Processing file: story_20260513_205613.json
+23:00:13 [d72a] Successfully loaded story_20260513_205613.json
+23:00:13 [d72a] Added story: story_20260513_205613.json
+23:00:13 [d72a] Processing file: story_20260617_175350.json
+23:00:13 [d72a] Successfully loaded story_20260617_175350.json
+23:00:13 [d72a] Added story: story_20260617_175350.json
+23:00:13 [d72a] Processing file: story_20260513_211131.json
+23:00:13 [d72a] Error processing story_20260513_211131.json: Expecting value: line 27 column 9 (char 2195)
+23:00:13 [d72a] Processing file: story_20260529_212454.json
+23:00:13 [d72a] Successfully loaded story_20260529_212454.json
+23:00:13 [d72a] Added story: story_20260529_212454.json
+23:00:13 [d72a] Processing file: story_20260620_171205.json
+23:00:13 [d72a] Successfully loaded story_20260620_171205.json
+23:00:13 [d72a] Added story: story_20260620_171205.json
+23:00:13 [d72a] Processing file: story_20260513_193539.json
+23:00:13 [d72a] Successfully loaded story_20260513_193539.json
+23:00:13 [d72a] Added story: story_20260513_193539.json
+23:00:13 [d72a] Processing file: story_20260620_194934.json
+23:00:13 [d72a] Successfully loaded story_20260620_194934.json
+23:00:13 [d72a] Added story: story_20260620_194934.json
+23:00:13 [d72a] Returning 25 stories: [{'filename': 'story_20260621_211358.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 288, 'created_at': '20260621 _2:11:35', 'preview': 'Ethan ran three quick laps around the green, checkered track he had built on the kitchen floor. His ...'}, {'filename': 'story_20260620_194934.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 292, 'created_at': '20260620 _1:94:93', 'preview': 'emotion:QThappy Ethan loved pretending he was a superhero with a bright red cape. One Saturday morni...'}, {'filename': 'story_20260620_194518.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 284, 'created_at': '20260620 _1:94:51', 'preview': 'emotion:QThappy Ethan loved Saturday mornings because the whole family stayed home together. emotion...'}, {'filename': 'story_20260620_193537.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 311, 'created_at': '20260620 _1:93:53', 'preview': 'emotion:QThappy Ethan ran toward the big wooden table in the school hall, where a massive toy train ...'}, {'filename': 'story_20260620_173850.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 290, 'created_at': '20260620 _1:73:85', 'preview': 'Ethan went to the park carrying a big, crinkled map he had drawn himself. emotion:QThappy The map sh...'}, {'filename': 'story_20260620_173631.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 260, 'created_at': '20260620 _1:73:63', 'preview': 'Ethan ran toward the big, red track in the middle of the school gym. emotion:QThappy He was so excit...'}, {'filename': 'story_20260620_171205.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 291, 'created_at': '20260620 _1:71:20', 'preview': 'It was a crisp autumn morning, and golden leaves were rustling through the air like tiny falling sup...'}, {'filename': 'story_20260620_170939.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 281, 'created_at': '20260620 _1:70:93', 'preview': 'emotion:QThappy Ethan went to school feeling excited because his class was building a model rocket t...'}, {'filename': 'story_20260620_165945.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 279, 'created_at': '20260620 _1:65:94', 'preview': 'emotion:QThappy Ethan loved Saturday mornings because the whole family stayed home together. While D...'}, {'filename': 'story_20260620_165654.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 269, 'created_at': '20260620 _1:65:65', 'preview': 'Ethan went to the park carrying his favorite blue toy rocket. emotion:QThappy He was excited because...'}, {'filename': 'story_20260617_175350.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 270, 'created_at': '20260617 _1:75:35', 'preview': 'emotion:QThappy Ethan ran across the school field because he spotted something interesting near the ...'}, {'filename': 'story_20260602_195420.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 286, 'created_at': '20260602 _1:95:42', 'preview': 'emotion:QThappy Ethan loved dinosaurs more than almost anything. One sunny afternoon, he went to the...'}, {'filename': 'story_20260529_212454.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 270, 'created_at': '20260529 _2:12:45', 'preview': 'Ethan carried his small blue backpack across the sunny park, because today was fossil-hunting day. e...'}, {'filename': 'story_20260521_222948.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 451, 'created_at': '20260521 _2:22:94', 'preview': 'Ethan loved dinosaurs, especially the roaring T-Rex. Today in class, Ms. Lily announced a special "D...'}, {'filename': 'story_20260521_220311.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 468, 'created_at': '20260521 _2:20:31', 'preview': 'Ethan sat at his art table, emotion:QTafraid a little nervous. Mr. Harrison announced, "Today, we\'ll...'}, {'filename': 'story_20260513_205613.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 477, 'created_at': '20260513 _2:05:61', 'preview': 'Ethan emotion:QThappy loved art class, especially when Mr. Harrison announced, "Today, we will build...'}, {'filename': 'story_20260513_203952.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 432, 'created_at': '20260513 _2:03:95', 'preview': 'Ethan walked into the sunny community park, his backpack jingling softly. emotion:QTexcited He felt ...'}, {'filename': 'story_20260513_203039.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 426, 'created_at': '20260513 _2:03:03', 'preview': "Ethan loved Saturdays because his family went to the big park. emotion:QThappy He held his mom's han..."}, {'filename': 'story_20260513_201632.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 407, 'created_at': '20260513 _2:01:63', 'preview': 'emotion:QThappy Ethan loved sunny afternoons at the park. emotion:QThappy He carried his favorite to...'}, {'filename': 'story_20260513_200430.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 377, 'created_at': '20260513 _2:00:43', 'preview': 'Ethan woke up feeling excited emotion:QThappy because today was picnic day! His mom had packed a big...'}, {'filename': 'story_20260513_195327.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 491, 'created_at': '20260513 _1:95:32', 'preview': 'Ethan loved dinosaur day at school. emotion:QThappy Today, his class would build amazing dinosaur sk...'}, {'filename': 'story_20260513_193539.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 446, 'created_at': '20260513 _1:93:53', 'preview': 'Ethan loved the big, grassy corner of the park, especially the area where the big oak tree stood. em...'}, {'filename': 'story_20260513_192412.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 371, 'created_at': '20260513 _1:92:41', 'preview': 'emotion:QThappy Ethan loved the playground. Today, he wanted to play a new game that he had invented...'}, {'filename': 'story_20260421_183933.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 502, 'created_at': '20260421 _1:83:93', 'preview': 'Ethan bounced on his toes as Mr. Harrison announced the art project: "Our Class Garden Mural!" Every...'}, {'filename': 'story_20260421_181010.json', 'title': 'Story for ethan', 'age': 8, 'word_count': 597, 'created_at': '20260421 _1:81:01', 'preview': 'Ethan skipped into Willow Creek Park, a bright yellow frisbee tucked under his arm. The sun warmed h...'}]
+23:00:13 [d72a] └─ DONE  GET /api/get_user_stories -> 200 in 18ms
+23:00:17 [7e3b] ┌─ WORK  GET /read_story/story_20260621_211358.json
+23:00:17 [16c5] ┌─ WORK  POST /api/get_specific_story_details | fields: filename
+23:00:17 [16c5] └─ DONE  POST /api/get_specific_story_details -> 200 in 1ms
+23:00:17 [7e3b] └─ DONE  GET /read_story/story_20260621_211358.json -> 200 in 11ms
+23:00:17 [474d] ┌─ WORK  POST /api/human_tracking/start
+23:00:17 [474d] api_human_tracking_start
+23:00:17 [474d] api_human_tracking_start try
+23:00:17 [474d] └─ DONE  POST /api/human_tracking/start -> 500 in 1ms
+23:00:17 [8495] ┌─ WORK  GET /api/get_story_sentences | args: filename
+23:00:17 [8495] └─ DONE  GET /api/get_story_sentences -> 200 in 2ms
+23:00:17 [8d6b] ┌─ WORK  POST /api/get_sentence_image | fields: filename, sentence_index, paragraph_index
+23:00:17 [8d6b] └─ DONE  POST /api/get_sentence_image -> 200 in 1ms
+23:00:17 [ddd6] ┌─ WORK  GET /images/ethan/story_images/story_20260621_211358/story_scene_000_20260621_211428_726c4ad9.png
+23:00:17 [ddd6] Serving image: ethan/story_images/story_20260621_211358/story_scene_000_20260621_211428_726c4ad9.png
+23:00:17 [ddd6] Full path: /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/ethan/story_images/story_20260621_211358/story_scene_000_20260621_211428_726c4ad9.png
+23:00:17 [ddd6] File exists: True
+23:00:17 [ddd6] └─ DONE  GET /images/ethan/story_images/story_20260621_211358/story_scene_000_20260621_211428_726c4ad9.png -> 304 in 1ms
+23:00:57 [b039] ┌─ WORK  GET /play_scene
+23:00:57 [b039] └─ DONE  GET /play_scene -> 200 in 1ms
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/os.py", line 362, in walk
+23:06:54 [----]     entry = next(scandir_it)
+23:06:54 [----] StopIteration
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] Call stack:
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/os.py", line 362, in walk
+23:06:54 [----]     entry = next(scandir_it)
+23:06:54 [----] StopIteration
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] Call stack:
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/os.py", line 362, in walk
+23:06:54 [----]     entry = next(scandir_it)
+23:06:54 [----] StopIteration
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] Call stack:
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/os.py", line 362, in walk
+23:06:54 [----]     entry = next(scandir_it)
+23:06:54 [----] StopIteration
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] 
+23:06:54 [----] During handling of the above exception, another exception occurred:
+23:06:54 [----] 
+23:06:54 [----] Traceback (most recent call last):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:54 [----]     if self.shouldRollover(record):
+23:06:54 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:54 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:54 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:54 [----] Call stack:
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:54 [----] --- Logging error ---
+23:06:55 [----] --- Logging error ---
+23:06:55 [----] --- Logging error ---
+23:06:55 [----] --- Logging error ---
+23:06:55 [----] Traceback (most recent call last):
+23:06:56 [----] --- Logging error ---
+23:06:56 [----] Traceback (most recent call last):
+23:06:56 [----]   File "/usr/lib/python3.8/os.py", line 362, in walk
+23:06:56 [----]     entry = next(scandir_it)
+23:06:56 [----] StopIteration
+23:06:56 [----] 
+23:06:56 [----] During handling of the above exception, another exception occurred:
+23:06:56 [----] 
+23:06:56 [----] Traceback (most recent call last):
+23:06:56 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:56 [----]     if self.shouldRollover(record):
+23:06:56 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:56 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:56 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:56 [----] 
+23:06:56 [----] During handling of the above exception, another exception occurred:
+23:06:56 [----] 
+23:06:56 [----] Traceback (most recent call last):
+23:06:56 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:56 [----]     if self.shouldRollover(record):
+23:06:56 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:56 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:56 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:56 [----] 
+23:06:56 [----] During handling of the above exception, another exception occurred:
+23:06:56 [----] 
+23:06:56 [----] Traceback (most recent call last):
+23:06:56 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:56 [----]     if self.shouldRollover(record):
+23:06:56 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:56 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:56 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:56 [----] 
+23:06:56 [----] During handling of the above exception, another exception occurred:
+23:06:56 [----] 
+23:06:56 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:57 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:57 [----] 
+23:06:57 [----] During handling of the above exception, another exception occurred:
+23:06:57 [----] 
+23:06:57 [----] Traceback (most recent call last):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:57 [----]     if self.shouldRollover(record):
+23:06:57 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:57 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:58 [----] --- Logging error ---
+23:06:58 [----] --- Logging error ---
+23:06:58 [----] Traceback (most recent call last):
+23:06:58 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:58 [----]     if self.shouldRollover(record):
+23:06:58 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:58 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:58 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:58 [----] 
+23:06:58 [----] During handling of the above exception, another exception occurred:
+23:06:58 [----] 
+23:06:58 [----] Traceback (most recent call last):
+23:06:58 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 69, in emit
+23:06:58 [----]     if self.shouldRollover(record):
+23:06:58 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 186, in shouldRollover
+23:06:58 [----]     self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+23:06:58 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='/home/qtrobot/.ros/log/tts_helper_5546_1782763479778.log'>
+23:06:58 [----] 
+23:06:58 [----] During handling of the above exception, another exception occurred:
+23:06:58 [----] 
+23:06:58 [----] Traceback (most recent call last):
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1089, in emit
+23:06:58 [----]     self.flush()
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1069, in flush
+23:06:58 [----]     self.stream.flush()
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/engineio/base_client.py", line 21, in signal_handler
+23:06:58 [----]     return original_signal_handler(sig, frame)
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/socketio/base_client.py", line 24, in signal_handler
+23:06:58 [----]     return original_signal_handler(sig, frame)
+23:06:58 [----]   File "/opt/ros/noetic/lib/python3/dist-packages/rospy/core.py", line 606, in _ros_signal
+23:06:58 [----]     signal_shutdown("signal-"+str(sig))
+23:06:58 [----]   File "/opt/ros/noetic/lib/python3/dist-packages/rospy/core.py", line 560, in signal_shutdown
+23:06:58 [----]     _logger.info("signal_shutdown [%s]"%reason)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1446, in info
+23:06:58 [----]     self._log(INFO, msg, args, **kwargs)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1589, in _log
+23:06:58 [----]     self.handle(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1599, in handle
+23:06:58 [----]     self.callHandlers(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1661, in callHandlers
+23:06:58 [----]     hdlr.handle(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 954, in handle
+23:06:58 [----]     self.emit(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 73, in emit
+23:06:58 [----]     self.handleError(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1007, in handleError
+23:06:58 [----]     traceback.print_exception(t, v, tb, None, sys.stderr)
+23:06:58 [----]   File "/usr/lib/python3.8/traceback.py", line 105, in print_exception
+23:06:58 [----]     print(line, file=file, end="")
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/web_user_server.py", line 308, in write
+23:06:58 [----]     self._original.write(data)
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/engineio/base_client.py", line 21, in signal_handler
+23:06:58 [----]     return original_signal_handler(sig, frame)
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/socketio/base_client.py", line 24, in signal_handler
+23:06:58 [----]     return original_signal_handler(sig, frame)
+23:06:58 [----]   File "/opt/ros/noetic/lib/python3/dist-packages/rospy/core.py", line 606, in _ros_signal
+23:06:58 [----]     signal_shutdown("signal-"+str(sig))
+23:06:58 [----]   File "/opt/ros/noetic/lib/python3/dist-packages/rospy/core.py", line 560, in signal_shutdown
+23:06:58 [----]     _logger.info("signal_shutdown [%s]"%reason)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1446, in info
+23:06:58 [----]     self._log(INFO, msg, args, **kwargs)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1589, in _log
+23:06:58 [----]     self.handle(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1599, in handle
+23:06:58 [----]     self.callHandlers(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1661, in callHandlers
+23:06:58 [----]     hdlr.handle(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 954, in handle
+23:06:58 [----]     self.emit(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/handlers.py", line 73, in emit
+23:06:58 [----]     self.handleError(record)
+23:06:58 [----]   File "/usr/lib/python3.8/logging/__init__.py", line 1006, in handleError
+23:06:58 [----]     sys.stderr.write('--- Logging error ---\n')
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/web_user_server.py", line 308, in write
+23:06:58 [----]     self._original.write(data)
+23:06:58 [----] RuntimeError: reentrant call inside <_io.BufferedWriter name='<stderr>'>
+23:06:58 [----] Call stack:
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/exceptiongroup/_formatting.py", line 71, in exceptiongroup_excepthook
+23:06:58 [----]     sys.stderr.write("".join(traceback.format_exception(etype, value, tb)))
+23:06:58 [----]   File "/usr/lib/python3.8/traceback.py", line 120, in format_exception
+23:06:58 [----]     return list(TracebackException(
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/exceptiongroup/_formatting.py", line 179, in __init__
+23:06:58 [----]     context = PatchedTracebackException(
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/exceptiongroup/_formatting.py", line 96, in __init__
+23:06:58 [----]     self.stack = traceback.StackSummary.extract(
+23:06:58 [----]   File "/usr/lib/python3.8/traceback.py", line 362, in extract
+23:06:58 [----]     linecache.checkcache(filename)
+23:06:58 [----]   File "/usr/lib/python3.8/linecache.py", line 74, in checkcache
+23:06:58 [----]     stat = os.stat(fullname)
+23:06:58 [----]   File "/home/qtrobot/tutorials-master/demos/version_1_llm/.venv/lib/python3.8/site-packages/engineio/base_client.py", line 21, in signal_handler
+23:06:58 [----]     return original_signal_handler(sig, frame)

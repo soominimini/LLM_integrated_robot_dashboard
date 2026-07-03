@@ -567,7 +567,12 @@ def _ensure_quiz_llm():
     with _quiz_llm_lock:
         if _quiz_llm is None:
             try:
-                _quiz_llm = _ClaudeQuizLLM(max_tokens=8192)
+                # 100-question JSON arrays (wh items carry accepted_answers
+                # lists) need headroom beyond the old 8192 cap. Keep this BELOW
+                # ~21k: the Anthropic SDK rejects non-streaming requests whose
+                # max_tokens implies a >10-minute worst case ("Streaming is
+                # required..."), and _claude_generate does not stream.
+                _quiz_llm = _ClaudeQuizLLM(max_tokens=16384)
             except Exception as e:
                 print(f"Warning: failed to initialize quiz LLM: {e}")
 
@@ -1562,8 +1567,8 @@ def api_generate_quiz():
 
     if not topics:
         return jsonify({"success": False, "error": "Topic is required"}), 400
-    if count < 1 or count > 20:
-        return jsonify({"success": False, "error": "Count must be 1-20"}), 400
+    if count < 1 or count > 100:
+        return jsonify({"success": False, "error": "Count must be 1-100"}), 400
     if not types:
         return jsonify({"success": False, "error": "Select at least one question type"}), 400
 
@@ -1672,9 +1677,14 @@ def api_generate_quiz():
             "a 7- to 8-year-old child can understand."
         )
     else:
+        # non social rules
         goal_text = (
-            "Goal: Questions must be objectively True or False based on basic object functions or category labels. "
-            "Avoid subjective questions like 'Do you like school?' or 'Are there toys?'."
+            "Goal: Questions must be objectively true or false based on basic object functions, category labels, or familiar everyday knowledge. "
+            "Avoid subjective questions, such as \"Do you like school?\". "
+            "Avoid ambiguous questions, exception-based facts, or culturally dependent knowledge. "
+            "Avoid silly or random false questions. "
+            "Do not use negation-heavy wording. "
+            "Do not repeat the same concept."
         )
         length_constraint = "Constraint: Questions must be short (under 8 words)."
 
@@ -1694,6 +1704,24 @@ def api_generate_quiz():
             "toward particular words or sounds; the questions must stay natural, general, and "
             f"about the topic(s) above:\n{kb_context}\n"
         )
+
+    # WH-type developmental guidance (KB wh_question_hierarchy): which WH types
+    # suit this child's level (what/who -> where -> when -> why/how). Only
+    # relevant when wh questions were requested.
+    if 'wh' in types:
+        try:
+            profile = _load_user_profile(username)
+            wh_frag = knowledge_base.build_wh_question_guidance_fragment(
+                profile.get('age') or 0, language_age=profile.get('language_age'))
+            if wh_frag:
+                kb_block += (
+                    "For WH questions, follow this developmental WH-type guidance — favour the "
+                    "recommended/primary types and do not use types marked as avoided or "
+                    "unsupported for this level:\n"
+                    f"{wh_frag}\n"
+                )
+        except Exception as e:
+            print(f"[quiz] WH guidance unavailable: {e}")
 
     # Open-ended social-emotional WH questions, blended in for older children.
     # No single correct answer — flagged so the play page accepts any thoughtful
@@ -2185,7 +2213,7 @@ def api_save_quiz():
 
 def _generate_story_questions(story_text, child_age, child_name="the child", persona_context="",
                               language_age=None):
-    """Generate comprehension questions for a story using Gemini.
+    """Generate comprehension questions for a story using Claude.
 
     For all ages: questions about main idea and story details.
     For ages > 7: also include inference questions (e.g. character feelings/motivations).
@@ -2259,10 +2287,10 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
         f"\"correct_answer\": \"A boy who helped his friend\", \"wrong_answers\": [\"A girl who went swimming\", \"A cat who got lost\"]}}]\n"
     )
 
-    raw = _gemini_generate(prompt, system="You generate comprehension questions for children's stories. Return JSON only.", max_tokens=4096)
+    raw = _claude_generate(prompt, system="You generate comprehension questions for children's stories. Return JSON only.", max_tokens=4096, label="story-questions")
     if raw:
         try:
-            print(f"[StoryQuestions] Gemini raw response: {raw[:500]}")
+            print(f"[StoryQuestions] Claude raw response: {raw[:500]}")
             if raw.startswith('```'):
                 raw = raw.strip('`').strip()
                 if raw.startswith('json'):
@@ -2365,10 +2393,11 @@ def _generate_takeaway_questions(takeaways, story_text, child_age, child_name="t
 
     print(f"[TakeawayQuestion] Generating {len(takeaways)} questions for takeaways: {takeaways}")
     try:
-        raw = _gemini_generate(
+        raw = _claude_generate(
             prompt,
             system="You write children's multiple-choice comprehension questions. Return JSON only.",
             max_tokens=1536,
+            label="takeaway-questions",
         )
         if not raw:
             print("[TakeawayQuestion] LLM returned empty response")
@@ -2522,12 +2551,12 @@ def _validate_tag_positions(text):
     return "".join(out)
 
 
-def _apply_emotion_tags_with_gemini(story_text):
-    """Run a Gemini-Flash pass over a generated story to insert correct
+def _apply_emotion_tags_with_llm(story_text):
+    """Run a Claude pass over a generated story to insert correct
     [gesture:...] and [emotion:...] tags inline.
 
     Story generation may use a model that under-tags or invents emotion
-    names. This pass uses Gemini specifically
+    names. This pass uses a dedicated Claude call specifically
     for the tagging step: it preserves the story word-for-word and adds tags
     immediately before the sentence that depicts each emotional beat or
     physical action. Returns the tagged story, or the original on failure.
@@ -2585,7 +2614,7 @@ def _apply_emotion_tags_with_gemini(story_text):
         f"STORY:\n{story_text}"
     )
 
-    tagged = _gemini_generate(
+    tagged = _claude_generate(
         prompt,
         system="You add inline gesture/emotion tags to children's stories. Return only the tagged story.",
         temperature=0.2,
@@ -2593,10 +2622,10 @@ def _apply_emotion_tags_with_gemini(story_text):
         label="emotion-tagger",
     )
     if not tagged:
-        print("[StoryTagger] Gemini returned nothing — keeping original story untagged")
+        print("[StoryTagger] Claude returned nothing — keeping original story untagged")
         return story_text
 
-    # Strip code fences if Gemini wrapped the output despite instructions
+    # Strip code fences if the model wrapped the output despite instructions
     tagged = tagged.strip()
     if tagged.startswith('```'):
         tagged = tagged.strip('`').strip()
@@ -2605,7 +2634,7 @@ def _apply_emotion_tags_with_gemini(story_text):
                 tagged = tagged[len(prefix):]
                 break
 
-    # Sanity check: if Gemini drastically changed the length, fall back.
+    # Sanity check: if the model drastically changed the length, fall back.
     # Tags add length, so the tagged version should be >= original; allow 5%
     # shrinkage as slack for whitespace normalization, but reject anything
     # that lost real text.
@@ -2613,7 +2642,7 @@ def _apply_emotion_tags_with_gemini(story_text):
         print(f"[StoryTagger] tagged output too short ({len(tagged)} vs {len(story_text)}) — keeping original")
         return story_text
 
-    print(f"[StoryTagger] Gemini tagging pass succeeded ({len(tagged)} chars)")
+    print(f"[StoryTagger] Claude tagging pass succeeded ({len(tagged)} chars)")
     return tagged
 
 
@@ -2698,7 +2727,7 @@ def _reinject_tags_into_pages(original_story, pages):
 
 
 def _split_story_into_pages(story_text, child_age):
-    """Split a story into age-appropriate pages using Gemini.
+    """Split a story into age-appropriate pages using Claude.
 
     Sentence count is a SOFT target tied to age:
         Ages 3-4:  ~1-2 sentences per page
@@ -2767,10 +2796,10 @@ def _split_story_into_pages(story_text, child_age):
         f"\n"
         f"Story:\n{cleaned_for_llm}"
     )
-    raw = _gemini_generate(prompt, system="You split stories into pages. Return JSON only.", max_tokens=4096)
+    raw = _claude_generate(prompt, system="You split stories into pages. Return JSON only.", max_tokens=4096, label="page-splitter")
     if raw:
         try:
-            print(f"[StoryPages] Gemini raw response: {raw[:500]}")
+            print(f"[StoryPages] Claude raw response: {raw[:500]}")
             if raw.startswith('```'):
                 raw = raw.strip('`').strip()
                 if raw.startswith('json'):
@@ -2874,10 +2903,10 @@ def _identify_story_scenes(chunks, unit_label="paragraph"):
         f"\"Lily showing her drawing to the class at the front of the classroom\"], "
         f"\"chunk_to_scene\": [0, 0, 1, 2]}}"
     )
-    raw = _gemini_generate(prompt, system="You analyze story structure. Return JSON only.", max_tokens=2048)
+    raw = _claude_generate(prompt, system="You analyze story structure. Return JSON only.", max_tokens=2048, label="scene-analyzer")
     if raw:
         try:
-            print(f"[StoryScenes] Gemini raw response: {raw[:500]}")
+            print(f"[StoryScenes] Claude raw response: {raw[:500]}")
             obj = _extract_json(raw)
             print(f"[StoryScenes] Parsed JSON: {json.dumps(obj, indent=2) if obj else None}")
             if obj:
@@ -3025,10 +3054,10 @@ def api_save_story():
     except Exception as e:
         print(f"[StorySave] Word-count enforcement skipped: {e}")
 
-    # Run a Gemini-Flash tagging pass on the story before splitting.
-    # Gemini Flash is used here specifically to insert/correct
+    # Run a Claude tagging pass on the story before splitting,
+    # specifically to insert/correct
     # [gesture:...] / [emotion:...] tags inline.
-    story = _apply_emotion_tags_with_gemini(story)
+    story = _apply_emotion_tags_with_llm(story)
     # Validate tag positions: snap any tag that landed mid-word or mid-clause
     # to the nearest valid position (start/end of sentence, after ,/!/?).
     story = _validate_tag_positions(story)
@@ -6639,46 +6668,214 @@ def _save_scene_index(username, index):
     with open(idx_path, 'w') as f:
         json.dump(index, f, indent=2)
 
-def _run_gemini_wh_analysis(image_path, child_age, difficulty, language_age=None):
-    """Run the Gemini vision worker to analyze a scene and generate WH questions.
+# WH picture-scene analysis runs on Claude vision in-process (same pattern as
+# the spatial still-frame validator). Override the model via WH_SCENE_LLM_MODEL.
+# The former Gemini worker (scripts/gemini_wh_scene.py) is no longer called.
+WH_SCENE_LLM_MODEL = os.getenv("WH_SCENE_LLM_MODEL", "claude-sonnet-4-6")
 
-    ``language_age`` (developmental/language age) is forwarded to the worker so
-    image questions are pitched at the child's language level rather than their
-    chronological age. The worker falls back to ``child_age`` when it is absent.
+_WH_SCENE_CARD_FRAMING = (
+    "IMPORTANT: The photo may show a printed card, page, or picture being held "
+    "by someone or placed on a surface. Focus ONLY on the illustration or scene "
+    "depicted ON the card/page itself. Ignore everything outside the card — "
+    "hands holding it, the person, the table, background, etc. Treat the "
+    "illustration on the card as the entire scene for your analysis."
+)
+
+
+def _build_wh_scene_prompt(child_age, difficulty, wh_guidance=''):
+    """Prompt for WH picture-scene analysis (ported verbatim from the former
+    Gemini worker scripts/gemini_wh_scene.py).
+
+    ``wh_guidance`` (receptive mode only): KB WH-type hierarchy block — when
+    present, question TYPES follow the child's developmental level instead of
+    the fixed one-of-each who/what/when/where/why."""
+    if difficulty == "expressive":
+        return f"""You are a pediatric speech-language pathologist creating therapy materials.
+
+{_WH_SCENE_CARD_FRAMING}
+
+Analyze this image and generate 5 OPEN-ENDED IMAGINATION questions for a child aged {child_age}.
+These questions invite the child to imagine, predict, reflect, or share personal experience.
+THEY HAVE NO SINGLE CORRECT ANSWER — any answer the child gives is acceptable.
+
+Cover these 5 different kinds of imagination prompts (one question each, in this order):
+1. FUTURE: what might happen next or after the scene
+2. PAST: what might have happened just before the scene
+3. PERSONAL: connect the scene to the child's own life or preferences (e.g., "Do you like...?", "Have you ever...?")
+4. ALTERNATIVE: imagine a different choice, place, or outcome (e.g., "What else could they do?", "Where else could they go?")
+5. FEELING: how a character might feel, or how the child would feel in the scene
+
+Each question must:
+- Be simple and warm, age-appropriate for {child_age} years old
+- Be answerable in 1–2 spoken sentences by a child
+- NOT have a right or wrong answer
+
+Use `wh_type` from {{"what", "when", "why"}} only — pick whichever best fits the question
+(e.g., "what" for future/past/alternative/personal, "why" for feeling, "when" works for past/future timing).
+
+Leave `answer` as an empty string and `visual_choices` as an empty array — they are not used in expressive mode.
+`evidence_hint` should be a short imagination prompt (e.g., "Imagine what comes next.", "Think about how you would feel.").
+
+Return ONLY valid JSON in this exact format:
+{{
+  "scene_description": "Brief description of the scene",
+  "questions": [
+    {{
+      "wh_type": "what",
+      "question": "What do you think he will do after playing soccer?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what comes next."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What was he doing right before this picture?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine what happened just before."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "Do you like playing soccer too?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Think about your own experience."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What else could he play instead of soccer?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Imagine a different game."
+    }},
+    {{
+      "wh_type": "why",
+      "question": "How do you think he feels while playing?",
+      "answer": "",
+      "visual_choices": [],
+      "evidence_hint": "Look at his face and body, and imagine the feeling."
+    }}
+  ]
+}}
+"""
+    if wh_guidance:
+        type_instruction = f"""Analyze this image and generate 5 WH-questions for a child aged {child_age}.
+
+{wh_guidance}
+Choose the five question TYPES according to the guidance above: favour the primary/recommended
+types, and repeat an easier type (an extra what/who/where question about a different detail)
+instead of using a harder type the picture does not clearly support. Types may repeat, but each
+question must ask about a DIFFERENT detail of the scene. The JSON example below shows one
+question per type — your actual wh_type values must follow the guidance above.
+
+For EACH of the 5 questions, generate:"""
+    else:
+        type_instruction = f"""Analyze this image and generate WH-questions for a child aged {child_age}.
+
+For EACH of the 5 WH-question types (who, what, when, where, why), generate:"""
+    return f"""You are a pediatric speech-language pathologist creating therapy materials.
+
+{_WH_SCENE_CARD_FRAMING}
+
+{type_instruction}
+1. A simple, clear question about the scene
+2. The correct answer (short, 1-5 words)
+3. Four visual choices (one correct + three plausible distractors), each 1-4 words
+4. An evidence hint telling the child where to look in the picture
+
+For receptive mode: make questions simple with obvious visual choices.
+
+Return ONLY valid JSON in this exact format:
+{{
+  "scene_description": "Brief description of the scene",
+  "questions": [
+    {{
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a boy",
+      "visual_choices": ["a boy", "a girl", "a man", "a dog"],
+      "evidence_hint": "Look at the person in the picture"
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What is he doing?",
+      "answer": "sleeping",
+      "visual_choices": ["sleeping", "eating", "running", "reading"],
+      "evidence_hint": "Look at what the person is doing"
+    }},
+    {{
+      "wh_type": "when",
+      "question": "When is it?",
+      "answer": "nighttime",
+      "visual_choices": ["nighttime", "morning", "afternoon", "lunchtime"],
+      "evidence_hint": "Look at the light and setting"
+    }},
+    {{
+      "wh_type": "where",
+      "question": "Where is he?",
+      "answer": "in bed",
+      "visual_choices": ["in bed", "at school", "in the park", "at the store"],
+      "evidence_hint": "Look at the place around the person"
+    }},
+    {{
+      "wh_type": "why",
+      "question": "Why is he sleeping?",
+      "answer": "because he is tired",
+      "visual_choices": ["because he is tired", "because he is hungry", "because he is sad", "because it is raining"],
+      "evidence_hint": "Think about why someone would do this"
+    }}
+  ]
+}}
+"""
+
+
+def _run_wh_scene_analysis(image_path, child_age, difficulty, language_age=None):
+    """Analyze a scene image with Claude vision and generate WH questions.
+
+    Replaces the former Gemini subprocess worker; the prompt is unchanged.
+    ``language_age`` (developmental/language age) pitches question complexity
+    at the child's language level, falling back to chronological ``child_age``.
+    The prompt/response are traced via _log_claude_io ([Claude:wh-scene-*]).
     """
-    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_wh_scene.py')
-    if not os.path.exists(script_path):
-        return None, "Worker script not found"
-    payload = json.dumps({
-        "image_path": image_path,
-        "child_age": child_age,
-        "language_age": language_age,
-        "difficulty": difficulty
-    })
+    effective_age = language_age if language_age is not None else child_age
     try:
-        proc = subprocess.run(
-            [WORKER_PYTHON, script_path],
-            input=payload,
-            capture_output=True,
-            text=True,
-            timeout=90,
-            env=os.environ.copy()
-        )
-        if proc.returncode != 0:
-            return None, f"Worker failed: {proc.stderr.strip()}"
-        raw = proc.stdout.strip()
-        if raw.startswith("```"):
-            raw = raw.strip("`")
-            if raw.startswith("json"):
-                raw = raw[4:].strip()
-        result = json.loads(raw)
-        return result, None
+        with open(image_path, 'rb') as f:
+            image_bytes = f.read()
+    except OSError as e:
+        return None, f"Image not readable: {e}"
+    ext = os.path.splitext(image_path)[1].lower()
+    mime_map = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png",
+                ".gif": "image/gif", ".webp": "image/webp", ".bmp": "image/bmp"}
+    # Receptive questions have correct answers, so their TYPES follow the KB's
+    # developmental WH hierarchy + image-card evidence rules. Expressive
+    # questions are open-ended by design and stay unconstrained.
+    wh_guidance = ''
+    if difficulty != "expressive":
+        try:
+            wh_guidance = knowledge_base.build_wh_question_guidance_fragment(
+                effective_age, image_card=True)
+        except Exception as e:
+            print(f"[WH-scene] KB guidance unavailable: {e}")
+    prompt = _build_wh_scene_prompt(effective_age, difficulty, wh_guidance=wh_guidance)
+    raw = _claude_generate_image(
+        image_bytes, prompt,
+        system="You create speech-therapy materials from scene images. Return JSON only.",
+        temperature=0.4,
+        max_tokens=2048,
+        label=f"wh-scene-{difficulty}",
+        model=WH_SCENE_LLM_MODEL,
+        mime_type=mime_map.get(ext, "image/jpeg"),
+    )
+    if not raw:
+        return None, "Claude returned no response"
+    if raw.startswith("```"):
+        raw = raw.strip("`")
+        if raw.startswith("json"):
+            raw = raw[4:].strip()
+    try:
+        return json.loads(raw), None
     except json.JSONDecodeError as e:
         return None, f"JSON parse error: {e}"
-    except subprocess.TimeoutExpired:
-        return None, "Analysis timed out"
-    except Exception as e:
-        return None, str(e)
 
 
 def _questions_path(wh_dir, scene_id, mode):
@@ -6704,7 +6901,7 @@ def _generate_and_save_both_modes(image_path, child_age, wh_dir, scene_id, langu
         "errors": {},
     }
     for mode in ("receptive", "expressive"):
-        result, error = _run_gemini_wh_analysis(image_path, child_age, mode, language_age=language_age)
+        result, error = _run_wh_scene_analysis(image_path, child_age, mode, language_age=language_age)
         if result and "questions" in result:
             with open(_questions_path(wh_dir, scene_id, mode), "w") as f:
                 json.dump(result, f, indent=2)
