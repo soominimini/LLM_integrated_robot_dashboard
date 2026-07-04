@@ -1,0 +1,602 @@
+[
+  {
+    "question": "Is it okay to hit a classmate when you are angry?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say please when asking for something?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to push someone to get to the front of the line?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say thank you when someone gives you food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to take a bite of someone else's apple without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you raise your hand before speaking in class?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to kick someone during a game at school?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you wait your turn before going down the slide?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to open a classmate's lunchbox without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say sorry when you accidentally bump into someone?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to throw fruit at another student?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you help a friend who dropped their school supplies?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to call someone a mean name at school?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you use a quiet voice inside the library?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to grab a toy from another child?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you include a classmate who is playing alone?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to tell a lie to avoid getting in trouble?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you clean up your mess after eating at the table?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to touch someone after they say stop?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say excuse me when you need to walk past someone?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to laugh at a classmate who made a mistake?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you share your crayons with a friend who has none?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to bite someone when you are upset?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you listen when your teacher is talking to the class?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave your food wrapper on the ground outside?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ask before borrowing a classmate's pencil?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to run inside the school hallway?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say hello when a classmate greets you?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to pick fruit from a neighbor's tree without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you put your trash in the bin after a picnic?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to interrupt someone while they are speaking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you hold the door open for someone behind you?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to throw food across the lunch table?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you tell an adult if someone is hurt on the playground?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to go through someone's bag without permission?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you take turns when playing a board game with friends?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to push a classmate off the swing?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say excuse me after you burp at the table?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave a mess in the classroom after art?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you help a younger child who cannot reach something?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to eat someone else's lunch without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you wait in line at the water fountain at school?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to pull someone's hair during a game?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you return a borrowed book to your classmate?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave the garden gate open after going through it?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you knock before entering someone's bedroom at home?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to step on plants in a nature park?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say good morning to your teacher when you arrive?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to shout loudly in a quiet classroom?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you put your plate in the sink after eating at home?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave the water running after washing your hands?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you offer to share your snack with a friend who forgot theirs?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to cut in front of someone waiting in line?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you admit it when you break something by accident?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to throw rocks at animals in nature?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you use kind words when talking to your classmates?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to scribble in a library book?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you help set the table before dinner at home?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to ignore a classmate who is crying?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you wash your hands before eating food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave your shoes in the middle of the hallway?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say please when asking a friend to pass the fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to eat with your mouth wide open at the table?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you put litter in the bin when you are in the park?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to break a branch off a tree in the park?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you let someone else go first if they have been waiting longer?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to spread rumors about a classmate at school?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you cover your mouth when you cough near others?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave your dirty dishes on the sofa at home?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ask before picking fruit from someone else's garden?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to cheat during a game to win?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say goodbye when you leave a friend's house?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave a tap running when you are done?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you tell the truth when a teacher asks what happened?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to throw your food wrapper on the floor in the park?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you help a classmate who fell down on the playground?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to write on the classroom walls?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you put your hand up before answering a question in class?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to take more food than you need when others are waiting?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say thank you when someone holds the door for you?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave your backpack in the middle of the classroom floor?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you invite a new classmate to join your game at recess?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to splash water on someone who does not want to get wet?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you return something you borrowed from a friend?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to talk loudly on the phone in a quiet room?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say sorry when you hurt someone's feelings?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to eat food that belongs to someone else without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you put your chair back under the desk when you leave class?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave your fruit peel on the path in the park?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you use a gentle voice when talking to a friend who is upset?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to ignore someone who says no to being touched?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you put your rubbish in the bin after eating your school lunch?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave the classroom without telling the teacher?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you share the playground equipment fairly with other children?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to make fun of someone for the food they brought to school?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you greet a visitor who comes to your home?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave the fridge door open after taking your food?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you wait for everyone to be served before you start eating?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to leave muddy shoes on the clean floor at home?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you say please when asking a friend to share their fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

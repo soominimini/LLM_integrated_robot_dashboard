@@ -25,6 +25,7 @@ application only needs its data source swapped:
 
 import json
 import os
+import random
 from typing import Any, Dict, List, Optional, Tuple
 
 
@@ -228,6 +229,23 @@ class LanguageInterestKB:
                     theme_keys.append(k)
         return [(k, self._themes.get(k, [])) for k in theme_keys]
 
+    def pick_random_interest(self, age: Any, gender: str,
+                             exclude: Optional[List[str]] = None
+                             ) -> Optional[Tuple[str, List[str]]]:
+        """Randomly pick ONE (theme, items) interest appropriate to age + gender.
+
+        ``exclude`` lists theme keys to avoid (e.g. the previous story's
+        interest) so consecutive stories rotate through different interests.
+        If exclusion would empty the pool, the full pool is used instead.
+        Returns None when the KB has no interests for this age/gender.
+        """
+        pool = self.resolve_interests(age, gender)
+        if not pool:
+            return None
+        excluded = {str(t).strip().lower() for t in (exclude or []) if str(t).strip()}
+        filtered = [(t, items) for (t, items) in pool if t.lower() not in excluded]
+        return random.choice(filtered or pool)
+
     def resolve_wh_guidance(self, age: Any) -> Optional[Dict[str, Any]]:
         """WH-question guidance for this age.
 
@@ -302,7 +320,9 @@ class LanguageInterestKB:
         return '; '.join(parts)
 
     def build_story_prompt_fragment(self, age: Any, gender: str = '',
-                                    language_age: Any = None) -> str:
+                                    language_age: Any = None,
+                                    interest: Optional[Tuple[str, List[str]]] = None
+                                    ) -> str:
         """Narrative-shaped guidance block for story generation.
 
         ``age`` is the child's chronological age and drives interest themes.
@@ -310,6 +330,11 @@ class LanguageInterestKB:
         target + language targets; when ``None`` it falls back to ``age``. This
         lets an older child with a language delay be targeted at a lower MLU
         (e.g. a 9-year-old with an MLU-6-8 target -> language_age 5).
+
+        ``interest`` is an optional single (theme, items) tuple — typically from
+        ``pick_random_interest`` — that the story must be built around. When
+        ``None``, the fragment lists ALL age/gender-appropriate themes (the LLM
+        then tends to gravitate to the same one every time).
         """
         lang_age = language_age if language_age is not None else age
         level = self.resolve_level(lang_age)
@@ -317,12 +342,26 @@ class LanguageInterestKB:
             return ''
         targets = self._targets_block(lang_age, include_wh=False)
         sounds = self._articulation_block(lang_age)
-        interests = self._interests_line(age, gender)
         sounds_section = (
             "\nPractise these target speech sounds by naturally featuring words "
             "that contain them (do not turn the story into a pronunciation drill):\n"
             f"{sounds}\n"
         ) if sounds else ""
+        if interest:
+            theme, items = interest
+            label = theme.replace('_', ' ')
+            interest_line = f"{label} ({', '.join(items)})" if items else label
+            interests_section = (
+                "\nBuild the story around this interest theme — use it for the "
+                "story's hook, characters, and setting:\n"
+                f"- {interest_line}\n"
+            )
+        else:
+            interests = self._interests_line(age, gender)
+            interests_section = (
+                "\nUse these interest themes as story hooks, characters, and settings:\n"
+                f"- {interests or '(none specified)'}\n"
+            )
         return (
             "--- LANGUAGE & INTEREST GUIDANCE (knowledge base) ---\n"
             f"Target developmental level: age {level.get('age')}, "
@@ -332,8 +371,7 @@ class LanguageInterestKB:
             "(model them in context; do not drill or quiz them in the story):\n"
             f"{targets or '- (none specified)'}\n"
             f"{sounds_section}"
-            "\nUse these interest themes as story hooks, characters, and settings:\n"
-            f"- {interests or '(none specified)'}\n"
+            f"{interests_section}"
         )
 
     def build_question_prompt_fragment(self, age: Any, gender: str = '',

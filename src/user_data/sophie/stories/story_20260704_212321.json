@@ -1,0 +1,101 @@
+{
+  "story": "Sophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand. The fairy is trying to reach three yellow stars. The stars are up in the tall tree. Sophie reaches up and gives the stars to the fairy. [emotion:QT/happy] The fairy is so happy. Sophie and the fairy put the stars on a big branch together. The branch is in the middle of the tree. Sophie is smiling and clapping her hands. [emotion:QT/happy][gesture:clapping]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 204,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "Sophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand.",
+    "The fairy is trying to reach three yellow stars. The stars are up in the tall tree.",
+    "Sophie reaches up and gives the stars to the fairy. [emotion:QT/happy] The fairy is so happy.",
+    "Sophie and the fairy put the stars on a big branch together. The branch is in the middle of the tree.",
+    "Sophie is smiling and clapping her hands."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand. The fairy is trying to reach three yellow stars. The stars are up in the tall tree. Sophie reaches up and gives the stars to the fairy. The fairy is so happy. Sophie and the fairy put the stars on a big branch together. The branch is in the middle of the tree. Sophie is smiling and clapping her hands."
+  ],
+  "scenes": [
+    "Sophie stands in a sunny garden, smiling and clapping as she and a tiny fairy with shiny wings and a wand place yellow stars together on a branch in the middle of a tall tree."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in this story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie helped a fairy reach three stars",
+      "wrong_answers": [
+        "Sophie found a princess in the garden",
+        "Sophie played with her rabbit and cat"
+      ]
+    },
+    {
+      "question": "Where did Sophie and the fairy put the three stars?",
+      "type": "detail",
+      "correct_answer": "On a branch in the middle of the tree",
+      "wrong_answers": [
+        "On the red flower in the garden",
+        "On the ground under the tree"
+      ]
+    },
+    {
+      "question": "What did the fairy have on her back?",
+      "type": "detail",
+      "correct_answer": "Shiny wings",
+      "wrong_answers": [
+        "A little crown",
+        "A pretty ribbon"
+      ]
+    },
+    {
+      "question": "What was Sophie doing because she was happy?",
+      "type": "detail",
+      "correct_answer": "Smiling and clapping her hands",
+      "wrong_answers": [
+        "Running and jumping around",
+        "Singing and dancing with the fairy"
+      ]
+    }
+  ],
+  "takeaways": []
+}

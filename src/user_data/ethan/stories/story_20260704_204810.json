@@ -1,0 +1,146 @@
+{
+  "story": "[emotion:QT/happy] Ethan ran three red laps around the track because his rocket car was the fastest one there. While he cheered, the car flew off the ramp and crashed under the wide, wooden table. [emotion:QT/surprised] Ethan crawled beneath the table and reached forward, but the car had rolled into the dark, narrow corner behind the heavy chair. He felt stuck and frustrated. [emotion:QT/angry] \"I think your car went really far,\" said a girl named Raya, crouching beside him. \"Maybe if I move the chair while you reach in, we can get it together.\"\n\nEthan thought she had a great idea. First, Raya pushed the chair slowly to the left. [gesture:stretching] Then Ethan stretched his arm into the deep, shadowy space and grabbed the red car.\n\n[emotion:QT/happy] \"We did it!\" Ethan shouted, laughing. [gesture:emotions/hoora] [emotion:QT/calm] After that, they raced their cars side by side, taking turns choosing the ramps. Ethan felt proud because he had asked for help and found a new friend. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 273,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+    ],
+    "title": "The Rocket Car Race"
+  },
+  "pages": [
+    "[emotion:QT/happy] Ethan ran three red laps around the track because his rocket car was the fastest one there. While he cheered, the car flew off the ramp and crashed under the wide, wooden table. [emotion:QT/surprised] Ethan crawled beneath the table and reached forward, but the car had rolled into the dark, narrow corner behind the heavy chair. He felt stuck and frustrated.",
+    "[emotion:QT/angry] \"I think your car went really far,\" said a girl named Raya, crouching beside him. \"Maybe if I move the chair while you reach in, we can get it together.\"",
+    "Ethan thought she had a great idea. First, Raya pushed the chair slowly to the left. [gesture:stretching] Then Ethan stretched his arm into the deep, shadowy space and grabbed the red car.",
+    "[emotion:QT/happy] \"We did it!\" Ethan shouted, laughing. [gesture:emotions/hoora] [emotion:QT/calm] After that, they raced their cars side by side, taking turns choosing the ramps. Ethan felt proud because he had asked for help and found a new friend."
+  ],
+  "paragraphs": [
+    "Ethan ran three red laps around the track because his rocket car was the fastest one there. While he cheered, the car flew off the ramp and crashed under the wide, wooden table. Ethan crawled beneath the table and reached forward, but the car had rolled into the dark, narrow corner behind the heavy chair. He felt stuck and frustrated. \"I think your car went really far,\" said a girl named Raya, crouching beside him. \"Maybe if I move the chair while you reach in, we can get it together.\"",
+    "Ethan thought she had a great idea. First, Raya pushed the chair slowly to the left. Then Ethan stretched his arm into the deep, shadowy space and grabbed the red car.",
+    "\"We did it!\" Ethan shouted, laughing. After that, they raced their cars side by side, taking turns choosing the ramps. Ethan felt proud because he had asked for help and found a new friend."
+  ],
+  "scenes": [
+    "Ethan crouched under a wide wooden table, reaching toward a dark corner behind a heavy chair, while a girl named Raya crouches beside him smiling and offering to help.",
+    "Raya pushing the chair to the left while Ethan stretches his arm into the shadowy corner to grab his small red rocket car.",
+    "Ethan and Raya laughing together and racing their toy cars side by side on ramps, looking happy and proud."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    1,
+    2
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    1,
+    2
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his rocket car?",
+      "type": "main_idea",
+      "correct_answer": "Asking for help and working together can save the day",
+      "wrong_answers": [
+        "Racing cars is always better than making friends",
+        "The fastest car wins every race"
+      ]
+    },
+    {
+      "question": "Where did Ethan's red rocket car roll after it crashed off the ramp?",
+      "type": "detail",
+      "correct_answer": "Into the dark, narrow corner behind the heavy chair",
+      "wrong_answers": [
+        "Under the ramp near the starting line",
+        "Through the door and into another room"
+      ]
+    },
+    {
+      "question": "What did Raya and Ethan do first, and then what happened after that to rescue the car?",
+      "type": "detail",
+      "correct_answer": "First Raya pushed the chair, then Ethan reached in and grabbed the car",
+      "wrong_answers": [
+        "First Ethan moved the chair, then Raya reached in to grab it",
+        "First they flipped the table, then the car rolled out on its own"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt proud at the end of the story, even though his car had crashed?",
+      "type": "inference",
+      "correct_answer": "Because he asked for help and found a new friend",
+      "wrong_answers": [
+        "Because his rocket car was still the three-time track champion",
+        "Because he reached the car without any help from Raya"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Raya had not crouched down to help Ethan reach his car?",
+      "type": "inference",
+      "correct_answer": "Ethan would have stayed stuck and frustrated without his car",
+      "wrong_answers": [
+        "The car would have driven itself back out from the corner",
+        "Ethan would have thrown the chair across the three-lap track"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to let Raya help him get the car?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help means you can solve problems you couldn't solve alone.",
+      "wrong_answers": [
+        "Waiting patiently on your own is always the best way to solve a tricky problem.",
+        "Letting someone else take over means you don't have to do any hard work yourself."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story about how Ethan and Raya played after they got the car back?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns makes games more fun for everyone.",
+      "wrong_answers": [
+        "Winning every race is what makes playing with others feel exciting and special.",
+        "Choosing the fastest car is the most important part of having fun with a friend."
+      ]
+    },
+    {
+      "question": "What did Ethan and Raya show us by what they did together?",
+      "type": "takeaway",
+      "correct_answer": "Working together with someone is how friendships begin.",
+      "wrong_answers": [
+        "Sharing your toys with someone means they will always be your best friend.",
+        "Being the kindest person in the room is what makes other children want to play with you."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help means you can solve problems you couldn't solve alone.",
+    "Taking turns makes games more fun for everyone.",
+    "Working together with someone is how friendships begin."
+  ]
+}

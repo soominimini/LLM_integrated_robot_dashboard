@@ -1,0 +1,176 @@
+{
+  "story": "Ethan loved his big red truck more than almost anything. [emotion:QT/happy] Before breakfast, he would race it across the kitchen floor while Dad made toast.\n\nOne morning, the truck's chunky front wheel cracked right off. [emotion:QT/sad] Ethan felt his chest go heavy, like a rock had dropped inside it.\n\n\"Dad, the wheel broke,\" Ethan said quietly, showing him the three pieces.\n\nDad crouched down. \"Maybe we can fix it together. You hold the parts, and I'll get the glue.\"\n\nWhile Ethan held the pieces carefully, Dad pressed them back into place. [emotion:QT/calm] Ethan watched every move.\n\n\"Which part goes there?\" Dad asked, pointing to the round edge.\n\n\"That one,\" Ethan said, sliding the piece forward.\n\nAfter the glue dried, the truck rolled smoothly again. Ethan thought it looked even better than before, because they had fixed it together. [emotion:QT/happy] Dad ruffled his hair and said, \"Best repair crew in the whole house.\"\n\nEthan grinned and drove the red truck three laps around the table. [emotion:QT/happy][gesture:emotions/hoora]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 292,
+    "paragraph_count": 11,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      4,
+      4,
+      4,
+      5,
+      5,
+      6,
+      7,
+      8,
+      8,
+      9,
+      10
+    ],
+    "title": "The Broken Red Truck"
+  },
+  "pages": [
+    "Ethan loved his big red truck more than almost anything. [emotion:QT/happy] Before breakfast, he would race it across the kitchen floor while Dad made toast.",
+    "One morning, the truck's chunky front wheel cracked right off. [emotion:QT/sad] Ethan felt his chest go heavy, like a rock had dropped inside it.",
+    "\"Dad, the wheel broke,\" Ethan said quietly, showing him the three pieces. Dad crouched down. \"Maybe we can fix it together. You hold the parts, and I'll get the glue.\"",
+    "While Ethan held the pieces carefully, Dad pressed them back into place. [emotion:QT/calm] Ethan watched every move. \"Which part goes there?\" Dad asked, pointing to the round edge. \"That one,\" Ethan said, sliding the piece forward.",
+    "After the glue dried, the truck rolled smoothly again. Ethan thought it looked even better than before, because they had fixed it together. [emotion:QT/happy] Dad ruffled his hair and said, \"Best repair crew in the whole house.\"",
+    "Ethan grinned and drove the red truck three laps around the table."
+  ],
+  "paragraphs": [
+    "Ethan loved his big red truck more than almost anything. Before breakfast, he would race it across the kitchen floor while Dad made toast.",
+    "One morning, the truck's chunky front wheel cracked right off. Ethan felt his chest go heavy, like a rock had dropped inside it.",
+    "\"Dad, the wheel broke,\" Ethan said quietly, showing him the three pieces.",
+    "Dad crouched down. \"Maybe we can fix it together. You hold the parts, and I'll get the glue.\"",
+    "While Ethan held the pieces carefully, Dad pressed them back into place. Ethan watched every move.",
+    "\"Which part goes there?\" Dad asked, pointing to the round edge.",
+    "\"That one,\" Ethan said, sliding the piece forward.",
+    "After the glue dried, the truck rolled smoothly again. Ethan thought it looked even better than before, because they had fixed it together. Dad ruffled his hair and said, \"Best repair crew in the whole house.\"",
+    "Ethan grinned and drove the red truck three laps around the table."
+  ],
+  "scenes": [
+    "Ethan racing his big red truck across the kitchen floor while Dad makes toast at the counter in the morning.",
+    "Ethan kneeling on the floor, holding the cracked truck with a wheel broken off into three pieces, his expression sad and heavy.",
+    "Ethan standing and showing Dad the three broken pieces of the wheel, Dad listening attentively.",
+    "Dad crouching down to Ethan's level, speaking encouragingly, ready to go get the glue.",
+    "Dad and Ethan sitting together on the floor, Dad pressing the wheel pieces back into place while Ethan holds them carefully and watches closely.",
+    "Dad pointing to the round edge of the wheel, asking Ethan which piece goes where.",
+    "Ethan sliding the correct piece forward into position, both focused on the repair.",
+    "Dad ruffling Ethan's hair as the repaired red truck sits between them, both smiling proudly.",
+    "Ethan grinning and driving the red truck in laps around the kitchen table."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    4,
+    7,
+    8
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    4,
+    7,
+    8
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his red truck?",
+      "type": "main_idea",
+      "correct_answer": "Working together can make things better",
+      "wrong_answers": [
+        "Trucks are the best toys to race",
+        "Broken things should be thrown away"
+      ]
+    },
+    {
+      "question": "Before breakfast, where was Ethan racing his red truck while Dad made toast?",
+      "type": "detail",
+      "correct_answer": "Across the kitchen floor",
+      "wrong_answers": [
+        "Around the living room couch",
+        "Through the hallway and bathroom"
+      ]
+    },
+    {
+      "question": "After the glue dried, what did Ethan do with his truck that showed he was happy again?",
+      "type": "detail",
+      "correct_answer": "He drove it three laps around the table",
+      "wrong_answers": [
+        "He raced it through three rooms",
+        "He gave the truck to his dad"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan thought the truck looked even better than before, even though it had been broken?",
+      "type": "inference",
+      "correct_answer": "Because he and his dad fixed it together",
+      "wrong_answers": [
+        "Because the glue made it shinier and faster",
+        "Because Dad bought him three new wheels"
+      ]
+    },
+    {
+      "question": "How do you think Ethan felt when the chunky wheel cracked right off his favourite truck?",
+      "type": "inference",
+      "correct_answer": "Sad and heavy-hearted, like something was wrong",
+      "wrong_answers": [
+        "Thrilled because he could get a new truck",
+        "Calm because he knew how to fix it"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to tell his dad about the broken truck?",
+      "type": "takeaway",
+      "correct_answer": "Asking for help means you are smart enough to know you do not have to do everything alone.",
+      "wrong_answers": [
+        "Telling a grown-up about your problems means they will always fix everything for you right away.",
+        "Asking for help is only a good idea when something is too big or too heavy for you to carry."
+      ]
+    },
+    {
+      "question": "What did Ethan and his dad show us by what they did?",
+      "type": "takeaway",
+      "correct_answer": "Working together with someone you love makes hard things feel easier.",
+      "wrong_answers": [
+        "Fixing things at home is always faster and better than buying something brand new.",
+        "Spending time with family is most important when you are feeling bored or have nothing to do."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Trying again after something breaks is how you make things better.",
+      "wrong_answers": [
+        "Taking very good care of your toys means they will never get broken or damaged.",
+        "When something stops working, the best thing to do is wait until you feel ready to use it again."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help means you are smart enough to know you do not have to do everything alone.",
+    "Working together with someone you love makes hard things feel easier.",
+    "Trying again after something breaks is how you make things better."
+  ]
+}

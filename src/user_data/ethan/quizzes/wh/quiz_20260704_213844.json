@@ -1,0 +1,1223 @@
+[
+  {
+    "question": "What do we call the red fruit that grows on trees?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "apples"
+    ]
+  },
+  {
+    "question": "Where do students sit to learn in school?",
+    "type": "wh",
+    "correct_answer": "classroom",
+    "accepted_answers": [
+      "classroom",
+      "classrooms",
+      "class",
+      "desk"
+    ]
+  },
+  {
+    "question": "What do you carry your school books inside?",
+    "type": "wh",
+    "correct_answer": "backpack",
+    "accepted_answers": [
+      "backpack",
+      "backpacks",
+      "bag",
+      "school bag"
+    ]
+  },
+  {
+    "question": "What fruit is long, yellow, and curved?",
+    "type": "wh",
+    "correct_answer": "banana",
+    "accepted_answers": [
+      "banana",
+      "bananas"
+    ]
+  },
+  {
+    "question": "Where do birds build their homes in nature?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "tree",
+      "trees",
+      "nest",
+      "nests",
+      "in trees",
+      "in a tree"
+    ]
+  },
+  {
+    "question": "What do we use to write on paper in school?",
+    "type": "wh",
+    "correct_answer": "pencil",
+    "accepted_answers": [
+      "pencil",
+      "pencils",
+      "pen",
+      "pens"
+    ]
+  },
+  {
+    "question": "What do we sleep on at home every night?",
+    "type": "wh",
+    "correct_answer": "bed",
+    "accepted_answers": [
+      "bed",
+      "beds"
+    ]
+  },
+  {
+    "question": "What falls from the sky to water plants in nature?",
+    "type": "wh",
+    "correct_answer": "rain",
+    "accepted_answers": [
+      "rain",
+      "rainwater",
+      "water"
+    ]
+  },
+  {
+    "question": "What do we use to brush our teeth at home?",
+    "type": "wh",
+    "correct_answer": "toothbrush",
+    "accepted_answers": [
+      "toothbrush",
+      "toothbrushes",
+      "a toothbrush"
+    ]
+  },
+  {
+    "question": "What food is made by baking flour and water together?",
+    "type": "wh",
+    "correct_answer": "bread",
+    "accepted_answers": [
+      "bread",
+      "a loaf of bread",
+      "loaf"
+    ]
+  },
+  {
+    "question": "Who is the adult in charge of teaching your class?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "teachers",
+      "the teacher"
+    ]
+  },
+  {
+    "question": "What do we drink that comes from a cow?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cow's milk",
+      "whole milk",
+      "dairy milk",
+      "white milk"
+    ]
+  },
+  {
+    "question": "What small red fruit grows on low plants in gardens?",
+    "type": "wh",
+    "correct_answer": "strawberry",
+    "accepted_answers": [
+      "strawberry",
+      "strawberries"
+    ]
+  },
+  {
+    "question": "Where do fish live in nature?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "the ocean",
+      "ocean",
+      "river",
+      "rivers",
+      "lake",
+      "lakes",
+      "sea",
+      "pond"
+    ]
+  },
+  {
+    "question": "What do we sit on when eating at the kitchen table?",
+    "type": "wh",
+    "correct_answer": "chair",
+    "accepted_answers": [
+      "chair",
+      "chairs",
+      "a chair"
+    ]
+  },
+  {
+    "question": "What food comes from hens and is used in cooking?",
+    "type": "wh",
+    "correct_answer": "eggs",
+    "accepted_answers": [
+      "eggs",
+      "egg",
+      "an egg"
+    ]
+  },
+  {
+    "question": "What gives us light and warmth in the daytime sky?",
+    "type": "wh",
+    "correct_answer": "sun",
+    "accepted_answers": [
+      "sun",
+      "the sun"
+    ]
+  },
+  {
+    "question": "What do we use to drink water or juice at home?",
+    "type": "wh",
+    "correct_answer": "cup",
+    "accepted_answers": [
+      "cup",
+      "cups",
+      "glass",
+      "glasses",
+      "a cup",
+      "a glass"
+    ]
+  },
+  {
+    "question": "What food is made from milk and used on sandwiches?",
+    "type": "wh",
+    "correct_answer": "cheese",
+    "accepted_answers": [
+      "cheese",
+      "cheeses",
+      "butter",
+      "cream cheese",
+      "cheddar",
+      "dairy"
+    ]
+  },
+  {
+    "question": "What do we write or draw on in school?",
+    "type": "wh",
+    "correct_answer": "paper",
+    "accepted_answers": [
+      "paper",
+      "a piece of paper",
+      "notebook"
+    ]
+  },
+  {
+    "question": "How are apples and oranges alike?",
+    "type": "wh",
+    "correct_answer": "they are both fruits",
+    "accepted_answers": [
+      "they are both fruits",
+      "both fruits",
+      "they are fruit",
+      "both are fruit",
+      "they are both food",
+      "both food"
+    ]
+  },
+  {
+    "question": "What tall plant has a trunk and grows in forests?",
+    "type": "wh",
+    "correct_answer": "tree",
+    "accepted_answers": [
+      "tree",
+      "trees",
+      "a tree"
+    ]
+  },
+  {
+    "question": "What do we put on our bodies to stay warm and dressed?",
+    "type": "wh",
+    "correct_answer": "clothes",
+    "accepted_answers": [
+      "clothes",
+      "clothing",
+      "a shirt",
+      "jacket"
+    ]
+  },
+  {
+    "question": "What food is long, thin, and boiled in water to eat?",
+    "type": "wh",
+    "correct_answer": "pasta",
+    "accepted_answers": [
+      "pasta",
+      "spaghetti",
+      "noodles",
+      "noodle"
+    ]
+  },
+  {
+    "question": "What colorful plant part grows in gardens and smells nice?",
+    "type": "wh",
+    "correct_answer": "flower",
+    "accepted_answers": [
+      "flower",
+      "flowers",
+      "a flower"
+    ]
+  },
+  {
+    "question": "What would you say to a friend who feels sad today?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": []
+  },
+  {
+    "question": "What small round fruit grows in bunches on vines?",
+    "type": "wh",
+    "correct_answer": "grape",
+    "accepted_answers": [
+      "grape",
+      "grapes"
+    ]
+  },
+  {
+    "question": "Where do students put their books before going to school?",
+    "type": "wh",
+    "correct_answer": "backpack",
+    "accepted_answers": [
+      "backpack",
+      "bag",
+      "school bag",
+      "in their backpack",
+      "in a bag"
+    ]
+  },
+  {
+    "question": "What do we put food and drinks on at mealtimes?",
+    "type": "wh",
+    "correct_answer": "table",
+    "accepted_answers": [
+      "table",
+      "tables",
+      "a table",
+      "the table"
+    ]
+  },
+  {
+    "question": "Why do we water flowers in the garden?",
+    "type": "wh",
+    "correct_answer": "so they grow",
+    "accepted_answers": [
+      "so they grow",
+      "to help them grow",
+      "to keep them alive",
+      "they need water to live",
+      "so they don't die",
+      "to make them grow"
+    ]
+  },
+  {
+    "question": "What white powder is used to bake bread and cakes?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "white flour",
+      "wheat flour",
+      "bread flour",
+      "powder",
+      "baking flour"
+    ]
+  },
+  {
+    "question": "Where do students read books quietly in school?",
+    "type": "wh",
+    "correct_answer": "library",
+    "accepted_answers": [
+      "library",
+      "classroom",
+      "the library",
+      "reading room",
+      "class"
+    ]
+  },
+  {
+    "question": "Why do we bring a backpack to school every day?",
+    "type": "wh",
+    "correct_answer": "to carry books and supplies",
+    "accepted_answers": [
+      "to carry books and supplies",
+      "to carry our things",
+      "to hold our books",
+      "to bring our stuff",
+      "to carry school things"
+    ]
+  },
+  {
+    "question": "What category does a strawberry belong to?",
+    "type": "wh",
+    "correct_answer": "fruit",
+    "accepted_answers": [
+      "fruit",
+      "fruits",
+      "food"
+    ]
+  },
+  {
+    "question": "How are a bed and a chair alike?",
+    "type": "wh",
+    "correct_answer": "you can sit or rest on both",
+    "accepted_answers": [
+      "you can sit or rest on both",
+      "both are furniture",
+      "they are both furniture",
+      "both are things you sit on",
+      "both used for resting"
+    ]
+  },
+  {
+    "question": "What do birds use their wings for in nature?",
+    "type": "wh",
+    "correct_answer": "flying",
+    "accepted_answers": [
+      "flying",
+      "to fly",
+      "they fly",
+      "for flying"
+    ]
+  },
+  {
+    "question": "Why do we use a toothbrush every morning and night?",
+    "type": "wh",
+    "correct_answer": "to clean our teeth",
+    "accepted_answers": [
+      "to clean our teeth",
+      "to brush our teeth",
+      "to keep teeth clean",
+      "to keep teeth healthy"
+    ]
+  },
+  {
+    "question": "What is an orange both a fruit and an example of?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "a food",
+      "fruit and food"
+    ]
+  },
+  {
+    "question": "Where does an apple grow before we eat it?",
+    "type": "wh",
+    "correct_answer": "on a tree",
+    "accepted_answers": [
+      "on a tree",
+      "tree",
+      "trees",
+      "apple tree",
+      "on an apple tree"
+    ]
+  },
+  {
+    "question": "What do we say to greet someone when we first meet them?",
+    "type": "wh",
+    "correct_answer": "hello",
+    "accepted_answers": [
+      "hello",
+      "hi",
+      "good morning",
+      "hey",
+      "nice to meet you"
+    ]
+  },
+  {
+    "question": "Why do we say thank you when someone helps us?",
+    "type": "wh",
+    "correct_answer": "to show we are grateful",
+    "accepted_answers": [
+      "to show we are grateful",
+      "to be polite",
+      "because it is polite",
+      "to be kind",
+      "to show appreciation"
+    ]
+  },
+  {
+    "question": "What do we do before eating a meal at the table?",
+    "type": "wh",
+    "correct_answer": "wash our hands",
+    "accepted_answers": [
+      "wash our hands",
+      "wash hands",
+      "set the table",
+      "sit down",
+      "prepare food"
+    ]
+  },
+  {
+    "question": "How are milk and cheese alike?",
+    "type": "wh",
+    "correct_answer": "both come from cows",
+    "accepted_answers": [
+      "both come from cows",
+      "they both come from cows",
+      "both are dairy",
+      "they are both dairy",
+      "both made from milk",
+      "cheese is made from milk"
+    ]
+  },
+  {
+    "question": "What do we do with dirty clothes at home?",
+    "type": "wh",
+    "correct_answer": "wash them",
+    "accepted_answers": [
+      "wash them",
+      "put them in the laundry",
+      "clean them",
+      "do the laundry"
+    ]
+  },
+  {
+    "question": "Where does rain come from in the sky?",
+    "type": "wh",
+    "correct_answer": "clouds",
+    "accepted_answers": [
+      "clouds",
+      "the clouds",
+      "from clouds"
+    ]
+  },
+  {
+    "question": "What do we do after finishing a meal at home?",
+    "type": "wh",
+    "correct_answer": "clean up",
+    "accepted_answers": [
+      "clean up",
+      "wash the dishes",
+      "clear the table",
+      "put dishes away",
+      "tidy up"
+    ]
+  },
+  {
+    "question": "Why do trees have roots in the ground?",
+    "type": "wh",
+    "correct_answer": "to get water and stay in place",
+    "accepted_answers": [
+      "to get water and stay in place",
+      "to absorb water",
+      "to drink water",
+      "to hold them up",
+      "to stay standing",
+      "to get nutrients"
+    ]
+  },
+  {
+    "question": "What is pasta made from?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "wheat",
+      "dough",
+      "flour and water",
+      "wheat flour"
+    ]
+  },
+  {
+    "question": "Who do you tell when something at school makes you upset?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": []
+  },
+  {
+    "question": "What do we use paper and pencils for in school?",
+    "type": "wh",
+    "correct_answer": "writing and drawing",
+    "accepted_answers": [
+      "writing and drawing",
+      "writing",
+      "drawing",
+      "doing schoolwork",
+      "taking notes",
+      "learning"
+    ]
+  },
+  {
+    "question": "Where do we go when we feel sick and need to rest?",
+    "type": "wh",
+    "correct_answer": "bed",
+    "accepted_answers": [
+      "bed",
+      "home",
+      "our room",
+      "the bedroom"
+    ]
+  },
+  {
+    "question": "What category does bread belong to?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "foods",
+      "grain",
+      "grains"
+    ]
+  },
+  {
+    "question": "How are a pencil and a book alike?",
+    "type": "wh",
+    "correct_answer": "both are used for learning at school",
+    "accepted_answers": [
+      "both are used for learning at school",
+      "both are school supplies",
+      "they are both school supplies",
+      "both used in school",
+      "both help us learn"
+    ]
+  },
+  {
+    "question": "What do we do before going to bed at night?",
+    "type": "wh",
+    "correct_answer": "brush our teeth",
+    "accepted_answers": [
+      "brush our teeth",
+      "get changed",
+      "put on pajamas",
+      "wash up",
+      "get ready for bed"
+    ]
+  },
+  {
+    "question": "Where do grapes grow before we pick them?",
+    "type": "wh",
+    "correct_answer": "on vines",
+    "accepted_answers": [
+      "on vines",
+      "vines",
+      "on a vine",
+      "on grapevines"
+    ]
+  },
+  {
+    "question": "What do we say when we accidentally bump into someone?",
+    "type": "wh",
+    "correct_answer": "sorry",
+    "accepted_answers": [
+      "sorry",
+      "excuse me",
+      "I'm sorry",
+      "pardon me"
+    ]
+  },
+  {
+    "question": "Why do we raise our hand before speaking in class?",
+    "type": "wh",
+    "correct_answer": "to wait our turn to speak",
+    "accepted_answers": [
+      "to wait our turn to speak",
+      "to be polite",
+      "so the teacher knows we want to talk",
+      "to take turns",
+      "to not interrupt"
+    ]
+  },
+  {
+    "question": "What is cheese made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cow's milk",
+      "dairy"
+    ]
+  },
+  {
+    "question": "Where do we keep food cold at home?",
+    "type": "wh",
+    "correct_answer": "refrigerator",
+    "accepted_answers": [
+      "refrigerator",
+      "fridge",
+      "the fridge",
+      "the refrigerator"
+    ]
+  },
+  {
+    "question": "What do flowers need from nature to grow well?",
+    "type": "wh",
+    "correct_answer": "sunlight and water",
+    "accepted_answers": [
+      "sunlight and water",
+      "sun and water",
+      "water and sunlight",
+      "water and sun",
+      "sunlight",
+      "water",
+      "rain and sun"
+    ]
+  },
+  {
+    "question": "Why do we wear clothes when we go outside?",
+    "type": "wh",
+    "correct_answer": "to stay warm and covered",
+    "accepted_answers": [
+      "to stay warm and covered",
+      "to keep warm",
+      "to protect our body",
+      "to stay warm",
+      "to be dressed"
+    ]
+  },
+  {
+    "question": "What do we do with a cup when we are thirsty?",
+    "type": "wh",
+    "correct_answer": "drink from it",
+    "accepted_answers": [
+      "drink from it",
+      "fill it with water",
+      "use it to drink",
+      "drink out of it"
+    ]
+  },
+  {
+    "question": "How are a banana and a grape alike?",
+    "type": "wh",
+    "correct_answer": "both are fruits",
+    "accepted_answers": [
+      "both are fruits",
+      "they are both fruits",
+      "both are food",
+      "they are both food",
+      "both are sweet"
+    ]
+  },
+  {
+    "question": "What do we do when a classmate drops their things?",
+    "type": "wh",
+    "correct_answer": "help them pick things up",
+    "accepted_answers": [
+      "help them pick things up",
+      "help them",
+      "pick things up for them",
+      "offer to help"
+    ]
+  },
+  {
+    "question": "Where do students line up before entering the school building?",
+    "type": "wh",
+    "correct_answer": "outside",
+    "accepted_answers": [
+      "outside",
+      "at the door",
+      "in front of the school",
+      "at the entrance"
+    ]
+  },
+  {
+    "question": "What do eggs come from?",
+    "type": "wh",
+    "correct_answer": "hens",
+    "accepted_answers": [
+      "hens",
+      "chickens",
+      "birds",
+      "a hen",
+      "a chicken"
+    ]
+  },
+  {
+    "question": "Why do we use a cup instead of our hands to drink?",
+    "type": "wh",
+    "correct_answer": "to hold the liquid without spilling",
+    "accepted_answers": [
+      "to hold the liquid without spilling",
+      "so we don't spill",
+      "to drink more easily",
+      "cups hold liquid better",
+      "to not make a mess"
+    ]
+  },
+  {
+    "question": "What is a strawberry an example of in the fruit category?",
+    "type": "wh",
+    "correct_answer": "a fruit",
+    "accepted_answers": [
+      "a fruit",
+      "fruit",
+      "a type of fruit",
+      "a kind of fruit"
+    ]
+  },
+  {
+    "question": "Where do we hang our backpack when we arrive at school?",
+    "type": "wh",
+    "correct_answer": "on a hook",
+    "accepted_answers": [
+      "on a hook",
+      "on a peg",
+      "in the cubby",
+      "on the wall",
+      "at our desk",
+      "in the classroom"
+    ]
+  },
+  {
+    "question": "What do we do before eating to make our hands clean?",
+    "type": "wh",
+    "correct_answer": "wash our hands",
+    "accepted_answers": [
+      "wash our hands",
+      "wash hands",
+      "clean our hands"
+    ]
+  },
+  {
+    "question": "How are bread and pasta alike?",
+    "type": "wh",
+    "correct_answer": "both are made from flour",
+    "accepted_answers": [
+      "both are made from flour",
+      "they are both made from flour",
+      "both are grain foods",
+      "both made from wheat",
+      "both are food"
+    ]
+  },
+  {
+    "question": "What do fish use to breathe underwater in nature?",
+    "type": "wh",
+    "correct_answer": "gills",
+    "accepted_answers": [
+      "gills",
+      "their gills"
+    ]
+  },
+  {
+    "question": "Where do we put food scraps that we cannot eat?",
+    "type": "wh",
+    "correct_answer": "trash",
+    "accepted_answers": [
+      "trash",
+      "bin",
+      "garbage",
+      "compost",
+      "rubbish bin",
+      "the bin",
+      "the trash"
+    ]
+  },
+  {
+    "question": "What do we use a table for at home?",
+    "type": "wh",
+    "correct_answer": "eating meals",
+    "accepted_answers": [
+      "eating meals",
+      "eating",
+      "putting things on",
+      "doing homework",
+      "working",
+      "having dinner"
+    ]
+  },
+  {
+    "question": "Why do we need the sun in nature?",
+    "type": "wh",
+    "correct_answer": "for light and warmth",
+    "accepted_answers": [
+      "for light and warmth",
+      "to give us light",
+      "to keep us warm",
+      "plants need it to grow",
+      "for energy",
+      "to grow plants"
+    ]
+  },
+  {
+    "question": "What do we call the person who teaches us at school?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "teachers",
+      "the teacher",
+      "instructor"
+    ]
+  },
+  {
+    "question": "How are a tree and a flower alike?",
+    "type": "wh",
+    "correct_answer": "both are plants",
+    "accepted_answers": [
+      "both are plants",
+      "they are both plants",
+      "both grow in nature",
+      "both are living things",
+      "both need water and sun"
+    ]
+  },
+  {
+    "question": "What do we do when we finish using something that belongs to someone else?",
+    "type": "wh",
+    "correct_answer": "give it back",
+    "accepted_answers": [
+      "give it back",
+      "return it",
+      "give it back to them",
+      "hand it back"
+    ]
+  },
+  {
+    "question": "Where does milk come from before it reaches the store?",
+    "type": "wh",
+    "correct_answer": "cows",
+    "accepted_answers": [
+      "cows",
+      "a cow",
+      "from cows",
+      "dairy farm",
+      "farm"
+    ]
+  },
+  {
+    "question": "What do we do with a book in school?",
+    "type": "wh",
+    "correct_answer": "read it",
+    "accepted_answers": [
+      "read it",
+      "read",
+      "learn from it",
+      "study from it"
+    ]
+  },
+  {
+    "question": "Why do birds fly south when the weather gets cold?",
+    "type": "wh",
+    "correct_answer": "to find warmer weather and food",
+    "accepted_answers": [
+      "to find warmer weather and food",
+      "to stay warm",
+      "because it is warmer there",
+      "to find food",
+      "to survive winter"
+    ]
+  },
+  {
+    "question": "What is an apple both a fruit and an example of?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "a food",
+      "fruit and food"
+    ]
+  },
+  {
+    "question": "Where do we go to sleep every night at home?",
+    "type": "wh",
+    "correct_answer": "bedroom",
+    "accepted_answers": [
+      "bedroom",
+      "bed",
+      "our room",
+      "the bedroom"
+    ]
+  },
+  {
+    "question": "What do we do when someone is talking to us?",
+    "type": "wh",
+    "correct_answer": "listen",
+    "accepted_answers": [
+      "listen",
+      "pay attention",
+      "look at them",
+      "listen carefully"
+    ]
+  },
+  {
+    "question": "How are rain and the sun alike?",
+    "type": "wh",
+    "correct_answer": "both help plants grow",
+    "accepted_answers": [
+      "both help plants grow",
+      "they both help plants grow",
+      "both are part of nature",
+      "both are weather",
+      "both are needed in nature"
+    ]
+  },
+  {
+    "question": "What do we do before crossing the street near school?",
+    "type": "wh",
+    "correct_answer": "look both ways",
+    "accepted_answers": [
+      "look both ways",
+      "stop and look",
+      "check for cars",
+      "wait for the signal",
+      "look left and right"
+    ]
+  },
+  {
+    "question": "What category does a banana belong to?",
+    "type": "wh",
+    "correct_answer": "fruit",
+    "accepted_answers": [
+      "fruit",
+      "fruits",
+      "food"
+    ]
+  },
+  {
+    "question": "Where do we put our dirty clothes at home?",
+    "type": "wh",
+    "correct_answer": "laundry basket",
+    "accepted_answers": [
+      "laundry basket",
+      "hamper",
+      "the laundry",
+      "washing basket",
+      "laundry bin"
+    ]
+  },
+  {
+    "question": "What do we do when we want to join a game others are playing?",
+    "type": "wh",
+    "correct_answer": "ask politely",
+    "accepted_answers": [
+      "ask politely",
+      "ask if we can join",
+      "ask to play",
+      "say can I play"
+    ]
+  },
+  {
+    "question": "Why do we use a pencil instead of our finger to write?",
+    "type": "wh",
+    "correct_answer": "because it makes marks on paper",
+    "accepted_answers": [
+      "because it makes marks on paper",
+      "to write clearly",
+      "pencils leave marks",
+      "so we can write",
+      "to make letters"
+    ]
+  },
+  {
+    "question": "What do we call a group of fish swimming together in nature?",
+    "type": "wh",
+    "correct_answer": "school",
+    "accepted_answers": [
+      "school",
+      "a school of fish",
+      "shoal",
+      "a shoal"
+    ]
+  },
+  {
+    "question": "How are eggs and milk alike?",
+    "type": "wh",
+    "correct_answer": "both come from animals",
+    "accepted_answers": [
+      "both come from animals",
+      "they both come from animals",
+      "both are animal products",
+      "both are food",
+      "both used in cooking"
+    ]
+  },
+  {
+    "question": "What do we do when we are done eating at the table?",
+    "type": "wh",
+    "correct_answer": "clear our plate",
+    "accepted_answers": [
+      "clear our plate",
+      "put our plate away",
+      "clean up",
+      "wash the dishes",
+      "tidy up"
+    ]
+  },
+  {
+    "question": "Where do oranges grow before we eat them?",
+    "type": "wh",
+    "correct_answer": "on trees",
+    "accepted_answers": [
+      "on trees",
+      "tree",
+      "trees",
+      "orange tree",
+      "on an orange tree"
+    ]
+  },
+  {
+    "question": "What do we do when a friend is being left out at recess?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": []
+  },
+  {
+    "question": "Why do we pack our backpack the night before school?",
+    "type": "wh",
+    "correct_answer": "so we are ready in the morning",
+    "accepted_answers": [
+      "so we are ready in the morning",
+      "to be prepared",
+      "so we don't forget anything",
+      "to save time in the morning"
+    ]
+  },
+  {
+    "question": "What is a broader category that includes apples, bananas, and grapes?",
+    "type": "wh",
+    "correct_answer": "fruit",
+    "accepted_answers": [
+      "fruit",
+      "fruits",
+      "food"
+    ]
+  },
+  {
+    "question": "Where do we go when we need help from an adult at school?",
+    "type": "wh",
+    "correct_answer": "the teacher",
+    "accepted_answers": [
+      "the teacher",
+      "teacher",
+      "to the teacher",
+      "the office",
+      "a grown up"
+    ]
+  },
+  {
+    "question": "What do we do with food scraps that can help plants grow?",
+    "type": "wh",
+    "correct_answer": "compost them",
+    "accepted_answers": [
+      "compost them",
+      "put them in compost",
+      "compost",
+      "add them to compost"
+    ]
+  },
+  {
+    "question": "How are a cup and a table alike?",
+    "type": "wh",
+    "correct_answer": "both are used at home",
+    "accepted_answers": [
+      "both are used at home",
+      "they are both used at home",
+      "both are household items",
+      "both are things we use at home"
+    ]
+  },
+  {
+    "question": "What do we do when we see litter on the ground outside?",
+    "type": "wh",
+    "correct_answer": "pick it up and put it in the bin",
+    "accepted_answers": [
+      "pick it up and put it in the bin",
+      "throw it away",
+      "put it in the trash",
+      "pick it up"
+    ]
+  },
+  {
+    "question": "Where do strawberries grow in a garden?",
+    "type": "wh",
+    "correct_answer": "on the ground",
+    "accepted_answers": [
+      "on the ground",
+      "low to the ground",
+      "on plants",
+      "on strawberry plants",
+      "on low plants"
+    ]
+  },
+  {
+    "question": "What do we do before starting to eat a meal at school?",
+    "type": "wh",
+    "correct_answer": "wash our hands",
+    "accepted_answers": [
+      "wash our hands",
+      "wash hands",
+      "clean our hands",
+      "sit down",
+      "wait for everyone"
+    ]
+  },
+  {
+    "question": "Why do we need to sleep in our bed every night?",
+    "type": "wh",
+    "correct_answer": "so our body can rest and grow",
+    "accepted_answers": [
+      "so our body can rest and grow",
+      "to rest",
+      "to get energy",
+      "our body needs rest",
+      "to stay healthy"
+    ]
+  },
+  {
+    "question": "What is a broader category that includes bread, pasta, and eggs?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "foods"
+    ]
+  },
+  {
+    "question": "Where do we look when the teacher is talking in class?",
+    "type": "wh",
+    "correct_answer": "at the teacher",
+    "accepted_answers": [
+      "at the teacher",
+      "the teacher",
+      "at the board",
+      "at the front"
+    ]
+  },
+  {
+    "question": "What do we do when we borrow something from a friend?",
+    "type": "wh",
+    "correct_answer": "return it when done",
+    "accepted_answers": [
+      "return it when done",
+      "give it back",
+      "say thank you",
+      "take care of it",
+      "return it"
+    ]
+  },
+  {
+    "question": "How are a fish and a bird alike?",
+    "type": "wh",
+    "correct_answer": "both are animals",
+    "accepted_answers": [
+      "both are animals",
+      "they are both animals",
+      "both are living things",
+      "both are creatures"
+    ]
+  },
+  {
+    "question": "What do we do when we arrive at school in the morning?",
+    "type": "wh",
+    "correct_answer": "go to our classroom",
+    "accepted_answers": [
+      "go to our classroom",
+      "go to class",
+      "put our bag away",
+      "sit at our desk",
+      "greet our teacher"
+    ]
+  }
+]

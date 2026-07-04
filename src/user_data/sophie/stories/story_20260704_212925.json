@@ -1,0 +1,100 @@
+{
+  "story": "Sophie is in the garden. Big red and yellow leaves are falling from the trees. Sophie sees a tiny fairy sitting on a leaf. [emotion:QT/surprised] The fairy has bright purple wings. Sophie picks up a red leaf and gives it to the fairy. [emotion:QT/happy] The fairy puts the leaf on a big pile of leaves. Sophie picks up more leaves. [emotion:QT/happy] Sophie and the fairy make a tall, crunchy pile together. The wind blows three leaves away. [emotion:QT/afraid] The fairy catches the leaves and brings them back. [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [
+      "season"
+    ],
+    "word_count": 212,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Fairy in the Falling Leaves"
+  },
+  "pages": [
+    "Sophie is in the garden. Big red and yellow leaves are falling from the trees. Sophie sees a tiny fairy sitting on a leaf.",
+    "[emotion:QT/surprised] The fairy has bright purple wings. Sophie picks up a red leaf and gives it to the fairy. [emotion:QT/happy] The fairy puts the leaf on a big pile of leaves.",
+    "Sophie picks up more leaves. [emotion:QT/happy] Sophie and the fairy make a tall, crunchy pile together. The wind blows three leaves away.",
+    "[emotion:QT/afraid] The fairy catches the leaves and brings them back."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Big red and yellow leaves are falling from the trees. Sophie sees a tiny fairy sitting on a leaf. The fairy has bright purple wings. Sophie picks up a red leaf and gives it to the fairy. The fairy puts the leaf on a big pile of leaves. Sophie picks up more leaves. Sophie and the fairy make a tall, crunchy pile together. The wind blows three leaves away. The fairy catches the leaves and brings them back."
+  ],
+  "scenes": [
+    "Sophie and a tiny fairy with bright purple wings work together in an autumn garden, collecting big red and yellow falling leaves into a tall crunchy pile, with the fairy catching windblown leaves in the air."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in this story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie and a fairy made a leaf pile together",
+      "wrong_answers": [
+        "Sophie chased a rabbit in the garden",
+        "A princess found a crown in the trees"
+      ]
+    },
+    {
+      "question": "Where did Sophie see the tiny fairy sitting?",
+      "type": "detail",
+      "correct_answer": "On a leaf",
+      "wrong_answers": [
+        "On a flower",
+        "On a branch"
+      ]
+    },
+    {
+      "question": "What colour were the fairy's wings?",
+      "type": "detail",
+      "correct_answer": "Bright purple",
+      "wrong_answers": [
+        "Red and yellow",
+        "Pink and white"
+      ]
+    },
+    {
+      "question": "What did the fairy do because three leaves blew away?",
+      "type": "detail",
+      "correct_answer": "She caught the leaves and brought them back",
+      "wrong_answers": [
+        "She flew away and hid",
+        "She made three more leaves"
+      ]
+    }
+  ],
+  "takeaways": []
+}

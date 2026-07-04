@@ -1,0 +1,99 @@
+{
+  "story": "Sophie and her friend Mia are at the pet shop. There are three fluffy cats in the shop. One small orange cat is sleeping on a red chair. Sophie wants to put the cat in a big basket. Sophie picks up the basket. Mia holds the basket open. Sophie puts the sleepy cat inside the basket. The cat opens its green eyes! [emotion:QT/surprised] \"The cat is awake!\" Sophie says. [emotion:QT/happy] Mia and Sophie are laughing. [gesture:clapping] The lady at the shop gives the girls two cat treats to share.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 220,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Sleepy Cat"
+  },
+  "pages": [
+    "Sophie and her friend Mia are at the pet shop. There are three fluffy cats in the shop. One small orange cat is sleeping on a red chair.",
+    "Sophie wants to put the cat in a big basket. Sophie picks up the basket. Mia holds the basket open. Sophie puts the sleepy cat inside the basket.",
+    "The cat opens its green eyes! [emotion:QT/surprised] \"The cat is awake!\" Sophie says.",
+    "[emotion:QT/happy] Mia and Sophie are laughing. [gesture:clapping] The lady at the shop gives the girls two cat treats to share."
+  ],
+  "paragraphs": [
+    "Sophie and her friend Mia are at the pet shop. There are three fluffy cats in the shop. One small orange cat is sleeping on a red chair. Sophie wants to put the cat in a big basket. Sophie picks up the basket. Mia holds the basket open. Sophie puts the sleepy cat inside the basket. The cat opens its green eyes! \"The cat is awake!\" Sophie says. Mia and Sophie are laughing. The lady at the shop gives the girls two cat treats to share."
+  ],
+  "scenes": [
+    "Sophie and Mia at a pet shop, laughing together as a small orange cat opens its green eyes inside a basket they are holding, with a shop lady handing them cat treats."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the story about?",
+      "type": "main_idea",
+      "correct_answer": "Two girls putting a cat in a basket",
+      "wrong_answers": [
+        "A princess finding a magic cat",
+        "Three cats running away from a shop"
+      ]
+    },
+    {
+      "question": "Where was the orange cat sleeping?",
+      "type": "detail",
+      "correct_answer": "On a red chair",
+      "wrong_answers": [
+        "In a big basket",
+        "Under the table"
+      ]
+    },
+    {
+      "question": "What colour are the cat's eyes?",
+      "type": "detail",
+      "correct_answer": "Green",
+      "wrong_answers": [
+        "Orange",
+        "Blue"
+      ]
+    },
+    {
+      "question": "What did the lady give the girls because they were at the shop?",
+      "type": "detail",
+      "correct_answer": "Two cat treats to share",
+      "wrong_answers": [
+        "Three fluffy cats to take home",
+        "A red chair and a basket"
+      ]
+    }
+  ],
+  "takeaways": []
+}

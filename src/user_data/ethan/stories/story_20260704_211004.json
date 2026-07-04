@@ -1,0 +1,153 @@
+{
+  "story": "Ethan ran through the bright, crowded gymnasium because today was the school superhero fair, and he had been working on his costume for three whole weeks. His red cape felt smooth and powerful against his shoulders, and his chest glowed with pride. [emotion:QT/happy] Then Ethan saw it \u2014 the tall, round display board where heroes posted their mission plans was completely blank. [emotion:QT/surprised] The markers were scattered across the floor, and nobody had written anything yet.\n\n\"I think we should do this together,\" said his classmate, Priya, who wore a golden star on her chest. \"While you reach the high corners, I can hold the board steady.\"\n\nEthan thought for a moment, then nodded. [gesture:think] [gesture:nodding-yes] First, they chose three thick, chunky markers. Next, Ethan stretched up carefully and drew their rescue mission plan in large, round letters. [gesture:stretching] After that, Priya added bright stars around each word.\n\nFinally, children gathered and cheered at the colorful, cheerful board they had made. [emotion:QT/happy] [gesture:clapping] Ethan grinned. [emotion:QT/happy] Working together had felt even more powerful than any superpower. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 294,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+    ],
+    "title": "Ethan and the Secret Three"
+  },
+  "pages": [
+    "Ethan ran through the bright, crowded gymnasium because today was the school superhero fair, and he had been working on his costume for three whole weeks. His red cape felt smooth and powerful against his shoulders, and his chest glowed with pride.",
+    "[emotion:QT/happy] Then Ethan saw it the tall, round display board where heroes posted their mission plans was completely blank. [emotion:QT/surprised] The markers were scattered across the floor, and nobody had written anything yet.",
+    "\"I think we should do this together,\" said his classmate, Priya, who wore a golden star on her chest. \"While you reach the high corners, I can hold the board steady.\"",
+    "Ethan thought for a moment, then nodded. [gesture:think] [gesture:nodding-yes] First, they chose three thick, chunky markers. Next, Ethan stretched up carefully and drew their rescue mission plan in large, round letters. [gesture:stretching] After that, Priya added bright stars around each word.",
+    "Finally, children gathered and cheered at the colorful, cheerful board they had made. [emotion:QT/happy] [gesture:clapping] Ethan grinned. [emotion:QT/happy] Working together had felt even more powerful than any superpower."
+  ],
+  "paragraphs": [
+    "Ethan ran through the bright, crowded gymnasium because today was the school superhero fair, and he had been working on his costume for three whole weeks. His red cape felt smooth and powerful against his shoulders, and his chest glowed with pride. Then Ethan saw it \u2014 the tall, round display board where heroes posted their mission plans was completely blank. The markers were scattered across the floor, and nobody had written anything yet.",
+    "\"I think we should do this together,\" said his classmate, Priya, who wore a golden star on her chest. \"While you reach the high corners, I can hold the board steady.\"",
+    "Ethan thought for a moment, then nodded. First, they chose three thick, chunky markers. Next, Ethan stretched up carefully and drew their rescue mission plan in large, round letters. After that, Priya added bright stars around each word.",
+    "Finally, children gathered and cheered at the colorful, cheerful board they had made. Ethan grinned. Working together had felt even more powerful than any superpower."
+  ],
+  "scenes": [
+    "Ethan in a red cape runs through a bright, crowded gymnasium decorated for a superhero fair, spotting a tall round display board that is completely blank with markers scattered on the floor.",
+    "Ethan and Priya (wearing a golden star) stand together at the blank display board, Priya gesturing as she proposes they work together \u2014 Ethan listening thoughtfully.",
+    "Ethan stretches up to write large round letters on the board while Priya holds it steady and adds bright stars around the words, both focused on their collaborative work.",
+    "A crowd of children gathers around the now colorful, cheerful display board, cheering, while Ethan and Priya grin proudly beside their creation."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    1,
+    2,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    1,
+    2,
+    3
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his superhero rescue mission?",
+      "type": "main_idea",
+      "correct_answer": "Working together is more powerful than any superpower",
+      "wrong_answers": [
+        "Having the best cape makes you a true hero",
+        "Winning the superhero fair is the most important thing"
+      ]
+    },
+    {
+      "question": "Where was the superhero fair that Ethan ran through at the start of the story?",
+      "type": "detail",
+      "correct_answer": "In the school gymnasium",
+      "wrong_answers": [
+        "In the school library",
+        "On the playground outside"
+      ]
+    },
+    {
+      "question": "After they chose three thick markers, what did Ethan and Priya do first, then next, to finish the rescue mission board?",
+      "type": "detail",
+      "correct_answer": "Ethan stretched up and wrote the plan, then Priya added bright stars",
+      "wrong_answers": [
+        "Priya wrote the plan, then Ethan drew the stars around it",
+        "They both drew pictures of their superhero capes together"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt even happier after he worked with Priya than he did when he was wearing his cape alone?",
+      "type": "inference",
+      "correct_answer": "Because sharing the challenge with a friend made it more rewarding",
+      "wrong_answers": [
+        "Because Priya gave him a three extra markers to keep",
+        "Because he thought his red cape was not working properly"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Ethan had not chosen to work together with Priya on the rescue mission board?",
+      "type": "inference",
+      "correct_answer": "The board might have stayed blank and the children would not have cheered",
+      "wrong_answers": [
+        "Ethan would have reached the high corners easily by himself",
+        "Three other children would have written the rescue plan instead"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to listen to Priya's suggestion?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help makes hard things possible.",
+      "wrong_answers": [
+        "Waiting for a teacher to help makes hard things possible.",
+        "Practicing on your own first makes hard things possible."
+      ]
+    },
+    {
+      "question": "What did Ethan and Priya show us by what they did?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns and working together gets the job done faster.",
+      "wrong_answers": [
+        "Planning everything out alone gets the job done faster.",
+        "Using the right supplies and tools gets the job done faster."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Doing something kind with a friend makes you both feel proud.",
+      "wrong_answers": [
+        "Finishing a big project by yourself makes you feel proud.",
+        "Wearing a special costume to an event makes you both feel proud."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help makes hard things possible.",
+    "Taking turns and working together gets the job done faster.",
+    "Doing something kind with a friend makes you both feel proud."
+  ]
+}

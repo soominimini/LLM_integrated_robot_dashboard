@@ -1,0 +1,602 @@
+[
+  {
+    "question": "Is an apple a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a banana a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is an orange a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are grapes a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a strawberry a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are bananas usually yellow?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are strawberries usually red?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are oranges usually orange?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are grapes small?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do apples grow on trees?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do oranges grow on trees?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do strawberries grow in gardens?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can you eat a banana?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fruits have seeds?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a banana long?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is an apple round?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we sleep in a bed?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we sit on chairs?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we eat at a table?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we drink from a cup?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we brush teeth with a toothbrush?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we wear clothes every day?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a bed in a bedroom?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we wash hands before eating?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we use a cup for drinking?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a chair used for sitting?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we put food on a table?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we wear clothes outside?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we brush teeth before bed?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a toothbrush used in the bathroom?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we sleep at night?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a table a piece of furniture?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is bread a food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Does milk come from cows?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is cheese made from milk?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do eggs come from chickens?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is pasta a food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is flour used to make bread?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can we drink milk?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we cook eggs to eat them?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is bread made from flour?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is pasta cooked in water?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is milk a drink?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is cheese a dairy food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we eat eggs for breakfast?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is flour a white powder?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can we eat bread?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is pasta made from flour?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees grow outside?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do flowers grow in gardens?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do birds fly in the sky?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fish live in water?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Does rain fall from the sky?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Does the sun shine in the sky?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees have leaves?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do flowers have petals?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do birds have wings?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fish have fins?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Does rain make things wet?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Does the sun give us light?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees have roots?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do birds make nests?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do flowers need water to grow?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fish swim?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is the sun bright?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees grow tall?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a rock part of nature?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do birds sing?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a grape small and round?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we peel a banana before eating?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a strawberry a red fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do apples have skin?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a chair found in a home?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we use a cup at meals?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a bed used for sleeping?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we put on clothes in the morning?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a toothbrush used for cleaning teeth?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we sit at a table to eat?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is milk white?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is an egg oval shaped?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is bread soft?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is cheese yellow or white?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we boil pasta in water?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do flowers come in many colors?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees give us shade?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fish live in rivers?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Does rain help plants grow?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is the sun in the sky during the day?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do birds lay eggs?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do flowers smell nice?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a banana a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do grapes grow in bunches?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is an orange round?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we eat fruit as a snack?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a cup found in a kitchen?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we use a table in the kitchen?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is flour used to make pasta?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do fish have scales?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do trees have trunks?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a bird an animal?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

@@ -1,0 +1,98 @@
+{
+  "story": "Sophie is in the garden. [emotion:QT/surprised] Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand. The fairy is trying to reach three bright stars. The stars are up in the tall tree. Sophie gets a big stick. Sophie and the fairy push the stick under the tree. The three stars fall down. [emotion:QT/happy] The fairy picks up the stars and puts them in a little bag. [emotion:QT/happy] \"Thank you!\" the fairy says to Sophie.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 204,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Little Fairy"
+  },
+  "pages": [
+    "Sophie is in the garden. [emotion:QT/surprised] Sophie sees a tiny fairy sitting on a red flower.",
+    "The fairy has shiny wings and a little wand. The fairy is trying to reach three bright stars. The stars are up in the tall tree.",
+    "Sophie gets a big stick. Sophie and the fairy push the stick under the tree. The three stars fall down.",
+    "[emotion:QT/happy] The fairy picks up the stars and puts them in a little bag. [emotion:QT/happy] \"Thank you!\" the fairy says to Sophie."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand. The fairy is trying to reach three bright stars. The stars are up in the tall tree. Sophie gets a big stick. Sophie and the fairy push the stick under the tree. The three stars fall down. The fairy picks up the stars and puts them in a little bag. \"Thank you!\" the fairy says to Sophie."
+  ],
+  "scenes": [
+    "Sophie stands in a sunny garden with a tiny fairy on a red flower, both using a big stick to knock three bright stars down from a tall tree, with the fairy holding a little bag to collect them."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in this story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie helped a fairy reach three stars",
+      "wrong_answers": [
+        "Sophie found a lost cat in the garden",
+        "A fairy gave Sophie a magic crown"
+      ]
+    },
+    {
+      "question": "Where was the fairy sitting at the start?",
+      "type": "detail",
+      "correct_answer": "On a red flower",
+      "wrong_answers": [
+        "On a big tree branch",
+        "Under a green leaf"
+      ]
+    },
+    {
+      "question": "What did the fairy have? She had shiny wings and a little...",
+      "type": "detail",
+      "correct_answer": "Wand",
+      "wrong_answers": [
+        "Crown",
+        "Bag"
+      ]
+    },
+    {
+      "question": "What did Sophie and the fairy use to get the three stars down?",
+      "type": "detail",
+      "correct_answer": "A big stick",
+      "wrong_answers": [
+        "A magic wand",
+        "A long ladder"
+      ]
+    }
+  ],
+  "takeaways": []
+}

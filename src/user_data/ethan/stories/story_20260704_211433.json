@@ -1,0 +1,164 @@
+{
+  "story": "Ethan loved superheroes more than anything. [emotion:QT/sad] Before school started, he brought his favorite red cape for Class Hero Day, but when he reached his classroom, the cape was gone. His stomach felt hollow, like an empty treasure chest.\n\n[emotion:QT/sad] \"I think I dropped it somewhere,\" Ethan told his classmate Mia, because he looked everywhere inside his bag.\n\n[gesture:think] Mia thought carefully. \"Maybe it fell while you were running through the hallway,\" she said. \"Let's check together.\"\n\nFirst, they retraced their steps through the long, narrow corridor. Then Mia spotted something bright tucked under the large brown bench near the water fountain.\n\n[emotion:QT/surprised] \"There it is!\" Ethan shouted, running toward it. [emotion:QT/happy] Mia grabbed one end while Ethan reached for the other, and they pulled the cape free together.\n\nAfter they returned to class, Ethan wore his red cape proudly. [emotion:QT/happy] He felt like a real superhero \u2014 not because he had powers, but because he had asked for help and found a true sidekick. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 278,
+    "paragraph_count": 8,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4,
+      5,
+      6,
+      7,
+      7
+    ],
+    "title": "Ethan and the Missing Cape"
+  },
+  "pages": [
+    "Ethan loved superheroes more than anything. [emotion:QT/sad] Before school started, he brought his favorite red cape for Class Hero Day, but when he reached his classroom, the cape was gone. His stomach felt hollow, like an empty treasure chest.",
+    "[emotion:QT/sad] \"I think I dropped it somewhere,\" Ethan told his classmate Mia, because he looked everywhere inside his bag.",
+    "[gesture:think] Mia thought carefully. \"Maybe it fell while you were running through the hallway,\" she said. \"Let's check together.\"",
+    "First, they retraced their steps through the long, narrow corridor. Then Mia spotted something bright tucked under the large brown bench near the water fountain.",
+    "[emotion:QT/surprised] \"There it is!\" Ethan shouted, running toward it. [emotion:QT/happy] Mia grabbed one end while Ethan reached for the other, and they pulled the cape free together.",
+    "After they returned to class, Ethan wore his red cape proudly. [emotion:QT/happy] He felt like a real superhero not because he had powers, but because he had asked for help and found a true sidekick."
+  ],
+  "paragraphs": [
+    "Ethan loved superheroes more than anything. Before school started, he brought his favorite red cape for Class Hero Day, but when he reached his classroom, the cape was gone. His stomach felt hollow, like an empty treasure chest.",
+    "\"I think I dropped it somewhere,\" Ethan told his classmate Mia, because he looked everywhere inside his bag.",
+    "Mia thought carefully. \"Maybe it fell while you were running through the hallway,\" she said. \"Let's check together.\"",
+    "First, they retraced their steps through the long, narrow corridor. Then Mia spotted something bright tucked under the large brown bench near the water fountain.",
+    "\"There it is!\" Ethan shouted, running toward it. Mia grabbed one end while Ethan reached for the other, and they pulled the cape free together.",
+    "After they returned to class, Ethan wore his red cape proudly. He felt like a real superhero \u2014 not because he had powers, but because he had asked for help and found a true sidekick."
+  ],
+  "scenes": [
+    "Ethan stands in his classroom doorway looking distressed, holding an empty bag, with a sad expression on his face as other kids in costumes are visible inside.",
+    "Ethan talks to Mia inside the classroom, gesturing with his hands while Mia listens attentively.",
+    "Ethan and Mia walk together through a long, narrow school hallway, looking around carefully for the missing cape.",
+    "Mia points excitedly at a bright red cape tucked under a large brown bench near a water fountain in the hallway.",
+    "Ethan and Mia both grab opposite ends of the red cape and pull it out from under the bench together, smiling.",
+    "Ethan stands proudly in the classroom wearing his red cape, beaming with joy, while Mia stands beside him smiling."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan the superhero?",
+      "type": "main_idea",
+      "correct_answer": "Asking for help and having a friend makes you a real hero",
+      "wrong_answers": [
+        "Having a red cape gives you special superpowers",
+        "Running through the hallway is the best rescue mission"
+      ]
+    },
+    {
+      "question": "Where was the red cape found after Ethan and Mia retraced their steps through the hallway?",
+      "type": "detail",
+      "correct_answer": "Tucked under the large brown bench near the water fountain",
+      "wrong_answers": [
+        "Hidden inside Ethan's treasure chest bag",
+        "Dropped near the classroom door by the teacher"
+      ]
+    },
+    {
+      "question": "What did Ethan and Mia do first before they found the cape together?",
+      "type": "detail",
+      "correct_answer": "They retraced their steps through the long, narrow corridor",
+      "wrong_answers": [
+        "They checked three other classrooms for the missing cape",
+        "They asked their teacher to help them search the whole school"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt like a real superhero after he found his red cape with Mia's help?",
+      "type": "inference",
+      "correct_answer": "Because he reached out for help and found a true sidekick",
+      "wrong_answers": [
+        "Because he ran the fastest through the hallway on the rescue mission",
+        "Because his red cape gave him three amazing superpowers that day"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Ethan had not asked Mia for help with the missing cape?",
+      "type": "inference",
+      "correct_answer": "He probably would not have thought to check the hallway bench",
+      "wrong_answers": [
+        "He would have found three other capes in the classroom treasure chest",
+        "The teacher would have already returned the cape before class started"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to tell Mia about his missing cape?",
+      "type": "takeaway",
+      "correct_answer": "Asking for help makes hard things easier to solve.",
+      "wrong_answers": [
+        "Keeping your problems to yourself helps you think more clearly.",
+        "Telling a friend about your problem means they will fix it for you."
+      ]
+    },
+    {
+      "question": "What did Ethan and Mia show us by what they did?",
+      "type": "takeaway",
+      "correct_answer": "Working together with a friend gets things done faster than working alone.",
+      "wrong_answers": [
+        "Searching in the same place twice is the best way to find lost things.",
+        "Letting someone else do the searching saves you time and energy."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Good friends are like superpowers \u2014 they make you stronger.",
+      "wrong_answers": [
+        "Having the right costume is what makes someone a true hero.",
+        "Being brave means facing every challenge without anyone beside you."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help makes hard things easier to solve.",
+    "Working together with a friend gets things done faster than working alone.",
+    "Good friends are like superpowers \u2014 they make you stronger."
+  ]
+}

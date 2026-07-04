@@ -1,0 +1,103 @@
+{
+  "story": "Sophie is in the castle. Sophie has a big, red crown. Sophie puts the crown on the chair. [emotion:QT/surprised] The crown falls on the floor! Sophie's friend Ruby is in the castle too. Ruby runs to the chair and picks up the crown. Ruby gives the crown to Sophie. Sophie puts the shiny crown on her head. [emotion:QT/happy] Sophie and Ruby are smiling. There are three roses on the table. Sophie puts a rose on Ruby's chair. Ruby and Sophie are sitting together in the castle. [emotion:QT/calm]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 198,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Royal Crown"
+  },
+  "pages": [
+    "Sophie is in the castle. Sophie has a big, red crown. Sophie puts the crown on the chair.",
+    "[emotion:QT/surprised] The crown falls on the floor!",
+    "Sophie's friend Ruby is in the castle too. Ruby runs to the chair and picks up the crown. Ruby gives the crown to Sophie.",
+    "Sophie puts the shiny crown on her head. [emotion:QT/happy] Sophie and Ruby are smiling.",
+    "There are three roses on the table. Sophie puts a rose on Ruby's chair. Ruby and Sophie are sitting together in the castle."
+  ],
+  "paragraphs": [
+    "Sophie is in the castle. Sophie has a big, red crown. Sophie puts the crown on the chair. The crown falls on the floor! Sophie's friend Ruby is in the castle too. Ruby runs to the chair and picks up the crown. Ruby gives the crown to Sophie. Sophie puts the shiny crown on her head. Sophie and Ruby are smiling. There are three roses on the table. Sophie puts a rose on Ruby's chair. Ruby and Sophie are sitting together in the castle."
+  ],
+  "scenes": [
+    "Sophie and Ruby are together in a castle, with Sophie wearing a shiny red crown on her head, smiling, while Ruby sits beside her on a chair with a rose placed on it, and three roses visible on the table nearby."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in the story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie and Ruby had fun in the castle",
+      "wrong_answers": [
+        "Sophie and Ruby played with a pet cat",
+        "Ruby and Sophie went to the park"
+      ]
+    },
+    {
+      "question": "Where is the crown at the start of the story?",
+      "type": "detail",
+      "correct_answer": "On the chair",
+      "wrong_answers": [
+        "On the table",
+        "On Sophie's head"
+      ]
+    },
+    {
+      "question": "What is Ruby doing when the crown falls on the floor?",
+      "type": "detail",
+      "correct_answer": "She runs and picks up the crown",
+      "wrong_answers": [
+        "She is eating the roses",
+        "She is running to the door"
+      ]
+    },
+    {
+      "question": "How many roses are on the table?",
+      "type": "detail",
+      "correct_answer": "Three roses",
+      "wrong_answers": [
+        "Two roses",
+        "Four roses"
+      ]
+    }
+  ],
+  "takeaways": []
+}

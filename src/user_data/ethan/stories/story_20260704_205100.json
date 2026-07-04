@@ -1,0 +1,147 @@
+{
+  "story": "Ethan had been building a red, three-level rocket track for his toy cars all morning. The tall, winding ramps were almost finished \u2014 but one silver piece was missing from the very top.\n\n\"I think it rolled under the chair,\" said his neighbor, Marcus, who had just arrived. [emotion:QT/happy] Marcus was clever and cheerful, and Ethan felt relieved because searching alone had felt frustrating. [emotion:QT/calm] \"I'll check the dark corner while you hold the ramp steady,\" Marcus suggested.\n\nAlthough the gap was small, Marcus reached in and found the piece. [emotion:QT/happy] Ethan gave a huge grin because that tiny part had made everything feel impossible before.\n\nAfter Marcus snapped it in, they took turns releasing the cars. A chunky blue racer flew down so fast it went skidding right off the table, and both boys burst out laughing. [emotion:QT/happy] [emotion:QT/happy] \"We built something really great together,\" Ethan said, feeling proud as the cars raced past the finish line. [gesture:clapping]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 287,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6
+    ],
+    "title": "Ethan and the Rocket Track"
+  },
+  "pages": [
+    "Ethan had been building a red, three-level rocket track for his toy cars all morning. The tall, winding ramps were almost finished but one silver piece was missing from the very top.",
+    "\"I think it rolled under the chair,\" said his neighbor, Marcus, who had just arrived. [emotion:QT/happy] Marcus was clever and cheerful, and Ethan felt relieved because searching alone had felt frustrating. [emotion:QT/calm] \"I'll check the dark corner while you hold the ramp steady,\" Marcus suggested.",
+    "Although the gap was small, Marcus reached in and found the piece. [emotion:QT/happy] Ethan gave a huge grin because that tiny part had made everything feel impossible before.",
+    "After Marcus snapped it in, they took turns releasing the cars. A chunky blue racer flew down so fast it went skidding right off the table, and both boys burst out laughing. [emotion:QT/happy] [emotion:QT/happy] \"We built something really great together,\" Ethan said, feeling proud as the cars raced past the finish line."
+  ],
+  "paragraphs": [
+    "Ethan had been building a red, three-level rocket track for his toy cars all morning. The tall, winding ramps were almost finished \u2014 but one silver piece was missing from the very top.",
+    "\"I think it rolled under the chair,\" said his neighbor, Marcus, who had just arrived. Marcus was clever and cheerful, and Ethan felt relieved because searching alone had felt frustrating. \"I'll check the dark corner while you hold the ramp steady,\" Marcus suggested.",
+    "Although the gap was small, Marcus reached in and found the piece. Ethan gave a huge grin because that tiny part had made everything feel impossible before.",
+    "After Marcus snapped it in, they took turns releasing the cars. A chunky blue racer flew down so fast it went skidding right off the table, and both boys burst out laughing. \"We built something really great together,\" Ethan said, feeling proud as the cars raced past the finish line."
+  ],
+  "scenes": [
+    "Ethan alone in his room, building a tall red three-level rocket track for toy cars, with a gap at the top where a silver piece is missing",
+    "Ethan and Marcus together near the track, with Marcus crouching to search under a chair in a dark corner while Ethan holds the ramp steady",
+    "Marcus retrieving the small silver piece and handing it over, with Ethan grinning in relief",
+    "Both boys laughing as a blue toy car skids off the table, with the completed rocket track behind them and cars racing past the finish line"
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his rocket track?",
+      "type": "main_idea",
+      "correct_answer": "Working together as a team makes things easier and more fun",
+      "wrong_answers": [
+        "Racing toy cars is better than building tracks",
+        "It is important to find every missing piece yourself"
+      ]
+    },
+    {
+      "question": "After Marcus arrived, where did he think the missing silver piece had rolled?",
+      "type": "detail",
+      "correct_answer": "Under the chair in a dark corner",
+      "wrong_answers": [
+        "Behind the three-level rocket track ramp",
+        "Underneath the chunky blue racer car"
+      ]
+    },
+    {
+      "question": "What happened right after Marcus snapped the missing piece into the rocket track?",
+      "type": "detail",
+      "correct_answer": "They took turns releasing the cars down the ramps",
+      "wrong_answers": [
+        "They went outside to race their cars on the street",
+        "Ethan rebuilt the three ramps from the very bottom"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt relieved when Marcus arrived to help him with the rocket track?",
+      "type": "inference",
+      "correct_answer": "Because searching alone had felt really frustrating",
+      "wrong_answers": [
+        "Because Marcus brought three new toy cars with him",
+        "Because Ethan was tired and wanted to stop building"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Marcus had not reached into the dark corner to find the missing piece?",
+      "type": "inference",
+      "correct_answer": "Ethan might not have finished the rocket track at all",
+      "wrong_answers": [
+        "The chunky blue racer would have gone faster down the ramp",
+        "Ethan would have found three more silver pieces right away"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to let Marcus help him find the missing piece?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help makes hard things easier.",
+      "wrong_answers": [
+        "Letting someone else do all the work means you finish faster.",
+        "Having a friend nearby means you never have to look for things yourself."
+      ]
+    },
+    {
+      "question": "What can we do like Ethan and Marcus when we play with something together?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns makes working together more fun for everyone.",
+      "wrong_answers": [
+        "Sharing your favorite toys means you will always get them back.",
+        "Playing with a friend means someone else can fix your mistakes."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Keeping on trying, even when something feels hard, leads to something great.",
+      "wrong_answers": [
+        "Building things on your own is the best way to feel proud of your work.",
+        "Finishing a project quickly is more important than enjoying the steps along the way."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help makes hard things easier.",
+    "Taking turns makes working together more fun for everyone.",
+    "Keeping on trying, even when something feels hard, leads to something great."
+  ]
+}

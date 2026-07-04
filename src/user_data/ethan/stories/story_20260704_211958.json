@@ -1,0 +1,164 @@
+{
+  "story": "Ethan ran to the big, muddy hill behind his house, pulling his favorite red toy truck. Three other trucks waited there \u2014 the chunky yellow one, the rough gray one, and the shiny blue racer. Autumn had painted the trees bright orange and brown, while thick clouds rolled in like a slow freight train overhead.\n\nThen the rain came. Wet mud swallowed the whole racetrack Ethan had built.\n\n\"That happened because the ground was already soft,\" said a girl named Rosa, who stood nearby holding a green truck.\n\n[emotion:QT/angry] Ethan felt frustrated, but Rosa had an idea. \"What if we rebuild it together? You go first, then I'll add the next part.\"\n\nSlowly, they shaped three smooth curves and a long straight road through the red and gold leaves. Rosa chose where each truck should go, and Ethan gave the signal to race.\n\nFinally, all four trucks thundered down the hill together. [gesture:emotions/hoora] Ethan threw his arms up and cheered \u2014 mud splattered absolutely everywhere. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "season"
+    ],
+    "word_count": 293,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      4,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6
+    ],
+    "title": "The Muddy Racetrack"
+  },
+  "pages": [
+    "Ethan ran to the big, muddy hill behind his house, pulling his favorite red toy truck. Three other trucks waited there the chunky yellow one, the rough gray one, and the shiny blue racer. Autumn had painted the trees bright orange and brown, while thick clouds rolled in like a slow freight train overhead.",
+    "Then the rain came. Wet mud swallowed the whole racetrack Ethan had built.",
+    "\"That happened because the ground was already soft,\" said a girl named Rosa, who stood nearby holding a green truck.",
+    "[emotion:QT/angry] Ethan felt frustrated, but Rosa had an idea. \"What if we rebuild it together? You go first, then I'll add the next part.\"",
+    "Slowly, they shaped three smooth curves and a long straight road through the red and gold leaves. Rosa chose where each truck should go, and Ethan gave the signal to race.",
+    "Finally, all four trucks thundered down the hill together. [gesture:emotions/hoora] Ethan threw his arms up and cheered mud splattered absolutely everywhere."
+  ],
+  "paragraphs": [
+    "Ethan ran to the big, muddy hill behind his house, pulling his favorite red toy truck. Three other trucks waited there \u2014 the chunky yellow one, the rough gray one, and the shiny blue racer. Autumn had painted the trees bright orange and brown, while thick clouds rolled in like a slow freight train overhead.",
+    "Then the rain came. Wet mud swallowed the whole racetrack Ethan had built.",
+    "\"That happened because the ground was already soft,\" said a girl named Rosa, who stood nearby holding a green truck.",
+    "Ethan felt frustrated, but Rosa had an idea. \"What if we rebuild it together? You go first, then I'll add the next part.\"",
+    "Slowly, they shaped three smooth curves and a long straight road through the red and gold leaves. Rosa chose where each truck should go, and Ethan gave the signal to race.",
+    "Finally, all four trucks thundered down the hill together. Ethan threw his arms up and cheered \u2014 mud splattered absolutely everywhere."
+  ],
+  "scenes": [
+    "Ethan pulls his red toy truck up a big muddy hill, with three other colorful trucks waiting nearby and autumn trees under thick rolling clouds.",
+    "Rain pours down as mud swallows the racetrack Ethan built on the hill.",
+    "Rosa stands nearby on the muddy hill holding a green truck, explaining to Ethan why the track was ruined.",
+    "Ethan looks frustrated while Rosa gestures enthusiastically, proposing they rebuild the track together.",
+    "Ethan and Rosa work side by side shaping curves and a straight road through red and gold leaves, arranging the trucks at the starting line.",
+    "All four trucks race down the hill together as Ethan throws his arms up cheering, mud splattering everywhere."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his trucks?",
+      "type": "main_idea",
+      "correct_answer": "Working together can turn a bad situation into something great",
+      "wrong_answers": [
+        "Racing trucks is always faster than rebuilding tracks",
+        "Rain makes every racetrack better than before"
+      ]
+    },
+    {
+      "question": "Where was the racetrack that Ethan built for his three trucks?",
+      "type": "detail",
+      "correct_answer": "On the big muddy hill behind his house",
+      "wrong_answers": [
+        "In the garage next to his red car",
+        "On the road in front of his school"
+      ]
+    },
+    {
+      "question": "After the rain came and wrecked the track, what did Rosa and Ethan do first to rebuild it?",
+      "type": "detail",
+      "correct_answer": "They shaped three smooth curves and a long straight road",
+      "wrong_answers": [
+        "They carried the trucks inside to stay dry",
+        "They threw the muddy trucks into the leaves"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan threw his arms up and cheered when the trucks raced down the hill?",
+      "type": "inference",
+      "correct_answer": "He was thrilled that their teamwork made the race happen",
+      "wrong_answers": [
+        "He was angry because the mud splattered on his clothes",
+        "He thought Rosa chose the wrong trucks for the race"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Rosa had not been there to help Ethan rebuild the racetrack?",
+      "type": "inference",
+      "correct_answer": "Ethan might have stayed frustrated and never raced the trucks",
+      "wrong_answers": [
+        "The rain would have stopped and the track would have fixed itself",
+        "Ethan would have found three new trucks to replace the muddy ones"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to work with Rosa after the racetrack was ruined?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help can turn a hard problem into something fun.",
+      "wrong_answers": [
+        "Building things on your own is the best way to make sure they turn out right.",
+        "Waiting for the rain to stop is the smartest thing to do when plans go wrong."
+      ]
+    },
+    {
+      "question": "What did Ethan and Rosa show us by what they did when rebuilding the track?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns with someone makes the work easier and faster.",
+      "wrong_answers": [
+        "Letting one person be in charge of everything gets the best results.",
+        "Planning every single step before you start helps you finish without any mistakes."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Trying again after something goes wrong is how you reach your goal.",
+      "wrong_answers": [
+        "Picking the right spot for your racetrack means nothing will ever go wrong.",
+        "Staying calm and walking away gives you time to come up with a better plan."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help can turn a hard problem into something fun.",
+    "Taking turns with someone makes the work easier and faster.",
+    "Trying again after something goes wrong is how you reach your goal."
+  ]
+}

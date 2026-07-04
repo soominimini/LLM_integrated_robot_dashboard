@@ -1,0 +1,105 @@
+{
+  "story": "Sophie is sitting in the garden with her mum. They are looking at the red flowers. [emotion:QT/surprised] Sophie sees something small and shiny under a big green leaf. [gesture:stretching] Sophie picks up the leaf. There is a tiny fairy sitting there! [emotion:QT/surprised] The fairy has little wings and a small magic wand. [emotion:QT/sad] The fairy's wand is broken. Sophie and her mum find three small sticks. They help the fairy fix her wand. The fairy waves her wand. [emotion:QT/happy] Little stars and sparkles fly into the air. Sophie and her mum are smiling. [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 213,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "Sophie is sitting in the garden with her mum. They are looking at the red flowers.",
+    "[emotion:QT/surprised] Sophie sees something small and shiny under a big green leaf. [gesture:stretching] Sophie picks up the leaf. There is a tiny fairy sitting there!",
+    "[emotion:QT/surprised] The fairy has little wings and a small magic wand. [emotion:QT/sad] The fairy's wand is broken.",
+    "Sophie and her mum find three small sticks. They help the fairy fix her wand.",
+    "The fairy waves her wand. [emotion:QT/happy] Little stars and sparkles fly into the air. Sophie and her mum are smiling."
+  ],
+  "paragraphs": [
+    "Sophie is sitting in the garden with her mum. They are looking at the red flowers. Sophie sees something small and shiny under a big green leaf. Sophie picks up the leaf. There is a tiny fairy sitting there! The fairy has little wings and a small magic wand. The fairy's wand is broken. Sophie and her mum find three small sticks. They help the fairy fix her wand. The fairy waves her wand. Little stars and sparkles fly into the air. Sophie and her mum are smiling."
+  ],
+  "scenes": [
+    "Sophie and her mum sit in a sunny garden among red flowers, discovering a tiny fairy with wings and a broken wand under a green leaf; together they help fix the wand and the fairy sends sparkles and stars into the air as everyone smiles."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in this story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie helped a fairy fix her magic wand",
+      "wrong_answers": [
+        "Sophie found a princess in the garden",
+        "Sophie played with three rabbits"
+      ]
+    },
+    {
+      "question": "Where was the tiny fairy hiding?",
+      "type": "detail",
+      "correct_answer": "Under a big green leaf",
+      "wrong_answers": [
+        "Under a red flower",
+        "Under a chair"
+      ]
+    },
+    {
+      "question": "What were Sophie and her mum looking at in the garden?",
+      "type": "detail",
+      "correct_answer": "The red flowers",
+      "wrong_answers": [
+        "Three rabbits running",
+        "A cat chasing butterflies"
+      ]
+    },
+    {
+      "question": "What happened after the fairy fixed her wand and waved it?",
+      "type": "detail",
+      "correct_answer": "Little stars and sparkles flew into the air",
+      "wrong_answers": [
+        "Three birds came flying down",
+        "It started raining"
+      ]
+    }
+  ],
+  "takeaways": []
+}

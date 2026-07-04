@@ -19,5 +19,26 @@
     "score": 5,
     "total": 5,
     "timestamp": "2026-07-04T00:08:09"
+  },
+  {
+    "scene_id": "scene_1783194533_2130a9",
+    "mode": "receptive",
+    "score": 4,
+    "total": 5,
+    "timestamp": "2026-07-04T21:51:02"
+  },
+  {
+    "scene_id": "scene_1783196370_cf9eef",
+    "mode": "receptive",
+    "score": 5,
+    "total": 5,
+    "timestamp": "2026-07-04T22:20:30"
+  },
+  {
+    "scene_id": "scene_1783197023_6e6790",
+    "mode": "receptive",
+    "score": 5,
+    "total": 5,
+    "timestamp": "2026-07-04T22:31:51"
   }
 ]

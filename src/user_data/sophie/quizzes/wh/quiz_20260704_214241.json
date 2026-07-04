@@ -1,0 +1,1157 @@
+[
+  {
+    "question": "What color is a ripe banana?",
+    "type": "wh",
+    "correct_answer": "yellow",
+    "accepted_answers": [
+      "yellow",
+      "yellowy",
+      "bright yellow",
+      "golden",
+      "gold"
+    ]
+  },
+  {
+    "question": "What fruit is red and small?",
+    "type": "wh",
+    "correct_answer": "strawberry",
+    "accepted_answers": [
+      "strawberry",
+      "strawberries",
+      "apple"
+    ]
+  },
+  {
+    "question": "What do we sleep on at night?",
+    "type": "wh",
+    "correct_answer": "bed",
+    "accepted_answers": [
+      "bed",
+      "a bed"
+    ]
+  },
+  {
+    "question": "Where do birds live outside?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "a tree",
+      "nest",
+      "nests",
+      "in trees"
+    ]
+  },
+  {
+    "question": "What do we use to brush teeth?",
+    "type": "wh",
+    "correct_answer": "toothbrush",
+    "accepted_answers": [
+      "toothbrush",
+      "a toothbrush"
+    ]
+  },
+  {
+    "question": "What animal gives us milk?",
+    "type": "wh",
+    "correct_answer": "cow",
+    "accepted_answers": [
+      "cow",
+      "cows",
+      "a cow"
+    ]
+  },
+  {
+    "question": "What do we sit on at the table?",
+    "type": "wh",
+    "correct_answer": "chair",
+    "accepted_answers": [
+      "chair",
+      "a chair",
+      "chairs"
+    ]
+  },
+  {
+    "question": "What color is a ripe apple?",
+    "type": "wh",
+    "correct_answer": "red",
+    "accepted_answers": [
+      "red",
+      "green",
+      "red or green",
+      "yellow"
+    ]
+  },
+  {
+    "question": "Where do fish live?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "in water",
+      "the ocean",
+      "a lake",
+      "river",
+      "sea"
+    ]
+  },
+  {
+    "question": "What do we drink milk from?",
+    "type": "wh",
+    "correct_answer": "cup",
+    "accepted_answers": [
+      "cup",
+      "a cup",
+      "glass",
+      "a glass"
+    ]
+  },
+  {
+    "question": "What falls from clouds when it rains?",
+    "type": "wh",
+    "correct_answer": "rain",
+    "accepted_answers": [
+      "rain",
+      "water",
+      "raindrops"
+    ]
+  },
+  {
+    "question": "What do we make bread from?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "dough",
+      "wheat"
+    ]
+  },
+  {
+    "question": "Where do we eat dinner at home?",
+    "type": "wh",
+    "correct_answer": "table",
+    "accepted_answers": [
+      "table",
+      "the table",
+      "dining table",
+      "kitchen table"
+    ]
+  },
+  {
+    "question": "What color are grapes usually?",
+    "type": "wh",
+    "correct_answer": "purple",
+    "accepted_answers": [
+      "purple",
+      "green",
+      "red",
+      "purple or green"
+    ]
+  },
+  {
+    "question": "What shines in the sky during the day?",
+    "type": "wh",
+    "correct_answer": "sun",
+    "accepted_answers": [
+      "sun",
+      "the sun"
+    ]
+  },
+  {
+    "question": "What do hens lay?",
+    "type": "wh",
+    "correct_answer": "eggs",
+    "accepted_answers": [
+      "eggs",
+      "an egg"
+    ]
+  },
+  {
+    "question": "Where do we put dirty clothes?",
+    "type": "wh",
+    "correct_answer": "laundry basket",
+    "accepted_answers": [
+      "laundry basket",
+      "hamper",
+      "basket",
+      "washing machine"
+    ]
+  },
+  {
+    "question": "What fruit is orange and round?",
+    "type": "wh",
+    "correct_answer": "orange",
+    "accepted_answers": [
+      "orange",
+      "an orange"
+    ]
+  },
+  {
+    "question": "What do trees grow from the ground?",
+    "type": "wh",
+    "correct_answer": "roots",
+    "accepted_answers": [
+      "roots",
+      "seeds",
+      "trunk"
+    ]
+  },
+  {
+    "question": "What do we put cheese on?",
+    "type": "wh",
+    "correct_answer": "bread",
+    "accepted_answers": [
+      "bread",
+      "crackers",
+      "pizza",
+      "sandwich"
+    ]
+  },
+  {
+    "question": "Where do flowers grow?",
+    "type": "wh",
+    "correct_answer": "ground",
+    "accepted_answers": [
+      "ground",
+      "in the ground",
+      "garden",
+      "outside",
+      "soil"
+    ]
+  },
+  {
+    "question": "What do we wear on our bodies?",
+    "type": "wh",
+    "correct_answer": "clothes",
+    "accepted_answers": [
+      "clothes",
+      "clothing",
+      "shirts",
+      "pants"
+    ]
+  },
+  {
+    "question": "What do birds use to fly?",
+    "type": "wh",
+    "correct_answer": "wings",
+    "accepted_answers": [
+      "wings",
+      "their wings"
+    ]
+  },
+  {
+    "question": "What food comes from milk?",
+    "type": "wh",
+    "correct_answer": "cheese",
+    "accepted_answers": [
+      "cheese",
+      "butter",
+      "yogurt"
+    ]
+  },
+  {
+    "question": "Where do apples grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "on trees",
+      "apple trees",
+      "a tree"
+    ]
+  },
+  {
+    "question": "What do we cook pasta in?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "a pot",
+      "pot",
+      "boiling water"
+    ]
+  },
+  {
+    "question": "What color is a strawberry?",
+    "type": "wh",
+    "correct_answer": "red",
+    "accepted_answers": [
+      "red",
+      "bright red",
+      "dark red",
+      "pinkish red",
+      "pink"
+    ]
+  },
+  {
+    "question": "Where do we sleep at night?",
+    "type": "wh",
+    "correct_answer": "bed",
+    "accepted_answers": [
+      "bed",
+      "in bed",
+      "bedroom",
+      "our bed"
+    ]
+  },
+  {
+    "question": "What do flowers have that smell nice?",
+    "type": "wh",
+    "correct_answer": "petals",
+    "accepted_answers": [
+      "petals",
+      "flowers",
+      "blossoms"
+    ]
+  },
+  {
+    "question": "What do we use to eat soup?",
+    "type": "wh",
+    "correct_answer": "spoon",
+    "accepted_answers": [
+      "spoon",
+      "a spoon"
+    ]
+  },
+  {
+    "question": "What grows on trees in a forest?",
+    "type": "wh",
+    "correct_answer": "leaves",
+    "accepted_answers": [
+      "leaves",
+      "leaf",
+      "branches",
+      "fruit"
+    ]
+  },
+  {
+    "question": "What do we drink when we are thirsty?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "milk",
+      "juice"
+    ]
+  },
+  {
+    "question": "Where do bananas grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "on trees",
+      "banana trees",
+      "a tree"
+    ]
+  },
+  {
+    "question": "What do we use eggs to make?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "breakfast",
+      "omelette",
+      "cake",
+      "scrambled eggs"
+    ]
+  },
+  {
+    "question": "What color is the sun?",
+    "type": "wh",
+    "correct_answer": "yellow",
+    "accepted_answers": [
+      "yellow",
+      "orange",
+      "yellow and orange"
+    ]
+  },
+  {
+    "question": "Where do we keep food cold?",
+    "type": "wh",
+    "correct_answer": "refrigerator",
+    "accepted_answers": [
+      "refrigerator",
+      "fridge",
+      "the fridge",
+      "the refrigerator"
+    ]
+  },
+  {
+    "question": "What do birds sing with?",
+    "type": "wh",
+    "correct_answer": "beak",
+    "accepted_answers": [
+      "beak",
+      "their beak",
+      "mouth",
+      "their mouth"
+    ]
+  },
+  {
+    "question": "What fruit has seeds inside?",
+    "type": "wh",
+    "correct_answer": "apple",
+    "accepted_answers": [
+      "apple",
+      "orange",
+      "watermelon",
+      "grape",
+      "many fruits"
+    ]
+  },
+  {
+    "question": "Where do we wash our hands?",
+    "type": "wh",
+    "correct_answer": "sink",
+    "accepted_answers": [
+      "sink",
+      "the sink",
+      "bathroom",
+      "kitchen"
+    ]
+  },
+  {
+    "question": "What do we use flour to bake?",
+    "type": "wh",
+    "correct_answer": "bread",
+    "accepted_answers": [
+      "bread",
+      "cake",
+      "cookies",
+      "muffins",
+      "baked goods"
+    ]
+  },
+  {
+    "question": "What color are leaves in spring?",
+    "type": "wh",
+    "correct_answer": "green",
+    "accepted_answers": [
+      "green",
+      "light green",
+      "bright green",
+      "dark green"
+    ]
+  },
+  {
+    "question": "What do we put pasta sauce on?",
+    "type": "wh",
+    "correct_answer": "pasta",
+    "accepted_answers": [
+      "pasta",
+      "noodles",
+      "spaghetti"
+    ]
+  },
+  {
+    "question": "Where do oranges grow?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "on trees",
+      "orange trees",
+      "a tree"
+    ]
+  },
+  {
+    "question": "What do we use a cup for?",
+    "type": "wh",
+    "correct_answer": "drinking",
+    "accepted_answers": [
+      "drinking",
+      "to drink",
+      "drink water",
+      "drink milk"
+    ]
+  },
+  {
+    "question": "What do fish use to swim?",
+    "type": "wh",
+    "correct_answer": "fins",
+    "accepted_answers": [
+      "fins",
+      "their fins",
+      "tail",
+      "their tail"
+    ]
+  },
+  {
+    "question": "What do we eat for breakfast with milk?",
+    "type": "wh",
+    "correct_answer": "cereal",
+    "accepted_answers": [
+      "cereal",
+      "bread",
+      "eggs",
+      "oatmeal"
+    ]
+  },
+  {
+    "question": "Where do strawberries grow?",
+    "type": "wh",
+    "correct_answer": "ground",
+    "accepted_answers": [
+      "ground",
+      "on the ground",
+      "garden",
+      "in a garden",
+      "plants"
+    ]
+  },
+  {
+    "question": "What do we put on a table to eat?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "plates",
+      "dishes",
+      "bowls"
+    ]
+  },
+  {
+    "question": "What do trees give us on hot days?",
+    "type": "wh",
+    "correct_answer": "shade",
+    "accepted_answers": [
+      "shade",
+      "shadow",
+      "cool air"
+    ]
+  },
+  {
+    "question": "What do we use a toothbrush for?",
+    "type": "wh",
+    "correct_answer": "brushing teeth",
+    "accepted_answers": [
+      "brushing teeth",
+      "cleaning teeth",
+      "brush our teeth",
+      "teeth"
+    ]
+  },
+  {
+    "question": "What color is an orange?",
+    "type": "wh",
+    "correct_answer": "orange",
+    "accepted_answers": [
+      "orange",
+      "orangey",
+      "bright orange",
+      "reddish orange"
+    ]
+  },
+  {
+    "question": "Where do grapes grow?",
+    "type": "wh",
+    "correct_answer": "vines",
+    "accepted_answers": [
+      "vines",
+      "on vines",
+      "a vine",
+      "grapevines"
+    ]
+  },
+  {
+    "question": "What do we use a chair for?",
+    "type": "wh",
+    "correct_answer": "sitting",
+    "accepted_answers": [
+      "sitting",
+      "to sit",
+      "sit down"
+    ]
+  },
+  {
+    "question": "What do flowers need to grow?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "sunlight",
+      "sun",
+      "water and sun",
+      "soil"
+    ]
+  },
+  {
+    "question": "What do we slice to make a sandwich?",
+    "type": "wh",
+    "correct_answer": "bread",
+    "accepted_answers": [
+      "bread",
+      "a loaf of bread"
+    ]
+  },
+  {
+    "question": "Where do birds build their homes?",
+    "type": "wh",
+    "correct_answer": "trees",
+    "accepted_answers": [
+      "trees",
+      "in trees",
+      "nests",
+      "in nests",
+      "branches"
+    ]
+  },
+  {
+    "question": "What do we use to drink water?",
+    "type": "wh",
+    "correct_answer": "cup",
+    "accepted_answers": [
+      "cup",
+      "a cup",
+      "glass",
+      "a glass",
+      "bottle"
+    ]
+  },
+  {
+    "question": "What fruit is small and purple?",
+    "type": "wh",
+    "correct_answer": "grape",
+    "accepted_answers": [
+      "grape",
+      "grapes"
+    ]
+  },
+  {
+    "question": "Where do we cook food at home?",
+    "type": "wh",
+    "correct_answer": "kitchen",
+    "accepted_answers": [
+      "kitchen",
+      "the kitchen",
+      "stove",
+      "oven"
+    ]
+  },
+  {
+    "question": "What do we call baby chickens?",
+    "type": "wh",
+    "correct_answer": "chicks",
+    "accepted_answers": [
+      "chicks",
+      "chick",
+      "baby chicks",
+      "chickens"
+    ]
+  },
+  {
+    "question": "What do trees have on their branches?",
+    "type": "wh",
+    "correct_answer": "leaves",
+    "accepted_answers": [
+      "leaves",
+      "leaf",
+      "fruit",
+      "birds"
+    ]
+  },
+  {
+    "question": "What do we put on bread to eat?",
+    "type": "wh",
+    "correct_answer": "butter",
+    "accepted_answers": [
+      "butter",
+      "jam",
+      "cheese",
+      "peanut butter"
+    ]
+  },
+  {
+    "question": "Where does rain come from?",
+    "type": "wh",
+    "correct_answer": "clouds",
+    "accepted_answers": [
+      "clouds",
+      "the clouds",
+      "sky",
+      "the sky"
+    ]
+  },
+  {
+    "question": "What do we wear when it is cold?",
+    "type": "wh",
+    "correct_answer": "warm clothes",
+    "accepted_answers": [
+      "warm clothes",
+      "a coat",
+      "jacket",
+      "sweater",
+      "clothes"
+    ]
+  },
+  {
+    "question": "What do fish breathe in water?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "oxygen",
+      "air"
+    ]
+  },
+  {
+    "question": "What do we use eggs and flour to make?",
+    "type": "wh",
+    "correct_answer": "cake",
+    "accepted_answers": [
+      "cake",
+      "bread",
+      "cookies",
+      "baked goods",
+      "pancakes"
+    ]
+  },
+  {
+    "question": "Where do we hang our clothes?",
+    "type": "wh",
+    "correct_answer": "closet",
+    "accepted_answers": [
+      "closet",
+      "wardrobe",
+      "hanger",
+      "hook",
+      "the closet"
+    ]
+  },
+  {
+    "question": "What do flowers grow from?",
+    "type": "wh",
+    "correct_answer": "seeds",
+    "accepted_answers": [
+      "seeds",
+      "a seed",
+      "the ground",
+      "soil",
+      "bulbs"
+    ]
+  },
+  {
+    "question": "What do we call the outside of an orange?",
+    "type": "wh",
+    "correct_answer": "peel",
+    "accepted_answers": [
+      "peel",
+      "skin",
+      "rind"
+    ]
+  },
+  {
+    "question": "Where do we store clothes at home?",
+    "type": "wh",
+    "correct_answer": "closet",
+    "accepted_answers": [
+      "closet",
+      "wardrobe",
+      "drawer",
+      "dresser"
+    ]
+  },
+  {
+    "question": "What do we use a bed for?",
+    "type": "wh",
+    "correct_answer": "sleeping",
+    "accepted_answers": [
+      "sleeping",
+      "to sleep",
+      "rest",
+      "resting"
+    ]
+  },
+  {
+    "question": "What do birds eat?",
+    "type": "wh",
+    "correct_answer": "seeds",
+    "accepted_answers": [
+      "seeds",
+      "worms",
+      "insects",
+      "bugs",
+      "food"
+    ]
+  },
+  {
+    "question": "What do we call the top of a tree?",
+    "type": "wh",
+    "correct_answer": "treetop",
+    "accepted_answers": [
+      "treetop",
+      "top",
+      "crown",
+      "the top",
+      "branches"
+    ]
+  },
+  {
+    "question": "What do we eat pasta with?",
+    "type": "wh",
+    "correct_answer": "sauce",
+    "accepted_answers": [
+      "sauce",
+      "tomato sauce",
+      "cheese",
+      "a fork",
+      "fork"
+    ]
+  },
+  {
+    "question": "Where do we brush our teeth?",
+    "type": "wh",
+    "correct_answer": "bathroom",
+    "accepted_answers": [
+      "bathroom",
+      "the bathroom",
+      "sink",
+      "the sink"
+    ]
+  },
+  {
+    "question": "What do we call a group of grapes?",
+    "type": "wh",
+    "correct_answer": "bunch",
+    "accepted_answers": [
+      "bunch",
+      "a bunch",
+      "cluster",
+      "a cluster"
+    ]
+  },
+  {
+    "question": "What do we use to eat food?",
+    "type": "wh",
+    "correct_answer": "fork",
+    "accepted_answers": [
+      "fork",
+      "spoon",
+      "hands",
+      "chopsticks",
+      "utensils"
+    ]
+  },
+  {
+    "question": "Where does the sun go at night?",
+    "type": "wh",
+    "correct_answer": "down",
+    "accepted_answers": [
+      "down",
+      "it sets",
+      "away",
+      "below the horizon",
+      "it goes down"
+    ]
+  },
+  {
+    "question": "What do we call the part of a tree we climb?",
+    "type": "wh",
+    "correct_answer": "branches",
+    "accepted_answers": [
+      "branches",
+      "branch",
+      "trunk",
+      "the trunk"
+    ]
+  },
+  {
+    "question": "What do we put milk in to drink?",
+    "type": "wh",
+    "correct_answer": "cup",
+    "accepted_answers": [
+      "cup",
+      "a cup",
+      "glass",
+      "a glass"
+    ]
+  },
+  {
+    "question": "What do flowers have in the middle?",
+    "type": "wh",
+    "correct_answer": "seeds",
+    "accepted_answers": [
+      "seeds",
+      "pollen",
+      "center",
+      "the center"
+    ]
+  },
+  {
+    "question": "Where do we put food to eat it?",
+    "type": "wh",
+    "correct_answer": "plate",
+    "accepted_answers": [
+      "plate",
+      "a plate",
+      "bowl",
+      "table"
+    ]
+  },
+  {
+    "question": "What do we call baby fish?",
+    "type": "wh",
+    "correct_answer": "fry",
+    "accepted_answers": [
+      "fry",
+      "baby fish",
+      "fingerlings",
+      "small fish"
+    ]
+  },
+  {
+    "question": "What do we use cheese for?",
+    "type": "wh",
+    "correct_answer": "eating",
+    "accepted_answers": [
+      "eating",
+      "food",
+      "sandwiches",
+      "pizza",
+      "cooking"
+    ]
+  },
+  {
+    "question": "Where do we put our head to sleep?",
+    "type": "wh",
+    "correct_answer": "pillow",
+    "accepted_answers": [
+      "pillow",
+      "a pillow",
+      "the pillow"
+    ]
+  },
+  {
+    "question": "What do trees need to grow tall?",
+    "type": "wh",
+    "correct_answer": "sunlight",
+    "accepted_answers": [
+      "sunlight",
+      "sun",
+      "water",
+      "water and sun",
+      "rain"
+    ]
+  },
+  {
+    "question": "What do we call the skin of a banana?",
+    "type": "wh",
+    "correct_answer": "peel",
+    "accepted_answers": [
+      "peel",
+      "skin",
+      "banana peel"
+    ]
+  },
+  {
+    "question": "Where do we sit to eat at home?",
+    "type": "wh",
+    "correct_answer": "table",
+    "accepted_answers": [
+      "table",
+      "the table",
+      "chair",
+      "dining table"
+    ]
+  },
+  {
+    "question": "What do birds have covering their body?",
+    "type": "wh",
+    "correct_answer": "feathers",
+    "accepted_answers": [
+      "feathers",
+      "feather"
+    ]
+  },
+  {
+    "question": "What do we make with flour and water?",
+    "type": "wh",
+    "correct_answer": "dough",
+    "accepted_answers": [
+      "dough",
+      "bread",
+      "pasta",
+      "baked goods"
+    ]
+  },
+  {
+    "question": "Where do we go when we are tired?",
+    "type": "wh",
+    "correct_answer": "bed",
+    "accepted_answers": [
+      "bed",
+      "to bed",
+      "bedroom",
+      "sleep"
+    ]
+  },
+  {
+    "question": "What do fish have on their body?",
+    "type": "wh",
+    "correct_answer": "scales",
+    "accepted_answers": [
+      "scales",
+      "fins",
+      "scales and fins"
+    ]
+  },
+  {
+    "question": "What do we call the sweet part of fruit?",
+    "type": "wh",
+    "correct_answer": "flesh",
+    "accepted_answers": [
+      "flesh",
+      "inside",
+      "the inside",
+      "pulp"
+    ]
+  },
+  {
+    "question": "Where do we keep our toothbrush?",
+    "type": "wh",
+    "correct_answer": "bathroom",
+    "accepted_answers": [
+      "bathroom",
+      "the bathroom",
+      "sink",
+      "cup",
+      "toothbrush holder"
+    ]
+  },
+  {
+    "question": "What do we call rain that freezes?",
+    "type": "wh",
+    "correct_answer": "snow",
+    "accepted_answers": [
+      "snow",
+      "ice",
+      "hail",
+      "sleet"
+    ]
+  },
+  {
+    "question": "What do we use a table for?",
+    "type": "wh",
+    "correct_answer": "eating",
+    "accepted_answers": [
+      "eating",
+      "to eat",
+      "putting food on",
+      "working",
+      "drawing"
+    ]
+  },
+  {
+    "question": "Where do flowers get water from?",
+    "type": "wh",
+    "correct_answer": "soil",
+    "accepted_answers": [
+      "soil",
+      "the ground",
+      "roots",
+      "rain",
+      "watering"
+    ]
+  },
+  {
+    "question": "What do we call the white part of an egg?",
+    "type": "wh",
+    "correct_answer": "egg white",
+    "accepted_answers": [
+      "egg white",
+      "white",
+      "the white part"
+    ]
+  },
+  {
+    "question": "Where do we put our clothes in the morning?",
+    "type": "wh",
+    "correct_answer": "body",
+    "accepted_answers": [
+      "body",
+      "on our body",
+      "ourselves",
+      "we put them on"
+    ]
+  },
+  {
+    "question": "What do we call the yellow part of an egg?",
+    "type": "wh",
+    "correct_answer": "yolk",
+    "accepted_answers": [
+      "yolk",
+      "the yolk",
+      "yellow part"
+    ]
+  },
+  {
+    "question": "Where do we find apples in a store?",
+    "type": "wh",
+    "correct_answer": "fruit section",
+    "accepted_answers": [
+      "fruit section",
+      "produce section",
+      "grocery store",
+      "supermarket",
+      "the store"
+    ]
+  },
+  {
+    "question": "What do we call the stem of a flower?",
+    "type": "wh",
+    "correct_answer": "stem",
+    "accepted_answers": [
+      "stem",
+      "stalk",
+      "the stem"
+    ]
+  },
+  {
+    "question": "What do we use bread to make?",
+    "type": "wh",
+    "correct_answer": "sandwich",
+    "accepted_answers": [
+      "sandwich",
+      "toast",
+      "sandwiches",
+      "toast and sandwiches"
+    ]
+  },
+  {
+    "question": "Where do we find fish in nature?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "rivers",
+      "lakes",
+      "ocean",
+      "sea",
+      "ponds"
+    ]
+  },
+  {
+    "question": "What do we call the big part of a tree?",
+    "type": "wh",
+    "correct_answer": "trunk",
+    "accepted_answers": [
+      "trunk",
+      "the trunk",
+      "body",
+      "stem"
+    ]
+  },
+  {
+    "question": "What do we use milk to make?",
+    "type": "wh",
+    "correct_answer": "cheese",
+    "accepted_answers": [
+      "cheese",
+      "butter",
+      "yogurt",
+      "ice cream"
+    ]
+  }
+]

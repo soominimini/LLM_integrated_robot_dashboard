@@ -392,16 +392,41 @@ def _load_user_profile(username):
     return profile
 
 
+def _last_story_interest_path(username):
+    return os.path.join(USER_DATA_DIR, username, "last_story_interest.json")
+
+
+def _load_last_story_interest(username):
+    """Theme key of the interest used for this user's previous story, or None."""
+    try:
+        with open(_last_story_interest_path(username), "r") as f:
+            return (json.load(f) or {}).get("theme")
+    except Exception:
+        return None
+
+
+def _save_last_story_interest(username, theme):
+    try:
+        path = _last_story_interest_path(username)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            json.dump({"theme": theme}, f)
+    except Exception as e:
+        print(f"[KB] failed to save last story interest: {e}")
+
+
 def _persona_context_for(username, age, kind="story", include_targets=True):
     """Build a language + interest knowledge-base fragment for `username`.
 
     Derives developmentally-appropriate language targets (by age) and interest
     themes (by age + gender) from the SLP co-design knowledge base.
 
-    kind: "story" -> narrative-shaped fragment; "question" -> compact fragment.
-    include_targets (question kind only): when False, drop the speech-sound /
-    grammar / interest targeting and keep only the wording-level (MLU length)
-    calibration. Returns an empty string if nothing can be derived.
+    kind: "story" -> narrative-shaped fragment built around ONE randomly picked
+    interest theme (rotating away from the previous story's pick, so
+    consecutive stories don't repeat the same topic); "question" -> compact
+    fragment. include_targets (question kind only): when False, drop the
+    speech-sound / grammar / interest targeting and keep only the wording-level
+    (MLU length) calibration. Returns an empty string if nothing can be derived.
     """
     try:
         profile = _load_user_profile(username)
@@ -416,8 +441,17 @@ def _persona_context_for(username, age, kind="story", include_targets=True):
                 effective_age, gender, language_age=language_age,
                 include_targets=include_targets)
         else:
+            last_theme = _load_last_story_interest(username)
+            interest = knowledge_base.pick_random_interest(
+                effective_age, gender,
+                exclude=[last_theme] if last_theme else None)
+            if interest:
+                _save_last_story_interest(username, interest[0])
+                print(f"[KB] story interest picked: {interest[0]} "
+                      f"(previous: {last_theme})")
             fragment = knowledge_base.build_story_prompt_fragment(
-                effective_age, gender, language_age=language_age)
+                effective_age, gender, language_age=language_age,
+                interest=interest)
         if fragment:
             info = knowledge_base.describe(effective_age, gender, language_age=language_age)
             print(f"[KB] derived level_age={info.get('level_age')} mlu={info.get('mlu_range')} "
@@ -6709,14 +6743,242 @@ _WH_SCENE_CARD_FRAMING = (
 )
 
 
+def _build_wh_scene_supported_expressive_prompt(child_age):
+    """Supported-expressive prompt for 4-5 year olds.
+
+    At this age open-ended imagination questions are too abstract, so
+    questions stay concrete and visually grounded, with therapist supports
+    (sentence frames, sample answers, verbal choices) and a developmental
+    hierarchy (labeling -> action -> location -> function -> one supported
+    inference/feeling). Personal-experience questions move to an
+    ``optional_extension_questions`` block instead of the main 5."""
+    return f"""You are a pediatric speech-language pathologist creating therapy materials.
+
+{_WH_SCENE_CARD_FRAMING}
+
+Analyze this image and generate 5 supported expressive questions about the image for a child aged {child_age}.
+
+Keep questions concrete, visually grounded, and answerable with a short phrase or 1 simple sentence.
+- Use supports such as sentence frames, example answers, and optional choices.
+- Avoid too many abstract imagination questions.
+- Do not require the child to infer hidden emotions, hidden intentions, or events that are not visible.
+
+Developmental hierarchy:
+1. Labeling visible objects or people
+2. Describing visible actions
+3. Describing location
+4. Simple function or purpose, only if familiar and visually supported
+5. One supported inference or feeling question, only if appropriate
+
+Question selection rules:
+- At least 3 questions must be directly answerable from the picture.
+- At most 1 question may ask about feeling.
+- At most 1 question may ask about what might happen next.
+- Avoid asking what happened before unless there is a very clear routine cue.
+- Avoid "why" unless the reason is simple, familiar, and visually supported.
+- Personal-experience questions are allowed only as optional extension questions, not as the main 5 questions.
+
+WH-type rules:
+- `wh_type` must match the actual question word.
+- Allowed values: "what", "who", "where", "how", "why".
+- Do not label a "How do you think..." question as `why`.
+
+For EACH question, include:
+1. `question_kind`: one of ["labeling", "action", "location", "function", "supported_inference", "feeling", "personal_extension"]
+2. `wh_type`: the WH word used in the question
+3. `question`: a simple question for the child
+4. `sample_answers`: 2-4 acceptable child responses
+5. `sentence_frame`: a short sentence starter the therapist can provide
+6. `support_level`: one of ["independent", "sentence_frame", "choice_support", "modeling"]
+7. `verbal_choices`: optional 2-3 choices if the child needs support
+8. `evidence_hint`: where the child should look or what they should think about
+
+Return ONLY valid JSON in this exact format:
+
+{{
+  "scene_description": "Brief description of the visible scene.",
+  "questions": [
+    {{
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What do you see?",
+      "sample_answers": ["a ball", "a boy", "a soccer ball"],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": ["a ball", "a book", "a spoon"],
+      "evidence_hint": "Look at the main object in the picture."
+    }},
+    {{
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the child doing?",
+      "sample_answers": ["kicking", "playing soccer", "kicking the ball"],
+      "sentence_frame": "He is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": ["kicking", "sleeping", "eating"],
+      "evidence_hint": "Look at the child's body and feet."
+    }},
+    {{
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the child playing?",
+      "sample_answers": ["outside", "on the grass", "on a field"],
+      "sentence_frame": "He is playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": ["on the grass", "in bed", "in the kitchen"],
+      "evidence_hint": "Look at the place around the child."
+    }},
+    {{
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a ball for?",
+      "sample_answers": ["playing", "kicking", "throwing"],
+      "sentence_frame": "We use a ball for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": ["playing", "sleeping", "eating"],
+      "evidence_hint": "Think about what people do with a ball."
+    }},
+    {{
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might happen next?",
+      "sample_answers": ["He kicks the ball", "The ball moves", "He keeps playing"],
+      "sentence_frame": "Next, he might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": ["kick the ball", "go to sleep", "eat lunch"],
+      "evidence_hint": "Look at what the child is doing now."
+    }}
+  ],
+  "optional_extension_questions": [
+    {{
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you like playing with a ball?",
+      "sample_answers": ["yes", "no", "I like balls", "I play soccer"],
+      "sentence_frame": "I like ___.",
+      "support_level": "modeling",
+      "verbal_choices": ["yes", "no"],
+      "evidence_hint": "Think about what you like to play."
+    }}
+  ]
+}}
+"""
+
+
+def _build_wh_scene_supported_receptive_prompt(child_age):
+    """Supported-receptive prompt for 4-5 year olds.
+
+    Self-contained: carries its own WH-type guidance (what/who/where only,
+    with a 3-what / 1-who / 1-where distribution), so the KB guidance block
+    is NOT injected for this age band — the KB's age-5 rule of exactly one
+    why/how per set would conflict with the what/who/where-only default."""
+    return f"""You are a pediatric speech-language pathologist creating therapy materials.
+
+{_WH_SCENE_CARD_FRAMING}
+
+Analyze this image and generate 5 receptive WH-questions about the image for a child aged {child_age}.
+
+- Keep questions concrete, visually grounded, and low-inference.
+- Do not ask about hidden emotions, intentions, causes, or events that are not visible.
+
+WH-question guidance:
+- Preferred WH types: what, who
+- Secondary WH type: where
+- Avoid when, why, and how unless the answer is clearly visible or strongly supported by routine/context.
+- For this task, default to what/who/where only.
+- It is acceptable to repeat WH types if each question targets a different visible detail.
+- Recommended distribution:
+  - 3 what questions
+  - 1 who question
+  - 1 where question, only if the location is visually clear
+  - If location is not visually clear, replace the where question with another what/who question.
+
+Question rules:
+- Each answer must be directly visible in the image.
+- Each question must be short and simple.
+- Each answer must be 1-5 words.
+- Do not ask the child to infer background events, emotions, reasons, or future actions.
+- Avoid questions that require the child to know a broad scene label unless the setting is visually obvious.
+- Avoid gender labels if gender is visually ambiguous; use "person," "child," "adult," "boy/girl" only when clear.
+
+Visual-choice rules:
+- Provide four visual choices.
+- One choice must be correct.
+- Three choices must be plausible but clearly incorrect.
+- Choices should be 1-4 words.
+- Choices should be visually and semantically distinct.
+- Do not include two choices that are too similar.
+
+Evidence hint rules:
+- Tell the child where to look in the image.
+- Use simple visual language.
+- Do not give away the answer directly.
+
+Return ONLY valid JSON in this exact format:
+
+{{
+  "scene_description": "Brief description of the visible scene.",
+  "questions": [
+    {{
+      "wh_type": "what",
+      "question": "What is the child holding?",
+      "answer": "a ball",
+      "visual_choices": ["a ball", "a book", "a spoon", "a shoe"],
+      "evidence_hint": "Look at the child's hands."
+    }},
+    {{
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a child",
+      "visual_choices": ["a child", "a dog", "a teacher", "a baby"],
+      "evidence_hint": "Look at the person in the picture."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What is the child doing?",
+      "answer": "kicking a ball",
+      "visual_choices": ["kicking a ball", "eating food", "reading a book", "washing hands"],
+      "evidence_hint": "Look at the child's body and feet."
+    }},
+    {{
+      "wh_type": "where",
+      "question": "Where is the child?",
+      "answer": "on the grass",
+      "visual_choices": ["on the grass", "in bed", "in a kitchen", "at a table"],
+      "evidence_hint": "Look at the ground around the child."
+    }},
+    {{
+      "wh_type": "what",
+      "question": "What color is the ball?",
+      "answer": "black and white",
+      "visual_choices": ["black and white", "red", "yellow", "green"],
+      "evidence_hint": "Look at the ball."
+    }}
+  ]
+}}
+"""
+
+
 def _build_wh_scene_prompt(child_age, difficulty, wh_guidance=''):
     """Prompt for WH picture-scene analysis (ported verbatim from the former
     Gemini worker scripts/gemini_wh_scene.py).
 
-    ``wh_guidance`` (receptive mode only): KB WH-type hierarchy block — when
-    present, question TYPES follow the child's developmental level instead of
-    the fixed one-of-each who/what/when/where/why."""
+    Both modes are age-gated: children aged 4-5 get the supported prompts
+    (concrete, visually grounded, low-inference) — supported expressive with
+    sentence frames and verbal choices instead of open-ended imagination, and
+    supported receptive with a what/who/where-only distribution instead of
+    the KB guidance block.
+
+    ``wh_guidance`` (receptive mode, ages outside 4-5): KB WH-type hierarchy
+    block — when present, question TYPES follow the child's developmental
+    level instead of the fixed one-of-each who/what/when/where/why."""
+    try:
+        age_num = int(child_age)
+    except (TypeError, ValueError):
+        age_num = 0
     if difficulty == "expressive":
+        if 4 <= age_num <= 5:
+            return _build_wh_scene_supported_expressive_prompt(child_age)
         return f"""You are a pediatric speech-language pathologist creating therapy materials.
 
 {_WH_SCENE_CARD_FRAMING}
@@ -6785,6 +7047,8 @@ Return ONLY valid JSON in this exact format:
   ]
 }}
 """
+    if 4 <= age_num <= 5:
+        return _build_wh_scene_supported_receptive_prompt(child_age)
     if wh_guidance:
         type_instruction = f"""Analyze this image and generate 5 WH-questions for a child aged {child_age}.
 

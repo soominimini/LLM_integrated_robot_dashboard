@@ -1,0 +1,103 @@
+{
+  "story": "Sophie is in the garden. [emotion:QT/surprised] Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand. Oh no! [emotion:QT/afraid] The fairy drops the wand in the tall grass. [emotion:QT/sad] Sophie cannot reach the wand. [emotion:QT/calm] Sophie and the fairy look together. They find the wand under a big leaf. [emotion:QT/happy] The fairy picks up the wand. The fairy gives Sophie three sparkling stars. Sophie puts the stars in her pocket. [gesture:clapping] [emotion:QT/happy] Sophie is smiling and clapping her hands.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 209,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "Sophie is in the garden. [emotion:QT/surprised] Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand.",
+    "Oh no! [emotion:QT/afraid] The fairy drops the wand in the tall grass. [emotion:QT/sad] Sophie cannot reach the wand.",
+    "[emotion:QT/calm] Sophie and the fairy look together. They find the wand under a big leaf.",
+    "[emotion:QT/happy] The fairy picks up the wand. The fairy gives Sophie three sparkling stars. Sophie puts the stars in her pocket.",
+    "[gesture:clapping] [emotion:QT/happy] Sophie is smiling and clapping her hands."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a little wand. Oh no! The fairy drops the wand in the tall grass. Sophie cannot reach the wand. Sophie and the fairy look together. They find the wand under a big leaf. The fairy picks up the wand. The fairy gives Sophie three sparkling stars. Sophie puts the stars in her pocket. Sophie is smiling and clapping her hands."
+  ],
+  "scenes": [
+    "Sophie stands in a sunny garden smiling and clapping her hands, with a tiny fairy on a red flower holding a wand and offering sparkling stars, a big leaf nearby in the tall grass."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in the story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie helped a fairy find her wand",
+      "wrong_answers": [
+        "Sophie found a rabbit in the garden",
+        "Sophie played with three cats"
+      ]
+    },
+    {
+      "question": "Where did they find the fairy's wand?",
+      "type": "detail",
+      "correct_answer": "Under a big leaf",
+      "wrong_answers": [
+        "Under a red flower",
+        "Under a big rock"
+      ]
+    },
+    {
+      "question": "What three things did the fairy give to Sophie?",
+      "type": "detail",
+      "correct_answer": "Three sparkling stars",
+      "wrong_answers": [
+        "Three shiny crowns",
+        "Three pretty flowers"
+      ]
+    },
+    {
+      "question": "What is Sophie doing at the end of the story?",
+      "type": "detail",
+      "correct_answer": "Smiling and clapping her hands",
+      "wrong_answers": [
+        "Running and jumping",
+        "Reaching for the wand"
+      ]
+    }
+  ],
+  "takeaways": []
+}
