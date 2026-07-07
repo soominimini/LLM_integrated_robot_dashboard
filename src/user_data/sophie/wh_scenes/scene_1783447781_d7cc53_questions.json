@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children, a boy and a girl, are riding a carnival ride together. They are seated in a green car with a yellow safety bar. A ferris wheel and colorful ride structures are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is on the ride?",
+      "answer": "a boy and a girl",
+      "visual_choices": [
+        "a boy and a girl",
+        "two adults",
+        "a mom and baby",
+        "three boys"
+      ],
+      "evidence_hint": "Look at the people sitting in the green car."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the car they are sitting in?",
+      "answer": "green",
+      "visual_choices": [
+        "green",
+        "red",
+        "blue",
+        "purple"
+      ],
+      "evidence_hint": "Look at the seat the children are sitting in."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children holding onto?",
+      "answer": "a yellow bar",
+      "visual_choices": [
+        "a yellow bar",
+        "a steering wheel",
+        "a rope",
+        "a backpack"
+      ],
+      "evidence_hint": "Look at the children's hands in front of them."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children?",
+      "answer": "at a carnival",
+      "visual_choices": [
+        "at a carnival",
+        "at a playground",
+        "in a car",
+        "at school"
+      ],
+      "evidence_hint": "Look at the rides and structures in the background."
+    },
+    {
+      "wh_type": "what",
+      "question": "What big ride can you see in the background?",
+      "answer": "a ferris wheel",
+      "visual_choices": [
+        "a ferris wheel",
+        "a slide",
+        "a swimming pool",
+        "a roller coaster"
+      ],
+      "evidence_hint": "Look at the tall round structure behind the children."
+    }
+  ]
+}

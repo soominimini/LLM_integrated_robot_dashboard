@@ -1,0 +1,286 @@
+
+19:45:53 [9202] ┌─ WORK  GET /quiz_generation
+19:45:53 [9202] └─ DONE  GET /quiz_generation -> 200 in 4ms
+19:46:00 [440e] ┌─ WORK  POST /api/generate_quiz | fields: topics, count, types
+19:46:00 [440e] [KB] derived level_age=5 mlu=6-8 targets=['plural_forms', 'ing_form', 'pronouns_later', 'location_noun', 'simple_conjunction', 'intermediate_conjunction', 'wh_questions_early', 'wh_questions_location', 'wh_questions_time'] speech[5+]=['advanced_sounds'] interests=['fairies', 'princesses', 'pets'] for user=sophie age=5 language_age=None gender='female' kind=question
+19:46:00 [440e] education question prompt:  Act as a pediatric educator. Create 100 questions about the topic(s) 'Fruit, Home, Food, Nature'. Target age 5. Use only these types: wh. Goal: For wh questions: questions must have a clear, short factual answer based on basic object functions, category labels, or familiar everyday knowledge. Avoid subjective questions, such as "Do you like school?". Avoid ambiguous questions, exception-based facts, or culturally dependent knowledge. Do not use negation-heavy wording. Avoid repeating the same wording or item too often. Developmental guidance for this child (from the SLP knowledge base) — use it ONLY to set how long and simple the question wording should be. Do NOT bend the question toward particular words or sounds; the questions must stay natural, general, and about the topic(s) above:
+19:46:00 [440e] --- LANGUAGE GUIDANCE (knowledge base) ---
+19:46:00 [440e] Target level: age 5, approx MLU 6-8 words. Match question wording to this length.
+19:46:00 [440e] 
+19:46:00 [440e] Use this conceptual-difficulty guidance to choose WHAT the questions test (content and reasoning level):
+19:46:00 [440e] --- CONCEPT GUIDANCE (knowledge base) ---
+19:46:00 [440e] Concept level (ages 5): Age-appropriate category hierarchy, familiar food categories, direct food origins, object functions, and familiar event scripts.
+19:46:00 [440e] Wording: Use simple, natural questions aligned with the child’s language level.
+19:46:00 [440e] Question length: 4-8 words when aligned with age-5 MLU guidance.
+19:46:00 [440e] Avoid: botanical exceptions; rare foods; atypical food colors; technical food production; multi-step production chains unless explicitly targeted; preference-based questions; subjective questions
+19:46:00 [440e] For 'Fruit', avoid: tomato as fruit; avocado as fruit; botanical definitions; rare fruits; atypical colors
+19:46:00 [440e] For 'Home', avoid: household safety scenarios that may be frightening; complex chores; culturally specific routines unless provided
+19:46:00 [440e] For 'Food', avoid: processed food with unclear ingredients; nutrition mechanisms; moralized healthy/unhealthy wording; diet or weight-related content
+19:46:00 [440e] For 'Nature', avoid: advanced ecology; exception-based animal facts; technical plant biology
+19:46:00 [440e] Target these concepts (vary across the question set):
+19:46:00 [440e] - object identity: Check whether the child understands what an object is. e.g. Is this an apple?
+19:46:00 [440e] - basic category membership: Ask whether a familiar item belongs to a familiar superordinate category. e.g. Is an apple a fruit?
+19:46:00 [440e] - perceptual attribute: Ask about directly observable and typical object features. e.g. Are bananas usually yellow?
+19:46:00 [440e] - within food category: Ask whether a food belongs to a specific food category. e.g. Is an apple a fruit?
+19:46:00 [440e] - direct food origin: Ask direct source-origin relationships. e.g. Does milk come from cows?
+19:46:00 [440e] - object function: Ask what familiar objects are used for in daily routines. e.g. Do we sleep in beds?
+19:46:00 [440e] - familiar event script: Ask about common actions, objects, people, or places in familiar events. e.g. Do books go in backpacks?
+19:46:00 [440e] - event sequence and planning: Ask whether an action happens before, after, or to prepare for a familiar event. e.g. Do we pack before school?
+19:46:00 [440e] Example familiarity anchors by topic: Fruit: apple, banana, orange, grape, strawberry | Home: bed, cup, table, chair, toothbrush, clothes | Food: bread, milk, cheese, eggs, flour, pasta | Nature: tree, flower, bird, fish, rain, sun
+19:46:00 [440e] Example question at this level: Is an apple a fruit?
+19:46:00 [440e] Example question at this level: Is a carrot a vegetable?
+19:46:00 [440e] Example question at this level: Does milk come from cows?
+19:46:00 [440e] 
+19:46:00 [440e] For WH questions, follow this developmental WH-type guidance — favour the recommended/primary types and do not use types marked as avoided or unsupported for this level:
+19:46:00 [440e] --- WH-QUESTION GUIDANCE (knowledge base) ---
+19:46:00 [440e] Developmental order (easiest first): what -> who -> where -> when -> why -> how.
+19:46:00 [440e] Primary WH types (prefer these): what, who, where.
+19:46:00 [440e] Use only with clear support: when.
+19:46:00 [440e] Emerging / optional: why, how.
+19:46:00 [440e] - WH-questions are appropriate around ages 4-5, but should follow a difficulty hierarchy.
+19:46:00 [440e] - Begin with what/who questions, then where, then when, then why/how.
+19:46:00 [440e] - Why and how questions should be simple, concrete, and supported by visible evidence or familiar routines.
+19:46:00 [440e] 
+19:46:00 [440e] Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object (e.g. do NOT use {"questions": [...]}). Do NOT add commentary, markdown, or code fences. Each array element must be an object with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. For yes_no, correct_answer must be 'yes' or 'no' and accepted_answers should be omitted. For wh, correct_answer is the primary short answer and accepted_answers must be a list of all reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). Example: if question is 'Where do kids read books in school?', correct_answer is 'classroom' and accepted_answers could be ['classroom', 'library', 'reading room', 'classrooms']. Rules: wh questions must begin with one of: what, when, where, why, who, how.
+19:46:00 [440e] [Claude] >>> PROMPT (5010 chars) | system: You create short, child-friendly quiz questions. Return JSON only. Each item must be {"question": "...", "type": "yes_no"|"wh"}.
+19:46:00 [440e] Act as a pediatric educator. Create 100 questions about the topic(s) 'Fruit, Home, Food, Nature'. Target age 5. Use only these types: wh. Goal: For wh questions: questions must have a clear, short factual answer based on basic object functions, category labels, or familiar everyday knowledge. Avoid subjective questions, such as "Do you like school?". Avoid ambiguous questions, exception-based facts, or culturally dependent knowledge. Do not use negation-heavy wording. Avoid repeating the same wording or item too often. Developmental guidance for this child (from the SLP knowledge base) — use it ONLY to set how long and simple the question wording should be. Do NOT bend the question toward particular words or sounds; the questions must stay natural, general, and about the topic(s) above:
+19:46:00 [440e] --- LANGUAGE GUIDANCE (knowledge base) ---
+19:46:00 [440e] Target level: age 5, approx MLU 6-8 words. Match question wording to this length.
+19:46:00 [440e] 
+19:46:00 [440e] Use this conceptual-difficulty guidance to choose WHAT the questions test (content and reasoning level):
+19:46:00 [440e] --- CONCEPT GUIDANCE (knowledge base) ---
+19:46:00 [440e] Concept level (ages 5): Age-appropriate category hierarchy, familiar food categories, direct food origins, object functions, and familiar event scripts.
+19:46:00 [440e] Wording: Use simple, natural questions aligned with the child’s language level.
+19:46:00 [440e] Question length: 4-8 words when aligned with age-5 MLU guidance.
+19:46:00 [440e] Avoid: botanical exceptions; rare foods; atypical food colors; technical food production; multi-step production chains unless explicitly targeted; preference-based questions; subjective questions
+19:46:00 [440e] For 'Fruit', avoid: tomato as fruit; avocado as fruit; botanical definitions; rare fruits; atypical colors
+19:46:00 [440e] For 'Home', avoid: household safety scenarios that may be frightening; complex chores; culturally specific routines unless provided
+19:46:00 [440e] For 'Food', avoid: processed food with unclear ingredients; nutrition mechanisms; moralized healthy/unhealthy wording; diet or weight-related content
+19:46:00 [440e] For 'Nature', avoid: advanced ecology; exception-based animal facts; technical plant biology
+19:46:00 [440e] Target these concepts (vary across the question set):
+19:46:00 [440e] - object identity: Check whether the child understands what an object is. e.g. Is this an apple?
+19:46:00 [440e] - basic category membership: Ask whether a familiar item belongs to a familiar superordinate category. e.g. Is an apple a fruit?
+19:46:00 [440e] - perceptual attribute: Ask about directly observable and typical object features. e.g. Are bananas usually yellow?
+19:46:00 [440e] - within food category: Ask whether a food belongs to a specific food category. e.g. Is an apple a fruit?
+19:46:00 [440e] - direct food origin: Ask direct source-origin relationships. e.g. Does milk come from cows?
+19:46:00 [440e] - object function: Ask what familiar objects are used for in daily routines. e.g. Do we sleep in beds?
+19:46:00 [440e] - familiar event script: Ask about common actions, objects, people, or places in familiar events. e.g. Do books go in backpacks?
+19:46:00 [440e] - event sequence and planning: Ask whether an action happens before, after, or to prepare for a familiar event. e.g. Do we pack before school?
+19:46:00 [440e] Example familiarity anchors by topic: Fruit: apple, banana, orange, grape, strawberry | Home: bed, cup, table, chair, toothbrush, clothes | Food: bread, milk, cheese, eggs, flour, pasta | Nature: tree, flower, bird, fish, rain, sun
+19:46:00 [440e] Example question at this level: Is an apple a fruit?
+19:46:00 [440e] Example question at this level: Is a carrot a vegetable?
+19:46:00 [440e] Example question at this level: Does milk come from cows?
+19:46:00 [440e] 
+19:46:00 [440e] For WH questions, follow this developmental WH-type guidance — favour the recommended/primary types and do not use types marked as avoided or unsupported for this level:
+19:46:00 [440e] --- WH-QUESTION GUIDANCE (knowledge base) ---
+19:46:00 [440e] Developmental order (easiest first): what -> who -> where -> when -> why -> how.
+19:46:00 [440e] Primary WH types (prefer these): what, who, where.
+19:46:00 [440e] Use only with clear support: when.
+19:46:00 [440e] Emerging / optional: why, how.
+19:46:00 [440e] - WH-questions are appropriate around ages 4-5, but should follow a difficulty hierarchy.
+19:46:00 [440e] - Begin with what/who questions, then where, then when, then why/how.
+19:46:00 [440e] - Why and how questions should be simple, concrete, and supported by visible evidence or familiar routines.
+19:46:00 [440e] 
+19:46:00 [440e] Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object (e.g. do NOT use {"questions": [...]}). Do NOT add commentary, markdown, or code fences. Each array element must be an object with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. For yes_no, correct_answer must be 'yes' or 'no' and accepted_answers should be omitted. For wh, correct_answer is the primary short answer and accepted_answers must be a list of all reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). Example: if question is 'Where do kids read books in school?', correct_answer is 'classroom' and accepted_answers could be ['classroom', 'library', 'reading room', 'classrooms']. Rules: wh questions must begin with one of: what, when, where, why, who, how.
+19:47:24 [440e] [Claude] <<< RESPONSE (20372 chars):
+19:47:24 [440e] ```json
+19:47:24 [440e] [
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What fruit is red and round?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "apple",
+19:47:24 [440e]     "accepted_answers": ["apple", "apples", "cherry", "cherries"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What do we sleep on at night?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "bed",
+19:47:24 [440e]     "accepted_answers": ["bed", "beds", "a bed"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What do we drink milk from?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "cup",
+19:47:24 [440e]     "accepted_answers": ["cup", "cups", "glass", "glasses", "a cup", "a glass"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What animal gives us milk?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "cow",
+19:47:24 [440e]     "accepted_answers": ["cow", "cows", "a cow"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What fruit is long and yellow?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "banana",
+19:47:24 [440e]     "accepted_answers": ["banana", "bananas", "a banana"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "Where do birds live in trees?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "nest",
+19:47:24 [440e]     "accepted_answers": ["nest", "nests", "a nest", "in a nest"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What do we use to brush our teeth?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "toothbrush",
+19:47:24 [440e]     "accepted_answers": ["toothbrush", "a toothbrush", "toothbrushes"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "What fruit grows in a bunch?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "grapes",
+19:47:24 [440e]     "accepted_answers": ["grapes", "grape", "bananas", "banana"]
+19:47:24 [440e]   },
+19:47:24 [440e]   {
+19:47:24 [440e]     "question": "Where do fish live?",
+19:47:24 [440e]     "type": "wh",
+19:47:24 [440e]     "correct_answer": "water",
+19:47:24 [440e]     "accepted_answers": ["water", "the o
+19:47:24 [440e] ...(+18872 more chars)
+19:47:24 [440e] [Claude] >>> PROMPT (881 chars) | system: You create short, child-friendly quiz questions. Return JSON only. Each item must be {"question": "...", "type": "yes_no"|"wh"}.
+19:47:24 [440e] For each question below, generate a list of all reasonably correct alternative answers that a child might give. Include the original answer, synonyms, plural/singular forms, and semantically valid alternatives. Return a JSON array where each element is a list of accepted answer strings, in the same order as the input. Example input: [{"question": "Where do kids read books?", "correct_answer": "classroom"}] Example output: [["classroom", "classrooms", "library", "reading room", "school"]] Input: [{"question": "What color are most leaves in spring?", "correct_answer": "green"}, {"question": "What do bees make from flowers?", "correct_answer": "honey"}, {"question": "What color is a ripe banana?", "correct_answer": "yellow"}, {"question": "What color is a ripe strawberry?", "correct_answer": "red"}, {"question": "What color is a ripe orange?", "correct_answer": "orange"}]
+19:47:27 [440e] [Claude] <<< RESPONSE (295 chars):
+19:47:27 [440e] ```json
+19:47:27 [440e] [
+19:47:27 [440e]   ["green", "light green", "bright green", "dark green"],
+19:47:27 [440e]   ["honey", "nectar", "beeswax", "wax", "honeycomb"],
+19:47:27 [440e]   ["yellow", "bright yellow", "golden", "gold"],
+19:47:27 [440e]   ["red", "bright red", "dark red", "crimson", "pink"],
+19:47:27 [440e]   ["orange", "bright orange", "dark orange", "reddish orange"]
+19:47:27 [440e] ]
+19:47:27 [440e] ```
+19:47:27 [440e] └─ DONE  POST /api/generate_quiz -> 200 in 86242ms
+19:51:03 [1cf6] ┌─ WORK  POST /api/save_quiz | fields: questions
+19:51:03 [1cf6] └─ DONE  POST /api/save_quiz -> 200 in 2ms
+19:52:52 [647d] ┌─ WORK  POST /api/logout
+19:52:52 [647d] └─ DONE  POST /api/logout -> 200 in 6ms
+19:52:52 [9b17] ┌─ WORK  GET /
+19:52:52 [9b17] └─ DONE  GET / -> 200 in 1ms
+19:52:55 [c5f0] ┌─ WORK  POST /api/login | fields: username
+19:52:55 [c5f0] └─ DONE  POST /api/login -> 200 in 6ms
+19:52:56 [51ad] ┌─ WORK  GET /
+19:52:56 [51ad] └─ DONE  GET / -> 200 in 1ms
+19:52:58 [e71a] ┌─ WORK  GET /quiz_generation
+19:52:58 [e71a] └─ DONE  GET /quiz_generation -> 200 in 1ms
+19:53:10 [69d7] ┌─ WORK  POST /api/generate_quiz | fields: topics, count, types
+19:53:10 [69d7] [KB] derived level_age=8 mlu=11+ targets=['irregular_past_tense', 'advanced_conjunction', 'auxiliary_verbs', 'copula_verbs', 'verb_tense_concepts', 'causal_explanation_language', 'narrative_sequence_language', 'perspective_taking_language', 'wh_questions_early', 'wh_questions_location', 'wh_questions_time', 'wh_questions_reasoning'] speech[5+]=['advanced_sounds'] interests=['superheroes', 'video_game_characters', 'vehicles'] for user=ethan age=8 language_age=None gender='male' kind=question
+19:53:10 [69d7] education question prompt:  Act as a pediatric educator. Create 100 questions about the topic(s) 'Fruit, School, Home, Food, Nature, Social Rules'. Target age 8. Use only these types: wh. Goal: For wh questions: questions must have a clear, short factual answer based on basic object functions, category labels, or familiar everyday knowledge. Avoid subjective questions, such as "Do you like school?". Avoid ambiguous questions, exception-based facts, or culturally dependent knowledge. Do not use negation-heavy wording. Avoid repeating the same wording or item too often. IMPORTANT: Because these are for an older child (7+), 3 of the WH questions must be OPEN-ENDED social-emotional questions, blended in among the others. These ask the child to imagine, reflect, or share how they would respond to feelings and social situations (empathy, comfort, kindness, perspective-taking). They have NO single correct answer — any thoughtful answer is acceptable. They must begin with what/who/how/why and address the child directly ('you'). Examples: 'What would you say when someone says they feel sad?', 'Who would you hug when you feel scared?', 'What could you do to help a friend who is crying?', 'How would you make a new classmate feel welcome?', 'What would you do if a friend lost their toy?'. Mark EACH such question with "open_ended": true. Keep the remaining WH questions factual. Developmental guidance for this child (from the SLP knowledge base) — use it ONLY to set how long and simple the question wording should be. Do NOT bend the question toward particular words or sounds; the questions must stay natural, general, and about the topic(s) above:
+19:53:10 [69d7] --- LANGUAGE GUIDANCE (knowledge base) ---
+19:53:10 [69d7] Target level: age 8, approx MLU 11+ words. Match question wording to this length.
+19:53:10 [69d7] 
+19:53:10 [69d7] Use this conceptual-difficulty guidance to choose WHAT the questions test (content and reasoning level):
+19:53:10 [69d7] --- CONCEPT GUIDANCE (knowledge base) ---
+19:53:10 [69d7] Concept level (ages 8): School-age conceptual reasoning involving explicit category relations, cross-classification, hierarchical reasoning, causal explanation, food-origin/processing reasoning, problem-solution reasoning, and structured narrative understanding.
+19:53:10 [69d7] Wording: Questions can be longer and can ask for explanation, comparison, or reasoning, but should remain concrete and contextually grounded. Phrase every question as ONE simple spoken clause a child would hear in conversation; split complex ideas into the question frames below instead of packing them into one sentence.
+19:53:10 [69d7] Question length: 8-14 words when expressive language level supports it.
+19:53:10 [69d7] Avoid: fully abstract reasoning without concrete context; adult-level nutrition or biology mechanisms; technical food production; highly ambiguous category exceptions; complex social inference without story support; academic connector phrases such as 'in terms of', 'with respect to', 'in what way'; two asks packed into one question (e.g. 'How are X and Y alike in terms of what they are made from?' — use 'What are X and Y both made from?' instead)
+19:53:10 [69d7] Use these simple question frames (one clause each): How are X and Y alike? | Why does X belong to this category? | Can X belong to two categories? | What is X made from? | Why did the character do that? | What happened after X? | What should the character do next?
+19:53:10 [69d7] Target these concepts (vary across the question set):
+19:53:10 [69d7] - within food category: Ask whether a food belongs to a specific food category. e.g. Is an apple a fruit?
+19:53:10 [69d7] - typicality reasoning: Use typical examples for simple quizzes; use less typical examples only for advanced reasoning or discussion. e.g. Is an apple a fruit?
+19:53:10 [69d7] - cross classification: Ask whether one item can be classified in multiple valid ways. e.g. Is an apple both fruit and food?
+19:53:10 [69d7] - superordinate subordinate reasoning: Ask whether an item is a kind of another category, or whether one category is broader than another. e.g. Is a poodle a kind of dog?
+19:53:10 [69d7] - origin and processing reasoning: Ask about natural source, animal source, ingredient source, or simple processing pathway. e.g. Do apples grow on trees?
+19:53:10 [69d7] - causal explanation: Ask why something happens or why an object/action is useful. e.g. Why do we use umbrellas?
+19:53:10 [69d7] - familiar event script: Ask about common actions, objects, people, or places in familiar events. e.g. Do books go in backpacks?
+19:53:10 [69d7] - event sequence and planning: Ask whether an action happens before, after, or to prepare for a familiar event. e.g. Do we pack before school?
+19:53:10 [69d7] Example familiarity anchors by topic: Fruit: apple, banana, orange, grape, strawberry | School: backpack, book, pencil, teacher, classroom, paper | Home: bed, cup, table, chair, toothbrush, clothes | Food: bread, milk, cheese, eggs, flour, pasta | Nature: tree, flower, bird, fish, rain, sun
+19:53:10 [69d7] Example question at this level: How are apples and bananas alike?
+19:53:10 [69d7] Example question at this level: Is an apple both fruit and food?
+19:53:10 [69d7] Example question at this level: Is a poodle a kind of dog?
+19:53:10 [69d7] 
+19:53:10 [69d7] For WH questions, follow this developmental WH-type guidance — favour the recommended/primary types and do not use types marked as avoided or unsupported for this level:
+19:53:10 [69d7] --- WH-QUESTION GUIDANCE (knowledge base) ---
+19:53:10 [69d7] Developmental order (easiest first): what -> who -> where -> when -> why -> how.
+19:53:10 [69d7] Recommended WH types: what, who, where, when, why, how.
+19:53:10 [69d7] - Use why/how for explanation, comparison, problem solving, social inference, and narrative reasoning when clinically appropriate.
+19:53:10 [69d7] - Keep questions concrete and contextually grounded.
+19:53:10 [69d7] 
+19:53:10 [69d7] Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object (e.g. do NOT use {"questions": [...]}). Do NOT add commentary, markdown, or code fences. Each array element must be an object with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. For yes_no, correct_answer must be 'yes' or 'no' and accepted_answers should be omitted. For wh, correct_answer is the primary short answer and accepted_answers must be a list of all reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). Example: if question is 'Where do kids read books in school?', correct_answer is 'classroom' and accepted_answers could be ['classroom', 'library', 'reading room', 'classrooms']. For open-ended social-emotional wh questions, set "open_ended": true, "correct_answer" to "", and "accepted_answers" to []. Rules: wh questions must begin with one of: what, when, where, why, who, how.
+19:53:10 [69d7] [Claude] >>> PROMPT (6489 chars) | system: You create short, child-friendly quiz questions. Return JSON only. Each item must be {"question": "...", "type": "yes_no"|"wh"}.
+19:53:10 [69d7] Act as a pediatric educator. Create 100 questions about the topic(s) 'Fruit, School, Home, Food, Nature, Social Rules'. Target age 8. Use only these types: wh. Goal: For wh questions: questions must have a clear, short factual answer based on basic object functions, category labels, or familiar everyday knowledge. Avoid subjective questions, such as "Do you like school?". Avoid ambiguous questions, exception-based facts, or culturally dependent knowledge. Do not use negation-heavy wording. Avoid repeating the same wording or item too often. IMPORTANT: Because these are for an older child (7+), 3 of the WH questions must be OPEN-ENDED social-emotional questions, blended in among the others. These ask the child to imagine, reflect, or share how they would respond to feelings and social situations (empathy, comfort, kindness, perspective-taking). They have NO single correct answer — any thoughtful answer is acceptable. They must begin with what/who/how/why and address the child directly ('you'). Examples: 'What would you say when someone says they feel sad?', 'Who would you hug when you feel scared?', 'What could you do to help a friend who is crying?', 'How would you make a new classmate feel welcome?', 'What would you do if a friend lost their toy?'. Mark EACH such question with "open_ended": true. Keep the remaining WH questions factual. Developmental guidance for this child (from the SLP knowledge base) — use it ONLY to set how long and simple the question wording should be. Do NOT bend the question toward particular words or sounds; the questions must stay natural, general, and about the topic(s) above:
+19:53:10 [69d7] --- LANGUAGE GUIDANCE (knowledge base) ---
+19:53:10 [69d7] Target level: age 8, approx MLU 11+ words. Match question wording to this length.
+19:53:10 [69d7] 
+19:53:10 [69d7] Use this conceptual-difficulty guidance to choose WHAT the questions test (content and reasoning level):
+19:53:10 [69d7] --- CONCEPT GUIDANCE (knowledge base) ---
+19:53:10 [69d7] Concept level (ages 8): School-age conceptual reasoning involving explicit category relations, cross-classification, hierarchical reasoning, causal explanation, food-origin/processing reasoning, problem-solution reasoning, and structured narrative understanding.
+19:53:10 [69d7] Wording: Questions can be longer and can ask for explanation, comparison, or reasoning, but should remain concrete and contextually grounded. Phrase every question as ONE simple spoken clause a child would hear in conversation; split complex ideas into the question frames below instead of packing them into one sentence.
+19:53:10 [69d7] Question length: 8-14 words when expressive language level supports it.
+19:53:10 [69d7] Avoid: fully abstract reasoning without concrete context; adult-level nutrition or biology mechanisms; technical food production; highly ambiguous category exceptions; complex social inference without story support; academic connector phrases such as 'in terms of', 'with respect to', 'in what way'; two asks packed into one question (e.g. 'How are X and Y alike in terms of what they are made from?' — use 'What are X and Y both made from?' instead)
+19:53:10 [69d7] Use these simple question frames (one clause each): How are X and Y alike? | Why does X belong to this category? | Can X belong to two categories? | What is X made from? | Why did the character do that? | What happened after X? | What should the character do next?
+19:53:10 [69d7] Target these concepts (vary across the question set):
+19:53:10 [69d7] - within food category: Ask whether a food belongs to a specific food category. e.g. Is an apple a fruit?
+19:53:10 [69d7] - typicality reasoning: Use typical examples for simple quizzes; use less typical examples only for advanced reasoning or discussion. e.g. Is an apple a fruit?
+19:53:10 [69d7] - cross classification: Ask whether one item can be classified in multiple valid ways. e.g. Is an apple both fruit and food?
+19:53:10 [69d7] - superordinate subordinate reasoning: Ask whether an item is a kind of another category, or whether one category is broader than another. e.g. Is a poodle a kind of dog?
+19:53:10 [69d7] - origin and processing reasoning: Ask about natural source, animal source, ingredient source, or simple processing pathway. e.g. Do apples grow on trees?
+19:53:10 [69d7] - causal explanation: Ask why something happens or why an object/action is useful. e.g. Why do we use umbrellas?
+19:53:10 [69d7] - familiar event script: Ask about common actions, objects, people, or places in familiar events. e.g. Do books go in backpacks?
+19:53:10 [69d7] - event sequence and planning: Ask whether an action happens before, after, or to prepare for a familiar event. e.g. Do we pack before school?
+19:53:10 [69d7] Example familiarity anchors by topic: Fruit: apple, banana, orange, grape, strawberry | School: backpack, book, pencil, teacher, classroom, paper | Home: bed, cup, table, chair, toothbrush, clothes | Food: bread, milk, cheese, eggs, flour, pasta | Nature: tree, flower, bird, fish, rain, sun
+19:53:10 [69d7] Example question at this level: How are apples and bananas alike?
+19:53:10 [69d7] Example question at this level: Is an apple both fruit and food?
+19:53:10 [69d7] Example question at this level: Is a poodle a kind of dog?
+19:53:10 [69d7] 
+19:53:10 [69d7] For WH questions, follow this developmental WH-type guidance — favour the recommended/primary types and do not use types marked as avoided or unsupported for this level:
+19:53:10 [69d7] --- WH-QUESTION GUIDANCE (knowledge base) ---
+19:53:10 [69d7] Developmental order (easiest first): what -> who -> where -> when -> why -> how.
+19:53:10 [69d7] Recommended WH types: what, who, where, when, why, how.
+19:53:10 [69d7] - Use why/how for explanation, comparison, problem solving, social inference, and narrative reasoning when clinically appropriate.
+19:53:10 [69d7] - Keep questions concrete and contextually grounded.
+19:53:10 [69d7] 
+19:53:10 [69d7] Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object (e.g. do NOT use {"questions": [...]}). Do NOT add commentary, markdown, or code fences. Each array element must be an object with keys: 'question', 'type', 'correct_answer', 'accepted_answers'. For yes_no, correct_answer must be 'yes' or 'no' and accepted_answers should be omitted. For wh, correct_answer is the primary short answer and accepted_answers must be a list of all reasonably correct alternative answers (synonyms, related valid answers, plural/singular forms). Example: if question is 'Where do kids read books in school?', correct_answer is 'classroom' and accepted_answers could be ['classroom', 'library', 'reading room', 'classrooms']. For open-ended social-emotional wh questions, set "open_ended": true, "correct_answer" to "", and "accepted_answers" to []. Rules: wh questions must begin with one of: what, when, where, why, who, how.
+19:54:48 [69d7] [Claude] <<< RESPONSE (24215 chars):
+19:54:48 [69d7] ```json
+19:54:48 [69d7] [
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "What do we call the sweet part of a plant that has seeds inside?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "fruit",
+19:54:48 [69d7]     "accepted_answers": ["fruit", "fruits"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "Where do apples and oranges grow?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "on trees",
+19:54:48 [69d7]     "accepted_answers": ["on trees", "trees", "in orchards", "on a tree"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "What category do bananas, grapes, and strawberries all belong to?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "fruit",
+19:54:48 [69d7]     "accepted_answers": ["fruit", "fruits", "food"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "How are apples and oranges alike?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "they are both fruits",
+19:54:48 [69d7]     "accepted_answers": ["both fruits", "they are fruits", "they are both food", "both food", "they grow on trees"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "What do you use a pencil for at school?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "writing",
+19:54:48 [69d7]     "accepted_answers": ["writing", "drawing", "to write", "to draw", "write things"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "Where do students sit to learn in school?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "classroom",
+19:54:48 [69d7]     "accepted_answers": ["classroom", "class", "in a classroom", "at a desk"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "What do you carry your books and supplies in when you go to school?",
+19:54:48 [69d7]     "type": "wh",
+19:54:48 [69d7]     "correct_answer": "backpack",
+19:54:48 [69d7]     "accepted_answers": ["backpack", "bag", "school bag", "bookbag"]
+19:54:48 [69d7]   },
+19:54:48 [69d7]   {
+19:54:48 [69d7]     "question": "Who is the person who teaches stude
+19:54:48 [69d7] ...(+22715 more chars)
+19:54:48 [69d7] └─ DONE  POST /api/generate_quiz -> 200 in 97598ms
+19:55:14 [2975] ┌─ WORK  POST /api/save_quiz | fields: questions
+19:55:14 [2975] └─ DONE  POST /api/save_quiz -> 200 in 3ms

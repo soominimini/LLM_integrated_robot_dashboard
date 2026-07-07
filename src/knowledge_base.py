@@ -564,7 +564,7 @@ class LanguageInterestKB:
                 ex = f" e.g. {exq}" if exq else ''
                 lines.append(f"- {label}: {goal}{ex}")
         if topic_items:
-            lines.append("Familiar items per topic: " + " | ".join(topic_items))
+            lines.append("Example familiarity anchors by topic: " + " | ".join(topic_items))
         for exq in (level.get('example_questions') or [])[:3]:
             lines.append(f"Example question at this level: {exq}")
         return '\n'.join(lines) + '\n'

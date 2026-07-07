@@ -1,0 +1,65 @@
+{
+  "scene_description": "A woman wearing an apron stands at a kitchen stove, stirring food in a pan. A basket of vegetables and fruits sits on the counter nearby. A ladle hangs on the wall behind her.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a woman",
+      "visual_choices": [
+        "a woman",
+        "a child",
+        "a man",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person standing at the stove."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman stirring?",
+      "answer": "food in a pan",
+      "visual_choices": [
+        "food in a pan",
+        "a cup of juice",
+        "a bowl of cereal",
+        "a pot of soup"
+      ],
+      "evidence_hint": "Look at what is on the stove in front of the woman."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the basket on the counter?",
+      "answer": "fruits and vegetables",
+      "visual_choices": [
+        "fruits and vegetables",
+        "toys",
+        "books",
+        "bread rolls"
+      ],
+      "evidence_hint": "Look at the big basket sitting on the counter."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the woman standing?",
+      "answer": "in a kitchen",
+      "visual_choices": [
+        "in a kitchen",
+        "in a garden",
+        "in a bedroom",
+        "in a store"
+      ],
+      "evidence_hint": "Look at the stove and counter around the woman."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is hanging on the wall?",
+      "answer": "a ladle",
+      "visual_choices": [
+        "a ladle",
+        "a clock",
+        "a picture",
+        "a towel"
+      ],
+      "evidence_hint": "Look at the wall behind the woman near the top of the picture."
+    }
+  ]
+}

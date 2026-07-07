@@ -1,0 +1,100 @@
+{
+  "story": "[emotion:QT/calm] Sophie is in the garden with her mum. They are looking at the red flowers near the fence. [emotion:QT/surprised] Sophie sees tiny wings behind a big green leaf. A small fairy is sitting on the leaf! The fairy has a shiny wand and three little stars on her dress. [gesture:stretching] Sophie reaches out her hand. The fairy steps onto Sophie's fingers. [emotion:QT/happy] Mum gives Sophie a chair to sit on. Sophie and the fairy are sitting together in the garden. Mum is watching and smiling. [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [
+      "family"
+    ],
+    "word_count": 214,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Tiny Fairy"
+  },
+  "pages": [
+    "[emotion:QT/calm] Sophie is in the garden with her mum. They are looking at the red flowers near the fence.",
+    "[emotion:QT/surprised] Sophie sees tiny wings behind a big green leaf. A small fairy is sitting on the leaf! The fairy has a shiny wand and three little stars on her dress.",
+    "[gesture:stretching] Sophie reaches out her hand. The fairy steps onto Sophie's fingers.",
+    "[emotion:QT/happy] Mum gives Sophie a chair to sit on. Sophie and the fairy are sitting together in the garden. Mum is watching and smiling."
+  ],
+  "paragraphs": [
+    "Sophie is in the garden with her mum. They are looking at the red flowers near the fence. Sophie sees tiny wings behind a big green leaf. A small fairy is sitting on the leaf! The fairy has a shiny wand and three little stars on her dress. Sophie reaches out her hand. The fairy steps onto Sophie's fingers. Mum gives Sophie a chair to sit on. Sophie and the fairy are sitting together in the garden. Mum is watching and smiling."
+  ],
+  "scenes": [
+    "Sophie and her mum are in the garden near red flowers by the fence; Sophie sits on a chair with a tiny fairy perched on her fingers, the fairy wearing a star-dotted dress and holding a wand, while Mum watches and smiles."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in this story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie found a fairy in the garden",
+      "wrong_answers": [
+        "Sophie found a rabbit in the garden",
+        "Sophie chased three butterflies"
+      ]
+    },
+    {
+      "question": "Where was the fairy sitting?",
+      "type": "detail",
+      "correct_answer": "On a big green leaf",
+      "wrong_answers": [
+        "On a red flower",
+        "Under the chair"
+      ]
+    },
+    {
+      "question": "What three things were on the fairy's dress?",
+      "type": "detail",
+      "correct_answer": "Three little stars",
+      "wrong_answers": [
+        "Three red flowers",
+        "Three tiny wings"
+      ]
+    },
+    {
+      "question": "What did Sophie do because she wanted to reach the fairy?",
+      "type": "detail",
+      "correct_answer": "She stretched out her hand",
+      "wrong_answers": [
+        "She ran to get her mum",
+        "She climbed up the chair"
+      ]
+    }
+  ],
+  "takeaways": []
+}

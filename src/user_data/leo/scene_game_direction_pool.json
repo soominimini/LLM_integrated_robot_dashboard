@@ -1,0 +1,119 @@
+{
+  "prompt_version": 2,
+  "toys_fp": "banana|carrot|corn|lemon",
+  "child_age": 3,
+  "language_age": 3,
+  "questions": [
+    {
+      "question": "Let's put the lemon under the banana.",
+      "mode": "direction",
+      "obj_a": "lemon",
+      "obj_b": "banana",
+      "relation": "under",
+      "phrase": "under",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the carrot beside the banana.",
+      "mode": "direction",
+      "obj_a": "carrot",
+      "obj_b": "banana",
+      "relation": "next_to",
+      "phrase": "beside",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the carrot below the corn.",
+      "mode": "direction",
+      "obj_a": "carrot",
+      "obj_b": "corn",
+      "relation": "under",
+      "phrase": "below",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana behind the lemon.",
+      "mode": "direction",
+      "obj_a": "banana",
+      "obj_b": "lemon",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the corn behind the lemon.",
+      "mode": "direction",
+      "obj_a": "corn",
+      "obj_b": "lemon",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the carrot behind the banana.",
+      "mode": "direction",
+      "obj_a": "carrot",
+      "obj_b": "banana",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana behind the corn.",
+      "mode": "direction",
+      "obj_a": "banana",
+      "obj_b": "corn",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the carrot beside the corn.",
+      "mode": "direction",
+      "obj_a": "carrot",
+      "obj_b": "corn",
+      "relation": "next_to",
+      "phrase": "beside",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana below the corn.",
+      "mode": "direction",
+      "obj_a": "banana",
+      "obj_b": "corn",
+      "relation": "under",
+      "phrase": "below",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the corn beside the banana.",
+      "mode": "direction",
+      "obj_a": "corn",
+      "obj_b": "banana",
+      "relation": "next_to",
+      "phrase": "beside",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    }
+  ],
+  "generated_at": "2026-07-07 21:40:53"
+}

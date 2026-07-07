@@ -1,0 +1,118 @@
+{
+  "scene_description": "Two children \u2014 a boy and a girl \u2014 are riding a roller coaster at an amusement park. They are sitting in a green car, holding a yellow safety bar, and smiling. In the background there is a Ferris wheel and colorful amusement park rides.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children riding on?",
+      "sample_answers": [
+        "a roller coaster",
+        "a ride",
+        "a coaster"
+      ],
+      "sentence_frame": "They are riding on ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a roller coaster",
+        "a bus",
+        "a boat"
+      ],
+      "evidence_hint": "Look at the green car the children are sitting in."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the children doing with their hands?",
+      "sample_answers": [
+        "holding the bar",
+        "grabbing the yellow bar",
+        "holding on"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "holding the bar",
+        "waving",
+        "clapping"
+      ],
+      "evidence_hint": "Look at the children's hands and the yellow bar in front of them."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children?",
+      "sample_answers": [
+        "at an amusement park",
+        "at a fair",
+        "outside at a park"
+      ],
+      "sentence_frame": "They are at ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "an amusement park",
+        "a school",
+        "a grocery store"
+      ],
+      "evidence_hint": "Look at the rides and the Ferris wheel in the background."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do the children look \u2014 are they happy or scared?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "they are smiling",
+        "they look happy"
+      ],
+      "sentence_frame": "They look ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "scared",
+        "sad"
+      ],
+      "evidence_hint": "Look at the children's faces and mouths."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children do after the ride is over?",
+      "sample_answers": [
+        "go on another ride",
+        "get off the roller coaster",
+        "walk around the park"
+      ],
+      "sentence_frame": "After the ride, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "go on another ride",
+        "go to sleep",
+        "go to school"
+      ],
+      "evidence_hint": "Think about what people do after a ride at an amusement park."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on a ride at an amusement park? What was it like?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "it was fun",
+        "it was fast",
+        "I was scared"
+      ],
+      "sentence_frame": "I went on ___ and it was ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "fun",
+        "fast",
+        "scary"
+      ],
+      "evidence_hint": "Think about a time you went on a ride or to a fun place."
+    }
+  ]
+}

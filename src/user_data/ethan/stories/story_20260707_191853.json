@@ -1,0 +1,163 @@
+{
+  "story": "Ethan had been working on his superhero headquarters for three whole days. The cardboard base was tall, bright red, and covered with silver star stickers. [emotion:QT/happy] He thought it was the most incredible thing he had ever built.\n\nThen, while he was reaching for his cape, his elbow knocked the base sideways. The right tower crumbled completely, and the roof caved in. [emotion:QT/sad] Ethan felt his stomach drop like a broken elevator.\n\n\"Maybe we can fix it together,\" said his neighbor Rosa, who had watched the whole thing through the chain-link fence.\n\n[emotion:QT/shy] Ethan felt embarrassed at first, although he really did want help. [emotion:QT/calm] \"Okay,\" he said quietly. \"I think I need another pair of hands.\"\n\nRosa grabbed the chunky pieces, and Ethan rebuilt the three corner supports carefully. After that, they reinforced the roof with extra tape.\n\nFinally, the base stood stronger than before. Ethan grinned because he realized that even superheroes work better as a team. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 272,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      4,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6
+    ],
+    "title": "Ethan and the Rescue Mission"
+  },
+  "pages": [
+    "Ethan had been working on his superhero headquarters for three whole days. The cardboard base was tall, bright red, and covered with silver star stickers. [emotion:QT/happy] He thought it was the most incredible thing he had ever built.",
+    "Then, while he was reaching for his cape, his elbow knocked the base sideways. The right tower crumbled completely, and the roof caved in. [emotion:QT/sad] Ethan felt his stomach drop like a broken elevator.",
+    "\"Maybe we can fix it together,\" said his neighbor Rosa, who had watched the whole thing through the chain-link fence.",
+    "[emotion:QT/shy] Ethan felt embarrassed at first, although he really did want help. [emotion:QT/calm] \"Okay,\" he said quietly. \"I think I need another pair of hands.\"",
+    "Rosa grabbed the chunky pieces, and Ethan rebuilt the three corner supports carefully. After that, they reinforced the roof with extra tape.",
+    "Finally, the base stood stronger than before. Ethan grinned because he realized that even superheroes work better as a team."
+  ],
+  "paragraphs": [
+    "Ethan had been working on his superhero headquarters for three whole days. The cardboard base was tall, bright red, and covered with silver star stickers. He thought it was the most incredible thing he had ever built.",
+    "Then, while he was reaching for his cape, his elbow knocked the base sideways. The right tower crumbled completely, and the roof caved in. Ethan felt his stomach drop like a broken elevator.",
+    "\"Maybe we can fix it together,\" said his neighbor Rosa, who had watched the whole thing through the chain-link fence.",
+    "Ethan felt embarrassed at first, although he really did want help. \"Okay,\" he said quietly. \"I think I need another pair of hands.\"",
+    "Rosa grabbed the chunky pieces, and Ethan rebuilt the three corner supports carefully. After that, they reinforced the roof with extra tape.",
+    "Finally, the base stood stronger than before. Ethan grinned because he realized that even superheroes work better as a team."
+  ],
+  "scenes": [
+    "Ethan proudly admiring his tall, bright red cardboard superhero headquarters covered in silver star stickers, standing beside it with a big smile.",
+    "Ethan accidentally knocking the cardboard base with his elbow, the right tower crumbling and the roof caving in, his face showing shock and dismay.",
+    "Rosa standing on the other side of a chain-link fence, calling out to Ethan with a friendly expression after watching the accident.",
+    "Ethan looking embarrassed but nodding quietly, agreeing to accept Rosa's help as the two face each other near the damaged base.",
+    "Rosa and Ethan working together side by side, Rosa holding chunky cardboard pieces while Ethan rebuilds corner supports and they apply extra tape to the roof.",
+    "The finished superhero headquarters standing tall and sturdy, with Ethan and Rosa grinning proudly together beside their teamwork creation."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his superhero base?",
+      "type": "main_idea",
+      "correct_answer": "Even superheroes work better as a team",
+      "wrong_answers": [
+        "Building things with cardboard is really hard",
+        "You should never touch your superhero cape"
+      ]
+    },
+    {
+      "question": "What happened to the superhero headquarters while Ethan was reaching for his cape?",
+      "type": "detail",
+      "correct_answer": "His elbow knocked it and the tower crumbled",
+      "wrong_answers": [
+        "Rosa accidentally crashed through the fence",
+        "The roof blew away in the wind"
+      ]
+    },
+    {
+      "question": "After Rosa grabbed the chunky pieces, what three things did Ethan and Rosa do to fix the base?",
+      "type": "detail",
+      "correct_answer": "Rebuilt the three corner supports, then reinforced the roof with tape",
+      "wrong_answers": [
+        "Threw it away and built a brand new one",
+        "Covered it with star stickers and painted it red"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt embarrassed at first, although he really wanted Rosa's help?",
+      "type": "inference",
+      "correct_answer": "He felt shy because she saw his base get wrecked",
+      "wrong_answers": [
+        "He thought Rosa was trying to steal his superhero cape",
+        "He was angry that Rosa had broken the base herself"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Ethan had refused Rosa's help and tried to fix the base on his own?",
+      "type": "inference",
+      "correct_answer": "The base might not have been as strong or well repaired",
+      "wrong_answers": [
+        "The base would have been even taller and more incredible",
+        "Rosa would have built her own superhero headquarters instead"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to let Rosa help him fix the headquarters?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help makes the job easier and more fun.",
+      "wrong_answers": [
+        "Letting someone else do the work means you can take a break and rest.",
+        "Watching a friend build something teaches you better than doing it yourself."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story about how Ethan and Rosa fixed the base together?",
+      "type": "takeaway",
+      "correct_answer": "Working together as a team often creates something stronger than working alone.",
+      "wrong_answers": [
+        "Having more people around means the project will always finish much faster.",
+        "Sharing your supplies with a neighbor is the best way to make new friends."
+      ]
+    },
+    {
+      "question": "What did Ethan show us by what he did after his headquarters fell apart?",
+      "type": "takeaway",
+      "correct_answer": "Trying again after something breaks takes real courage and perseverance.",
+      "wrong_answers": [
+        "Building with cardboard is always a bad idea because it falls down too easily.",
+        "Staying calm when something goes wrong means the problem was not very serious."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help makes the job easier and more fun.",
+    "Working together as a team often creates something stronger than working alone.",
+    "Trying again after something breaks takes real courage and perseverance."
+  ]
+}

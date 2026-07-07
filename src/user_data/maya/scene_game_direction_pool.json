@@ -1,0 +1,86 @@
+{
+  "prompt_version": 2,
+  "toys_fp": "banana|carrot|corn|lemon|tray",
+  "child_age": 4,
+  "language_age": 4,
+  "questions": [
+    {
+      "question": "Let's put the lemon on the tray.",
+      "mode": "direction",
+      "obj_a": "lemon",
+      "obj_b": "tray",
+      "relation": "above",
+      "phrase": "on",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana on the tray.",
+      "mode": "direction",
+      "obj_a": "banana",
+      "obj_b": "tray",
+      "relation": "above",
+      "phrase": "on",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana below the tray.",
+      "mode": "direction",
+      "obj_a": "banana",
+      "obj_b": "tray",
+      "relation": "under",
+      "phrase": "below",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the tray under the carrot.",
+      "mode": "direction",
+      "obj_a": "tray",
+      "obj_b": "carrot",
+      "relation": "under",
+      "phrase": "under",
+      "category": "container",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the carrot behind the banana.",
+      "mode": "direction",
+      "obj_a": "carrot",
+      "obj_b": "banana",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the corn under the lemon.",
+      "mode": "direction",
+      "obj_a": "corn",
+      "obj_b": "lemon",
+      "relation": "under",
+      "phrase": "under",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the lemon behind the tray.",
+      "mode": "direction",
+      "obj_a": "lemon",
+      "obj_b": "tray",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    }
+  ],
+  "generated_at": "2026-07-07 21:37:20"
+}

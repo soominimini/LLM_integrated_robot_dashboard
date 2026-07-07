@@ -1,0 +1,65 @@
+{
+  "scene_description": "A girl with long dark hair sits at a table writing in a book. A laptop computer is open on the table beside her. There are paintings on the wall behind her and a couch with blue pillows nearby.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a baby",
+        "a teacher",
+        "a boy"
+      ],
+      "evidence_hint": "Look at the person sitting at the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding?",
+      "answer": "a pencil",
+      "visual_choices": [
+        "a pencil",
+        "a spoon",
+        "a crayon",
+        "a phone"
+      ],
+      "evidence_hint": "Look at what is in the girl's hand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the table next to the girl?",
+      "answer": "a laptop",
+      "visual_choices": [
+        "a laptop",
+        "a plate",
+        "a backpack",
+        "a cup"
+      ],
+      "evidence_hint": "Look at the table beside the girl."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "answer": "at a table",
+      "visual_choices": [
+        "at a table",
+        "on the floor",
+        "on a bed",
+        "on a swing"
+      ],
+      "evidence_hint": "Look at what is underneath the girl's arms and book."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl writing in?",
+      "answer": "a book",
+      "visual_choices": [
+        "a book",
+        "a newspaper",
+        "a folder",
+        "a box"
+      ],
+      "evidence_hint": "Look at what is open on the table in front of the girl."
+    }
+  ]
+}

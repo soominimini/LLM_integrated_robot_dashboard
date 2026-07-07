@@ -1,0 +1,101 @@
+{
+  "story": "Sophie is playing in the big castle. The castle has tall, red towers. Sophie finds a shiny crown on the floor. [emotion:QT/happy] Sophie wants to put the crown on top of the tower. But the tower is too tall! [emotion:QT/sad] Sophie's friend Ria is standing next to Sophie. Ria picks up Sophie and Sophie puts the crown on top of the tower. The crown is sitting on the tall, red tower. [gesture:clapping] [emotion:QT/happy] Sophie and Ria are clapping their hands. The shiny crown is on the tower! [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 214,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Shiny Crown"
+  },
+  "pages": [
+    "Sophie is playing in the big castle. The castle has tall, red towers.",
+    "Sophie finds a shiny crown on the floor. [emotion:QT/happy] Sophie wants to put the crown on top of the tower.",
+    "But the tower is too tall! [emotion:QT/sad] Sophie's friend Ria is standing next to Sophie.",
+    "Ria picks up Sophie and Sophie puts the crown on top of the tower.",
+    "The crown is sitting on the tall, red tower. [gesture:clapping] [emotion:QT/happy] Sophie and Ria are clapping their hands. The shiny crown is on the tower!"
+  ],
+  "paragraphs": [
+    "Sophie is playing in the big castle. The castle has tall, red towers. Sophie finds a shiny crown on the floor. Sophie wants to put the crown on top of the tower. But the tower is too tall! Sophie's friend Ria is standing next to Sophie. Ria picks up Sophie and Sophie puts the crown on top of the tower. The crown is sitting on the tall, red tower. Sophie and Ria are clapping their hands. The shiny crown is on the tower!"
+  ],
+  "scenes": [
+    "Sophie and Ria in a big castle with tall red towers \u2014 Ria lifts Sophie up so she can place a shiny crown on top of the tower, and both girls clap with joy."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the story mainly about?",
+      "type": "main_idea",
+      "correct_answer": "Sophie and Ria put a crown on the tower",
+      "wrong_answers": [
+        "Sophie found a rabbit in the castle",
+        "Ria lost her shiny crown"
+      ]
+    },
+    {
+      "question": "Where did Sophie find the shiny crown?",
+      "type": "detail",
+      "correct_answer": "On the floor",
+      "wrong_answers": [
+        "On top of the red tower",
+        "In her friend Ria's hands"
+      ]
+    },
+    {
+      "question": "What are Sophie and Ria doing at the end of the story?",
+      "type": "detail",
+      "correct_answer": "They are clapping their hands",
+      "wrong_answers": [
+        "They are running around the castle",
+        "They are eating their lunch"
+      ]
+    },
+    {
+      "question": "Why did Ria pick up Sophie?",
+      "type": "detail",
+      "correct_answer": "Because the tower was too tall",
+      "wrong_answers": [
+        "Because Sophie was feeling sad and tired",
+        "Because the crown was too heavy"
+      ]
+    }
+  ],
+  "takeaways": []
+}

@@ -1,0 +1,164 @@
+{
+  "story": "Ethan had been working on his favorite video game for three whole weeks. He was so close to finding the hidden treasure chest on the rocky third level, because he had already collected every glowing red ruby along the path.\n\nThen, while he was reaching for his controller, it slipped and crashed to the floor. The screen went dark. [emotion:QT/sad] His progress was gone.\n\n[emotion:QT/sad] Ethan felt a tight, heavy feeling in his chest, like a storm cloud sitting right on his shoulders.\n\nHis older neighbor, Rachel, came over after school. [emotion:QT/happy] \"I think I remember where that chest was,\" she said cheerfully. \"Want to try together?\"\n\nFirst, Rachel chose the character. Then Ethan ran the race through the three checkpoints. Next, they reached the chest at the top of the crumbling tower.\n\n\"We actually found it,\" Ethan said, grinning so wide his cheeks ached. [emotion:QT/happy] Rachel laughed. [emotion:QT/happy] \"We found it because we took turns thinking.\"",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 256,
+    "paragraph_count": 8,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      6,
+      7,
+      7
+    ],
+    "title": "The Missing Treasure Chest"
+  },
+  "pages": [
+    "Ethan had been working on his favorite video game for three whole weeks. He was so close to finding the hidden treasure chest on the rocky third level, because he had already collected every glowing red ruby along the path.",
+    "Then, while he was reaching for his controller, it slipped and crashed to the floor. The screen went dark. [emotion:QT/sad] His progress was gone.",
+    "[emotion:QT/sad] Ethan felt a tight, heavy feeling in his chest, like a storm cloud sitting right on his shoulders.",
+    "His older neighbor, Rachel, came over after school. [emotion:QT/happy] \"I think I remember where that chest was,\" she said cheerfully. \"Want to try together?\"",
+    "First, Rachel chose the character. Then Ethan ran the race through the three checkpoints. Next, they reached the chest at the top of the crumbling tower.",
+    "\"We actually found it,\" Ethan said, grinning so wide his cheeks ached. [emotion:QT/happy] Rachel laughed. [emotion:QT/happy] \"We found it because we took turns thinking.\""
+  ],
+  "paragraphs": [
+    "Ethan had been working on his favorite video game for three whole weeks. He was so close to finding the hidden treasure chest on the rocky third level, because he had already collected every glowing red ruby along the path.",
+    "Then, while he was reaching for his controller, it slipped and crashed to the floor. The screen went dark. His progress was gone.",
+    "Ethan felt a tight, heavy feeling in his chest, like a storm cloud sitting right on his shoulders.",
+    "His older neighbor, Rachel, came over after school. \"I think I remember where that chest was,\" she said cheerfully. \"Want to try together?\"",
+    "First, Rachel chose the character. Then Ethan ran the race through the three checkpoints. Next, they reached the chest at the top of the crumbling tower.",
+    "\"We actually found it,\" Ethan said, grinning so wide his cheeks ached. Rachel laughed. \"We found it because we took turns thinking.\""
+  ],
+  "scenes": [
+    "Ethan sitting at his gaming setup, intensely focused on a video game screen showing a rocky level with glowing red rubies along a path.",
+    "Ethan reaching for his controller as it slips and crashes to the floor, the TV screen going dark.",
+    "Ethan sitting alone with a slumped posture, a heavy, sad expression on his face, a dark storm cloud illustrated hovering over his shoulders.",
+    "Rachel knocking on or entering the room cheerfully, smiling at a downcast Ethan near the gaming setup.",
+    "Rachel and Ethan sitting together at the gaming setup, taking turns with the controller, navigating a crumbling tower on screen.",
+    "Ethan and Rachel both grinning widely at the screen showing the discovered treasure chest, celebrating together."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his treasure chest quest?",
+      "type": "main_idea",
+      "correct_answer": "Working together as a team helps you reach your goal",
+      "wrong_answers": [
+        "Video games are too tricky to finish alone",
+        "You should never drop your controller"
+      ]
+    },
+    {
+      "question": "What three things did Ethan and Rachel do after they chose their character to reach the treasure chest?",
+      "type": "detail",
+      "correct_answer": "Ran the race, reached three checkpoints, then found the chest",
+      "wrong_answers": [
+        "Collected red rubies, ran a race, then chose a character",
+        "Climbed a tower, fought a monster, then found a power-up"
+      ]
+    },
+    {
+      "question": "Where was the treasure chest that Ethan had been trying to reach for three whole weeks?",
+      "type": "detail",
+      "correct_answer": "At the top of the crumbling tower on the third level",
+      "wrong_answers": [
+        "Hidden behind the glowing red rubies on level one",
+        "Inside a secret base at the end of the race track"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt that tight, heavy feeling in his chest when the screen went dark?",
+      "type": "inference",
+      "correct_answer": "Because he lost three weeks of hard work on his game",
+      "wrong_answers": [
+        "Because he thought Rachel was going to take his controller",
+        "Because he was tired and wanted to go to sleep"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Rachel had not come over to help Ethan after school?",
+      "type": "inference",
+      "correct_answer": "Ethan might have stayed sad and not found the chest",
+      "wrong_answers": [
+        "Ethan would have found the chest faster on his own",
+        "Ethan would have chosen a different superhero character"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to let Rachel help him?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help makes hard things much easier to solve.",
+      "wrong_answers": [
+        "Letting someone else play your game means you will always win faster.",
+        "Waiting for a friend to arrive is the best way to fix a broken controller."
+      ]
+    },
+    {
+      "question": "What did Ethan and Rachel show us by what they did?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns and sharing ideas helps everyone do better together.",
+      "wrong_answers": [
+        "Choosing the right character at the start is the most important part of any game.",
+        "Playing video games with a neighbor is always more fun than playing alone."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Even when something goes wrong, trying again is worth it.",
+      "wrong_answers": [
+        "Saving your progress often is the most important thing to remember when gaming.",
+        "If a game is too hard after three weeks, it is better to choose an easier one."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help makes hard things much easier to solve.",
+    "Taking turns and sharing ideas helps everyone do better together.",
+    "Even when something goes wrong, trying again is worth it."
+  ]
+}

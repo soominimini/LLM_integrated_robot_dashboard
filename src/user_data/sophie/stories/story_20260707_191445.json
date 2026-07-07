@@ -1,0 +1,109 @@
+{
+  "story": "Sophie is in the classroom. Sophie has a fish in a small, round bowl. The fish is red and orange. Sophie puts the bowl on the table. [emotion:QT/surprised] But the bowl is not there! [emotion:QT/afraid] Sophie looks under the chair. Sophie looks behind the big blue box. Sophie asks her friend Mia for help. Mia and Sophie look together. [emotion:QT/happy] They find the round bowl on the teacher's desk. The red and orange fish is swimming and splashing. [emotion:QT/happy] Sophie and Mia are happy. [gesture:clapping] The teacher is watching and clapping.",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 217,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Missing Fish"
+  },
+  "pages": [
+    "Sophie is in the classroom. Sophie has a fish in a small, round bowl. The fish is red and orange.",
+    "Sophie puts the bowl on the table. [emotion:QT/surprised] But the bowl is not there!",
+    "[emotion:QT/afraid] Sophie looks under the chair. Sophie looks behind the big blue box.",
+    "Sophie asks her friend Mia for help. Mia and Sophie look together.",
+    "[emotion:QT/happy] They find the round bowl on the teacher's desk. The red and orange fish is swimming and splashing.",
+    "[emotion:QT/happy] Sophie and Mia are happy. [gesture:clapping] The teacher is watching and clapping."
+  ],
+  "paragraphs": [
+    "Sophie is in the classroom. Sophie has a fish in a small, round bowl. The fish is red and orange. Sophie puts the bowl on the table. But the bowl is not there! Sophie looks under the chair. Sophie looks behind the big blue box. Sophie asks her friend Mia for help. Mia and Sophie look together. They find the round bowl on the teacher's desk. The red and orange fish is swimming and splashing. Sophie and Mia are happy. The teacher is watching and clapping."
+  ],
+  "scenes": [
+    "Sophie and Mia stand happily at the teacher's desk in a classroom, finding the small round bowl with the red and orange fish swimming inside, while the teacher watches and claps."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in the story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie lost her fish and found it",
+      "wrong_answers": [
+        "Sophie got a new pet rabbit",
+        "Sophie and Mia went to a castle"
+      ]
+    },
+    {
+      "question": "Where did Sophie find the round bowl?",
+      "type": "detail",
+      "correct_answer": "On the teacher's desk",
+      "wrong_answers": [
+        "Under the chair",
+        "Behind the big blue box"
+      ]
+    },
+    {
+      "question": "What colours are the fish?",
+      "type": "detail",
+      "correct_answer": "Red and orange",
+      "wrong_answers": [
+        "Blue and green",
+        "Pink and purple"
+      ]
+    },
+    {
+      "question": "Who is helping Sophie look for the fish?",
+      "type": "detail",
+      "correct_answer": "Her friend Mia",
+      "wrong_answers": [
+        "The teacher",
+        "A fairy with wings"
+      ]
+    }
+  ],
+  "takeaways": []
+}

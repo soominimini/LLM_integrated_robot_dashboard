@@ -282,7 +282,7 @@ STRICT RULES:
     # structure is injected via THEME_GUIDANCE fields.
     # ─────────────────────────────────────────────
 
-    MASTER_TEMPLATE = """Write a short story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story should be developmentally appropriate, engaging, and supportive of early language development.
+    MASTER_TEMPLATE = """Write a short story for a {age}-year-old {gender} named {child_name}. The story should be developmentally appropriate, engaging, and supportive of language comprehension and literacy development.
 
 --- AGE-APPROPRIATE LANGUAGE REQUIREMENTS ---
 {age_guidelines}
@@ -312,7 +312,7 @@ Use a clear three-act structure:
     # Examples from story_corpus.json are injected into {wh_examples}.
     # ─────────────────────────────────────────────
 
-    WH_MASTER_TEMPLATE = """Write a short story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story will be used by a robot to practise WH-question comprehension (WHO / WHAT / WHERE) with the child.
+    WH_MASTER_TEMPLATE = """Write a short story for a {age}-year-old {gender} named {child_name}. The story should be developmentally appropriate, engaging, and supportive of language comprehension and literacy development.
 
 --- STYLE REFERENCE (from the curated 4-to-7 corpus, WHO/WHAT/WHERE subset for this age) ---
 Follow the general style, length, vocabulary, and structure of these examples. Each story is followed by 5–7 WH-questions whose answers are explicitly stated in the story.
@@ -344,7 +344,7 @@ Follow the general style, length, vocabulary, and structure of these examples. E
     # lesson. Reuses OUTPUT_FORMAT (no takeaways / questions).
     # ─────────────────────────────────────────────
 
-    SIMPLE_MASTER_TEMPLATE = """Write a very short, simple story for a {age}-year-old {gender} named {child_name}, who has speech delay. The story should be gentle, soothing, and supportive of very early language development.
+    SIMPLE_MASTER_TEMPLATE = """Write a very short, simple story for a {age}-year-old {gender} named {child_name}. The story should be gentle, soothing, and supportive of very early language development.
 
 --- AGE-APPROPRIATE LANGUAGE REQUIREMENTS ---
 {age_guidelines}

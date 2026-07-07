@@ -1,0 +1,119 @@
+{
+  "scene_description": "A woman with long hair stands with her back to the viewer at what appears to be an airport observation area. She is holding a handbag and standing next to a rolling suitcase. In the sky above, an airplane is flying away.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What do you see flying in the sky?",
+      "sample_answers": [
+        "an airplane",
+        "a plane",
+        "a big plane"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "an airplane",
+        "a bird",
+        "a balloon"
+      ],
+      "evidence_hint": "Look up at the top part of the picture in the sky."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the big bag on wheels called? What do you see next to the lady?",
+      "sample_answers": [
+        "a suitcase",
+        "a bag",
+        "a rolling bag",
+        "luggage"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "suitcase",
+        "backpack",
+        "lunchbox"
+      ],
+      "evidence_hint": "Look at the bag with wheels sitting on the ground near the lady."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the lady doing?",
+      "sample_answers": [
+        "standing",
+        "watching the plane",
+        "looking at the airplane",
+        "waiting"
+      ],
+      "sentence_frame": "The lady is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "watching the plane",
+        "running",
+        "eating"
+      ],
+      "evidence_hint": "Look at the lady's body \u2014 is she moving or standing still? What is she facing?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the airplane?",
+      "sample_answers": [
+        "in the sky",
+        "up high",
+        "flying in the air",
+        "above the lady"
+      ],
+      "sentence_frame": "The airplane is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "in the sky",
+        "on the ground",
+        "in the water"
+      ],
+      "evidence_hint": "Look at the top of the picture and find the airplane."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "The lady has a suitcase. What might she be getting ready to do?",
+      "sample_answers": [
+        "go on a trip",
+        "get on a plane",
+        "travel",
+        "go somewhere on an airplane"
+      ],
+      "sentence_frame": "She might be getting ready to ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "go on a trip",
+        "go to sleep",
+        "go to the park"
+      ],
+      "evidence_hint": "Look at the suitcase and the airplane \u2014 think about when people use suitcases."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on an airplane? Where did you go?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I went on a plane",
+        "I went to grandma's house"
+      ],
+      "sentence_frame": "I went ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you traveled somewhere far away."
+    }
+  ]
+}

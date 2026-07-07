@@ -1,0 +1,2706 @@
+
+21:30:50 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question└─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:30:50 [d6a0] 
+21:30:50 [----] [Claude:scene-game-question] >>> PROMPT (2485 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:30:50 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:30:50 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:30:50 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:30:50 [----] The TARGET object for this round is: lemon.
+21:30:50 [----] Generate ONE inference-style request that lets the child figure
+21:30:50 [----] out THIS target object from its observable properties.
+21:30:50 [----] 
+21:30:50 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:30:50 [----] It must NEVER contain any of these noun names from the toy list:
+21:30:50 [----]   lemon, apple, banana, corn, carrot
+21:30:50 [----] Refer to the target only as "it", "something", "one", or by
+21:30:50 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:30:50 [----] must INFER which object you mean from the description.
+21:30:50 [----] 
+21:30:50 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:30:50 [----] - A single noun (the object type) with at most ONE adjective
+21:30:50 [----]   describing color, size, or category.
+21:30:50 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:30:50 [----]   "tomato", "yellow fruit", "round ball".
+21:30:50 [----] - BAD criteria (do NOT produce these):
+21:30:50 [----]     * "red car moving block" (compound / multi-object)
+21:30:50 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:30:50 [----]     * "toy that you can stack" (function-based, vague)
+21:30:50 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:30:50 [----] 
+21:30:50 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:30:50 [----] target among the available toys. Before answering, check every
+21:30:50 [----] other toy in the list: if it also fits your description, revise
+21:30:50 [----] the question to use a more DISTINGUISHING feature of the target
+21:30:50 [----] (a property no other listed toy shares).
+21:30:50 [----] Example: with both a banana and a lemon in the list, "Find
+21:30:50 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:30:50 [----] and long!" is GOOD (only the banana matches).
+21:30:50 [----] 
+21:30:50 [----] The criteria MUST describe the target object (lemon).
+21:30:50 [----] Use simple, clear language appropriate for ages 4-6.
+21:30:50 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:30:50 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:30:50 [----] - Question: "Show me something green that goes ROAR!"
+21:30:50 [----]   (criteria: green dinosaur)
+21:30:50 [----] BAD examples (do NOT do these):
+21:30:50 [----] - "Show me the red apple!" — names the target.
+21:30:50 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:30:50 [----]   toys could match.
+21:30:50 [----] 
+21:30:50 [----] Return ONLY a JSON object:
+21:30:50 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:30:50 [dcc3] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:50 [4006] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:51 [dcc3] └─ DONE  GET /api/scene_game/pool_status -> 200 in 13ms
+21:30:51 [4006] └─ DONE  GET /api/scene_game/pool_status -> 200 in 25ms
+21:30:52 [----] [Claude:scene-game-question] <<< RESPONSE (90 chars):
+21:30:52 [----] {"question": "Can you find something small and yellow?", "criteria": "small yellow fruit"}
+21:30:52 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Can you find something small and yellow?", "criteria": "small yellow fruit"}
+21:30:52 [----] [SceneGame] Parsed question JSON: {
+21:30:52 [----]   "question": "Can you find something small and yellow?",
+21:30:52 [----]   "criteria": "small yellow fruit"
+21:30:52 [----] }
+21:30:52 [----] [Claude:scene-game-question] >>> PROMPT (2687 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:30:52 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:30:52 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:30:52 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:30:52 [----] Do NOT repeat any of these previously asked questions — write a
+21:30:52 [----] clearly different one (vary the property described, the phrasing,
+21:30:52 [----] or the sentence opener):
+21:30:52 [----]   - Can you find something small and yellow?
+21:30:52 [----] The TARGET object for this round is: banana.
+21:30:52 [----] Generate ONE inference-style request that lets the child figure
+21:30:52 [----] out THIS target object from its observable properties.
+21:30:52 [----] 
+21:30:52 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:30:52 [----] It must NEVER contain any of these noun names from the toy list:
+21:30:52 [----]   lemon, apple, banana, corn, carrot
+21:30:52 [----] Refer to the target only as "it", "something", "one", or by
+21:30:52 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:30:52 [----] must INFER which object you mean from the description.
+21:30:52 [----] 
+21:30:52 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:30:52 [----] - A single noun (the object type) with at most ONE adjective
+21:30:52 [----]   describing color, size, or category.
+21:30:52 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:30:52 [----]   "tomato", "yellow fruit", "round ball".
+21:30:52 [----] - BAD criteria (do NOT produce these):
+21:30:52 [----]     * "red car moving block" (compound / multi-object)
+21:30:52 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:30:52 [----]     * "toy that you can stack" (function-based, vague)
+21:30:52 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:30:52 [----] 
+21:30:52 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:30:52 [----] target among the available toys. Before answering, check every
+21:30:52 [----] other toy in the list: if it also fits your description, revise
+21:30:52 [----] the question to use a more DISTINGUISHING feature of the target
+21:30:52 [----] (a property no other listed toy shares).
+21:30:52 [----] Example: with both a banana and a lemon in the list, "Find
+21:30:52 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:30:52 [----] and long!" is GOOD (only the banana matches).
+21:30:52 [----] 
+21:30:52 [----] The criteria MUST describe the target object (banana).
+21:30:52 [----] Use simple, clear language appropriate for ages 4-6.
+21:30:52 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:30:52 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:30:52 [----] - Question: "Show me something green that goes ROAR!"
+21:30:52 [----]   (criteria: green dinosaur)
+21:30:52 [----] BAD examples (do NOT do these):
+21:30:52 [----] - "Show me the red apple!" — names the target.
+21:30:52 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:30:52 [----]   toys could match.
+21:30:52 [----] 
+21:30:52 [----] Return ONLY a JSON object:
+21:30:52 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:30:53 [f19e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:53 [c6f8] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:53 [f19e] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:30:53 [c6f8] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:30:54 [----] [Claude:scene-game-question] <<< RESPONSE (80 chars):
+21:30:54 [----] {"question": "Find something long and yellow!", "criteria": "long yellow fruit"}
+21:30:54 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find something long and yellow!", "criteria": "long yellow fruit"}
+21:30:54 [----] [SceneGame] Parsed question JSON: {
+21:30:54 [----]   "question": "Find something long and yellow!",
+21:30:54 [----]   "criteria": "long yellow fruit"
+21:30:54 [----] }
+21:30:54 [----] [Claude:scene-game-question] >>> PROMPT (2721 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:30:54 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:30:54 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:30:54 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:30:54 [----] Do NOT repeat any of these previously asked questions — write a
+21:30:54 [----] clearly different one (vary the property described, the phrasing,
+21:30:54 [----] or the sentence opener):
+21:30:54 [----]   - Can you find something small and yellow?
+21:30:54 [----]   - Find something long and yellow!
+21:30:54 [----] The TARGET object for this round is: apple.
+21:30:54 [----] Generate ONE inference-style request that lets the child figure
+21:30:54 [----] out THIS target object from its observable properties.
+21:30:54 [----] 
+21:30:54 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:30:54 [----] It must NEVER contain any of these noun names from the toy list:
+21:30:54 [----]   lemon, apple, banana, corn, carrot
+21:30:54 [----] Refer to the target only as "it", "something", "one", or by
+21:30:54 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:30:54 [----] must INFER which object you mean from the description.
+21:30:54 [----] 
+21:30:54 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:30:54 [----] - A single noun (the object type) with at most ONE adjective
+21:30:54 [----]   describing color, size, or category.
+21:30:54 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:30:54 [----]   "tomato", "yellow fruit", "round ball".
+21:30:54 [----] - BAD criteria (do NOT produce these):
+21:30:54 [----]     * "red car moving block" (compound / multi-object)
+21:30:54 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:30:54 [----]     * "toy that you can stack" (function-based, vague)
+21:30:54 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:30:54 [----] 
+21:30:54 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:30:54 [----] target among the available toys. Before answering, check every
+21:30:54 [----] other toy in the list: if it also fits your description, revise
+21:30:54 [----] the question to use a more DISTINGUISHING feature of the target
+21:30:54 [----] (a property no other listed toy shares).
+21:30:54 [----] Example: with both a banana and a lemon in the list, "Find
+21:30:54 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:30:54 [----] and long!" is GOOD (only the banana matches).
+21:30:54 [----] 
+21:30:54 [----] The criteria MUST describe the target object (apple).
+21:30:54 [----] Use simple, clear language appropriate for ages 4-6.
+21:30:54 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:30:54 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:30:54 [----] - Question: "Show me something green that goes ROAR!"
+21:30:54 [----]   (criteria: green dinosaur)
+21:30:54 [----] BAD examples (do NOT do these):
+21:30:54 [----] - "Show me the red apple!" — names the target.
+21:30:54 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:30:54 [----]   toys could match.
+21:30:54 [----] 
+21:30:54 [----] Return ONLY a JSON object:
+21:30:54 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:30:55 [88b5] ┌─ WORK  GET /api/scene_game/pool_status | args: kind┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:55 [1f02] 
+21:30:55 [88b5] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:30:55 [1f02] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:30:56 [----] [Claude:scene-game-question] <<< RESPONSE (67 chars):
+21:30:56 [----] {"question": "Find me a round red fruit!", "criteria": "red fruit"}
+21:30:56 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round red fruit!", "criteria": "red fruit"}
+21:30:56 [----] [SceneGame] Parsed question JSON: {
+21:30:56 [----]   "question": "Find me a round red fruit!",
+21:30:56 [----]   "criteria": "red fruit"
+21:30:56 [----] }
+21:30:56 [----] [Claude:scene-game-question] >>> PROMPT (2754 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:30:56 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:30:56 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:30:56 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:30:56 [----] Do NOT repeat any of these previously asked questions — write a
+21:30:56 [----] clearly different one (vary the property described, the phrasing,
+21:30:56 [----] or the sentence opener):
+21:30:56 [----]   - Can you find something small and yellow?
+21:30:56 [----]   - Find something long and yellow!
+21:30:56 [----]   - Find me a round red fruit!
+21:30:56 [----] The TARGET object for this round is: carrot.
+21:30:56 [----] Generate ONE inference-style request that lets the child figure
+21:30:56 [----] out THIS target object from its observable properties.
+21:30:56 [----] 
+21:30:56 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:30:56 [----] It must NEVER contain any of these noun names from the toy list:
+21:30:56 [----]   lemon, apple, banana, corn, carrot
+21:30:56 [----] Refer to the target only as "it", "something", "one", or by
+21:30:56 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:30:56 [----] must INFER which object you mean from the description.
+21:30:56 [----] 
+21:30:56 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:30:56 [----] - A single noun (the object type) with at most ONE adjective
+21:30:56 [----]   describing color, size, or category.
+21:30:56 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:30:56 [----]   "tomato", "yellow fruit", "round ball".
+21:30:56 [----] - BAD criteria (do NOT produce these):
+21:30:56 [----]     * "red car moving block" (compound / multi-object)
+21:30:56 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:30:56 [----]     * "toy that you can stack" (function-based, vague)
+21:30:56 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:30:56 [----] 
+21:30:56 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:30:56 [----] target among the available toys. Before answering, check every
+21:30:56 [----] other toy in the list: if it also fits your description, revise
+21:30:56 [----] the question to use a more DISTINGUISHING feature of the target
+21:30:56 [----] (a property no other listed toy shares).
+21:30:56 [----] Example: with both a banana and a lemon in the list, "Find
+21:30:56 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:30:56 [----] and long!" is GOOD (only the banana matches).
+21:30:56 [----] 
+21:30:56 [----] The criteria MUST describe the target object (carrot).
+21:30:56 [----] Use simple, clear language appropriate for ages 4-6.
+21:30:56 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:30:56 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:30:56 [----] - Question: "Show me something green that goes ROAR!"
+21:30:56 [----]   (criteria: green dinosaur)
+21:30:56 [----] BAD examples (do NOT do these):
+21:30:56 [----] - "Show me the red apple!" — names the target.
+21:30:56 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:30:56 [----]   toys could match.
+21:30:56 [----] 
+21:30:56 [----] Return ONLY a JSON object:
+21:30:56 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:30:57 [7bc3] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:57 [f9f7] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:57 [f9f7] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:30:57 [7bc3] 
+21:30:57 [----] [Claude:scene-game-question] <<< RESPONSE (87 chars):
+21:30:57 [----] {"question": "Find me something orange and long!", "criteria": "long orange vegetable"}
+21:30:57 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something orange and long!", "criteria": "long orange vegetable"}
+21:30:57 [----] [SceneGame] Parsed question JSON: {
+21:30:57 [----]   "question": "Find me something orange and long!",
+21:30:57 [----]   "criteria": "long orange vegetable"
+21:30:57 [----] }
+21:30:57 [----] [Claude:scene-game-question] >>> PROMPT (2789 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:30:57 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:30:57 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:30:57 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:30:57 [----] Do NOT repeat any of these previously asked questions — write a
+21:30:57 [----] clearly different one (vary the property described, the phrasing,
+21:30:57 [----] or the sentence opener):
+21:30:57 [----]   - Can you find something small and yellow?
+21:30:57 [----]   - Find something long and yellow!
+21:30:57 [----]   - Find me a round red fruit!
+21:30:57 [----]   - Find me something orange and long!
+21:30:57 [----] The TARGET object for this round is: corn.
+21:30:57 [----] Generate ONE inference-style request that lets the child figure
+21:30:57 [----] out THIS target object from its observable properties.
+21:30:57 [----] 
+21:30:57 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:30:57 [----] It must NEVER contain any of these noun names from the toy list:
+21:30:57 [----]   lemon, apple, banana, corn, carrot
+21:30:57 [----] Refer to the target only as "it", "something", "one", or by
+21:30:57 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:30:57 [----] must INFER which object you mean from the description.
+21:30:57 [----] 
+21:30:57 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:30:57 [----] - A single noun (the object type) with at most ONE adjective
+21:30:57 [----]   describing color, size, or category.
+21:30:57 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:30:57 [----]   "tomato", "yellow fruit", "round ball".
+21:30:57 [----] - BAD criteria (do NOT produce these):
+21:30:57 [----]     * "red car moving block" (compound / multi-object)
+21:30:57 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:30:57 [----]     * "toy that you can stack" (function-based, vague)
+21:30:57 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:30:57 [----] 
+21:30:57 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:30:57 [----] target among the available toys. Before answering, check every
+21:30:57 [----] other toy in the list: if it also fits your description, revise
+21:30:57 [----] the question to use a more DISTINGUISHING feature of the target
+21:30:57 [----] (a property no other listed toy shares).
+21:30:57 [----] Example: with both a banana and a lemon in the list, "Find
+21:30:57 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:30:57 [----] and long!" is GOOD (only the banana matches).
+21:30:57 [----] 
+21:30:57 [----] The criteria MUST describe the target object (corn).
+21:30:57 [----] Use simple, clear language appropriate for ages 4-6.
+21:30:57 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:30:57 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:30:57 [----] - Question: "Show me something green that goes ROAR!"
+21:30:57 [----]   (criteria: green dinosaur)
+21:30:57 [----] BAD examples (do NOT do these):
+21:30:57 [----] - "Show me the red apple!" — names the target.
+21:30:57 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:30:57 [----]   toys could match.
+21:30:57 [----] 
+21:30:57 [----] Return ONLY a JSON object:
+21:30:57 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:30:58 [----] [Claude:scene-game-question] <<< RESPONSE (90 chars):
+21:30:58 [----] {"question": "Find me something yellow with bumps!", "criteria": "bumpy yellow vegetable"}
+21:30:58 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something yellow with bumps!", "criteria": "bumpy yellow vegetable"}
+21:30:58 [----] [SceneGame] Parsed question JSON: {
+21:30:58 [----]   "question": "Find me something yellow with bumps!",
+21:30:58 [----]   "criteria": "bumpy yellow vegetable"
+21:30:58 [----] }
+21:30:58 [----] [Claude:scene-game-question] >>> PROMPT (2832 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:30:58 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:30:58 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:30:58 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:30:58 [----] Do NOT repeat any of these previously asked questions — write a
+21:30:58 [----] clearly different one (vary the property described, the phrasing,
+21:30:58 [----] or the sentence opener):
+21:30:58 [----]   - Can you find something small and yellow?
+21:30:58 [----]   - Find something long and yellow!
+21:30:58 [----]   - Find me a round red fruit!
+21:30:58 [----]   - Find me something orange and long!
+21:30:58 [----]   - Find me something yellow with bumps!
+21:30:58 [----] The TARGET object for this round is: lemon.
+21:30:58 [----] Generate ONE inference-style request that lets the child figure
+21:30:58 [----] out THIS target object from its observable properties.
+21:30:58 [----] 
+21:30:58 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:30:58 [----] It must NEVER contain any of these noun names from the toy list:
+21:30:58 [----]   lemon, apple, banana, corn, carrot
+21:30:58 [----] Refer to the target only as "it", "something", "one", or by
+21:30:58 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:30:58 [----] must INFER which object you mean from the description.
+21:30:58 [----] 
+21:30:58 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:30:58 [----] - A single noun (the object type) with at most ONE adjective
+21:30:58 [----]   describing color, size, or category.
+21:30:58 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:30:58 [----]   "tomato", "yellow fruit", "round ball".
+21:30:58 [----] - BAD criteria (do NOT produce these):
+21:30:58 [----]     * "red car moving block" (compound / multi-object)
+21:30:58 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:30:58 [----]     * "toy that you can stack" (function-based, vague)
+21:30:58 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:30:58 [----] 
+21:30:58 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:30:58 [----] target among the available toys. Before answering, check every
+21:30:58 [----] other toy in the list: if it also fits your description, revise
+21:30:58 [----] the question to use a more DISTINGUISHING feature of the target
+21:30:58 [----] (a property no other listed toy shares).
+21:30:58 [----] Example: with both a banana and a lemon in the list, "Find
+21:30:58 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:30:58 [----] and long!" is GOOD (only the banana matches).
+21:30:58 [----] 
+21:30:58 [----] The criteria MUST describe the target object (lemon).
+21:30:58 [----] Use simple, clear language appropriate for ages 4-6.
+21:30:58 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:30:58 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:30:58 [----] - Question: "Show me something green that goes ROAR!"
+21:30:58 [----]   (criteria: green dinosaur)
+21:30:58 [----] BAD examples (do NOT do these):
+21:30:58 [----] - "Show me the red apple!" — names the target.
+21:30:58 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:30:58 [----]   toys could match.
+21:30:58 [----] 
+21:30:58 [----] Return ONLY a JSON object:
+21:30:58 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:30:59 [21e1] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:59 [d0ea] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:30:59 [21e1] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:30:59 [d0ea] 
+21:31:00 [----] [Claude:scene-game-question] <<< RESPONSE (77 chars):
+21:31:00 [----] {"question": "Find me a sour yellow fruit!", "criteria": "sour yellow fruit"}
+21:31:00 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a sour yellow fruit!", "criteria": "sour yellow fruit"}
+21:31:00 [----] [SceneGame] Parsed question JSON: {
+21:31:00 [----]   "question": "Find me a sour yellow fruit!",
+21:31:00 [----]   "criteria": "sour yellow fruit"
+21:31:00 [----] }
+21:31:00 [----] [Claude:scene-game-question] >>> PROMPT (2865 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:31:00 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:31:00 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:31:00 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:31:00 [----] Do NOT repeat any of these previously asked questions — write a
+21:31:00 [----] clearly different one (vary the property described, the phrasing,
+21:31:00 [----] or the sentence opener):
+21:31:00 [----]   - Can you find something small and yellow?
+21:31:00 [----]   - Find something long and yellow!
+21:31:00 [----]   - Find me a round red fruit!
+21:31:00 [----]   - Find me something orange and long!
+21:31:00 [----]   - Find me something yellow with bumps!
+21:31:00 [----]   - Find me a sour yellow fruit!
+21:31:00 [----] The TARGET object for this round is: apple.
+21:31:00 [----] Generate ONE inference-style request that lets the child figure
+21:31:00 [----] out THIS target object from its observable properties.
+21:31:00 [----] 
+21:31:00 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:31:00 [----] It must NEVER contain any of these noun names from the toy list:
+21:31:00 [----]   lemon, apple, banana, corn, carrot
+21:31:00 [----] Refer to the target only as "it", "something", "one", or by
+21:31:00 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:31:00 [----] must INFER which object you mean from the description.
+21:31:00 [----] 
+21:31:00 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:31:00 [----] - A single noun (the object type) with at most ONE adjective
+21:31:00 [----]   describing color, size, or category.
+21:31:00 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:31:00 [----]   "tomato", "yellow fruit", "round ball".
+21:31:00 [----] - BAD criteria (do NOT produce these):
+21:31:00 [----]     * "red car moving block" (compound / multi-object)
+21:31:00 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:31:00 [----]     * "toy that you can stack" (function-based, vague)
+21:31:00 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:31:00 [----] 
+21:31:00 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:31:00 [----] target among the available toys. Before answering, check every
+21:31:00 [----] other toy in the list: if it also fits your description, revise
+21:31:00 [----] the question to use a more DISTINGUISHING feature of the target
+21:31:00 [----] (a property no other listed toy shares).
+21:31:00 [----] Example: with both a banana and a lemon in the list, "Find
+21:31:00 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:31:00 [----] and long!" is GOOD (only the banana matches).
+21:31:00 [----] 
+21:31:00 [----] The criteria MUST describe the target object (apple).
+21:31:00 [----] Use simple, clear language appropriate for ages 4-6.
+21:31:00 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:31:00 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:31:00 [----] - Question: "Show me something green that goes ROAR!"
+21:31:00 [----]   (criteria: green dinosaur)
+21:31:00 [----] BAD examples (do NOT do these):
+21:31:00 [----] - "Show me the red apple!" — names the target.
+21:31:00 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:31:00 [----]   toys could match.
+21:31:00 [----] 
+21:31:00 [----] Return ONLY a JSON object:
+21:31:00 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:31:01 [8871] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:01 [beb5] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:01 [8871] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:31:01 [beb5] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:01 [----] [Claude:scene-game-question] <<< RESPONSE (206 chars):
+21:31:01 [----] {"question": "Find me a round red fruit!", "criteria": "red fruit"}
+21:31:01 [----] 
+21:31:01 [----] Wait, that was already asked. Let me generate a different one.
+21:31:01 [----] 
+21:31:01 [----] {"question": "Show me something small and red!", "criteria": "red fruit"}
+21:31:01 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round red fruit!", "criteria": "red fruit"}
+21:31:01 [----] 
+21:31:01 [----] Wait, that was already asked. Let me generate a different one.
+21:31:01 [----] 
+21:31:01 [----] {"question": "Show me something small and red!", "criteria": "red fruit"}
+21:31:01 [----] [SceneGame] Parsed question JSON: {
+21:31:01 [----]   "question": "Find me a round red fruit!",
+21:31:01 [----]   "criteria": "red fruit"
+21:31:01 [----] }
+21:31:01 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me a round red fruit!'
+21:31:01 [----] [Claude:scene-game-question] >>> PROMPT (2867 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:31:01 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:31:01 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:31:01 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:31:01 [----] Do NOT repeat any of these previously asked questions — write a
+21:31:01 [----] clearly different one (vary the property described, the phrasing,
+21:31:01 [----] or the sentence opener):
+21:31:01 [----]   - Can you find something small and yellow?
+21:31:01 [----]   - Find something long and yellow!
+21:31:01 [----]   - Find me a round red fruit!
+21:31:01 [----]   - Find me something orange and long!
+21:31:01 [----]   - Find me something yellow with bumps!
+21:31:01 [----]   - Find me a sour yellow fruit!
+21:31:01 [----] The TARGET object for this round is: carrot.
+21:31:01 [----] Generate ONE inference-style request that lets the child figure
+21:31:01 [----] out THIS target object from its observable properties.
+21:31:01 [----] 
+21:31:01 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:31:01 [----] It must NEVER contain any of these noun names from the toy list:
+21:31:01 [----]   lemon, apple, banana, corn, carrot
+21:31:01 [----] Refer to the target only as "it", "something", "one", or by
+21:31:01 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:31:01 [----] must INFER which object you mean from the description.
+21:31:01 [----] 
+21:31:01 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:31:01 [----] - A single noun (the object type) with at most ONE adjective
+21:31:01 [----]   describing color, size, or category.
+21:31:01 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:31:01 [----]   "tomato", "yellow fruit", "round ball".
+21:31:01 [----] - BAD criteria (do NOT produce these):
+21:31:01 [----]     * "red car moving block" (compound / multi-object)
+21:31:01 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:31:01 [----]     * "toy that you can stack" (function-based, vague)
+21:31:01 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:31:01 [----] 
+21:31:01 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:31:01 [----] target among the available toys. Before answering, check every
+21:31:01 [----] other toy in the list: if it also fits your description, revise
+21:31:01 [----] the question to use a more DISTINGUISHING feature of the target
+21:31:01 [----] (a property no other listed toy shares).
+21:31:01 [----] Example: with both a banana and a lemon in the list, "Find
+21:31:01 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:31:01 [----] and long!" is GOOD (only the banana matches).
+21:31:01 [----] 
+21:31:01 [----] The criteria MUST describe the target object (carrot).
+21:31:01 [----] Use simple, clear language appropriate for ages 4-6.
+21:31:01 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:31:01 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:31:01 [----] - Question: "Show me something green that goes ROAR!"
+21:31:01 [----]   (criteria: green dinosaur)
+21:31:01 [----] BAD examples (do NOT do these):
+21:31:01 [----] - "Show me the red apple!" — names the target.
+21:31:01 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:31:01 [----]   toys could match.
+21:31:01 [----] 
+21:31:01 [----] Return ONLY a JSON object:
+21:31:01 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:31:03 [b124] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:03 [7cf9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:03 [b124] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:03 [7cf9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:03 [----] [Claude:scene-game-question] <<< RESPONSE (85 chars):
+21:31:03 [----] {"question": "Find me something crunchy and orange!", "criteria": "orange vegetable"}
+21:31:03 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something crunchy and orange!", "criteria": "orange vegetable"}
+21:31:03 [----] [SceneGame] Parsed question JSON: {
+21:31:03 [----]   "question": "Find me something crunchy and orange!",
+21:31:03 [----]   "criteria": "orange vegetable"
+21:31:03 [----] }
+21:31:03 [----] [Claude:scene-game-question] >>> PROMPT (2905 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:31:03 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:31:03 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:31:03 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:31:03 [----] Do NOT repeat any of these previously asked questions — write a
+21:31:03 [----] clearly different one (vary the property described, the phrasing,
+21:31:03 [----] or the sentence opener):
+21:31:03 [----]   - Can you find something small and yellow?
+21:31:03 [----]   - Find something long and yellow!
+21:31:03 [----]   - Find me a round red fruit!
+21:31:03 [----]   - Find me something orange and long!
+21:31:03 [----]   - Find me something yellow with bumps!
+21:31:03 [----]   - Find me a sour yellow fruit!
+21:31:03 [----]   - Find me something crunchy and orange!
+21:31:03 [----] The TARGET object for this round is: corn.
+21:31:03 [----] Generate ONE inference-style request that lets the child figure
+21:31:03 [----] out THIS target object from its observable properties.
+21:31:03 [----] 
+21:31:03 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:31:03 [----] It must NEVER contain any of these noun names from the toy list:
+21:31:03 [----]   lemon, apple, banana, corn, carrot
+21:31:03 [----] Refer to the target only as "it", "something", "one", or by
+21:31:03 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:31:03 [----] must INFER which object you mean from the description.
+21:31:03 [----] 
+21:31:03 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:31:03 [----] - A single noun (the object type) with at most ONE adjective
+21:31:03 [----]   describing color, size, or category.
+21:31:03 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:31:03 [----]   "tomato", "yellow fruit", "round ball".
+21:31:03 [----] - BAD criteria (do NOT produce these):
+21:31:03 [----]     * "red car moving block" (compound / multi-object)
+21:31:03 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:31:03 [----]     * "toy that you can stack" (function-based, vague)
+21:31:03 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:31:03 [----] 
+21:31:03 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:31:03 [----] target among the available toys. Before answering, check every
+21:31:03 [----] other toy in the list: if it also fits your description, revise
+21:31:03 [----] the question to use a more DISTINGUISHING feature of the target
+21:31:03 [----] (a property no other listed toy shares).
+21:31:03 [----] Example: with both a banana and a lemon in the list, "Find
+21:31:03 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:31:03 [----] and long!" is GOOD (only the banana matches).
+21:31:03 [----] 
+21:31:03 [----] The criteria MUST describe the target object (corn).
+21:31:03 [----] Use simple, clear language appropriate for ages 4-6.
+21:31:03 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:31:03 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:31:03 [----] - Question: "Show me something green that goes ROAR!"
+21:31:03 [----]   (criteria: green dinosaur)
+21:31:03 [----] BAD examples (do NOT do these):
+21:31:03 [----] - "Show me the red apple!" — names the target.
+21:31:03 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:31:03 [----]   toys could match.
+21:31:03 [----] 
+21:31:03 [----] Return ONLY a JSON object:
+21:31:03 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:31:04 [----] [Claude:scene-game-question] <<< RESPONSE (101 chars):
+21:31:04 [----] {"question": "Find me something yellow with lots of rows!", "criteria": "yellow vegetable with rows"}
+21:31:04 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something yellow with lots of rows!", "criteria": "yellow vegetable with rows"}
+21:31:04 [----] [SceneGame] Parsed question JSON: {
+21:31:04 [----]   "question": "Find me something yellow with lots of rows!",
+21:31:04 [----]   "criteria": "yellow vegetable with rows"
+21:31:04 [----] }
+21:31:04 [----] [Claude:scene-game-question] >>> PROMPT (2957 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:31:04 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:31:04 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:31:04 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:31:04 [----] Do NOT repeat any of these previously asked questions — write a
+21:31:04 [----] clearly different one (vary the property described, the phrasing,
+21:31:04 [----] or the sentence opener):
+21:31:04 [----]   - Can you find something small and yellow?
+21:31:04 [----]   - Find something long and yellow!
+21:31:04 [----]   - Find me a round red fruit!
+21:31:04 [----]   - Find me something orange and long!
+21:31:04 [----]   - Find me something yellow with bumps!
+21:31:04 [----]   - Find me a sour yellow fruit!
+21:31:04 [----]   - Find me something crunchy and orange!
+21:31:04 [----]   - Find me something yellow with lots of rows!
+21:31:04 [----] The TARGET object for this round is: banana.
+21:31:04 [----] Generate ONE inference-style request that lets the child figure
+21:31:04 [----] out THIS target object from its observable properties.
+21:31:04 [----] 
+21:31:04 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:31:04 [----] It must NEVER contain any of these noun names from the toy list:
+21:31:04 [----]   lemon, apple, banana, corn, carrot
+21:31:04 [----] Refer to the target only as "it", "something", "one", or by
+21:31:04 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:31:04 [----] must INFER which object you mean from the description.
+21:31:04 [----] 
+21:31:04 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:31:04 [----] - A single noun (the object type) with at most ONE adjective
+21:31:04 [----]   describing color, size, or category.
+21:31:04 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:31:04 [----]   "tomato", "yellow fruit", "round ball".
+21:31:04 [----] - BAD criteria (do NOT produce these):
+21:31:04 [----]     * "red car moving block" (compound / multi-object)
+21:31:04 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:31:04 [----]     * "toy that you can stack" (function-based, vague)
+21:31:04 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:31:04 [----] 
+21:31:04 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:31:04 [----] target among the available toys. Before answering, check every
+21:31:04 [----] other toy in the list: if it also fits your description, revise
+21:31:04 [----] the question to use a more DISTINGUISHING feature of the target
+21:31:04 [----] (a property no other listed toy shares).
+21:31:04 [----] Example: with both a banana and a lemon in the list, "Find
+21:31:04 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:31:04 [----] and long!" is GOOD (only the banana matches).
+21:31:04 [----] 
+21:31:04 [----] The criteria MUST describe the target object (banana).
+21:31:04 [----] Use simple, clear language appropriate for ages 4-6.
+21:31:04 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:31:04 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:31:04 [----] - Question: "Show me something green that goes ROAR!"
+21:31:04 [----]   (criteria: green dinosaur)
+21:31:04 [----] BAD examples (do NOT do these):
+21:31:04 [----] - "Show me the red apple!" — names the target.
+21:31:04 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:31:04 [----]   toys could match.
+21:31:04 [----] 
+21:31:04 [----] Return ONLY a JSON object:
+21:31:04 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:31:05 [5816] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:05 [909b] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:05 [5816] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:05 [909b] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:06 [----] [Claude:scene-game-question] <<< RESPONSE (87 chars):
+21:31:06 [----] {"question": "Find me something yellow and curved!", "criteria": "curved yellow fruit"}
+21:31:06 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something yellow and curved!", "criteria": "curved yellow fruit"}
+21:31:06 [----] [SceneGame] Parsed question JSON: {
+21:31:06 [----]   "question": "Find me something yellow and curved!",
+21:31:06 [----]   "criteria": "curved yellow fruit"
+21:31:06 [----] }
+21:31:06 [----] [Claude:scene-game-question] >>> PROMPT (2994 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:31:06 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:31:06 [----] Available physical toys: lemon, apple, banana, corn, carrot.
+21:31:06 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:31:06 [----] Do NOT repeat any of these previously asked questions — write a
+21:31:06 [----] clearly different one (vary the property described, the phrasing,
+21:31:06 [----] or the sentence opener):
+21:31:06 [----]   - Can you find something small and yellow?
+21:31:06 [----]   - Find something long and yellow!
+21:31:06 [----]   - Find me a round red fruit!
+21:31:06 [----]   - Find me something orange and long!
+21:31:06 [----]   - Find me something yellow with bumps!
+21:31:06 [----]   - Find me a sour yellow fruit!
+21:31:06 [----]   - Find me something crunchy and orange!
+21:31:06 [----]   - Find me something yellow with lots of rows!
+21:31:06 [----]   - Find me something yellow and curved!
+21:31:06 [----] The TARGET object for this round is: corn.
+21:31:06 [----] Generate ONE inference-style request that lets the child figure
+21:31:06 [----] out THIS target object from its observable properties.
+21:31:06 [----] 
+21:31:06 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:31:06 [----] It must NEVER contain any of these noun names from the toy list:
+21:31:06 [----]   lemon, apple, banana, corn, carrot
+21:31:06 [----] Refer to the target only as "it", "something", "one", or by
+21:31:06 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:31:06 [----] must INFER which object you mean from the description.
+21:31:06 [----] 
+21:31:06 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:31:06 [----] - A single noun (the object type) with at most ONE adjective
+21:31:06 [----]   describing color, size, or category.
+21:31:06 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:31:06 [----]   "tomato", "yellow fruit", "round ball".
+21:31:06 [----] - BAD criteria (do NOT produce these):
+21:31:06 [----]     * "red car moving block" (compound / multi-object)
+21:31:06 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:31:06 [----]     * "toy that you can stack" (function-based, vague)
+21:31:06 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:31:06 [----] 
+21:31:06 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:31:06 [----] target among the available toys. Before answering, check every
+21:31:06 [----] other toy in the list: if it also fits your description, revise
+21:31:06 [----] the question to use a more DISTINGUISHING feature of the target
+21:31:06 [----] (a property no other listed toy shares).
+21:31:06 [----] Example: with both a banana and a lemon in the list, "Find
+21:31:06 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:31:06 [----] and long!" is GOOD (only the banana matches).
+21:31:06 [----] 
+21:31:06 [----] The criteria MUST describe the target object (corn).
+21:31:06 [----] Use simple, clear language appropriate for ages 4-6.
+21:31:06 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:31:06 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:31:06 [----] - Question: "Show me something green that goes ROAR!"
+21:31:06 [----]   (criteria: green dinosaur)
+21:31:06 [----] BAD examples (do NOT do these):
+21:31:06 [----] - "Show me the red apple!" — names the target.
+21:31:06 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:31:06 [----]   toys could match.
+21:31:06 [----] 
+21:31:06 [----] Return ONLY a JSON object:
+21:31:06 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:31:07 [61e8] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:07 [cd35] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:07 [61e8] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:31:07 [cd35] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:07 [----] [Claude:scene-game-question] <<< RESPONSE (80 chars):
+21:31:07 [----] {"question": "Find me something tall and green!", "criteria": "green vegetable"}
+21:31:07 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something tall and green!", "criteria": "green vegetable"}
+21:31:07 [----] [SceneGame] Parsed question JSON: {
+21:31:07 [----]   "question": "Find me something tall and green!",
+21:31:07 [----]   "criteria": "green vegetable"
+21:31:07 [----] }
+21:31:07 [----] [SceneGame] criteria pool ready for maya: 10 question(s)
+21:31:09 [5b11] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:09 [bd5a] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:09 [5b11] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:31:09 [bd5a] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:31:20 [b3b5] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:31:20 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:31:20 [b3b5] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:31:20 [5043] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:20 [c300] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:20 [5043] └─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:31:20 [c300] 
+21:31:20 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the apple below the lemon."
+21:31:20 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the apple below the lemon."
+21:31:20 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:31:22 [bb50] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:22 [4d6f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:31:22 [4d6f] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:31:22 [bb50] └─ DONE  GET /api/scene_game/pool_status -> 200 in 9ms
+21:31:32 [c369] ┌─ WORK  GET /play_scene
+21:31:43 [c369] └─ DONE  GET /play_scene -> 200 in 11044ms
+21:31:48 [da87] ┌─ WORK  POST /api/scene/start | fields: mode
+21:31:48 [da87] self.engine :  qwen
+21:31:55 [da87] └─ DONE  POST /api/scene/start -> 200 in 6474ms
+21:32:31 [7b29] ┌─ WORK  POST /api/scene/start | fields: mode
+21:32:31 [7b29] self.engine :  qwen
+21:32:37 [7b29] └─ DONE  POST /api/scene/start -> 200 in 5427ms
+21:32:49 [0172] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:32:53 [0172] [SceneGame] gemini_analyze_image raw: ```json
+21:32:53 [0172] [
+21:32:53 [0172]   {"point": [629, 555], "label": "lemon", "color": "yellow", "shape": "oval"}
+21:32:53 [0172] ]
+21:32:53 [0172] ```
+21:32:53 [0172] [SceneGame] Detected object: lemon, color: yellow, shape: oval, point: [629, 555]
+21:32:53 [0172] [SceneGame] Robot looking at pixel (355, 302)
+21:32:53 [0172] [SceneGame] Detected object: lemon, color: yellow, shape: oval
+21:32:53 [0172] [Claude:scene-game-criteria-match] >>> PROMPT (885 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:32:53 [0172] A child showed a physical object. The vision system detected:
+21:32:53 [0172]   label: "lemon"
+21:32:53 [0172]   color: "yellow"
+21:32:53 [0172]   shape: "oval"
+21:32:53 [0172] The game asked for: "long yellow fruit".
+21:32:53 [0172] 
+21:32:53 [0172] Decide if the detected object matches the criteria. Use ALL of the
+21:32:53 [0172] detected attributes (label AND color AND shape), not just the label.
+21:32:53 [0172] 
+21:32:53 [0172] Examples of correct matches:
+21:32:53 [0172] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:32:53 [0172]   (label gives "car", color gives "red")
+21:32:53 [0172] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:32:53 [0172] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:32:53 [0172] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:32:53 [0172] 
+21:32:53 [0172] Examples of non-matches:
+21:32:53 [0172] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:32:53 [0172]   ("truck" isn't a car)
+21:32:53 [0172] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:32:53 [0172] 
+21:32:53 [0172] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:32:55 [0172] [Claude:scene-game-criteria-match] <<< RESPONSE (205 chars):
+21:32:55 [0172] {"match": false, "reason": "The detected object is oval-shaped, but the criteria requires a 'long' fruit. A lemon is oval/round, not long. While it is yellow and a fruit, the shape does not match 'long'."}
+21:32:55 [0172] [SceneGame] Criteria match Claude raw: {"match": false, "reason": "The detected object is oval-shaped, but the criteria requires a 'long' fruit. A lemon is oval/round, not long. While it is yellow and a fruit, the shape does not match 'long'."}
+21:32:55 [0172] [SceneGame] Criteria match parsed: {
+21:32:55 [0172]   "match": false,
+21:32:55 [0172]   "reason": "The detected object is oval-shaped, but the criteria requires a 'long' fruit. A lemon is oval/round, not long. While it is yellow and a fruit, the shape does not match 'long'."
+21:32:55 [0172] }
+21:32:55 [0172] self.engine :  qwen
+21:33:04 [0172] └─ DONE  POST /api/scene_game/answer -> 200 in 14528ms
+21:33:07 [c6bc] ┌─ WORK  POST /api/scene/start | fields: mode
+21:33:07 [c6bc] self.engine :  qwen
+21:33:12 [c6bc] └─ DONE  POST /api/scene/start -> 200 in 4656ms
+21:33:14 [8c22] ┌─ WORK  POST /api/scene/start | fields: mode
+21:33:14 [8c22] self.engine :  qwen
+21:33:19 [8c22] └─ DONE  POST /api/scene/start -> 200 in 5102ms
+21:33:20 [b5ec] ┌─ WORK  POST /api/scene/start | fields: mode
+21:33:20 [b5ec] self.engine :  qwen
+21:33:25 [b5ec] └─ DONE  POST /api/scene/start -> 200 in 5335ms
+21:33:41 [f037] ┌─ WORK  POST /api/scene/start | fields: mode
+21:33:41 [f037] self.engine :  qwen
+21:33:47 [f037] └─ DONE  POST /api/scene/start -> 200 in 5323ms
+21:33:48 [8f3c] ┌─ WORK  POST /api/scene/start | fields: mode
+21:33:48 [8f3c] self.engine :  qwen
+21:33:53 [8f3c] └─ DONE  POST /api/scene/start -> 200 in 5197ms
+21:33:58 [00a1] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:34:02 [00a1] [SceneGame] gemini_analyze_image raw: ```json
+21:34:02 [00a1] [
+21:34:02 [00a1]   {
+21:34:02 [00a1]     "point": [637, 604],
+21:34:02 [00a1]     "label": "toy carrot",
+21:34:02 [00a1]     "color": "orange",
+21:34:02 [00a1]     "shape": "conical"
+21:34:02 [00a1]   }
+21:34:02 [00a1] ]
+21:34:02 [00a1] ```
+21:34:02 [00a1] [SceneGame] Detected object: toy carrot, color: orange, shape: conical, point: [637, 604]
+21:34:02 [00a1] [SceneGame] Robot looking at pixel (387, 306)
+21:34:02 [00a1] [SceneGame] Detected object: toy carrot, color: orange, shape: conical
+21:34:02 [00a1] [Claude:scene-game-criteria-match] >>> PROMPT (892 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:34:02 [00a1] A child showed a physical object. The vision system detected:
+21:34:02 [00a1]   label: "toy carrot"
+21:34:02 [00a1]   color: "orange"
+21:34:02 [00a1]   shape: "conical"
+21:34:02 [00a1] The game asked for: "orange vegetable".
+21:34:02 [00a1] 
+21:34:02 [00a1] Decide if the detected object matches the criteria. Use ALL of the
+21:34:02 [00a1] detected attributes (label AND color AND shape), not just the label.
+21:34:02 [00a1] 
+21:34:02 [00a1] Examples of correct matches:
+21:34:02 [00a1] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:34:02 [00a1]   (label gives "car", color gives "red")
+21:34:02 [00a1] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:34:02 [00a1] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:34:02 [00a1] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:34:02 [00a1] 
+21:34:02 [00a1] Examples of non-matches:
+21:34:02 [00a1] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:34:02 [00a1]   ("truck" isn't a car)
+21:34:02 [00a1] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:34:02 [00a1] 
+21:34:02 [00a1] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:34:04 [00a1] [Claude:scene-game-criteria-match] <<< RESPONSE (190 chars):
+21:34:04 [00a1] {"match": true, "reason": "The label 'toy carrot' identifies it as a carrot, which is a vegetable. The color is orange, matching the criteria. All attributes align with 'orange vegetable'."}
+21:34:04 [00a1] [SceneGame] Criteria match Claude raw: {"match": true, "reason": "The label 'toy carrot' identifies it as a carrot, which is a vegetable. The color is orange, matching the criteria. All attributes align with 'orange vegetable'."}
+21:34:04 [00a1] [SceneGame] Criteria match parsed: {
+21:34:04 [00a1]   "match": true,
+21:34:04 [00a1]   "reason": "The label 'toy carrot' identifies it as a carrot, which is a vegetable. The color is orange, matching the criteria. All attributes align with 'orange vegetable'."
+21:34:04 [00a1] }
+21:34:04 [00a1] self.engine :  qwen
+21:34:12 [00a1] └─ DONE  POST /api/scene_game/answer -> 200 in 13911ms
+21:34:15 [fd22] ┌─ WORK  POST /api/scene/start | fields: mode
+21:34:15 [fd22] self.engine :  qwen
+21:34:21 [fd22] └─ DONE  POST /api/scene/start -> 200 in 5803ms
+21:34:30 [f8ba] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:34:33 [f8ba] [SceneGame] gemini_analyze_image raw: ```json
+21:34:33 [f8ba] [
+21:34:33 [f8ba]   {"point": [488, 492], "label": "corn model", "color": "yellow", "shape": "oblong"}
+21:34:33 [f8ba] ]
+21:34:33 [f8ba] ```
+21:34:33 [f8ba] [SceneGame] Detected object: corn model, color: yellow, shape: oblong, point: [488, 492]
+21:34:33 [f8ba] [SceneGame] Robot looking at pixel (315, 234)
+21:34:33 [f8ba] [SceneGame] Detected object: corn model, color: yellow, shape: oblong
+21:34:33 [f8ba] [Claude:scene-game-criteria-match] >>> PROMPT (901 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:34:33 [f8ba] A child showed a physical object. The vision system detected:
+21:34:33 [f8ba]   label: "corn model"
+21:34:33 [f8ba]   color: "yellow"
+21:34:33 [f8ba]   shape: "oblong"
+21:34:33 [f8ba] The game asked for: "yellow vegetable with rows".
+21:34:33 [f8ba] 
+21:34:33 [f8ba] Decide if the detected object matches the criteria. Use ALL of the
+21:34:33 [f8ba] detected attributes (label AND color AND shape), not just the label.
+21:34:33 [f8ba] 
+21:34:33 [f8ba] Examples of correct matches:
+21:34:33 [f8ba] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:34:33 [f8ba]   (label gives "car", color gives "red")
+21:34:33 [f8ba] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:34:33 [f8ba] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:34:33 [f8ba] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:34:33 [f8ba] 
+21:34:33 [f8ba] Examples of non-matches:
+21:34:33 [f8ba] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:34:33 [f8ba]   ("truck" isn't a car)
+21:34:33 [f8ba] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:34:33 [f8ba] 
+21:34:33 [f8ba] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:34:35 [f8ba] [Claude:scene-game-criteria-match] <<< RESPONSE (238 chars):
+21:34:35 [f8ba] {"match": true, "reason": "The label 'corn model' represents corn, which is a yellow vegetable known for its rows of kernels. The color is yellow and the oblong shape matches corn. All attributes align with 'yellow vegetable with rows'."}
+21:34:35 [f8ba] [SceneGame] Criteria match Claude raw: {"match": true, "reason": "The label 'corn model' represents corn, which is a yellow vegetable known for its rows of kernels. The color is yellow and the oblong shape matches corn. All attributes align with 'yellow vegetable with rows'."}
+21:34:35 [f8ba] [SceneGame] Criteria match parsed: {
+21:34:35 [f8ba]   "match": true,
+21:34:35 [f8ba]   "reason": "The label 'corn model' represents corn, which is a yellow vegetable known for its rows of kernels. The color is yellow and the oblong shape matches corn. All attributes align with 'yellow vegetable with rows'."
+21:34:35 [f8ba] }
+21:34:35 [f8ba] self.engine :  qwen
+21:34:42 [f8ba] └─ DONE  POST /api/scene_game/answer -> 200 in 12442ms
+21:34:45 [2ce5] ┌─ WORK  POST /api/scene/start | fields: mode
+21:34:45 [2ce5] self.engine :  qwen
+21:34:50 [2ce5] └─ DONE  POST /api/scene/start -> 200 in 5021ms
+21:34:54 [632f] ┌─ WORK  POST /api/scene/start | fields: mode
+21:34:54 [632f] self.engine :  qwen
+21:35:00 [632f] └─ DONE  POST /api/scene/start -> 200 in 5396ms
+21:35:10 [fb2a] ┌─ WORK  POST /api/scene/start | fields: mode
+21:35:10 [fb2a] └─ DONE  POST /api/scene/start -> 200 in 1ms
+21:35:51 [4484] ┌─ WORK  POST /api/scene/start | fields: mode
+21:35:51 [4484] self.engine :  qwen
+21:35:56 [4484] └─ DONE  POST /api/scene/start -> 200 in 5003ms
+21:36:32 [da81] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:36:32 [da81] [Claude:scene-game-validate-spatial] >>> PROMPT (1912 chars) | model: claude-sonnet-4-6 | system: You judge a children's spatial-direction game from one photo. Return JSON only.
+21:36:32 [da81] You are judging a children's spatial-direction game.
+21:36:32 [da81] The valid game objects are: lemon,apple,banana,corn,carrot. Only identify objects from this list.
+21:36:32 [da81] The child was asked to arrange the scene so that the carrot is next to the corn.
+21:36:32 [da81] 
+21:36:32 [da81] The image is taken from the front of the child (camera-facing view).
+21:36:32 [da81] Decide:
+21:36:32 [da81] 1. Is the carrot present in the scene?
+21:36:32 [da81] 2. Is the corn present in the scene?
+21:36:32 [da81] 3. What is the actual spatial relation of the carrot TO the corn? Pick ONE:
+21:36:32 [da81]    - next_to       (side by side, roughly same height)
+21:36:32 [da81]    - above         (higher than / on top of)
+21:36:32 [da81]    - under         (lower than / underneath)
+21:36:32 [da81]    - behind        (further from the camera, partially hidden)
+21:36:32 [da81]    - in_front_of   (closer to camera, may partially block the other)
+21:36:32 [da81]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:36:32 [da81]    - out           (outside / not contained by the other; fully visible and separate)
+21:36:32 [da81]    - other         (none of the above clearly applies)
+21:36:32 [da81] 4. Does that match the requested relation 'next_to'?
+21:36:32 [da81] 
+21:36:32 [da81] Tips:
+21:36:32 [da81] - 'behind' means partially hidden by the reference object, or visibly
+21:36:32 [da81]   smaller/further along the camera's depth axis.
+21:36:32 [da81] - 'in_front_of' means the moving object partly occludes or sits
+21:36:32 [da81]   closer to the camera than the reference object.
+21:36:32 [da81] - 'in' means the moving object is contained by the reference object
+21:36:32 [da81]   (e.g. ball inside a cup or box) — typically partly hidden by the
+21:36:32 [da81]   rim/walls of the container.
+21:36:32 [da81] - 'out' means the moving object is clearly outside the reference
+21:36:32 [da81]   object, fully visible, with a visible gap between them.
+21:36:32 [da81] If you cannot tell confidently, return 'other'.
+21:36:32 [da81] 
+21:36:32 [da81] Return ONLY a JSON object with no markdown fences:
+21:36:32 [da81] {
+21:36:32 [da81]   "obj_a_found": true|false,
+21:36:32 [da81]   "obj_b_found": true|false,
+21:36:32 [da81]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:36:32 [da81]   "correct": true|false,
+21:36:32 [da81]   "reason": "<short, child-friendly explanation>"
+21:36:32 [da81] }
+21:36:32 [da81] If either object is missing, set correct=false.
+21:36:34 [da81] [Claude:scene-game-validate-spatial] <<< RESPONSE (206 chars):
+21:36:34 [da81] {
+21:36:34 [da81]   "obj_a_found": true,
+21:36:34 [da81]   "obj_b_found": true,
+21:36:34 [da81]   "actual_relation": "next_to",
+21:36:34 [da81]   "correct": true,
+21:36:34 [da81]   "reason": "Great job! The carrot and the corn are right next to each other, side by side in your hand!"
+21:36:34 [da81] }
+21:36:34 [da81] [SceneGame] claude_validate_spatial raw: {
+21:36:34 [da81]   "obj_a_found": true,
+21:36:34 [da81]   "obj_b_found": true,
+21:36:34 [da81]   "actual_relation": "next_to",
+21:36:34 [da81]   "correct": true,
+21:36:34 [da81]   "reason": "Great job! The carrot and the corn are right next to each other, side by side in your hand!"
+21:36:34 [da81] }
+21:36:34 [da81] self.engine :  qwen
+21:36:41 [da81] └─ DONE  POST /api/scene_game/answer -> 200 in 9016ms
+21:37:09 [1cc7] ┌─ WORK  GET /
+21:37:09 [1cc7] └─ DONE  GET / -> 200 in 1ms
+21:37:11 [6888] ┌─ WORK  GET /object_game_generate
+21:37:11 [6888] └─ DONE  GET /object_game_generate -> 200 in 1ms
+21:37:11 [161c] ┌─ WORK  GET /api/scene_game/toys
+21:37:11 [44c0] ┌─ WORK  GET /api/scene_game/pool_status | args: kind┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:11 [d220] 
+21:37:11 [161c] └─ DONE  GET /api/scene_game/toys -> 200 in 5ms
+21:37:11 [44c0] └─ DONE  GET /api/scene_game/pool_status -> 200 in 8ms
+21:37:11 [d220] └─ DONE  GET /api/scene_game/pool_status -> 200 in 13ms
+21:37:14 [cc0b] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:37:14 [cc0b] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+21:37:14 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:37:14 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:37:14 [----] [Claude:scene-game-question] >>> PROMPT (3022 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:14 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:14 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:14 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:14 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:14 [----] clearly different one (vary the property described, the phrasing,
+21:37:14 [----] or the sentence opener):
+21:37:14 [----]   - Can you find something small and yellow?
+21:37:14 [----]   - Find something long and yellow!
+21:37:14 [----]   - Find me a round red fruit!
+21:37:14 [----]   - Find me something orange and long!
+21:37:14 [----]   - Find me something yellow with bumps!
+21:37:14 [----]   - Find me a sour yellow fruit!
+21:37:14 [----]   - Find me something crunchy and orange!
+21:37:14 [----]   - Find me something yellow with lots of rows!
+21:37:14 [----]   - Find me something yellow and curved!
+21:37:14 [----]   - Find me something tall and green!
+21:37:14 [----] The TARGET object for this round is: carrot.
+21:37:14 [----] Generate ONE inference-style request that lets the child figure
+21:37:14 [----] out THIS target object from its observable properties.
+21:37:14 [----] 
+21:37:14 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:14 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:14 [----]   lemon, banana, corn, carrot
+21:37:14 [----] Refer to the target only as "it", "something", "one", or by
+21:37:14 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:14 [----] must INFER which object you mean from the description.
+21:37:14 [----] 
+21:37:14 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:14 [----] - A single noun (the object type) with at most ONE adjective
+21:37:14 [----]   describing color, size, or category.
+21:37:14 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:14 [----]   "tomato", "yellow fruit", "round ball".
+21:37:14 [----] - BAD criteria (do NOT produce these):
+21:37:14 [----]     * "red car moving block" (compound / multi-object)
+21:37:14 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:14 [----]     * "toy that you can stack" (function-based, vague)
+21:37:14 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:14 [----] 
+21:37:14 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:14 [----] target among the available toys. Before answering, check every
+21:37:14 [----] other toy in the list: if it also fits your description, revise
+21:37:14 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:14 [----] (a property no other listed toy shares).
+21:37:14 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:14 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:14 [----] and long!" is GOOD (only the banana matches).
+21:37:14 [----] 
+21:37:14 [----] The criteria MUST describe the target object (carrot).
+21:37:14 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:14 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:14 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:14 [----] - Question: "Show me something green that goes ROAR!"
+21:37:14 [----]   (criteria: green dinosaur)
+21:37:14 [----] BAD examples (do NOT do these):
+21:37:14 [----] - "Show me the red apple!" — names the target.
+21:37:14 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:14 [----]   toys could match.
+21:37:14 [----] 
+21:37:14 [----] Return ONLY a JSON object:
+21:37:14 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the banana under the carrot."
+21:37:14 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:37:17 [----] [Claude:scene-game-question] <<< RESPONSE (84 chars):
+21:37:17 [----] {"question": "Find me something pointy and orange!", "criteria": "orange vegetable"}
+21:37:17 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something pointy and orange!", "criteria": "orange vegetable"}
+21:37:17 [----] [SceneGame] Parsed question JSON: {
+21:37:17 [----]   "question": "Find me something pointy and orange!",
+21:37:17 [----]   "criteria": "orange vegetable"
+21:37:17 [----] }
+21:37:17 [----] [Claude:scene-game-question] >>> PROMPT (3063 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:17 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:17 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:17 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:17 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:17 [----] clearly different one (vary the property described, the phrasing,
+21:37:17 [----] or the sentence opener):
+21:37:17 [----]   - Find me something pointy and orange!
+21:37:17 [----]   - Can you find something small and yellow?
+21:37:17 [----]   - Find something long and yellow!
+21:37:17 [----]   - Find me a round red fruit!
+21:37:17 [----]   - Find me something orange and long!
+21:37:17 [----]   - Find me something yellow with bumps!
+21:37:17 [----]   - Find me a sour yellow fruit!
+21:37:17 [----]   - Find me something crunchy and orange!
+21:37:17 [----]   - Find me something yellow with lots of rows!
+21:37:17 [----]   - Find me something yellow and curved!
+21:37:17 [----]   - Find me something tall and green!
+21:37:17 [----] The TARGET object for this round is: banana.
+21:37:17 [----] Generate ONE inference-style request that lets the child figure
+21:37:17 [----] out THIS target object from its observable properties.
+21:37:17 [----] 
+21:37:17 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:17 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:17 [----]   lemon, banana, corn, carrot
+21:37:17 [----] Refer to the target only as "it", "something", "one", or by
+21:37:17 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:17 [----] must INFER which object you mean from the description.
+21:37:17 [----] 
+21:37:17 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:17 [----] - A single noun (the object type) with at most ONE adjective
+21:37:17 [----]   describing color, size, or category.
+21:37:17 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:17 [----]   "tomato", "yellow fruit", "round ball".
+21:37:17 [----] - BAD criteria (do NOT produce these):
+21:37:17 [----]     * "red car moving block" (compound / multi-object)
+21:37:17 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:17 [----]     * "toy that you can stack" (function-based, vague)
+21:37:17 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:17 [----] 
+21:37:17 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:17 [----] target among the available toys. Before answering, check every
+21:37:17 [----] other toy in the list: if it also fits your description, revise
+21:37:17 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:17 [----] (a property no other listed toy shares).
+21:37:17 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:17 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:17 [----] and long!" is GOOD (only the banana matches).
+21:37:17 [----] 
+21:37:17 [----] The criteria MUST describe the target object (banana).
+21:37:17 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:17 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:17 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:17 [----] - Question: "Show me something green that goes ROAR!"
+21:37:17 [----]   (criteria: green dinosaur)
+21:37:17 [----] BAD examples (do NOT do these):
+21:37:17 [----] - "Show me the red apple!" — names the target.
+21:37:17 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:17 [----]   toys could match.
+21:37:17 [----] 
+21:37:17 [----] Return ONLY a JSON object:
+21:37:17 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:19 [----] [Claude:scene-game-question] <<< RESPONSE (85 chars):
+21:37:19 [----] {"question": "Find me a fruit that monkeys love!", "criteria": "curved yellow fruit"}
+21:37:19 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a fruit that monkeys love!", "criteria": "curved yellow fruit"}
+21:37:19 [----] [SceneGame] Parsed question JSON: {
+21:37:19 [----]   "question": "Find me a fruit that monkeys love!",
+21:37:19 [----]   "criteria": "curved yellow fruit"
+21:37:19 [----] }
+21:37:19 [----] [Claude:scene-game-question] >>> PROMPT (3098 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:19 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:19 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:19 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:19 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:19 [----] clearly different one (vary the property described, the phrasing,
+21:37:19 [----] or the sentence opener):
+21:37:19 [----]   - Find me something pointy and orange!
+21:37:19 [----]   - Find me a fruit that monkeys love!
+21:37:19 [----]   - Can you find something small and yellow?
+21:37:19 [----]   - Find something long and yellow!
+21:37:19 [----]   - Find me a round red fruit!
+21:37:19 [----]   - Find me something orange and long!
+21:37:19 [----]   - Find me something yellow with bumps!
+21:37:19 [----]   - Find me a sour yellow fruit!
+21:37:19 [----]   - Find me something crunchy and orange!
+21:37:19 [----]   - Find me something yellow with lots of rows!
+21:37:19 [----]   - Find me something yellow and curved!
+21:37:19 [----]   - Find me something tall and green!
+21:37:19 [----] The TARGET object for this round is: corn.
+21:37:19 [----] Generate ONE inference-style request that lets the child figure
+21:37:19 [----] out THIS target object from its observable properties.
+21:37:19 [----] 
+21:37:19 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:19 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:19 [----]   lemon, banana, corn, carrot
+21:37:19 [----] Refer to the target only as "it", "something", "one", or by
+21:37:19 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:19 [----] must INFER which object you mean from the description.
+21:37:19 [----] 
+21:37:19 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:19 [----] - A single noun (the object type) with at most ONE adjective
+21:37:19 [----]   describing color, size, or category.
+21:37:19 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:19 [----]   "tomato", "yellow fruit", "round ball".
+21:37:19 [----] - BAD criteria (do NOT produce these):
+21:37:19 [----]     * "red car moving block" (compound / multi-object)
+21:37:19 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:19 [----]     * "toy that you can stack" (function-based, vague)
+21:37:19 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:19 [----] 
+21:37:19 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:19 [----] target among the available toys. Before answering, check every
+21:37:19 [----] other toy in the list: if it also fits your description, revise
+21:37:19 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:19 [----] (a property no other listed toy shares).
+21:37:19 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:19 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:19 [----] and long!" is GOOD (only the banana matches).
+21:37:19 [----] 
+21:37:19 [----] The criteria MUST describe the target object (corn).
+21:37:19 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:19 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:19 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:19 [----] - Question: "Show me something green that goes ROAR!"
+21:37:19 [----]   (criteria: green dinosaur)
+21:37:19 [----] BAD examples (do NOT do these):
+21:37:19 [----] - "Show me the red apple!" — names the target.
+21:37:19 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:19 [----]   toys could match.
+21:37:19 [----] 
+21:37:19 [----] Return ONLY a JSON object:
+21:37:19 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:20 [5734] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:37:20 [5734] └─ DONE  POST /api/scene_game/toys -> 200 in 4ms
+21:37:20 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:37:20 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+21:37:20 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the lemon on the tray."
+21:37:20 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the banana under the tray."
+21:37:20 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:37:21 [----] [Claude:scene-game-question] <<< RESPONSE (105 chars):
+21:37:21 [----] {"question": "Find me something with lots of little yellow bumps!", "criteria": "bumpy yellow vegetable"}
+21:37:21 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something with lots of little yellow bumps!", "criteria": "bumpy yellow vegetable"}
+21:37:21 [----] [SceneGame] Parsed question JSON: {
+21:37:21 [----]   "question": "Find me something with lots of little yellow bumps!",
+21:37:21 [----]   "criteria": "bumpy yellow vegetable"
+21:37:21 [----] }
+21:37:21 [----] [Claude:scene-game-question] >>> PROMPT (3115 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:21 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:21 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:21 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:21 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:21 [----] clearly different one (vary the property described, the phrasing,
+21:37:21 [----] or the sentence opener):
+21:37:21 [----]   - Find me a fruit that monkeys love!
+21:37:21 [----]   - Find me something with lots of little yellow bumps!
+21:37:21 [----]   - Can you find something small and yellow?
+21:37:21 [----]   - Find something long and yellow!
+21:37:21 [----]   - Find me a round red fruit!
+21:37:21 [----]   - Find me something orange and long!
+21:37:21 [----]   - Find me something yellow with bumps!
+21:37:21 [----]   - Find me a sour yellow fruit!
+21:37:21 [----]   - Find me something crunchy and orange!
+21:37:21 [----]   - Find me something yellow with lots of rows!
+21:37:21 [----]   - Find me something yellow and curved!
+21:37:21 [----]   - Find me something tall and green!
+21:37:21 [----] The TARGET object for this round is: lemon.
+21:37:21 [----] Generate ONE inference-style request that lets the child figure
+21:37:21 [----] out THIS target object from its observable properties.
+21:37:21 [----] 
+21:37:21 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:21 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:21 [----]   lemon, banana, corn, carrot
+21:37:21 [----] Refer to the target only as "it", "something", "one", or by
+21:37:21 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:21 [----] must INFER which object you mean from the description.
+21:37:21 [----] 
+21:37:21 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:21 [----] - A single noun (the object type) with at most ONE adjective
+21:37:21 [----]   describing color, size, or category.
+21:37:21 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:21 [----]   "tomato", "yellow fruit", "round ball".
+21:37:21 [----] - BAD criteria (do NOT produce these):
+21:37:21 [----]     * "red car moving block" (compound / multi-object)
+21:37:21 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:21 [----]     * "toy that you can stack" (function-based, vague)
+21:37:21 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:21 [----] 
+21:37:21 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:21 [----] target among the available toys. Before answering, check every
+21:37:21 [----] other toy in the list: if it also fits your description, revise
+21:37:21 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:21 [----] (a property no other listed toy shares).
+21:37:21 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:21 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:21 [----] and long!" is GOOD (only the banana matches).
+21:37:21 [----] 
+21:37:21 [----] The criteria MUST describe the target object (lemon).
+21:37:21 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:21 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:21 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:21 [----] - Question: "Show me something green that goes ROAR!"
+21:37:21 [----]   (criteria: green dinosaur)
+21:37:21 [----] BAD examples (do NOT do these):
+21:37:21 [----] - "Show me the red apple!" — names the target.
+21:37:21 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:21 [----]   toys could match.
+21:37:21 [----] 
+21:37:21 [----] Return ONLY a JSON object:
+21:37:21 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:21 [3b45] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:37:21 [3b45] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 1ms
+21:37:21 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:37:21 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:37:21 [9c61] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:21 [e79f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:21 [9c61] └─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms
+21:37:21 [e79f] 
+21:37:22 [----] [Claude:scene-game-question] <<< RESPONSE (70 chars):
+21:37:22 [----] {"question": "Find me a round sour fruit!", "criteria": "round fruit"}
+21:37:22 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round sour fruit!", "criteria": "round fruit"}
+21:37:22 [----] [SceneGame] Parsed question JSON: {
+21:37:22 [----]   "question": "Find me a round sour fruit!",
+21:37:22 [----]   "criteria": "round fruit"
+21:37:22 [----] }
+21:37:22 [----] [Claude:scene-game-question] >>> PROMPT (3110 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:22 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:22 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:22 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:22 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:22 [----] clearly different one (vary the property described, the phrasing,
+21:37:22 [----] or the sentence opener):
+21:37:22 [----]   - Find me something with lots of little yellow bumps!
+21:37:22 [----]   - Find me a round sour fruit!
+21:37:22 [----]   - Can you find something small and yellow?
+21:37:22 [----]   - Find something long and yellow!
+21:37:22 [----]   - Find me a round red fruit!
+21:37:22 [----]   - Find me something orange and long!
+21:37:22 [----]   - Find me something yellow with bumps!
+21:37:22 [----]   - Find me a sour yellow fruit!
+21:37:22 [----]   - Find me something crunchy and orange!
+21:37:22 [----]   - Find me something yellow with lots of rows!
+21:37:22 [----]   - Find me something yellow and curved!
+21:37:22 [----]   - Find me something tall and green!
+21:37:22 [----] The TARGET object for this round is: banana.
+21:37:22 [----] Generate ONE inference-style request that lets the child figure
+21:37:22 [----] out THIS target object from its observable properties.
+21:37:22 [----] 
+21:37:22 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:22 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:22 [----]   lemon, banana, corn, carrot
+21:37:22 [----] Refer to the target only as "it", "something", "one", or by
+21:37:22 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:22 [----] must INFER which object you mean from the description.
+21:37:22 [----] 
+21:37:22 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:22 [----] - A single noun (the object type) with at most ONE adjective
+21:37:22 [----]   describing color, size, or category.
+21:37:22 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:22 [----]   "tomato", "yellow fruit", "round ball".
+21:37:22 [----] - BAD criteria (do NOT produce these):
+21:37:22 [----]     * "red car moving block" (compound / multi-object)
+21:37:22 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:22 [----]     * "toy that you can stack" (function-based, vague)
+21:37:22 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:22 [----] 
+21:37:22 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:22 [----] target among the available toys. Before answering, check every
+21:37:22 [----] other toy in the list: if it also fits your description, revise
+21:37:22 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:22 [----] (a property no other listed toy shares).
+21:37:22 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:22 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:22 [----] and long!" is GOOD (only the banana matches).
+21:37:22 [----] 
+21:37:22 [----] The criteria MUST describe the target object (banana).
+21:37:22 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:22 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:22 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:22 [----] - Question: "Show me something green that goes ROAR!"
+21:37:22 [----]   (criteria: green dinosaur)
+21:37:22 [----] BAD examples (do NOT do these):
+21:37:22 [----] - "Show me the red apple!" — names the target.
+21:37:22 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:22 [----]   toys could match.
+21:37:22 [----] 
+21:37:22 [----] Return ONLY a JSON object:
+21:37:22 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:23 [52ee] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:23 [c538] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:23 [c538] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:37:23 [52ee] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:37:24 [----] [Claude:scene-game-question] <<< RESPONSE (78 chars):
+21:37:24 [----] {"question": "Find me a fruit that monkeys love!", "criteria": "yellow fruit"}
+21:37:24 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a fruit that monkeys love!", "criteria": "yellow fruit"}
+21:37:24 [----] [SceneGame] Parsed question JSON: {
+21:37:24 [----]   "question": "Find me a fruit that monkeys love!",
+21:37:24 [----]   "criteria": "yellow fruit"
+21:37:24 [----] }
+21:37:24 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me a fruit that monkeys love!'
+21:37:24 [----] [Claude:scene-game-question] >>> PROMPT (3110 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:24 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:24 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:24 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:24 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:24 [----] clearly different one (vary the property described, the phrasing,
+21:37:24 [----] or the sentence opener):
+21:37:24 [----]   - Find me something with lots of little yellow bumps!
+21:37:24 [----]   - Find me a round sour fruit!
+21:37:24 [----]   - Can you find something small and yellow?
+21:37:24 [----]   - Find something long and yellow!
+21:37:24 [----]   - Find me a round red fruit!
+21:37:24 [----]   - Find me something orange and long!
+21:37:24 [----]   - Find me something yellow with bumps!
+21:37:24 [----]   - Find me a sour yellow fruit!
+21:37:24 [----]   - Find me something crunchy and orange!
+21:37:24 [----]   - Find me something yellow with lots of rows!
+21:37:24 [----]   - Find me something yellow and curved!
+21:37:24 [----]   - Find me something tall and green!
+21:37:24 [----] The TARGET object for this round is: carrot.
+21:37:24 [----] Generate ONE inference-style request that lets the child figure
+21:37:24 [----] out THIS target object from its observable properties.
+21:37:24 [----] 
+21:37:24 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:24 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:24 [----]   lemon, banana, corn, carrot
+21:37:24 [----] Refer to the target only as "it", "something", "one", or by
+21:37:24 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:24 [----] must INFER which object you mean from the description.
+21:37:24 [----] 
+21:37:24 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:24 [----] - A single noun (the object type) with at most ONE adjective
+21:37:24 [----]   describing color, size, or category.
+21:37:24 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:24 [----]   "tomato", "yellow fruit", "round ball".
+21:37:24 [----] - BAD criteria (do NOT produce these):
+21:37:24 [----]     * "red car moving block" (compound / multi-object)
+21:37:24 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:24 [----]     * "toy that you can stack" (function-based, vague)
+21:37:24 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:24 [----] 
+21:37:24 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:24 [----] target among the available toys. Before answering, check every
+21:37:24 [----] other toy in the list: if it also fits your description, revise
+21:37:24 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:24 [----] (a property no other listed toy shares).
+21:37:24 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:24 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:24 [----] and long!" is GOOD (only the banana matches).
+21:37:24 [----] 
+21:37:24 [----] The criteria MUST describe the target object (carrot).
+21:37:24 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:24 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:24 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:24 [----] - Question: "Show me something green that goes ROAR!"
+21:37:24 [----]   (criteria: green dinosaur)
+21:37:24 [----] BAD examples (do NOT do these):
+21:37:24 [----] - "Show me the red apple!" — names the target.
+21:37:24 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:24 [----]   toys could match.
+21:37:24 [----] 
+21:37:24 [----] Return ONLY a JSON object:
+21:37:24 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:25 [4575] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:25 [e232] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:25 [4575] └─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:37:25 [e232] 
+21:37:26 [----] [Claude:scene-game-question] <<< RESPONSE (91 chars):
+21:37:26 [----] {"question": "Find me something pointy and orange!", "criteria": "orange pointy vegetable"}
+21:37:26 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something pointy and orange!", "criteria": "orange pointy vegetable"}
+21:37:26 [----] [SceneGame] Parsed question JSON: {
+21:37:26 [----]   "question": "Find me something pointy and orange!",
+21:37:26 [----]   "criteria": "orange pointy vegetable"
+21:37:26 [----] }
+21:37:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me something pointy and orange!'
+21:37:26 [----] [Claude:scene-game-question] >>> PROMPT (3106 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:26 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:26 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:26 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:26 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:26 [----] clearly different one (vary the property described, the phrasing,
+21:37:26 [----] or the sentence opener):
+21:37:26 [----]   - Find me something with lots of little yellow bumps!
+21:37:26 [----]   - Find me a round sour fruit!
+21:37:26 [----]   - Can you find something small and yellow?
+21:37:26 [----]   - Find something long and yellow!
+21:37:26 [----]   - Find me a round red fruit!
+21:37:26 [----]   - Find me something orange and long!
+21:37:26 [----]   - Find me something yellow with bumps!
+21:37:26 [----]   - Find me a sour yellow fruit!
+21:37:26 [----]   - Find me something crunchy and orange!
+21:37:26 [----]   - Find me something yellow with lots of rows!
+21:37:26 [----]   - Find me something yellow and curved!
+21:37:26 [----]   - Find me something tall and green!
+21:37:26 [----] The TARGET object for this round is: corn.
+21:37:26 [----] Generate ONE inference-style request that lets the child figure
+21:37:26 [----] out THIS target object from its observable properties.
+21:37:26 [----] 
+21:37:26 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:26 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:26 [----]   lemon, banana, corn, carrot
+21:37:26 [----] Refer to the target only as "it", "something", "one", or by
+21:37:26 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:26 [----] must INFER which object you mean from the description.
+21:37:26 [----] 
+21:37:26 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:26 [----] - A single noun (the object type) with at most ONE adjective
+21:37:26 [----]   describing color, size, or category.
+21:37:26 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:26 [----]   "tomato", "yellow fruit", "round ball".
+21:37:26 [----] - BAD criteria (do NOT produce these):
+21:37:26 [----]     * "red car moving block" (compound / multi-object)
+21:37:26 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:26 [----]     * "toy that you can stack" (function-based, vague)
+21:37:26 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:26 [----] 
+21:37:26 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:26 [----] target among the available toys. Before answering, check every
+21:37:26 [----] other toy in the list: if it also fits your description, revise
+21:37:26 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:26 [----] (a property no other listed toy shares).
+21:37:26 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:26 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:26 [----] and long!" is GOOD (only the banana matches).
+21:37:26 [----] 
+21:37:26 [----] The criteria MUST describe the target object (corn).
+21:37:26 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:26 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:26 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:26 [----] - Question: "Show me something green that goes ROAR!"
+21:37:26 [----]   (criteria: green dinosaur)
+21:37:26 [----] BAD examples (do NOT do these):
+21:37:26 [----] - "Show me the red apple!" — names the target.
+21:37:26 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:26 [----]   toys could match.
+21:37:26 [----] 
+21:37:26 [----] Return ONLY a JSON object:
+21:37:26 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:27 [----] [Claude:scene-game-question] <<< RESPONSE (97 chars):
+21:37:27 [----] {"question": "Find me something with lots of little rows!", "criteria": "bumpy yellow vegetable"}
+21:37:27 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something with lots of little rows!", "criteria": "bumpy yellow vegetable"}
+21:37:27 [----] [SceneGame] Parsed question JSON: {
+21:37:27 [----]   "question": "Find me something with lots of little rows!",
+21:37:27 [----]   "criteria": "bumpy yellow vegetable"
+21:37:27 [----] }
+21:37:27 [----] [Claude:scene-game-question] >>> PROMPT (3100 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:27 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:27 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:27 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:27 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:27 [----] clearly different one (vary the property described, the phrasing,
+21:37:27 [----] or the sentence opener):
+21:37:27 [----]   - Find me a round sour fruit!
+21:37:27 [----]   - Find me something with lots of little rows!
+21:37:27 [----]   - Can you find something small and yellow?
+21:37:27 [----]   - Find something long and yellow!
+21:37:27 [----]   - Find me a round red fruit!
+21:37:27 [----]   - Find me something orange and long!
+21:37:27 [----]   - Find me something yellow with bumps!
+21:37:27 [----]   - Find me a sour yellow fruit!
+21:37:27 [----]   - Find me something crunchy and orange!
+21:37:27 [----]   - Find me something yellow with lots of rows!
+21:37:27 [----]   - Find me something yellow and curved!
+21:37:27 [----]   - Find me something tall and green!
+21:37:27 [----] The TARGET object for this round is: lemon.
+21:37:27 [----] Generate ONE inference-style request that lets the child figure
+21:37:27 [----] out THIS target object from its observable properties.
+21:37:27 [----] 
+21:37:27 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:27 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:27 [----]   lemon, banana, corn, carrot
+21:37:27 [----] Refer to the target only as "it", "something", "one", or by
+21:37:27 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:27 [----] must INFER which object you mean from the description.
+21:37:27 [----] 
+21:37:27 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:27 [----] - A single noun (the object type) with at most ONE adjective
+21:37:27 [----]   describing color, size, or category.
+21:37:27 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:27 [----]   "tomato", "yellow fruit", "round ball".
+21:37:27 [----] - BAD criteria (do NOT produce these):
+21:37:27 [----]     * "red car moving block" (compound / multi-object)
+21:37:27 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:27 [----]     * "toy that you can stack" (function-based, vague)
+21:37:27 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:27 [----] 
+21:37:27 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:27 [----] target among the available toys. Before answering, check every
+21:37:27 [----] other toy in the list: if it also fits your description, revise
+21:37:27 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:27 [----] (a property no other listed toy shares).
+21:37:27 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:27 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:27 [----] and long!" is GOOD (only the banana matches).
+21:37:27 [----] 
+21:37:27 [----] The criteria MUST describe the target object (lemon).
+21:37:27 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:27 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:27 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:27 [----] - Question: "Show me something green that goes ROAR!"
+21:37:27 [----]   (criteria: green dinosaur)
+21:37:27 [----] BAD examples (do NOT do these):
+21:37:27 [----] - "Show me the red apple!" — names the target.
+21:37:27 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:27 [----]   toys could match.
+21:37:27 [----] 
+21:37:27 [----] Return ONLY a JSON object:
+21:37:27 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:27 [64a2] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:27 [320e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:27 [320e] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:37:27 [64a2] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:37:29 [----] [Claude:scene-game-question] <<< RESPONSE (212 chars):
+21:37:29 [----] {"question": "Find me a round sour fruit!", "criteria": "round sour fruit"}
+21:37:29 [----] 
+21:37:29 [----] Wait, that was already asked. Let me generate a different one.
+21:37:29 [----] 
+21:37:29 [----] {"question": "Find me a small round fruit!", "criteria": "round fruit"}
+21:37:29 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round sour fruit!", "criteria": "round sour fruit"}
+21:37:29 [----] 
+21:37:29 [----] Wait, that was already asked. Let me generate a different one.
+21:37:29 [----] 
+21:37:29 [----] {"question": "Find me a small round fruit!", "criteria": "round fruit"}
+21:37:29 [----] [SceneGame] Parsed question JSON: {
+21:37:29 [----]   "question": "Find me a round sour fruit!",
+21:37:29 [----]   "criteria": "round sour fruit"
+21:37:29 [----] }
+21:37:29 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me a round sour fruit!'
+21:37:29 [----] [Claude:scene-game-question] >>> PROMPT (3100 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:29 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:29 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:29 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:29 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:29 [----] clearly different one (vary the property described, the phrasing,
+21:37:29 [----] or the sentence opener):
+21:37:29 [----]   - Find me a round sour fruit!
+21:37:29 [----]   - Find me something with lots of little rows!
+21:37:29 [----]   - Can you find something small and yellow?
+21:37:29 [----]   - Find something long and yellow!
+21:37:29 [----]   - Find me a round red fruit!
+21:37:29 [----]   - Find me something orange and long!
+21:37:29 [----]   - Find me something yellow with bumps!
+21:37:29 [----]   - Find me a sour yellow fruit!
+21:37:29 [----]   - Find me something crunchy and orange!
+21:37:29 [----]   - Find me something yellow with lots of rows!
+21:37:29 [----]   - Find me something yellow and curved!
+21:37:29 [----]   - Find me something tall and green!
+21:37:29 [----] The TARGET object for this round is: lemon.
+21:37:29 [----] Generate ONE inference-style request that lets the child figure
+21:37:29 [----] out THIS target object from its observable properties.
+21:37:29 [----] 
+21:37:29 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:29 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:29 [----]   lemon, banana, corn, carrot
+21:37:29 [----] Refer to the target only as "it", "something", "one", or by
+21:37:29 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:29 [----] must INFER which object you mean from the description.
+21:37:29 [----] 
+21:37:29 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:29 [----] - A single noun (the object type) with at most ONE adjective
+21:37:29 [----]   describing color, size, or category.
+21:37:29 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:29 [----]   "tomato", "yellow fruit", "round ball".
+21:37:29 [----] - BAD criteria (do NOT produce these):
+21:37:29 [----]     * "red car moving block" (compound / multi-object)
+21:37:29 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:29 [----]     * "toy that you can stack" (function-based, vague)
+21:37:29 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:29 [----] 
+21:37:29 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:29 [----] target among the available toys. Before answering, check every
+21:37:29 [----] other toy in the list: if it also fits your description, revise
+21:37:29 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:29 [----] (a property no other listed toy shares).
+21:37:29 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:29 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:29 [----] and long!" is GOOD (only the banana matches).
+21:37:29 [----] 
+21:37:29 [----] The criteria MUST describe the target object (lemon).
+21:37:29 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:29 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:29 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:29 [----] - Question: "Show me something green that goes ROAR!"
+21:37:29 [----]   (criteria: green dinosaur)
+21:37:29 [----] BAD examples (do NOT do these):
+21:37:29 [----] - "Show me the red apple!" — names the target.
+21:37:29 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:29 [----]   toys could match.
+21:37:29 [----] 
+21:37:29 [----] Return ONLY a JSON object:
+21:37:29 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:29 [3857] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:29 [5b81] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:29 [3857] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:37:29 [5b81] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:37:30 [----] [Claude:scene-game-question] <<< RESPONSE (219 chars):
+21:37:30 [----] {"question": "Find me a round sour fruit!", "criteria": "round sour fruit"}
+21:37:30 [----] 
+21:37:30 [----] Wait, that was already asked. Let me generate a different one.
+21:37:30 [----] 
+21:37:30 [----] {"question": "Find me something little and round!", "criteria": "round fruit"}
+21:37:30 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round sour fruit!", "criteria": "round sour fruit"}
+21:37:30 [----] 
+21:37:30 [----] Wait, that was already asked. Let me generate a different one.
+21:37:30 [----] 
+21:37:30 [----] {"question": "Find me something little and round!", "criteria": "round fruit"}
+21:37:30 [----] [SceneGame] Parsed question JSON: {
+21:37:30 [----]   "question": "Find me a round sour fruit!",
+21:37:30 [----]   "criteria": "round sour fruit"
+21:37:30 [----] }
+21:37:30 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me a round sour fruit!'
+21:37:30 [----] [Claude:scene-game-question] >>> PROMPT (3102 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:30 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:30 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:30 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:30 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:30 [----] clearly different one (vary the property described, the phrasing,
+21:37:30 [----] or the sentence opener):
+21:37:30 [----]   - Find me a round sour fruit!
+21:37:30 [----]   - Find me something with lots of little rows!
+21:37:30 [----]   - Can you find something small and yellow?
+21:37:30 [----]   - Find something long and yellow!
+21:37:30 [----]   - Find me a round red fruit!
+21:37:30 [----]   - Find me something orange and long!
+21:37:30 [----]   - Find me something yellow with bumps!
+21:37:30 [----]   - Find me a sour yellow fruit!
+21:37:30 [----]   - Find me something crunchy and orange!
+21:37:30 [----]   - Find me something yellow with lots of rows!
+21:37:30 [----]   - Find me something yellow and curved!
+21:37:30 [----]   - Find me something tall and green!
+21:37:30 [----] The TARGET object for this round is: banana.
+21:37:30 [----] Generate ONE inference-style request that lets the child figure
+21:37:30 [----] out THIS target object from its observable properties.
+21:37:30 [----] 
+21:37:30 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:30 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:30 [----]   lemon, banana, corn, carrot
+21:37:30 [----] Refer to the target only as "it", "something", "one", or by
+21:37:30 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:30 [----] must INFER which object you mean from the description.
+21:37:30 [----] 
+21:37:30 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:30 [----] - A single noun (the object type) with at most ONE adjective
+21:37:30 [----]   describing color, size, or category.
+21:37:30 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:30 [----]   "tomato", "yellow fruit", "round ball".
+21:37:30 [----] - BAD criteria (do NOT produce these):
+21:37:30 [----]     * "red car moving block" (compound / multi-object)
+21:37:30 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:30 [----]     * "toy that you can stack" (function-based, vague)
+21:37:30 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:30 [----] 
+21:37:30 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:30 [----] target among the available toys. Before answering, check every
+21:37:30 [----] other toy in the list: if it also fits your description, revise
+21:37:30 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:30 [----] (a property no other listed toy shares).
+21:37:30 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:30 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:30 [----] and long!" is GOOD (only the banana matches).
+21:37:30 [----] 
+21:37:30 [----] The criteria MUST describe the target object (banana).
+21:37:30 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:30 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:30 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:30 [----] - Question: "Show me something green that goes ROAR!"
+21:37:30 [----]   (criteria: green dinosaur)
+21:37:30 [----] BAD examples (do NOT do these):
+21:37:30 [----] - "Show me the red apple!" — names the target.
+21:37:30 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:30 [----]   toys could match.
+21:37:30 [----] 
+21:37:30 [----] Return ONLY a JSON object:
+21:37:30 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:31 [9581] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:31 [ac29] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:31 [9581] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:37:31 [ac29] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:37:32 [----] [Claude:scene-game-question] <<< RESPONSE (85 chars):
+21:37:32 [----] {"question": "Find me a fruit that curves like a smile!", "criteria": "curved fruit"}
+21:37:32 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a fruit that curves like a smile!", "criteria": "curved fruit"}
+21:37:32 [----] [SceneGame] Parsed question JSON: {
+21:37:32 [----]   "question": "Find me a fruit that curves like a smile!",
+21:37:32 [----]   "criteria": "curved fruit"
+21:37:32 [----] }
+21:37:32 [----] [Claude:scene-game-question] >>> PROMPT (3112 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:32 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:32 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:32 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:32 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:32 [----] clearly different one (vary the property described, the phrasing,
+21:37:32 [----] or the sentence opener):
+21:37:32 [----]   - Find me something with lots of little rows!
+21:37:32 [----]   - Find me a fruit that curves like a smile!
+21:37:32 [----]   - Can you find something small and yellow?
+21:37:32 [----]   - Find something long and yellow!
+21:37:32 [----]   - Find me a round red fruit!
+21:37:32 [----]   - Find me something orange and long!
+21:37:32 [----]   - Find me something yellow with bumps!
+21:37:32 [----]   - Find me a sour yellow fruit!
+21:37:32 [----]   - Find me something crunchy and orange!
+21:37:32 [----]   - Find me something yellow with lots of rows!
+21:37:32 [----]   - Find me something yellow and curved!
+21:37:32 [----]   - Find me something tall and green!
+21:37:32 [----] The TARGET object for this round is: corn.
+21:37:32 [----] Generate ONE inference-style request that lets the child figure
+21:37:32 [----] out THIS target object from its observable properties.
+21:37:32 [----] 
+21:37:32 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:32 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:32 [----]   lemon, banana, corn, carrot
+21:37:32 [----] Refer to the target only as "it", "something", "one", or by
+21:37:32 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:32 [----] must INFER which object you mean from the description.
+21:37:32 [----] 
+21:37:32 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:32 [----] - A single noun (the object type) with at most ONE adjective
+21:37:32 [----]   describing color, size, or category.
+21:37:32 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:32 [----]   "tomato", "yellow fruit", "round ball".
+21:37:32 [----] - BAD criteria (do NOT produce these):
+21:37:32 [----]     * "red car moving block" (compound / multi-object)
+21:37:32 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:32 [----]     * "toy that you can stack" (function-based, vague)
+21:37:32 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:32 [----] 
+21:37:32 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:32 [----] target among the available toys. Before answering, check every
+21:37:32 [----] other toy in the list: if it also fits your description, revise
+21:37:32 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:32 [----] (a property no other listed toy shares).
+21:37:32 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:32 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:32 [----] and long!" is GOOD (only the banana matches).
+21:37:32 [----] 
+21:37:32 [----] The criteria MUST describe the target object (corn).
+21:37:32 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:32 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:32 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:32 [----] - Question: "Show me something green that goes ROAR!"
+21:37:32 [----]   (criteria: green dinosaur)
+21:37:32 [----] BAD examples (do NOT do these):
+21:37:32 [----] - "Show me the red apple!" — names the target.
+21:37:32 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:32 [----]   toys could match.
+21:37:32 [----] 
+21:37:32 [----] Return ONLY a JSON object:
+21:37:32 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:33 [----] [Claude:scene-game-question] <<< RESPONSE (104 chars):
+21:37:33 [----] {"question": "Find me something with lots of little bumps in rows!", "criteria": "bumpy rows vegetable"}
+21:37:33 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something with lots of little bumps in rows!", "criteria": "bumpy rows vegetable"}
+21:37:33 [----] [SceneGame] Parsed question JSON: {
+21:37:33 [----]   "question": "Find me something with lots of little bumps in rows!",
+21:37:33 [----]   "criteria": "bumpy rows vegetable"
+21:37:33 [----] }
+21:37:33 [----] [Claude:scene-game-question] >>> PROMPT (3125 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:33 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:33 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:33 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:33 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:33 [----] clearly different one (vary the property described, the phrasing,
+21:37:33 [----] or the sentence opener):
+21:37:33 [----]   - Find me a fruit that curves like a smile!
+21:37:33 [----]   - Find me something with lots of little bumps in rows!
+21:37:33 [----]   - Can you find something small and yellow?
+21:37:33 [----]   - Find something long and yellow!
+21:37:33 [----]   - Find me a round red fruit!
+21:37:33 [----]   - Find me something orange and long!
+21:37:33 [----]   - Find me something yellow with bumps!
+21:37:33 [----]   - Find me a sour yellow fruit!
+21:37:33 [----]   - Find me something crunchy and orange!
+21:37:33 [----]   - Find me something yellow with lots of rows!
+21:37:33 [----]   - Find me something yellow and curved!
+21:37:33 [----]   - Find me something tall and green!
+21:37:33 [----] The TARGET object for this round is: carrot.
+21:37:33 [----] Generate ONE inference-style request that lets the child figure
+21:37:33 [----] out THIS target object from its observable properties.
+21:37:33 [----] 
+21:37:33 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:33 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:33 [----]   lemon, banana, corn, carrot
+21:37:33 [----] Refer to the target only as "it", "something", "one", or by
+21:37:33 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:33 [----] must INFER which object you mean from the description.
+21:37:33 [----] 
+21:37:33 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:33 [----] - A single noun (the object type) with at most ONE adjective
+21:37:33 [----]   describing color, size, or category.
+21:37:33 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:33 [----]   "tomato", "yellow fruit", "round ball".
+21:37:33 [----] - BAD criteria (do NOT produce these):
+21:37:33 [----]     * "red car moving block" (compound / multi-object)
+21:37:33 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:33 [----]     * "toy that you can stack" (function-based, vague)
+21:37:33 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:33 [----] 
+21:37:33 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:33 [----] target among the available toys. Before answering, check every
+21:37:33 [----] other toy in the list: if it also fits your description, revise
+21:37:33 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:33 [----] (a property no other listed toy shares).
+21:37:33 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:33 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:33 [----] and long!" is GOOD (only the banana matches).
+21:37:33 [----] 
+21:37:33 [----] The criteria MUST describe the target object (carrot).
+21:37:33 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:33 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:33 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:33 [----] - Question: "Show me something green that goes ROAR!"
+21:37:33 [----]   (criteria: green dinosaur)
+21:37:33 [----] BAD examples (do NOT do these):
+21:37:33 [----] - "Show me the red apple!" — names the target.
+21:37:33 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:33 [----]   toys could match.
+21:37:33 [----] 
+21:37:33 [----] Return ONLY a JSON object:
+21:37:33 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:33 [2fa7] ┌─ WORK  GET /api/scene_game/pool_status | args: kind┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:37:33 [6db8] 
+21:37:33 [6db8] └─ DONE  GET /api/scene_game/pool_status -> 200 in 9ms
+21:37:33 [2fa7] └─ DONE  GET /api/scene_game/pool_status -> 200 in 18ms
+21:37:34 [----] [Claude:scene-game-question] <<< RESPONSE (84 chars):
+21:37:34 [----] {"question": "Find me something pointy and orange!", "criteria": "orange vegetable"}
+21:37:34 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something pointy and orange!", "criteria": "orange vegetable"}
+21:37:34 [----] [SceneGame] Parsed question JSON: {
+21:37:34 [----]   "question": "Find me something pointy and orange!",
+21:37:34 [----]   "criteria": "orange vegetable"
+21:37:34 [----] }
+21:37:34 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me something pointy and orange!'
+21:37:34 [----] [Claude:scene-game-question] >>> PROMPT (3125 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:34 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:34 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:34 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:34 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:34 [----] clearly different one (vary the property described, the phrasing,
+21:37:34 [----] or the sentence opener):
+21:37:34 [----]   - Find me a fruit that curves like a smile!
+21:37:34 [----]   - Find me something with lots of little bumps in rows!
+21:37:34 [----]   - Can you find something small and yellow?
+21:37:34 [----]   - Find something long and yellow!
+21:37:34 [----]   - Find me a round red fruit!
+21:37:34 [----]   - Find me something orange and long!
+21:37:34 [----]   - Find me something yellow with bumps!
+21:37:34 [----]   - Find me a sour yellow fruit!
+21:37:34 [----]   - Find me something crunchy and orange!
+21:37:34 [----]   - Find me something yellow with lots of rows!
+21:37:34 [----]   - Find me something yellow and curved!
+21:37:34 [----]   - Find me something tall and green!
+21:37:34 [----] The TARGET object for this round is: carrot.
+21:37:34 [----] Generate ONE inference-style request that lets the child figure
+21:37:34 [----] out THIS target object from its observable properties.
+21:37:34 [----] 
+21:37:34 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:34 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:34 [----]   lemon, banana, corn, carrot
+21:37:34 [----] Refer to the target only as "it", "something", "one", or by
+21:37:34 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:34 [----] must INFER which object you mean from the description.
+21:37:34 [----] 
+21:37:34 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:34 [----] - A single noun (the object type) with at most ONE adjective
+21:37:34 [----]   describing color, size, or category.
+21:37:34 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:34 [----]   "tomato", "yellow fruit", "round ball".
+21:37:34 [----] - BAD criteria (do NOT produce these):
+21:37:34 [----]     * "red car moving block" (compound / multi-object)
+21:37:34 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:34 [----]     * "toy that you can stack" (function-based, vague)
+21:37:34 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:34 [----] 
+21:37:34 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:34 [----] target among the available toys. Before answering, check every
+21:37:34 [----] other toy in the list: if it also fits your description, revise
+21:37:34 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:34 [----] (a property no other listed toy shares).
+21:37:34 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:34 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:34 [----] and long!" is GOOD (only the banana matches).
+21:37:34 [----] 
+21:37:34 [----] The criteria MUST describe the target object (carrot).
+21:37:34 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:34 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:34 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:34 [----] - Question: "Show me something green that goes ROAR!"
+21:37:34 [----]   (criteria: green dinosaur)
+21:37:34 [----] BAD examples (do NOT do these):
+21:37:34 [----] - "Show me the red apple!" — names the target.
+21:37:34 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:34 [----]   toys could match.
+21:37:34 [----] 
+21:37:34 [----] Return ONLY a JSON object:
+21:37:34 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:35 [470a] ┌─ WORK  GET /
+21:37:35 [470a] └─ DONE  GET / -> 200 in 1ms
+21:37:36 [----] [Claude:scene-game-question] <<< RESPONSE (84 chars):
+21:37:36 [----] {"question": "Find me something pointy and orange!", "criteria": "orange vegetable"}
+21:37:36 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something pointy and orange!", "criteria": "orange vegetable"}
+21:37:36 [----] [SceneGame] Parsed question JSON: {
+21:37:36 [----]   "question": "Find me something pointy and orange!",
+21:37:36 [----]   "criteria": "orange vegetable"
+21:37:36 [----] }
+21:37:36 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me something pointy and orange!'
+21:37:36 [----] [Claude:scene-game-question] >>> PROMPT (3123 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:36 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:36 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:36 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:36 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:36 [----] clearly different one (vary the property described, the phrasing,
+21:37:36 [----] or the sentence opener):
+21:37:36 [----]   - Find me a fruit that curves like a smile!
+21:37:36 [----]   - Find me something with lots of little bumps in rows!
+21:37:36 [----]   - Can you find something small and yellow?
+21:37:36 [----]   - Find something long and yellow!
+21:37:36 [----]   - Find me a round red fruit!
+21:37:36 [----]   - Find me something orange and long!
+21:37:36 [----]   - Find me something yellow with bumps!
+21:37:36 [----]   - Find me a sour yellow fruit!
+21:37:36 [----]   - Find me something crunchy and orange!
+21:37:36 [----]   - Find me something yellow with lots of rows!
+21:37:36 [----]   - Find me something yellow and curved!
+21:37:36 [----]   - Find me something tall and green!
+21:37:36 [----] The TARGET object for this round is: lemon.
+21:37:36 [----] Generate ONE inference-style request that lets the child figure
+21:37:36 [----] out THIS target object from its observable properties.
+21:37:36 [----] 
+21:37:36 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:36 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:36 [----]   lemon, banana, corn, carrot
+21:37:36 [----] Refer to the target only as "it", "something", "one", or by
+21:37:36 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:36 [----] must INFER which object you mean from the description.
+21:37:36 [----] 
+21:37:36 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:36 [----] - A single noun (the object type) with at most ONE adjective
+21:37:36 [----]   describing color, size, or category.
+21:37:36 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:36 [----]   "tomato", "yellow fruit", "round ball".
+21:37:36 [----] - BAD criteria (do NOT produce these):
+21:37:36 [----]     * "red car moving block" (compound / multi-object)
+21:37:36 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:36 [----]     * "toy that you can stack" (function-based, vague)
+21:37:36 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:36 [----] 
+21:37:36 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:36 [----] target among the available toys. Before answering, check every
+21:37:36 [----] other toy in the list: if it also fits your description, revise
+21:37:36 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:36 [----] (a property no other listed toy shares).
+21:37:36 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:36 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:36 [----] and long!" is GOOD (only the banana matches).
+21:37:36 [----] 
+21:37:36 [----] The criteria MUST describe the target object (lemon).
+21:37:36 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:36 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:36 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:36 [----] - Question: "Show me something green that goes ROAR!"
+21:37:36 [----]   (criteria: green dinosaur)
+21:37:36 [----] BAD examples (do NOT do these):
+21:37:36 [----] - "Show me the red apple!" — names the target.
+21:37:36 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:36 [----]   toys could match.
+21:37:36 [----] 
+21:37:36 [----] Return ONLY a JSON object:
+21:37:36 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:37 [----] [Claude:scene-game-question] <<< RESPONSE (75 chars):
+21:37:37 [----] {"question": "Find me a round sour fruit!", "criteria": "round sour fruit"}
+21:37:37 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round sour fruit!", "criteria": "round sour fruit"}
+21:37:37 [----] [SceneGame] Parsed question JSON: {
+21:37:37 [----]   "question": "Find me a round sour fruit!",
+21:37:37 [----]   "criteria": "round sour fruit"
+21:37:37 [----] }
+21:37:37 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me a round sour fruit!'
+21:37:37 [----] [Claude:scene-game-question] >>> PROMPT (3121 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:37 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:37 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:37 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:37 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:37 [----] clearly different one (vary the property described, the phrasing,
+21:37:37 [----] or the sentence opener):
+21:37:37 [----]   - Find me a fruit that curves like a smile!
+21:37:37 [----]   - Find me something with lots of little bumps in rows!
+21:37:37 [----]   - Can you find something small and yellow?
+21:37:37 [----]   - Find something long and yellow!
+21:37:37 [----]   - Find me a round red fruit!
+21:37:37 [----]   - Find me something orange and long!
+21:37:37 [----]   - Find me something yellow with bumps!
+21:37:37 [----]   - Find me a sour yellow fruit!
+21:37:37 [----]   - Find me something crunchy and orange!
+21:37:37 [----]   - Find me something yellow with lots of rows!
+21:37:37 [----]   - Find me something yellow and curved!
+21:37:37 [----]   - Find me something tall and green!
+21:37:37 [----] The TARGET object for this round is: corn.
+21:37:37 [----] Generate ONE inference-style request that lets the child figure
+21:37:37 [----] out THIS target object from its observable properties.
+21:37:37 [----] 
+21:37:37 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:37 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:37 [----]   lemon, banana, corn, carrot
+21:37:37 [----] Refer to the target only as "it", "something", "one", or by
+21:37:37 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:37 [----] must INFER which object you mean from the description.
+21:37:37 [----] 
+21:37:37 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:37 [----] - A single noun (the object type) with at most ONE adjective
+21:37:37 [----]   describing color, size, or category.
+21:37:37 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:37 [----]   "tomato", "yellow fruit", "round ball".
+21:37:37 [----] - BAD criteria (do NOT produce these):
+21:37:37 [----]     * "red car moving block" (compound / multi-object)
+21:37:37 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:37 [----]     * "toy that you can stack" (function-based, vague)
+21:37:37 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:37 [----] 
+21:37:37 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:37 [----] target among the available toys. Before answering, check every
+21:37:37 [----] other toy in the list: if it also fits your description, revise
+21:37:37 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:37 [----] (a property no other listed toy shares).
+21:37:37 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:37 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:37 [----] and long!" is GOOD (only the banana matches).
+21:37:37 [----] 
+21:37:37 [----] The criteria MUST describe the target object (corn).
+21:37:37 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:37 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:37 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:37 [----] - Question: "Show me something green that goes ROAR!"
+21:37:37 [----]   (criteria: green dinosaur)
+21:37:37 [----] BAD examples (do NOT do these):
+21:37:37 [----] - "Show me the red apple!" — names the target.
+21:37:37 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:37 [----]   toys could match.
+21:37:37 [----] 
+21:37:37 [----] Return ONLY a JSON object:
+21:37:37 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:38 [02f8] ┌─ WORK  GET /play_scene
+21:37:38 [02f8] └─ DONE  GET /play_scene -> 200 in 2ms
+21:37:40 [a017] ┌─ WORK  POST /api/scene/start | fields: mode
+21:37:40 [a017] self.engine :  qwen
+21:37:41 [----] [Claude:scene-game-question] <<< RESPONSE (594 chars):
+21:37:41 [----] {"question": "Find me something with lots of rows!", "criteria": "bumpy tall vegetable"}
+21:37:41 [----] 
+21:37:41 [----] Wait, let me reconsider. The criteria should be a simple noun + one adjective, and the question must distinguish corn from all other toys (lemon, banana, carrot).
+21:37:41 [----] 
+21:37:41 [----] Corn has rows of kernels — that's unique among the toys. But "lots of rows" was already asked. Let me think of another distinguishing property.
+21:37:41 [----] 
+21:37:41 [----] Corn has a green leafy husk/wrapper. That's unique — lemon is yellow, banana is yellow, carrot is orange.
+21:37:41 [----] 
+21:37:41 [----] {"question": "Find me something with a green jacket on!", "criteria": "green vegetable"}
+21:37:41 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something with lots of rows!", "criteria": "bumpy tall vegetable"}
+21:37:41 [----] 
+21:37:41 [----] Wait, let me reconsider. The criteria should be a simple noun + one adjective, and the question must distinguish corn from all other toys (lemon, banana, carrot).
+21:37:41 [----] 
+21:37:41 [----] Corn has rows of kernels — that's unique among the toys. But "lots of rows" was already asked. Let me think of another distinguishing property.
+21:37:41 [----] 
+21:37:41 [----] Corn has a green leafy husk/wrapper. That's unique — lemon is yellow, banana is yellow, carrot is orange.
+21:37:41 [----] 
+21:37:41 [----] {"question": "Find me something with a green jacket on!", "criteria": "green vegetable"}
+21:37:41 [----] [SceneGame] Parsed question JSON: {
+21:37:41 [----]   "question": "Find me something with lots of rows!",
+21:37:41 [----]   "criteria": "bumpy tall vegetable"
+21:37:41 [----] }
+21:37:41 [----] [Claude:scene-game-question] >>> PROMPT (3120 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:41 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:41 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:41 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:41 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:41 [----] clearly different one (vary the property described, the phrasing,
+21:37:41 [----] or the sentence opener):
+21:37:41 [----]   - Find me something with lots of little bumps in rows!
+21:37:41 [----]   - Find me something with lots of rows!
+21:37:41 [----]   - Can you find something small and yellow?
+21:37:41 [----]   - Find something long and yellow!
+21:37:41 [----]   - Find me a round red fruit!
+21:37:41 [----]   - Find me something orange and long!
+21:37:41 [----]   - Find me something yellow with bumps!
+21:37:41 [----]   - Find me a sour yellow fruit!
+21:37:41 [----]   - Find me something crunchy and orange!
+21:37:41 [----]   - Find me something yellow with lots of rows!
+21:37:41 [----]   - Find me something yellow and curved!
+21:37:41 [----]   - Find me something tall and green!
+21:37:41 [----] The TARGET object for this round is: banana.
+21:37:41 [----] Generate ONE inference-style request that lets the child figure
+21:37:41 [----] out THIS target object from its observable properties.
+21:37:41 [----] 
+21:37:41 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:41 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:41 [----]   lemon, banana, corn, carrot
+21:37:41 [----] Refer to the target only as "it", "something", "one", or by
+21:37:41 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:41 [----] must INFER which object you mean from the description.
+21:37:41 [----] 
+21:37:41 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:41 [----] - A single noun (the object type) with at most ONE adjective
+21:37:41 [----]   describing color, size, or category.
+21:37:41 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:41 [----]   "tomato", "yellow fruit", "round ball".
+21:37:41 [----] - BAD criteria (do NOT produce these):
+21:37:41 [----]     * "red car moving block" (compound / multi-object)
+21:37:41 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:41 [----]     * "toy that you can stack" (function-based, vague)
+21:37:41 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:41 [----] 
+21:37:41 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:41 [----] target among the available toys. Before answering, check every
+21:37:41 [----] other toy in the list: if it also fits your description, revise
+21:37:41 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:41 [----] (a property no other listed toy shares).
+21:37:41 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:41 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:41 [----] and long!" is GOOD (only the banana matches).
+21:37:41 [----] 
+21:37:41 [----] The criteria MUST describe the target object (banana).
+21:37:41 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:41 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:41 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:41 [----] - Question: "Show me something green that goes ROAR!"
+21:37:41 [----]   (criteria: green dinosaur)
+21:37:41 [----] BAD examples (do NOT do these):
+21:37:41 [----] - "Show me the red apple!" — names the target.
+21:37:41 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:41 [----]   toys could match.
+21:37:41 [----] 
+21:37:41 [----] Return ONLY a JSON object:
+21:37:41 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:43 [----] [Claude:scene-game-question] <<< RESPONSE (71 chars):
+21:37:43 [----] {"question": "Find me a fruit that bends!", "criteria": "curved fruit"}
+21:37:43 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a fruit that bends!", "criteria": "curved fruit"}
+21:37:43 [----] [SceneGame] Parsed question JSON: {
+21:37:43 [----]   "question": "Find me a fruit that bends!",
+21:37:43 [----]   "criteria": "curved fruit"
+21:37:43 [----] }
+21:37:43 [----] [Claude:scene-game-question] >>> PROMPT (3095 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:43 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:43 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:43 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:43 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:43 [----] clearly different one (vary the property described, the phrasing,
+21:37:43 [----] or the sentence opener):
+21:37:43 [----]   - Find me something with lots of rows!
+21:37:43 [----]   - Find me a fruit that bends!
+21:37:43 [----]   - Can you find something small and yellow?
+21:37:43 [----]   - Find something long and yellow!
+21:37:43 [----]   - Find me a round red fruit!
+21:37:43 [----]   - Find me something orange and long!
+21:37:43 [----]   - Find me something yellow with bumps!
+21:37:43 [----]   - Find me a sour yellow fruit!
+21:37:43 [----]   - Find me something crunchy and orange!
+21:37:43 [----]   - Find me something yellow with lots of rows!
+21:37:43 [----]   - Find me something yellow and curved!
+21:37:43 [----]   - Find me something tall and green!
+21:37:43 [----] The TARGET object for this round is: carrot.
+21:37:43 [----] Generate ONE inference-style request that lets the child figure
+21:37:43 [----] out THIS target object from its observable properties.
+21:37:43 [----] 
+21:37:43 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:43 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:43 [----]   lemon, banana, corn, carrot
+21:37:43 [----] Refer to the target only as "it", "something", "one", or by
+21:37:43 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:43 [----] must INFER which object you mean from the description.
+21:37:43 [----] 
+21:37:43 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:43 [----] - A single noun (the object type) with at most ONE adjective
+21:37:43 [----]   describing color, size, or category.
+21:37:43 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:43 [----]   "tomato", "yellow fruit", "round ball".
+21:37:43 [----] - BAD criteria (do NOT produce these):
+21:37:43 [----]     * "red car moving block" (compound / multi-object)
+21:37:43 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:43 [----]     * "toy that you can stack" (function-based, vague)
+21:37:43 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:43 [----] 
+21:37:43 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:43 [----] target among the available toys. Before answering, check every
+21:37:43 [----] other toy in the list: if it also fits your description, revise
+21:37:43 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:43 [----] (a property no other listed toy shares).
+21:37:43 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:43 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:43 [----] and long!" is GOOD (only the banana matches).
+21:37:43 [----] 
+21:37:43 [----] The criteria MUST describe the target object (carrot).
+21:37:43 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:43 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:43 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:43 [----] - Question: "Show me something green that goes ROAR!"
+21:37:43 [----]   (criteria: green dinosaur)
+21:37:43 [----] BAD examples (do NOT do these):
+21:37:43 [----] - "Show me the red apple!" — names the target.
+21:37:43 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:43 [----]   toys could match.
+21:37:43 [----] 
+21:37:43 [----] Return ONLY a JSON object:
+21:37:43 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:44 [----] [Claude:scene-game-question] <<< RESPONSE (91 chars):
+21:37:44 [----] {"question": "Find me something pointy and orange!", "criteria": "orange pointy vegetable"}
+21:37:44 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something pointy and orange!", "criteria": "orange pointy vegetable"}
+21:37:44 [----] [SceneGame] Parsed question JSON: {
+21:37:44 [----]   "question": "Find me something pointy and orange!",
+21:37:44 [----]   "criteria": "orange pointy vegetable"
+21:37:44 [----] }
+21:37:44 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me something pointy and orange!'
+21:37:44 [----] [Claude:scene-game-question] >>> PROMPT (3091 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:44 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:44 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:44 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:44 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:44 [----] clearly different one (vary the property described, the phrasing,
+21:37:44 [----] or the sentence opener):
+21:37:44 [----]   - Find me something with lots of rows!
+21:37:44 [----]   - Find me a fruit that bends!
+21:37:44 [----]   - Can you find something small and yellow?
+21:37:44 [----]   - Find something long and yellow!
+21:37:44 [----]   - Find me a round red fruit!
+21:37:44 [----]   - Find me something orange and long!
+21:37:44 [----]   - Find me something yellow with bumps!
+21:37:44 [----]   - Find me a sour yellow fruit!
+21:37:44 [----]   - Find me something crunchy and orange!
+21:37:44 [----]   - Find me something yellow with lots of rows!
+21:37:44 [----]   - Find me something yellow and curved!
+21:37:44 [----]   - Find me something tall and green!
+21:37:44 [----] The TARGET object for this round is: corn.
+21:37:44 [----] Generate ONE inference-style request that lets the child figure
+21:37:44 [----] out THIS target object from its observable properties.
+21:37:44 [----] 
+21:37:44 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:44 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:44 [----]   lemon, banana, corn, carrot
+21:37:44 [----] Refer to the target only as "it", "something", "one", or by
+21:37:44 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:44 [----] must INFER which object you mean from the description.
+21:37:44 [----] 
+21:37:44 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:44 [----] - A single noun (the object type) with at most ONE adjective
+21:37:44 [----]   describing color, size, or category.
+21:37:44 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:44 [----]   "tomato", "yellow fruit", "round ball".
+21:37:44 [----] - BAD criteria (do NOT produce these):
+21:37:44 [----]     * "red car moving block" (compound / multi-object)
+21:37:44 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:44 [----]     * "toy that you can stack" (function-based, vague)
+21:37:44 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:44 [----] 
+21:37:44 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:44 [----] target among the available toys. Before answering, check every
+21:37:44 [----] other toy in the list: if it also fits your description, revise
+21:37:44 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:44 [----] (a property no other listed toy shares).
+21:37:44 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:44 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:44 [----] and long!" is GOOD (only the banana matches).
+21:37:44 [----] 
+21:37:44 [----] The criteria MUST describe the target object (corn).
+21:37:44 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:44 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:44 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:44 [----] - Question: "Show me something green that goes ROAR!"
+21:37:44 [----]   (criteria: green dinosaur)
+21:37:44 [----] BAD examples (do NOT do these):
+21:37:44 [----] - "Show me the red apple!" — names the target.
+21:37:44 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:44 [----]   toys could match.
+21:37:44 [----] 
+21:37:44 [----] Return ONLY a JSON object:
+21:37:44 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:45 [a017] └─ DONE  POST /api/scene/start -> 200 in 5015ms
+21:37:48 [----] [Claude:scene-game-question] <<< RESPONSE (504 chars):
+21:37:48 [----] {"question": "Find me something with lots of rows!", "criteria": "corn"}
+21:37:48 [----] 
+21:37:48 [----] Wait, that question was already used. Let me try again.
+21:37:48 [----] 
+21:37:48 [----] {"question": "Find me something yellow you can peel row by row!", "criteria": "yellow rows"}
+21:37:48 [----] 
+21:37:48 [----] Hmm, let me reconsider and keep it simple and within MLU guidelines.
+21:37:48 [----] 
+21:37:48 [----] {"question": "Find something with many little rows!", "criteria": "rows of kernels"}
+21:37:48 [----] 
+21:37:48 [----] Let me produce a clean final answer:
+21:37:48 [----] 
+21:37:48 [----] {"question": "Find me something bumpy and tall!", "criteria": "tall bumpy vegetable"}
+21:37:48 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me something with lots of rows!", "criteria": "corn"}
+21:37:48 [----] 
+21:37:48 [----] Wait, that question was already used. Let me try again.
+21:37:48 [----] 
+21:37:48 [----] {"question": "Find me something yellow you can peel row by row!", "criteria": "yellow rows"}
+21:37:48 [----] 
+21:37:48 [----] Hmm, let me reconsider and keep it simple and within MLU guidelines.
+21:37:48 [----] 
+21:37:48 [----] {"question": "Find something with many little rows!", "criteria": "rows of kernels"}
+21:37:48 [----] 
+21:37:48 [----] Let me produce a clean final answer:
+21:37:48 [----] 
+21:37:48 [----] {"question": "Find me something bumpy and tall!", "criteria": "tall bumpy vegetable"}
+21:37:48 [----] [SceneGame] Parsed question JSON: {
+21:37:48 [----]   "question": "Find me something with lots of rows!",
+21:37:48 [----]   "criteria": "corn"
+21:37:48 [----] }
+21:37:48 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Find me something with lots of rows!'
+21:37:48 [----] [Claude:scene-game-question] >>> PROMPT (3093 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:37:48 [----] You are generating a question for an object detection game for a 4-year-old child.
+21:37:48 [----] Available physical toys: lemon, banana, corn, carrot.
+21:37:48 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep the question within that length and use sentence structures a child at this language level produces.
+21:37:48 [----] Do NOT repeat any of these previously asked questions — write a
+21:37:48 [----] clearly different one (vary the property described, the phrasing,
+21:37:48 [----] or the sentence opener):
+21:37:48 [----]   - Find me something with lots of rows!
+21:37:48 [----]   - Find me a fruit that bends!
+21:37:48 [----]   - Can you find something small and yellow?
+21:37:48 [----]   - Find something long and yellow!
+21:37:48 [----]   - Find me a round red fruit!
+21:37:48 [----]   - Find me something orange and long!
+21:37:48 [----]   - Find me something yellow with bumps!
+21:37:48 [----]   - Find me a sour yellow fruit!
+21:37:48 [----]   - Find me something crunchy and orange!
+21:37:48 [----]   - Find me something yellow with lots of rows!
+21:37:48 [----]   - Find me something yellow and curved!
+21:37:48 [----]   - Find me something tall and green!
+21:37:48 [----] The TARGET object for this round is: lemon.
+21:37:48 [----] Generate ONE inference-style request that lets the child figure
+21:37:48 [----] out THIS target object from its observable properties.
+21:37:48 [----] 
+21:37:48 [----] HARD RULE — the QUESTION text must NOT name the target object.
+21:37:48 [----] It must NEVER contain any of these noun names from the toy list:
+21:37:48 [----]   lemon, banana, corn, carrot
+21:37:48 [----] Refer to the target only as "it", "something", "one", or by
+21:37:48 [----] a generic placeholder like "a fruit" or "a vehicle". The child
+21:37:48 [----] must INFER which object you mean from the description.
+21:37:48 [----] 
+21:37:48 [----] CRITICAL — the criteria must describe ONE simple, concrete object:
+21:37:48 [----] - A single noun (the object type) with at most ONE adjective
+21:37:48 [----]   describing color, size, or category.
+21:37:48 [----] - Good criteria: "banana", "red car", "green dinosaur",
+21:37:48 [----]   "tomato", "yellow fruit", "round ball".
+21:37:48 [----] - BAD criteria (do NOT produce these):
+21:37:48 [----]     * "red car moving block" (compound / multi-object)
+21:37:48 [----]     * "big round shiny red fruit on a tree" (too many properties)
+21:37:48 [----]     * "toy that you can stack" (function-based, vague)
+21:37:48 [----] - Do not chain multiple objects or stack three+ adjectives.
+21:37:48 [----] 
+21:37:48 [----] UNIQUENESS RULE — the question's description must fit ONLY the
+21:37:48 [----] target among the available toys. Before answering, check every
+21:37:48 [----] other toy in the list: if it also fits your description, revise
+21:37:48 [----] the question to use a more DISTINGUISHING feature of the target
+21:37:48 [----] (a property no other listed toy shares).
+21:37:48 [----] Example: with both a banana and a lemon in the list, "Find
+21:37:48 [----] something yellow!" is BAD (both match) — "Find something yellow
+21:37:48 [----] and long!" is GOOD (only the banana matches).
+21:37:48 [----] 
+21:37:48 [----] The criteria MUST describe the target object (lemon).
+21:37:48 [----] Use simple, clear language appropriate for ages 4-6.
+21:37:48 [----] Good examples (target NOT named, exactly ONE listed toy fits):
+21:37:48 [----] - Question: "I want a red fruit!" (criteria: red fruit)
+21:37:48 [----] - Question: "Show me something green that goes ROAR!"
+21:37:48 [----]   (criteria: green dinosaur)
+21:37:48 [----] BAD examples (do NOT do these):
+21:37:48 [----] - "Show me the red apple!" — names the target.
+21:37:48 [----] - "Find something tall and yellow!" — ambiguous: several yellow
+21:37:48 [----]   toys could match.
+21:37:48 [----] 
+21:37:48 [----] Return ONLY a JSON object:
+21:37:48 [----] {"question": "<the sentence — must NOT contain any toy name>", "criteria": "<short criteria phrase: one noun + at most one adjective>"}
+21:37:50 [----] [Claude:scene-game-question] <<< RESPONSE (79 chars):
+21:37:50 [----] {"question": "Find me a round yellow fruit!", "criteria": "round yellow fruit"}
+21:37:50 [----] [SceneGame] Gemini raw question response (attempt 1): {"question": "Find me a round yellow fruit!", "criteria": "round yellow fruit"}
+21:37:50 [----] [SceneGame] Parsed question JSON: {
+21:37:50 [----]   "question": "Find me a round yellow fruit!",
+21:37:50 [----]   "criteria": "round yellow fruit"
+21:37:50 [----] }
+21:37:50 [----] [SceneGame] criteria pool ready for maya: 10 question(s)
+21:37:56 [21e3] ┌─ WORK  POST /api/scene/start | fields: mode
+21:37:56 [21e3] self.engine :  qwen
+21:38:02 [21e3] └─ DONE  POST /api/scene/start -> 200 in 6221ms
+21:38:12 [2d75] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:38:12 [2d75] [Claude:scene-game-validate-spatial] >>> PROMPT (1905 chars) | model: claude-sonnet-4-6 | system: You judge a children's spatial-direction game from one photo. Return JSON only.
+21:38:12 [2d75] You are judging a children's spatial-direction game.
+21:38:12 [2d75] The valid game objects are: lemon,banana,corn,carrot,tray. Only identify objects from this list.
+21:38:12 [2d75] The child was asked to arrange the scene so that the corn is on top of the tray.
+21:38:12 [2d75] 
+21:38:12 [2d75] The image is taken from the front of the child (camera-facing view).
+21:38:12 [2d75] Decide:
+21:38:12 [2d75] 1. Is the corn present in the scene?
+21:38:12 [2d75] 2. Is the tray present in the scene?
+21:38:12 [2d75] 3. What is the actual spatial relation of the corn TO the tray? Pick ONE:
+21:38:12 [2d75]    - next_to       (side by side, roughly same height)
+21:38:12 [2d75]    - above         (higher than / on top of)
+21:38:12 [2d75]    - under         (lower than / underneath)
+21:38:12 [2d75]    - behind        (further from the camera, partially hidden)
+21:38:12 [2d75]    - in_front_of   (closer to camera, may partially block the other)
+21:38:12 [2d75]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:38:12 [2d75]    - out           (outside / not contained by the other; fully visible and separate)
+21:38:12 [2d75]    - other         (none of the above clearly applies)
+21:38:12 [2d75] 4. Does that match the requested relation 'above'?
+21:38:12 [2d75] 
+21:38:12 [2d75] Tips:
+21:38:12 [2d75] - 'behind' means partially hidden by the reference object, or visibly
+21:38:12 [2d75]   smaller/further along the camera's depth axis.
+21:38:12 [2d75] - 'in_front_of' means the moving object partly occludes or sits
+21:38:12 [2d75]   closer to the camera than the reference object.
+21:38:12 [2d75] - 'in' means the moving object is contained by the reference object
+21:38:12 [2d75]   (e.g. ball inside a cup or box) — typically partly hidden by the
+21:38:12 [2d75]   rim/walls of the container.
+21:38:12 [2d75] - 'out' means the moving object is clearly outside the reference
+21:38:12 [2d75]   object, fully visible, with a visible gap between them.
+21:38:12 [2d75] If you cannot tell confidently, return 'other'.
+21:38:12 [2d75] 
+21:38:12 [2d75] Return ONLY a JSON object with no markdown fences:
+21:38:12 [2d75] {
+21:38:12 [2d75]   "obj_a_found": true|false,
+21:38:12 [2d75]   "obj_b_found": true|false,
+21:38:12 [2d75]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:38:12 [2d75]   "correct": true|false,
+21:38:12 [2d75]   "reason": "<short, child-friendly explanation>"
+21:38:12 [2d75] }
+21:38:12 [2d75] If either object is missing, set correct=false.
+21:38:14 [2d75] [Claude:scene-game-validate-spatial] <<< RESPONSE (214 chars):
+21:38:14 [2d75] {
+21:38:14 [2d75]   "obj_a_found": true,
+21:38:14 [2d75]   "obj_b_found": true,
+21:38:14 [2d75]   "actual_relation": "in",
+21:38:14 [2d75]   "correct": false,
+21:38:14 [2d75]   "reason": "The corn is sitting inside the tray, not on top of it. Try placing the corn on top of the tray instead!"
+21:38:14 [2d75] }
+21:38:14 [2d75] [SceneGame] claude_validate_spatial raw: {
+21:38:14 [2d75]   "obj_a_found": true,
+21:38:14 [2d75]   "obj_b_found": true,
+21:38:14 [2d75]   "actual_relation": "in",
+21:38:14 [2d75]   "correct": false,
+21:38:14 [2d75]   "reason": "The corn is sitting inside the tray, not on top of it. Try placing the corn on top of the tray instead!"
+21:38:14 [2d75] }
+21:38:14 [2d75] self.engine :  qwen
+21:38:20 [2d75] └─ DONE  POST /api/scene_game/answer -> 200 in 8059ms
+21:38:36 [efb0] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:38:36 [efb0] [Claude:scene-game-validate-spatial] >>> PROMPT (1905 chars) | model: claude-sonnet-4-6 | system: You judge a children's spatial-direction game from one photo. Return JSON only.
+21:38:36 [efb0] You are judging a children's spatial-direction game.
+21:38:36 [efb0] The valid game objects are: lemon,banana,corn,carrot,tray. Only identify objects from this list.
+21:38:36 [efb0] The child was asked to arrange the scene so that the corn is on top of the tray.
+21:38:36 [efb0] 
+21:38:36 [efb0] The image is taken from the front of the child (camera-facing view).
+21:38:36 [efb0] Decide:
+21:38:36 [efb0] 1. Is the corn present in the scene?
+21:38:36 [efb0] 2. Is the tray present in the scene?
+21:38:36 [efb0] 3. What is the actual spatial relation of the corn TO the tray? Pick ONE:
+21:38:36 [efb0]    - next_to       (side by side, roughly same height)
+21:38:36 [efb0]    - above         (higher than / on top of)
+21:38:36 [efb0]    - under         (lower than / underneath)
+21:38:36 [efb0]    - behind        (further from the camera, partially hidden)
+21:38:36 [efb0]    - in_front_of   (closer to camera, may partially block the other)
+21:38:36 [efb0]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:38:36 [efb0]    - out           (outside / not contained by the other; fully visible and separate)
+21:38:36 [efb0]    - other         (none of the above clearly applies)
+21:38:36 [efb0] 4. Does that match the requested relation 'above'?
+21:38:36 [efb0] 
+21:38:36 [efb0] Tips:
+21:38:36 [efb0] - 'behind' means partially hidden by the reference object, or visibly
+21:38:36 [efb0]   smaller/further along the camera's depth axis.
+21:38:36 [efb0] - 'in_front_of' means the moving object partly occludes or sits
+21:38:36 [efb0]   closer to the camera than the reference object.
+21:38:36 [efb0] - 'in' means the moving object is contained by the reference object
+21:38:36 [efb0]   (e.g. ball inside a cup or box) — typically partly hidden by the
+21:38:36 [efb0]   rim/walls of the container.
+21:38:36 [efb0] - 'out' means the moving object is clearly outside the reference
+21:38:36 [efb0]   object, fully visible, with a visible gap between them.
+21:38:36 [efb0] If you cannot tell confidently, return 'other'.
+21:38:36 [efb0] 
+21:38:36 [efb0] Return ONLY a JSON object with no markdown fences:
+21:38:36 [efb0] {
+21:38:36 [efb0]   "obj_a_found": true|false,
+21:38:36 [efb0]   "obj_b_found": true|false,
+21:38:36 [efb0]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:38:36 [efb0]   "correct": true|false,
+21:38:36 [efb0]   "reason": "<short, child-friendly explanation>"
+21:38:36 [efb0] }
+21:38:36 [efb0] If either object is missing, set correct=false.
+21:38:39 [efb0] [Claude:scene-game-validate-spatial] <<< RESPONSE (204 chars):
+21:38:39 [efb0] {
+21:38:39 [efb0]   "obj_a_found": true,
+21:38:39 [efb0]   "obj_b_found": true,
+21:38:39 [efb0]   "actual_relation": "above",
+21:38:39 [efb0]   "correct": true,
+21:38:39 [efb0]   "reason": "Great job! The corn is sitting right on top of the tray. That's exactly where it should be!"
+21:38:39 [efb0] }
+21:38:39 [efb0] [SceneGame] claude_validate_spatial raw: {
+21:38:39 [efb0]   "obj_a_found": true,
+21:38:39 [efb0]   "obj_b_found": true,
+21:38:39 [efb0]   "actual_relation": "above",
+21:38:39 [efb0]   "correct": true,
+21:38:39 [efb0]   "reason": "Great job! The corn is sitting right on top of the tray. That's exactly where it should be!"
+21:38:39 [efb0] }
+21:38:39 [efb0] self.engine :  qwen
+21:38:46 [efb0] └─ DONE  POST /api/scene_game/answer -> 200 in 9860ms
+21:38:50 [a82c] ┌─ WORK  POST /api/scene/start | fields: mode
+21:38:50 [a82c] self.engine :  qwen
+21:38:55 [a82c] └─ DONE  POST /api/scene/start -> 200 in 5176ms
+21:39:44 [988d] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:39:44 [988d] [Claude:scene-game-validate-spatial] >>> PROMPT (1908 chars) | model: claude-sonnet-4-6 | system: You judge a children's spatial-direction game from one photo. Return JSON only.
+21:39:44 [988d] You are judging a children's spatial-direction game.
+21:39:44 [988d] The valid game objects are: lemon,banana,corn,carrot,tray. Only identify objects from this list.
+21:39:44 [988d] The child was asked to arrange the scene so that the lemon is next to the corn.
+21:39:44 [988d] 
+21:39:44 [988d] The image is taken from the front of the child (camera-facing view).
+21:39:44 [988d] Decide:
+21:39:44 [988d] 1. Is the lemon present in the scene?
+21:39:44 [988d] 2. Is the corn present in the scene?
+21:39:44 [988d] 3. What is the actual spatial relation of the lemon TO the corn? Pick ONE:
+21:39:44 [988d]    - next_to       (side by side, roughly same height)
+21:39:44 [988d]    - above         (higher than / on top of)
+21:39:44 [988d]    - under         (lower than / underneath)
+21:39:44 [988d]    - behind        (further from the camera, partially hidden)
+21:39:44 [988d]    - in_front_of   (closer to camera, may partially block the other)
+21:39:44 [988d]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:39:44 [988d]    - out           (outside / not contained by the other; fully visible and separate)
+21:39:44 [988d]    - other         (none of the above clearly applies)
+21:39:44 [988d] 4. Does that match the requested relation 'next_to'?
+21:39:44 [988d] 
+21:39:44 [988d] Tips:
+21:39:44 [988d] - 'behind' means partially hidden by the reference object, or visibly
+21:39:44 [988d]   smaller/further along the camera's depth axis.
+21:39:44 [988d] - 'in_front_of' means the moving object partly occludes or sits
+21:39:44 [988d]   closer to the camera than the reference object.
+21:39:44 [988d] - 'in' means the moving object is contained by the reference object
+21:39:44 [988d]   (e.g. ball inside a cup or box) — typically partly hidden by the
+21:39:44 [988d]   rim/walls of the container.
+21:39:44 [988d] - 'out' means the moving object is clearly outside the reference
+21:39:44 [988d]   object, fully visible, with a visible gap between them.
+21:39:44 [988d] If you cannot tell confidently, return 'other'.
+21:39:44 [988d] 
+21:39:44 [988d] Return ONLY a JSON object with no markdown fences:
+21:39:44 [988d] {
+21:39:44 [988d]   "obj_a_found": true|false,
+21:39:44 [988d]   "obj_b_found": true|false,
+21:39:44 [988d]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:39:44 [988d]   "correct": true|false,
+21:39:44 [988d]   "reason": "<short, child-friendly explanation>"
+21:39:44 [988d] }
+21:39:44 [988d] If either object is missing, set correct=false.
+21:39:47 [988d] [Claude:scene-game-validate-spatial] <<< RESPONSE (227 chars):
+21:39:47 [988d] {
+21:39:47 [988d]   "obj_a_found": true,
+21:39:47 [988d]   "obj_b_found": true,
+21:39:47 [988d]   "actual_relation": "next_to",
+21:39:47 [988d]   "correct": true,
+21:39:47 [988d]   "reason": "Great job! The lemon and the corn are sitting side by side on the white tray. They are right next to each other!"
+21:39:47 [988d] }
+21:39:47 [988d] [SceneGame] claude_validate_spatial raw: {
+21:39:47 [988d]   "obj_a_found": true,
+21:39:47 [988d]   "obj_b_found": true,
+21:39:47 [988d]   "actual_relation": "next_to",
+21:39:47 [988d]   "correct": true,
+21:39:47 [988d]   "reason": "Great job! The lemon and the corn are sitting side by side on the white tray. They are right next to each other!"
+21:39:47 [988d] }
+21:39:47 [988d] self.engine :  qwen
+21:39:54 [988d] └─ DONE  POST /api/scene_game/answer -> 200 in 9173ms
+21:40:44 [1c3e] ┌─ WORK  POST /api/logout
+21:40:44 [1c3e] └─ DONE  POST /api/logout -> 200 in 6ms
+21:40:48 [b1c6] ┌─ WORK  POST /api/login | fields: username
+21:40:48 [b1c6] └─ DONE  POST /api/login -> 200 in 7ms
+21:40:48 [3368] ┌─ WORK  POST /api/login | fields: username
+21:40:48 [3368] └─ DONE  POST /api/login -> 200 in 6ms
+21:40:49 [282f] ┌─ WORK  GET /
+21:40:49 [282f] └─ DONE  GET / -> 200 in 1ms
+21:40:51 [a11b] ┌─ WORK  GET /object_game_generate
+21:40:51 [a11b] └─ DONE  GET /object_game_generate -> 200 in 1ms
+21:40:51 [321a] ┌─ WORK  GET /api/scene_game/toys
+21:40:51 [7f6d] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:40:51 [312c] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:40:51 [321a] └─ DONE  GET /api/scene_game/toys -> 200 in 4ms
+21:40:51 [7f6d] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:40:51 [312c] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:40:53 [2a5d] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:40:53 [2a5d] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms\\\\\\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+21:40:53 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:40:53 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:40:53 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the banana behind the corn."
+21:40:53 [----] [SceneGame] criteria pool ready for leo: 10 question(s)
+21:40:53 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot below the corn."
+21:40:53 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot next to the banana."
+21:40:53 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot below the corn."
+21:40:53 [----] [SceneGame] direction pool ready for leo: 10 question(s)
+21:40:54 [4f68] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:40:54 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:40:54 [4f68] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:40:54 [72dc] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:40:54 [5610] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:40:54 [----] [SceneGame] criteria pool ready for leo: 10 question(s)
+21:40:54 [72dc] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:40:54 [5610] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:40:56 [0eda] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:40:56 [c2bd] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:40:56 [0eda] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:40:56 [c2bd] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:41:00 [70d0] ┌─ WORK  GET /play_scene
+21:41:00 [70d0] └─ DONE  GET /play_scene -> 200 in 1ms
+21:41:02 [37ff] ┌─ WORK  POST /api/scene/start | fields: mode
+21:41:02 [37ff] self.engine :  qwen
+21:41:07 [37ff] └─ DONE  POST /api/scene/start -> 200 in 4608ms
+21:41:15 [caae] ┌─ WORK  POST /api/scene/start | fields: mode
+21:41:15 [caae] self.engine :  qwen
+21:41:19 [caae] └─ DONE  POST /api/scene/start -> 200 in 4296ms
+21:41:22 [2f39] ┌─ WORK  POST /api/scene/start | fields: mode
+21:41:22 [2f39] self.engine :  qwen
+21:41:25 [2f39] └─ DONE  POST /api/scene/start -> 200 in 3749ms
+21:41:32 [9b15] ┌─ WORK  POST /api/scene/start | fields: mode
+21:41:32 [9b15] self.engine :  qwen
+21:41:37 [9b15] └─ DONE  POST /api/scene/start -> 200 in 4425ms
+21:41:43 [a7ec] ┌─ WORK  POST /api/scene/start | fields: mode
+21:41:43 [a7ec] self.engine :  qwen
+21:41:47 [a7ec] └─ DONE  POST /api/scene/start -> 200 in 4155ms
+21:41:53 [30d4] ┌─ WORK  POST /api/scene/start | fields: mode
+21:41:53 [30d4] self.engine :  qwen
+21:41:57 [30d4] └─ DONE  POST /api/scene/start -> 200 in 3962ms
+21:42:02 [1b1e] ┌─ WORK  POST /api/scene/start | fields: mode
+21:42:02 [1b1e] self.engine :  qwen
+21:42:07 [1b1e] └─ DONE  POST /api/scene/start -> 200 in 4589ms

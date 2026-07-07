@@ -1,0 +1,65 @@
+{
+  "scene_description": "A child wearing a red and white striped jersey and blue shorts is kicking a black and white soccer ball on a green grass field. Other players are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the child kicking?",
+      "answer": "a soccer ball",
+      "visual_choices": [
+        "a soccer ball",
+        "a helmet",
+        "a water bottle",
+        "a shoe"
+      ],
+      "evidence_hint": "Look near the child's foot at the bottom of the picture."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is kicking the ball?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a dog",
+        "a baby",
+        "an adult"
+      ],
+      "evidence_hint": "Look at the person running in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the child's shirt?",
+      "answer": "red and white",
+      "visual_choices": [
+        "red and white",
+        "all blue",
+        "yellow",
+        "green and black"
+      ],
+      "evidence_hint": "Look at the stripes on the shirt the child is wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the child playing?",
+      "answer": "on a grass field",
+      "visual_choices": [
+        "on a grass field",
+        "in a pool",
+        "in a gym",
+        "on a sidewalk"
+      ],
+      "evidence_hint": "Look at the ground all around the child."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the soccer ball?",
+      "answer": "black and white",
+      "visual_choices": [
+        "black and white",
+        "all red",
+        "orange",
+        "yellow and blue"
+      ],
+      "evidence_hint": "Look closely at the ball near the child's foot."
+    }
+  ]
+}

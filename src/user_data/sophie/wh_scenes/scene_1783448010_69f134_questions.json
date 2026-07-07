@@ -1,0 +1,65 @@
+{
+  "scene_description": "A boy sits on green grass next to a tree trunk. Two American flags are displayed nearby, and a driveway or road is visible in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is sitting on the grass?",
+      "answer": "a boy",
+      "visual_choices": [
+        "a boy",
+        "a girl",
+        "a dog",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person sitting near the tree."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the boy sitting next to?",
+      "answer": "a tree",
+      "visual_choices": [
+        "a tree",
+        "a car",
+        "a bench",
+        "a fence"
+      ],
+      "evidence_hint": "Look right behind the boy."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the boy's shirt?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at what the boy is wearing on top."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the boy sitting?",
+      "answer": "on the grass",
+      "visual_choices": [
+        "on the grass",
+        "in a pool",
+        "on a sidewalk",
+        "at a table"
+      ],
+      "evidence_hint": "Look at the ground underneath the boy."
+    },
+    {
+      "wh_type": "what",
+      "question": "What flags are in the picture?",
+      "answer": "American flags",
+      "visual_choices": [
+        "American flags",
+        "balloons",
+        "kites",
+        "banners"
+      ],
+      "evidence_hint": "Look at the tall red, white, and blue things near the road."
+    }
+  ]
+}

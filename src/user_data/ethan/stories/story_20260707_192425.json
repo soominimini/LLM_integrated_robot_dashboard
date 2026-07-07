@@ -1,0 +1,156 @@
+{
+  "story": "Ethan had reached the treasure room in his favorite video game, but a giant red creature was blocking the golden chest. Although Ethan tried three different buttons, nothing worked.\n\n[emotion:QT/sad] \"I think I need help,\" Ethan said quietly, because he had never felt so stuck before.\n\nHis neighbor Ravi came over and sat beside him. Ravi had played this level before and remembered the trick.\n\n\"You have to throw the cheese block first, then run left,\" Ravi explained, pointing carefully at the corner of the screen.\n\n[emotion:QT/surprised] \"I always went right,\" Ethan said, surprised.\n\nThey took turns \u2014 Ethan threw the block while Ravi called out directions. After three tries, the creature chased the cheese and the chest swung open. The room filled with bright, glittery light, and both of them cheered so loudly that Ethan's dog ran in barking. [emotion:QT/happy] [gesture:emotions/hoora] Ethan felt something warm and proud in his chest, like sunshine behind a cloud. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [],
+    "word_count": 266,
+    "paragraph_count": 8,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      2,
+      3,
+      3,
+      4,
+      5,
+      6,
+      6,
+      6,
+      7
+    ],
+    "title": "The Treasure Room Glitch"
+  },
+  "pages": [
+    "Ethan had reached the treasure room in his favorite video game, but a giant red creature was blocking the golden chest. Although Ethan tried three different buttons, nothing worked.",
+    "[emotion:QT/sad] \"I think I need help,\" Ethan said quietly, because he had never felt so stuck before.",
+    "His neighbor Ravi came over and sat beside him. Ravi had played this level before and remembered the trick.",
+    "\"You have to throw the cheese block first, then run left,\" Ravi explained, pointing carefully at the corner of the screen. [emotion:QT/surprised] \"I always went right,\" Ethan said, surprised.",
+    "They took turns Ethan threw the block while Ravi called out directions. After three tries, the creature chased the cheese and the chest swung open. The room filled with bright, glittery light, and both of them cheered so loudly that Ethan's dog ran in barking. [emotion:QT/happy] [gesture:emotions/hoora] Ethan felt something warm and proud in his chest, like sunshine behind a cloud."
+  ],
+  "paragraphs": [
+    "Ethan had reached the treasure room in his favorite video game, but a giant red creature was blocking the golden chest. Although Ethan tried three different buttons, nothing worked.",
+    "\"I think I need help,\" Ethan said quietly, because he had never felt so stuck before.",
+    "His neighbor Ravi came over and sat beside him. Ravi had played this level before and remembered the trick.",
+    "\"You have to throw the cheese block first, then run left,\" Ravi explained, pointing carefully at the corner of the screen.",
+    "\"I always went right,\" Ethan said, surprised.",
+    "They took turns \u2014 Ethan threw the block while Ravi called out directions. After three tries, the creature chased the cheese and the chest swung open. The room filled with bright, glittery light, and both of them cheered so loudly that Ethan's dog ran in barking. Ethan felt something warm and proud in his chest, like sunshine behind a cloud."
+  ],
+  "scenes": [
+    "Ethan sits alone at his gaming setup, facing a TV screen showing a giant red creature blocking a golden chest, his hands on the controller with a frustrated expression.",
+    "Ethan sits back from the controller, looking quietly defeated, speaking softly to himself or toward the door.",
+    "Ravi sits beside Ethan on the couch, both boys looking at the TV screen together, Ravi leaning in with a knowing expression.",
+    "Ravi points at the corner of the TV screen, explaining the strategy to Ethan who listens with wide eyes.",
+    "Ethan and Ravi are side by side at the screen \u2014 Ethan throwing the cheese block in the game while Ravi calls out directions \u2014 as the creature chases the cheese, the chest bursts open in glittery light, and both boys cheer with Ethan's dog bounding into the room barking."
+  ],
+  "page_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    3
+  ],
+  "page_to_paragraph": [
+    0,
+    1,
+    2,
+    3,
+    3
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3,
+    3,
+    4
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his video game treasure chest?",
+      "type": "main_idea",
+      "correct_answer": "Asking a friend for help can save the day",
+      "wrong_answers": [
+        "Ethan was the best video game player",
+        "The treasure chest was too hard to reach"
+      ]
+    },
+    {
+      "question": "What did Ravi say Ethan had to throw first, before the creature would chase after it?",
+      "type": "detail",
+      "correct_answer": "A cheese block",
+      "wrong_answers": [
+        "A golden key",
+        "A red power-up"
+      ]
+    },
+    {
+      "question": "After Ethan threw the block and the creature chased the cheese, what happened to the treasure chest?",
+      "type": "detail",
+      "correct_answer": "It swung open and the room filled with bright, glittery light",
+      "wrong_answers": [
+        "The creature guarded it even more",
+        "Ethan ran right and grabbed the chest"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan felt something warm and proud in his chest, like sunshine behind a cloud?",
+      "type": "inference",
+      "correct_answer": "Because he asked for help and they reached the treasure together",
+      "wrong_answers": [
+        "Because he beat the level all by himself",
+        "Because his dog ran in and made them laugh"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Ethan had not asked Ravi for help with the creature?",
+      "type": "inference",
+      "correct_answer": "He would have stayed stuck and never reached the treasure",
+      "wrong_answers": [
+        "He would have thrown the cheese block on his own",
+        "The creature would have moved away by itself"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to say he needed help?",
+      "type": "takeaway",
+      "correct_answer": "Asking for help when you're stuck is a really smart thing to do.",
+      "wrong_answers": [
+        "Trying every button on your own will always solve the problem in the end.",
+        "Watching someone else play is the best way to learn a new video game."
+      ]
+    },
+    {
+      "question": "What can you learn from their behavior?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns and working together helps you solve hard problems faster.",
+      "wrong_answers": [
+        "Letting the most experienced person handle everything gets the best results.",
+        "Practicing a difficult level over and over by yourself is the quickest way to win."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Friends make even tricky challenges more fun.",
+      "wrong_answers": [
+        "Winning a game feels best when you figure out the answer completely on your own.",
+        "Playing video games is more exciting when you compete against each other."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking for help when you're stuck is a really smart thing to do.",
+    "Taking turns and working together helps you solve hard problems faster.",
+    "Friends make even tricky challenges more fun."
+  ]
+}

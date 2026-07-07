@@ -1,0 +1,149 @@
+{
+  "story": "Ethan loved superheroes more than almost anything. Before school started, he had carefully drawn a red cape on his project poster for the class \"Heroes We Admire\" display. While he was unpacking his bag that morning, his heart sank because the poster was gone. [emotion:QT/sad] Ethan searched beneath the round table and checked behind the tall blue bookshelves, but the poster had completely vanished. [emotion:QT/sad] His throat felt tight, like a knot that wouldn't loosen.\n\n\"I think it slipped under the reading corner rug,\" said his classmate Rosa, who had been watching him search. She crouched down and pointed to a corner where the rumpled edge stuck out. [emotion:QT/surprised] Together, they smoothed the crumpled edges, and Ethan carefully retaped three torn corners while Rosa held the poster steady.\n\n[emotion:QT/happy] \"Teamwork is basically a superpower,\" Rosa said, and both of them laughed.\n\nAfter that, their posters hung side by side on the bright classroom wall, looking three times better than Ethan had imagined. [emotion:QT/happy]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "school"
+    ],
+    "word_count": 264,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      5,
+      6
+    ],
+    "title": "Ethan and the Missing Cape"
+  },
+  "pages": [
+    "Ethan loved superheroes more than almost anything. Before school started, he had carefully drawn a red cape on his project poster for the class \"Heroes We Admire\" display. While he was unpacking his bag that morning, his heart sank because the poster was gone.",
+    "[emotion:QT/sad] Ethan searched beneath the round table and checked behind the tall blue bookshelves, but the poster had completely vanished. [emotion:QT/sad] His throat felt tight, like a knot that wouldn't loosen.",
+    "\"I think it slipped under the reading corner rug,\" said his classmate Rosa, who had been watching him search. She crouched down and pointed to a corner where the rumpled edge stuck out. [emotion:QT/surprised] Together, they smoothed the crumpled edges, and Ethan carefully retaped three torn corners while Rosa held the poster steady.",
+    "[emotion:QT/happy] \"Teamwork is basically a superpower,\" Rosa said, and both of them laughed. After that, their posters hung side by side on the bright classroom wall, looking three times better than Ethan had imagined."
+  ],
+  "paragraphs": [
+    "Ethan loved superheroes more than almost anything. Before school started, he had carefully drawn a red cape on his project poster for the class \"Heroes We Admire\" display. While he was unpacking his bag that morning, his heart sank because the poster was gone. Ethan searched beneath the round table and checked behind the tall blue bookshelves, but the poster had completely vanished. His throat felt tight, like a knot that wouldn't loosen.",
+    "\"I think it slipped under the reading corner rug,\" said his classmate Rosa, who had been watching him search. She crouched down and pointed to a corner where the rumpled edge stuck out. Together, they smoothed the crumpled edges, and Ethan carefully retaped three torn corners while Rosa held the poster steady.",
+    "\"Teamwork is basically a superpower,\" Rosa said, and both of them laughed.",
+    "After that, their posters hung side by side on the bright classroom wall, looking three times better than Ethan had imagined."
+  ],
+  "scenes": [
+    "Ethan searching anxiously around a classroom, checking under a round table and behind tall blue bookshelves, with a worried expression on his face.",
+    "Rosa crouching and pointing to a rug corner where the poster peeks out, while both children work together to smooth and retape the crumpled poster.",
+    "Ethan and Rosa laughing together in the classroom reading corner, sharing a joyful moment.",
+    "Two colorful posters hanging side by side on a bright classroom wall, with Ethan and Rosa standing back admiring them."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    1,
+    2
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    1,
+    2
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his superhero poster?",
+      "type": "main_idea",
+      "correct_answer": "Teamwork and friendship can help you through tough problems",
+      "wrong_answers": [
+        "Superheroes are better than real people",
+        "Drawing posters is the most important thing at school"
+      ]
+    },
+    {
+      "question": "Before Ethan found his poster, where did Rosa think the missing poster was hiding?",
+      "type": "detail",
+      "correct_answer": "Under the reading corner rug",
+      "wrong_answers": [
+        "Behind the tall blue bookshelves",
+        "Beneath the round table"
+      ]
+    },
+    {
+      "question": "After they found the crumpled poster, what three things did Ethan and Rosa do to fix it together?",
+      "type": "detail",
+      "correct_answer": "They smoothed the edges, retaped three torn corners, and Rosa held it steady",
+      "wrong_answers": [
+        "They drew a new red cape and threw the old poster away",
+        "They asked their teacher to repair it with fresh paper"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan's throat felt tight, like a knot that wouldn't loosen, when he realized his poster was gone?",
+      "type": "inference",
+      "correct_answer": "He was really sad and worried because he had worked hard on it",
+      "wrong_answers": [
+        "He was thirsty and had not drunk any water that morning",
+        "He was angry at Rosa for touching his things"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Rosa had not been there watching Ethan search for his poster?",
+      "type": "inference",
+      "correct_answer": "Ethan probably would not have found the poster under the rug",
+      "wrong_answers": [
+        "Ethan would have found three more posters behind the shelves",
+        "The teacher would have drawn a brand new superhero cape for him"
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan to let Rosa help him find the poster?",
+      "type": "takeaway",
+      "correct_answer": "Asking a friend for help can solve problems faster than struggling alone.",
+      "wrong_answers": [
+        "Searching every corner of the room by yourself is the best way to find lost things.",
+        "Waiting patiently for a teacher to notice your problem is the quickest way to fix it."
+      ]
+    },
+    {
+      "question": "What did Ethan and Rosa show us by what they did?",
+      "type": "takeaway",
+      "correct_answer": "Working together makes hard things easier and more fun.",
+      "wrong_answers": [
+        "Fixing something on your own makes you feel prouder of the finished result.",
+        "Splitting up tasks and working separately gets things done more quickly."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Good friendships grow when you notice someone who needs help.",
+      "wrong_answers": [
+        "Strong friendships are built by spending lots of time playing the same games together.",
+        "The best way to make a friend is to share your belongings and supplies with them."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Asking a friend for help can solve problems faster than struggling alone.",
+    "Working together makes hard things easier and more fun.",
+    "Good friendships grow when you notice someone who needs help."
+  ]
+}

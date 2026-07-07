@@ -177,9 +177,13 @@
 
         <ul class="toy-list" id="toyList"></ul>
 
+        <div class="count-info" id="poolInfo"></div>
+
         <div class="actions">
             <button class="btn btn-back" onclick="window.location.href='/generate'">Back</button>
             <button class="btn btn-reset" onclick="resetDefaults()">Reset</button>
+            <button class="btn btn-reset" id="pregenBtn" onclick="pregenerate('criteria')">Generate Questions</button>
+            <button class="btn btn-reset" id="pregenDirBtn" onclick="pregenerate('direction')">Generate Direction Questions</button>
             <button class="btn btn-play" onclick="window.location.href='/play_scene'">Play Game</button>
         </div>
     </div>
@@ -293,7 +297,54 @@
         function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
         function escAttr(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
 
+        // --- Pre-generated question pools (inference + direction) ---
+        let poolTimer = null;
+
+        async function refreshPoolStatus() {
+            try {
+                const [cRes, dRes] = await Promise.all([
+                    fetch('/api/scene_game/pool_status?kind=criteria'),
+                    fetch('/api/scene_game/pool_status?kind=direction')
+                ]);
+                const c = await cRes.json();
+                const d = await dRes.json();
+                const fmt = (label, s) => s.refilling
+                    ? label + ': generating… ' + s.ready + ' ready'
+                    : label + ': ' + s.ready + ' ready';
+                const parts = [];
+                if (c.success) parts.push(fmt('Inference', c));
+                if (d.success) parts.push(fmt('Direction', d));
+                document.getElementById('poolInfo').textContent = parts.join('  ·  ');
+                document.getElementById('pregenBtn').disabled = !!(c.success && c.refilling);
+                document.getElementById('pregenDirBtn').disabled = !!(d.success && d.refilling);
+                const busy = (c.success && c.refilling) || (d.success && d.refilling);
+                if (busy) {
+                    if (!poolTimer) poolTimer = setInterval(refreshPoolStatus, 2000);
+                } else if (poolTimer) {
+                    clearInterval(poolTimer); poolTimer = null;
+                }
+            } catch (e) { /* status is best-effort */ }
+        }
+
+        async function pregenerate(kind) {
+            try {
+                const res = await fetch('/api/scene_game/pregenerate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kind: kind || 'criteria' })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showAlert(data.started ? 'Question generation started' : 'Generation already running', 'success');
+                    refreshPoolStatus();
+                }
+            } catch (e) {
+                showAlert('Error: ' + e.message, 'error');
+            }
+        }
+
         loadToys();
+        refreshPoolStatus();
     </script>
 </body>
 </html>

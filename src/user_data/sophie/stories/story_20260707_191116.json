@@ -1,0 +1,105 @@
+{
+  "story": "Sophie is playing in the garden. [emotion:QT/surprised] Sophie sees a tiny fairy sitting on a red flower. The fairy has small, sparkly wings. The fairy is holding a little wand. Sophie picks three big leaves. Sophie puts the leaves in a circle on the ground. The fairy sits in the middle of the circle. Then the fairy waves the wand. [emotion:QT/surprised] Suddenly, the red flower turns bright yellow! [gesture:clapping] Sophie and the fairy clap their hands together. The fairy smiles at Sophie. [emotion:QT/happy]",
+  "metadata": {
+    "age": 5,
+    "age_tier": "wh_question_format",
+    "child_name": "sophie",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "topics": [],
+    "word_count": 206,
+    "paragraph_count": 2,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "title": "Sophie and the Little Fairy"
+  },
+  "pages": [
+    "Sophie is playing in the garden. [emotion:QT/surprised] Sophie sees a tiny fairy sitting on a red flower.",
+    "The fairy has small, sparkly wings. The fairy is holding a little wand.",
+    "Sophie picks three big leaves. Sophie puts the leaves in a circle on the ground.",
+    "The fairy sits in the middle of the circle. Then the fairy waves the wand.",
+    "[emotion:QT/surprised] Suddenly, the red flower turns bright yellow!",
+    "[gesture:clapping] Sophie and the fairy clap their hands together. The fairy smiles at Sophie."
+  ],
+  "paragraphs": [
+    "Sophie is playing in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has small, sparkly wings. The fairy is holding a little wand. Sophie picks three big leaves. Sophie puts the leaves in a circle on the ground. The fairy sits in the middle of the circle. Then the fairy waves the wand. Suddenly, the red flower turns bright yellow! Sophie and the fairy clap their hands together. The fairy smiles at Sophie."
+  ],
+  "scenes": [
+    "Sophie kneeling in a sunny garden beside a circle of leaves, with a tiny sparkly-winged fairy sitting in the middle holding a wand, as a red flower transforms to bright yellow and both Sophie and the fairy clap and smile."
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "paragraph_to_scene": [
+    0
+  ],
+  "questions": [
+    {
+      "question": "What was the main thing that happened in the story?",
+      "type": "main_idea",
+      "correct_answer": "Sophie and a fairy did magic together",
+      "wrong_answers": [
+        "Sophie played with her three cats",
+        "A princess found a crown in the garden"
+      ]
+    },
+    {
+      "question": "Where was the fairy sitting at the start?",
+      "type": "detail",
+      "correct_answer": "On a red flower",
+      "wrong_answers": [
+        "On a big green leaf",
+        "Under a chair"
+      ]
+    },
+    {
+      "question": "What did the fairy use to change the flower?",
+      "type": "detail",
+      "correct_answer": "A little wand",
+      "wrong_answers": [
+        "Her sparkly wings",
+        "Three big leaves"
+      ]
+    },
+    {
+      "question": "What were Sophie and the fairy doing at the end?",
+      "type": "detail",
+      "correct_answer": "Clapping their hands together",
+      "wrong_answers": [
+        "Running around the garden",
+        "Picking three red flowers"
+      ]
+    }
+  ],
+  "takeaways": []
+}

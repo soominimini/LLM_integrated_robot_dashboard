@@ -1,7 +1,8 @@
 #!/usr/bin/env python3.9
 
 import os
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, send_from_directory, send_file,make_response
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, send_from_directory, \
+    send_file, make_response
 from user_management import UserManager
 from story_generator import StoryGenerator
 from knowledge_base import LanguageInterestKB
@@ -18,6 +19,7 @@ from typing import Optional
 import difflib
 import subprocess
 import subprocess
+
 try:
     import cv2
 except Exception:
@@ -25,6 +27,7 @@ except Exception:
 try:
     # Optional LLM client used for ASR intent correction
     from llamaindex_interface import ChatWithRAG
+
     LLM_AVAILABLE = True
 except Exception:
     LLM_AVAILABLE = False
@@ -36,6 +39,7 @@ try:
     from cv_bridge import CvBridge, CvBridgeError
     from queue import Queue
     from threading import Thread
+
     ROS_AVAILABLE = True
 except Exception:
     ROS_AVAILABLE = False
@@ -46,6 +50,7 @@ from threading import Event as ThreadEvent
 # Human tracking (kinematics + presence detection)
 try:
     from human_tracking import HumanTracking
+
     HUMAN_TRACKING_AVAILABLE = True
 except Exception:
     HUMAN_TRACKING_AVAILABLE = False
@@ -76,10 +81,11 @@ _HUMAN_TRACKER_RETRY_COOLDOWN = 60.0  # seconds
 _v4l_cap = None
 _v4l_cap_lock = Lock()
 
-
-#loading env variables
+# loading env variables
 from dotenv import load_dotenv
+
 load_dotenv()
+
 
 def _ensure_human_tracker():
     global _human_tracker, _human_tracker_failed_at
@@ -107,6 +113,7 @@ def _ensure_human_tracker():
             )
             return None
     return _human_tracker
+
 
 def _pause_human_tracking_for_capture():
     """Stop continuous human tracking so the robot's head stays still.
@@ -200,6 +207,7 @@ class CameraCapture:
             return self.image_queue.get()
         return None
 
+
 def _get_ros_frame():
     global _ros_cam
     if not ROS_AVAILABLE:
@@ -222,7 +230,6 @@ def _get_ros_frame():
     return frame
 
 
-
 app = Flask(__name__, template_folder="../templates")
 app.secret_key = os.urandom(24)
 CORS(app)
@@ -242,7 +249,6 @@ story_generator = StoryGenerator(llm_model="claude-sonnet-4-6")
 knowledge_base = LanguageInterestKB()
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
-
 
 # ===== live step tracing (added for debugging visibility) =====
 # Mirrors every print()/stderr line into logs/trace.log with a timestamp and a
@@ -289,6 +295,7 @@ def _trace_fh_for_today():
                     pass
         return _trace_state["fh"]
 
+
 # High-frequency polling endpoints we don't want to frame (keeps the trace readable).
 _TRACE_SKIP = {
     "/api/movement_status", "/api/volume_status", "/api/current_user",
@@ -299,6 +306,7 @@ _TRACE_SKIP = {
 
 class _Tee:
     """Write to the original stream and also to the trace file, timestamping at line boundaries."""
+
     def __init__(self, original):
         self._original = original
         self._buf = ""
@@ -366,6 +374,8 @@ def _trace_end(resp):
         dt = (time.time() - getattr(_trace_local, "t0", time.time())) * 1000.0
         print(f"└─ DONE  {request.method} {request.path} -> {resp.status_code} in {dt:.0f}ms")
     return resp
+
+
 # ===== end live step tracing =====
 
 
@@ -483,10 +493,13 @@ def _language_age_for(username, age):
         pass
     return age
 
+
 # Gemini analysis is delegated to external script (Python 3.9) when requested
 
 # De-duplicate short-interval wait announcements
 _last_wait_announce_ts = 0.0
+
+
 def _announce_wait_once(cooldown_seconds: float = 2.0):
     global _last_wait_announce_ts
     now = time.time()
@@ -496,6 +509,7 @@ def _announce_wait_once(cooldown_seconds: float = 2.0):
         except Exception:
             pass
         _last_wait_announce_ts = now
+
 
 def _with_asr_suspended(say_callable):
     """Disable ASR audio stream while robot is speaking, then restore."""
@@ -528,6 +542,7 @@ def _with_asr_suspended(say_callable):
         #     pass
         pass
 
+
 # --- Camera REST endpoints ---
 
 # Lightweight LLM-based ASR intent correction
@@ -535,6 +550,7 @@ _intent_llm = None
 _intent_llm_lock = Lock()
 _quiz_llm = None
 _quiz_llm_lock = Lock()
+
 
 def _ensure_intent_llm():
     global _intent_llm
@@ -556,6 +572,7 @@ def _ensure_intent_llm():
                 )
             except Exception as e:
                 print(f"Warning: failed to initialize intent LLM: {e}")
+
 
 class _ClaudeQuizLLM:
     """Quiz LLM backed by Claude (Sonnet 4.6) via the in-process Anthropic SDK.
@@ -731,6 +748,7 @@ def _parse_json_array(raw: str):
 
     return None
 
+
 def _llm_canonicalize_heard(expected: str, heard: str, context: Optional[str] = None) -> Optional[str]:
     try:
         if not expected or not heard:
@@ -745,10 +763,10 @@ def _llm_canonicalize_heard(expected: str, heard: str, context: Optional[str] = 
             return None
         ctx = context or ""
         prompt = (
-            "Expected: '" + expected + "'\n"
-            "Heard: '" + heard + "'\n"
-            "Context: '" + ctx + "'\n"
-            "Answer in JSON only with keys match (true/false) and canonical."
+                "Expected: '" + expected + "'\n"
+                                           "Heard: '" + heard + "'\n"
+                                                                "Context: '" + ctx + "'\n"
+                                                                                     "Answer in JSON only with keys match (true/false) and canonical."
         )
         resp = _intent_llm.get_response(prompt)
         text = getattr(resp, 'message', None)
@@ -769,7 +787,7 @@ def _llm_canonicalize_heard(expected: str, heard: str, context: Optional[str] = 
             r = raw.rfind('}')
             if l != -1 and r != -1 and r > l:
                 try:
-                    obj = _json.loads(raw[l:r+1])
+                    obj = _json.loads(raw[l:r + 1])
                 except Exception:
                     obj = None
         if not isinstance(obj, dict):
@@ -782,6 +800,7 @@ def _llm_canonicalize_heard(expected: str, heard: str, context: Optional[str] = 
     except Exception as e:
         print(f"LLM correction error: {e}")
         return None
+
 
 def _edit_distance_limited(a: str, b: str, max_distance: int = 1) -> int:
     """Compute Levenshtein distance with early exit if distance exceeds max_distance."""
@@ -798,7 +817,7 @@ def _edit_distance_limited(a: str, b: str, max_distance: int = 1) -> int:
         ai = a[i - 1]
         for j in range(1, lb + 1):
             cost = 0 if ai == b[j - 1] else 1
-            curr[j] = min(prev[j] + 1,      # deletion
+            curr[j] = min(prev[j] + 1,  # deletion
                           curr[j - 1] + 1,  # insertion
                           prev[j - 1] + cost)  # substitution
             if curr[j] < min_in_row:
@@ -807,6 +826,7 @@ def _edit_distance_limited(a: str, b: str, max_distance: int = 1) -> int:
             return max_distance + 1
         prev = curr
     return prev[-1]
+
 
 def _fuzzy_canonicalize_heard(expected: str, heard: str) -> Optional[str]:
     """Return expected when a close fuzzy match is detected in heard tokens; else None."""
@@ -832,6 +852,7 @@ def _fuzzy_canonicalize_heard(expected: str, heard: str) -> Optional[str]:
     except Exception:
         return None
 
+
 # Activity runner state
 _activity_stop_event = ThreadEvent()
 _activity_thread = None
@@ -839,11 +860,12 @@ _asr_enabled = True
 
 # Step-by-step confirmation state (for run_saved with therapist confirmation)
 _step_confirm_event = ThreadEvent()
-_step_current_index = -1       # which step is waiting for confirmation (-1 = not running)
+_step_current_index = -1  # which step is waiting for confirmation (-1 = not running)
 _step_total_count = 0
 _step_current_label = ""
 _step_next_label = ""
-_step_waiting = False           # True when paused waiting for therapist
+_step_waiting = False  # True when paused waiting for therapist
+
 
 def _generate_recovery_question(mode, username=''):
     """Capture a camera frame and generate a recovery question via Gemini.
@@ -895,6 +917,7 @@ def _generate_recovery_question(mode, username=''):
         print(f"[Recovery] Error: {e}")
         return None
 
+
 def _wait_until_robot_silent(timeout=15):
     """Block until TTS finishes speaking, plus a short cooldown for mic to clear."""
     start = time.time()
@@ -902,6 +925,7 @@ def _wait_until_robot_silent(timeout=15):
         time.sleep(0.1)
     # Extra cooldown so the mic doesn't pick up tail-end audio from the speaker
     time.sleep(1.5)
+
 
 def _enable_face_tracking():
     """Activate face/sound tracking so the robot follows the child during conversation."""
@@ -919,6 +943,7 @@ def _enable_face_tracking():
     except Exception as e:
         print(f"[Conversation] Tracking error: {e}")
 
+
 def _signal_child_can_speak():
     """Play show_tablet gesture to let the child know the mic is on and they can talk."""
     if not ROS_AVAILABLE:
@@ -931,6 +956,7 @@ def _signal_child_can_speak():
         print("[Conversation] show_tablet gesture -> child can speak now")
     except Exception as e:
         print(f"[Conversation] gesture error: {e}")
+
 
 def _detect_red_card(frame):
     """Detect a red card in the camera frame using HSV color thresholding.
@@ -957,6 +983,7 @@ def _detect_red_card(frame):
         print(f"[RedCard] Detection error: {e}")
         return False
 
+
 def _filter_english_only(text):
     """Remove non-English characters, keeping only ASCII letters, digits, basic punctuation, and spaces."""
     import re
@@ -965,7 +992,9 @@ def _filter_english_only(text):
     filtered = re.sub(r'[^\x20-\x7E]', ' ', text)
     return re.sub(r'\s+', ' ', filtered).strip()
 
-def _generate_conversation_followup(theme, robot_said, child_said, child_name, child_age, followup_number, total_followups, history, is_closing=False):
+
+def _generate_conversation_followup(theme, robot_said, child_said, child_name, child_age, followup_number,
+                                    total_followups, history, is_closing=False):
     """Generate a conversational follow-up using Gemini."""
     # Filter child's speech to English-only before sending to Gemini
     child_said = _filter_english_only(child_said)
@@ -1002,15 +1031,18 @@ def _generate_conversation_followup(theme, robot_said, child_said, child_name, c
         print(f"[Conversation] Follow-up error: {e}")
         return None
 
+
 # Streaming TTS queue for partial ASR text
 _stream_tts_queue = Queue()
 _stream_tts_thread = None
 _stream_tts_stop = ThreadEvent()
 
+
 def _ensure_stream_tts_worker():
     global _stream_tts_thread
     if _stream_tts_thread and _stream_tts_thread.is_alive():
         return
+
     def worker():
         while not _stream_tts_stop.is_set():
             try:
@@ -1022,13 +1054,16 @@ def _ensure_stream_tts_worker():
                     tts_helper.speak_story(text, "en-US")
             except Exception as e:
                 print(f"[TTS stream] error: {e}")
+
     _stream_tts_thread = Thread(target=worker, daemon=True)
     _stream_tts_thread.start()
+
 
 def _enqueue_tts_chunk(text: str):
     if text:
         _ensure_stream_tts_worker()
         _stream_tts_queue.put(text)
+
 
 def _has_parallel_recognizers(blocks):
     try:
@@ -1037,13 +1072,15 @@ def _has_parallel_recognizers(blocks):
                 cond = b.get('cond') or []
                 recog_count = 0
                 for c in cond:
-                    if c.get('type') == 'recognize' and (c.get('target') or 'speech').lower() == 'speech' and (c.get('value') or '').strip():
+                    if c.get('type') == 'recognize' and (c.get('target') or 'speech').lower() == 'speech' and (
+                            c.get('value') or '').strip():
                         recog_count += 1
                 if recog_count >= 2:
                     return True
         return False
     except Exception:
         return False
+
 
 def _whisper_recognize_once(language=None):
     """Run whisper.py as a subprocess and return recognized text (best-effort)."""
@@ -1085,6 +1122,7 @@ def _whisper_recognize_once(language=None):
         print(f"[Whisper] exception: {e}")
         return ""
 
+
 def _whisper_recognize_streaming(language=None):
     """
     Run whisper.py and stream PARTIAL lines to TTS while returning FINAL text.
@@ -1123,6 +1161,7 @@ def _whisper_recognize_streaming(language=None):
     except Exception as e:
         print(f"[Whisper] exception: {e}")
         return ""
+
 
 def _extract_story_title(text):
     """Extract the title from raw story text.
@@ -1260,6 +1299,7 @@ def clean_story_text(text):
 
     return cleaned
 
+
 @app.route("/")
 def index():
     # If user is logged in, show main dashboard with two options
@@ -1268,6 +1308,7 @@ def index():
         user = user_manager.users.get(username)
         return render_template("dashboard.html", logged_in=True, user=user)
     return render_template("index.html", logged_in=False)
+
 
 @app.route("/api/update_profile", methods=["POST"])
 def api_update_profile():
@@ -1324,6 +1365,7 @@ def api_update_profile():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/api/register", methods=["POST"])
 def api_register():
     data = request.get_json()
@@ -1340,6 +1382,7 @@ def api_register():
         return jsonify({"success": True}), 200
     else:
         return jsonify({"error": "Registration failed. Username might already exist or invalid age."}), 400
+
 
 @app.route("/api/login", methods=["POST"])
 def api_login():
@@ -1364,6 +1407,7 @@ def api_login():
     else:
         return jsonify({"error": "Invalid username"}), 401
 
+
 @app.route("/api/logout", methods=["POST"])
 def api_logout():
     session.pop('username', None)
@@ -1373,6 +1417,7 @@ def api_logout():
     except Exception:
         pass
     return jsonify({"success": True})
+
 
 @app.route("/api/current_user")
 def api_current_user():
@@ -1391,6 +1436,7 @@ def api_current_user():
         }})
     return jsonify({"user": None})
 
+
 @app.route("/api/users")
 def api_users():
     users = [
@@ -1404,6 +1450,7 @@ def api_users():
     ]
     return jsonify({"users": users})
 
+
 @app.route("/api/user_stats")
 def api_user_stats():
     username = session.get('username')
@@ -1411,6 +1458,7 @@ def api_user_stats():
         return jsonify({"error": "Not logged in"}), 401
     stats = user_manager.get_user_stats(username)
     return jsonify(stats)
+
 
 @app.route("/api/get_custom_games", methods=["GET"])
 def api_get_custom_games():
@@ -1456,17 +1504,18 @@ def api_get_custom_games():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/api/generate_story", methods=["POST"])
 def api_generate_story():
     """Generate a therapeutic story for the logged-in user"""
     username = session.get('username')
     if not username:
         return jsonify({"error": "Not logged in"}), 401
-    
+
     user = user_manager.users.get(username)
     if not user:
         return jsonify({"error": "User not found"}), 404
-    
+
     data = request.get_json() or {}
     child_name = data.get("child_name", username)
     age = data.get("age", user.get("age", 4))
@@ -1508,9 +1557,10 @@ def api_generate_story():
         else:
             return jsonify({"error": result["error"]}), 500
 
-                
+
     except Exception as e:
         return jsonify({"error": f"Story generation failed: {str(e)}"}), 500
+
 
 @app.route("/api/generate_story_stream", methods=["POST"])
 def api_generate_story_stream():
@@ -1518,11 +1568,11 @@ def api_generate_story_stream():
     username = session.get('username')
     if not username:
         return jsonify({"error": "Not logged in"}), 401
-    
+
     user = user_manager.users.get(username)
     if not user:
         return jsonify({"error": "User not found"}), 404
-    
+
     data = request.get_json() or {}
     child_name = data.get("child_name", username)
     age = data.get("age", user.get("age", 4))
@@ -1556,20 +1606,21 @@ def api_generate_story_stream():
             }
             yield f"data: {json.dumps({'meta': meta})}\n\n"
             for chunk in story_generator.generate_story_stream(
-                child_name=child_name,
-                age=age,
-                gender=gender,
-                custom_prompt=custom_prompt,
-                topics=topics,
-                goals=learning_goals,
-                persona_context=_persona_context_for(username, age, kind="story"),
-                language_age=language_age,
+                    child_name=child_name,
+                    age=age,
+                    gender=gender,
+                    custom_prompt=custom_prompt,
+                    topics=topics,
+                    goals=learning_goals,
+                    persona_context=_persona_context_for(username, age, kind="story"),
+                    language_age=language_age,
             ):
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         except Exception as e:
             yield f"data: {json.dumps({'error': str(e)})}\n\n"
-    
+
     return Response(generate(), mimetype='text/plain')
+
 
 @app.route("/start_assistant")
 def start_assistant():
@@ -1577,12 +1628,14 @@ def start_assistant():
     # For now, just show a message
     return "<h2>QTrobot AI Assistant will start here (integration point).</h2>"
 
+
 @app.route("/quiz_generation")
 def quiz_generation_page():
     """Render the quiz generation page."""
     if 'username' not in session:
         return redirect(url_for('index'))
     return render_template("quiz_generation.html")
+
 
 @app.route("/api/generate_quiz", methods=["POST"])
 def api_generate_quiz():
@@ -1719,16 +1772,35 @@ def api_generate_quiz():
             f"language a child aged {profile_age} can understand."
         )
     else:
-        # non social rules
-        goal_text = (
-            "Goal: Questions must be objectively true or false based on basic object functions, category labels, or familiar everyday knowledge. "
+        # non social rules — the goal is assembled per requested question type:
+        # "objectively true or false" only makes sense for yes/no questions,
+        # while wh questions need a clear short factual answer instead.
+        goal_parts = []
+        if "yes_no" in types:
+            goal_parts.append(
+                "For yes/no questions: questions must be objectively true or false based on "
+                "basic object functions, category labels, or familiar everyday knowledge. "
+                "Avoid silly or random false questions."
+            )
+        if "wh" in types:
+            goal_parts.append(
+                "For wh questions: questions must have a clear, short factual answer based on "
+                "basic object functions, category labels, or familiar everyday knowledge."
+            )
+        # With large batches, forbidding concept repetition entirely is
+        # unrealistic; ask for wording/item variety instead.
+        if count > 30:
+            repetition_rule = "Avoid repeating the same wording or item too often."
+        else:
+            repetition_rule = "Do not repeat the same concept."
+        goal_parts.append(
             "Avoid subjective questions, such as \"Do you like school?\". "
             "Avoid ambiguous questions, exception-based facts, or culturally dependent knowledge. "
-            "Avoid silly or random false questions. "
             "Do not use negation-heavy wording. "
-            "Do not repeat the same concept."
+            + repetition_rule
         )
-        length_constraint = "Constraint: Questions must be short (under 8 words)."
+        goal_text = "Goal: " + " ".join(goal_parts)
+        # length_constraint = "Constraint: Questions must be short (under 8 words)."
 
     # Knowledge-base guidance: ONLY the developmental wording-level (MLU
     # sentence-length) calibration, derived from the child's profile age /
@@ -1812,7 +1884,7 @@ def api_generate_quiz():
         f"{age_hint} "
         f"Use only these types: {type_hint}. "
         f"{goal_text} "
-        f"{length_constraint} "
+        # f"{length_constraint} "
         f"{social_emotional_text}"
         f"{kb_block}"
         "Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your "
@@ -1873,7 +1945,8 @@ def api_generate_quiz():
                 # Ensure correct_answer is in accepted_answers
                 if correct_answer and correct_answer not in accepted_answers:
                     accepted_answers.insert(0, correct_answer)
-                entry = {"question": q, "type": t, "correct_answer": correct_answer, "accepted_answers": accepted_answers}
+                entry = {"question": q, "type": t, "correct_answer": correct_answer,
+                         "accepted_answers": accepted_answers}
             questions.append(entry)
 
         # Post-process: generate accepted_answers for WH questions that have empty/insufficient lists.
@@ -1882,7 +1955,8 @@ def api_generate_quiz():
                            and not q.get("open_ended") and len(q.get("accepted_answers", [])) <= 1]
         if wh_needing_alts and _quiz_llm is not None:
             try:
-                alt_input = [{"question": q["question"], "correct_answer": q["correct_answer"]} for q in wh_needing_alts]
+                alt_input = [{"question": q["question"], "correct_answer": q["correct_answer"]} for q in
+                             wh_needing_alts]
                 alt_prompt = (
                     "For each question below, generate a list of all reasonably correct alternative answers "
                     "that a child might give. Include the original answer, synonyms, plural/singular forms, "
@@ -1916,6 +1990,7 @@ def api_generate_quiz():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/api/robot_gesture", methods=["POST"])
 def api_robot_gesture():
     """Play a gesture and/or emotion on the robot."""
@@ -1944,6 +2019,7 @@ def api_robot_gesture():
         print(f"[Gesture] error: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/api/speech_recognize", methods=["POST"])
 def api_speech_recognize():
     """Run whisper ASR once and return the recognized text."""
@@ -1963,12 +2039,14 @@ def api_speech_recognize():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/educational_quiz")
 def educational_quiz_page():
     """Render the educational quiz play page."""
     if 'username' not in session:
         return redirect(url_for('index'))
     return render_template("educational_quiz.html")
+
 
 @app.route("/api/get_saved_quiz")
 def api_get_saved_quiz():
@@ -2015,6 +2093,7 @@ def api_get_saved_quiz():
                         q["accepted_answers"].append(ans)
 
     return jsonify({"success": True, "questions": all_questions})
+
 
 @app.route("/api/generate_quiz_feedback", methods=["POST"])
 def api_generate_quiz_feedback():
@@ -2068,7 +2147,7 @@ def api_generate_quiz_feedback():
             l = raw.find('{')
             r = raw.rfind('}')
             if l != -1 and r != -1 and r > l:
-                obj = json.loads(raw[l:r+1])
+                obj = json.loads(raw[l:r + 1])
         if isinstance(obj, dict):
             correct = [str(s).strip() for s in (obj.get("correct") or []) if str(s).strip()]
             incorrect = [str(s).strip() for s in (obj.get("incorrect") or []) if str(s).strip()]
@@ -2077,6 +2156,7 @@ def api_generate_quiz_feedback():
         print(f"Warning: feedback generation failed: {e}")
 
     return jsonify({"success": True, "correct": [], "incorrect": []})
+
 
 @app.route("/api/generate_wh_options", methods=["POST"])
 def api_generate_wh_options():
@@ -2163,7 +2243,7 @@ def api_generate_wh_options():
             l = raw.find('[')
             r = raw.rfind(']')
             if l != -1 and r != -1 and r > l:
-                obj = json.loads(raw[l:r+1])
+                obj = json.loads(raw[l:r + 1])
         if not isinstance(obj, list):
             return jsonify({"success": False, "error": "LLM returned invalid JSON"}), 500
 
@@ -2192,6 +2272,7 @@ def api_generate_wh_options():
         return jsonify({"success": True, "options": options_out})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route("/api/teach_quiz_answer", methods=["POST"])
 def api_teach_quiz_answer():
@@ -2230,6 +2311,7 @@ def api_teach_quiz_answer():
         json.dump(learned, f, indent=2)
 
     return jsonify({"success": True, "total_answers": len(existing)})
+
 
 @app.route("/api/save_quiz", methods=["POST"])
 def api_save_quiz():
@@ -2271,6 +2353,7 @@ def api_save_quiz():
         "wh_count": len(wh_qs),
         "files": saved
     })
+
 
 def _generate_story_questions(story_text, child_age, child_name="the child", persona_context="",
                               language_age=None):
@@ -2348,7 +2431,9 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
         f"\"correct_answer\": \"A boy who helped his friend\", \"wrong_answers\": [\"A girl who went swimming\", \"A cat who got lost\"]}}]\n"
     )
 
-    raw = _claude_generate(prompt, system="You generate comprehension questions for children's stories. Return JSON only.", max_tokens=4096, label="story-questions")
+    raw = _claude_generate(prompt,
+                           system="You generate comprehension questions for children's stories. Return JSON only.",
+                           max_tokens=4096, label="story-questions")
     if raw:
         try:
             print(f"[StoryQuestions] Claude raw response: {raw[:500]}")
@@ -2359,7 +2444,7 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
             start = raw.find('[')
             end = raw.rfind(']')
             if start != -1 and end != -1 and end > start:
-                questions = json.loads(raw[start:end+1])
+                questions = json.loads(raw[start:end + 1])
                 if isinstance(questions, list) and len(questions) > 0:
                     # Validate structure
                     valid = []
@@ -2391,9 +2476,11 @@ def _generate_story_questions(story_text, child_age, child_name="the child", per
     ]
     if complexity_age > 7:
         fallback.append({"question": "Why do you think the main character felt happy at the end?", "type": "inference",
-                         "correct_answer": "Because they helped someone", "wrong_answers": ["Because they got a prize", "Because they went home"]})
+                         "correct_answer": "Because they helped someone",
+                         "wrong_answers": ["Because they got a prize", "Because they went home"]})
         fallback.append({"question": "What do you think the story is trying to teach us?", "type": "inference",
-                         "correct_answer": "Being kind to others is important", "wrong_answers": ["Being fast is the best", "You should always be alone"]})
+                         "correct_answer": "Being kind to others is important",
+                         "wrong_answers": ["Being fast is the best", "You should always be alone"]})
     return fallback
 
 
@@ -2420,7 +2507,7 @@ def _generate_takeaway_questions(takeaways, story_text, child_age, child_name="t
 
     cleaned_story = clean_story_text(story_text)
 
-    numbered = "\n".join(f"{i+1}. \"{t}\"" for i, t in enumerate(takeaways))
+    numbered = "\n".join(f"{i + 1}. \"{t}\"" for i, t in enumerate(takeaways))
     prompt = (
         f"You are creating multiple-choice LESSON questions for a {child_age}-year-old "
         f"child named {child_name}. The story below has {len(takeaways)} takeaways. "
@@ -2732,7 +2819,7 @@ def _reinject_tags_into_pages(original_story, pages):
         while rest and rest.startswith('['):
             close = rest.find(']')
             if close != -1:
-                rest = rest[close+1:].lstrip()
+                rest = rest[close + 1:].lstrip()
             else:
                 break
         # Grab a longer context window for more reliable matching
@@ -2857,7 +2944,8 @@ def _split_story_into_pages(story_text, child_age):
         f"\n"
         f"Story:\n{cleaned_for_llm}"
     )
-    raw = _claude_generate(prompt, system="You split stories into pages. Return JSON only.", max_tokens=4096, label="page-splitter")
+    raw = _claude_generate(prompt, system="You split stories into pages. Return JSON only.", max_tokens=4096,
+                           label="page-splitter")
     if raw:
         try:
             print(f"[StoryPages] Claude raw response: {raw[:500]}")
@@ -2868,7 +2956,7 @@ def _split_story_into_pages(story_text, child_age):
             start = raw.find('[')
             end = raw.rfind(']')
             if start != -1 and end != -1 and end > start:
-                pages = json.loads(raw[start:end+1])
+                pages = json.loads(raw[start:end + 1])
                 if isinstance(pages, list) and len(pages) > 0:
                     pages = [str(p).strip() for p in pages if str(p).strip()]
                     if pages:
@@ -2917,7 +3005,8 @@ def _split_story_into_pages(story_text, child_age):
                 else:
                     i += len(chunk)
                 pages.append(' '.join(chunk))
-    print(f"[StoryPages] Fallback split into {len(pages)} pages (age {child_age}, target {target} sents, {len(paragraphs)} paragraphs)")
+    print(
+        f"[StoryPages] Fallback split into {len(pages)} pages (age {child_age}, target {target} sents, {len(paragraphs)} paragraphs)")
     return pages
 
 
@@ -2938,7 +3027,7 @@ def _identify_story_scenes(chunks, unit_label="paragraph"):
         return [""], [0]
 
     Unit = unit_label.capitalize()
-    full_text = "\n\n".join(f"{Unit} {i+1}: {p}" for i, p in enumerate(chunks))
+    full_text = "\n\n".join(f"{Unit} {i + 1}: {p}" for i, p in enumerate(chunks))
 
     prompt = (
         f"You are choosing illustrations for a children's story that has been split "
@@ -2964,7 +3053,8 @@ def _identify_story_scenes(chunks, unit_label="paragraph"):
         f"\"Lily showing her drawing to the class at the front of the classroom\"], "
         f"\"chunk_to_scene\": [0, 0, 1, 2]}}"
     )
-    raw = _claude_generate(prompt, system="You analyze story structure. Return JSON only.", max_tokens=2048, label="scene-analyzer")
+    raw = _claude_generate(prompt, system="You analyze story structure. Return JSON only.", max_tokens=2048,
+                           label="scene-analyzer")
     if raw:
         try:
             print(f"[StoryScenes] Claude raw response: {raw[:500]}")
@@ -3235,6 +3325,7 @@ def api_save_story():
 
     return jsonify({"success": True, "filename": fname})
 
+
 @app.route("/generate")
 def generate_games():
     """Game generation page - shows the original game selection interface"""
@@ -3243,6 +3334,7 @@ def generate_games():
     username = session['username']
     user = user_manager.users.get(username)
     return render_template("index.html", logged_in=True, user=user, show_game_selection=True)
+
 
 @app.route("/play")
 def play_games():
@@ -3261,6 +3353,7 @@ def play_games():
         print(f"HumanTracking auto-start (/play) error: {e}")
     return render_template("play_games.html", logged_in=True, user=user)
 
+
 @app.route("/play_scene")
 def play_scene_page():
     """Dedicated Scene Detection play page"""
@@ -3278,6 +3371,7 @@ def play_scene_page():
         print(f"HumanTracking auto-start (/play_scene) error: {e}")
     return render_template("play_scene.html", logged_in=True, user=user)
 
+
 def _log_gemini_io(system, prompt, response=None, label=None):
     """Trace an in-process Gemini call to stdout so its prompt/response land in
     the daily trace log — the same way story generation logs its prompt.
@@ -3292,7 +3386,7 @@ def _log_gemini_io(system, prompt, response=None, label=None):
         print(prompt)
     else:
         preview = response if len(response) <= 1500 else (
-            response[:1500] + f"\n...(+{len(response) - 1500} more chars)")
+                response[:1500] + f"\n...(+{len(response) - 1500} more chars)")
         print(f"[{tag}] <<< RESPONSE ({len(response)} chars):")
         print(preview)
 
@@ -3359,17 +3453,17 @@ def _get_anthropic_client():
     return _anthropic_client
 
 
-def _log_claude_io(system, prompt, response=None, label=None):
+def _log_claude_io(system, prompt, response=None, label=None, model=None):
     """Trace a Claude call to the daily trace log, mirroring _log_gemini_io."""
     if os.getenv("LOG_LLM_PROMPTS", "1") == "0":
         return
     tag = f"Claude:{label}" if label else "Claude"
     if response is None:
-        print(f"[{tag}] >>> PROMPT ({len(prompt)} chars) | system: {system}")
+        print(f"[{tag}] >>> PROMPT ({len(prompt)} chars) | model: {model or '?'} | system: {system}")
         print(prompt)
     else:
         preview = response if len(response) <= 1500 else (
-            response[:1500] + f"\n...(+{len(response) - 1500} more chars)")
+                response[:1500] + f"\n...(+{len(response) - 1500} more chars)")
         print(f"[{tag}] <<< RESPONSE ({len(response)} chars):")
         print(preview)
 
@@ -3383,7 +3477,7 @@ def _claude_generate(prompt, system="You are a helpful assistant. Return JSON on
     """
     model = model or SCENE_GAME_LLM_MODEL
     try:
-        _log_claude_io(system, prompt, label=label)
+        _log_claude_io(system, prompt, label=label, model=model)
         kwargs = dict(
             model=model,
             max_tokens=max_tokens,
@@ -3420,7 +3514,7 @@ def _claude_generate_image(image_bytes, prompt,
     model = model or SCENE_GAME_LLM_MODEL
     b64 = base64.standard_b64encode(image_bytes).decode("ascii")
     try:
-        _log_claude_io(system, prompt, label=label)
+        _log_claude_io(system, prompt, label=label, model=model)
         kwargs = dict(
             model=model,
             max_tokens=max_tokens,
@@ -3473,14 +3567,19 @@ def _extract_json(raw):
             depth -= 1
             if depth == 0:
                 try:
-                    return json.loads(raw[start:i+1])
+                    return json.loads(raw[start:i + 1])
                 except json.JSONDecodeError:
                     return None
     return None
 
 
+# Last target per user, so consecutive rounds rotate to a different object.
+_scene_game_last_target = {}
+
+
 def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_context="",
-                                  language_age=None):
+                                  language_age=None, username=None,
+                                  target_override=None, avoid_questions=None):
     """Use Claude to generate a scene-game question.
 
     The question wording is pitched at the child's target MLU (mean length of
@@ -3501,8 +3600,20 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
         criteria  – descriptive criteria string (ages 4+) or None (ages 2-3)
         mode      – "exact" | "criteria"
     """
-    # Pick one toy as the primary target (always used as fallback)
-    target = random.choice(toy_list)
+    # Pick one toy as the target, rotating away from the previous round's
+    # target so consecutive questions don't keep landing on the same object.
+    # The chosen target drives ALL modes — for criteria/riddle rounds it is
+    # named explicitly in the prompt, so the LLM describes it instead of
+    # freely (and repeatedly) picking its own favourite from the list.
+    _last_key = username or '_'
+    if target_override:
+        # Batch pre-generation cycles targets itself for even coverage.
+        target = target_override
+    else:
+        last_target = _scene_game_last_target.get(_last_key)
+        candidates = [t for t in toy_list if t != last_target] or list(toy_list)
+        target = random.choice(candidates)
+    _scene_game_last_target[_last_key] = target
 
     # Complexity tier follows the developmental/language age, not chronological.
     complexity_age = language_age if language_age is not None else child_age
@@ -3523,7 +3634,10 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
     except Exception as e:
         print(f"[SceneGame] MLU lookup failed: {e}")
 
-    # Determine mode based on age
+    # Determine mode based on age. The age gate always wins — the play page
+    # requests mode='criteria' for every child, but children aged <=3 must
+    # get the straightforward local templates ("Show me the lemon!"), never
+    # LLM inference questions.
     if complexity_age <= 3:
         mode = "exact"
     else:
@@ -3536,6 +3650,19 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             "Weave these goals naturally into the question (e.g. target vocabulary, "
             "sentence structure, or concepts relevant to the goals). "
         )
+
+    # Previously used questions to steer away from — batch pre-generation
+    # passes the pool's existing questions here so no two rounds repeat.
+    avoid_clause = ""
+    if avoid_questions:
+        recent = [q.strip() for q in avoid_questions if q and q.strip()][-12:]
+        if recent:
+            avoid_clause = (
+                "Do NOT repeat any of these previously asked questions — write a\n"
+                "clearly different one (vary the property described, the phrasing,\n"
+                "or the sentence opener):\n"
+                + "".join(f"  - {q}\n" for q in recent)
+            )
     # Knowledge-base guidance is intentionally limited to the MLU only (the
     # mlu_clause built above). The full persona context — language targets
     # (pronouns, -ing forms), speech sounds, and interests — is deliberately
@@ -3556,12 +3683,20 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             # Variants with article when "the" feels off (kept rare):
             f"Show me {article} {target}!",
         ]
+        if avoid_questions:
+            used = {q.strip().lower() for q in avoid_questions if q}
+            fresh = [t for t in templates if t.strip().lower() not in used]
+            if fresh:
+                templates = fresh
         question = random.choice(templates)
         return {
             'question': question,
             'target': target,
             'criteria': None,
             'mode': 'exact',
+            'generator': 'template',
+            'llm_model': None,
+            'prompt': None,
         }
     elif complexity_age <= 6:
         prompt = (
@@ -3570,8 +3705,10 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"Available physical toys: {', '.join(toy_list)}.\n"
             f"{mlu_clause}"
             f"{goals_clause}"
+            f"{avoid_clause}"
+            f"The TARGET object for this round is: {target}.\n"
             f"Generate ONE inference-style request that lets the child figure\n"
-            f"out the target object from its observable properties.\n"
+            f"out THIS target object from its observable properties.\n"
             f"\n"
             f"HARD RULE — the QUESTION text must NOT name the target object.\n"
             f"It must NEVER contain any of these noun names from the toy list:\n"
@@ -3591,15 +3728,25 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"    * \"toy that you can stack\" (function-based, vague)\n"
             f"- Do not chain multiple objects or stack three+ adjectives.\n"
             f"\n"
-            f"The criteria MUST match at least one toy from the list above.\n"
+            f"UNIQUENESS RULE — the question's description must fit ONLY the\n"
+            f"target among the available toys. Before answering, check every\n"
+            f"other toy in the list: if it also fits your description, revise\n"
+            f"the question to use a more DISTINGUISHING feature of the target\n"
+            f"(a property no other listed toy shares).\n"
+            f"Example: with both a banana and a lemon in the list, \"Find\n"
+            f"something yellow!\" is BAD (both match) — \"Find something yellow\n"
+            f"and long!\" is GOOD (only the banana matches).\n"
+            f"\n"
+            f"The criteria MUST describe the target object ({target}).\n"
             f"Use simple, clear language appropriate for ages 4-6.\n"
-            f"Good examples (target NOT named in the question):\n"
+            f"Good examples (target NOT named, exactly ONE listed toy fits):\n"
             f"- Question: \"I want a red fruit!\" (criteria: red fruit)\n"
-            f"- Question: \"Can you find something yellow?\" (criteria: yellow)\n"
             f"- Question: \"Show me something green that goes ROAR!\"\n"
             f"  (criteria: green dinosaur)\n"
-            f"BAD example (do NOT do this — names the target):\n"
-            f"- Question: \"Show me the red apple!\" — \"apple\" is the target name.\n"
+            f"BAD examples (do NOT do these):\n"
+            f"- \"Show me the red apple!\" — names the target.\n"
+            f"- \"Find something tall and yellow!\" — ambiguous: several yellow\n"
+            f"  toys could match.\n"
             f"\n"
             f"Return ONLY a JSON object:\n"
             f"{{\"question\": \"<the sentence — must NOT contain any toy name>\", "
@@ -3612,9 +3759,11 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"Available physical toys: {', '.join(toy_list)}.\n"
             f"{mlu_clause}"
             f"{goals_clause}"
-            f"Generate ONE riddle that requires the child to reason about\n"
-            f"properties (color, shape, size, function, where it is found) to\n"
-            f"figure out the answer. Do NOT use a conversational tone.\n"
+            f"{avoid_clause}"
+            f"The TARGET (the riddle's answer) for this round is: {target}.\n"
+            f"Generate ONE riddle about THIS target that requires the child to\n"
+            f"reason about properties (color, shape, size, function, where it\n"
+            f"is found) to figure out the answer. Do NOT use a conversational tone.\n"
             f"\n"
             f"HARD RULE — the QUESTION (riddle) text must NEVER name the target\n"
             f"object. It must NOT contain any of these noun names from the toy list:\n"
@@ -3632,7 +3781,15 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"- Do NOT chain multiple objects or invent compound targets like\n"
             f"  \"red car moving block\" or \"shiny round tree fruit\".\n"
             f"\n"
-            f"The target MUST match at least one toy from the list.\n"
+            f"UNIQUENESS RULE — the clues must point to ONLY the target among\n"
+            f"the available toys. Before answering, check every other toy in\n"
+            f"the list: if the riddle could also describe it, change the clues\n"
+            f"to a more DISTINGUISHING feature until exactly one toy fits.\n"
+            f"Example: \"I am tall and yellow\" is BAD if the list has both a\n"
+            f"banana and a lemon — add a clue only the target has (\"I am long\n"
+            f"and curved\", \"monkeys love me\").\n"
+            f"\n"
+            f"The \"criteria\" field MUST describe the target ({target}).\n"
             f"Good example: \"I am round and red, and I grow on a tree. What am I?\"\n"
             f"  (criteria: \"red apple\") — note the riddle does NOT say \"apple\".\n"
             f"BAD example (do NOT do this — names the target):\n"
@@ -3673,18 +3830,21 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
                     print(f"[SceneGame] Question leaked target name '{leaked}'. Retrying...")
                     # Strengthen the prompt for the retry
                     prompt = (
-                        prompt
-                        + f"\n\nPREVIOUS ATTEMPT FAILED — your last question contained the\n"
-                        + f"forbidden word \"{leaked}\". Rewrite the question so it contains\n"
-                        + f"NONE of these words: {', '.join(toy_list)}. Refer to the target\n"
-                        + f"only as \"it\" or \"something\"."
+                            prompt
+                            + f"\n\nPREVIOUS ATTEMPT FAILED — your last question contained the\n"
+                            + f"forbidden word \"{leaked}\". Rewrite the question so it contains\n"
+                            + f"NONE of these words: {', '.join(toy_list)}. Refer to the target\n"
+                            + f"only as \"it\" or \"something\"."
                     )
                     continue
                 return {
                     'question': q,
                     'target': None,
                     'criteria': obj.get('criteria', ''),
-                    'mode': 'criteria'
+                    'mode': 'criteria',
+                    'generator': 'llm',
+                    'llm_model': SCENE_GAME_LLM_MODEL,
+                    'prompt': prompt,
                 }
         except Exception as e:
             print(f"[SceneGame] Question generation failed: {e}")
@@ -3703,7 +3863,10 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             'question': q,
             'target': None,
             'criteria': last_obj.get('criteria', ''),
-            'mode': 'criteria'
+            'mode': 'criteria',
+            'generator': 'llm_sanitized',
+            'llm_model': SCENE_GAME_LLM_MODEL,
+            'prompt': prompt,
         }
 
     # Final fallback: a generic inference question keyed to the picked target's
@@ -3713,7 +3876,10 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
         'question': "Can you find something special in front of you?",
         'target': None,
         'criteria': target,
-        'mode': 'criteria'
+        'mode': 'criteria',
+        'generator': 'fallback',
+        'llm_model': None,
+        'prompt': prompt,
     }
 
 
@@ -3723,15 +3889,15 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
 # may use (chosen randomly per round so the child hears varied vocabulary).
 # The canonical key is the only thing passed to the worker for grounding.
 DIRECTION_RELATION_PHRASES = {
-    "next_to":     ["next to", "beside"],
-    "above":       ["on top of", "above", "on"],
-    "under":       ["under", "below"],
-    "behind":      ["behind"],
+    "next_to": ["next to", "beside"],
+    "above": ["on top of", "above", "on"],
+    "under": ["under", "below"],
+    "behind": ["behind"],
     "in_front_of": ["in front of"],
     # Containment relations — taught to children aged 3 and under as the
     # first spatial concepts before they move on to the richer 2D/3D set.
-    "in":          ["in", "inside"],
-    "out":         ["out of", "outside"],
+    "in": ["in", "inside"],
+    "out": ["out of", "outside"],
 }
 
 # ---------- Toy categorisation ----------
@@ -3867,7 +4033,7 @@ def _scene_game_generate_direction_question(toy_list, child_age=None):
     if enclosing_containers and non_containers:
         candidates.append("in")
     if surface_containers and non_containers:
-        candidates.append("on")          # canonical 'above', spoken "on"
+        candidates.append("on")  # canonical 'above', spoken "on"
     if len(all_toys) >= 2:
         candidates.extend(["next_to", "under", "behind"])
 
@@ -4289,7 +4455,7 @@ def _check_criteria_match(detected_label, criteria, detected_color=None, detecte
     # Fallback: lenient string contain across all attributes
     blob = ' '.join([label_lower, color_lower, shape_lower])
     match = bool(crit_lower) and (
-        crit_lower in blob or any(tok in blob for tok in crit_tokens)
+            crit_lower in blob or any(tok in blob for tok in crit_tokens)
     )
     return match, "fallback string match (all attributes)"
 
@@ -4389,6 +4555,7 @@ def api_scene_game_hint():
     except Exception:
         pass
     return jsonify({'success': True, 'hint': hint})
+
 
 @app.route('/api/scene_game/answer', methods=['POST'])
 def api_scene_game_answer():
@@ -4567,6 +4734,7 @@ def api_scene_game_answer():
         'reason': reason
     })
 
+
 @app.route('/api/human_tracking/untrack', methods=['POST'])
 def api_human_tracking_untrack():
     if 'username' not in session:
@@ -4578,6 +4746,7 @@ def api_human_tracking_untrack():
         return jsonify({'success': True})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/human_tracking/start', methods=['POST'])
 def api_human_tracking_start():
@@ -4600,6 +4769,7 @@ def api_human_tracking_start():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
 @app.route('/api/human_tracking/status', methods=['GET'])
 def api_human_tracking_status():
     if 'username' not in session:
@@ -4621,6 +4791,7 @@ def api_human_tracking_status():
         return jsonify({'success': True, 'running': running, 'person_id': current_id, 'person_present': person_present})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/camera_frame')
 def api_camera_frame():
@@ -4645,6 +4816,7 @@ def api_camera_frame():
         return resp
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/camera_capture', methods=['POST'])
 def api_camera_capture():
@@ -4708,7 +4880,7 @@ def api_camera_capture():
                     l = raw.find('[')
                     r = raw.rfind(']')
                     if l != -1 and r != -1 and r > l:
-                        obj = json.loads(raw[l:r+1])
+                        obj = json.loads(raw[l:r + 1])
                 item = None
                 if isinstance(obj, list) and obj:
                     item = obj[0]
@@ -4746,6 +4918,7 @@ def api_camera_capture():
                         'target': target, 'found': found})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/recovery/generate_question', methods=['POST'])
 def api_recovery_generate_question():
@@ -4812,6 +4985,7 @@ def api_recovery_generate_question():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
 @app.route('/api/conversation/wait_for_turn', methods=['POST'])
 def api_conversation_wait_for_turn():
     """Listen for child's speech until red card is shown, then generate follow-up.
@@ -4850,6 +5024,7 @@ def api_conversation_wait_for_turn():
 
         # Red card watcher runs in parallel with ASR
         red_card_event = ThreadEvent()
+
         def _watch_red_card():
             while not red_card_event.is_set() and not _activity_stop_event.is_set():
                 f = _get_ros_frame()
@@ -4857,6 +5032,7 @@ def api_conversation_wait_for_turn():
                     red_card_event.set()
                     return
                 time.sleep(0.5)
+
         red_card_thread = Thread(target=_watch_red_card, daemon=True)
         red_card_thread.start()
 
@@ -4880,7 +5056,8 @@ def api_conversation_wait_for_turn():
         child_said = ' '.join(collected_speech)
         if not child_said:
             child_said = ''
-        print(f"[Conversation] Child said: '{child_said}' (red_card={red_card_seen}) -> generating follow-up immediately")
+        print(
+            f"[Conversation] Child said: '{child_said}' (red_card={red_card_seen}) -> generating follow-up immediately")
 
         # Phase 2: Generate follow-up response
         is_closing = payload.get('is_closing', False)
@@ -4913,6 +5090,7 @@ def api_conversation_wait_for_turn():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
 @app.route('/api/conversation/check_red_card', methods=['GET'])
 def api_check_red_card():
     """Quick check if red card is currently visible in camera."""
@@ -4923,6 +5101,7 @@ def api_check_red_card():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
 @app.route("/builder")
 def builder_page():
     """DIY activity builder page"""
@@ -4931,6 +5110,7 @@ def builder_page():
     username = session['username']
     user = user_manager.users.get(username)
     return render_template("diy_builder.html", logged_in=True, user=user)
+
 
 @app.route("/conversation_builder")
 def conversation_builder_page():
@@ -4941,6 +5121,7 @@ def conversation_builder_page():
     user = user_manager.users.get(username)
     return render_template("conversation_builder.html", logged_in=True, user=user)
 
+
 @app.route("/select_toy")
 def select_toy_page():
     """Toy selection page before DIY builder"""
@@ -4949,6 +5130,7 @@ def select_toy_page():
     username = session['username']
     user = user_manager.users.get(username)
     return render_template("select_toy.html", logged_in=True, user=user)
+
 
 @app.route('/api/toys', methods=['GET'])
 def api_get_toys():
@@ -4982,6 +5164,7 @@ def api_get_toys():
             toys.append({'name': name, 'image': t.get('image')})
     return jsonify({'success': True, 'toys': toys})
 
+
 @app.route('/api/toys/add', methods=['POST'])
 def api_add_toy():
     if 'username' not in session:
@@ -5012,6 +5195,7 @@ def api_add_toy():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
     return jsonify({'success': True, 'added': True})
+
 
 @app.route("/api/activity/prepare", methods=["POST"])
 def api_activity_prepare():
@@ -5050,9 +5234,9 @@ def api_activity_prepare():
     # Determine subjects for looped gameplay (e.g., animals)
     subjects = []
     known_animals = [
-        'tiger','rabbit','lion','giraffe','elephant','zebra','monkey','panda','bear','fox',
-        'hippo','hippopotamus','kangaroo','koala','leopard','cheetah','wolf','deer','camel','rhino',
-        'crocodile','alligator','horse','sheep','goat','cow','dog','cat','penguin','dolphin'
+        'tiger', 'rabbit', 'lion', 'giraffe', 'elephant', 'zebra', 'monkey', 'panda', 'bear', 'fox',
+        'hippo', 'hippopotamus', 'kangaroo', 'koala', 'leopard', 'cheetah', 'wolf', 'deer', 'camel', 'rhino',
+        'crocodile', 'alligator', 'horse', 'sheep', 'goat', 'cow', 'dog', 'cat', 'penguin', 'dolphin'
     ]
     # Try to infer a seed subject from first image block
     seed_subject = None
@@ -5141,10 +5325,10 @@ def api_activity_prepare():
                                         "subject": f"{src}_{idx}",
                                         "image_path": img_url
                                     })
-                        
+
                         # Optional: enrich speech blocks with subject placeholders not implemented in UI yet
-                        
-                        
+
+
                     except Exception as e:
                         b["image_path"] = None
                         print(f"Error generating activity image: {str(e)}")
@@ -5165,6 +5349,7 @@ def api_activity_prepare():
             "expanded_images": expanded_images
         }
     })
+
 
 @app.route("/api/activity/test", methods=["POST"])
 def api_activity_test():
@@ -5193,6 +5378,7 @@ def api_activity_test():
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
     """Internal routine to execute a block list with loop count."""
@@ -5260,7 +5446,8 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                                         try:
                                             # avoid overlap with TTS
                                             guard_start = time.time()
-                                            while getattr(tts_helper, 'is_speaking', lambda: False)() and time.time() - guard_start < 10:
+                                            while getattr(tts_helper, 'is_speaking',
+                                                          lambda: False)() and time.time() - guard_start < 10:
                                                 if _activity_stop_event.is_set():
                                                     return
                                                 time.sleep(0.05)
@@ -5275,7 +5462,8 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                                                     print(f"[Logic ASR] fuzzy corrected '{heard_raw}' -> '{fuzzy}'")
                                                     heard = fuzzy
                                                 else:
-                                                    corrected = _llm_canonicalize_heard(exp, heard, context="DIY logic recognize")
+                                                    corrected = _llm_canonicalize_heard(exp, heard,
+                                                                                        context="DIY logic recognize")
                                                     if corrected:
                                                         print(f"[Logic ASR] corrected '{heard_raw}' -> '{corrected}'")
                                                         heard = corrected.lower()
@@ -5284,6 +5472,7 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                                         except Exception as e:
                                             print(f"ASR error: {e}")
                                             time.sleep(0.2)
+
                                 th = Thread(target=worker, daemon=True)
                                 th.start()
                                 threads.append(th)
@@ -5347,6 +5536,7 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                             print(f"[DIY step] gesture '{g}' result={result}")
                         except Exception as e:
                             print(f"[DIY step] gesture error: {e}")
+
                     t = Thread(target=_play_gesture, daemon=True)
                     t.start()
                     threads.append(t)
@@ -5361,6 +5551,7 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                             print(f"[DIY step] emotion '{emo}' result={result}")
                         except Exception as e:
                             print(f"[DIY step] emotion error: {e}")
+
                     t = Thread(target=_show_emotion, daemon=True)
                     t.start()
                     threads.append(t)
@@ -5405,6 +5596,7 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
 
                         # Red card watcher runs in parallel with ASR
                         red_card_event = ThreadEvent()
+
                         def _watch_red_card(ev=red_card_event):
                             while not ev.is_set() and not _activity_stop_event.is_set():
                                 f = _get_ros_frame()
@@ -5412,6 +5604,7 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                                     ev.set()
                                     return
                                 time.sleep(0.5)
+
                         red_card_thread = Thread(target=_watch_red_card, daemon=True)
                         red_card_thread.start()
 
@@ -5432,7 +5625,8 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
                         red_card_thread.join(timeout=1.0)
 
                         child_said = ' '.join(collected_speech)
-                        print(f"[Conversation] Child said: '{child_said}' -> generating {'closing' if is_closing else 'follow-up'}")
+                        print(
+                            f"[Conversation] Child said: '{child_said}' -> generating {'closing' if is_closing else 'follow-up'}")
 
                         # Generate response (follow-up question or closing comment)
                         fu_text = _generate_conversation_followup(
@@ -5536,6 +5730,7 @@ def _execute_activity(blocks, loop_count, require_confirm=False, username=''):
         _step_current_index = -1
         _step_waiting = False
 
+
 @app.route("/api/activity/step_status", methods=["GET"])
 def api_activity_step_status():
     """Return current step-by-step execution status for therapist UI."""
@@ -5547,11 +5742,13 @@ def api_activity_step_status():
         "next_label": _step_next_label
     })
 
+
 @app.route("/api/activity/confirm_step", methods=["POST"])
 def api_activity_confirm_step():
     """Therapist confirms to proceed to the next step."""
     _step_confirm_event.set()
     return jsonify({"success": True})
+
 
 @app.route("/api/activity/run_saved", methods=["POST"])
 def api_activity_run_saved():
@@ -5592,6 +5789,7 @@ def api_activity_run_saved():
                     _execute_activity(blocks, loop_count, require_confirm=require_confirm, username=username)
                 except Exception as e:
                     print(f"Run activity error: {e}")
+
             if _activity_thread and _activity_thread.is_alive():
                 try:
                     _activity_stop_event.set()
@@ -5607,6 +5805,7 @@ def api_activity_run_saved():
             return jsonify({"success": True, "running": False})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route('/api/activity/stop', methods=['POST'])
 def api_activity_stop():
@@ -5625,6 +5824,7 @@ def api_activity_stop():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/my_games")
 def my_games_page():
     if 'username' not in session:
@@ -5632,6 +5832,7 @@ def my_games_page():
     username = session['username']
     user = user_manager.users.get(username)
     return render_template("my_games.html", logged_in=True, user=user)
+
 
 @app.route("/api/activity/save", methods=["POST"])
 def api_activity_save():
@@ -5652,6 +5853,7 @@ def api_activity_save():
         return jsonify({"success": True, "filename": fname})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route("/api/activity/load_saved", methods=["POST"])
 def api_activity_load_saved():
@@ -5674,6 +5876,7 @@ def api_activity_load_saved():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/api/activity/delete", methods=["POST"])
 def api_activity_delete():
     """Delete a previously saved DIY activity by filename."""
@@ -5694,47 +5897,48 @@ def api_activity_delete():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route("/api/read_user_stories", methods=["POST"])
 def api_read_user_stories():
     """Read user's saved stories aloud using robot TTS"""
     username = session.get('username')
     if not username:
         return jsonify({"error": "Not logged in"}), 401
-    
+
     user = user_manager.users.get(username)
     if not user:
         return jsonify({"error": "User not found"}), 404
-    
+
     try:
         # Get user's stories directory
         user_stories_dir = os.path.join(USER_DATA_DIR, username, "stories")
-        
+
         if not os.path.exists(user_stories_dir):
             return jsonify({"error": "No stories found for this user"}), 404
-        
+
         # Get all story files
         story_files = [f for f in os.listdir(user_stories_dir) if f.endswith('.json')]
-        
+
         if not story_files:
             return jsonify({"error": "No stories found for this user"}), 404
-        
+
         # Read the most recent story (or a random one)
         story_files.sort(reverse=True)  # Most recent first
         latest_story_file = story_files[0]
         story_path = os.path.join(user_stories_dir, latest_story_file)
-        
+
         with open(story_path, 'r') as f:
             story_data = json.load(f)
-        
+
         story_text = story_data.get('story', '')
         metadata = story_data.get('metadata', {})
-        
+
         if not story_text:
             return jsonify({"error": "Story content is empty"}), 400
-        
+
         # Clean the story text before speaking
         cleaned_story = clean_story_text(story_text)
-        
+
         # Make the robot speak the story
         if tts_helper.is_available():
             # Determine language from metadata or use default
@@ -5756,7 +5960,7 @@ def api_read_user_stories():
                         tracker.untrack()
                 except Exception:
                     pass
-            
+
             if success:
                 return jsonify({
                     "success": True,
@@ -5783,9 +5987,10 @@ def api_read_user_stories():
                 "message": "TTS not available. Story content provided.",
                 "tts_available": False
             }), 200
-        
+
     except Exception as e:
         return jsonify({"error": f"Error reading stories: {str(e)}"}), 500
+
 
 @app.route("/api/get_specific_story_details", methods=["POST"])
 def api_get_specific_story_details():
@@ -5793,33 +5998,33 @@ def api_get_specific_story_details():
     username = session.get('username')
     if not username:
         return jsonify({"error": "Not logged in"}), 401
-    
+
     data = request.get_json() or {}
     filename = data.get("filename")
-    
+
     if not filename:
         return jsonify({"error": "Filename is required"}), 400
-    
+
     try:
         # Get user's stories directory
         user_stories_dir = os.path.join(USER_DATA_DIR, username, "stories")
         story_path = os.path.join(user_stories_dir, filename)
-        
+
         if not os.path.exists(story_path):
             return jsonify({"error": "Story file not found"}), 404
-        
+
         with open(story_path, 'r') as f:
             story_data = json.load(f)
-        
+
         story_text = story_data.get('story', '')
         metadata = story_data.get('metadata', {})
-        
+
         if not story_text:
             return jsonify({"error": "Story content is empty"}), 400
-        
+
         # Clean the story text for display
         cleaned_story = clean_story_text(story_text)
-        
+
         # Return story details without speaking
         return jsonify({
             "success": True,
@@ -5827,9 +6032,10 @@ def api_get_specific_story_details():
             "metadata": metadata,
             "filename": filename
         }), 200
-        
+
     except Exception as e:
         return jsonify({"error": f"Error loading story: {str(e)}"}), 500
+
 
 @app.route("/api/read_specific_story", methods=["POST"])
 def api_read_specific_story():
@@ -5837,33 +6043,33 @@ def api_read_specific_story():
     username = session.get('username')
     if not username:
         return jsonify({"error": "Not logged in"}), 401
-    
+
     data = request.get_json() or {}
     filename = data.get("filename")
-    
+
     if not filename:
         return jsonify({"error": "Filename is required"}), 400
-    
+
     try:
         # Get user's stories directory
         user_stories_dir = os.path.join(USER_DATA_DIR, username, "stories")
         story_path = os.path.join(user_stories_dir, filename)
-        
+
         if not os.path.exists(story_path):
             return jsonify({"error": "Story file not found"}), 404
-        
+
         with open(story_path, 'r') as f:
             story_data = json.load(f)
-        
+
         story_text = story_data.get('story', '')
         metadata = story_data.get('metadata', {})
-        
+
         if not story_text:
             return jsonify({"error": "Story content is empty"}), 400
-        
+
         # Clean the story text before speaking
         cleaned_story = clean_story_text(story_text)
-        
+
         # Make the robot speak the story
         if tts_helper.is_available():
             # Determine language from metadata or use default
@@ -5885,7 +6091,7 @@ def api_read_specific_story():
                         tracker.untrack()
                 except Exception:
                     pass
-            
+
             if success:
                 return jsonify({
                     "success": True,
@@ -5912,9 +6118,10 @@ def api_read_specific_story():
                 "message": "TTS not available. Story content provided.",
                 "tts_available": False
             }), 200
-        
+
     except Exception as e:
         return jsonify({"error": f"Error reading story: {str(e)}"}), 500
+
 
 @app.route("/api/get_user_stories", methods=["GET"])
 def api_get_user_stories():
@@ -5922,18 +6129,18 @@ def api_get_user_stories():
     username = session.get('username')
     if not username:
         return jsonify({"error": "Not logged in"}), 401
-    
+
     try:
         # Get user's stories directory
         user_stories_dir = os.path.join(USER_DATA_DIR, username, "stories")
-        
+
         if not os.path.exists(user_stories_dir):
             return jsonify({"stories": []}), 200
-        
+
         # Debug print statements
         print(f"Looking for stories in: {user_stories_dir}")
         print(f"Files found: {os.listdir(user_stories_dir)}")
-        
+
         # Get all story files with metadata
         stories = []
         for filename in os.listdir(user_stories_dir):
@@ -5943,7 +6150,7 @@ def api_get_user_stories():
                 try:
                     with open(story_path, 'r') as f:
                         story_data = json.load(f)
-                    
+
                     print(f"Successfully loaded {filename}")
                     metadata = story_data.get('metadata', {})
                     # Use filename timestamp as fallback if generated_at is null
@@ -5955,12 +6162,12 @@ def api_get_user_stories():
                             created_at = f"{timestamp_part[:8]} {timestamp_part[8:10]}:{timestamp_part[10:12]}:{timestamp_part[12:14]}"
                         except:
                             created_at = 'Unknown'
-                    
+
                     # Clean the preview text
                     raw_story = story_data.get('story', '')
                     cleaned_preview = clean_story_text(raw_story)
                     preview = cleaned_preview[:100] + "..." if len(cleaned_preview) > 100 else cleaned_preview
-                    
+
                     stories.append({
                         "filename": filename,
                         "title": f"Story for {metadata.get('child_name', 'Unknown')}",
@@ -5974,17 +6181,18 @@ def api_get_user_stories():
                     # Skip corrupted files
                     print(f"Error processing {filename}: {str(e)}")
                     continue
-        
+
         # Sort by creation date (newest first)
         stories.sort(key=lambda x: x.get('created_at', '') or '', reverse=True)
-        
+
         # Debug print: show what we're returning
         print(f"Returning {len(stories)} stories: {stories}")
-        
+
         return jsonify({"stories": stories}), 200
-        
+
     except Exception as e:
         return jsonify({"error": f"Error getting stories: {str(e)}"}), 500
+
 
 @app.route('/read_story/<filename>')
 def read_story_page(filename):
@@ -5997,6 +6205,7 @@ def read_story_page(filename):
     except Exception as e:
         print(f"HumanTracking auto-start (/read_story) error: {e}")
     return render_template('read_story.html')
+
 
 @app.route('/api/get_story_sentences')
 def api_get_story_sentences():
@@ -6073,6 +6282,7 @@ def api_get_story_sentences():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+
 @app.route('/api/get_sentence_image', methods=['POST'])
 def api_get_sentence_image():
     """Get the scene image for a specific page (sentence_index = page index).
@@ -6131,6 +6341,7 @@ def api_get_sentence_image():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+
 @app.route('/images/<path:filename>')
 def serve_image(filename):
     """Serve generated images robustly"""
@@ -6142,6 +6353,7 @@ def serve_image(filename):
         return send_file(full_path)
     else:
         return "Image not found", 404
+
 
 def _normalize_tag_name(name):
     """Normalize tag names: QThappy -> QT/happy, strip punctuation."""
@@ -6317,7 +6529,6 @@ def _play_tags(gestures, emotions, pre_speech_pause=1.0):
 # should fire concurrently with the next TTS call, not after a 1-second pause.
 _CLAUSE_INTERNAL_TERMINATORS = (",", ";", ":", "—", "–")
 
-
 # Common abbreviations whose trailing period is NOT a sentence boundary.
 # Stored lowercase, without the trailing period, with internal periods kept
 # (so the multi-letter "u.s.a" matches strings ending in "U.S.A.").
@@ -6447,25 +6658,27 @@ def api_speak_sentence():
             pass
     return jsonify({'success': True})
 
+
 @app.route('/api/movement_settings', methods=['POST'])
 def api_movement_settings():
     """Enable or disable movement during speech"""
     username = session.get('username')
     if not username:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
-    
+
     data = request.get_json() or {}
     enabled = data.get('enabled', True)
-    
+
     try:
         tts_helper.enable_movement(enabled)
         return jsonify({
-            'success': True, 
+            'success': True,
             'movement_enabled': enabled,
             'movement_available': tts_helper.is_movement_available()
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/movement_status', methods=['GET'])
 def api_movement_status():
@@ -6473,7 +6686,7 @@ def api_movement_status():
     username = session.get('username')
     if not username:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
-    
+
     try:
         return jsonify({
             'success': True,
@@ -6482,6 +6695,7 @@ def api_movement_status():
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/volume_settings', methods=['POST'])
 def api_volume_settings():
@@ -6506,12 +6720,14 @@ def api_volume_settings():
     try:
         applied = tts_helper.set_hardware_volume(level)
         if not applied:
-            return jsonify({'success': False, 'error': 'Hardware volume change failed (check ROBOT_HOST/ROBOT_USER/ROBOT_PASSWORD and sshpass)'}), 500
+            return jsonify({'success': False,
+                            'error': 'Hardware volume change failed (check ROBOT_HOST/ROBOT_USER/ROBOT_PASSWORD and sshpass)'}), 500
 
         setattr(tts_helper, 'volume_level', level)
         return jsonify({'success': True, 'volume_level': level, 'applied': True})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @app.route('/api/polly_volume', methods=['POST'])
 def api_polly_volume():
@@ -6531,6 +6747,8 @@ def api_polly_volume():
         return jsonify({'success': True, 'polly_volume': tts_helper.polly_volume})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @app.route('/api/volume_test', methods=['POST'])
 def api_volume_test():
     username = session.get('username')
@@ -6541,13 +6759,15 @@ def api_volume_test():
         return jsonify({'success': True})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @app.route('/api/joint_limits', methods=['GET'])
 def api_joint_limits():
     """Get joint limits and safe movement ranges"""
     username = session.get('username')
     if not username:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
-    
+
     try:
         return jsonify({
             'success': True,
@@ -6557,13 +6777,14 @@ def api_joint_limits():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
 @app.route('/api/head_position', methods=['GET'])
 def api_head_position():
     """Get current head position"""
     username = session.get('username')
     if not username:
         return jsonify({'success': False, 'error': 'Not logged in'}), 401
-    
+
     try:
         yaw, pitch = tts_helper.get_current_head_position()
         return jsonify({
@@ -6576,10 +6797,12 @@ def api_head_position():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
 # ===================== SCENE GAME TOY LIST =====================
 
-SCENE_GAME_DEFAULT_TOYS = ['lemon', 'tomato', 'apple', 'banana', 'tray', 'box','bowl']
+SCENE_GAME_DEFAULT_TOYS = ['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl']
 SCENE_GAME_TOYS_FILE = os.path.join(USER_DATA_DIR, 'scene_game_toys.json')
+
 
 def _load_scene_toys():
     """Load the toy list from disk, falling back to defaults."""
@@ -6593,11 +6816,276 @@ def _load_scene_toys():
             pass
     return list(SCENE_GAME_DEFAULT_TOYS)
 
+
 def _save_scene_toys(toys):
     """Persist the toy list to disk."""
     os.makedirs(os.path.dirname(SCENE_GAME_TOYS_FILE), exist_ok=True)
     with open(SCENE_GAME_TOYS_FILE, 'w') as f:
         json.dump(toys, f, indent=2)
+
+
+def _store_scene_question(username, record):
+    """Append one generated scene-game round to the user's question log.
+
+    Written as JSON Lines (one round per line) to
+    user_data/<username>/scene_game_questions.jsonl so every generated
+    question is auditable: timestamp, mode, question, target/criteria,
+    which generator produced it (template/llm/llm_sanitized/fallback/local),
+    the LLM model, and the exact prompt used (None for non-LLM rounds).
+    Failures are logged but never break the game round.
+    """
+    try:
+        d = os.path.join(USER_DATA_DIR, username or '_anonymous')
+        os.makedirs(d, exist_ok=True)
+        record = dict(record)
+        record['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S')
+        path = os.path.join(d, 'scene_game_questions.jsonl')
+        with open(path, 'a') as f:
+            f.write(json.dumps(record, ensure_ascii=False) + '\n')
+    except Exception as e:
+        print(f"[SceneGame] question store failed: {e}")
+
+
+# ---------- Pre-generated question pool ----------
+#
+# Instead of calling the LLM live on every "start round" click, questions are
+# generated ahead of time into user_data/<user>/scene_game_question_pool.json.
+# /api/scene/start pops the next pooled question (fast) and only generates
+# live when the pool is empty or stale. The pool is fingerprinted against the
+# toy list + child age + language age, so editing toys or the profile
+# automatically invalidates it. Refills run in a background thread.
+SCENE_POOL_TARGET = int(os.getenv('SCENE_POOL_TARGET', '10'))
+SCENE_POOL_REFILL_AT = int(os.getenv('SCENE_POOL_REFILL_AT', '3'))
+# Bump when the question-generation prompt changes materially, so pools built
+# with the old prompt are discarded and regenerated.
+SCENE_POOL_PROMPT_VERSION = 2
+
+_scene_pool_lock = Lock()
+_scene_pool_refilling = set()
+
+
+def _scene_pool_path(username, kind='criteria'):
+    d = os.path.join(USER_DATA_DIR, username or '_anonymous')
+    os.makedirs(d, exist_ok=True)
+    fname = ('scene_game_question_pool.json' if kind == 'criteria'
+             else 'scene_game_direction_pool.json')
+    return os.path.join(d, fname)
+
+
+def _toys_fingerprint(toy_list):
+    return "|".join(sorted(t.strip().lower() for t in toy_list))
+
+
+def _scene_pool_meta_for(username):
+    """Current (toy_list, child_age, language_age, learning_goals) for a user."""
+    toy_list = _load_scene_toys()
+    child_age, learning_goals = 5, ''
+    if username:
+        child_age, learning_goals = _get_user_age_and_goals(username)
+    language_age = _language_age_for(username, child_age) if username else None
+    return toy_list, child_age, language_age, learning_goals
+
+
+def _load_scene_pool(username, kind='criteria'):
+    try:
+        with open(_scene_pool_path(username, kind), 'r') as f:
+            pool = json.load(f)
+        if isinstance(pool, dict) and isinstance(pool.get('questions'), list):
+            return pool
+    except Exception:
+        pass
+    return None
+
+
+def _save_scene_pool(username, pool, kind='criteria'):
+    with open(_scene_pool_path(username, kind), 'w') as f:
+        json.dump(pool, f, indent=2, ensure_ascii=False)
+
+
+def _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+    return (
+        pool is not None
+        and pool.get('prompt_version') == SCENE_POOL_PROMPT_VERSION
+        and pool.get('toys_fp') == _toys_fingerprint(toy_list)
+        and pool.get('child_age') == child_age
+        and pool.get('language_age') == language_age
+    )
+
+
+def _pop_pooled_scene_question(username, kind='criteria'):
+    """Pop the next pre-generated question. Returns (result, remaining) or
+    (None, 0) when no valid pooled question is available."""
+    toy_list, child_age, language_age, _goals = _scene_pool_meta_for(username)
+    with _scene_pool_lock:
+        pool = _load_scene_pool(username, kind)
+        if not _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+            return None, 0
+        questions = pool.get('questions') or []
+        if not questions:
+            return None, 0
+        result = questions.pop(0)
+        _save_scene_pool(username, pool, kind)
+        return result, len(questions)
+
+
+def _recent_served_rounds(username, limit=20):
+    """Last `limit` rounds served to this user, from the audit log
+    (scene_game_questions.jsonl). Used so a refill does not regenerate a
+    (near-)copy of a question the child just played — served questions are
+    already popped from the pool, so the pool alone can't catch that."""
+    try:
+        path = os.path.join(USER_DATA_DIR, username or '_anonymous',
+                            'scene_game_questions.jsonl')
+        with open(path, 'r') as f:
+            lines = f.readlines()[-limit:]
+        out = []
+        for line in lines:
+            try:
+                rec = json.loads(line)
+            except Exception:
+                continue
+            if isinstance(rec, dict):
+                out.append(rec)
+        return out
+    except Exception:
+        return []
+
+
+def _refill_scene_pool(username, target=None, kind='criteria'):
+    """Top the user's `kind` pool up to `target` questions (blocking).
+
+    kind='criteria' pre-generates LLM inference questions; kind='direction'
+    pre-builds local spatial-preposition rounds. Each question is appended
+    (and saved) as soon as it is generated, so play can serve from the pool
+    before the whole batch is done. Generation runs outside the lock — only
+    pool file access is serialized.
+    """
+    target = target or SCENE_POOL_TARGET
+    toy_list, child_age, language_age, learning_goals = _scene_pool_meta_for(username)
+    persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
+    fp = _toys_fingerprint(toy_list)
+
+    def _fresh_pool():
+        return {'prompt_version': SCENE_POOL_PROMPT_VERSION,
+                'toys_fp': fp, 'child_age': child_age,
+                'language_age': language_age, 'questions': []}
+
+    def _norm_q(text):
+        return re.sub(r'[^a-z0-9 ]+', '', (text or '').lower()).strip()
+
+    def _round_key(q):
+        # Direction rounds are duplicates when the same object pair and
+        # relation recur, even if the spoken phrase differs ("on" vs
+        # "on top of"). Other kinds dedupe on the question wording.
+        if kind == 'direction':
+            return (f"{(q.get('obj_a') or '').lower()}"
+                    f"|{q.get('relation')}|{(q.get('obj_b') or '').lower()}")
+        return _norm_q(q.get('question'))
+
+    # Drop any duplicates already sitting in the pool (from before questions
+    # were de-duplicated) so they can be regenerated as distinct rounds.
+    with _scene_pool_lock:
+        pool = _load_scene_pool(username, kind)
+        if _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+            seen, unique = set(), []
+            for q in pool['questions']:
+                k = _round_key(q)
+                if k and k not in seen:
+                    seen.add(k)
+                    unique.append(q)
+            if len(unique) != len(pool['questions']):
+                print(f"[SceneGame] {kind} pool refill: removed "
+                      f"{len(pool['questions']) - len(unique)} duplicate(s)")
+                pool['questions'] = unique
+                _save_scene_pool(username, pool, kind)
+
+    # Rounds already served (popped from the pool) also count as "used":
+    # without them, a refill happily regenerates a near-copy of the question
+    # the child just played.
+    served = [r for r in _recent_served_rounds(username)
+              if (r.get('mode') == 'direction') == (kind == 'direction')]
+    served_keys = {_round_key(r) for r in served}
+
+    # criteria: cycle targets through shuffled passes of the toy list so every
+    # object gets even coverage (rotation alone only prevents adjacent
+    # repeats), and steer the LLM away from the questions already pooled.
+    # direction: keep drawing random local rounds, keeping only new triples.
+    # A hard attempt cap keeps this loop finite even if generation keeps
+    # producing repeats (e.g. few toys => few distinct direction rounds).
+    target_cycle = []
+    attempts = 0
+    max_attempts = target * 3 + 5
+    while attempts < max_attempts:
+        attempts += 1
+        with _scene_pool_lock:
+            pool = _load_scene_pool(username, kind)
+            if not _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+                pool = _fresh_pool()
+                _save_scene_pool(username, pool, kind)
+            rounds = list(pool['questions'])
+        if len(rounds) >= target:
+            break
+        if kind == 'direction':
+            result = _scene_game_generate_direction_question(toy_list, child_age=child_age)
+            if result is None:
+                print("[SceneGame] direction pool: current toy list cannot "
+                      "make direction rounds (needs 2+ toys / a container)")
+                break
+        else:
+            if not target_cycle:
+                target_cycle = list(toy_list)
+                random.shuffle(target_cycle)
+            tgt = target_cycle.pop(0)
+            result = _scene_game_generate_question(
+                toy_list, child_age, learning_goals, persona_context=persona_ctx,
+                language_age=language_age, username=username,
+                target_override=tgt,
+                avoid_questions=[q.get('question', '') for q in rounds]
+                                + [r.get('question', '') for r in served])
+        if _round_key(result) in ({_round_key(q) for q in rounds} | served_keys):
+            print(f"[SceneGame] {kind} pool refill: dropped duplicate "
+                  f"round {result.get('question')!r}")
+            continue
+        with _scene_pool_lock:
+            pool = _load_scene_pool(username, kind)
+            if not _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+                pool = _fresh_pool()
+            pool['questions'].append(result)
+            pool['generated_at'] = time.strftime('%Y-%m-%d %H:%M:%S')
+            _save_scene_pool(username, pool, kind)
+    with _scene_pool_lock:
+        pool = _load_scene_pool(username, kind)
+        n = len((pool or {}).get('questions') or [])
+    print(f"[SceneGame] {kind} pool ready for {username or '_anonymous'}: "
+          f"{n} question(s)")
+
+
+def _refill_scene_pool_async(username, target=None, kind='criteria'):
+    """Kick off a background refill unless one is already running."""
+    key = (username or '_', kind)
+    with _scene_pool_lock:
+        if key in _scene_pool_refilling:
+            return False
+        _scene_pool_refilling.add(key)
+
+    def _run():
+        try:
+            _refill_scene_pool(username, target, kind)
+        except Exception as e:
+            print(f"[SceneGame] {kind} pool refill failed for {key[0]}: {e}")
+        finally:
+            with _scene_pool_lock:
+                _scene_pool_refilling.discard(key)
+
+    Thread(target=_run, daemon=True).start()
+    return True
+
+
+def _warm_scene_pools_async(username):
+    """Background-refill both question pools (criteria + direction)."""
+    _refill_scene_pool_async(username)
+    _refill_scene_pool_async(username, kind='direction')
+
 
 @app.route("/object_game_generate")
 def object_game_generate_page():
@@ -6607,10 +7095,12 @@ def object_game_generate_page():
     user = user_manager.users.get(session['username'])
     return render_template("scene_game_config.html", logged_in=True, user=user)
 
+
 @app.route('/api/scene_game/toys', methods=['GET'])
 def api_scene_game_toys_get():
     """Return the current toy list."""
     return jsonify({'success': True, 'toys': _load_scene_toys()})
+
 
 @app.route('/api/scene_game/toys', methods=['POST'])
 def api_scene_game_toys_post():
@@ -6627,28 +7117,75 @@ def api_scene_game_toys_post():
             return jsonify({'success': False, 'error': f'"{name}" already exists'})
         toys.append(name)
         _save_scene_toys(toys)
+        # Toy list changed -> the old pool is stale; rebuild it in the
+        # background so questions are ready before play starts.
+        _warm_scene_pools_async(session.get('username'))
         return jsonify({'success': True, 'toys': toys})
 
     if action == 'delete':
         name = (data.get('name') or '').strip()
         toys = [t for t in toys if t.lower() != name.lower()]
         _save_scene_toys(toys)
+        _warm_scene_pools_async(session.get('username'))
         return jsonify({'success': True, 'toys': toys})
 
     if action == 'reset':
         toys = list(SCENE_GAME_DEFAULT_TOYS)
         _save_scene_toys(toys)
+        _warm_scene_pools_async(session.get('username'))
         return jsonify({'success': True, 'toys': toys})
 
     return jsonify({'success': False, 'error': 'Unknown action'}), 400
 
+
+def _scene_pool_kind_from(value):
+    kind = (value or 'criteria').strip().lower()
+    return kind if kind in ('criteria', 'direction') else 'criteria'
+
+
+@app.route('/api/scene_game/pregenerate', methods=['POST'])
+def api_scene_game_pregenerate():
+    """Pre-generate an object-game question pool for the current user.
+
+    Body: {"kind": "criteria"|"direction", "count": N}. kind defaults to
+    criteria (LLM inference questions); direction pre-builds spatial rounds.
+    """
+    username = session.get('username')
+    data = request.get_json(silent=True) or {}
+    kind = _scene_pool_kind_from(data.get('kind'))
+    try:
+        target = int(data.get('count') or SCENE_POOL_TARGET)
+    except (TypeError, ValueError):
+        target = SCENE_POOL_TARGET
+    target = max(1, min(50, target))
+    started = _refill_scene_pool_async(username, target, kind)
+    toy_list, child_age, language_age, _goals = _scene_pool_meta_for(username)
+    pool = _load_scene_pool(username, kind)
+    ready = len((pool or {}).get('questions') or []) \
+        if _scene_pool_is_valid(pool, toy_list, child_age, language_age) else 0
+    return jsonify({'success': True, 'started': started, 'kind': kind,
+                    'ready': ready, 'target': target})
+
+
+@app.route('/api/scene_game/pool_status', methods=['GET'])
+def api_scene_game_pool_status():
+    """How many pre-generated questions are ready (?kind=criteria|direction)."""
+    username = session.get('username')
+    kind = _scene_pool_kind_from(request.args.get('kind'))
+    toy_list, child_age, language_age, _goals = _scene_pool_meta_for(username)
+    pool = _load_scene_pool(username, kind)
+    valid = _scene_pool_is_valid(pool, toy_list, child_age, language_age)
+    with _scene_pool_lock:
+        refilling = (username or '_', kind) in _scene_pool_refilling
+    return jsonify({'success': True, 'kind': kind,
+                    'ready': len(pool.get('questions') or []) if valid else 0,
+                    'valid': bool(valid),
+                    'refilling': refilling})
+
+
 @app.route('/api/scene/start', methods=['POST'])
 def api_scene_start():
     try:
-        toy_list = _load_scene_toys()
-        if not toy_list:
-            toy_list = list(SCENE_GAME_DEFAULT_TOYS)
-
         child_age = 5
         learning_goals = ''
         username = session.get('username')
@@ -6665,25 +7202,58 @@ def api_scene_start():
         if requested_mode not in ('auto', 'criteria', 'direction'):
             requested_mode = 'auto'
 
-        result = None
+        # Start NEVER generates questions. Rounds are only fetched from the
+        # pools pre-generated on the Object Game Setup page; when a pool is
+        # empty (or stale after a toys/profile change), the player is sent
+        # back there instead of silently generating a new question.
+        served_from = 'pool'
         if requested_mode == 'direction':
             # Olivia always plays the fixed, curated set of direction rounds.
             if username == 'olivia':
                 result = _scene_game_olivia_direction_question()
+                served_from = 'curated'
             else:
-                result = _scene_game_generate_direction_question(toy_list, child_age=child_age)
+                result, _remaining = _pop_pooled_scene_question(username, kind='direction')
+                if result is None:
+                    return jsonify({
+                        'success': False,
+                        'pool_empty': True,
+                        'error': 'No stored direction questions left. Open Object Game '
+                                 'Setup and click "Generate Direction Questions".',
+                    })
+        else:
+            result, _remaining = _pop_pooled_scene_question(username)
             if result is None:
-                # Generator bailed: either toy list <2, or in/out was the only
-                # option but the list has no container. Fall through to auto.
-                print("[SceneGame] direction mode unavailable for current toy list; falling back to auto")
-        if result is None:
-            persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
-            result = _scene_game_generate_question(
-                toy_list, child_age, learning_goals, persona_context=persona_ctx,
-                language_age=_language_age_for(username, child_age) if username else None,
-            )
+                return jsonify({
+                    'success': False,
+                    'pool_empty': True,
+                    'error': 'No stored questions left. Open Object Game Setup '
+                             'and click "Generate Questions".',
+                })
 
         question = result['question']
+
+        # Persist the generated round so every question is auditable
+        # (prompt + model are only present when the LLM path produced it;
+        # direction mode and age<=3 templates are built locally).
+        _store_scene_question(username, {
+            'user': username,
+            'child_age': child_age,
+            'requested_mode': requested_mode,
+            'mode': result.get('mode'),
+            'question': question,
+            'target': result.get('target'),
+            'criteria': result.get('criteria'),
+            'obj_a': result.get('obj_a'),
+            'obj_b': result.get('obj_b'),
+            'relation': result.get('relation'),
+            'phrase': result.get('phrase'),
+            'generator': result.get('generator', 'local'),
+            'llm_model': result.get('llm_model'),
+            'prompt': result.get('prompt'),
+            'served_from': served_from,
+        })
+
         try:
             _with_asr_suspended(lambda: tts_helper.speak(question))
         except Exception:
@@ -6702,15 +7272,18 @@ def api_scene_start():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+
 # ===================== WH PICTURE SCENE ENDPOINTS =====================
 
 WH_SCENE_DIR_NAME = 'wh_scenes'
+
 
 def _user_wh_dir(username):
     """Get or create the WH scenes directory for a user."""
     d = os.path.join(USER_DATA_DIR, username, WH_SCENE_DIR_NAME)
     os.makedirs(d, exist_ok=True)
     return d
+
 
 def _load_scene_index(username):
     """Load the scene index JSON for a user."""
@@ -6723,11 +7296,13 @@ def _load_scene_index(username):
             return []
     return []
 
+
 def _save_scene_index(username, index):
     """Save the scene index JSON for a user."""
     idx_path = os.path.join(_user_wh_dir(username), 'index.json')
     with open(idx_path, 'w') as f:
         json.dump(index, f, indent=2)
+
 
 # WH picture-scene analysis runs on Claude vision in-process (same pattern as
 # the spatial still-frame validator). Override the model via WH_SCENE_LLM_MODEL.
@@ -7290,7 +7865,8 @@ def api_wh_scene_upload():
         if summary["errors"]:
             response["warning"] = "; ".join(f"{m}: {e}" for m, e in summary["errors"].items())
         return jsonify(response)
-    return jsonify({"success": True, "scene": entry, "warning": "; ".join(f"{m}: {e}" for m, e in summary["errors"].items()) or "Unknown error"})
+    return jsonify({"success": True, "scene": entry,
+                    "warning": "; ".join(f"{m}: {e}" for m, e in summary["errors"].items()) or "Unknown error"})
 
 
 @app.route("/api/wh_scene/capture", methods=["POST"])
@@ -7354,7 +7930,8 @@ def api_wh_scene_capture():
         if summary["errors"]:
             response["warning"] = "; ".join(f"{m}: {e}" for m, e in summary["errors"].items())
         return jsonify(response)
-    return jsonify({"success": True, "scene": entry, "warning": "; ".join(f"{m}: {e}" for m, e in summary["errors"].items()) or "Unknown error"})
+    return jsonify({"success": True, "scene": entry,
+                    "warning": "; ".join(f"{m}: {e}" for m, e in summary["errors"].items()) or "Unknown error"})
 
 
 @app.route("/api/wh_scene/list")

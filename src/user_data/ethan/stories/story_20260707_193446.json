@@ -1,0 +1,152 @@
+{
+  "story": "Ethan knelt beside his bright red toy truck on the smooth, sun-warmed pavement. Golden leaves were falling around him like tiny paper airplanes, drifting softly onto his carefully built racetrack. He had been planning this race all morning. [emotion:QT/happy] Then dark clouds rolled in quickly, and chilly raindrops began to fall. [emotion:QT/sad] Ethan's shoulders dropped. He thought his whole plan was ruined. [emotion:QT/sad] \"I wonder if we could move the track under the big tree,\" said his neighbor Mia, crouching beside him. \"There's enough room if we rearrange the curved pieces.[emotion:QT/sad] \"\n\nAlthough Ethan felt disappointed at first, he grabbed the yellow pieces while Mia carried the red ones. They worked together, taking turns placing each section carefully.\n\nAfter that, the rain drummed cheerfully on the leaves above them, but the track stayed dry. [emotion:QT/calm] Ethan gave Mia the first race because the idea was hers. [emotion:QT/happy] Finally, the trucks zoomed forward, and both of them cheered loudly. [emotion:QT/happy][gesture:clapping]",
+  "metadata": {
+    "age": 8,
+    "age_tier": "school_age",
+    "child_name": "ethan",
+    "generated_at": null,
+    "language_age": null,
+    "model": "claude-sonnet-4-6",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "topics": [
+      "season"
+    ],
+    "word_count": 274,
+    "paragraph_count": 7,
+    "sentence_to_paragraph": [
+      0,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6
+    ],
+    "title": "The Race Before the Rain"
+  },
+  "pages": [
+    "Ethan knelt beside his bright red toy truck on the smooth, sun-warmed pavement. Golden leaves were falling around him like tiny paper airplanes, drifting softly onto his carefully built racetrack. He had been planning this race all morning.",
+    "[emotion:QT/happy] Then dark clouds rolled in quickly, and chilly raindrops began to fall. [emotion:QT/sad] Ethan's shoulders dropped. He thought his whole plan was ruined.",
+    "[emotion:QT/sad] \"I wonder if we could move the track under the big tree,\" said his neighbor Mia, crouching beside him. \"There's enough room if we rearrange the curved pieces. \"",
+    "Although Ethan felt disappointed at first, he grabbed the yellow pieces while Mia carried the red ones. They worked together, taking turns placing each section carefully.",
+    "After that, the rain drummed cheerfully on the leaves above them, but the track stayed dry. [emotion:QT/calm] Ethan gave Mia the first race because the idea was hers. [emotion:QT/happy] Finally, the trucks zoomed forward, and both of them cheered loudly."
+  ],
+  "paragraphs": [
+    "Ethan knelt beside his bright red toy truck on the smooth, sun-warmed pavement. Golden leaves were falling around him like tiny paper airplanes, drifting softly onto his carefully built racetrack. He had been planning this race all morning. Then dark clouds rolled in quickly, and chilly raindrops began to fall. Ethan's shoulders dropped. He thought his whole plan was ruined. \"I wonder if we could move the track under the big tree,\" said his neighbor Mia, crouching beside him. \"There's enough room if we rearrange the curved pieces.\"",
+    "Although Ethan felt disappointed at first, he grabbed the yellow pieces while Mia carried the red ones. They worked together, taking turns placing each section carefully.",
+    "After that, the rain drummed cheerfully on the leaves above them, but the track stayed dry. Ethan gave Mia the first race because the idea was hers. Finally, the trucks zoomed forward, and both of them cheered loudly."
+  ],
+  "scenes": [
+    "Ethan kneeling beside his red toy truck on sun-warmed pavement as dark clouds gather and rain begins to fall, with golden leaves drifting down and Mia crouching beside him pointing toward a large nearby tree",
+    "Ethan and Mia working together under the big tree, each carrying colored track pieces and placing them carefully on the ground",
+    "Ethan and Mia cheering together under the leafy tree canopy as their toy trucks zoom along the completed dry racetrack while rain drums on the leaves above"
+  ],
+  "page_to_scene": [
+    0,
+    0,
+    0,
+    1,
+    2
+  ],
+  "page_to_paragraph": [
+    0,
+    0,
+    0,
+    1,
+    2
+  ],
+  "paragraph_to_scene": [
+    0,
+    1,
+    2
+  ],
+  "questions": [
+    {
+      "question": "What is the main message of this story about Ethan and his race track?",
+      "type": "main_idea",
+      "correct_answer": "Working together can rescue a ruined plan",
+      "wrong_answers": [
+        "Trucks are the fastest vehicles in a race",
+        "Rain always ruins outdoor activities"
+      ]
+    },
+    {
+      "question": "After the rain started, where did Ethan and Mia move the race track to?",
+      "type": "detail",
+      "correct_answer": "Under the big tree",
+      "wrong_answers": [
+        "Inside Ethan's house",
+        "Under a red truck"
+      ]
+    },
+    {
+      "question": "While they were rearranging the track, what three colors of pieces did Ethan and Mia carry?",
+      "type": "detail",
+      "correct_answer": "Ethan carried yellow pieces and Mia carried red ones",
+      "wrong_answers": [
+        "Ethan carried red pieces and Mia carried blue ones",
+        "They both carried orange and green pieces"
+      ]
+    },
+    {
+      "question": "Why do you think Ethan gave Mia the first race, even though he had been planning this all morning?",
+      "type": "inference",
+      "correct_answer": "Because her idea saved the race track from the rain",
+      "wrong_answers": [
+        "Because Mia's truck was faster than his",
+        "Because Ethan was too tired to race first"
+      ]
+    },
+    {
+      "question": "What do you think would have happened if Mia had not thought of moving the track under the tree?",
+      "type": "inference",
+      "correct_answer": "Ethan would have had to cancel the race",
+      "wrong_answers": [
+        "The rain would have stopped right away",
+        "Ethan would have built a three-story racetrack"
+      ]
+    },
+    {
+      "question": "What did Mia show us by what she did?",
+      "type": "takeaway",
+      "correct_answer": "Friends who help you through a challenge make everything better.",
+      "wrong_answers": [
+        "Friends who live nearby are always the best people to play with.",
+        "Friends who bring their own toys are the most helpful to have around."
+      ]
+    },
+    {
+      "question": "Why was it a good idea for Ethan and Mia to move the racetrack under the tree?",
+      "type": "takeaway",
+      "correct_answer": "When something changes unexpectedly, trying a new idea can still get you to your goal.",
+      "wrong_answers": [
+        "When the weather changes, it is always better to go inside and wait for it to stop.",
+        "When your plan does not work, starting over with a completely different activity is the best choice."
+      ]
+    },
+    {
+      "question": "What is one lesson from this story?",
+      "type": "takeaway",
+      "correct_answer": "Taking turns and sharing makes things more fun for everyone.",
+      "wrong_answers": [
+        "Letting the person with the best idea always go first is the polite thing to do.",
+        "Finishing a game quickly together is more important than how you play it."
+      ]
+    }
+  ],
+  "takeaways": [
+    "Friends who help you through a challenge make everything better.",
+    "When something changes unexpectedly, trying a new idea can still get you to your goal.",
+    "Taking turns and sharing makes things more fun for everyone."
+  ]
+}

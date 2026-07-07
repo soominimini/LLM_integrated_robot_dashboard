@@ -1,0 +1,116 @@
+{
+  "scene_description": "A woman wearing a pink top and yellow rubber gloves is kneeling on a kitchen floor. She is holding a striped cloth and is surrounded by cleaning supplies including a blue bucket, a red bucket, a mop, and a cleaning cart. The kitchen has white cabinets and countertops in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the woman wearing on her hands?",
+      "sample_answers": [
+        "gloves",
+        "yellow gloves",
+        "rubber gloves"
+      ],
+      "sentence_frame": "She is wearing ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "yellow gloves",
+        "mittens",
+        "nothing"
+      ],
+      "evidence_hint": "Look at the woman's hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the woman doing?",
+      "sample_answers": [
+        "cleaning",
+        "scrubbing",
+        "holding a cloth",
+        "washing"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cleaning",
+        "cooking",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at what the woman is doing with her hands and the cloth."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the woman cleaning?",
+      "sample_answers": [
+        "in the kitchen",
+        "on the kitchen floor",
+        "inside"
+      ],
+      "sentence_frame": "She is cleaning ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the kitchen",
+        "in the bedroom",
+        "outside"
+      ],
+      "evidence_hint": "Look at the cabinets and sink in the background."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a mop and bucket for?",
+      "sample_answers": [
+        "cleaning the floor",
+        "washing the floor",
+        "mopping"
+      ],
+      "sentence_frame": "We use a mop and bucket for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cleaning the floor",
+        "cooking food",
+        "drawing pictures"
+      ],
+      "evidence_hint": "Look at the mop and buckets next to the woman."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the woman do next with the mop?",
+      "sample_answers": [
+        "mop the floor",
+        "clean the floor",
+        "use the mop to wash"
+      ],
+      "sentence_frame": "Next, she might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "mop the floor",
+        "eat lunch",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at the mop standing next to her and the buckets of water."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you ever help clean up at home?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I wipe the table",
+        "I pick up toys"
+      ],
+      "sentence_frame": "I help by ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about chores you do at home."
+    }
+  ]
+}
