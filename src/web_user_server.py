@@ -7070,7 +7070,7 @@ def _store_scene_question(username, record):
 # ---------- Pre-generated question pool ----------
 #
 # Instead of calling the LLM live on every "start round" click, questions are
-# generated ahead of time into user_data/<user>/scene_game_question_pool__old.json.
+# generated ahead of time into user_data/<user>/scene_game_question_pool.json.
 # /api/scene/start pops the next pooled question (fast) and only generates
 # live when the pool is empty or stale. The pool is fingerprinted against the
 # toy list + child age + language age, so editing toys or the profile
@@ -7092,7 +7092,7 @@ _scene_pool_refilling = set()
 def _scene_pool_path(username, kind='criteria'):
     d = os.path.join(USER_DATA_DIR, username or '_anonymous')
     os.makedirs(d, exist_ok=True)
-    fname = ('scene_game_question_pool__old.json' if kind == 'criteria'
+    fname = ('scene_game_question_pool.json' if kind == 'criteria'
              else 'scene_game_direction_pool.json')
     return os.path.join(d, fname)
 
