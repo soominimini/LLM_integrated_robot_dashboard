@@ -1,0 +1,124 @@
+
+21:08:49 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:08:49 [----] [Claude:scene-game-question-batch] >>> PROMPT (2358 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:08:49 [----] You are generating questions for an object detection game for a 4-year-old child.
+21:08:49 [----] Available physical toys: lemon, tomato, apple, banana, carrot, grape, corn, cookie, dinosaur.
+21:08:49 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep every question within that length.
+21:08:49 [----] Generate exactly 7 DIFFERENT inference-style requests for EACH target that let the child figure out THAT target without naming it.
+21:08:49 [----] Do this for ALL 9 target objects listed below (63 questions in total — exactly 7 per target):
+21:08:49 [----]   1. lemon
+21:08:49 [----]   2. tomato
+21:08:49 [----]   3. apple
+21:08:49 [----]   4. banana
+21:08:49 [----]   5. carrot
+21:08:49 [----]   6. grape
+21:08:49 [----]   7. corn
+21:08:49 [----]   8. cookie
+21:08:49 [----]   9. dinosaur
+21:08:49 [----] 
+21:08:49 [----] HARD RULE — a question must NEVER contain the name of ITS target or ANY other toy. It must contain NONE of these words:
+21:08:49 [----]   lemon, tomato, apple, banana, carrot, grape, corn, cookie, dinosaur
+21:08:49 [----] Refer to the target only as "it", "something", or "one". The child must INFER which object is meant.
+21:08:49 [----] CLUE STYLE — each spoken question must be ONE of these two kinds:
+21:08:49 [----]   (a) An ASSOCIATION / FUNCTION clue (what animal eats it, what you do with it, where you find it). These are the best clues and may stand alone. Good: "Get me something rabbits love to eat!"
+21:08:49 [----]   (b) A PHYSICAL-PROPERTY clue (color/shape/size/texture). When you describe properties you MUST also name the object's CATEGORY (fruit, vegetable, animal, ...) so the child knows what kind of thing to look for. Good: "I want a skinny, bright orange vegetable!" BAD: "I want something skinny and bright orange!" (no category word).
+21:08:49 [----] CRITERIA RULE — each "criteria" is a short concrete descriptor: at most ONE adjective plus the CATEGORY noun (e.g. "orange vegetable", "red fruit"); never a function phrase, compound, or multi-object.
+21:08:49 [----] UNIQUENESS RULE — a target's 7 questions must each use a DIFFERENT property or association, and every question must fit ONLY its own target among the toys (use a distinguishing feature no other listed toy shares).
+21:08:49 [----] Use simple, clear language appropriate for ages 4-6.
+21:08:49 [----] Example object: {"target": "carrot", "question": "Get me something rabbits love to eat!", "criteria": "orange vegetable"}
+21:08:49 [----] 
+21:08:49 [----] Return ONLY a JSON object, no other text:
+21:08:49 [----] {"questions": [ {"target": "<exact toy name>", "question": "<sentence, contains no toy name>", "criteria": "<one noun + at most one adjective>"}, ... ]}
+21:08:49 [----] The array MUST hold exactly 63 objects: 7 for each target.
+21:08:49 [631f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:08:49 [c994] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:08:49 [c994] └─ DONE  GET /api/scene_game/pool_status -> 200 in 16ms
+21:08:49 [631f] └─ DONE  GET /api/scene_game/pool_status -> 200 in 19ms
+21:08:59 [273a] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:08:59 [7add] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:08:59 [273a] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:08:59 [7add] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:09:01 [72b1] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:01 [72b1] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:09:01 [5562] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:01 [5562] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:09:03 [5044] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:03 [f364] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:03 [5044] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:03 [f364] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:09:05 [1a6f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:05 [220d] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:05 [1a6f] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:05 [220d] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:07 [826e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:07 [5611] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:07 [826e] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:09:07 [5611] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:09:09 [7968] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:09 [b801] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:09 [7968] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:09 [b801] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:09:11 [30c9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:11 [8e52] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:11 [30c9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:11 [8e52] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:13 [----] [Claude:scene-game-question-batch] <<< RESPONSE (6757 chars):
+21:09:13 [----] ```json
+21:09:13 [----] {
+21:09:13 [----]   "questions": [
+21:09:13 [----]     {"target": "lemon", "question": "Get me the sour yellow fruit!", "criteria": "yellow fruit"},
+21:09:13 [----]     {"target": "lemon", "question": "Find something you squeeze for juice!", "criteria": "yellow fruit"},
+21:09:13 [----]     {"target": "lemon", "question": "Get me a fruit that makes your face scrunch!", "criteria": "sour fruit"},
+21:09:13 [----]     {"target": "lemon", "question": "Find the bumpy yellow fruit!", "criteria": "bumpy fruit"},
+21:09:13 [----]     {"target": "lemon", "question": "Get me something that goes in lemonade!", "criteria": "yellow fruit"},
+21:09:13 [----]     {"target": "lemon", "question": "Find a fruit shaped like an oval!", "criteria": "oval fruit"},
+21:09:13 [----]     {"target": "lemon", "question": "Get me the fruit that tastes very sour!", "criteria": "sour fruit"},
+21:09:13 [----] 
+21:09:13 [----]     {"target": "tomato", "question": "Get me the round red vegetable!", "criteria": "red vegetable"},
+21:09:13 [----]     {"target": "tomato", "question": "Find something that goes on a pizza!", "criteria": "red vegetable"},
+21:09:13 [----]     {"target": "tomato", "question": "Get me something you put in a salad!", "criteria": "round vegetable"},
+21:09:13 [----]     {"target": "tomato", "question": "Find the soft squishy red vegetable!", "criteria": "soft vegetable"},
+21:09:13 [----]     {"target": "tomato", "question": "Get me something used to make ketchup!", "criteria": "red vegetable"},
+21:09:13 [----]     {"target": "tomato", "question": "Find a vegetable that is red and round!", "criteria": "round vegetable"},
+21:09:13 [----]     {"target": "tomato", "question": "Get me something that grows on a vine!", "criteria": "red vege
+21:09:13 [----] ...(+5257 more chars)┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:13 [de83] [SceneGame] batch generation: 63 usable question(s) from ONE API call (asked for 63)
+21:09:13 [----] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:13 [1c15] 
+21:09:13 [----] [SceneGame] criteria pool: added 62 question(s) from ONE API call for maya└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 10ms
+21:09:13 [1c15] 
+21:09:13 [de83] 
+21:09:13 [----] [SceneGame] criteria pool ready for maya: 62 question(s)
+21:09:15 [0888] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:15 [7e66] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:15 [0888] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:09:15 [7e66] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:09:35 [a9d7] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, relations
+21:09:35 [a9d7] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:09:35 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:09:35 [8306] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:35 [4b46] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:35 [8306] └─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:09:35 [4b46] 
+21:09:35 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:09:37 [974b] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:37 [703a] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:09:37 [703a] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:09:37 [974b] 
+21:10:20 [ddfa] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:10:20 [ddfa] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+21:10:22 [de96] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:10:22 [de96] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+21:10:24 [0eba] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, relations
+21:10:24 [0eba] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 1ms
+21:10:24 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:10:24 [8dba] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:10:24 [50c6] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:10:24 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tomato beside the carrot."└─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:10:24 [50c6] 
+21:10:24 [8dba] 
+21:10:24 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:10:26 [7f87] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:10:26 [b6e2] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:10:26 [b6e2] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:10:26 [7f87] └─ DONE  GET /api/scene_game/pool_status -> 200 in 9ms

@@ -1,16 +1,49 @@
 {
   "prompt_version": 2,
-  "toys_fp": "banana|carrot|corn|lemon|tray",
+  "toys_fp": "apple|banana|bowl|carrot|cookie|corn|dinosaur|grape|lemon|tomato|tray",
   "child_age": 4,
   "language_age": 4,
   "questions": [
     {
-      "question": "Let's put the lemon on the tray.",
+      "question": "Let's put the tomato next to the carrot.",
       "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "above",
-      "phrase": "on",
+      "obj_a": "tomato",
+      "obj_b": "carrot",
+      "relation": "next_to",
+      "phrase": "next to",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the grape behind the lemon.",
+      "mode": "direction",
+      "obj_a": "grape",
+      "obj_b": "lemon",
+      "relation": "behind",
+      "phrase": "behind",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the cookie beside the corn.",
+      "mode": "direction",
+      "obj_a": "cookie",
+      "obj_b": "corn",
+      "relation": "next_to",
+      "phrase": "beside",
+      "category": "food",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the grape behind the corn.",
+      "mode": "direction",
+      "obj_a": "grape",
+      "obj_b": "corn",
+      "relation": "behind",
+      "phrase": "behind",
       "category": "fruit",
       "target": null,
       "criteria": null
@@ -27,60 +60,68 @@
       "criteria": null
     },
     {
-      "question": "Let's put the banana below the tray.",
+      "question": "Let's put the dinosaur in front of the corn.",
+      "mode": "direction",
+      "obj_a": "dinosaur",
+      "obj_b": "corn",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "dinosaur",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the carrot below the bowl.",
+      "mode": "direction",
+      "obj_a": "carrot",
+      "obj_b": "bowl",
+      "relation": "under",
+      "phrase": "below",
+      "category": "vegetable",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the lemon under the corn.",
+      "mode": "direction",
+      "obj_a": "lemon",
+      "obj_b": "corn",
+      "relation": "under",
+      "phrase": "under",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the apple under the lemon.",
+      "mode": "direction",
+      "obj_a": "apple",
+      "obj_b": "lemon",
+      "relation": "under",
+      "phrase": "under",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana below the carrot.",
       "mode": "direction",
       "obj_a": "banana",
-      "obj_b": "tray",
+      "obj_b": "carrot",
       "relation": "under",
       "phrase": "below",
       "category": "fruit",
       "target": null,
       "criteria": null
-    },
-    {
-      "question": "Let's put the tray under the carrot.",
-      "mode": "direction",
-      "obj_a": "tray",
-      "obj_b": "carrot",
-      "relation": "under",
-      "phrase": "under",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the carrot behind the banana.",
-      "mode": "direction",
-      "obj_a": "carrot",
-      "obj_b": "banana",
-      "relation": "behind",
-      "phrase": "behind",
-      "category": "food",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the corn under the lemon.",
-      "mode": "direction",
-      "obj_a": "corn",
-      "obj_b": "lemon",
-      "relation": "under",
-      "phrase": "under",
-      "category": "food",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the lemon behind the tray.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "behind",
-      "phrase": "behind",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
     }
   ],
-  "generated_at": "2026-07-07 21:37:20"
+  "relations": [
+    "behind",
+    "in",
+    "in_front_of",
+    "next_to",
+    "on",
+    "under"
+  ],
+  "generated_at": "2026-07-10 21:10:24"
 }

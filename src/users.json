@@ -26,7 +26,7 @@
     "age": 4,
     "password_hash": "",
     "created_at": "2026-03-26T18:21:59.973312",
-    "last_login": "2026-07-07T21:30:45.532537",
+    "last_login": "2026-07-10T21:08:13.546025",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/chat_history",
     "display_name": "maya",
@@ -109,7 +109,7 @@
     "age": 3,
     "password_hash": "",
     "created_at": "2026-07-07T20:19:39.431870",
-    "last_login": "2026-07-07T21:40:48.679311",
+    "last_login": "2026-07-07T22:21:30.233096",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/leo",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/leo/chat_history"
   }

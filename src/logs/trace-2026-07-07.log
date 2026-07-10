@@ -1,0 +1,642 @@
+21:44:58 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+21:44:58 [----]  * Serving Flask app 'web_user_server'
+21:44:58 [----]  * Debug mode: on
+21:45:16 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+21:45:16 [b754] ┌─ WORK  GET /
+21:45:16 [b754] └─ DONE  GET / -> 200 in 11ms
+21:45:20 [d9bd] ┌─ WORK  POST /api/login | fields: username
+21:45:20 [d9bd] └─ DONE  POST /api/login -> 200 in 7ms
+21:45:21 [5eee] ┌─ WORK  GET /
+21:45:21 [5eee] └─ DONE  GET / -> 200 in 8ms
+21:45:24 [c030] ┌─ WORK  GET /object_game_generate
+21:45:24 [c030] └─ DONE  GET /object_game_generate -> 200 in 4ms
+21:45:24 [6449] ┌─ WORK  GET /api/scene_game/toys
+21:45:24 [72a9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:24 [6449] └─ DONE  GET /api/scene_game/toys -> 200 in 3ms
+21:45:24 [ce17] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:24 [72a9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 7ms
+21:45:24 [ce17] └─ DONE  GET /api/scene_game/pool_status -> 200 in 7ms
+21:45:26 [3cc8] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:45:26 [3cc8] └─ DONE  POST /api/scene_game/toys -> 200 in 2ms
+21:45:26 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:26 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot beside the lemon."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the carrot!"
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the lemon!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the carrot!"
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the lemon under the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the lemon!"
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the lemon?'
+21:45:26 [----] [SceneGame] direction pool ready for leo: 10 question(s)
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the carrot!"
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a lemon!'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a lemon!'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the lemon?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the lemon?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a carrot!'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the lemon?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the lemon?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:26 [----] [SceneGame] criteria pool ready for leo: 8 question(s)
+21:45:26 [eb12] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:45:26 [eb12] └─ DONE  POST /api/scene_game/toys -> 200 in 4ms
+21:45:26 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:26 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot behind the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a carrot!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn beside the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the carrot!"
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn behind the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot below the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a carrot!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn behind the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a carrot!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn behind the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the carrot?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot behind the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot under the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the carrot!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot under the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot behind the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot behind the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a carrot!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn beside the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn next to the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the carrot!"
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn behind the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the carrot!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot behind the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot behind the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot under the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot below the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the carrot?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot under the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the carrot?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot under the corn."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn behind the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the carrot?'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn beside the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the carrot."
+21:45:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot under the corn."
+21:45:26 [----] [SceneGame] criteria pool ready for leo: 5 question(s)
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the carrot below the corn."
+21:45:26 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn behind the carrot."
+21:45:26 [----] [SceneGame] direction pool ready for leo: 6 question(s)
+21:45:27 [43a9] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+21:45:27 [43a9] └─ DONE  POST /api/scene_game/toys -> 200 in 1ms
+21:45:27 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:27 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:27 [----] [SceneGame] direction mode needs two distinct toys, or a container plus an object; current toys: ['corn']
+21:45:27 [----] [SceneGame] direction pool: current toy list cannot make direction rounds (needs 2+ toys / a container)
+21:45:27 [----] [SceneGame] direction pool ready for leo: 0 question(s)
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:27 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:27 [----] [SceneGame] criteria pool ready for leo: 3 question(s)
+21:45:28 [2e36] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:45:28 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:28 [2e36] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [0742] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [d752] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:45:28 [0742] 
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:45:28 [d752] 
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:28 [----] [SceneGame] criteria pool ready for leo: 3 question(s)
+21:45:30 [5eee] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:30 [adf3] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:30 [5eee] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:45:30 [adf3] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:45:54 [d2b2] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:45:54 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:45:54 [d2b2] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 1ms
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:54 [ba7a] 
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:54 [d549] 
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'└─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:45:54 [d549] 
+21:45:54 [ba7a] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:45:54 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:45:54 [----] [SceneGame] criteria pool ready for leo: 3 question(s)
+21:45:56 [1ed9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:56 [e2b8] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:45:56 [1ed9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:45:56 [e2b8] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:46:00 [78c9] ┌─ WORK  GET /play_scene
+21:46:12 [78c9] └─ DONE  GET /play_scene -> 200 in 12212ms
+21:46:15 [77ea] ┌─ WORK  POST /api/scene/start | fields: mode
+21:46:15 [77ea] self.engine :  qwen
+21:46:19 [77ea] └─ DONE  POST /api/scene/start -> 200 in 4397ms
+21:49:46 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+21:50:05 [845b] ┌─ WORK  GET /
+21:50:05 [845b] └─ DONE  GET / -> 200 in 18ms
+21:50:09 [05c0] ┌─ WORK  POST /api/login | fields: username
+21:50:09 [05c0] └─ DONE  POST /api/login -> 200 in 11ms
+21:50:10 [ec1f] ┌─ WORK  GET /
+21:50:10 [ec1f] └─ DONE  GET / -> 200 in 7ms
+21:50:12 [d4b4] ┌─ WORK  GET /object_game_generate
+21:50:12 [d4b4] └─ DONE  GET /object_game_generate -> 200 in 13ms
+21:50:13 [3486] ┌─ WORK  GET /api/scene_game/toys
+21:50:13 [3486] └─ DONE  GET /api/scene_game/toys -> 200 in 2ms
+21:50:13 [d42e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:50:13 [d42e] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:50:13 [12a9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:50:13 [12a9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:50:14 [f54b] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:50:14 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question└─ DONE  POST /api/scene_game/pregenerate -> 200 in 4ms
+21:50:14 [f54b] 
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [bb04] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'└─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:50:14 [bb04] 
+21:50:14 [f540] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [f540] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms[SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:50:14 [----] 
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:50:14 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:50:14 [----] [SceneGame] criteria pool ready for leo: 2 question(s)
+21:50:16 [54a5] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:50:16 [54a5] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:50:16 [dd7a] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:50:16 [dd7a] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+21:52:02 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+21:52:02 [----]  * Serving Flask app 'web_user_server'
+21:52:02 [----]  * Debug mode: on
+21:52:23 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+21:56:58 [f157] ┌─ WORK  GET /
+21:56:58 [f157] └─ DONE  GET / -> 200 in 12ms
+21:57:01 [3902] ┌─ WORK  POST /api/login | fields: username
+21:57:01 [3902] └─ DONE  POST /api/login -> 200 in 7ms
+21:57:02 [3590] ┌─ WORK  GET /
+21:57:02 [3590] └─ DONE  GET / -> 200 in 7ms
+21:57:04 [d6c0] ┌─ WORK  GET /object_game_generate
+21:57:04 [d6c0] └─ DONE  GET /object_game_generate -> 200 in 4ms
+21:57:04 [912a] ┌─ WORK  GET /api/scene_game/toys
+21:57:04 [1611] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:04 [cec6] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:04 [912a] └─ DONE  GET /api/scene_game/toys -> 200 in 3ms
+21:57:04 [1611] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:57:04 [cec6] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:57:06 [91fc] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:57:06 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:57:06 [91fc] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 3ms
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:06 [d9b3] 
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [4c8a] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'└─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:57:06 [d9b3] 
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'└─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:57:06 [4c8a] 
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:06 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:06 [----] [SceneGame] criteria pool ready for leo: 2 question(s)
+21:57:08 [ffa6] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:08 [4383] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:08 [ffa6] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:57:08 [4383] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:57:26 [e3bd] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+21:57:26 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+21:57:26 [e3bd] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [b3d7] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:26 [b608] 
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:26 [b3d7] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"└─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:57:26 [b608] 
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+21:57:26 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+21:57:26 [----] [SceneGame] criteria pool ready for leo: 2 question(s)
+21:57:28 [b7ad] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:28 [ccc0] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:57:28 [b7ad] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:57:28 [ccc0] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+22:04:46 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+22:04:46 [----]  * Serving Flask app 'web_user_server'
+22:04:46 [----]  * Debug mode: on
+22:05:03 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+22:05:07 [6d29] ┌─ WORK  GET /
+22:05:07 [6d29] └─ DONE  GET / -> 200 in 12ms
+22:05:38 [49c4] ┌─ WORK  POST /api/login | fields: username
+22:05:38 [49c4] └─ DONE  POST /api/login -> 200 in 7ms
+22:05:39 [d91e] ┌─ WORK  GET /
+22:05:39 [d91e] └─ DONE  GET / -> 200 in 7ms
+22:10:05 [9d84] ┌─ WORK  GET /object_game_generate
+22:10:05 [9d84] └─ DONE  GET /object_game_generate -> 200 in 4ms
+22:10:05 [be21] ┌─ WORK  GET /api/scene_game/toys
+22:10:05 [9647] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:10:05 [0dcb] ┌─ WORK  GET /api/scene_game/pool_status | args: kind└─ DONE  GET /api/scene_game/toys -> 200 in 5ms
+22:10:05 [be21] 
+22:10:05 [9647] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+22:10:05 [0dcb] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+22:10:10 [0fd7] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+22:10:10 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+22:10:10 [0fd7] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+22:10:10 [3f1e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:10:10 [dda3] 
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'└─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+22:10:10 [3f1e] 
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'└─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+22:10:10 [dda3] 
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round "Let's find the corn!"
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me a corn!'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Where is the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Can you find the corn?'
+22:10:10 [----] [SceneGame] criteria pool refill: dropped duplicate round 'Show me the corn!'
+22:10:10 [----] [SceneGame] criteria pool ready for leo: 5 question(s)
+22:10:12 [86a7] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:10:12 [bc0b] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:10:12 [86a7] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+22:10:12 [bc0b] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+22:15:51 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+22:16:13 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+22:21:08 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+22:21:08 [----]  * Serving Flask app 'web_user_server'
+22:21:08 [----]  * Debug mode: on
+22:21:26 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-07.log (daily rotation)
+22:21:26 [e330] ┌─ WORK  GET /
+22:21:26 [e330] └─ DONE  GET / -> 200 in 12ms
+22:21:30 [85c6] ┌─ WORK  POST /api/login | fields: username
+22:21:30 [85c6] └─ DONE  POST /api/login -> 200 in 7ms
+22:21:31 [d92a] ┌─ WORK  GET /
+22:21:31 [d92a] └─ DONE  GET / -> 200 in 7ms
+22:21:33 [2677] ┌─ WORK  GET /object_game_generate
+22:21:33 [2677] └─ DONE  GET /object_game_generate -> 200 in 6ms
+22:21:33 [a120] ┌─ WORK  GET /api/scene_game/toys
+22:21:33 [0b8f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:21:33 [3c98] 
+22:21:33 [a120] └─ DONE  GET /api/scene_game/toys -> 200 in 4ms
+22:21:33 [3c98] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+22:21:33 [0b8f] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+22:21:35 [95e0] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind
+22:21:35 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+22:21:35 [95e0] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+22:21:35 [a261] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:21:35 [d730] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:21:35 [d730] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+22:21:35 [a261] 
+22:21:35 [----] [SceneGame] criteria pool ready for leo: 10 question(s)
+22:21:37 [17f6] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:21:37 [0287] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:21:37 [17f6] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+22:21:37 [0287] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+22:21:50 [769d] ┌─ WORK  POST /api/scene_game/toys | fields: action, name
+22:21:50 [769d] └─ DONE  POST /api/scene_game/toys -> 200 in 2ms
+22:21:50 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question[KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+22:21:50 [----] 
+22:21:50 [----] [SceneGame] criteria pool ready for leo: 10 question(s)
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray behind the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn next to the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn next to the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray under the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray behind the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray next to the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn next to the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray beside the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray next to the corn."
+22:21:50 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the tray."
+22:21:50 [----] [SceneGame] direction pool ready for leo: 8 question(s)
+22:22:05 [9dfd] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, relations
+22:22:05 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+22:22:05 [9dfd] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray under the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray under the corn."┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:05 [bd71] 
+22:22:05 [3ec4] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [bd71] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+22:22:05 [3ec4] 
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn in front of the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn in front of the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn in front of the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray under the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray under the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray below the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn in front of the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray in front of the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tray under the corn."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn under the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:05 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn below the tray."
+22:22:05 [----] [SceneGame] direction pool ready for leo: 5 question(s)
+22:22:07 [e2a1] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:07 [ccb8] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:07 [ccb8] └─ DONE  GET /api/scene_game/pool_status -> 200 in 1ms
+22:22:07 [e2a1] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+22:22:14 [2699] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, relations
+22:22:14 [----] [KB] derived level_age=3 mlu=4 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_early', 'location_prepositions', 'size_noun', 'person_noun'] speech[3-4]=['middle_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play', 'vehicles'] for user=leo age=3 language_age=None gender='' kind=question
+22:22:14 [2699] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 3ms
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [1a23] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:14 [3e1c] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."└─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+22:22:14 [3e1c] 
+22:22:14 [1a23] 
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the corn on the tray."
+22:22:14 [----] [SceneGame] direction pool ready for leo: 1 question(s)
+22:22:16 [59a0] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:16 [72e9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+22:22:16 [59a0] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+22:22:16 [72e9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms

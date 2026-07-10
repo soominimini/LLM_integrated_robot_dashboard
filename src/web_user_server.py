@@ -3708,49 +3708,59 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"{avoid_clause}"
             f"The TARGET object for this round is: {target}.\n"
             f"Generate ONE inference-style request that lets the child figure\n"
-            f"out THIS target object from its observable properties.\n"
+            f"out THIS target object without naming it.\n"
             f"\n"
             f"HARD RULE — the QUESTION text must NOT name the target object.\n"
             f"It must NEVER contain any of these noun names from the toy list:\n"
             f"  {', '.join(toy_list)}\n"
-            f"Refer to the target only as \"it\", \"something\", \"one\", or by\n"
-            f"a generic placeholder like \"a fruit\" or \"a vehicle\". The child\n"
-            f"must INFER which object you mean from the description.\n"
+            f"Refer to the target only as \"it\", \"something\", or \"one\". The\n"
+            f"child must INFER which object you mean.\n"
             f"\n"
-            f"CRITICAL — the criteria must describe ONE simple, concrete object:\n"
-            f"- A single noun (the object type) with at most ONE adjective\n"
-            f"  describing color, size, or category.\n"
-            f"- Good criteria: \"banana\", \"red car\", \"green dinosaur\",\n"
-            f"  \"tomato\", \"yellow fruit\", \"round ball\".\n"
-            f"- BAD criteria (do NOT produce these):\n"
-            f"    * \"red car moving block\" (compound / multi-object)\n"
-            f"    * \"big round shiny red fruit on a tree\" (too many properties)\n"
-            f"    * \"toy that you can stack\" (function-based, vague)\n"
-            f"- Do not chain multiple objects or stack three+ adjectives.\n"
+            f"CLUE STYLE — the spoken question must be ONE of these two kinds:\n"
+            f"  (a) An ASSOCIATION / FUNCTION clue: what animal eats it, what you\n"
+            f"      do with it, or where you find it. These are the best clues and\n"
+            f"      may stand on their own.\n"
+            f"      Good: \"Get me something rabbits love to eat!\"\n"
+            f"  (b) A PHYSICAL-PROPERTY clue (color, shape, size, texture). When\n"
+            f"      you describe properties you MUST also name the object's\n"
+            f"      CATEGORY (fruit, vegetable, animal, ...) so the child knows\n"
+            f"      what kind of thing to look for.\n"
+            f"      Good: \"I want a skinny, bright orange vegetable!\"\n"
+            f"      BAD:  \"I want something skinny and bright orange!\" — no\n"
+            f"            category, the child cannot tell what kind of thing it is.\n"
             f"\n"
-            f"UNIQUENESS RULE — the question's description must fit ONLY the\n"
-            f"target among the available toys. Before answering, check every\n"
-            f"other toy in the list: if it also fits your description, revise\n"
-            f"the question to use a more DISTINGUISHING feature of the target\n"
-            f"(a property no other listed toy shares).\n"
-            f"Example: with both a banana and a lemon in the list, \"Find\n"
-            f"something yellow!\" is BAD (both match) — \"Find something yellow\n"
-            f"and long!\" is GOOD (only the banana matches).\n"
+            f"CRITERIA FIELD — separate from the spoken question, give a short,\n"
+            f"concrete descriptor of the target for the answer checker: at most\n"
+            f"ONE adjective plus the CATEGORY noun.\n"
+            f"- Good criteria: \"orange vegetable\", \"red fruit\", \"green dinosaur\".\n"
+            f"- BAD criteria: \"skinny and bright orange\" (no category noun),\n"
+            f"  \"something rabbits eat\" (a function, not a concrete descriptor),\n"
+            f"  \"red car moving block\" (compound). Keep it <adjective> <category>.\n"
+            f"\n"
+            f"UNIQUENESS RULE — the clue must fit ONLY the target among the\n"
+            f"available toys. Check every other toy: if it also fits, switch to a\n"
+            f"more DISTINGUISHING feature (a property or association no other\n"
+            f"listed toy shares).\n"
+            f"Example: with a banana and a lemon in the list, \"a yellow fruit\" is\n"
+            f"BAD (both match) — \"a long yellow fruit\" is GOOD (only the banana).\n"
             f"\n"
             f"The criteria MUST describe the target object ({target}).\n"
             f"Use simple, clear language appropriate for ages 4-6.\n"
-            f"Good examples (target NOT named, exactly ONE listed toy fits):\n"
-            f"- Question: \"I want a red fruit!\" (criteria: red fruit)\n"
-            f"- Question: \"Show me something green that goes ROAR!\"\n"
-            f"  (criteria: green dinosaur)\n"
+            f"Good examples (target NOT named):\n"
+            f"- Question: \"Get me something rabbits love to eat!\"\n"
+            f"  (criteria: \"orange vegetable\")\n"
+            f"- Question: \"I want a skinny, bright orange vegetable!\"\n"
+            f"  (criteria: \"orange vegetable\")\n"
+            f"- Question: \"Show me a red fruit!\" (criteria: \"red fruit\")\n"
             f"BAD examples (do NOT do these):\n"
-            f"- \"Show me the red apple!\" — names the target.\n"
-            f"- \"Find something tall and yellow!\" — ambiguous: several yellow\n"
-            f"  toys could match.\n"
+            f"- \"Show me the carrot!\" — names the target.\n"
+            f"- \"I want something skinny and orange!\" — property clue with NO\n"
+            f"  category word.\n"
+            f"- \"Find something yellow!\" — ambiguous: several yellow toys match.\n"
             f"\n"
             f"Return ONLY a JSON object:\n"
             f"{{\"question\": \"<the sentence — must NOT contain any toy name>\", "
-            f"\"criteria\": \"<short criteria phrase: one noun + at most one adjective>\"}}"
+            f"\"criteria\": \"<short: one adjective + category noun>\"}}"
         )
     else:
         prompt = (
@@ -3883,6 +3893,176 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
     }
 
 
+def _scene_game_generate_questions_batch(toy_list, child_age, learning_goals,
+                                         per_item, language_age=None,
+                                         username=None, avoid_questions=None):
+    """Generate `per_item` DISTINCT inference questions for EVERY toy in a
+    SINGLE API call — instead of one call per question.
+
+    This is the batch replacement for calling _scene_game_generate_question()
+    once per slot: the whole "which objects, how many each" instruction is put
+    in one prompt and the model returns every question at once. Returns a list
+    of question dicts shaped like the criteria result of
+    _scene_game_generate_question(), or None if the call fails or yields nothing
+    usable (the caller then falls back to the per-question loop).
+
+    Only for the criteria/riddle tier (developmental age >= 4). Age <=3 (exact
+    templates) and direction rounds are built locally and never reach here.
+    """
+    complexity_age = language_age if language_age is not None else child_age
+    per_item = max(1, int(per_item or 1))
+    total = len(toy_list) * per_item
+    names = ', '.join(toy_list)
+
+    # MLU (mean length of utterance) target, same knowledge-base source the
+    # single-question path uses, so batch wording stays at the child's level.
+    mlu_clause = ""
+    try:
+        kb_info = knowledge_base.describe(complexity_age)
+        mlu_range = kb_info.get('mlu_range') if kb_info else None
+        if mlu_range:
+            mlu_clause = (
+                f"TARGET MLU (knowledge base): the child's mean length of utterance "
+                f"is about {mlu_range} words. Keep every question within that length.\n"
+            )
+    except Exception as e:
+        print(f"[SceneGame] MLU lookup failed: {e}")
+
+    goals_clause = ""
+    if learning_goals:
+        goals_clause = (
+            f"The child's therapy session goals are: {learning_goals}. "
+            f"Weave these naturally into the questions. "
+        )
+
+    avoid_clause = ""
+    if avoid_questions:
+        recent = [q.strip() for q in avoid_questions if q and q.strip()][-20:]
+        if recent:
+            avoid_clause = (
+                "Do NOT reuse any of these recently played questions:\n"
+                + "".join(f"  - {q}\n" for q in recent)
+            )
+
+    targets_block = "\n".join(f"  {i + 1}. {t}" for i, t in enumerate(toy_list))
+
+    if complexity_age <= 6:
+        style_line = (
+            f"Generate exactly {per_item} DIFFERENT inference-style requests for EACH "
+            f"target that let the child figure out THAT target without naming it.")
+        level_line = "Use simple, clear language appropriate for ages 4-6."
+        clue_rule = (
+            "CLUE STYLE — each spoken question must be ONE of these two kinds:\n"
+            "  (a) An ASSOCIATION / FUNCTION clue (what animal eats it, what you do "
+            "with it, where you find it). These are the best clues and may stand "
+            "alone. Good: \"Get me something rabbits love to eat!\"\n"
+            "  (b) A PHYSICAL-PROPERTY clue (color/shape/size/texture). When you "
+            "describe properties you MUST also name the object's CATEGORY (fruit, "
+            "vegetable, animal, ...) so the child knows what kind of thing to look "
+            "for. Good: \"I want a skinny, bright orange vegetable!\" "
+            "BAD: \"I want something skinny and bright orange!\" (no category word).\n")
+        ex = ('{"target": "carrot", "question": "Get me something rabbits love to '
+              'eat!", "criteria": "orange vegetable"}')
+    else:
+        style_line = (
+            f"Generate exactly {per_item} DIFFERENT riddles for EACH target that "
+            f"require the child to reason about properties (color, shape, size, "
+            f"function, where it is found) to name THAT target.")
+        level_line = "Do NOT use a conversational tone."
+        clue_rule = ""
+        ex = ('{"target": "apple", "question": "I am round and red, and I grow on a '
+              'tree. What am I?", "criteria": "red apple"}')
+
+    prompt = (
+        f"You are generating questions for an object detection game for a "
+        f"{complexity_age}-year-old child.\n"
+        f"Available physical toys: {names}.\n"
+        f"{mlu_clause}{goals_clause}{avoid_clause}"
+        f"{style_line}\n"
+        f"Do this for ALL {len(toy_list)} target objects listed below "
+        f"({total} questions in total — exactly {per_item} per target):\n"
+        f"{targets_block}\n\n"
+        f"HARD RULE — a question must NEVER contain the name of ITS target or ANY "
+        f"other toy. It must contain NONE of these words:\n  {names}\n"
+        f"Refer to the target only as \"it\", \"something\", or \"one\". The child "
+        f"must INFER which object is meant.\n"
+        f"{clue_rule}"
+        f"CRITERIA RULE — each \"criteria\" is a short concrete descriptor: at most "
+        f"ONE adjective plus the CATEGORY noun (e.g. \"orange vegetable\", \"red "
+        f"fruit\"); never a function phrase, compound, or multi-object.\n"
+        f"UNIQUENESS RULE — a target's {per_item} questions must each use a DIFFERENT "
+        f"property or association, and every question must fit ONLY its own target "
+        f"among the toys (use a distinguishing feature no other listed toy shares).\n"
+        f"{level_line}\n"
+        f"Example object: {ex}\n\n"
+        f"Return ONLY a JSON object, no other text:\n"
+        f"{{\"questions\": [ {{\"target\": \"<exact toy name>\", "
+        f"\"question\": \"<sentence, contains no toy name>\", "
+        f"\"criteria\": \"<one noun + at most one adjective>\"}}, ... ]}}\n"
+        f"The array MUST hold exactly {total} objects: {per_item} for each target."
+    )
+
+    # Size the output budget to the batch, but stay well under the SDK's
+    # non-streaming ceiling. On any failure _claude_generate returns None and
+    # the caller drops back to the per-question loop.
+    max_tokens = min(8000, 700 + total * 70)
+    raw = _claude_generate(
+        prompt, system="You generate game questions for children. Return JSON only.",
+        temperature=0.6, max_tokens=max_tokens, label="scene-game-question-batch")
+    if not raw:
+        print("[SceneGame] batch generation: no response — falling back per-question")
+        return None
+
+    obj = _extract_json(raw)
+    items = obj.get('questions') if isinstance(obj, dict) else None
+    if not isinstance(items, list) or not items:
+        print("[SceneGame] batch generation: could not parse a questions array — "
+              "falling back per-question")
+        return None
+
+    def _leaked(q_text):
+        ql = q_text.lower()
+        for toy in toy_list:
+            tl = toy.lower().strip()
+            if tl and re.search(rf'\b{re.escape(tl)}\b', ql):
+                return tl
+        return None
+
+    def _sanitize(q_text):
+        for toy in toy_list:
+            tl = toy.lower().strip()
+            if tl:
+                q_text = re.sub(rf'\b{re.escape(tl)}\b', 'it', q_text,
+                                flags=re.IGNORECASE)
+        return re.sub(r'\s{2,}', ' ', q_text).strip()
+
+    results = []
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        q = (it.get('question') or '').strip()
+        if not q:
+            continue
+        gen = 'llm_batch'
+        if _leaked(q):
+            q = _sanitize(q)
+            gen = 'llm_batch_sanitized'
+            if not q:
+                continue
+        results.append({
+            'question': q,
+            'target': None,
+            'criteria': (it.get('criteria') or '').strip(),
+            'mode': 'criteria',
+            'generator': gen,
+            'llm_model': SCENE_GAME_LLM_MODEL,
+            'prompt': prompt,
+        })
+    print(f"[SceneGame] batch generation: {len(results)} usable question(s) from ONE "
+          f"API call (asked for {total})")
+    return results or None
+
+
 # ---------- Direction mode (spatial preposition teaching) ----------
 
 # Canonical relation key -> list of natural phrases the spoken instruction
@@ -3923,6 +4103,14 @@ SCENE_TOY_CATEGORIES = {
         "raspberry", "blackberry", "apricot", "fig", "papaya", "avocado",
         "pomegranate", "coconut",
     },
+    "vegetable": {
+        "carrot", "corn", "sweetcorn", "broccoli", "cauliflower", "pea",
+        "peas", "potato", "cucumber", "pepper", "capsicum", "onion",
+        "lettuce", "cabbage", "celery", "pumpkin", "eggplant", "aubergine",
+        "spinach", "radish", "beet", "beetroot", "mushroom", "bean", "beans",
+        "squash", "zucchini", "courgette", "asparagus", "leek", "turnip",
+        "kale", "chili", "chilli", "artichoke", "parsnip", "okra", "yam",
+    },
     "dinosaur": {
         "dinosaur", "dino", "trex", "rex", "raptor", "triceratops",
         "stegosaurus", "brontosaurus", "velociraptor", "pterodactyl",
@@ -3930,10 +4118,10 @@ SCENE_TOY_CATEGORIES = {
     },
     "food": {
         "cookie", "cake", "bread", "pizza", "sandwich", "donut", "doughnut",
-        "egg", "carrot", "broccoli", "candy", "biscuit", "cheese", "hotdog",
+        "egg", "candy", "biscuit", "cheese", "hotdog",
         "burger", "muffin", "pretzel", "cupcake", "lollipop", "icecream",
         "cracker", "popcorn", "fries", "waffle", "pancake", "taco", "noodle",
-        "noodles", "corn", "chocolate", "jelly", "sausage", "meatball",
+        "noodles", "chocolate", "jelly", "sausage", "meatball",
         "pasta", "rice", "sushi", "pie",
     },
     "animal": {
@@ -3988,7 +4176,8 @@ def _is_direction_container(toy_name):
     return _categorize_toy(toy_name) == "container"
 
 
-def _scene_game_generate_direction_question(toy_list, child_age=None):
+def _scene_game_generate_direction_question(toy_list, child_age=None,
+                                            allowed_relations=None):
     """Build a spatial-reasoning round of the form
     "Let's put the <object> <relation> the <reference>".
 
@@ -3998,12 +4187,16 @@ def _scene_game_generate_direction_question(toy_list, child_age=None):
         object to move into / onto it. Enclosing containers (box, bowl, basket)
         read as "in" (canonical ``in``); flat surfaces (tray, plate) read as
         "on" (canonical ``above``).
-      * Positional ("next to" / "beside", "under" / "below", "behind") works
-        with any two distinct toys — the reference need not be a container.
+      * Positional ("next to" / "beside", "under" / "below", "behind",
+        "in front of") works with any two distinct toys — the reference need
+        not be a container.
+
+    ``allowed_relations`` (keys from: in, on, next_to, under, behind,
+    in_front_of) restricts the menu to the prepositions selected on the setup
+    page; None allows everything the toys support.
 
     Returns None — so the caller falls back to another mode — when the toy
-    list cannot support any relation (fewer than two toys, and no
-    container+object pair).
+    list cannot support any (allowed) relation.
 
     ``child_age`` is accepted for call-site compatibility but no longer steers
     relation choice; difficulty now comes from the object/relation mix.
@@ -4035,11 +4228,16 @@ def _scene_game_generate_direction_question(toy_list, child_age=None):
     if surface_containers and non_containers:
         candidates.append("on")  # canonical 'above', spoken "on"
     if len(all_toys) >= 2:
-        candidates.extend(["next_to", "under", "behind"])
+        candidates.extend(["next_to", "under", "behind", "in_front_of"])
+
+    if allowed_relations:
+        allowed = {str(r).strip().lower() for r in allowed_relations}
+        candidates = [c for c in candidates if c in allowed]
 
     if not candidates:
-        print(f"[SceneGame] direction mode needs two distinct toys, or a "
-              f"container plus an object; current toys: {toy_list}")
+        print(f"[SceneGame] direction mode: no usable relation for current "
+              f"toys {toy_list} (allowed: {allowed_relations or 'all'}) — "
+              f"needs two distinct toys, or a container plus an object")
         return None
 
     choice = random.choice(candidates)
@@ -6849,12 +7047,16 @@ def _store_scene_question(username, record):
 # ---------- Pre-generated question pool ----------
 #
 # Instead of calling the LLM live on every "start round" click, questions are
-# generated ahead of time into user_data/<user>/scene_game_question_pool.json.
+# generated ahead of time into user_data/<user>/scene_game_question_pool__old.json.
 # /api/scene/start pops the next pooled question (fast) and only generates
 # live when the pool is empty or stale. The pool is fingerprinted against the
 # toy list + child age + language age, so editing toys or the profile
 # automatically invalidates it. Refills run in a background thread.
 SCENE_POOL_TARGET = int(os.getenv('SCENE_POOL_TARGET', '10'))
+# Criteria pool: how many DISTINCT questions to pre-generate for EACH toy, so
+# every object in the list gets several rounds instead of just one. The batch
+# size is this number times the number of toys (capped in the code below).
+SCENE_POOL_PER_ITEM = int(os.getenv('SCENE_POOL_PER_ITEM', '3'))
 SCENE_POOL_REFILL_AT = int(os.getenv('SCENE_POOL_REFILL_AT', '3'))
 # Bump when the question-generation prompt changes materially, so pools built
 # with the old prompt are discarded and regenerated.
@@ -6867,7 +7069,7 @@ _scene_pool_refilling = set()
 def _scene_pool_path(username, kind='criteria'):
     d = os.path.join(USER_DATA_DIR, username or '_anonymous')
     os.makedirs(d, exist_ok=True)
-    fname = ('scene_game_question_pool.json' if kind == 'criteria'
+    fname = ('scene_game_question_pool__old.json' if kind == 'criteria'
              else 'scene_game_direction_pool.json')
     return os.path.join(d, fname)
 
@@ -6951,24 +7153,68 @@ def _recent_served_rounds(username, limit=20):
         return []
 
 
-def _refill_scene_pool(username, target=None, kind='criteria'):
+def _refill_scene_pool(username, target=None, kind='criteria', fresh=False,
+                       relations=None, per_item=None):
     """Top the user's `kind` pool up to `target` questions (blocking).
 
     kind='criteria' pre-generates LLM inference questions; kind='direction'
-    pre-builds local spatial-preposition rounds. Each question is appended
-    (and saved) as soon as it is generated, so play can serve from the pool
-    before the whole batch is done. Generation runs outside the lock — only
-    pool file access is serialized.
+    pre-builds local spatial-preposition rounds using only the prepositions
+    in `relations` (None = all supported; auto top-ups reuse the selection
+    stored with the pool). `fresh` discards whatever is in the pool first,
+    so an explicit "Generate" click always produces a brand-new batch of
+    exactly `target` questions.
+
+    Criteria batches generate `per_item` DISTINCT questions for EACH toy, so
+    every object in the list gets several rounds (batch size = per_item ×
+    number of toys). `per_item` falls back to the value stored with the pool
+    (so auto top-ups keep the user's choice), then to SCENE_POOL_PER_ITEM.
+    When per_item is resolved it overrides `target`. The questions are still
+    spread evenly across the toys.
+
+    Each question is appended (and saved) as soon as it is generated, so play
+    can serve from the pool before the whole batch is done. Generation runs
+    outside the lock — only pool file access is serialized.
     """
     target = target or SCENE_POOL_TARGET
     toy_list, child_age, language_age, learning_goals = _scene_pool_meta_for(username)
     persona_ctx = _persona_context_for(username, child_age, kind="question") if username else ''
     fp = _toys_fingerprint(toy_list)
 
+    # Direction refills without an explicit selection reuse the preposition
+    # set stored with the existing pool (chosen on the setup page).
+    if kind == 'direction' and not relations:
+        with _scene_pool_lock:
+            prev = _load_scene_pool(username, kind)
+        if prev and prev.get('relations'):
+            relations = prev['relations']
+
+    # Criteria refills produce `per_item` questions for each toy. An explicit
+    # value wins; otherwise reuse the per-item setting stored with the current
+    # pool (so background top-ups keep the user's choice), then the default.
+    # The resolved per-item count drives the batch size (per_item × #toys).
+    if kind != 'direction':
+        if not per_item:
+            with _scene_pool_lock:
+                prev = _load_scene_pool(username, kind)
+            if prev and prev.get('per_item'):
+                per_item = prev['per_item']
+        try:
+            per_item = int(per_item or SCENE_POOL_PER_ITEM)
+        except (TypeError, ValueError):
+            per_item = SCENE_POOL_PER_ITEM
+        per_item = max(1, min(10, per_item))
+        if toy_list:
+            target = max(1, min(100, len(toy_list) * per_item))
+
     def _fresh_pool():
-        return {'prompt_version': SCENE_POOL_PROMPT_VERSION,
-                'toys_fp': fp, 'child_age': child_age,
-                'language_age': language_age, 'questions': []}
+        p = {'prompt_version': SCENE_POOL_PROMPT_VERSION,
+             'toys_fp': fp, 'child_age': child_age,
+             'language_age': language_age, 'questions': []}
+        if kind == 'direction' and relations:
+            p['relations'] = sorted(relations)
+        if kind != 'direction' and per_item:
+            p['per_item'] = per_item
+        return p
 
     def _norm_q(text):
         return re.sub(r'[^a-z0-9 ]+', '', (text or '').lower()).strip()
@@ -6982,15 +7228,20 @@ def _refill_scene_pool(username, target=None, kind='criteria'):
                     f"|{q.get('relation')}|{(q.get('obj_b') or '').lower()}")
         return _norm_q(q.get('question'))
 
-    # Drop any duplicates already sitting in the pool (from before questions
-    # were de-duplicated) so they can be regenerated as distinct rounds.
+    # Fresh generation replaces the pool outright; otherwise drop any
+    # duplicates already sitting in the pool (from before questions were
+    # de-duplicated) so they can be regenerated as distinct rounds.
     with _scene_pool_lock:
         pool = _load_scene_pool(username, kind)
-        if _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+        if fresh:
+            pool = _fresh_pool()
+            _save_scene_pool(username, pool, kind)
+        elif _scene_pool_is_valid(pool, toy_list, child_age, language_age):
             seen, unique = set(), []
             for q in pool['questions']:
                 k = _round_key(q)
-                if k and k not in seen:
+                # Template rounds may legitimately repeat (see below).
+                if q.get('generator') == 'template' or (k and k not in seen):
                     seen.add(k)
                     unique.append(q)
             if len(unique) != len(pool['questions']):
@@ -7006,13 +7257,61 @@ def _refill_scene_pool(username, target=None, kind='criteria'):
               if (r.get('mode') == 'direction') == (kind == 'direction')]
     served_keys = {_round_key(r) for r in served}
 
-    # criteria: cycle targets through shuffled passes of the toy list so every
-    # object gets even coverage (rotation alone only prevents adjacent
-    # repeats), and steer the LLM away from the questions already pooled.
+    # criteria: plan the batch as exactly `target` slots spread evenly across
+    # the toys (1 toy -> target questions about it, target toys -> 1 each);
+    # a duplicate keeps its slot and retries the same toy with the dropped
+    # wording added to the avoid list, so no toy loses coverage.
     # direction: keep drawing random local rounds, keeping only new triples.
     # A hard attempt cap keeps this loop finite even if generation keeps
     # producing repeats (e.g. few toys => few distinct direction rounds).
-    target_cycle = []
+    slot_queue = []
+    if kind != 'direction':
+        with _scene_pool_lock:
+            pool = _load_scene_pool(username, kind)
+            have = len(pool['questions']) \
+                if _scene_pool_is_valid(pool, toy_list, child_age, language_age) else 0
+        shuffled = list(toy_list)
+        random.shuffle(shuffled)
+        slot_queue = [shuffled[i % len(shuffled)]
+                      for i in range(max(0, target - have))]
+
+    # Criteria/riddle tier (developmental age >= 4): generate the WHOLE batch in
+    # ONE API call — the prompt states which objects and how many questions per
+    # object — instead of one call per question. Age <=3 (local exact templates)
+    # and direction (local spatial rounds) never make API calls, so they keep
+    # the per-round loop below. If the single call fails, slot_queue is left in
+    # place and the per-question loop runs as a graceful fallback.
+    complexity_age = language_age if language_age is not None else child_age
+    if kind != 'direction' and complexity_age >= 4 and toy_list and slot_queue:
+        batch = _scene_game_generate_questions_batch(
+            toy_list, child_age, learning_goals, per_item,
+            language_age=language_age, username=username,
+            avoid_questions=[r.get('question', '') for r in served])
+        if batch:
+            with _scene_pool_lock:
+                pool = _load_scene_pool(username, kind)
+                if not _scene_pool_is_valid(pool, toy_list, child_age, language_age):
+                    pool = _fresh_pool()
+                questions = list(pool.get('questions') or [])
+                seen = {_round_key(q) for q in questions} | served_keys
+                added = 0
+                for result in batch:
+                    if len(questions) >= target:
+                        break
+                    k = _round_key(result)
+                    if k and k in seen:
+                        continue
+                    seen.add(k)
+                    questions.append(result)
+                    added += 1
+                pool['questions'] = questions
+                pool['generated_at'] = time.strftime('%Y-%m-%d %H:%M:%S')
+                _save_scene_pool(username, pool, kind)
+            print(f"[SceneGame] criteria pool: added {added} question(s) from ONE "
+                  f"API call for {username or '_anonymous'}")
+            slot_queue = []  # batch filled the pool; skip the per-question loop
+
+    dropped = []
     attempts = 0
     max_attempts = target * 3 + 5
     while attempts < max_attempts:
@@ -7026,26 +7325,39 @@ def _refill_scene_pool(username, target=None, kind='criteria'):
         if len(rounds) >= target:
             break
         if kind == 'direction':
-            result = _scene_game_generate_direction_question(toy_list, child_age=child_age)
+            result = _scene_game_generate_direction_question(
+                toy_list, child_age=child_age, allowed_relations=relations)
             if result is None:
                 print("[SceneGame] direction pool: current toy list cannot "
-                      "make direction rounds (needs 2+ toys / a container)")
+                      "make direction rounds for the selected prepositions")
                 break
         else:
-            if not target_cycle:
-                target_cycle = list(toy_list)
-                random.shuffle(target_cycle)
-            tgt = target_cycle.pop(0)
+            if not slot_queue:
+                break
+            tgt = slot_queue[0]
             result = _scene_game_generate_question(
                 toy_list, child_age, learning_goals, persona_context=persona_ctx,
                 language_age=language_age, username=username,
                 target_override=tgt,
                 avoid_questions=[q.get('question', '') for q in rounds]
-                                + [r.get('question', '') for r in served])
-        if _round_key(result) in ({_round_key(q) for q in rounds} | served_keys):
-            print(f"[SceneGame] {kind} pool refill: dropped duplicate "
-                  f"round {result.get('question')!r}")
-            continue
+                                + [r.get('question', '') for r in served]
+                                + dropped)
+        # Exact-mode template rounds (age <=3) are allowed to repeat: the
+        # whole space is five wordings per toy, so deduping would cap the
+        # batch below `target` (and a young child hearing "Show me the
+        # corn!" twice is fine). The template branch already prefers unused
+        # wordings first, so repeats only appear once the set is exhausted.
+        # LLM and direction rounds stay strictly unique, including against
+        # recently served history.
+        if result.get('generator') != 'template':
+            if _round_key(result) in ({_round_key(q) for q in rounds} | served_keys):
+                if kind != 'direction':
+                    dropped.append(result.get('question', ''))
+                print(f"[SceneGame] {kind} pool refill: dropped duplicate "
+                      f"round {result.get('question')!r}")
+                continue
+        if kind != 'direction' and slot_queue:
+            slot_queue.pop(0)
         with _scene_pool_lock:
             pool = _load_scene_pool(username, kind)
             if not _scene_pool_is_valid(pool, toy_list, child_age, language_age):
@@ -7060,7 +7372,8 @@ def _refill_scene_pool(username, target=None, kind='criteria'):
           f"{n} question(s)")
 
 
-def _refill_scene_pool_async(username, target=None, kind='criteria'):
+def _refill_scene_pool_async(username, target=None, kind='criteria', fresh=False,
+                             relations=None, per_item=None):
     """Kick off a background refill unless one is already running."""
     key = (username or '_', kind)
     with _scene_pool_lock:
@@ -7070,7 +7383,8 @@ def _refill_scene_pool_async(username, target=None, kind='criteria'):
 
     def _run():
         try:
-            _refill_scene_pool(username, target, kind)
+            _refill_scene_pool(username, target, kind, fresh=fresh,
+                               relations=relations, per_item=per_item)
         except Exception as e:
             print(f"[SceneGame] {kind} pool refill failed for {key[0]}: {e}")
         finally:
@@ -7079,12 +7393,6 @@ def _refill_scene_pool_async(username, target=None, kind='criteria'):
 
     Thread(target=_run, daemon=True).start()
     return True
-
-
-def _warm_scene_pools_async(username):
-    """Background-refill both question pools (criteria + direction)."""
-    _refill_scene_pool_async(username)
-    _refill_scene_pool_async(username, kind='direction')
 
 
 @app.route("/object_game_generate")
@@ -7109,6 +7417,11 @@ def api_scene_game_toys_post():
     action = data.get('action', '')
     toys = _load_scene_toys()
 
+    # NOTE: changing the toy list does NOT auto-generate questions. Editing the
+    # list only saves it; the old pool simply goes stale (its toys fingerprint
+    # no longer matches) and is ignored until the user explicitly clicks
+    # "Generate Questions" / "Generate Direction Questions". This keeps every
+    # API call tied to a deliberate button press.
     if action == 'add':
         name = (data.get('name') or '').strip()
         if not name:
@@ -7117,22 +7430,17 @@ def api_scene_game_toys_post():
             return jsonify({'success': False, 'error': f'"{name}" already exists'})
         toys.append(name)
         _save_scene_toys(toys)
-        # Toy list changed -> the old pool is stale; rebuild it in the
-        # background so questions are ready before play starts.
-        _warm_scene_pools_async(session.get('username'))
         return jsonify({'success': True, 'toys': toys})
 
     if action == 'delete':
         name = (data.get('name') or '').strip()
         toys = [t for t in toys if t.lower() != name.lower()]
         _save_scene_toys(toys)
-        _warm_scene_pools_async(session.get('username'))
         return jsonify({'success': True, 'toys': toys})
 
     if action == 'reset':
         toys = list(SCENE_GAME_DEFAULT_TOYS)
         _save_scene_toys(toys)
-        _warm_scene_pools_async(session.get('username'))
         return jsonify({'success': True, 'toys': toys})
 
     return jsonify({'success': False, 'error': 'Unknown action'}), 400
@@ -7143,28 +7451,57 @@ def _scene_pool_kind_from(value):
     return kind if kind in ('criteria', 'direction') else 'criteria'
 
 
+# Canonical relation keys the direction generator's menu understands; the
+# setup page's preposition checkboxes send a subset of these.
+_DIRECTION_CANDIDATE_KEYS = ('in', 'on', 'next_to', 'under', 'behind', 'in_front_of')
+
+
 @app.route('/api/scene_game/pregenerate', methods=['POST'])
 def api_scene_game_pregenerate():
     """Pre-generate an object-game question pool for the current user.
 
-    Body: {"kind": "criteria"|"direction", "count": N}. kind defaults to
-    criteria (LLM inference questions); direction pre-builds spatial rounds.
+    Body: {"kind": "criteria"|"direction", "per_item": N, "count": N}.
+    kind defaults to criteria (LLM inference questions). For criteria, `per_item`
+    sets how many questions to generate PER toy (batch = per_item × #toys);
+    direction pre-builds spatial rounds sized by a flat `count`.
     """
     username = session.get('username')
     data = request.get_json(silent=True) or {}
     kind = _scene_pool_kind_from(data.get('kind'))
-    try:
-        target = int(data.get('count') or SCENE_POOL_TARGET)
-    except (TypeError, ValueError):
-        target = SCENE_POOL_TARGET
-    target = max(1, min(50, target))
-    started = _refill_scene_pool_async(username, target, kind)
     toy_list, child_age, language_age, _goals = _scene_pool_meta_for(username)
+
+    # Direction generation may be restricted to the prepositions ticked on
+    # the setup page (canonical keys, e.g. ["in", "behind", "in_front_of"]).
+    relations = None
+    per_item = None
+    if kind == 'direction':
+        try:
+            target = int(data.get('count') or SCENE_POOL_TARGET)
+        except (TypeError, ValueError):
+            target = SCENE_POOL_TARGET
+        target = max(1, min(50, target))
+        raw = data.get('relations')
+        if isinstance(raw, list):
+            cleaned = [str(r).strip().lower().replace(' ', '_') for r in raw]
+            relations = [r for r in cleaned if r in _DIRECTION_CANDIDATE_KEYS] or None
+    else:
+        # criteria: caller picks how many questions PER toy; the batch covers
+        # every toy that many times (capped at 100 total in the refill).
+        try:
+            per_item = int(data.get('per_item') or SCENE_POOL_PER_ITEM)
+        except (TypeError, ValueError):
+            per_item = SCENE_POOL_PER_ITEM
+        per_item = max(1, min(10, per_item))
+        target = max(1, min(100, len(toy_list) * per_item)) if toy_list else per_item
+    # An explicit generate click always produces a fresh batch (leftovers from
+    # earlier batches are discarded).
+    started = _refill_scene_pool_async(username, target, kind, fresh=True,
+                                       relations=relations, per_item=per_item)
     pool = _load_scene_pool(username, kind)
     ready = len((pool or {}).get('questions') or []) \
         if _scene_pool_is_valid(pool, toy_list, child_age, language_age) else 0
     return jsonify({'success': True, 'started': started, 'kind': kind,
-                    'ready': ready, 'target': target})
+                    'ready': ready, 'target': target, 'per_item': per_item})
 
 
 @app.route('/api/scene_game/pool_status', methods=['GET'])

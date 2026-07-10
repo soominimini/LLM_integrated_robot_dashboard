@@ -1,12 +1,12 @@
 {
   "prompt_version": 2,
-  "toys_fp": "banana|carrot|corn|lemon",
+  "toys_fp": "corn|tray",
   "child_age": 3,
   "language_age": 3,
   "questions": [
     {
-      "question": "Where is the banana?",
-      "target": "banana",
+      "question": "Let's find the tray!",
+      "target": "tray",
       "criteria": null,
       "mode": "exact",
       "generator": "template",
@@ -14,8 +14,8 @@
       "prompt": null
     },
     {
-      "question": "Show me the lemon!",
-      "target": "lemon",
+      "question": "Show me the corn!",
+      "target": "corn",
       "criteria": null,
       "mode": "exact",
       "generator": "template",
@@ -23,8 +23,71 @@
       "prompt": null
     },
     {
-      "question": "Show me the banana!",
-      "target": "banana",
+      "question": "Where is the tray?",
+      "target": "tray",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Where is the corn?",
+      "target": "corn",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Show me the tray!",
+      "target": "tray",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Can you find the corn?",
+      "target": "corn",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Show me a tray!",
+      "target": "tray",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Can you find the corn?",
+      "target": "corn",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Can you find the tray?",
+      "target": "tray",
+      "criteria": null,
+      "mode": "exact",
+      "generator": "template",
+      "llm_model": null,
+      "prompt": null
+    },
+    {
+      "question": "Show me a corn!",
+      "target": "corn",
       "criteria": null,
       "mode": "exact",
       "generator": "template",
@@ -32,5 +95,5 @@
       "prompt": null
     }
   ],
-  "generated_at": "2026-07-07 21:40:53"
+  "generated_at": "2026-07-07 22:21:50"
 }
