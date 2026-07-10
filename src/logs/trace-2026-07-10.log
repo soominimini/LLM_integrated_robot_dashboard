@@ -115,10 +115,105 @@
 21:10:24 [8dba] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
 21:10:24 [50c6] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
 21:10:24 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the tomato beside the carrot."└─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
-21:10:24 [50c6] 
-21:10:24 [8dba] 
-21:10:24 [----] [SceneGame] direction pool ready for maya: 10 question(s)
-21:10:26 [7f87] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
-21:10:26 [b6e2] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
-21:10:26 [b6e2] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
-21:10:26 [7f87] └─ DONE  GET /api/scene_game/pool_status -> 200 in 9ms
+
+
+
+
+21:15:35 [2015] ┌─ WORK  GET /object_game_generate
+21:15:35 [2015] └─ DONE  GET /object_game_generate -> 200 in 4ms
+21:15:35 [6f06] ┌─ WORK  GET /api/scene_game/toys
+21:15:35 [6f06] └─ DONE  GET /api/scene_game/toys -> 200 in 0ms
+21:15:35 [bb20] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:15:35 [a862] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:15:35 [bb20] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:15:35 [a862] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:15:41 [51c3] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, relations
+21:15:41 [51c3] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:15:41 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'pronouns_later', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='in' (containment/in: movable object into an enclosing container)
+21:15:41 [----] [SceneGame][direction]   picked move-object='corn' reference-object='bowl'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the corn in the bowl."  [canonical relation='in', spoken phrase='in']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='in_front_of' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='dinosaur' reference-object='tomato'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the dinosaur in front of the tomato."  [canonical relation='in_front_of', spoken phrase='in front of']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='behind' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='grape' reference-object='tomato'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the grape behind the tomato."  [canonical relation='behind', spoken phrase='behind']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='under' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='grape' reference-object='apple'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the grape below the apple."  [canonical relation='under', spoken phrase='below']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='behind' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='bowl' reference-object='tomato'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the bowl behind the tomato."  [canonical relation='behind', spoken phrase='behind']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='in' (containment/in: movable object into an enclosing container)
+21:15:41 [----] [SceneGame][direction]   picked move-object='lemon' reference-object='bowl'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the lemon in the bowl."  [canonical relation='in', spoken phrase='in']
+21:15:41 [ccf5] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:15:41 [4182] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='behind' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='lemon' reference-object='carrot'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the lemon behind the carrot."  [canonical relation='behind', spoken phrase='behind']
+21:15:41 [ccf5] └─ DONE  GET /api/scene_game/pool_status -> 200 in 7ms
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']└─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms
+21:15:41 [4182] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] 
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='under' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='bowl' reference-object='corn'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the bowl under the corn."  [canonical relation='under', spoken phrase='under']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='under' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='bowl' reference-object='corn'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the bowl below the corn."  [canonical relation='under', spoken phrase='below']
+21:15:41 [----] [SceneGame] direction pool refill: dropped duplicate round "Let's put the bowl below the corn."
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='in_front_of' (positional: two distinct toys, spoken phrase picked at random)
+21:15:41 [----] [SceneGame][direction]   picked move-object='tray' reference-object='bowl'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the tray in front of the bowl."  [canonical relation='in_front_of', spoken phrase='in front of']
+21:15:41 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'carrot', 'grape', 'corn', 'cookie', 'dinosaur', 'bowl', 'tray'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana', 'grape'], vegetable=['carrot', 'corn'], food=['cookie'], dinosaur=['dinosaur'], container=['bowl', 'tray']
+21:15:41 [----] [SceneGame][direction]   containers: enclosing/in=['bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana', 'grape', 'carrot', 'corn', 'cookie', 'dinosaur']
+21:15:41 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:15:41 [----] [SceneGame][direction]   chose relation='in' (containment/in: movable object into an enclosing container)
+21:15:41 [----] [SceneGame][direction]   picked move-object='carrot' reference-object='bowl'
+21:15:41 [----] [SceneGame][direction] ROUND: "Let's put the carrot in the bowl."  [canonical relation='in', spoken phrase='in']
+21:15:41 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:15:43 [3c76] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:15:43 [27ed] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:15:43 [3c76] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:15:43 [27ed] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms

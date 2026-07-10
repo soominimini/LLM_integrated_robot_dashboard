@@ -4219,6 +4219,15 @@ def _scene_game_generate_direction_question(toy_list, child_age=None,
         (surface_containers if tokens & SCENE_SURFACE_CONTAINERS
          else enclosing_containers).append(c)
 
+    # Trace (to the daily log) the raw material this round is built from, so the
+    # whole local/script derivation of a direction question is auditable.
+    cats_str = ', '.join(f'{k}={v}' for k, v in by_category.items())
+    allowed_str = list(allowed_relations) if allowed_relations else 'all'
+    print(f"[SceneGame][direction] generate: toys={all_toys} allowed={allowed_str}")
+    print(f"[SceneGame][direction]   categories: {cats_str}")
+    print(f"[SceneGame][direction]   containers: enclosing/in={enclosing_containers} "
+          f"surface/on={surface_containers}; movable objects={non_containers}")
+
     # Build the menu of relations the current toys can actually pose. Each key
     # is a canonical relation; containment relations carry their destination
     # pool so we don't re-derive it below.
@@ -4230,14 +4239,20 @@ def _scene_game_generate_direction_question(toy_list, child_age=None,
     if len(all_toys) >= 2:
         candidates.extend(["next_to", "under", "behind", "in_front_of"])
 
+    supported = list(candidates)
     if allowed_relations:
         allowed = {str(r).strip().lower() for r in allowed_relations}
         candidates = [c for c in candidates if c in allowed]
+        print(f"[SceneGame][direction]   relations toys support={supported}; "
+              f"after therapist filter {sorted(allowed)} -> usable={candidates}")
+    else:
+        print(f"[SceneGame][direction]   relations toys support={supported} "
+              f"(no preposition filter) -> usable={candidates}")
 
     if not candidates:
-        print(f"[SceneGame] direction mode: no usable relation for current "
-              f"toys {toy_list} (allowed: {allowed_relations or 'all'}) — "
-              f"needs two distinct toys, or a container plus an object")
+        print(f"[SceneGame][direction] no usable relation for current toys "
+              f"{toy_list} (allowed: {allowed_relations or 'all'}) — needs two "
+              f"distinct toys, or a container plus an object")
         return None
 
     choice = random.choice(candidates)
@@ -4246,17 +4261,25 @@ def _scene_game_generate_direction_question(toy_list, child_age=None,
         obj_a = random.choice(non_containers)
         obj_b = random.choice(enclosing_containers)
         relation, phrase = "in", "in"
+        branch = "containment/in: movable object into an enclosing container"
     elif choice == "on":
         obj_a = random.choice(non_containers)
         obj_b = random.choice(surface_containers)
         relation, phrase = "above", "on"
+        branch = "containment/on: movable object onto a flat surface container"
     else:
         # Positional relation: any two distinct toys; varied spoken vocabulary.
         obj_a, obj_b = random.sample(all_toys, 2)
         relation = choice
         phrase = random.choice(DIRECTION_RELATION_PHRASES[relation])
+        branch = "positional: two distinct toys, spoken phrase picked at random"
 
     question = f"Let's put the {obj_a} {phrase} the {obj_b}."
+    print(f"[SceneGame][direction]   chose relation='{choice}' ({branch})")
+    print(f"[SceneGame][direction]   picked move-object='{obj_a}' "
+          f"reference-object='{obj_b}'")
+    print(f"[SceneGame][direction] ROUND: \"{question}\"  "
+          f"[canonical relation='{relation}', spoken phrase='{phrase}']")
     return {
         'question': question,
         'mode': 'direction',
