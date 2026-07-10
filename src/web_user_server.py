@@ -4426,6 +4426,8 @@ def _run_claude_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=No
         "If either object is missing, set correct=false."
     )
 
+    print(f"[SceneGame] validate spatial prompt (photo):\n{prompt}")
+
     raw = _claude_generate_image(
         image_bytes, prompt,
         system="You judge a children's spatial-direction game from one photo. Return JSON only.",
@@ -4539,7 +4541,10 @@ def _run_gemini_validate_spatial_video(video_path, obj_a, obj_b, relation, toy_l
             raw = raw.strip('`').strip()
             if raw.startswith('json'):
                 raw = raw[4:].strip()
-        return json.loads(raw)
+        parsed = json.loads(raw)
+        if isinstance(parsed, dict) and parsed.get('prompt'):
+            print(f"[SceneGame] validate spatial prompt (video):\n{parsed['prompt']}")
+        return parsed
     except Exception as e:
         print(f"[SceneGame] validate_spatial_video exec failed: {e}")
         return None
@@ -4559,6 +4564,11 @@ def _run_gemini_detect_and_look(image_path):
             [WORKER_PYTHON, script_path, '--image', image_path],
             capture_output=True, text=True, timeout=60
         )
+        # Echo the exact detection prompt the worker used into the server log.
+        m = re.search(r'<<<DETECTION_PROMPT_START>>>\n(.*?)\n<<<DETECTION_PROMPT_END>>>',
+                      proc.stderr or '', re.S)
+        if m:
+            print(f"[SceneGame] detection prompt:\n{m.group(1)}")
         if proc.returncode != 0:
             print(f"[SceneGame] analyze script error: {proc.stderr}")
             return None

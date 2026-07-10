@@ -38,6 +38,12 @@ def main():
     with open(args.image, 'rb') as f:
         image_bytes = f.read()
 
+    # Emit the exact prompt on stderr (stdout is reserved for the JSON result)
+    # so the server can echo it into its [SceneGame] logs — single source of
+    # truth, no duplicated prompt string on the server side.
+    sys.stderr.write("<<<DETECTION_PROMPT_START>>>\n" + PROMPT + "\n<<<DETECTION_PROMPT_END>>>\n")
+    sys.stderr.flush()
+
     image_response = client.models.generate_content(
         model=MODEL_ID,
         contents=[
