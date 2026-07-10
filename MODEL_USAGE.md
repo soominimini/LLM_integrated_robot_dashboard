@@ -1,9 +1,11 @@
 # Model Usage by Activity
 
-Which AI model powers which task, per activity. Last updated **2026-07-03**
-(the day the story-pipeline text passes moved from Gemini 2.5 Flash to Claude
-Sonnet 4.6, and the knowledge base moved to
-`documents/restructured_knowledge_base_v2.json`).
+Which AI model powers which task, per activity. Last updated **2026-07-10**
+(the day the movement/spatial-direction game — still-frame **and** video —
+moved from Claude / Gemini 2.5 Flash to **Gemini Robotics-ER 1.6 preview**,
+after an A/B on saved frames; see §4. Prior update 2026-07-03: story-pipeline
+text passes moved from Gemini 2.5 Flash to Claude Sonnet 4.6, and the knowledge
+base moved to `documents/restructured_knowledge_base_v2.json`).
 
 All Claude calls run in-process via the Anthropic SDK
 (`_claude_generate` / `_claude_generate_image` in `src/web_user_server.py`);
@@ -47,15 +49,27 @@ the output) + ≈ 2 s backfill for 2/100 questions. `max_tokens` must stay below
 |---|---|---|---|
 | Game question generation (KB fragment injected) | **Claude Sonnet 4.6** | `SCENE_GAME_LLM_MODEL` default | `[Claude:scene-game-question]` |
 | Object/criteria match validation | **Claude Sonnet 4.6** | `SCENE_GAME_LLM_MODEL` default | `[Claude:scene-game-criteria-match]` |
-| Object detection in camera frame (points/labels/colors) | **Gemini Robotics-ER 1.6 preview** | `scripts/gemini_analyze_image.py` |  |
+| Object detection in camera frame (points/labels/colors) | **Gemini Robotics-ER 1.6 preview** | `scripts/gemini_analyze_image.py` | `[Gemini:scene-game-detect]` |
 
 ## 4. Movement / spatial direction game
 
-| Task | Model | Where |
-|---|---|---|
-| Still-frame spatial validation (left/right/on/under…) | **Claude Sonnet 4.6** (vision) | `_claude_generate_image`, `SPATIAL_VALIDATION_MODEL` default |
-| Video-clip depth relations (behind / in front / in / out) | **Gemini 2.5 Flash** (video) | `scripts/gemini_validate_spatial_video.py` |
-| Object detection in camera frame | **Gemini Robotics-ER 1.6 preview** | `scripts/gemini_analyze_image.py` |
+Spatial validation moved from Claude / Gemini 2.5 Flash to **Gemini
+Robotics-ER** on 2026-07-10, after an A/B on saved frames (ER read shallow
+"above vs in" container cases more as intended; its child-friendly `reason`
+wording held up). All three workers share the ER model. Claude/Flash remain a
+one-env revert (see the overrides table).
+
+| Task | Model | Where | Trace tag |
+|---|---|---|---|
+| Still-frame spatial validation (next_to / above / under) | **Gemini Robotics-ER 1.6 preview** (vision) | `scripts/gemini_validate_spatial.py`; `SPATIAL_ER_MODEL` default, selected when `SPATIAL_VALIDATION_BACKEND=er` (default) | `[Gemini:scene-game-validate-spatial-er]` |
+| — legacy fallback | **Claude Sonnet 4.6** (vision) | `_run_claude_validate_spatial`, `SPATIAL_VALIDATION_MODEL` default, active only when `SPATIAL_VALIDATION_BACKEND=claude` | `[Claude:scene-game-validate-spatial]` |
+| Video-clip depth relations (behind / in front / in / out) | **Gemini Robotics-ER 1.6 preview** (video) | `scripts/gemini_validate_spatial_video.py`, `SPATIAL_ER_VIDEO_MODEL` default | `[Gemini:scene-game-validate-spatial-video]` |
+| Object detection in camera frame | **Gemini Robotics-ER 1.6 preview** | `scripts/gemini_analyze_image.py` | `[Gemini:scene-game-detect]` |
+
+ER is a *preview* model and runs internal "thinking" (a benign
+`thought_signature` warning on stderr), so a round is a little slower than the
+old Flash/Claude path. A/B harness: `scripts/ab_spatial_validate.py`
+(+ `scripts/ab_build_manifest.py`) re-runs Claude vs ER on saved frames.
 
 ## 5. WH picture-scene activity
 
@@ -90,10 +104,13 @@ The former Gemini worker `scripts/gemini_wh_scene.py` is no longer called.
 | Variable | Default | Controls |
 |---|---|---|
 | `SCENE_GAME_LLM_MODEL` | `claude-sonnet-4-6` | All `_claude_generate` passes: scene game, emotion tagger, page splitter, scene analyzer, story/takeaway questions |
-| `SPATIAL_VALIDATION_MODEL` | `claude-sonnet-4-6` | Still-frame spatial validation |
+| `SPATIAL_VALIDATION_BACKEND` | `er` | Photo spatial validation backend: `er` (Gemini Robotics-ER) or `claude` (legacy in-process Claude) |
+| `SPATIAL_ER_MODEL` | `gemini-robotics-er-1.6-preview` | Photo spatial validation model (when backend=`er`) |
+| `SPATIAL_ER_VIDEO_MODEL` | `gemini-robotics-er-1.6-preview` | Video-clip depth-relation spatial validation model (set to `gemini-2.5-flash` to revert) |
+| `SPATIAL_VALIDATION_MODEL` | `claude-sonnet-4-6` | Claude vision model, **only used when `SPATIAL_VALIDATION_BACKEND=claude`** |
 | `WH_SCENE_LLM_MODEL` | `claude-sonnet-4-6` | WH picture-scene question generation (vision) |
 | `GOOGLE_IMAGE_MODEL` | `gemini-2.5-flash-image` | Story scene illustrations |
-| `GEMINI_VISION_MODEL` | `gemini-2.5-flash` | Remaining Gemini vision workers (recovery question, spatial video) |
+| `GEMINI_VISION_MODEL` | `gemini-2.5-flash` | Remaining Gemini vision workers (recovery question, conversation follow-ups, WH-scene worker) — no longer drives spatial video |
 | `TTS_ENGINE` | `qwen` | TTS backend (`qwen` / `qt` / `polly`) |
 | `QWEN_MODEL` / `QWEN_VOICE` | `qwen3-tts-vd-realtime-2026-01-15` / custom clone | Qwen TTS model + voice |
 

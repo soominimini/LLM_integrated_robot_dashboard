@@ -3710,6 +3710,11 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"Generate ONE inference-style request that lets the child figure\n"
             f"out THIS target object without naming it.\n"
             f"\n"
+            f"HOW THE CHILD ANSWERS — the child finds the matching toy, PICKS IT\n"
+            f"UP, and HOLDS IT UP to the robot's camera. So every request must ask\n"
+            f"the child to find and SHOW or BRING the object — never to merely\n"
+            f"point at it.\n"
+            f"\n"
             f"HARD RULE — the QUESTION text must NOT name the target object.\n"
             f"It must NEVER contain any of these noun names from the toy list:\n"
             f"  {', '.join(toy_list)}\n"
@@ -3729,6 +3734,13 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"      BAD:  \"I want something skinny and bright orange!\" — no\n"
             f"            category, the child cannot tell what kind of thing it is.\n"
             f"\n"
+            f"PHRASING VARIETY — vary the sentence opener every round. Do NOT\n"
+            f"always begin with \"Get me\" or \"I want\". Rotate among natural,\n"
+            f"child-friendly openers such as: \"Can you find ...\", \"Let's find ...\",\n"
+            f"\"Can you bring me ...\", \"Show me ...\", \"Where is ...\",\n"
+            f"\"I'm looking for ...\", \"Which one is ...\", \"Find ...\". Choose a\n"
+            f"DIFFERENT opener from the recent questions listed above.\n"
+            f"\n"
             f"CRITERIA FIELD — separate from the spoken question, give a short,\n"
             f"concrete descriptor of the target for the answer checker: at most\n"
             f"ONE adjective plus the CATEGORY noun.\n"
@@ -3746,12 +3758,12 @@ def _scene_game_generate_question(toy_list, child_age, learning_goals, persona_c
             f"\n"
             f"The criteria MUST describe the target object ({target}).\n"
             f"Use simple, clear language appropriate for ages 4-6.\n"
-            f"Good examples (target NOT named):\n"
-            f"- Question: \"Get me something rabbits love to eat!\"\n"
+            f"Good examples (target NOT named — note the varied openers):\n"
+            f"- Question: \"Can you find something rabbits love to eat?\"\n"
             f"  (criteria: \"orange vegetable\")\n"
-            f"- Question: \"I want a skinny, bright orange vegetable!\"\n"
+            f"- Question: \"Let's find a skinny, bright orange vegetable!\"\n"
             f"  (criteria: \"orange vegetable\")\n"
-            f"- Question: \"Show me a red fruit!\" (criteria: \"red fruit\")\n"
+            f"- Question: \"Can you bring me a red fruit?\" (criteria: \"red fruit\")\n"
             f"BAD examples (do NOT do these):\n"
             f"- \"Show me the carrot!\" — names the target.\n"
             f"- \"I want something skinny and orange!\" — property clue with NO\n"
@@ -3960,9 +3972,18 @@ def _scene_game_generate_questions_batch(toy_list, child_age, learning_goals,
             "describe properties you MUST also name the object's CATEGORY (fruit, "
             "vegetable, animal, ...) so the child knows what kind of thing to look "
             "for. Good: \"I want a skinny, bright orange vegetable!\" "
-            "BAD: \"I want something skinny and bright orange!\" (no category word).\n")
-        ex = ('{"target": "carrot", "question": "Get me something rabbits love to '
-              'eat!", "criteria": "orange vegetable"}')
+            "BAD: \"I want something skinny and bright orange!\" (no category word).\n"
+            "HOW THE CHILD ANSWERS — the child finds the matching toy, picks it up, "
+            "and holds it up to the robot's camera. So every request must ask the "
+            "child to find and SHOW or BRING the object — never to merely point at "
+            "it.\n"
+            "PHRASING VARIETY — vary the sentence opener across the whole set; do "
+            "NOT start most questions with \"Get me\" or \"I want\". Rotate among "
+            "natural openers such as \"Can you find ...\", \"Let's find ...\", \"Can "
+            "you bring me ...\", \"Show me ...\", \"Where is ...\", "
+            "\"I'm looking for ...\", \"Which one is ...\", \"Find ...\".\n")
+        ex = ('{"target": "carrot", "question": "Can you find something rabbits love '
+              'to eat?", "criteria": "orange vegetable"}')
     else:
         style_line = (
             f"Generate exactly {per_item} DIFFERENT riddles for EACH target that "
@@ -4336,9 +4357,16 @@ def _scene_game_olivia_direction_question():
     }
 
 
-# Photo (single-frame) spatial validation runs on Claude vision in-process —
-# Sonnet by default; override via SPATIAL_VALIDATION_MODEL. The video-clip
-# validator and the Robotics-ER object detector stay on Gemini.
+# Backend for PHOTO (single-frame) spatial validation:
+#   "er"     -> Gemini Robotics-ER (default; the embodied-reasoning model also
+#               used by the object detector), via scripts/gemini_validate_spatial.py
+#   "claude" -> in-process Claude vision (legacy fallback)
+# Flip with SPATIAL_VALIDATION_BACKEND=claude to revert instantly.
+SPATIAL_VALIDATION_BACKEND = os.getenv("SPATIAL_VALIDATION_BACKEND", "er").strip().lower()
+
+# Claude vision model, used only when SPATIAL_VALIDATION_BACKEND=claude.
+# Override via SPATIAL_VALIDATION_MODEL. The video-clip validator and the
+# Robotics-ER object detector stay on Gemini.
 SPATIAL_VALIDATION_LLM_MODEL = os.getenv("SPATIAL_VALIDATION_MODEL", "claude-sonnet-4-6")
 
 # Canonical relation key -> grounding phrase. Mirrors RELATION_PHRASE in
@@ -4425,8 +4453,6 @@ def _run_claude_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=No
         "}\n"
         "If either object is missing, set correct=false."
     )
-
-    print(f"[SceneGame] validate spatial prompt (photo):\n{prompt}")
 
     raw = _claude_generate_image(
         image_bytes, prompt,
@@ -4543,11 +4569,63 @@ def _run_gemini_validate_spatial_video(video_path, obj_a, obj_b, relation, toy_l
                 raw = raw[4:].strip()
         parsed = json.loads(raw)
         if isinstance(parsed, dict) and parsed.get('prompt'):
-            print(f"[SceneGame] validate spatial prompt (video):\n{parsed['prompt']}")
+            _log_gemini_io("(gemini video spatial validator)", parsed['prompt'],
+                           label="scene-game-validate-spatial-video")
         return parsed
     except Exception as e:
         print(f"[SceneGame] validate_spatial_video exec failed: {e}")
         return None
+
+
+def _run_er_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=None):
+    """Validate a single-frame spatial arrangement with Gemini Robotics-ER.
+
+    Drop-in peer of _run_claude_validate_spatial: same inputs, same returned
+    dict shape (obj_a_found, obj_b_found, actual_relation, correct, reason, plus
+    prompt/raw_response for the therapist UI), or None on failure. Runs
+    scripts/gemini_validate_spatial.py via WORKER_PYTHON because google.genai
+    lives in .venv39, not the server venv. The worker uses the SAME prompt as
+    the Claude validator, so the two backends differ only by model.
+    """
+    if not image_path or not os.path.exists(image_path):
+        print(f"[SceneGame] er validate_spatial image not found: {image_path}")
+        return None
+    script_path = os.path.join(os.path.dirname(BASE_DIR), 'scripts', 'gemini_validate_spatial.py')
+    if not os.path.exists(script_path):
+        print("[SceneGame] gemini_validate_spatial.py not found")
+        return None
+    cmd = [WORKER_PYTHON, script_path, '--image', image_path,
+           '--obj-a', obj_a, '--obj-b', obj_b, '--relation', relation]
+    if toy_list:
+        toys = ','.join(toy_list) if isinstance(toy_list, (list, tuple)) else str(toy_list)
+        cmd.extend(['--toy-list', toys])
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if proc.returncode != 0:
+            print(f"[SceneGame] er validate_spatial error: {proc.stderr.strip()}")
+            return None
+        raw = (proc.stdout or '').strip()
+        print(f"[SceneGame] er validate_spatial raw: {raw}")
+        if raw.startswith('```'):
+            raw = raw.strip('`').strip()
+            if raw.startswith('json'):
+                raw = raw[4:].strip()
+        parsed = json.loads(raw)
+        if isinstance(parsed, dict) and parsed.get('prompt'):
+            _log_gemini_io("(gemini-robotics-er spatial validator)", parsed['prompt'],
+                           label="scene-game-validate-spatial-er")
+        return parsed
+    except Exception as e:
+        print(f"[SceneGame] er validate_spatial exec failed: {e}")
+        return None
+
+
+def _validate_spatial_photo(image_path, obj_a, obj_b, relation, toy_list=None):
+    """Dispatch single-frame spatial validation to the configured backend
+    (ER by default; Claude when SPATIAL_VALIDATION_BACKEND=claude)."""
+    if SPATIAL_VALIDATION_BACKEND == "claude":
+        return _run_claude_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=toy_list)
+    return _run_er_validate_spatial(image_path, obj_a, obj_b, relation, toy_list=toy_list)
 
 
 def _run_gemini_detect_and_look(image_path):
@@ -4564,11 +4642,14 @@ def _run_gemini_detect_and_look(image_path):
             [WORKER_PYTHON, script_path, '--image', image_path],
             capture_output=True, text=True, timeout=60
         )
-        # Echo the exact detection prompt the worker used into the server log.
+        # Route the worker's exact detection prompt through the same central
+        # logger every other scene-game call uses, so it appears uniformly as
+        # [Gemini:scene-game-detect] and honours LOG_LLM_PROMPTS.
         m = re.search(r'<<<DETECTION_PROMPT_START>>>\n(.*?)\n<<<DETECTION_PROMPT_END>>>',
                       proc.stderr or '', re.S)
         if m:
-            print(f"[SceneGame] detection prompt:\n{m.group(1)}")
+            _log_gemini_io("(gemini-robotics-er object detector)", m.group(1).strip(),
+                           label="scene-game-detect")
         if proc.returncode != 0:
             print(f"[SceneGame] analyze script error: {proc.stderr}")
             return None
@@ -4847,9 +4928,9 @@ def api_scene_game_answer():
             else:
                 print("[SceneGame] video capture failed for depth relation; "
                       "falling back to still-frame validator")
-                result = _run_claude_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
+                result = _validate_spatial_photo(fpath, obj_a, obj_b, relation, toy_list=toy_list)
         else:
-            result = _run_claude_validate_spatial(fpath, obj_a, obj_b, relation, toy_list=toy_list)
+            result = _validate_spatial_photo(fpath, obj_a, obj_b, relation, toy_list=toy_list)
         if result is None:
             try:
                 tts_helper.speak("I couldn't see clearly. Can you show me again?")

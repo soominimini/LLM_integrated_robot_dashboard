@@ -48,7 +48,10 @@ RELATION_PHRASE = {
 
 
 def main():
-    model_id = os.getenv("GEMINI_VISION_MODEL", "gemini-2.5-flash")
+    # Gemini Robotics-ER is the embodied-reasoning model (also used by the
+    # object detector); it is the default backend for single-frame spatial
+    # validation. Override with SPATIAL_ER_MODEL.
+    model_id = os.getenv("SPATIAL_ER_MODEL", "gemini-robotics-er-1.6-preview")
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
     if not api_key:
         raise RuntimeError("Missing GEMINI_API_KEY or GOOGLE_API_KEY")
@@ -129,7 +132,12 @@ def main():
             types.Part.from_bytes(data=image_bytes, mime_type='image/jpeg'),
             prompt,
         ],
-        config=types.GenerateContentConfig(temperature=0.2),
+        config=types.GenerateContentConfig(
+            temperature=0.2,
+            system_instruction=(
+                "You judge a children's spatial-direction game from one photo. "
+                "Return JSON only."),
+        ),
     )
 
     raw = (response.text or '').strip()

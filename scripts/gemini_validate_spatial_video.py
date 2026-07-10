@@ -56,7 +56,10 @@ def _state_name(file_obj):
 
 
 def main():
-    model_id = os.getenv("GEMINI_VISION_MODEL", "gemini-2.5-flash")
+    # Gemini Robotics-ER by default (same embodied-reasoning model as the
+    # still-frame validator and object detector). Override with
+    # SPATIAL_ER_VIDEO_MODEL (e.g. set to gemini-2.5-flash to revert).
+    model_id = os.getenv("SPATIAL_ER_VIDEO_MODEL", "gemini-robotics-er-1.6-preview")
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
     if not api_key:
         raise RuntimeError("Missing GEMINI_API_KEY or GOOGLE_API_KEY")
@@ -160,7 +163,12 @@ def main():
     response = client.models.generate_content(
         model=model_id,
         contents=[myfile, prompt],
-        config=types.GenerateContentConfig(temperature=0.2),
+        config=types.GenerateContentConfig(
+            temperature=0.2,
+            system_instruction=(
+                "You judge a children's spatial-direction game from a short "
+                "video. Return JSON only."),
+        ),
     )
 
     raw = (response.text or '').strip()

@@ -1,0 +1,389 @@
+[
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260710_220655.jpg",
+    "obj_a": "apple",
+    "obj_b": "tray",
+    "relation": "under",
+    "toy_list": [
+      "lemon",
+      "tomato",
+      "apple",
+      "banana",
+      "carrot",
+      "grape",
+      "corn",
+      "cookie",
+      "dinosaur",
+      "cup",
+      "tray"
+    ],
+    "source": "detecting logic.log",
+    "ts": "220655",
+    "claude": {
+      "ok": true,
+      "ms": 3358,
+      "parsed": {
+        "obj_a_found": false,
+        "obj_b_found": true,
+        "actual_relation": "other",
+        "correct": false,
+        "reason": "I can see the tray, but there is no apple in the scene. We need an apple to play this game!"
+      },
+      "raw": "{\n  \"obj_a_found\": false,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"other\",\n  \"correct\": false,\n  \"reason\": \"I can see the tray, but there is no apple in the scene. We need an apple to play this game!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 4883,
+      "parsed": {
+        "obj_a_found": false,
+        "obj_b_found": true,
+        "actual_relation": "other",
+        "correct": false,
+        "reason": "I couldn't find the apple in the picture, so I can't check if it's under the tray."
+      },
+      "raw": "{\n  \"obj_a_found\": false,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"other\",\n  \"correct\": false,\n  \"reason\": \"I couldn't find the apple in the picture, so I can't check if it's under the tray.\"\n}"
+    },
+    "agree_relation": true,
+    "agree_correct": true
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260710_220732.jpg",
+    "obj_a": "apple",
+    "obj_b": "tray",
+    "relation": "under",
+    "toy_list": [
+      "lemon",
+      "tomato",
+      "apple",
+      "banana",
+      "carrot",
+      "grape",
+      "corn",
+      "cookie",
+      "dinosaur",
+      "cup",
+      "tray"
+    ],
+    "source": "detecting logic.log",
+    "ts": "220732",
+    "claude": {
+      "ok": true,
+      "ms": 2890,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "under",
+        "correct": true,
+        "reason": "Great job! The apple (red ball) is being held underneath the green tray, so the apple is under the tray \u2014 just like you were asked!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"under\",\n  \"correct\": true,\n  \"reason\": \"Great job! The apple (red ball) is being held underneath the green tray, so the apple is under the tray \u2014 just like you were asked!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 3470,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "under",
+        "correct": true,
+        "reason": "Great job! You put the apple right under the tray."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"under\",\n  \"correct\": true,\n  \"reason\": \"Great job! You put the apple right under the tray.\"\n}"
+    },
+    "agree_relation": true,
+    "agree_correct": true
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213632.jpg",
+    "obj_a": "carrot",
+    "obj_b": "corn",
+    "relation": "next_to",
+    "toy_list": [
+      "lemon",
+      "apple",
+      "banana",
+      "corn",
+      "carrot"
+    ],
+    "source": "object_maya.log",
+    "ts": "213632",
+    "claude": {
+      "ok": true,
+      "ms": 2036,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "next_to",
+        "correct": true,
+        "reason": "Great job! The carrot and the corn are right next to each other, side by side in your hand!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"next_to\",\n  \"correct\": true,\n  \"reason\": \"Great job! The carrot and the corn are right next to each other, side by side in your hand!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 3466,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "next_to",
+        "correct": true,
+        "reason": "The carrot is right next to the corn."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"next_to\",\n  \"correct\": true,\n  \"reason\": \"The carrot is right next to the corn.\"\n}"
+    },
+    "agree_relation": true,
+    "agree_correct": true
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213812.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "corn",
+      "carrot",
+      "tray"
+    ],
+    "source": "object_maya.log",
+    "ts": "213812",
+    "claude": {
+      "ok": true,
+      "ms": 2146,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "in",
+        "correct": false,
+        "reason": "The corn is sitting inside one of the little sections of the tray, not on top of it. Try placing the corn on top of the tray instead!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"in\",\n  \"correct\": false,\n  \"reason\": \"The corn is sitting inside one of the little sections of the tray, not on top of it. Try placing the corn on top of the tray instead!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 5042,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "above",
+        "correct": true,
+        "reason": "The corn is right on top of the tray!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"above\",\n  \"correct\": true,\n  \"reason\": \"The corn is right on top of the tray!\"\n}"
+    },
+    "agree_relation": false,
+    "agree_correct": false
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213836.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "corn",
+      "carrot",
+      "tray"
+    ],
+    "source": "object_maya.log",
+    "ts": "213836",
+    "claude": {
+      "ok": true,
+      "ms": 2293,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "above",
+        "correct": true,
+        "reason": "Great job! The corn is sitting on top of the tray, just like you were asked!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"above\",\n  \"correct\": true,\n  \"reason\": \"Great job! The corn is sitting on top of the tray, just like you were asked!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 4201,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "above",
+        "correct": true,
+        "reason": "Great job! The corn is right on top of the tray."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"above\",\n  \"correct\": true,\n  \"reason\": \"Great job! The corn is right on top of the tray.\"\n}"
+    },
+    "agree_relation": true,
+    "agree_correct": true
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213944.jpg",
+    "obj_a": "lemon",
+    "obj_b": "corn",
+    "relation": "next_to",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "corn",
+      "carrot",
+      "tray"
+    ],
+    "source": "object_maya.log",
+    "ts": "213944",
+    "claude": {
+      "ok": true,
+      "ms": 2367,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "next_to",
+        "correct": true,
+        "reason": "Great job! The lemon and the corn are sitting side by side on the white tray. They are right next to each other!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"next_to\",\n  \"correct\": true,\n  \"reason\": \"Great job! The lemon and the corn are sitting side by side on the white tray. They are right next to each other!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 3497,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "next_to",
+        "correct": true,
+        "reason": "The lemon is sitting right next to the corn on the tray."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"next_to\",\n  \"correct\": true,\n  \"reason\": \"The lemon is sitting right next to the corn on the tray.\"\n}"
+    },
+    "agree_relation": true,
+    "agree_correct": true
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260629_213643.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "tray",
+      "box",
+      "grape",
+      "carrot",
+      "corn"
+    ],
+    "source": "trace-2026-06-29.log",
+    "ts": "213643",
+    "claude": {
+      "ok": true,
+      "ms": 2363,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "in",
+        "correct": false,
+        "reason": "The corn is sitting inside one of the sections of the tray, not on top of it. Try placing the corn on top of the tray instead!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"in\",\n  \"correct\": false,\n  \"reason\": \"The corn is sitting inside one of the sections of the tray, not on top of it. Try placing the corn on top of the tray instead!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 3544,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "above",
+        "correct": true,
+        "reason": "The corn is sitting right on top of the tray."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"above\",\n  \"correct\": true,\n  \"reason\": \"The corn is sitting right on top of the tray.\"\n}"
+    },
+    "agree_relation": false,
+    "agree_correct": false
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260629_213706.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "tray",
+      "box",
+      "grape",
+      "carrot",
+      "corn"
+    ],
+    "source": "trace-2026-06-29.log",
+    "ts": "213706",
+    "claude": {
+      "ok": true,
+      "ms": 2151,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "in",
+        "correct": false,
+        "reason": "The corn is sitting inside one of the sections of the tray, not on top of it. Try placing the corn on top of the tray instead!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"in\",\n  \"correct\": false,\n  \"reason\": \"The corn is sitting inside one of the sections of the tray, not on top of it. Try placing the corn on top of the tray instead!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 4275,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "above",
+        "correct": true,
+        "reason": "The corn is sitting right on top of the tray."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"above\",\n  \"correct\": true,\n  \"reason\": \"The corn is sitting right on top of the tray.\"\n}"
+    },
+    "agree_relation": false,
+    "agree_correct": false
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260629_215703.jpg",
+    "obj_a": "tray",
+    "obj_b": "lemon",
+    "relation": "under",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "tray",
+      "box",
+      "grape",
+      "carrot",
+      "corn"
+    ],
+    "source": "trace-2026-06-29.log",
+    "ts": "215703",
+    "claude": {
+      "ok": true,
+      "ms": 2436,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "under",
+        "correct": true,
+        "reason": "Great job! The tray is holding the lemon from below, so the tray is under the lemon \u2014 just like you were asked!"
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"under\",\n  \"correct\": true,\n  \"reason\": \"Great job! The tray is holding the lemon from below, so the tray is under the lemon \u2014 just like you were asked!\"\n}"
+    },
+    "er": {
+      "ok": true,
+      "ms": 3338,
+      "parsed": {
+        "obj_a_found": true,
+        "obj_b_found": true,
+        "actual_relation": "under",
+        "correct": true,
+        "reason": "The tray is positioned directly below the lemon."
+      },
+      "raw": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"under\",\n  \"correct\": true,\n  \"reason\": \"The tray is positioned directly below the lemon.\"\n}"
+    },
+    "agree_relation": true,
+    "agree_correct": true
+  }
+]

@@ -1,0 +1,155 @@
+[
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260710_220655.jpg",
+    "obj_a": "apple",
+    "obj_b": "tray",
+    "relation": "under",
+    "toy_list": [
+      "lemon",
+      "tomato",
+      "apple",
+      "banana",
+      "carrot",
+      "grape",
+      "corn",
+      "cookie",
+      "dinosaur",
+      "cup",
+      "tray"
+    ],
+    "source": "detecting logic.log",
+    "ts": "220655"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260710_220732.jpg",
+    "obj_a": "apple",
+    "obj_b": "tray",
+    "relation": "under",
+    "toy_list": [
+      "lemon",
+      "tomato",
+      "apple",
+      "banana",
+      "carrot",
+      "grape",
+      "corn",
+      "cookie",
+      "dinosaur",
+      "cup",
+      "tray"
+    ],
+    "source": "detecting logic.log",
+    "ts": "220732"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213632.jpg",
+    "obj_a": "carrot",
+    "obj_b": "corn",
+    "relation": "next_to",
+    "toy_list": [
+      "lemon",
+      "apple",
+      "banana",
+      "corn",
+      "carrot"
+    ],
+    "source": "object_maya.log",
+    "ts": "213632"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213812.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "corn",
+      "carrot",
+      "tray"
+    ],
+    "source": "object_maya.log",
+    "ts": "213812"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213836.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "corn",
+      "carrot",
+      "tray"
+    ],
+    "source": "object_maya.log",
+    "ts": "213836"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260707_213944.jpg",
+    "obj_a": "lemon",
+    "obj_b": "corn",
+    "relation": "next_to",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "corn",
+      "carrot",
+      "tray"
+    ],
+    "source": "object_maya.log",
+    "ts": "213944"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260629_213643.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "tray",
+      "box",
+      "grape",
+      "carrot",
+      "corn"
+    ],
+    "source": "trace-2026-06-29.log",
+    "ts": "213643"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260629_213706.jpg",
+    "obj_a": "corn",
+    "obj_b": "tray",
+    "relation": "above",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "tray",
+      "box",
+      "grape",
+      "carrot",
+      "corn"
+    ],
+    "source": "trace-2026-06-29.log",
+    "ts": "213706"
+  },
+  {
+    "image": "src/user_data/maya/captured_scenes/scene_answer_20260629_215703.jpg",
+    "obj_a": "tray",
+    "obj_b": "lemon",
+    "relation": "under",
+    "toy_list": [
+      "lemon",
+      "banana",
+      "tray",
+      "box",
+      "grape",
+      "carrot",
+      "corn"
+    ],
+    "source": "trace-2026-06-29.log",
+    "ts": "215703"
+  }
+]

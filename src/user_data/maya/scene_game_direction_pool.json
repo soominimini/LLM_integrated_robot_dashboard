@@ -1,14 +1,14 @@
 {
   "prompt_version": 2,
-  "toys_fp": "apple|banana|carrot|cookie|corn|cup|dinosaur|grape|lemon|tomato|tray",
+  "toys_fp": "apple|banana|carrot|cookie|corn|dinosaur|grape|lemon|tomato",
   "child_age": 4,
   "language_age": 4,
   "questions": [
     {
-      "question": "Let's put the tomato behind the corn.",
+      "question": "Let's put the apple behind the lemon.",
       "mode": "direction",
-      "obj_a": "tomato",
-      "obj_b": "corn",
+      "obj_a": "apple",
+      "obj_b": "lemon",
       "relation": "behind",
       "phrase": "behind",
       "category": "fruit",
@@ -16,90 +16,35 @@
       "criteria": null
     },
     {
-      "question": "Let's put the cookie in the cup.",
+      "question": "Let's put the banana in front of the cookie.",
       "mode": "direction",
-      "obj_a": "cookie",
-      "obj_b": "cup",
-      "relation": "in",
-      "phrase": "in",
-      "category": "food",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the cookie in front of the tray.",
-      "mode": "direction",
-      "obj_a": "cookie",
-      "obj_b": "tray",
+      "obj_a": "banana",
+      "obj_b": "cookie",
       "relation": "in_front_of",
       "phrase": "in front of",
-      "category": "food",
+      "category": "fruit",
       "target": null,
       "criteria": null
     },
     {
-      "question": "Let's put the lemon next to the carrot.",
+      "question": "Let's put the grape below the lemon.",
+      "mode": "direction",
+      "obj_a": "grape",
+      "obj_b": "lemon",
+      "relation": "under",
+      "phrase": "below",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the lemon in front of the carrot.",
       "mode": "direction",
       "obj_a": "lemon",
       "obj_b": "carrot",
-      "relation": "next_to",
-      "phrase": "next to",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tomato on the tray.",
-      "mode": "direction",
-      "obj_a": "tomato",
-      "obj_b": "tray",
-      "relation": "above",
-      "phrase": "on",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tomato in front of the cookie.",
-      "mode": "direction",
-      "obj_a": "tomato",
-      "obj_b": "cookie",
       "relation": "in_front_of",
       "phrase": "in front of",
       "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tray in front of the banana.",
-      "mode": "direction",
-      "obj_a": "tray",
-      "obj_b": "banana",
-      "relation": "in_front_of",
-      "phrase": "in front of",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the cup beside the cookie.",
-      "mode": "direction",
-      "obj_a": "cup",
-      "obj_b": "cookie",
-      "relation": "next_to",
-      "phrase": "beside",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the carrot behind the tray.",
-      "mode": "direction",
-      "obj_a": "carrot",
-      "obj_b": "tray",
-      "relation": "behind",
-      "phrase": "behind",
-      "category": "vegetable",
       "target": null,
       "criteria": null
     }
@@ -112,5 +57,5 @@
     "on",
     "under"
   ],
-  "generated_at": "2026-07-10 22:04:14"
+  "generated_at": "2026-07-10 23:04:20"
 }
