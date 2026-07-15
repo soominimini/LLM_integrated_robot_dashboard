@@ -35,6 +35,15 @@
      "description": "Common everyday actions",
      "examples": [
       "eat",
+      "go",
+      "come",
+      "stop",
+      "give",
+      "open",
+      "close",
+      "look",
+      "play",
+      "help",
       "drink",
       "sleep",
       "run",
@@ -46,13 +55,25 @@
      "description": "Less frequent and cognitively more complex verbs",
      "examples": [
       "climb",
-      "chase",
-      "carry",
-      "deliver",
-      "rescue",
+      "dance",
+      "draw",
+      "paint",
       "build",
-      "search",
-      "discover"
+      "laugh",
+      "catch",
+      "dress",
+      "pour",
+      "shake",
+      "think",
+      "ask",
+      "answer",
+      "share",
+      "blow",
+      "pop",
+      "fix",
+      "hide",
+      "find",
+      "squeeze"
      ]
     },
     "basic_adjectives": {
@@ -60,15 +81,34 @@
      "examples": [
       "big",
       "small",
+      "tall",
       "long",
       "short",
+      "fast",
+      "slow",
       "red",
       "blue",
       "green",
       "yellow",
       "round",
-      "square",
-      "triangle-shaped"
+      "square"
+     ]
+    },
+    "intermediate_adjectives": {
+     "description": "More advanced descriptive adjectives covering texture, temperature, physical state, and simple emotional states, appropriate for four-year-olds building on basic size/color/shape adjectives.",
+     "examples": [
+      "soft",
+      "hard",
+      "hot",
+      "cold",
+      "wet",
+      "dry",
+      "heavy",
+      "light",
+      "clean",
+      "dirty",
+      "full",
+      "empty"
      ]
     },
     "pronouns_early": {
@@ -81,14 +121,19 @@
       "you"
      ]
     },
-    "pronouns_later": {
-     "description": "Later developing pronouns",
+    "pronouns_intermediate": {
+     "description": "Early third-person singular pronouns",
      "examples": [
       "he",
-      "she",
-      "they",
+      "she"
+     ]
+    },
+    "pronouns_later": {
+     "description": "Later developing pronouns: possessive and plural third-person forms",
+     "examples": [
       "her",
       "his",
+      "they",
       "their"
      ]
     },
@@ -173,7 +218,31 @@
      "examples": [
       "went",
       "ate",
+      "became",
+      "began",
+      "flew",
+      "found",
+      "forgot",
+      "brought",
+      "chose",
+      "hid",
+      "caught",
+      "came",
+      "drank",
+      "drove",
+      "sang",
+      "spoke",
+      "swam",
+      "took",
+      "taught",
+      "thought",
+      "wrote",
+      "wore",
+      "won",
       "saw",
+      "rode",
+      "blew",
+      "bought",
       "gave"
      ]
     },
@@ -324,7 +393,8 @@
      "targets": [
       "action_verbs_higher_level",
       "basic_adjectives",
-      "pronouns_later",
+      "intermediate_adjectives",
+      "pronouns_intermediate",
       "location_prepositions",
       "size_noun",
       "location_noun",
@@ -752,7 +822,8 @@
     "For younger children, prioritize concrete, familiar, visible, typical, and everyday examples.",
     "For older children, gradually introduce cross-classification, hierarchy, explanation, causal reasoning, and event/narrative structure.",
     "Avoid ambiguous, exception-based, culturally dependent, overly technical, or intentionally tricky questions unless the activity specifically targets advanced reasoning.",
-    "When generating WH-questions, use the language framework’s WH hierarchy to control question difficulty separately from conceptual difficulty."
+    "When generating WH-questions, use the language framework’s WH hierarchy to control question difficulty separately from conceptual difficulty.",
+    "Each target carries suitable_question_types (yes_no / wh) so the quiz can pick targets that suit the requested question type; why/how questions count as wh. Targets with no suitable type for the requested question type are skipped, and the generator falls back to the unfiltered list rather than emitting none."
    ],
    "developmental_levels": [
     {
@@ -1023,8 +1094,7 @@
      ],
      "optional_targets": [
       "prediction_inference",
-      "event_sequence_and_planning",
-      "typicality_reasoning"
+      "event_sequence_and_planning"
      ],
      "question_guidance": {
       "recommended_question_types": [
@@ -1147,13 +1217,21 @@
       "within_food_category",
       "direct_food_origin"
      ],
-     "recommended_targets_age_8": [
+     "recommended_targets_age_6_7": [
       "within_food_category",
       "typicality_reasoning",
       "cross_classification",
       "superordinate_subordinate_reasoning",
       "origin_and_processing_reasoning",
       "causal_explanation"
+     ],
+     "recommended_targets_age_8": [
+      "cross_classification",
+      "superordinate_subordinate_reasoning",
+      "origin_and_processing_reasoning",
+      "causal_explanation",
+      "event_sequence_and_planning",
+      "prediction_inference"
      ],
      "example_items": [
       "apple",
@@ -1175,6 +1253,13 @@
       "object_function",
       "familiar_event_script",
       "basic_category_membership"
+     ],
+     "recommended_targets_age_6_7": [
+      "familiar_event_script",
+      "event_sequence_and_planning",
+      "taxonomic_thematic_relation",
+      "problem_solution_reasoning",
+      "causal_explanation"
      ],
      "recommended_targets_age_8": [
       "familiar_event_script",
@@ -1204,6 +1289,12 @@
       "basic_category_membership",
       "event_sequence_and_planning"
      ],
+     "recommended_targets_age_6_7": [
+      "event_sequence_and_planning",
+      "problem_solution_reasoning",
+      "causal_explanation",
+      "prediction_inference"
+     ],
      "recommended_targets_age_8": [
       "event_sequence_and_planning",
       "problem_solution_reasoning",
@@ -1232,13 +1323,22 @@
       "within_food_category",
       "direct_food_origin"
      ],
-     "recommended_targets_age_8": [
+     "recommended_targets_age_6_7": [
       "within_food_category",
       "cross_classification",
       "ingredient_to_food_pathway",
       "grown_made_animal_source",
       "origin_and_processing_reasoning",
       "causal_explanation"
+     ],
+     "recommended_targets_age_8": [
+      "cross_classification",
+      "ingredient_to_food_pathway",
+      "grown_made_animal_source",
+      "origin_and_processing_reasoning",
+      "causal_explanation",
+      "event_sequence_and_planning",
+      "prediction_inference"
      ],
      "example_items": [
       "bread",
@@ -1262,6 +1362,12 @@
       "basic_category_membership",
       "perceptual_attribute",
       "direct_food_origin"
+     ],
+     "recommended_targets_age_6_7": [
+      "superordinate_subordinate_reasoning",
+      "causal_explanation",
+      "prediction_inference",
+      "origin_and_processing_reasoning"
      ],
      "recommended_targets_age_8": [
       "superordinate_subordinate_reasoning",
@@ -1288,6 +1394,10 @@
    "targets": {
     "object_identity": {
      "difficulty_level": 1,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "earliest_concrete_concept",
      "description": "Recognizing or naming familiar concrete objects, people, animals, foods, places, and everyday items.",
      "question_goal": "Check whether the child understands what an object is.",
@@ -1321,6 +1431,9 @@
     },
     "basic_category_membership": {
      "difficulty_level": 2,
+     "suitable_question_types": [
+      "yes_no"
+     ],
      "developmental_position": "basic_item_to_broader_category",
      "description": "Understanding that a familiar item belongs to a broader everyday category.",
      "question_goal": "Ask whether a familiar item belongs to a familiar superordinate category.",
@@ -1371,6 +1484,10 @@
     },
     "object_function": {
      "difficulty_level": 2,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "function_use_relation",
      "description": "Understanding common object functions and everyday uses.",
      "question_goal": "Ask what familiar objects are used for in daily routines.",
@@ -1420,6 +1537,10 @@
     },
     "perceptual_attribute": {
      "difficulty_level": 2,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "visible_attribute_reasoning",
      "description": "Understanding or describing objects using visible features such as color, size, shape, texture, or parts.",
      "question_goal": "Ask about directly observable and typical object features.",
@@ -1469,6 +1590,9 @@
     },
     "food_nonfood_distinction": {
      "difficulty_level": 2,
+     "suitable_question_types": [
+      "yes_no"
+     ],
      "developmental_position": "edible_vs_nonedible",
      "description": "Distinguishing edible items from non-edible items.",
      "question_goal": "Ask whether familiar items are food or not food.",
@@ -1506,6 +1630,9 @@
     },
     "within_food_category": {
      "difficulty_level": 3,
+     "suitable_question_types": [
+      "yes_no"
+     ],
      "developmental_position": "food_taxonomic_category",
      "description": "Distinguishing between familiar food categories such as fruit, vegetable, dairy, grain food, meat, and drink.",
      "question_goal": "Ask whether a food belongs to a specific food category.",
@@ -1560,6 +1687,10 @@
     },
     "typicality_reasoning": {
      "difficulty_level": 4,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "representative_vs_less_representative_category_members",
      "description": "Understanding that some category members are more typical or expected than others.",
      "question_goal": "Use typical examples for simple quizzes; use less typical examples only for advanced reasoning or discussion.",
@@ -1622,6 +1753,10 @@
     },
     "direct_food_origin": {
      "difficulty_level": 4,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "direct_source_relation",
      "description": "Understanding where familiar foods come from.",
      "question_goal": "Ask direct source-origin relationships.",
@@ -1668,6 +1803,10 @@
     },
     "ingredient_to_food_pathway": {
      "difficulty_level": 5,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "simple_processed_food_relation",
      "description": "Understanding that some foods are made from ingredients through preparation or production.",
      "question_goal": "Ask simple ingredient-to-product relationships.",
@@ -1710,6 +1849,10 @@
     },
     "grown_made_animal_source": {
      "difficulty_level": 5,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "food_source_type",
      "description": "Understanding whether foods are grown, come from animals, or are made from ingredients.",
      "question_goal": "Classify foods by broad source type.",
@@ -1752,6 +1895,10 @@
     },
     "familiar_event_script": {
      "difficulty_level": 3,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "routine_event_knowledge",
      "description": "Understanding familiar routines as sequences involving actions, actors, props, and places.",
      "question_goal": "Ask about common actions, objects, people, or places in familiar events.",
@@ -1858,6 +2005,10 @@
     },
     "event_sequence_and_planning": {
      "difficulty_level": 5,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "temporal_event_order_and_preparation",
      "description": "Understanding simple event order, preparation, and prevention within familiar routines.",
      "question_goal": "Ask whether an action happens before, after, or to prepare for a familiar event.",
@@ -1917,6 +2068,10 @@
     },
     "taxonomic_thematic_relation": {
      "difficulty_level": 6,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "semantic_relation_comparison",
      "description": "Understanding both category-based relations and event-based or context-based relations.",
      "question_goal": "Ask how two items are related by category or by everyday use/event context.",
@@ -1958,6 +2113,10 @@
     },
     "cross_classification": {
      "difficulty_level": 6,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "multiple_category_membership",
      "description": "Understanding that one item can belong to more than one category at the same time.",
      "question_goal": "Ask whether one item can be classified in multiple valid ways.",
@@ -2013,6 +2172,10 @@
     },
     "superordinate_subordinate_reasoning": {
      "difficulty_level": 6,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "hierarchical_category_reasoning",
      "description": "Understanding broader and narrower category labels.",
      "question_goal": "Ask whether an item is a kind of another category, or whether one category is broader than another.",
@@ -2055,6 +2218,10 @@
     },
     "multi_attribute_categorization": {
      "difficulty_level": 6,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "categorization_by_multiple_features",
      "description": "Classifying or comparing items using more than one attribute, such as category, function, color, size, material, or context.",
      "question_goal": "Ask the child to reason using two or more features.",
@@ -2100,6 +2267,10 @@
     },
     "origin_and_processing_reasoning": {
      "difficulty_level": 7,
+     "suitable_question_types": [
+      "yes_no",
+      "wh"
+     ],
      "developmental_position": "food_system_reasoning",
      "description": "Understanding whether foods are grown, come from animals, or are made through human preparation or processing.",
      "question_goal": "Ask about natural source, animal source, ingredient source, or simple processing pathway.",
@@ -2148,6 +2319,9 @@
     },
     "causal_explanation": {
      "difficulty_level": 7,
+     "suitable_question_types": [
+      "wh"
+     ],
      "developmental_position": "simple_cause_effect_reasoning",
      "description": "Explaining simple cause-effect relationships in everyday events, stories, object functions, and food/nature concepts.",
      "question_goal": "Ask why something happens or why an object/action is useful.",
@@ -2190,6 +2364,9 @@
     },
     "problem_solution_reasoning": {
      "difficulty_level": 7,
+     "suitable_question_types": [
+      "wh"
+     ],
      "developmental_position": "everyday_problem_solving",
      "description": "Understanding simple problems and appropriate solutions in familiar contexts.",
      "question_goal": "Ask what someone should do when a familiar problem occurs.",
@@ -2228,6 +2405,9 @@
     },
     "narrative_goal_attempt_outcome": {
      "difficulty_level": 7,
+     "suitable_question_types": [
+      "wh"
+     ],
      "developmental_position": "story_macrostructure_reasoning",
      "description": "Understanding story structure through character goals, attempts, outcomes, and internal states.",
      "question_goal": "Ask about what a character wanted, what they did, what happened, and how they felt.",
@@ -2267,6 +2447,9 @@
     },
     "prediction_inference": {
      "difficulty_level": 8,
+     "suitable_question_types": [
+      "wh"
+     ],
      "developmental_position": "predictive_and_inferential_reasoning",
      "description": "Using context to infer what might happen next or what someone might think, feel, or need.",
      "question_goal": "Ask the child to make a simple prediction or inference from a familiar context.",

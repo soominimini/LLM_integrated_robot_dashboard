@@ -1683,80 +1683,115 @@ def api_generate_quiz():
 
     age_hint = f"Target age {profile_age}."
 
-    # Detect social-rules topic: triggers a specialised yes/no prompt that asks
-    # about kindness, manners, sharing, and respect. Designed for age 7+ but
+    # Detect social-rules topic: triggers a specialised social-pragmatic prompt
+    # driven by the KB's social_communication framework. Designed for age 7+ but
     # works at any age when explicitly selected.
     SOCIAL_RULE_KEYWORDS = (
         "social rule", "social rules", "social norm", "social norms",
         "etiquette", "manners", "good manners", "kindness", "behavior", "behaviour",
     )
+    # Share of the set the social topic claims when checked alongside other
+    # topics; the remainder is split across those other topics.
+    SOCIAL_PRIORITY_SHARE = 0.7
+
     is_social_rules = any(
         any(kw in t.lower() for kw in SOCIAL_RULE_KEYWORDS) for t in topics
     )
-    use_social_rules_branch = is_social_rules and ("yes_no" in types)
+    # Social-pragmatic takes priority over the other topics: when the social
+    # topic is checked it leads the set regardless of question type, and takes
+    # the whole set when checked alone. This previously also required "yes_no"
+    # in types, so a WH-only social selection produced no social questions at
+    # all — the topic was silently dropped.
+    use_social_rules_branch = is_social_rules
+    other_topics = [t for t in topics
+                    if not any(kw in t.lower() for kw in SOCIAL_RULE_KEYWORDS)]
+    social_only = is_social_rules and not other_topics
+    if not is_social_rules:
+        n_social = 0
+    elif social_only:
+        n_social = count
+    else:
+        n_social = max(1, round(count * SOCIAL_PRIORITY_SHARE))
+    n_other = count - n_social
+    # A very small set can round to no room for the other topics; treat that as
+    # social-only rather than asking for "0 about ..." questions.
+    if is_social_rules and n_other == 0:
+        social_only = True
+        n_social = count
 
     # For older children (7+), blend a few OPEN-ENDED social-emotional WH
     # questions (empathy, comfort, perspective-taking) into the WH set regardless
     # of topic. These have no single correct answer and are graded accept-any.
-    blend_social_emotional = (profile_age >= 7) and ("wh" in types)
+    # Skipped when social is already the priority topic — the social branch marks
+    # its own WH questions open-ended instead.
+    blend_social_emotional = ((profile_age >= 7) and ("wh" in types)
+                              and not use_social_rules_branch)
+    # Social WH questions ("What could you say to join a game?") have no single
+    # correct answer either, so they need the same open-ended handling.
+    social_wh_open_ended = use_social_rules_branch and ("wh" in types)
 
     topic_text = ", ".join(topics)
+    if social_only:
+        topic_line = f"Create {count} questions about social rules and social communication."
+    elif is_social_rules:
+        topic_line = (
+            f"Create {count} questions: {n_social} about social rules and social "
+            f"communication (the PRIORITY topic), and {n_other} about the topic(s) "
+            f"'{', '.join(other_topics)}'."
+        )
+    else:
+        topic_line = f"Create {count} questions about the topic(s) '{topic_text}'."
 
+    goal_sections = []
     if use_social_rules_branch:
-        # Specialised goal + examples for social-rules yes/no questions.
-        # Every example answer must be a clear, widely accepted yes or no.
-        # Avoid subjective, vague, culturally specific, or gray-area questions.
-        goal_text = (
-            "Goal: Generate diverse yes/no questions about social rules, etiquette, kindness, "
-            "safety, and basic social norms that a child should learn. Every question MUST have "
-            "a clear, widely accepted yes-or-no answer, not an opinion, preference, or gray-area "
-            "judgment. The aim is to help children think about expected vs. unexpected behavior, "
-            "right vs. wrong actions, and how their behavior affects others. "
-
-            "Cover a diverse mix of the following categories: "
-            "1) physical kindness and safety, such as no hitting, kicking, pushing, biting, or throwing objects at people; "
-            "2) sharing, turn-taking, and fairness, such as waiting, taking turns, and playing fairly; "
-            "3) polite words and manners, such as please, thank you, sorry, excuse me, and greetings; "
-            "4) classroom and group behavior, such as listening, raising hands, following rules, and not disrupting others; "
-            "5) respecting belongings and personal space, such as asking before touching, borrowing, or entering someone's space; "
-            "6) helping and caring for others, such as helping someone who falls or comforting someone who is sad; "
-            "7) honesty and responsibility, such as telling the truth, admitting mistakes, and cleaning up after oneself; "
-            "8) inclusion and friendship, such as inviting others, not excluding someone, and using kind words; "
-            "9) privacy and boundaries, such as not opening private bags, not touching others without permission, and respecting 'no'; "
-            "10) community rules and public behavior, such as waiting in line, using an indoor voice, and being careful in shared spaces. "
-
-            "Generate questions from multiple categories rather than repeating the same type of rule. "
-            "Use concrete child-friendly situations. Prefer questions about observable actions, not feelings or preferences. "
-            "Each question should test one rule only. Do not use complicated moral dilemmas. "
-
-            "Examples of GOOD questions and their answers: "
-            "'Is it okay to kick your friend?' → no. "
-            "'Should you say thank you when someone helps you?' → yes. "
-            "'Is it okay to take a toy without asking?' → no. "
-            "'Should you wait your turn in line?' → yes. "
-            "'Is it polite to interrupt someone speaking?' → no. "
-            "'Should you say sorry when you hurt someone?' → yes. "
-            "'Is it okay to laugh at someone who made a mistake?' → no. "
-            "'Should you share with a friend who has none?' → yes. "
-            "'Is it okay to push someone to go first?' → no. "
-            "'Should you raise your hand before speaking in class?' → yes. "
-            "'Is it okay to open someone's backpack without asking?' → no. "
-            "'Should you help someone who dropped their crayons?' → yes. "
-            "'Is it okay to tell a lie to avoid trouble?' → no. "
-            "'Should you include a classmate who is left out?' → yes. "
-            "'Is it okay to grab a toy from someone?' → no. "
-            "'Should you use a quiet voice in the library?' → yes. "
-            "'Is it okay to call someone a mean name?' → no. "
-            "'Should you clean up after making a mess?' → yes. "
-            "'Is it okay to touch someone who says stop?' → no. "
-            "'Should you say excuse me when you need to pass?' → yes. "
-
-            "AVOID opinion, vague, absolute, or culturally dependent questions such as: "
+        # Social-pragmatic goal. WHAT the questions cover comes from the KB's
+        # social_communication framework (the social fragment added to kb_block
+        # below), which replaced a hardcoded list of ten rule categories. The
+        # constraints here govern question FORM — answerability for yes/no, and
+        # the open-ended flag for wh — so the quiz stays gradable.
+        social_parts = []
+        if "yes_no" in types:
+            social_parts.append(
+                "For yes/no social questions: every question MUST have a clear, widely "
+                "accepted yes-or-no answer, not an opinion, preference, or gray-area "
+                "judgment. The aim is to help children think about expected vs. unexpected "
+                "behavior and how their behavior affects others. Use concrete child-friendly "
+                "situations, prefer observable actions over feelings, and test one rule per "
+                "question. Do not use complicated moral dilemmas. "
+                "Examples of GOOD questions and their answers: "
+                "'Is it okay to kick your friend?' → no. "
+                "'Should you say thank you when someone helps you?' → yes. "
+                "'Is it okay to take a toy without asking?' → no. "
+                "'Should you wait your turn in line?' → yes. "
+                "'Is it polite to interrupt someone speaking?' → no. "
+                "'Should you include a classmate who is left out?' → yes. "
+                "'Is it okay to open someone's backpack without asking?' → no. "
+                "'Should you clean up after making a mess?' → yes."
+            )
+        if "wh" in types:
+            social_parts.append(
+                "For wh social questions: ask what a child could say or do in a concrete "
+                "social situation taken from the social-communication targets below "
+                "(joining a game, a friend who is upset, a disagreement, needing help). "
+                "These are OPEN-ENDED: they have no single correct answer and any thoughtful "
+                "answer is acceptable. Address the child directly ('you') and mark EACH of "
+                "them with \"open_ended\": true. "
+                "Examples: 'What could you say to join a game at recess?', "
+                "'What can you do if a friend looks sad?', "
+                "'How could you make a new classmate feel welcome?', "
+                "'Who could help if two children want the same toy?'"
+            )
+        social_parts.append(
+            "AVOID opinion, vague, absolute, or culturally dependent social questions such as: "
             "'Do you like sharing?', 'Is school fun?', 'Should you always be nice?', "
-            "'Is it bad to be angry?', 'Is it okay to be sad?', 'Should everyone be your friend?', "
-            "'Is it okay to never say no?', or 'Should you give away all your toys?'. "
-            "Avoid the word 'always' unless the rule is truly absolute. Avoid questions where the correct "
-            "answer depends on context, culture, family rules, or personal preference."
+            "'Is it bad to be angry?', 'Should everyone be your friend?', or "
+            "'Should you give away all your toys?'. Avoid the word 'always' unless the rule is "
+            "truly absolute. Avoid questions where the correct answer depends on context, "
+            "culture, family rules, or personal preference."
+        )
+        goal_sections.append(
+            ("Goal: " if social_only else "Goal for the social questions: ")
+            + " ".join(social_parts)
         )
 
         # Wording level follows the child's profile age (was hardcoded to
@@ -1771,8 +1806,9 @@ def api_generate_quiz():
             f"Constraint: Questions must be short, {_max_words}, and use simple "
             f"language a child aged {profile_age} can understand."
         )
-    else:
-        # non social rules — the goal is assembled per requested question type:
+
+    if not social_only:
+        # non social topics — the goal is assembled per requested question type:
         # "objectively true or false" only makes sense for yes/no questions,
         # while wh questions need a clear short factual answer instead.
         goal_parts = []
@@ -1799,8 +1835,13 @@ def api_generate_quiz():
             "Do not use negation-heavy wording. "
             + repetition_rule
         )
-        goal_text = "Goal: " + " ".join(goal_parts)
+        goal_sections.append(
+            ("Goal for the other topics: " if use_social_rules_branch else "Goal: ")
+            + " ".join(goal_parts)
+        )
         # length_constraint = "Constraint: Questions must be short (under 8 words)."
+
+    goal_text = " ".join(goal_sections)
 
     # Knowledge-base guidance: ONLY the developmental wording-level (MLU
     # sentence-length) calibration, derived from the child's profile age /
@@ -1823,20 +1864,39 @@ def api_generate_quiz():
     # may test at this child's level — per-topic recommended concept targets
     # (topic_mapping), level wording/length/avoid rules, and example questions.
     # Keyed off the child's profile age, NOT their language age: concept level
-    # and wording level are independent KB domains. The social-rules branch
-    # keeps its own goal text.
-    if not use_social_rules_branch:
+    # and wording level are independent KB domains. Built from the non-social
+    # topics only: the social topic has no topic_mapping entry and draws its
+    # content from the social framework below instead.
+    if other_topics and not social_only:
         try:
             concept_frag = knowledge_base.build_concept_prompt_fragment(
-                profile_age, topics)
+                profile_age, other_topics, types=types)
             if concept_frag:
                 kb_block += (
                     "Use this conceptual-difficulty guidance to choose WHAT the "
-                    "questions test (content and reasoning level):\n"
+                    f"{'non-social ' if use_social_rules_branch else ''}questions "
+                    "test (content and reasoning level):\n"
                     f"{concept_frag}\n"
                 )
         except Exception as e:
             print(f"[quiz] concept guidance unavailable: {e}")
+
+    # Social-communication guidance (KB frameworks.social_communication): WHAT the
+    # social questions may cover — peer interaction, emotion understanding,
+    # perspective taking, conflict resolution, self-advocacy — plus the KB's
+    # neurodiversity guardrails. Social is the priority topic, so this leads.
+    if use_social_rules_branch:
+        try:
+            social_frag = knowledge_base.build_social_prompt_fragment(profile_age)
+            if social_frag:
+                kb_block += (
+                    f"The social questions are the PRIORITY: exactly {n_social} of the "
+                    f"{count} questions must come from this social-communication "
+                    "guidance, covering a diverse mix of its targets:\n"
+                    f"{social_frag}\n"
+                )
+        except Exception as e:
+            print(f"[quiz] social guidance unavailable: {e}")
 
     # WH-type developmental guidance (KB wh_question_hierarchy): which WH types
     # suit this child's level (what/who -> where -> when -> why/how). Only
@@ -1874,13 +1934,17 @@ def api_generate_quiz():
             "'How would you make a new classmate feel welcome?', 'What would you do if a friend lost their toy?'. "
             "Mark EACH such question with \"open_ended\": true. Keep the remaining WH questions factual. "
         )
+    # Needed by both paths: the blended social-emotional WH questions above, and
+    # the social branch's own WH questions, which are open-ended for the same
+    # reason (no single correct answer to grade against).
+    if blend_social_emotional or social_wh_open_ended:
         open_ended_format = (
             "For open-ended social-emotional wh questions, set \"open_ended\": true, \"correct_answer\" to \"\", "
             "and \"accepted_answers\" to []. "
         )
 
     prompt = (
-        f"Act as a pediatric educator. Create {count} questions about the topic(s) '{topic_text}'. "
+        f"Act as a pediatric educator. {topic_line} "
         f"{age_hint} "
         f"Use only these types: {type_hint}. "
         f"{goal_text} "

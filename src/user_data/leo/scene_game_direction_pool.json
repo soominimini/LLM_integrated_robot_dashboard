@@ -1,23 +1,111 @@
 {
   "prompt_version": 2,
-  "toys_fp": "corn|tray",
+  "toys_fp": "apple|banana|lemon|tomato",
   "child_age": 3,
   "language_age": 3,
   "questions": [
     {
-      "question": "Let's put the corn on the tray.",
+      "question": "Let's put the tomato in front of the banana.",
       "mode": "direction",
-      "obj_a": "corn",
-      "obj_b": "tray",
-      "relation": "above",
-      "phrase": "on",
-      "category": "food",
+      "obj_a": "tomato",
+      "obj_b": "banana",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the apple in front of the banana.",
+      "mode": "direction",
+      "obj_a": "apple",
+      "obj_b": "banana",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the banana in front of the lemon.",
+      "mode": "direction",
+      "obj_a": "banana",
+      "obj_b": "lemon",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the tomato in front of the lemon.",
+      "mode": "direction",
+      "obj_a": "tomato",
+      "obj_b": "lemon",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the lemon in front of the tomato.",
+      "mode": "direction",
+      "obj_a": "lemon",
+      "obj_b": "tomato",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the apple in front of the lemon.",
+      "mode": "direction",
+      "obj_a": "apple",
+      "obj_b": "lemon",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the apple in front of the tomato.",
+      "mode": "direction",
+      "obj_a": "apple",
+      "obj_b": "tomato",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the tomato in front of the apple.",
+      "mode": "direction",
+      "obj_a": "tomato",
+      "obj_b": "apple",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
+      "target": null,
+      "criteria": null
+    },
+    {
+      "question": "Let's put the lemon in front of the apple.",
+      "mode": "direction",
+      "obj_a": "lemon",
+      "obj_b": "apple",
+      "relation": "in_front_of",
+      "phrase": "in front of",
+      "category": "fruit",
       "target": null,
       "criteria": null
     }
   ],
   "relations": [
-    "on"
+    "in_front_of"
   ],
-  "generated_at": "2026-07-07 22:22:14"
+  "generated_at": "2026-07-15 18:37:54"
 }

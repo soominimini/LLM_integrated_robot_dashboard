@@ -1,61 +1,36 @@
 {
   "prompt_version": 2,
-  "toys_fp": "apple|banana|carrot|cookie|corn|dinosaur|grape|lemon|tomato",
+  "toys_fp": "banana|bowl",
   "child_age": 4,
   "language_age": 4,
   "questions": [
     {
-      "question": "Let's put the apple behind the lemon.",
+      "question": "Let's put the bowl in front of the banana.",
       "mode": "direction",
-      "obj_a": "apple",
-      "obj_b": "lemon",
-      "relation": "behind",
-      "phrase": "behind",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the banana in front of the cookie.",
-      "mode": "direction",
-      "obj_a": "banana",
-      "obj_b": "cookie",
+      "obj_a": "bowl",
+      "obj_b": "banana",
       "relation": "in_front_of",
       "phrase": "in front of",
-      "category": "fruit",
+      "category": "container",
       "target": null,
       "criteria": null
     },
     {
-      "question": "Let's put the grape below the lemon.",
+      "question": "Let's put the bowl below the banana.",
       "mode": "direction",
-      "obj_a": "grape",
-      "obj_b": "lemon",
+      "obj_a": "bowl",
+      "obj_b": "banana",
       "relation": "under",
       "phrase": "below",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the lemon in front of the carrot.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "carrot",
-      "relation": "in_front_of",
-      "phrase": "in front of",
-      "category": "fruit",
+      "category": "container",
       "target": null,
       "criteria": null
     }
   ],
   "relations": [
-    "behind",
     "in",
     "in_front_of",
-    "next_to",
-    "on",
     "under"
   ],
-  "generated_at": "2026-07-10 23:04:20"
+  "generated_at": "2026-07-15 00:40:53"
 }

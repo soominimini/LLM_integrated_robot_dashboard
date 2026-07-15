@@ -80,7 +80,7 @@ Standardized subprocess contract:
    │  TTS: ROS behavior/talkText       │   │  TTS: tts_helper (Qwen/Polly/QT)         │
    │  Vision: DeepFace faces           │   │  Vision: Gemini (object/WH) + Claude(still)│
    │  Behaviors: idle_attention,       │   │  Images: image_generator -> worker(.venv39)│
-   │   human_tracking, command_iface   │   │  Personas: persona_rag                   │
+   │   human_tracking, command_iface   │   │  SLP targeting: knowledge_base (§9.1)    │
    │  Config: ParamifyWeb + default.yaml│   │  UI: templates/*.html                    │
    └───────────────┬───────────────────┘   └──────────────────┬───────────────────────┘
                    │             shared library modules        │
@@ -292,16 +292,121 @@ Sonnet 4.6 via the Anthropic SDK — see §11 and the in-process note in §1.
 
 | File | Read by | When / how |
 |---|---|---|
-| `personas_rag.json` | `persona_rag.py:30` (App B) | 4 reference clinical personas. `match(age, disorder)` keyword-scores the best one; `build_story_context` / `build_question_context` inject a `--- PERSONA CONTEXT ---` block into story/quiz prompts. Keyword matching, **not** vector RAG. |
+| `restructured_knowledge_base_v2.json` | `knowledge_base.py:32` (App B) | **The SLP knowledge base — see §9.1.** Loaded once by `LanguageInterestKB`; supplies developmental language / speech-sound / concept / social-communication targets and interest themes to the story, quiz, and WH-scene prompts. Replaced `SLP_codesign_knowledge_base_integrated_v1_1.json` on 2026-07-03. |
+| `personas_rag.json` | — (`persona_rag.py:30` exists but **nothing imports it**) | 4 reference clinical personas, superseded by the SLP knowledge base (§9.1). Dead at runtime: no module in `src/` imports `persona_rag`, so this file is never read. The `_persona_context_for()` helper (`web_user_server.py:450`) keeps the old name but is KB-backed. |
 | `sar_system_prompt.md` | **Both apps** — `config/default.yaml` `system_prompt_file` (A) and `web_user_server.py:1942` (B) | "Socially Assistive Robot" framing prompt (child-safety / therapist-authority guidance). App A prepends it to the robot role; App B prepends it in `/api/generate_quiz_feedback` (now a **Claude** `_quiz_llm` call) for child-friendly feedback phrasing. |
 | `story for 4 to 7 years old/story_corpus.json` | `story_generator.py:380` (App B) | 10 fables + 30 WH-question stories used as **few-shot examples** in story prompts for ages 4–7. Not vector RAG. |
 | `QTrobot.pdf` | App A RAG (`llamaindex_interface.py:116`) | Intended retrieval corpus for the robot's conversation **only if** the config `docs` path points here. By default `docs` points at the deployed path `/home/qtrobot/robot/code/.../documents`, so in this repo it is ingested only if `docs` is repointed. RAG loads `.pdf` only. |
 | `QTrobot_research_papers.txt` | — | Not ingested (RAG `formats` default = `['.pdf']`). Reference material. |
 | `story for kid.{odt,pdf}`, `story with wh questions.pdf` | — | Authoring/source material for `story_corpus.json`. Only picked up by App A RAG if `docs` repointed here (`.pdf` only). |
 
-Only `personas_rag.json`, `sar_system_prompt.md`, and `story_corpus.json` are
-actively read by code today. (A stray `documents/.~lock.story for kid.odt#`
-LibreOffice lock file is junk — safe to delete.)
+Only `restructured_knowledge_base_v2.json`, `sar_system_prompt.md`, and
+`story_corpus.json` are actively read by code today. (A stray
+`documents/.~lock.story for kid.odt#` LibreOffice lock file is junk — safe to
+delete.)
+
+### 9.1 SLP knowledge base (`restructured_knowledge_base_v2.json`)
+
+The single source of developmental targeting for App B. One JSON file (v2.2)
+loaded once by `LanguageInterestKB` (`knowledge_base.py`), which resolves it
+against a child's age and formats **prompt fragments** that activities inject
+into their LLM prompts. It replaced the old persona-matching RAG: instead of
+picking one of four fixed clinical personas by `(age, diagnosis)`, it derives
+targets per framework.
+
+```mermaid
+flowchart LR
+    subgraph JSON["documents/restructured_knowledge_base_v2.json (v2.2)"]
+        direction TB
+        L["language<br/>targets · developmental_levels<br/>wh_question_hierarchy"]
+        S["speech_sound<br/>phoneme targets by age"]
+        C["concept<br/>targets · developmental_levels<br/>topic_mapping"]
+        SC["social_communication<br/>10 targets · 1 level (age 8)"]
+        I["interests<br/>themes · age preferences"]
+    end
+
+    subgraph KBM["LanguageInterestKB — knowledge_base.py"]
+        direction TB
+        FS["build_story_prompt_fragment()"]
+        FQ["build_question_prompt_fragment()"]
+        FC["build_concept_prompt_fragment()"]
+        FSO["build_social_prompt_fragment()"]
+        FWH["build_wh_question_guidance_fragment()"]
+    end
+
+    subgraph ACT["Activities — web_user_server.py"]
+        direction TB
+        ST["Storytelling"]
+        QZ["Educational quiz"]
+        WHS["WH picture scene"]
+    end
+
+    L --> FS
+    L --> FQ
+    L --> FWH
+    S --> FS
+    S --> FQ
+    I --> FS
+    I --> FQ
+    C --> FC
+    SC --> FSO
+
+    FS --> ST
+    FQ --> QZ
+    FC --> QZ
+    FSO --> QZ
+    FWH --> QZ
+    FWH --> WHS
+```
+
+**The five frameworks.** They are kept deliberately separate — the KB's own
+design principle is that *wording* level and *content* level are independent
+domains, so a child can be targeted at MLU 6-8 while reasoning at concept age 8.
+
+| Framework | Controls | Reached via |
+|---|---|---|
+| `language` | Grammar targets, MLU phrase length, and the WH-question developmental hierarchy (what/who → where → when → why/how) | `resolve_level` / `resolve_targets`, `resolve_wh_guidance` |
+| `speech_sound` | Articulation phonemes + example words by age (early p/b/m/n/d → advanced th/r/ch) | `resolve_speech_level` / `resolve_articulation` |
+| `concept` | What a question may *test*: object identity → category → food origin → causal/narrative reasoning. Includes `topic_mapping` for the quiz's Fruit/School/Home/Food/Nature topics | `resolve_concept_level` |
+| `social_communication` | Social-pragmatic targets: reciprocal conversation, peer entry, emotion understanding, theory of mind, conflict resolution, self-advocacy. Carries the neurodiversity guardrails (no forced eye contact, no masking) | `resolve_social_level` |
+| `interests` | Personalization themes only — never the clinical target. Branded characters used only when the child profile names them | `resolve_interests` / `pick_random_interest` |
+
+**Level resolution.** Every resolver follows the same rule: take the highest
+level at or **below** the child's age, falling back to the lowest level if the
+child is younger than all of them. Levels are defined at sparse ages, so an age
+without its own level reuses the one below it rather than over-targeting. Ages
+resolve as follows (verified against the loader):
+
+| Child age | language (MLU) | speech_sound | concept | social_communication | interests |
+|---|---|---|---|---|---|
+| 2 | age 2 (1-3) | 2-3 | 2-3 | age 8 † | age 2 |
+| 3 | age 3 (4) | 3-4 | 2-3 | age 8 † | age 3 |
+| 4 | age 4 (5-6) | 4-5 | 4 | age 8 † | age 3 † |
+| 5 | age 5 (6-8) | 5+ | 5 | age 8 † | age 5 |
+| 6 | age 6 (8-10) | 5+ | 6-7 | age 8 † | age 6 |
+| 7 | age 6 (8-10) † | 5+ | 6-7 | age 8 † | age 6 † |
+| 8 | age 8 (11+) | 5+ | 8 | age 8 | age 8 |
+| 9 | age 8 (11+) † | 5+ | 9+ | age 8 † | age 8 † |
+
+† = the KB defines no level at that age, so the resolver reuses the nearest
+defined one — the next level *down*, or the *lowest* level when the child is
+younger than all of them.
+
+Two fallbacks are worth knowing about. `social_communication` defines **only one
+level** (`social_age_8_asd_peer_interaction`, profiled for "school-age child
+with ASD or social-pragmatic communication needs"), so *every* age resolves to
+it — and for ages 2-7 that means falling back **upward** onto a level above the
+child's age, since there is nothing lower to pick. A genuinely age-graded social
+framework is a KB addition; `resolve_social_level` will pick up new levels
+automatically once they exist. Separately, `interests` has no age-4 or age-7
+entry, so those ages inherit age 3 and age 6 respectively.
+
+**Profile inputs.** `_persona_context_for()` (`web_user_server.py:450`) reads the
+child's profile and passes `age`, `gender`, and an optional `language_age`.
+`language_age` decouples wording from chronological age — a 9-year-old with a
+language delay can be targeted at `language_age: 5` (MLU 6-8) while interests
+still follow age 9. `describe()` logs what was derived on every call (`[KB]
+derived level_age=... mlu=... targets=[...]`).
 
 ---
 
@@ -594,7 +699,7 @@ RAG is **not** used.
 
 **Models (all Claude as of 2026-06-29):** question generation (both types) =
 **Claude Sonnet 4.6** in-process via `_ClaudeQuizLLM`→`_claude_generate`
-(`:526`); yes/no has a "Social Rules" special branch. WH distractors = Claude
+(`:526`); the "Social Rules" topic takes a priority branch (see below). WH distractors = Claude
 (`/api/generate_wh_options:1992`). Feedback phrases = Claude with
 `sar_system_prompt.md` injected. Spoken-answer ASR = OpenAI `gpt-4o-transcribe`
 (`whisper.py`). TTS = Qwen. **Answer matching uses no LLM** (client-side JS).
@@ -607,12 +712,60 @@ targeting that the story and scene-game questions still use. This was changed
 because embedding target sounds/plurals into short quiz questions distorted the
 content (e.g. *"Do three cherries grow underground?"*).
 
-**Social-emotional WH blend (2026-06-29):** for High (7+) difficulty with WH
-selected, the prompt blends in a few **open-ended** social-emotional
-perspective-taking questions (e.g. *"Who would you hug when you feel scared?"*),
-flagged `open_ended:true` with no fixed answer. The play page grades these
-**accept-any** (`educational_quiz.html`: `submitWH` short-circuits when
-`q.open_ended`), shows a "sharing" acknowledgement, and hides the Teach button.
+**Conceptual difficulty (KB `frameworks.concept`):** what the non-social
+questions may *test* comes from `build_concept_prompt_fragment(profile_age,
+other_topics, types=types)` (`:1872`) — per-topic targets from `topic_mapping`,
+the level's wording/length/avoid rules, and example questions. Keyed off
+**profile age, not language age**: concept level and wording level are
+independent KB domains (§9.1).
+
+**Type-aware concept selection (2026-07-15):** each concept target carries
+`suitable_question_types` (`yes_no` / `wh`; why/how count as `wh`), and the
+requested types filter the target list — implementing `concept.generation_rules.
+rule_6` ("match conceptual target to question type"), which the KB had always
+stated but nothing enforced. Before this, the concept block was byte-identical
+for yes/no and WH, so a yes/no quiz was handed reasoning targets the KB reserves
+for why/how: at age 8 on Fruit+Food, `causal_explanation` now drops from the
+yes/no set (its own constraint says "for yes/no quizzes, convert causal targets
+into simpler forms") and `within_food_category` drops from the WH set, giving 7
+type-appropriate targets each instead of the same 8 for both. A target that
+declares no types suits all of them, and if a filter would empty the list the
+unfiltered list is used and a warning logged — an imprecise concept target beats
+none. Note `concept.question_templates` is a *phrasing* library covering only 14
+of 21 targets, **not** a type filter: filtering by it would yield zero WH targets
+at age 8.
+
+**Topic fairness (2026-07-15):** targets are gathered **round-robin** across the
+checked topics rather than unioned. The old union was order-preserving and capped
+at `max_targets=8`, so earlier topics filled the budget and starved later ones —
+Fruit+Food+School unions to 12 at age 8 and School lost all four of its targets,
+meaning a checked topic contributed nothing to the quiz. Anything still cut by
+the cap is now logged rather than dropped silently.
+
+**Social-pragmatic priority (2026-07-15):** checking the "Social Rules" topic
+makes social the **priority topic**, driven by the KB's `social_communication`
+framework via `build_social_prompt_fragment` (`:1890`). It takes
+`SOCIAL_PRIORITY_SHARE` (70%) of the set when combined with other topics — 7 of
+10, with the remaining 3 from the other topics' concept targets — and the whole
+set when checked alone. Small counts that round to no remainder collapse to
+social-only. This branch **no longer requires yes/no**: it previously fired on
+`is_social_rules and ("yes_no" in types)`, so a WH-only social selection was
+silently dropped (`topic_mapping` has no "Social Rules" entry, so the topic
+contributed nothing at all). Its content used to be a hardcoded list of ten rule
+categories in `web_user_server.py`; that now lives in the KB, and the inline
+prompt keeps only the answerability guardrails (clear yes/no answer, GOOD/AVOID
+examples).
+
+**Open-ended social questions:** social **WH** questions ("What could you say to
+join a game?") have no single correct answer, so the social branch flags them
+`open_ended:true`. Separately, `blend_social_emotional` mixes a few open-ended
+social-emotional perspective-taking questions (e.g. *"Who would you hug when you
+feel scared?"*) into any **non-social** WH quiz for ages 7+; it is skipped when
+social is already the priority topic, which would double up. The play page
+grades all of these **accept-any** (`educational_quiz.html`: `submitWH`
+short-circuits when `q.open_ended`), shows a "sharing" acknowledgement, and
+hides the Teach button. Note the age gate is the child's **profile age** — the
+`difficulty` tier this once keyed off was removed on 2026-07-04.
 
 **Mechanism:** (1) Authoring (`/quiz_generation`): generate (Claude) → robust JSON
 parse → normalize per type (open-ended WH preserved) → `/api/save_quiz` splits into `yes_no/` vs `wh/`.
@@ -779,9 +932,10 @@ sequenceDiagram
     participant R as Robot
     participant D as Disk
     Note over U,D: AUTHORING
-    U->>F: POST /api/generate_quiz, +Social-Rules branch, 7+ blends open-ended WH
+    U->>F: POST /api/generate_quiz (topics, types, count)
+    Note over F: KB fragments: wording (MLU) + concept targets<br/>Social Rules checked -> social framework takes 70%
     F->>CL: _ClaudeQuizLLM Claude Sonnet 4.6 (in-process)
-    CL-->>F: questions JSON
+    CL-->>F: questions JSON (social WH flagged open_ended)
     F-->>U: list
     U->>F: POST /api/save_quiz
     F->>D: write quizzes/yes_no + quizzes/wh

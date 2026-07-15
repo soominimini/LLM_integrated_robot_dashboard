@@ -3,7 +3,15 @@
 - **Entry points:** pages `/quiz_generation`, `/educational_quiz`; APIs `/api/generate_quiz`, `/api/generate_quiz_feedback`, `/api/generate_wh_options`, `/api/teach_quiz_answer`, `/api/save_quiz`, `/api/get_saved_quiz`.
 - **Model:** `gemini-2.5-flash` via `_GeminiQuizLLM` (→ `_gemini_generate` → `scripts/gemini_general.py`). **Context window: 1,048,576.** Quiz LLM created with `max_tokens=8192`; generation `temperature=0.3`.
   - *Note:* the route docstring says “Generate quiz questions using Llama,” but the implementation uses Gemini Flash (`_GeminiQuizLLM`). The comment is stale.
-- **Age-varied prompt?** **Yes** — via the `difficulty` field, and a separate social-rules branch.
+- **Age-varied prompt?** **Yes** — via the child's profile age, and a separate social-pragmatic priority branch. (The `difficulty` field this once keyed off was removed on 2026-07-04; profile age is now the single source of truth.)
+
+> ⚠️ **Staleness warning (2026-07-15).** This file has drifted from the code in
+> two ways beyond the note above. (1) The **model** is no longer Gemini Flash —
+> question generation moved to **Claude Sonnet 4.6 in-process** on 2026-06-29
+> (`_ClaudeQuizLLM`); the sections below still describe `_GeminiQuizLLM`.
+> (2) The **social-rules prompt** quoted below was replaced on 2026-07-15.
+> Treat `web_user_server.py:api_generate_quiz` as the source of truth, and see
+> `ARCHITECTURE.md` §9.1 (SLP knowledge base) and §16.3 (educational quiz).
 
 ## Quiz LLM system role (`_GeminiQuizLLM.SYSTEM_ROLE`, verbatim)
 
@@ -32,7 +40,15 @@ Goal: Questions must be objectively True or False based on basic object function
 ```
 length: `Constraint: Questions must be short (under 8 words).`
 
-**Social-rules branch** (topic mentions social rules/etiquette/manners/kindness/behaviour AND yes_no selected; designed for age 7+):
+**Social-rules branch** — ⚠️ **REPLACED 2026-07-15, kept for history only.** The
+prompt below is no longer in the code. It fired only when yes_no was selected,
+so a WH-only social selection was silently dropped. It now fires on any question
+type, takes 70% of the set when combined with other topics, and draws its
+content from the KB's `social_communication` framework
+(`knowledge_base.build_social_prompt_fragment`) instead of the hardcoded
+category list quoted here. See `ARCHITECTURE.md` §16.3. Historic text (topic
+mentioned social rules/etiquette/manners/kindness/behaviour AND yes_no selected;
+designed for age 7+):
 ```
 Goal: Generate yes/no questions about social rules, etiquette, kindness, and basic social norms that a child should learn. Every question MUST have a clear, widely accepted yes-or-no answer — not an opinion or gray-area. The aim is to make children think about right and wrong behavior and learn social rules. Cover a mix of: physical kindness (no hitting/kicking/pushing), sharing and taking turns, polite words (please, thank you, sorry, excuse me), classroom behavior (listening, raising hands, waiting), respect for others' belongings, helping others, and basic honesty. Examples of GOOD questions and their answers: 'Is it okay to kick your friend?' → no. 'Should you say thank you when someone helps you?' → yes. 'Is it okay to take a toy without asking?' → no. 'Should you wait your turn in line?' → yes. 'Is it polite to interrupt someone speaking?' → no. 'Should you say sorry when you hurt someone?' → yes. 'Is it okay to laugh at someone who made a mistake?' → no. 'Should you share with a friend who has none?' → yes. AVOID opinion or vague questions like 'Do you like sharing?', 'Is school fun?', or 'Should you always be nice?' (the word 'always' makes it too strong).
 ```

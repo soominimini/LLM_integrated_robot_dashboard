@@ -38,7 +38,7 @@ from google.genai import types
 # canonical key to this worker.
 RELATION_PHRASE = {
     "next_to": "next to",
-    "above": "on top of",
+    "above": "above",
     "under": "under",
     "behind": "behind",
     "in_front_of": "in front of",
@@ -103,6 +103,7 @@ def main():
         f"4. Does that match the requested relation '{args.relation}'?\n"
         "\n"
         "Tips:\n"
+        "2D images cause spatial states to overlap (e.g., an object poking out 'under' a bowl also looks 'next_to' it). If the visual evidence supports multiple valid interpretations, give the benefit of the doubt and prioritize the child's requested relation over competing overlapping states."
         "- 'behind' means partially hidden by the reference object, or visibly\n"
         "  smaller/further along the camera's depth axis.\n"
         "- 'in_front_of' means the moving object partly occludes or sits\n"
@@ -112,6 +113,7 @@ def main():
         "  rim/walls of the container.\n"
         "- 'out' means the moving object is clearly outside the reference\n"
         "  object, fully visible, with a visible gap between them.\n"
+        "-  To be visible while 'under' a solid object (like a bowl), the moving object will be 'poking out.' Consider it 'under' if it is physically touching or partially hidden by the bottom edge or base of the reference object, even if it appears to be sitting next to or in front of it in 2D space.\n"
         "If you cannot tell confidently, return 'other'.\n"
         "\n"
         "Return ONLY a JSON object with no markdown fences:\n"
