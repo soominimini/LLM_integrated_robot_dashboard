@@ -40,7 +40,7 @@ Prompt fragments — each returns '' when the KB carries no relevant data:
     build_story_prompt_fragment(age, gender, language_age=, interest=)    -> str
     build_question_prompt_fragment(age, gender, language_age=,
                                    include_targets=)                      -> str
-    build_concept_prompt_fragment(concept_age, topics=, max_targets=)     -> str
+    build_concept_prompt_fragment(concept_age, max_targets=, types=)      -> str
     build_social_prompt_fragment(age, max_targets=)                       -> str
     build_wh_question_guidance_fragment(age, language_age=, image_card=)  -> str
 
@@ -92,7 +92,6 @@ class LanguageInterestKB:
         self._image_card_wh: Dict[str, Any] = {}
         self._concept_targets: Dict[str, Any] = {}
         self._concept_levels: List[Dict[str, Any]] = []
-        self._concept_topics: Dict[str, Any] = {}
         self._social_targets: Dict[str, Any] = {}
         self._social_levels: List[Dict[str, Any]] = []
         self._social_notes: List[str] = []
@@ -136,7 +135,6 @@ class LanguageInterestKB:
             concept = fw.get('concept', {}) or {}
             self._concept_targets = concept.get('targets', {}) or {}
             self._concept_levels = concept.get('developmental_levels', []) or []
-            self._concept_topics = concept.get('topic_mapping', {}) or {}
             # Social-communication framework (peer interaction, emotion
             # understanding, perspective taking, self-advocacy). Drives the
             # social-pragmatic quiz topic.
@@ -549,17 +547,14 @@ class LanguageInterestKB:
         return any(t in declared for t in types)
 
     def build_concept_prompt_fragment(self, concept_age: Any,
-                                      topics: Optional[List[str]] = None,
                                       max_targets: int = 8,
                                       types: Optional[List[str]] = None) -> str:
         """Conceptual-difficulty guidance block for the educational quiz.
 
-        ``concept_age`` drives the concept level (typically mapped from the
-        quiz difficulty tier, NOT the child's language age — wording level and
-        concept level are independent KB domains). ``topics`` selects
-        per-topic recommended targets from ``topic_mapping`` (Fruit, School,
-        Home, Food, Nature); topics without a mapping fall back to the level's
-        primary targets. Returns '' when the KB has no concept framework.
+        ``concept_age`` drives the concept level (typically the child's profile
+        age, NOT their language age — wording level and concept level are
+        independent KB domains). Targets are the level's ``primary_targets``.
+        Returns '' when the KB has no concept framework.
 
         ``types`` are the requested question types (``yes_no`` / ``wh``). Targets
         are filtered to those whose ``suitable_question_types`` matches, so a
@@ -567,33 +562,10 @@ class LanguageInterestKB:
         why/how — see ``concept.generation_rules.rule_6``. If the filter would
         empty the list the unfiltered list is used instead and a warning logged:
         an imprecise concept target beats none at all.
-
-        Targets are gathered round-robin across the matched topics, so every
-        checked topic contributes before any contributes a second target. A
-        plain union would let earlier topics fill ``max_targets`` and silently
-        starve later ones (Fruit+Food+School unions to 12 at age 8, and School
-        used to lose all four of its targets to the cap).
         """
         level = self.resolve_concept_level(concept_age)
         if not level:
             return ''
-        try:
-            a = int(concept_age)
-        except (TypeError, ValueError):
-            a = 0
-        young = a <= 5
-        # topic_mapping bands. There used to be only two, split at age 5, which
-        # meant the band named recommended_targets_age_8 was read by ages 6-9
-        # alike — so trimming it for age 8 also trimmed 6 and 7. The 6-7 band
-        # separates them; it falls back to the age-8 band for any topic that
-        # does not define one, preserving the old behaviour.
-        if young:
-            bands = ['recommended_targets_age_4_5']
-        elif a <= 7:
-            bands = ['recommended_targets_age_6_7', 'recommended_targets_age_8']
-        else:
-            bands = ['recommended_targets_age_8']
-
         lines: List[str] = ["--- CONCEPT GUIDANCE (knowledge base) ---"]
         desc = level.get('description', '')
         lines.append(f"Concept level (ages {level.get('age_range')}): {desc}")
@@ -610,46 +582,16 @@ class LanguageInterestKB:
             lines.append("Use these simple question frames (one clause each): "
                          + " | ".join(patterns))
 
-        # Collect target ids: per-topic recommendations where mapped, level
-        # primaries otherwise.
-        topic_items: List[str] = []
-        per_topic: List[List[str]] = []
-        matched_topic = False
-        for topic in topics or []:
-            spec = next((v for k, v in self._concept_topics.items()
-                         if k.lower() == str(topic).lower()), None)
-            if not spec:
-                continue
-            matched_topic = True
-            per_topic.append(next((list(spec[b]) for b in bands if spec.get(b)), []))
-            items = spec.get('example_items') or []
-            if items:
-                topic_items.append(f"{topic}: {', '.join(items[:6])}")
-            if young and spec.get('avoid_for_younger_children'):
-                lines.append(f"For '{topic}', avoid: "
-                             + "; ".join(spec['avoid_for_younger_children']))
-
-        def _assemble(pools: List[List[str]]) -> List[str]:
-            """Round-robin across pools, order-preserving, deduped."""
-            out: List[str] = []
-            for tier in range(max((len(p) for p in pools), default=0)):
-                for pool in pools:
-                    if tier < len(pool) and pool[tier] not in out:
-                        out.append(pool[tier])
-            return out
-
-        pools = per_topic if matched_topic else [list(level.get('primary_targets', []) or [])]
-        # Filter each pool by question type BEFORE interleaving, so a topic's
-        # fair share is its type-appropriate targets rather than whatever
-        # survives afterwards.
-        typed = [[t for t in pool if self._suits_types(t, types)] for pool in pools]
-        target_ids = _assemble(typed)
+        # Collect target ids from the level's primary targets, filtered by
+        # question type.
+        pool = list(level.get('primary_targets', []) or [])
+        target_ids = [t for t in pool if self._suits_types(t, types)]
         if not target_ids:
-            target_ids = _assemble(pools)
+            target_ids = list(pool)
             if target_ids:
                 print(f"[KB] concept: no target suits types={types} at "
                       f"concept_age={concept_age}; falling back to the unfiltered list")
-        dropped = [t for t in _assemble(pools) if t not in target_ids]
+        dropped = [t for t in pool if t not in target_ids]
         if len(target_ids) > max_targets:
             dropped += target_ids[max_targets:]
             target_ids = target_ids[:max_targets]
@@ -666,8 +608,6 @@ class LanguageInterestKB:
                 exq = (spec.get('example_questions') or [''])[0]
                 ex = f" e.g. {exq}" if exq else ''
                 lines.append(f"- {label}: {goal}{ex}")
-        if topic_items:
-            lines.append("Example familiarity anchors by topic: " + " | ".join(topic_items))
         for exq in (level.get('example_questions') or [])[:3]:
             lines.append(f"Example question at this level: {exq}")
         return '\n'.join(lines) + '\n'
@@ -704,12 +644,11 @@ class LanguageInterestKB:
         contact, no punishing autistic communication style). Returns '' when
         the KB has no social framework.
 
-        ``max_targets`` defaults to None (emit every primary target). Unlike
-        ``build_concept_prompt_fragment`` — where per-topic targets accumulate
-        across several topics and need a cap — a social level carries one fixed
-        curated list, so capping it would silently drop clinical targets: the
-        age-8 level has 10, and a cap of 8 always lost social_problem_solving
-        and self_advocacy_and_communication_of_needs.
+        ``max_targets`` defaults to None (emit every primary target): a social
+        level carries one fixed curated list, so capping it would silently
+        drop clinical targets — the age-8 level has 10, and a cap of 8 always
+        lost social_problem_solving and
+        self_advocacy_and_communication_of_needs.
         """
         level = self.resolve_social_level(age)
         if not level:

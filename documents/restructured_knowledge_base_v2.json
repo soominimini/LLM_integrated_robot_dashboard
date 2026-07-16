@@ -1208,189 +1208,6 @@
      ]
     }
    ],
-   "topic_mapping": {
-    "Fruit": {
-     "recommended_targets_age_4_5": [
-      "object_identity",
-      "basic_category_membership",
-      "perceptual_attribute",
-      "within_food_category",
-      "direct_food_origin"
-     ],
-     "recommended_targets_age_6_7": [
-      "within_food_category",
-      "typicality_reasoning",
-      "cross_classification",
-      "superordinate_subordinate_reasoning",
-      "origin_and_processing_reasoning",
-      "causal_explanation"
-     ],
-     "recommended_targets_age_8": [
-      "cross_classification",
-      "superordinate_subordinate_reasoning",
-      "origin_and_processing_reasoning",
-      "causal_explanation",
-      "event_sequence_and_planning",
-      "prediction_inference"
-     ],
-     "example_items": [
-      "apple",
-      "banana",
-      "orange",
-      "grape",
-      "strawberry"
-     ],
-     "avoid_for_younger_children": [
-      "tomato as fruit",
-      "avocado as fruit",
-      "botanical definitions",
-      "rare fruits",
-      "atypical colors"
-     ]
-    },
-    "School": {
-     "recommended_targets_age_4_5": [
-      "object_function",
-      "familiar_event_script",
-      "basic_category_membership"
-     ],
-     "recommended_targets_age_6_7": [
-      "familiar_event_script",
-      "event_sequence_and_planning",
-      "taxonomic_thematic_relation",
-      "problem_solution_reasoning",
-      "causal_explanation"
-     ],
-     "recommended_targets_age_8": [
-      "familiar_event_script",
-      "event_sequence_and_planning",
-      "taxonomic_thematic_relation",
-      "problem_solution_reasoning",
-      "causal_explanation"
-     ],
-     "example_items": [
-      "backpack",
-      "book",
-      "pencil",
-      "teacher",
-      "classroom",
-      "paper"
-     ],
-     "avoid_for_younger_children": [
-      "abstract school rules",
-      "complex schedules",
-      "social conflict without support"
-     ]
-    },
-    "Home": {
-     "recommended_targets_age_4_5": [
-      "object_function",
-      "familiar_event_script",
-      "basic_category_membership",
-      "event_sequence_and_planning"
-     ],
-     "recommended_targets_age_6_7": [
-      "event_sequence_and_planning",
-      "problem_solution_reasoning",
-      "causal_explanation",
-      "prediction_inference"
-     ],
-     "recommended_targets_age_8": [
-      "event_sequence_and_planning",
-      "problem_solution_reasoning",
-      "causal_explanation",
-      "prediction_inference"
-     ],
-     "example_items": [
-      "bed",
-      "cup",
-      "table",
-      "chair",
-      "toothbrush",
-      "clothes",
-      "toys"
-     ],
-     "avoid_for_younger_children": [
-      "household safety scenarios that may be frightening",
-      "complex chores",
-      "culturally specific routines unless provided"
-     ]
-    },
-    "Food": {
-     "recommended_targets_age_4_5": [
-      "food_nonfood_distinction",
-      "object_function",
-      "within_food_category",
-      "direct_food_origin"
-     ],
-     "recommended_targets_age_6_7": [
-      "within_food_category",
-      "cross_classification",
-      "ingredient_to_food_pathway",
-      "grown_made_animal_source",
-      "origin_and_processing_reasoning",
-      "causal_explanation"
-     ],
-     "recommended_targets_age_8": [
-      "cross_classification",
-      "ingredient_to_food_pathway",
-      "grown_made_animal_source",
-      "origin_and_processing_reasoning",
-      "causal_explanation",
-      "event_sequence_and_planning",
-      "prediction_inference"
-     ],
-     "example_items": [
-      "bread",
-      "milk",
-      "cheese",
-      "eggs",
-      "flour",
-      "pasta",
-      "chicken"
-     ],
-     "avoid_for_younger_children": [
-      "processed food with unclear ingredients",
-      "nutrition mechanisms",
-      "moralized healthy/unhealthy wording",
-      "diet or weight-related content"
-     ]
-    },
-    "Nature": {
-     "recommended_targets_age_4_5": [
-      "object_identity",
-      "basic_category_membership",
-      "perceptual_attribute",
-      "direct_food_origin"
-     ],
-     "recommended_targets_age_6_7": [
-      "superordinate_subordinate_reasoning",
-      "causal_explanation",
-      "prediction_inference",
-      "origin_and_processing_reasoning"
-     ],
-     "recommended_targets_age_8": [
-      "superordinate_subordinate_reasoning",
-      "causal_explanation",
-      "prediction_inference",
-      "origin_and_processing_reasoning"
-     ],
-     "example_items": [
-      "tree",
-      "flower",
-      "bird",
-      "fish",
-      "rain",
-      "sun",
-      "plant"
-     ],
-     "avoid_for_younger_children": [
-      "advanced ecology",
-      "exception-based animal facts",
-      "technical plant biology"
-     ]
-    }
-   },
    "targets": {
     "object_identity": {
      "difficulty_level": 1,
@@ -1903,7 +1720,7 @@
      "description": "Understanding familiar routines as sequences involving actions, actors, props, and places.",
      "question_goal": "Ask about common actions, objects, people, or places in familiar events.",
      "conceptual_relation": "event_to_actor_prop_action_place",
-     "recommended_age_range": "4+",
+     "recommended_age_range": "5+",
      "examples": [
       {
        "event": "school",
@@ -1991,10 +1808,13 @@
       }
      ],
      "example_questions": [
-      "Do books go in backpacks?",
-      "Do we pay at stores?",
-      "Do we sleep in beds?",
-      "Do shoes go on before outside?"
+      "What do you put in your backpack before school?",
+      "Who may prepare the food?",
+      "Who teaches children in the classroom?",
+      "What do you use to brush your teeth?",
+      "Who helps customers pay?",
+      "Where do you put the food before paying?",
+      "Where do students sit during class?"
      ],
      "generation_constraints": [
       "Use familiar, everyday events.",
@@ -2304,10 +2124,18 @@
       }
      ],
      "example_questions": [
-      "Do apples grow on trees?",
-      "Does milk come from cows?",
-      "Is bread made from flour?",
+      "How are oranges changed into orange juice?",
+      "Is yogurt made from milk?",
+      "What happens before flour becomes bread?",
       "Is cheese made from milk?",
+      "What is paper made from?",
+      "Can wood be used to make paper?",
+      "What material is used to make a T-shirt?",
+      "Does cotton come from a plant?",
+      "What is glass made from?",
+      "Can sand be changed into glass?",
+      "Which comes first: cotton or a T-shirt?",
+      "Which comes first: sand or a glass bottle?",
       "Is pasta made from wheat?"
      ],
      "generation_constraints": [
@@ -2350,10 +2178,17 @@
       }
      ],
      "example_questions": [
-      "Why do we use umbrellas?",
-      "Why did the child ask for help?",
-      "Why do people eat food?",
-      "Why do plants need water?"
+      "Why do people use umbrellas when it rains?",
+      "Why do plants grow better when they get water?",
+      "Why does ice melt when it gets warm?",
+      "Why do people wear coats when it is cold?",
+      "Why do we wash our hands before eating?",
+      "Why does a wet floor become slippery?",
+      "Why do people turn on lights when a room is dark?",
+      "Why does bread become hard when it is left out?",
+      "Why do we put food in the refrigerator?",
+      "Why does a balloon get bigger when air goes inside?",
+      "Why do leaves fall from some trees in autumn?"
      ],
      "generation_constraints": [
       "Use concrete cause-effect relations.",
@@ -2475,141 +2310,23 @@
      ],
      "example_questions": [
       "What might happen when clouds get dark?",
-      "How might the child feel?",
-      "What does the plant need?",
-      "What should go in the backpack?"
+      "What could happen when the clouds get dark?",
+      "What might happen if the ice cream is left in the sun?",
+      "What might happen if the plant does not get water?",
+      "What do you think will happen after a glass falls on the floor?",
+      "How would someone feel after losing a favourite toy?",
+      "How would someone feel after receiving a surprise gift?",
+      "What might someone think after finding a broken window?",
+      "What would someone need after getting wet in the rain?",
+      "What does a plant need when its leaves become dry?",
+      "What should someone pack before going to school?",
+      "What should someone do after spilling water on the floor?"
      ],
      "generation_constraints": [
       "Use visible or explicitly stated clues.",
       "Avoid inference questions requiring hidden cultural knowledge.",
       "For children with language difficulties, provide choices or visual support."
      ]
-    }
-   },
-   "question_templates": {
-    "yes_no": {
-     "object_identity": [
-      "Is this a {item}?"
-     ],
-     "basic_category_membership": [
-      "Is a {item} a {category}?",
-      "Is {item} a kind of {category}?"
-     ],
-     "object_function": [
-      "Do we use {object} to {function}?",
-      "Does a {object} help us {function}?"
-     ],
-     "perceptual_attribute": [
-      "Are {items} usually {attribute}?",
-      "Do {items} have {part}?"
-     ],
-     "direct_food_origin": [
-      "Does {food} come from {origin}?",
-      "Do {food_plural} grow on {origin}?"
-     ],
-     "ingredient_to_food_pathway": [
-      "Is {food} made from {ingredient}?"
-     ],
-     "familiar_event_script": [
-      "Do we use {prop} at {event}?",
-      "Do we {action} at {place}?"
-     ],
-     "cross_classification": [
-      "Is {item} both {category_1} and {category_2}?"
-     ]
-    },
-    "wh": {
-     "object_function": [
-      "What do we use {object} for?"
-     ],
-     "direct_food_origin": [
-      "Where does {food} come from?"
-     ],
-     "familiar_event_script": [
-      "What do we bring to {event}?",
-      "Who helps at {place}?"
-     ],
-     "event_sequence_and_planning": [
-      "What do we do before {event}?",
-      "What happens after {action}?"
-     ],
-     "narrative_goal_attempt_outcome": [
-      "What did the character want?",
-      "What happened at the end?"
-     ]
-    },
-    "why_how_compare": {
-     "taxonomic_thematic_relation": [
-      "How are {item_1} and {item_2} alike?",
-      "Why do {item_1} and {item_2} go together?"
-     ],
-     "causal_explanation": [
-      "Why do we {action}?",
-      "Why did {event} happen?"
-     ],
-     "problem_solution_reasoning": [
-      "What should {character} do if {problem}?",
-      "Why would that help?"
-     ],
-     "narrative_goal_attempt_outcome": [
-      "Why did the character {action}?",
-      "How did the character solve the problem?"
-     ],
-     "origin_and_processing_reasoning": [
-      "How does {ingredient} become {food}?"
-     ]
-    },
-    "wh_developmental_hierarchy": {
-     "level_1_what_who": {
-      "wh_types": [
-       "what",
-       "who"
-      ],
-      "templates": [
-       "What is this?",
-       "What is {character} doing?",
-       "Who is in the picture?",
-       "Who is {action}?"
-      ]
-     },
-     "level_2_where": {
-      "wh_types": [
-       "where"
-      ],
-      "templates": [
-       "Where is {character}?",
-       "Where is the {object}?",
-       "Where are they playing?"
-      ]
-     },
-     "level_3_when": {
-      "wh_types": [
-       "when"
-      ],
-      "templates": [
-       "When do we {routine_action}?",
-       "When is it {weather_or_time_cue}?",
-       "When does this happen?"
-      ],
-      "constraints": [
-       "Use only with clear visual or routine cues."
-      ]
-     },
-     "level_4_why_how": {
-      "wh_types": [
-       "why",
-       "how"
-      ],
-      "templates": [
-       "Why is {character} {action}?",
-       "Why does {character} need {object}?",
-       "How does {character} {action}?",
-       "How can {character} fix it?"
-      ],
-      "constraints": [
-       "Use only with visible evidence, familiar routines, or story context."
-      ]
-     }
     }
    },
    "generation_rules": {
@@ -3121,66 +2838,6 @@
      ]
     }
    },
-   "neutral_age_recommendations": [
-    {
-     "age": 2,
-     "recommended_themes": [
-      "dinosaurs",
-      "vehicles"
-     ],
-     "source": "combined_from_co_design_observed_preferences",
-     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
-    },
-    {
-     "age": 3,
-     "recommended_themes": [
-      "unicorns",
-      "animals",
-      "pets",
-      "princesses",
-      "pretend_play",
-      "vehicles"
-     ],
-     "source": "combined_from_co_design_observed_preferences",
-     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
-    },
-    {
-     "age": 5,
-     "recommended_themes": [
-      "fairies",
-      "princesses",
-      "pets",
-      "vehicles",
-      "dinosaurs",
-      "superheroes"
-     ],
-     "source": "combined_from_co_design_observed_preferences",
-     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
-    },
-    {
-     "age": 6,
-     "recommended_themes": [
-      "fairies",
-      "princesses",
-      "superheroes",
-      "video_game_characters",
-      "vehicles"
-     ],
-     "source": "combined_from_co_design_observed_preferences",
-     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
-    },
-    {
-     "age": 8,
-     "recommended_themes": [
-      "fairies",
-      "superheroes",
-      "video_game_characters",
-      "vehicles"
-     ],
-     "source": "combined_from_co_design_observed_preferences",
-     "selection_note": "Use as optional personalization guidance only; do not restrict by gender."
-    }
-   ],
    "co_design_observed_age_preferences": [
     {
      "age": 2,
@@ -3242,202 +2899,8 @@
       "vehicles"
      ]
     }
-   ],
-   "selection_rules": {
-    "rule_1": {
-     "name": "Clinical target before interest theme",
-     "description": "Select the language, concept, social-communication, or speech-sound target first; then use an interest theme to personalize the content."
-    },
-    "rule_2": {
-     "name": "Specific interest only when provided",
-     "description": "Use branded or named characters only when the child profile explicitly indicates interest in that character, game, or franchise."
-    },
-    "rule_3": {
-     "name": "Gender-neutral application",
-     "description": "Allow any child to use any theme regardless of gender."
-    },
-    "rule_4": {
-     "name": "Avoid unsafe or inappropriate scenarios",
-     "description": "When using superheroes or game themes, prefer helping, teamwork, problem solving, building, racing, friendship, and emotion regulation over violence."
-    }
-   },
-   "source_age_preferences_from_previous_kb": [
-    {
-     "age": 2,
-     "girls": [],
-     "boys": [
-      "dinosaurs",
-      "vehicles"
-     ]
-    },
-    {
-     "age": 3,
-     "girls": [
-      "unicorns",
-      "animals",
-      "pets",
-      "princesses",
-      "pretend_play"
-     ],
-     "boys": [
-      "pets",
-      "pretend_play",
-      "vehicles"
-     ]
-    },
-    {
-     "age": 5,
-     "girls": [
-      "fairies",
-      "princesses",
-      "pets",
-      "superheroes"
-     ],
-     "boys": [
-      "pets",
-      "vehicles",
-      "dinosaurs",
-      "superheroes"
-     ]
-    },
-    {
-     "age": 6,
-     "girls": [
-      "fairies",
-      "superheroes"
-     ],
-     "boys": [
-      "superheroes",
-      "vehicles"
-     ]
-    },
-    {
-     "age": 8,
-     "girls": [
-      "fairies"
-     ],
-     "boys": [
-      "superheroes",
-      "video_game_characters",
-      "vehicles"
-     ]
-    }
    ]
   }
- },
- "global_generation_rules": {
-  "rule_1": {
-   "name": "Select target domain first",
-   "description": "Choose whether the activity targets language form, conceptual knowledge, social communication, or a combined target before selecting topic or interest theme."
-  },
-  "rule_2": {
-   "name": "Separate wording level from concept level",
-   "description": "Use language guidance to control wording length and grammar; use the concept framework to control conceptual difficulty."
-  },
-  "rule_3": {
-   "name": "Allow combined targets only when clinically appropriate",
-   "description": "Combine language, concept, social, and interest dimensions only when the resulting activity remains natural, clear, and developmentally appropriate."
-  },
-  "rule_4": {
-   "name": "Avoid diagnostic assumptions",
-   "description": "Do not infer conceptual, social, or language ability from diagnosis alone."
-  },
-  "rule_5": {
-   "name": "Use expected answer metadata",
-   "description": "For yes/no quiz generation, include expected_answer and avoid ambiguous, preference-based, or exception-based questions."
-  },
-  "rule_6": {
-   "name": "Use interest themes safely",
-   "description": "Avoid violent, frightening, or overly branded content unless explicitly appropriate and requested."
-  },
-  "rule_7": {
-   "name": "Preserve speech sound domain",
-   "description": "When articulation is selected as a target, use the speech sound framework to select phonemes and example words, then combine with language, concept, or interest themes only if natural."
-  },
-  "rule_8": {
-   "name": "Select clinical target before theme",
-   "description": "Select the language or articulation target based on developmental level first, then select the activity theme based on child interests."
-  },
-  "rule_9": {
-   "name": "Use developmental level flexibly",
-   "description": "Use developmental age, MLU, and SLP judgment rather than chronological age alone."
-  },
-  "rule_10": {
-   "name": "Avoid gender-restricted personalization",
-   "description": "Gender-based interest lists are retained from co-design data, but the system should allow any child to use any interest theme."
-  },
-  "rule_11": {
-   "name": "Follow WH-question hierarchy",
-   "description": "For image-card and WH-question generation, use the developmental hierarchy what/who → where → when → why/how. Do not force harder WH types when the image or context does not support them."
-  }
- },
- "example_activity_selection_workflow": [
-  "1. Read child profile: chronological age, developmental language level, speech sound profile, diagnosis/profile if provided, and interests.",
-  "2. Select the primary clinical target domain: language, speech sound, concept, social communication, or a clinically appropriate combination.",
-  "3. Select target level and target IDs from the relevant framework using developmental guidance and SLP judgment.",
-  "4. Select an interest theme or specific interest only for personalization.",
-  "5. Generate the activity using the appropriate question/activity template and include expected-answer metadata when relevant.",
-  "6. Check output against global rules: natural wording, non-ambiguous answer, developmentally appropriate demand, and safe personalization.",
-  "7. For WH-question or image-card activities, apply the WH-question hierarchy: what/who first, then where, then when, then why/how; avoid unsupported when/why/how questions."
- ],
- "example_child_profile_schema": {
-  "chronological_age": "number",
-  "diagnosis_or_profile": "optional string, e.g., ASD, speech sound delay, language delay",
-  "developmental_language_level": "language developmental level id",
-  "speech_sound_level": "optional speech developmental level id",
-  "concept_development_level": "optional concept developmental level id",
-  "social_communication_level": "optional social developmental level id",
-  "mlu": "optional number or range",
-  "preferred_themes": [
-   "theme_id or specific interest name"
-  ],
-  "language_targets": [
-   "target ids from frameworks.language.targets"
-  ],
-  "speech_sound_targets": [
-   "target ids from frameworks.speech_sound.targets"
-  ],
-  "concept_targets": [
-   "target ids from frameworks.concept.targets"
-  ],
-  "social_targets": [
-   "target ids from frameworks.social_communication.targets"
-  ],
-  "activity_type": "yes_no_quiz | wh_question | role_play | story | instruction_following | image_inference | conversation_practice",
-  "wh_question_level": "optional WH-question level id or allowed WH types from frameworks.language.wh_question_hierarchy",
-  "allowed_wh_types": [
-   "optional list such as what, who, where"
-  ]
- },
- "example_child_profile": {
-  "chronological_age": 5,
-  "developmental_language_level": "language_age_5_mlu_6_8",
-  "mlu": 6,
-  "preferred_themes": [
-   "dinosaurs",
-   "vehicles"
-  ],
-  "language_targets": [
-   "plural_forms",
-   "simple_conjunction"
-  ],
-  "speech_sound_targets": [
-   "advanced_sounds"
-  ],
-  "example_generated_phrase": "Three red dinosaurs are running and jumping.",
-  "concept_development_level": "concept_age_5_category_food_origin_event",
-  "concept_targets": [
-   "basic_category_membership",
-   "object_function"
-  ],
-  "activity_type": "educational_quiz",
-  "expected_output_metadata": [
-   "question",
-   "type",
-   "expected_answer",
-   "target_domain",
-   "target_id"
-  ]
  },
  "image_card_wh_question_generation_guidance": {
   "version": "1.0",
