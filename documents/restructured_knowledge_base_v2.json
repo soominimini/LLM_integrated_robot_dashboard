@@ -440,9 +440,7 @@
       "intermediate_conjunction",
       "wh_questions_early",
       "wh_questions_location",
-      "wh_questions_time"
-     ],
-     "optional_targets": [
+      "wh_questions_time",
       "wh_questions_reasoning"
      ],
      "wh_question_guidance": {
@@ -484,9 +482,7 @@
       "intermediate_conjunction",
       "wh_questions_early",
       "wh_questions_location",
-      "wh_questions_time"
-     ],
-     "optional_targets": [
+      "wh_questions_time",
       "wh_questions_reasoning"
      ],
      "wh_question_guidance": {
@@ -531,7 +527,6 @@
       "wh_questions_time",
       "wh_questions_reasoning"
      ],
-     "discourse_guidance": "Use connected sentences, explanations, narratives, and simple reasoning when appropriate.",
      "wh_question_guidance": {
       "developmental_order": [
        "what",
@@ -566,38 +561,6 @@
      "when",
      "why",
      "how"
-    ],
-    "difficulty_levels": [
-     {
-      "level": 1,
-      "wh_types": [
-       "what",
-       "who"
-      ],
-      "description": "Concrete identification/action/person questions; easiest and most visually grounded."
-     },
-     {
-      "level": 2,
-      "wh_types": [
-       "where"
-      ],
-      "description": "Location questions; use when place or spatial relation is clearly visible."
-     },
-     {
-      "level": 3,
-      "wh_types": [
-       "when"
-      ],
-      "description": "Time, routine, season, weather, or event-context questions; use only with clear visual or routine cues."
-     },
-     {
-      "level": 4,
-      "wh_types": [
-       "why",
-       "how"
-      ],
-      "description": "Reasoning and action-means questions; hardest and should be supported by visible evidence, familiar routines, or story context."
-     }
     ],
     "age_guidance": {
      "age_2_3": {
@@ -662,16 +625,6 @@
        "Maintain concrete context and provide visual choices or scaffolds when needed."
       ]
      }
-    },
-    "image_card_guidance": {
-     "description": "Guidance for generating WH-questions from illustrated image cards.",
-     "rules": [
-      "Do not force all WH types if the image does not support them.",
-      "For children aged 4-5, prioritize what, who, and where questions.",
-      "Include when only if time, routine, weather, season, or event context is visually supported.",
-      "Include why/how only if the reason or action-means relation is obvious from the picture, a familiar routine, or a short story context.",
-      "When a harder WH type is not supported, replace it with an additional what/who/where question rather than inventing an answer."
-     ]
     }
    }
   },
@@ -833,24 +786,12 @@
      "primary_targets": [
       "object_identity",
       "object_function",
-      "food_nonfood_distinction"
-     ],
-     "optional_targets": [
+      "food_nonfood_distinction",
       "perceptual_attribute"
      ],
      "question_guidance": {
-      "recommended_question_types": [
-       "yes_no",
-       "simple_wh"
-      ],
       "wording": "Very short, concrete, and familiar wording.",
       "recommended_question_length": "2-5 words when possible",
-      "recommended_content": [
-       "familiar objects",
-       "familiar actions",
-       "visible features",
-       "simple food/non-food distinction"
-      ],
       "avoid": [
        "abstract categories",
        "superordinate labels if unfamiliar",
@@ -876,49 +817,20 @@
       "basic_category_membership",
       "object_function",
       "perceptual_attribute",
-      "familiar_event_script"
-     ],
-     "optional_targets": [
+      "familiar_event_script",
       "food_nonfood_distinction",
       "within_food_category"
      ],
      "question_guidance": {
-      "recommended_question_types": [
-       "yes_no",
-       "simple_wh"
-      ],
       "wording": "Short questions with familiar category labels and visible properties.",
       "recommended_question_length": "3-6 words when possible",
-      "recommended_content": [
-       "typical category members",
-       "basic object functions",
-       "common routines",
-       "visible attributes"
-      ],
       "avoid": [
        "atypical category members",
        "exception-based facts",
        "complex food-origin questions",
        "multi-step production chains",
        "ambiguous category labels"
-      ],
-      "wh_question_guidance": {
-       "recommended_primary_wh_types": [
-        "what",
-        "who"
-       ],
-       "recommended_secondary_wh_types": [
-        "where"
-       ],
-       "use_with_strong_support_only": [
-        "when",
-        "why",
-        "how"
-       ],
-       "notes": [
-        "Use WH-questions mainly for visible people, objects, actions, and clear locations."
-       ]
-      }
+      ]
      },
      "example_questions": [
       "Is an apple a fruit?",
@@ -936,33 +848,14 @@
       "within_food_category",
       "object_function",
       "direct_food_origin",
-      "familiar_event_script"
-     ],
-     "optional_targets": [
+      "familiar_event_script",
       "ingredient_to_food_pathway",
       "event_sequence_and_planning",
       "typicality_reasoning"
      ],
      "question_guidance": {
-      "recommended_question_types": [
-       "yes_no",
-       "wh"
-      ],
       "wording": "Use simple, natural questions aligned with the child’s language level.",
       "recommended_question_length": "4-8 words when aligned with age-5 MLU guidance",
-      "recommended_yes_no_question_types": [
-       "object_to_category",
-       "object_function",
-       "direct_food_origin",
-       "familiar_event_prop",
-       "simple_food_category"
-      ],
-      "recommended_content": [
-       "typical fruits and vegetables",
-       "school and home routines",
-       "direct origins such as milk from cows",
-       "object functions such as beds for sleeping"
-      ],
       "avoid": [
        "botanical exceptions",
        "rare foods",
@@ -971,34 +864,7 @@
        "multi-step production chains unless explicitly targeted",
        "preference-based questions",
        "subjective questions"
-      ],
-      "wh_question_guidance": {
-       "developmental_order": [
-        "what",
-        "who",
-        "where",
-        "when",
-        "why",
-        "how"
-       ],
-       "recommended_primary_wh_types": [
-        "what",
-        "who",
-        "where"
-       ],
-       "use_with_support": [
-        "when"
-       ],
-       "emerging_or_optional": [
-        "why",
-        "how"
-       ],
-       "notes": [
-        "Use what/who first, then where.",
-        "Use when only with clear time, routine, season, weather, or event cues.",
-        "Use why/how only for simple and visually or routinely supported reasoning."
-       ]
-      }
+      ]
      },
      "example_questions": [
       "Is an apple a fruit?",
@@ -1018,57 +884,20 @@
       "direct_food_origin",
       "ingredient_to_food_pathway",
       "grown_made_animal_source",
-      "event_sequence_and_planning"
-     ],
-     "optional_targets": [
+      "event_sequence_and_planning",
       "causal_explanation",
       "problem_solution_reasoning",
       "superordinate_subordinate_reasoning"
      ],
      "question_guidance": {
-      "recommended_question_types": [
-       "yes_no",
-       "wh",
-       "simple_why",
-       "simple_how"
-      ],
       "wording": "Questions may include simple because, before, after, made from, and comes from relations.",
       "recommended_question_length": "6-10 words when appropriate",
-      "recommended_content": [
-       "simple category hierarchy",
-       "direct and simple processed food origins",
-       "event order",
-       "simple cause-effect"
-      ],
       "avoid": [
        "highly technical food-system concepts",
        "adult-level nutrition mechanisms",
        "abstract reasoning without context",
        "ambiguous category exceptions"
-      ],
-      "wh_question_guidance": {
-       "developmental_order": [
-        "what",
-        "who",
-        "where",
-        "when",
-        "why",
-        "how"
-       ],
-       "recommended_wh_types": [
-        "what",
-        "who",
-        "where",
-        "when"
-       ],
-       "use_with_support": [
-        "why",
-        "how"
-       ],
-       "notes": [
-        "Use why/how for concrete cause-effect, problem-solution, and routine-based reasoning."
-       ]
-      }
+      ]
      },
      "example_questions": [
       "Is cheese made from milk?",
@@ -1090,21 +919,11 @@
       "ingredient_to_food_pathway",
       "causal_explanation",
       "problem_solution_reasoning",
-      "narrative_goal_attempt_outcome"
-     ],
-     "optional_targets": [
+      "narrative_goal_attempt_outcome",
       "prediction_inference",
       "event_sequence_and_planning"
      ],
      "question_guidance": {
-      "recommended_question_types": [
-       "yes_no",
-       "wh",
-       "why",
-       "how",
-       "compare",
-       "explain"
-      ],
       "wording": "Questions can be longer and can ask for explanation, comparison, or reasoning, but should remain concrete and contextually grounded. Phrase every question as ONE simple spoken clause a child would hear in conversation; split complex ideas into the question frames below instead of packing them into one sentence.",
       "recommended_question_length": "8-14 words when expressive language level supports it",
       "recommended_question_patterns": [
@@ -1116,15 +935,6 @@
        "What happened after X?",
        "What should the character do next?"
       ],
-      "recommended_content": [
-       "taxonomic and thematic semantic relations",
-       "multiple category membership",
-       "superordinate-basic-subordinate hierarchy",
-       "simple food processing",
-       "cause-effect explanations",
-       "problem-solution reasoning",
-       "story goal-attempt-outcome structure"
-      ],
       "avoid": [
        "fully abstract reasoning without concrete context",
        "adult-level nutrition or biology mechanisms",
@@ -1133,20 +943,7 @@
        "complex social inference without story support",
        "academic connector phrases such as 'in terms of', 'with respect to', 'in what way'",
        "two asks packed into one question (e.g. 'How are X and Y alike in terms of what they are made from?' — use 'What are X and Y both made from?' instead)"
-      ],
-      "wh_question_guidance": {
-       "recommended_wh_types": [
-        "what",
-        "who",
-        "where",
-        "when",
-        "why",
-        "how"
-       ],
-       "notes": [
-        "Why/how questions can target causal explanation, social reasoning, problem solving, and narrative reasoning when the child’s expressive language supports it."
-       ]
-      }
+      ]
      },
      "example_questions": [
       "How are apples and bananas alike?",
@@ -1168,30 +965,14 @@
       "origin_and_processing_reasoning",
       "causal_explanation",
       "prediction_inference",
-      "narrative_goal_attempt_outcome"
-     ],
-     "optional_targets": [
+      "narrative_goal_attempt_outcome",
       "typicality_reasoning",
       "multi_attribute_categorization",
       "problem_solution_reasoning"
      ],
      "question_guidance": {
-      "recommended_question_types": [
-       "why",
-       "how",
-       "compare",
-       "explain",
-       "predict"
-      ],
       "wording": "Can include multi-step explanations if the child’s language and attention profile supports it. Phrase every question as ONE simple spoken clause a child would hear in conversation; split complex ideas into the question frames below instead of packing them into one sentence.",
       "recommended_question_length": "Flexible, based on language profile",
-      "recommended_content": [
-       "less typical but valid category members",
-       "multi-step food pathways",
-       "simple systems reasoning",
-       "compare and contrast",
-       "explicit narrative reasoning"
-      ],
       "avoid": [
        "adult-level scientific detail",
        "unscaffolded abstract explanation",
@@ -1212,8 +993,7 @@
     "object_identity": {
      "difficulty_level": 1,
      "suitable_question_types": [
-      "yes_no",
-      "wh"
+      "yes_no"
      ],
      "developmental_position": "earliest_concrete_concept",
      "description": "Recognizing or naming familiar concrete objects, people, animals, foods, places, and everyday items.",
@@ -1344,7 +1124,11 @@
       "Do we sleep in beds?",
       "Do we drink from cups?",
       "Do spoons help us eat?",
-      "Do backpacks carry books?"
+      "Do backpacks carry books?",
+      "What do we use a cup for?",
+      "What do we use an umbrella for?",
+      "What do we use a toothbrush for?",
+      "What do we use a key for?"
      ],
      "generation_constraints": [
       "Use familiar object-function pairs.",
@@ -1393,16 +1177,18 @@
       }
      ],
      "example_questions": [
-      "Are bananas usually yellow?",
-      "Are apples usually round?",
+      "Are bananas yellow?",
+      "Are apples round?",
       "Do birds have wings?",
-      "Do trees have leaves?"
+      "Do trees have leaves?",
+      "What color is a banana?",
+      "What grows on a tree?",
+      "What color is grass?"
      ],
      "generation_constraints": [
       "Use typical attributes only for younger children.",
       "Avoid atypical color examples unless targeting advanced typicality reasoning.",
-      "Avoid exception-based questions such as 'Do all birds fly?'",
-      "Use 'usually' when a property has common exceptions."
+      "Avoid exception-based questions such as 'Do all birds fly?'"
      ]
     },
     "food_nonfood_distinction": {
@@ -1555,11 +1341,7 @@
      "example_questions": [
       "Is an apple a fruit?",
       "Is broccoli a vegetable?",
-      "Is a dog an animal?"
-     ],
-     "advanced_example_questions": [
-      "Can a tomato be a fruit?",
-      "Can a penguin be a bird?",
+      "Is a dog an animal?",
       "Why is a whale an animal?"
      ],
      "generation_constraints": [
@@ -1609,7 +1391,12 @@
       "Does milk come from cows?",
       "Do eggs come from chickens?",
       "Do apples grow on trees?",
-      "Does flour come from wheat?"
+      "Does flour come from wheat?",
+      "Where does milk come from?",
+      "Where do eggs come from?",
+      "Where do apples grow?",
+      "Where do bananas grow?",
+      "Where do fish come from?"
      ],
      "generation_constraints": [
       "Prefer direct and familiar source relationships.",
@@ -1655,7 +1442,11 @@
       "Is bread made from flour?",
       "Is cheese made from milk?",
       "Is pasta made from wheat?",
-      "Is jam made from fruit?"
+      "Is jam made from fruit?",
+      "What is bread made from?",
+      "What is cheese made from?",
+      "What is flour made from?",
+      "What is orange juice made from?"
      ],
      "generation_constraints": [
       "Treat processed foods as harder than direct food-origin questions.",
@@ -1702,18 +1493,21 @@
       "Do apples grow on trees?",
       "Does milk come from animals?",
       "Is bread made from ingredients?",
-      "Is cheese made from milk?"
+      "Is cheese made from milk?",
+      "What animal gives us milk?",
+      "What is bread made from?",
+      "What is cheese made from?",
+      "Where do carrots grow?",
+      "What animal do eggs come from?"
      ],
      "generation_constraints": [
       "Use simple source categories.",
-      "Avoid complex industrial food-system explanations for younger children.",
       "For age 8, compare grown foods and made foods using concrete examples."
      ]
     },
     "familiar_event_script": {
      "difficulty_level": 3,
      "suitable_question_types": [
-      "yes_no",
       "wh"
      ],
      "developmental_position": "routine_event_knowledge",
@@ -1875,10 +1669,17 @@
       }
      ],
      "example_questions": [
-      "Do we pack before school?",
-      "Do we pay before leaving?",
-      "Do shoes go on before outside?",
-      "Do we brush teeth before bed?"
+      "Do we pack a backpack before school?",
+      "Do we pay before leaving the store?",
+      "Do we put on shoes before going outside?",
+      "Do we brush teeth before bed?",
+      "What do we do to our hands before eating?",
+      "What do you do after you wake up?",
+      "What do you put on first, socks or shoes?",
+      "What do you do before going to sleep?",
+      "What do we do before eating breakfast?",
+      "What do you do after brushing your teeth?",
+      "What do we do with dirty dishes after eating?"
      ],
      "generation_constraints": [
       "Use only simple familiar sequences for age 5.",
@@ -1981,7 +1782,9 @@
       "Is an apple both fruit and food?",
       "Is cereal both food and breakfast food?",
       "Is a backpack for school and carrying things?",
-      "Can a carrot be food and a vegetable?"
+      "Can a carrot be food and a vegetable?",
+      "Why can an apple be both a fruit and a snack?",
+      "How can a dog be both an animal and a pet?"
      ],
      "generation_constraints": [
       "Use cross-classification with familiar items.",
@@ -2027,7 +1830,11 @@
       "Is a poodle a kind of dog?",
       "Is an apple a kind of fruit?",
       "Is a pencil a school supply?",
-      "Is a chair a kind of furniture?"
+      "Is a chair a kind of furniture?",
+      "What kind of animal is a poodle?",
+      "What larger group does a dog belong to?",
+      "Why is an apple a type of fruit?",
+      "What kind of food is an apple?"
      ],
      "generation_constraints": [
       "Use familiar hierarchies first.",
@@ -2496,7 +2303,6 @@
     {
      "level_id": "social_age_8_asd_peer_interaction",
      "age_range": "8",
-     "profile": "school-age child with ASD or social-pragmatic communication needs",
      "description": "Peer-interaction and social-communication targets appropriate for an older child who is beginning to manage school, recess, group activities, friendship, emotional understanding, and self-advocacy demands.",
      "primary_targets": [
       "reciprocal_conversation",
@@ -2509,16 +2315,6 @@
       "teasing_bullying_and_rejection_response",
       "social_problem_solving",
       "self_advocacy_and_communication_of_needs"
-     ],
-     "recommended_activity_types": [
-      "role_play",
-      "social_story",
-      "comic_strip_conversation",
-      "scenario_question",
-      "emotion_inference",
-      "problem_solution",
-      "conversation_practice",
-      "peer_game_practice"
      ],
      "generation_guidance": {
       "recommended_contexts": [

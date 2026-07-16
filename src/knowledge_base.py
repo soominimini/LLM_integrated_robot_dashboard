@@ -569,6 +569,33 @@ class LanguageInterestKB:
         key = lambda e: self._range_lower_bound(e.get('age_range', ''))
         return (max if eligible else min)(pool, key=key)
 
+    _WH_WORDS = ('what', 'who', 'where', 'when', 'why', 'how', 'which')
+
+    @classmethod
+    def _question_form(cls, question: str) -> str:
+        """Crude form classifier: 'wh' when the question starts with a WH word,
+        'yes_no' otherwise."""
+        words = (question or '').strip().strip('"').split()
+        first = words[0].lower().rstrip(",'") if words else ''
+        return 'wh' if first in cls._WH_WORDS else 'yes_no'
+
+    def _pick_example(self, examples: List[str],
+                      types: Optional[List[str]]) -> str:
+        """First example whose form matches a requested question type; else the
+        first example.
+
+        Keeps the injected 'e.g.' aligned with the requested format — a
+        yes/no-only quiz must not be shown a WH-form model question (and vice
+        versa) for targets that carry examples of both forms.
+        """
+        if not examples:
+            return ''
+        if types:
+            for q in examples:
+                if self._question_form(q) in types:
+                    return q
+        return examples[0]
+
     def _suits_types(self, target_id: str, types: Optional[List[str]]) -> bool:
         """Whether a concept target suits any of the requested question types.
 
@@ -585,7 +612,7 @@ class LanguageInterestKB:
         return any(t in declared for t in types)
 
     def build_concept_prompt_fragment(self, concept_age: Any,
-                                      max_targets: int = 8,
+                                      max_targets: int = 12,
                                       types: Optional[List[str]] = None) -> str:
         """Conceptual-difficulty guidance block for the educational quiz.
 
@@ -593,6 +620,10 @@ class LanguageInterestKB:
         age, NOT their language age — wording level and concept level are
         independent KB domains). Targets are the level's ``primary_targets``.
         Returns '' when the KB has no concept framework.
+
+        ``max_targets`` (12) is a safety backstop, sized above every level's
+        curated list (the largest, age 8, carries 11) so no KB target is
+        silently dropped; the per-type filter below is what actually trims.
 
         ``types`` are the requested question types (``yes_no`` / ``wh``). Targets
         are filtered to those whose ``suitable_question_types`` matches, so a
@@ -643,7 +674,8 @@ class LanguageInterestKB:
                 spec = self._concept_targets.get(tid) or {}
                 label = tid.replace('_', ' ')
                 goal = spec.get('question_goal') or spec.get('description') or ''
-                exq = (spec.get('example_questions') or [''])[0]
+                exq = self._pick_example(
+                    spec.get('example_questions') or [], types)
                 ex = f" e.g. {exq}" if exq else ''
                 lines.append(f"- {label}: {goal}{ex}")
         for exq in (level.get('example_questions') or [])[:3]:
