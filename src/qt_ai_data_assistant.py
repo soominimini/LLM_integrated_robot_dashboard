@@ -21,7 +21,12 @@ from human_tracking import HumanTracking
 from idle_attention import IdleAttention
 
 from riva_speech_recognition_vad import RivaSpeechRecognitionSilero
-# from scene_detection import SceneDetection
+# scene_detection module is not shipped with this project; scene detection is
+# optional and the assistant runs without it (scene_detector stays None).
+try:
+    from scene_detection import SceneDetection
+except ImportError:
+    SceneDetection = None
 
 from paramify.paramify_web import ParamifyWeb
 from utils.base_node import BaseNode
@@ -122,8 +127,12 @@ class QTAIDataAssistant(ParamifyWeb, BaseNode):
         
         self.idle_attention = IdleAttention(setup_kwargs={'attention_time':5, 'human_tracker':self.human_tracker}, paused=self.parameters.paused)
         
-        self.scene_detector = SceneDetection(setup_kwargs={'detection_framerate': 0.1}, paused=(self.parameters.paused or not self.parameters.enable_scene))
-        self.scene_detector.register_callback(self._scene_derection_callback)
+        self.scene_detector = None
+        if SceneDetection is not None:
+            self.scene_detector = SceneDetection(setup_kwargs={'detection_framerate': 0.1}, paused=(self.parameters.paused or not self.parameters.enable_scene))
+            self.scene_detector.register_callback(self._scene_derection_callback)
+        else:
+            rospy.logwarn("scene_detection module not available - scene detection disabled")
 
 
         # get current robot attention pos
@@ -378,6 +387,9 @@ class QTAIDataAssistant(ParamifyWeb, BaseNode):
 
     def on_enable_scene_set(self, value):
         rospy.loginfo(f"enable_scene param set to {value}")
+        if not self.scene_detector:
+            rospy.logwarn("scene detection not available - enable_scene ignored")
+            return
         if not value:
             self.scene_detector.pause()
             return
@@ -397,13 +409,13 @@ class QTAIDataAssistant(ParamifyWeb, BaseNode):
         if value:
             self.asr.pause()
             self.human_detector.pause()
-            self.scene_detector.pause()
+            self.scene_detector.pause() if self.scene_detector else None
             self.idle_attention.pause()
             self.pause()
         else: 
             self.asr.resume()
             self.human_detector.resume()
-            self.scene_detector.resume() if self.parameters.enable_scene else None
+            self.scene_detector.resume() if (self.scene_detector and self.parameters.enable_scene) else None
             self.idle_attention.resume()
             self.resume()        
 
