@@ -252,6 +252,9 @@ knowledge_base = LanguageInterestKB()
 # yes/no + open-ended WH questions in the educational quiz, and a social
 # theme woven into generated stories.
 SOCIAL_CONTENT_MIN_AGE = 7
+# Share of an educational-quiz question set allocated to social-communication
+# questions for children at or above SOCIAL_CONTENT_MIN_AGE (at least 1).
+SOCIAL_SHARE = 0.3
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
@@ -1705,7 +1708,9 @@ def api_generate_quiz():
     # social questions are open-ended (graded accept-any); yes/no-format ones
     # must stay objectively gradable.
     blend_social = profile_age >= SOCIAL_CONTENT_MIN_AGE
-    n_social = (max(2, min(3, count // 2)) if count >= 4 else 1) if blend_social else 0
+    # SOCIAL_SHARE of the set (rounded half-up), at least 1 — so the social
+    # mix scales with set size instead of flatlining at 2-3 questions.
+    n_social = max(1, int(count * SOCIAL_SHARE + 0.5)) if blend_social else 0
 
     task_line = f"Create {count} educational questions."
 
