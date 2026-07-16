@@ -37,12 +37,18 @@ ARCHITECTURE.md §9.1 for the resolved age -> level table and its gaps).
 
 Prompt fragments — each returns '' when the KB carries no relevant data:
 
-    build_story_prompt_fragment(age, gender, language_age=, interest=)    -> str
+    build_story_prompt_fragment(age, gender, language_age=, interest=,
+                                social_theme=)                            -> str
     build_question_prompt_fragment(age, gender, language_age=,
                                    include_targets=)                      -> str
     build_concept_prompt_fragment(concept_age, max_targets=, types=)      -> str
-    build_social_prompt_fragment(age, max_targets=)                       -> str
+    build_social_prompt_fragment(age, max_targets=, target_ids=)          -> str
     build_wh_question_guidance_fragment(age, language_age=, image_card=)  -> str
+
+Social-theme selection for coverage rotation: ``social_theme_ids(age)`` lists
+the level's target ids, ``social_theme(id)`` resolves one to
+(id, description, skills), ``pick_random_social_theme(age)`` is the
+no-memory fallback.
 
 ``describe(age, gender, language_age=)`` returns a compact dict of what was
 derived, for logging.
@@ -284,6 +290,24 @@ class LanguageInterestKB:
         filtered = [(t, items) for (t, items) in pool if t.lower() not in excluded]
         return random.choice(filtered or pool)
 
+    def social_theme_ids(self, age: Any) -> List[str]:
+        """Ordered target ids of the resolved social level's primary targets
+        (only those actually present in the targets dict)."""
+        level = self.resolve_social_level(age)
+        if not level:
+            return []
+        return [t for t in (level.get('primary_targets') or [])
+                if t in self._social_targets]
+
+    def social_theme(self, target_id: str
+                     ) -> Optional[Tuple[str, str, List[str]]]:
+        """(target_id, description, skills) for one social target, or None."""
+        spec = self._social_targets.get(target_id)
+        if not spec:
+            return None
+        return (target_id, spec.get('description', ''),
+                list(spec.get('skills') or []))
+
     def pick_random_social_theme(self, age: Any
                                  ) -> Optional[Tuple[str, str, List[str]]]:
         """Randomly pick ONE social-communication target for story weaving.
@@ -292,17 +316,13 @@ class LanguageInterestKB:
         level's primary targets, or None when the KB has no social framework.
         Callers gate by age (social story themes are for older children); the
         KB level itself resolves for any age via ``resolve_social_level``.
+        Callers wanting no-repeat coverage should manage their own cycle over
+        ``social_theme_ids`` and resolve with ``social_theme`` instead.
         """
-        level = self.resolve_social_level(age)
-        if not level:
-            return None
-        ids = [t for t in (level.get('primary_targets') or [])
-               if t in self._social_targets]
+        ids = self.social_theme_ids(age)
         if not ids:
             return None
-        tid = random.choice(ids)
-        spec = self._social_targets.get(tid) or {}
-        return tid, spec.get('description', ''), list(spec.get('skills') or [])
+        return self.social_theme(random.choice(ids))
 
     def resolve_wh_guidance(self, age: Any) -> Optional[Dict[str, Any]]:
         """WH-question guidance for this age.
@@ -703,7 +723,8 @@ class LanguageInterestKB:
         return (max if eligible else min)(pool, key=key)
 
     def build_social_prompt_fragment(self, age: Any,
-                                     max_targets: Optional[int] = None) -> str:
+                                     max_targets: Optional[int] = None,
+                                     target_ids: Optional[List[str]] = None) -> str:
         """Social-communication guidance block for social-pragmatic questions.
 
         Supplies WHAT the social questions may cover: the level's primary
@@ -714,7 +735,13 @@ class LanguageInterestKB:
         contact, no punishing autistic communication style). Returns '' when
         the KB has no social framework.
 
-        ``max_targets`` defaults to None (emit every primary target): a social
+        ``target_ids`` restricts the fragment to those targets (order
+        preserved, unknown ids skipped) — used by callers that rotate targets
+        across generations for full coverage. When None, every primary target
+        is listed. Each target line is prefixed with its id so the LLM can
+        tag generated questions with ``social_target``.
+
+        ``max_targets`` defaults to None (emit every listed target): a social
         level carries one fixed curated list, so capping it would silently
         drop clinical targets — the age-8 level has 10, and a cap of 8 always
         lost social_problem_solving and
@@ -733,19 +760,21 @@ class LanguageInterestKB:
         avoid = gg.get('avoid') or []
         if avoid:
             lines.append("Avoid: " + "; ".join(avoid))
-        target_ids = list(level.get('primary_targets', []) or [])
+        if target_ids is not None:
+            ids = [t for t in target_ids if t in self._social_targets]
+        else:
+            ids = list(level.get('primary_targets', []) or [])
         if max_targets is not None:
-            target_ids = target_ids[:max_targets]
-        if target_ids:
+            ids = ids[:max_targets]
+        if ids:
             lines.append("Cover a diverse mix of these social-communication targets "
                          "(do not repeat the same one):")
-            for tid in target_ids:
+            for tid in ids:
                 spec = self._social_targets.get(tid) or {}
-                label = tid.replace('_', ' ')
                 d = spec.get('description', '')
                 skills = spec.get('skills') or []
                 sk = f" Skills: {', '.join(skills[:4])}." if skills else ''
-                lines.append(f"- {label}: {d}{sk}")
+                lines.append(f"- {tid}: {d}{sk}")
         for note in self._social_notes[:3]:
             lines.append(f"- {note}")
         return '\n'.join(lines) + '\n'

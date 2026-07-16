@@ -126,17 +126,24 @@
                 statusText.innerText = `Generated ${questions.length} questions`;
                 questions.forEach((q, i) => {
                     const typeLabel = (q.type === "yes_no") ? "Yes/No" : "WH- Question";
-                    const answerLabel = q.correct_answer ? q.correct_answer.toUpperCase() : "N/A";
+                    const answerLabel = q.open_ended ? "OPEN-ENDED"
+                        : (q.correct_answer ? q.correct_answer.toUpperCase() : "N/A");
+                    const socialChip = q.social_target
+                        ? `<span class="text-[10px] font-bold uppercase text-purple-500">${q.social_target.replace(/_/g, ' ')}</span>`
+                        : '';
                     const card = document.createElement('div');
                     card.className = "bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 group animate-fade-in";
                     card.dataset.type = q.type;
                     card.dataset.answer = q.correct_answer || "";
                     card.dataset.acceptedAnswers = JSON.stringify(q.accepted_answers || []);
+                    card.dataset.openEnded = q.open_ended ? "1" : "";
+                    card.dataset.socialTarget = q.social_target || "";
                     card.innerHTML = `
                         <div class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0">${i + 1}</div>
                         <div class="flex-1">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-[10px] font-black uppercase text-indigo-400">${typeLabel} • age ${data.target_age ?? ''}</span>
+                                ${socialChip}
                                 <span class="text-[10px] font-bold uppercase text-emerald-600">Answer: ${answerLabel}</span>
                                 <button onclick="this.closest('.group').remove()" class="text-gray-300 hover:text-red-500 text-xs transition">Delete</button>
                             </div>
@@ -169,6 +176,11 @@
                 if (card.dataset.acceptedAnswers) {
                     try { entry.accepted_answers = JSON.parse(card.dataset.acceptedAnswers); } catch(e) {}
                 }
+                // Carry grading + coverage metadata through save: the play page
+                // grades open-ended questions accept-any, and social_target
+                // records which social-communication target a question covers.
+                if (card.dataset.openEnded) entry.open_ended = true;
+                if (card.dataset.socialTarget) entry.social_target = card.dataset.socialTarget;
                 return entry;
             }).filter(q => q.question);
 

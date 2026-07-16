@@ -433,6 +433,50 @@ def _save_last_story_interest(username, theme):
         print(f"[KB] failed to save last story interest: {e}")
 
 
+def _social_cycle_path(username):
+    return os.path.join(USER_DATA_DIR, username, "social_target_cycle.json")
+
+
+def _draw_social_targets(username, age, n, kind):
+    """Draw ``n`` social-communication target ids for this child, cycling
+    through ALL the KB's targets before any repeats.
+
+    ``kind`` keys an independent cycle per activity ('quiz' | 'story'), so
+    quiz generations and stories each guarantee full coverage of the ten
+    social targets on their own. The remaining pool is persisted per child in
+    social_target_cycle.json; draws are random within the pool so order still
+    varies. Falls back to a plain random sample if persistence fails.
+    """
+    ids = knowledge_base.social_theme_ids(age)
+    if not ids:
+        return []
+    n = min(n, len(ids))
+    try:
+        try:
+            with open(_social_cycle_path(username)) as f:
+                state = json.load(f) or {}
+        except Exception:
+            state = {}
+        # Drop ids the KB no longer defines (it may have been edited).
+        remaining = [t for t in (state.get(kind) or []) if t in ids]
+        drawn = []
+        while len(drawn) < n:
+            if not remaining:
+                remaining = [t for t in ids if t not in drawn]
+            pick = random.choice(remaining)
+            remaining.remove(pick)
+            drawn.append(pick)
+        state[kind] = remaining
+        path = _social_cycle_path(username)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            json.dump(state, f)
+        return drawn
+    except Exception as e:
+        print(f"[KB] social target cycle failed for {username}: {e}")
+        return random.sample(ids, n)
+
+
 def _persona_context_for(username, age, kind="story", include_targets=True):
     """Build a language + interest knowledge-base fragment for `username`.
 
@@ -469,12 +513,17 @@ def _persona_context_for(username, age, kind="story", include_targets=True):
                       f"(previous: {last_theme})")
             # For older children, weave one KB social-communication theme
             # (peer interaction, emotion understanding, conflict resolution,
-            # ...) into the story alongside the interest theme.
+            # ...) into the story alongside the interest theme. Themes cycle
+            # through all KB targets per child before repeating.
             social_theme = None
             try:
                 if int(effective_age or 0) >= SOCIAL_CONTENT_MIN_AGE:
-                    social_theme = knowledge_base.pick_random_social_theme(
-                        effective_age)
+                    drawn = _draw_social_targets(
+                        username, effective_age, 1, "story")
+                    social_theme = (knowledge_base.social_theme(drawn[0])
+                                    if drawn else
+                                    knowledge_base.pick_random_social_theme(
+                                        effective_age))
                     if social_theme:
                         print(f"[KB] story social theme picked: {social_theme[0]}")
             except (TypeError, ValueError):
@@ -1711,6 +1760,12 @@ def api_generate_quiz():
     # SOCIAL_SHARE of the set (rounded half-up), at least 1 — so the social
     # mix scales with set size instead of flatlining at 2-3 questions.
     n_social = max(1, int(count * SOCIAL_SHARE + 0.5)) if blend_social else 0
+    # Which social targets THIS generation covers: drawn from the child's
+    # persisted cycle so successive quizzes rotate through all ten targets
+    # instead of letting the LLM gravitate to the same few.
+    social_target_ids = (_draw_social_targets(username, profile_age,
+                                              n_social, "quiz")
+                         if blend_social else [])
 
     task_line = f"Create {count} educational questions."
 
@@ -1784,12 +1839,13 @@ def api_generate_quiz():
     # communication style).
     if blend_social:
         try:
-            social_frag = knowledge_base.build_social_prompt_fragment(profile_age)
+            social_frag = knowledge_base.build_social_prompt_fragment(
+                profile_age, target_ids=social_target_ids or None)
             if social_frag:
                 kb_block += (
                     f"The {n_social} social questions must come from this "
-                    "social-communication guidance, covering a diverse mix of "
-                    "its targets:\n"
+                    "social-communication guidance, covering EVERY listed "
+                    "target at least once:\n"
                     f"{social_frag}\n"
                 )
         except Exception as e:
@@ -1856,6 +1912,12 @@ def api_generate_quiz():
             "angry?', or questions whose correct answer depends on context, culture, or "
             "family rules. Keep the remaining questions factual. "
         )
+        if social_target_ids:
+            social_parts.append(
+                'Tag EVERY social question with "social_target": "<id>", where <id> is '
+                "the id of the target it practises, exactly one of: "
+                + ", ".join(social_target_ids) + "."
+            )
         social_text = " ".join(social_parts)
         if "wh" in types:
             open_ended_format = (
@@ -1896,12 +1958,14 @@ def api_generate_quiz():
             return jsonify({"success": False, "error": "LLM returned invalid JSON"}), 500
 
         questions = []
+        valid_social_targets = set(knowledge_base.social_theme_ids(profile_age))
         for item in obj:
             if not isinstance(item, dict):
                 continue
             q = (item.get("question") or "").strip()
             t = (item.get("type") or "").strip().lower()
             open_ended = bool(item.get("open_ended"))
+            social_target = (item.get("social_target") or "").strip()
             correct_answer = (item.get("correct_answer") or "").strip()
             accepted_answers = item.get("accepted_answers") or []
             if not isinstance(accepted_answers, list):
@@ -1930,6 +1994,8 @@ def api_generate_quiz():
                     accepted_answers.insert(0, correct_answer)
                 entry = {"question": q, "type": t, "correct_answer": correct_answer,
                          "accepted_answers": accepted_answers}
+            if social_target in valid_social_targets:
+                entry["social_target"] = social_target
             questions.append(entry)
 
         # Post-process: generate accepted_answers for WH questions that have empty/insufficient lists.
