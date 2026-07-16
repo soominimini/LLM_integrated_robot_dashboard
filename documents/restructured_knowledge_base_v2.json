@@ -2397,8 +2397,7 @@
       "taking turns",
       "not dominating the conversation",
       "repairing misunderstandings"
-     ],
-     "example_activity": "Practice a short peer conversation about a shared interest."
+     ]
     },
     "peer_entry_and_group_joining": {
      "description": "Joining an ongoing peer activity or group interaction.",
@@ -2408,8 +2407,7 @@
       "asking to join",
       "joining without interrupting",
       "accepting yes/no responses"
-     ],
-     "example_activity": "Role-play joining a game at recess."
+     ]
     },
     "friendship_development": {
      "description": "Understanding how to make and maintain friendships.",
@@ -2420,8 +2418,7 @@
       "being a good host",
       "sharing preferred activities",
       "following up after a playdate"
-     ],
-     "example_activity": "Choose which classmate might enjoy the same activity and explain why."
+     ]
     },
     "emotion_understanding": {
      "description": "Recognizing and discussing emotions in self and others.",
@@ -2431,8 +2428,7 @@
       "noticing facial, body, and context cues",
       "expressing one's own feeling",
       "asking how someone feels"
-     ],
-     "example_activity": "Look at a story scene and identify how each character feels."
+     ]
     },
     "perspective_taking_theory_of_mind": {
      "description": "Understanding that another person may think, know, feel, or want something different.",
@@ -2441,8 +2437,7 @@
       "understanding different preferences",
       "predicting how someone may react",
       "explaining why someone acted a certain way"
-     ],
-     "example_activity": "Ask: 'What does the character think happened?'"
+     ]
     },
     "cooperative_play_and_group_participation": {
      "description": "Participating in games, group tasks, and shared activities.",
@@ -2453,8 +2448,7 @@
       "being flexible",
       "showing good sportsmanship",
       "coping with losing or mistakes"
-     ],
-     "example_activity": "Practice a board-game scenario with winning, losing, and turn-taking."
+     ]
     },
     "conflict_resolution": {
      "description": "Handling disagreement with peers in a safe and socially functional way.",
@@ -2464,8 +2458,7 @@
       "listening to the other person",
       "suggesting a solution",
       "asking an adult for help when needed"
-     ],
-     "example_activity": "Role-play what to do when two children want the same toy."
+     ]
     },
     "teasing_bullying_and_rejection_response": {
      "description": "Responding to teasing, exclusion, or bullying safely.",
@@ -2475,8 +2468,7 @@
       "walking away",
       "seeking adult support",
       "knowing when a situation is unsafe"
-     ],
-     "example_activity": "Choose the safest response when someone says something unkind."
+     ]
     },
     "social_problem_solving": {
      "description": "Understanding a social problem and selecting an appropriate response.",
@@ -2486,8 +2478,7 @@
       "predicting consequences",
       "choosing a safe solution",
       "reflecting on what happened"
-     ],
-     "example_activity": "Ask: 'What should Ethan do if his friend is upset?'"
+     ]
     },
     "self_advocacy_and_communication_of_needs": {
      "description": "Expressing needs, boundaries, preferences, and requests for help.",
@@ -2498,8 +2489,7 @@
       "explaining sensory needs",
       "requesting help",
       "stating preferences"
-     ],
-     "example_activity": "Practice saying, 'I need a break' or 'Can you explain that again?'"
+     ]
     }
    },
    "developmental_levels": [

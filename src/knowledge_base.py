@@ -284,6 +284,26 @@ class LanguageInterestKB:
         filtered = [(t, items) for (t, items) in pool if t.lower() not in excluded]
         return random.choice(filtered or pool)
 
+    def pick_random_social_theme(self, age: Any
+                                 ) -> Optional[Tuple[str, str, List[str]]]:
+        """Randomly pick ONE social-communication target for story weaving.
+
+        Returns (target_id, description, skills) from the resolved social
+        level's primary targets, or None when the KB has no social framework.
+        Callers gate by age (social story themes are for older children); the
+        KB level itself resolves for any age via ``resolve_social_level``.
+        """
+        level = self.resolve_social_level(age)
+        if not level:
+            return None
+        ids = [t for t in (level.get('primary_targets') or [])
+               if t in self._social_targets]
+        if not ids:
+            return None
+        tid = random.choice(ids)
+        spec = self._social_targets.get(tid) or {}
+        return tid, spec.get('description', ''), list(spec.get('skills') or [])
+
     def resolve_wh_guidance(self, age: Any) -> Optional[Dict[str, Any]]:
         """WH-question guidance for this age.
 
@@ -359,7 +379,8 @@ class LanguageInterestKB:
 
     def build_story_prompt_fragment(self, age: Any, gender: str = '',
                                     language_age: Any = None,
-                                    interest: Optional[Tuple[str, List[str]]] = None
+                                    interest: Optional[Tuple[str, List[str]]] = None,
+                                    social_theme: Optional[Tuple[str, str, List[str]]] = None
                                     ) -> str:
         """Narrative-shaped guidance block for story generation.
 
@@ -373,6 +394,11 @@ class LanguageInterestKB:
         ``pick_random_interest`` — that the story must be built around. When
         ``None``, the fragment lists ALL age/gender-appropriate themes (the LLM
         then tends to gravitate to the same one every time).
+
+        ``social_theme`` is an optional (target_id, description, skills) tuple —
+        typically from ``pick_random_social_theme`` — woven into the story as a
+        social-communication theme (KB frameworks.social_communication). Callers
+        pass it for older children only.
         """
         lang_age = language_age if language_age is not None else age
         level = self.resolve_level(lang_age)
@@ -400,6 +426,17 @@ class LanguageInterestKB:
                 "\nUse these interest themes as story hooks, characters, and settings:\n"
                 f"- {interests or '(none specified)'}\n"
             )
+        social_section = ""
+        if social_theme:
+            tid, desc, skills = social_theme
+            label = tid.replace('_', ' ')
+            sk = f" Show characters {', '.join(skills[:4])}." if skills else ''
+            social_section = (
+                "\nWeave this social-communication theme into the story naturally — "
+                "characters modelling the skills in a concrete situation, not a "
+                "lecture or a moral tacked on at the end:\n"
+                f"- {label}: {desc}{sk}\n"
+            )
         return (
             "--- LANGUAGE & INTEREST GUIDANCE (knowledge base) ---\n"
             f"Target developmental level: age {level.get('age')}, "
@@ -410,6 +447,7 @@ class LanguageInterestKB:
             f"{targets or '- (none specified)'}\n"
             f"{sounds_section}"
             f"{interests_section}"
+            f"{social_section}"
         )
 
     def build_question_prompt_fragment(self, age: Any, gender: str = '',

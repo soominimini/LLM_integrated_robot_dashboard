@@ -247,6 +247,11 @@ user_manager = UserManager(
 )
 story_generator = StoryGenerator(llm_model="claude-sonnet-4-6")
 knowledge_base = LanguageInterestKB()
+# From this chronological age, social-communication content from the KB
+# (frameworks.social_communication) is blended into activities: social
+# yes/no + open-ended WH questions in the educational quiz, and a social
+# theme woven into generated stories.
+SOCIAL_CONTENT_MIN_AGE = 7
 tts_helper = TTSHelper()
 image_generator = ImageGenerator()
 
@@ -459,9 +464,21 @@ def _persona_context_for(username, age, kind="story", include_targets=True):
                 _save_last_story_interest(username, interest[0])
                 print(f"[KB] story interest picked: {interest[0]} "
                       f"(previous: {last_theme})")
+            # For older children, weave one KB social-communication theme
+            # (peer interaction, emotion understanding, conflict resolution,
+            # ...) into the story alongside the interest theme.
+            social_theme = None
+            try:
+                if int(effective_age or 0) >= SOCIAL_CONTENT_MIN_AGE:
+                    social_theme = knowledge_base.pick_random_social_theme(
+                        effective_age)
+                    if social_theme:
+                        print(f"[KB] story social theme picked: {social_theme[0]}")
+            except (TypeError, ValueError):
+                pass
             fragment = knowledge_base.build_story_prompt_fragment(
                 effective_age, gender, language_age=language_age,
-                interest=interest)
+                interest=interest, social_theme=social_theme)
         if fragment:
             info = knowledge_base.describe(effective_age, gender, language_age=language_age)
             print(f"[KB] derived level_age={info.get('level_age')} mlu={info.get('mlu_range')} "
@@ -1680,10 +1697,15 @@ def api_generate_quiz():
 
     age_hint = f"Target age {profile_age}."
 
-    # For older children (7+), blend a few OPEN-ENDED social-emotional WH
-    # questions (empathy, comfort, perspective-taking) into the WH set.
-    # These have no single correct answer and are graded accept-any.
-    blend_social_emotional = (profile_age >= 7) and ("wh" in types)
+    # For older children, blend a few social-communication questions into the
+    # set, drawn from the KB's social_communication framework (all ten targets:
+    # reciprocal conversation, peer entry, friendship, emotion understanding,
+    # perspective taking, cooperative play, conflict resolution, teasing/
+    # bullying response, social problem solving, self-advocacy). WH-format
+    # social questions are open-ended (graded accept-any); yes/no-format ones
+    # must stay objectively gradable.
+    blend_social = profile_age >= SOCIAL_CONTENT_MIN_AGE
+    n_social = (max(2, min(3, count // 2)) if count >= 4 else 1) if blend_social else 0
 
     task_line = f"Create {count} educational questions."
 
@@ -1750,6 +1772,24 @@ def api_generate_quiz():
     except Exception as e:
         print(f"[quiz] concept guidance unavailable: {e}")
 
+    # Social-communication guidance (KB frameworks.social_communication): WHAT
+    # the blended social questions may cover — the level's ten targets with
+    # their component skills, recommended contexts, and the KB's
+    # neurodiversity guardrails (no forced eye contact, no punishing autistic
+    # communication style).
+    if blend_social:
+        try:
+            social_frag = knowledge_base.build_social_prompt_fragment(profile_age)
+            if social_frag:
+                kb_block += (
+                    f"The {n_social} social questions must come from this "
+                    "social-communication guidance, covering a diverse mix of "
+                    "its targets:\n"
+                    f"{social_frag}\n"
+                )
+        except Exception as e:
+            print(f"[quiz] social guidance unavailable: {e}")
+
     # WH-type developmental guidance (KB wh_question_hierarchy): which WH types
     # suit this child's level (what/who -> where -> when -> why/how). Only
     # relevant when wh questions were requested.
@@ -1768,36 +1808,62 @@ def api_generate_quiz():
         except Exception as e:
             print(f"[quiz] WH guidance unavailable: {e}")
 
-    # Open-ended social-emotional WH questions, blended in for older children.
-    # No single correct answer — flagged so the play page accepts any thoughtful
-    # response. The remaining WH questions stay factual with a real answer.
-    social_emotional_text = ""
+    # Social-communication questions, blended in for older children. WHAT they
+    # cover comes from the KB social fragment added to kb_block above; the
+    # guidance here governs question FORM per requested type — objectively
+    # gradable yes/no, and open-ended WH flagged so the play page accepts any
+    # thoughtful response. The remaining questions stay factual.
+    social_text = ""
     open_ended_format = ""
-    if blend_social_emotional:
-        n_se = max(2, min(3, count // 2)) if count >= 4 else 1
-        social_emotional_text = (
-            f"IMPORTANT: Because these are for an older child (7+), {n_se} of the WH questions must be "
-            "OPEN-ENDED social-emotional questions, blended in among the others. These ask the child to "
-            "imagine, reflect, or share how they would respond to feelings and social situations "
-            "(empathy, comfort, kindness, perspective-taking). They have NO single correct answer — any "
-            "thoughtful answer is acceptable. They must begin with what/who/how/why and address the child "
-            "directly ('you'). Examples: 'What would you say when someone says they feel sad?', "
-            "'Who would you hug when you feel scared?', 'What could you do to help a friend who is crying?', "
-            "'How would you make a new classmate feel welcome?', 'What would you do if a friend lost their toy?'. "
-            "Mark EACH such question with \"open_ended\": true. Keep the remaining WH questions factual. "
+    if blend_social:
+        social_parts = [
+            f"IMPORTANT: Because these are for an older child "
+            f"({SOCIAL_CONTENT_MIN_AGE}+), {n_social} of the {count} questions "
+            "must be SOCIAL-COMMUNICATION questions, blended in among the "
+            "others and drawn from the social-communication guidance below."
+        ]
+        if "yes_no" in types:
+            social_parts.append(
+                "Social yes/no questions must have a clear, widely accepted yes-or-no "
+                "answer — expected vs. unexpected behavior, not an opinion, preference, or "
+                "gray-area judgment. Use concrete child-friendly situations, prefer "
+                "observable actions over feelings, test one rule per question, and do not "
+                "use complicated moral dilemmas. Examples: "
+                "'Is it okay to take a toy without asking?' → no. "
+                "'Should you wait your turn in line?' → yes. "
+                "'Is it polite to interrupt someone speaking?' → no. "
+                "'Should you include a classmate who is left out?' → yes."
+            )
+        if "wh" in types:
+            social_parts.append(
+                "Social wh questions ask what the child could say or do in a concrete "
+                "social situation from the guidance below (joining a game, a friend who is "
+                "upset, a disagreement, needing help). These are OPEN-ENDED: they have no "
+                "single correct answer and any thoughtful answer is acceptable. Address the "
+                "child directly ('you') and mark EACH of them with \"open_ended\": true. "
+                "Examples: 'What could you say to join a game at recess?', "
+                "'What can you do if a friend looks sad?', "
+                "'How could you make a new classmate feel welcome?'"
+            )
+        social_parts.append(
+            "AVOID opinion, vague, absolute, or culturally dependent social questions such "
+            "as: 'Do you like sharing?', 'Should you always be nice?', 'Is it bad to be "
+            "angry?', or questions whose correct answer depends on context, culture, or "
+            "family rules. Keep the remaining questions factual. "
         )
-    if blend_social_emotional:
-        open_ended_format = (
-            "For open-ended social-emotional wh questions, set \"open_ended\": true, \"correct_answer\" to \"\", "
-            "and \"accepted_answers\" to []. "
-        )
+        social_text = " ".join(social_parts)
+        if "wh" in types:
+            open_ended_format = (
+                "For open-ended social wh questions, set \"open_ended\": true, \"correct_answer\" to \"\", "
+                "and \"accepted_answers\" to []. "
+            )
 
     prompt = (
         f"Act as a pediatric educator. {task_line} "
         f"{age_hint} "
         f"Use only these types: {type_hint}. "
         f"{goal_text} "
-        f"{social_emotional_text}"
+        f"{social_text}"
         f"{kb_block}"
         "Return Format: Respond with ONE JSON array ONLY. The first non-whitespace character of your "
         "response MUST be '[' and the last MUST be ']'. Do NOT wrap the array inside an object "
