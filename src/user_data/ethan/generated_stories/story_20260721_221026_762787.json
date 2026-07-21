@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Lost Level\n\nEthan sat cross-legged on his bedroom floor, staring at the glowing screen. He had been trying to reach the third level of Rocket Quest for three whole days, but the giant crystal cave kept trapping his character inside.\n\n\"This is the trickiest part,\" Ethan thought, because the narrow tunnel twisted sharply to the right and disappeared behind a tall, red door.\n\nHis friend Marcus came over after school, carrying a bright orange controller. \"I reached that level last week,\" Marcus said, sliding down beside Ethan. \"Although it looks impossible, there's a hidden path near the bottom-left corner.\"\n\nEthan thought Marcus might be right. \"Should we try it together?\" Ethan asked.\n\n\"You go through the tunnel first, then I'll follow with the torch character,\" Marcus suggested.\n\nThey took turns carefully, calling out what they saw. Finally, the red door swung open, and a rainbow of treasure spilled across the screen.\n\nBoth boys cheered so loudly that Ethan's dog ran in, completely confused.\n\n** End **\n** Takeaways **\n- Asking a friend for help can solve a problem faster than struggling alone.\n- Taking turns and sharing ideas makes teamwork stronger.\n- Sticking with a hard challenge until you figure it out feels really great.\n\n** Explanation of the output **\nThe story uses Ethan's interest in video games to naturally embed descriptive spatial language (\"narrow tunnel,\" \"bottom-left corner,\" \"tall, red door\"), irregular past tense (\"came,\" \"carried,\" \"ran,\" \"sprang\"), and causal language (\"because,\" \"so\"). Collaboration, turn-taking, and social problem-solving are modelled through Marcus and Ethan's dialogue, showing characters identifying an obstacle, proposing solutions, and succeeding together — all core speech-language therapy targets woven into the narrative without explicit instruction.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 284,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:10:26.762787"
+}

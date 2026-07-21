@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Broken Truck\n\nEthan loved his toy truck collection more than almost anything. The red one with the chunky wheels was his favorite because it was the fastest.\n\nOne afternoon, he went to grab it and found three of the wheels had broken off. His little brother Charlie sat nearby, looking very small and very quiet.\n\n\"I think Charlie dropped it,\" Ethan thought, feeling a sharp twist in his chest. Although he wanted to yell, he took a breath first.\n\n\"Charlie, were you playing with my truck?\" Ethan asked carefully.\n\nCharlie's chin began to wobble. \"I wanted to drive it like you do. I didn't know it would break.\"\n\nEthan thought about that. Charlie had chosen the red truck because Charlie thought it was special too.\n\nSo Ethan sat beside Charlie, and together they fixed the wheels using the repair kit their dad brought home. While they worked, Charlie laughed at every wobbly wheel.\n\nAfter that, the truck was theirs.\n\n** End **\n** Takeaways **\n- When you think about how someone else feels, it helps you be kind instead of angry.\n- Working together on a problem makes the fix feel better than doing it alone.\n- Sharing something you love with family can make it even more special.\n\n** Explanation of the output **\nThe story uses vehicles (the red truck) as the central hook and weaves in perspective-taking as Ethan considers Charlie's motivation before reacting. Irregular past tense, causal language (because, so), and descriptive vocabulary are modeled naturally throughout the narrative and dialogue, supporting Ethan's language comprehension and literacy development goals.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 268,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T22:14:24.557620"
+}

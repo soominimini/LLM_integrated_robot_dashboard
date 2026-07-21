@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Little Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has shiny wings and a small green wand. The fairy is trying to reach three yellow stars up in the tree. Sophie reaches up and gets the stars. Sophie puts the stars in the fairy's basket. The fairy and Sophie are clapping their hands together. The basket is full of bright, round stars. Sophie and the fairy are smiling. The stars are glowing in the big, tall tree.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is sitting on the red flower?\n3. WHAT does the fairy have in her hand?\n4. WHERE are the three yellow stars?\n5. WHO gets the stars from the tree?\n6. WHERE does Sophie put the stars?\n7. WHAT are Sophie and the fairy doing together?\n\n** Explanation of the output **\nThe fairy-themed story weaves in descriptive adjectives (tiny, shiny, red, yellow, bright, round), spatial terms (on, up, in), plural nouns (stars, wings, hands), and progressive verbs (sitting, reaching, clapping) to naturally support Sophie's language targets. Collaboration and connection are shown through Sophie helping the fairy and the two characters celebrating together, building key social-emotional and language comprehension goals without explicit instruction.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 218,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:57:33.338046"
+}

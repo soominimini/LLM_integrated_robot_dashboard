@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy Wings\n\nSophie is in the classroom. Sophie sees a small, sparkly box on the table. Sophie opens the box. Three tiny fairy wings are inside the box! The wings are pink and yellow. Sophie wants to put the wings on the classroom rabbit. But Sophie cannot reach the rabbit's cage. Sophie asks her friend Chloe for help. Chloe is tall. Chloe reaches the cage and opens it. Sophie puts the pink wings on the rabbit. The teacher sees the rabbit. The teacher is surprised!\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is on the table?\n3. WHAT is inside the box?\n4. WHO does Sophie ask for help?\n5. WHERE does Chloe reach?\n6. WHAT does Sophie put on the rabbit?\n7. WHO is surprised?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (small, sparkly, pink, yellow, tall), spatial terms (inside, on, in), and collaboration through Sophie asking Chloe for help — naturally supporting descriptive language, turn-taking, and the value of friendship. Target sounds [th], [r], and [ch] appear organically in \"three,\" \"rabbit,\" and \"Chloe/reach,\" and all WH-question answers are stated explicitly in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 203,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:01:44.917682"
+}

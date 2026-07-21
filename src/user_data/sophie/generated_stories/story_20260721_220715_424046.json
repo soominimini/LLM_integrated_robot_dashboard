@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Windy Leaves\n\nSophie is playing outside with her dog, Chip. Big orange and red leaves are falling from the tall trees. Sophie is throwing a leaf up in the air. Chip is jumping and catching the leaves! Then a big gust of wind blows the leaves into a huge pile. Sophie's friend Mia runs over to help. Mia and Sophie rake the crunchy leaves back together. Chip jumps right into the middle of the pile! Sophie and Mia are laughing. The three friends sit in the big, warm leaf pile.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHERE is Sophie playing?\n3. WHAT color are the leaves?\n4. WHAT does Chip do with the leaves?\n5. WHO comes to help Sophie?\n6. WHERE does Chip jump?\n7. WHAT are Sophie and Mia doing at the end?\n\n** Explanation of the output **\nThe story uses a fall outdoor setting with a wind-driven obstacle to naturally weave in descriptive adjectives (\"big,\" \"orange,\" \"crunchy,\" \"tall\"), collaboration between named friends, and pet-themed action through Chip the dog. Speech-language goals are embedded through progressive verb forms (\"throwing,\" \"jumping,\" \"laughing\"), location phrases (\"into the middle\"), conjunctions (\"and,\" \"right into\"), and target sounds /r/, /ch/, and /th/ in words like \"three,\" \"throwing,\" \"Chip,\" and \"crunchy.\"\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 221,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-07-21T22:07:15.424046"
+}

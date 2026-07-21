@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Sparkly Crown\n\nSophie is playing in the castle. Sophie has a big, sparkly crown. The crown is on the chair. Sophie reaches for the crown but it falls under the table. Sophie cannot reach the crown. Her friend Ruby is there. Ruby gets on her hands and knees. Ruby reaches under the table. Ruby pulls the crown out. Ruby gives the crown to Sophie. Sophie puts the three sparkly jewels on the crown. Sophie and Ruby are both wearing crowns now. The two friends are sitting together on the red rug.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHERE are Sophie and Ruby playing?\n3. WHAT does Sophie have?\n4. WHERE does the crown fall?\n5. WHO gets the crown from under the table?\n6. WHAT are Sophie and Ruby wearing?\n7. WHERE are the two friends sitting?\n\n** Explanation of the output **\nThe story weaves in descriptive words (big, sparkly, red), spatial terms (on the chair, under the table), plural nouns (crowns, jewels, friends), and a simple collaboration scene where Sophie needs Ruby's help — naturally supporting language comprehension, friendship themes, and turn-taking without explicit instruction. Target sounds [th], [r], and [ch] are embedded in words like *the*, *three*, *Ruby*, *red*, and *reaches* throughout the narrative.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 220,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:59:39.618982"
+}

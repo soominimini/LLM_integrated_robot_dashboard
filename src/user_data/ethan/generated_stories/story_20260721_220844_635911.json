@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Rescue Mission\n\nEthan wore his red cape every single afternoon after school. He thought he was ready for any mission — until the day his superhero puzzle, which had three hundred pieces, scattered across the floor because he tripped over his chair.\n\n\"This is a disaster,\" Ethan said, feeling a sharp wave of frustration rise in his chest.\n\nHis neighbor, a thoughtful girl named Rosa, came through the door and saw the enormous mess. She noticed Ethan's slumped shoulders right away.\n\n\"You look really defeated,\" Rosa said carefully. \"Maybe I can help? I brought fresh eyes.\"\n\nAlthough Ethan felt embarrassed at first, he chose to say yes. First, they sorted pieces by color. Then, Rosa found the tricky corner pieces while Ethan connected the long, straight edges. After that, the puzzle grew quickly because they took turns without rushing.\n\nFinally, the brilliant superhero image appeared, complete and bright.\n\n\"We did it together,\" Ethan said, genuinely surprised by how much faster teamwork had worked.\n\n** End **\n** Takeaways **\n- Asking a friend for help makes hard things easier and more fun.\n- Taking turns and sharing the work gets the job done faster.\n- Noticing how someone feels shows you truly care about them.\n\n** Explanation of the output **\nThe story integrates Ethan's superhero interest as the emotional hook while naturally embedding descriptive language, spatial terms, and irregular past tense verbs throughout the narration and dialogue. Collaborative turn-taking and emotion recognition are modeled concretely through Rosa noticing Ethan's body language and both characters negotiating the puzzle task together. Target sounds including \"th,\" \"r,\" and \"ch\" appear naturally in words like \"three,\" \"tricky,\" \"chair,\" \"brought,\" and \"rush,\" supporting articulation practice within meaningful context.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 288,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:08:44.635911"
+}

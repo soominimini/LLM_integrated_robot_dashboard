@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Red Rocket Racer\n\nEthan had built the most thrilling race track he had ever seen, with three steep ramps and a sharp curve near the chair. His favourite red rocket car was ready to race. While he was setting up the final ramp, the piece slipped beneath the couch and slid to the very back.\n\nEthan reached in, but his arm was too short. Because the gap was so narrow, he couldn't reach the bright red car at all.\n\nHis neighbour, Chloe, came over and thought carefully before she spoke. \"I wonder if the long ruler would help,\" she said. \"I think I know where yours is.\"\n\nThey took turns guiding the ruler under the couch, working together patiently until the car slowly rolled out.\n\n\"We found it!\" Ethan cheered, and Chloe gave a huge grin.\n\nEthan chose the best starting ramp, and they raced together until it was almost dark outside.\n\n** End **\n** Takeaways **\n- Working together with a friend helps you solve problems you can't solve alone.\n- Asking a friend for help shows you trust them, and that makes friendships stronger.\n- Being patient and trying again helps you reach your goal.\n\n** Explanation of the output **\nThe story is built around Ethan's interest in vehicles, using a race car and track as the hook while naturally modelling irregular past tense verbs (found, took, came, spoke, chose), causal language (because), and perspective-taking dialogue (I wonder, I think). Therapy goals — descriptive language, collaboration, turn-taking, and overcoming challenges with support — are woven into action and dialogue without explicit instruction, keeping the narrative warm, playful, and clinically purposeful.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 278,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:11:07.565692"
+}

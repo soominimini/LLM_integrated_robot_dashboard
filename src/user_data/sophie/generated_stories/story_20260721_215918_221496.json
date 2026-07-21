@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. Sophie sees three rabbits in a big cage. One rabbit is small and white. One rabbit is fluffy and brown. The brown rabbit is sitting in the corner. Sophie wants to hold the brown rabbit. The pet shop lady opens the cage. Sophie holds out her hands. The brown rabbit hops onto Sophie's lap. Sophie and the pet shop lady are both smiling. Sophie gives the rabbit a soft red carrot. The rabbit chews the carrot. Sophie is so happy.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie see in the big cage?\n3. WHAT colour is the fluffy rabbit?\n4. WHERE is the brown rabbit sitting?\n5. WHAT does Sophie give the rabbit?\n6. WHO opens the cage?\n7. WHAT does the rabbit do with the carrot?\n\n** Explanation of the output **\nThe story builds descriptive vocabulary through colour and size words (small, white, fluffy, brown, soft, red) and spatial terms (in the corner, onto Sophie's lap), and targets late-developing sounds through words such as three, rabbit, and chews. Collaboration and connection are woven in through Sophie and the pet shop lady acting together, supporting goals around turn-taking, relationships, and overcoming challenges with help.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 216,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:59:18.221496"
+}

@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Shiny Crown\n\nSophie is in the big, tall castle. Sophie has a red crown. The crown is on the table. Oh no! The crown falls under the chair. Sophie cannot reach it. Her friend Ruby is there, too. Ruby gets down on the floor. Ruby reaches under the chair. Ruby gives the crown back to Sophie. Sophie puts the three ribbons on the crown. The ribbons are long and bright. Sophie and Ruby are smiling. The two friends sit together on the soft, round rug.\n\n** End **\n** Questions **\n1. WHO is in the castle?\n2. WHERE is Sophie's crown at the start?\n3. WHERE does the crown fall?\n4. WHO reaches under the chair?\n5. WHAT does Sophie put on the crown?\n6. WHERE are Sophie and Ruby sitting?\n7. WHAT color is Sophie's crown?\n\n** Explanation of the output **\nThe story weaves descriptive adjectives (big, tall, red, long, bright, soft, round), spatial terms (on the table, under the chair), plural nouns (ribbons, friends), and conjunctions (and) into a princess-themed scene that naturally supports Sophie's language targets. The five-to-seven WHO/WHAT/WHERE questions build literal comprehension by directing attention to explicitly stated facts about characters, objects, and locations.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 206,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:57:59.963408"
+}

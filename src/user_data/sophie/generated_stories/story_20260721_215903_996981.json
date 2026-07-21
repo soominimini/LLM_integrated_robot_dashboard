@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has bright, sparkly wings. The fairy is holding a small wand. Sophie kneels down next to the flower. The fairy drops three shiny stars on the ground. Sophie picks up the stars one by one. Sophie puts the stars in the fairy's hands. The fairy smiles a big smile. Sophie and the fairy wave their hands together. Sophie feels proud. The fairy flies up into the tall green trees.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHERE is the fairy sitting?\n3. WHAT does the fairy have?\n4. WHAT does the fairy drop?\n5. WHERE does Sophie put the stars?\n6. WHERE does the fairy fly?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (tiny, red, bright, sparkly, small, shiny, tall, green), spatial terms (on, next to, in), and collaboration through Sophie and the fairy working together — all supporting the stated therapy goals. The fairy theme, present-tense concrete sentences, character name repetition, and observable facts keep the story aligned with the 4–5 age-tier corpus style and make all WH-questions directly answerable from the text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 208,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:59:03.996981"
+}

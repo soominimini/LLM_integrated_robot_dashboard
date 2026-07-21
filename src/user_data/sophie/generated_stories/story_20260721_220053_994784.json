@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop with her friend Rachel. There are three fluffy rabbits in a big cage. One small rabbit is sitting in the corner. Sophie wants to hold the rabbit, but the rabbit runs to the back of the cage. Rachel gets a crunchy treat and puts it near the front of the cage. The rabbit hops over and takes the treat. Sophie holds out her hand. The rabbit comes closer. The kind helper at the pet shop gives Sophie a soft carrot to hold.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is with Sophie at the pet shop?\n3. WHAT are the three rabbits sitting inside?\n4. WHERE is the small rabbit sitting?\n5. WHAT does Rachel put near the front of the cage?\n6. WHAT does the helper give Sophie to hold?\n7. WHO gives Sophie the carrot?\n\n** Explanation of the output **\nThe story naturally embeds descriptive adjectives (fluffy, small, crunchy, soft), spatial terms (corner, back, front), and collaboration through Sophie and Rachel working together to help the rabbit come closer — directly supporting descriptive language, turn-taking, and relationship-building goals. Target sounds /r/, /ch/, and /th/ appear in context through words such as rabbit, Rachel, crunchy, three, and the, keeping articulation practice embedded and natural.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 225,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:00:53.994784"
+}

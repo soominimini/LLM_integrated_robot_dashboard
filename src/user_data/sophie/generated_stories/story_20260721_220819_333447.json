@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy Wings\n\nSophie is in the classroom. Sophie has a big red craft box. Inside the box are small paper wings. Sophie and her friend Mia are making fairy wings together. Sophie puts glitter on the wings. Mia puts ribbons on the wings. Oh no! The ribbons fall under the chair. Sophie asks the teacher for help. The teacher finds the ribbons under the chair. Mia and Sophie stick the ribbons back on. Now the wings are shiny and bright. Sophie and Mia are smiling!\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is inside the big red craft box?\n3. WHO is making fairy wings with Sophie?\n4. WHAT falls under the chair?\n5. WHO finds the ribbons?\n6. WHERE are the ribbons found?\n7. WHAT do Sophie and Mia do at the end?\n\n** Explanation of the output **\nThe story weaves descriptive words (big, red, shiny, bright), spatial terms (inside, under), collaboration, turn-taking, and asking for help naturally into a fairy-themed classroom scene. WH-questions target literal comprehension at the single-fact level, supporting language comprehension and early literacy development appropriate for age 5.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 196,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:08:19.333447"
+}

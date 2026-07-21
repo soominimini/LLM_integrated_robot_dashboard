@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Red Truck Race\n\nEthan brought his favorite red truck to the school activity fair, where three long tables were covered in colorful track pieces. He had been dreaming about building the fastest course in the whole gym.\n\nWhile Ethan searched for the curved pieces, a boy named Marcus came over. \"That truck is so cool,\" Marcus said. \"The wheels are really shiny.\"\n\n\"Thanks,\" Ethan said, although he felt nervous sharing.\n\nTwo older kids nearby began laughing loudly. \"Baby toys!\" one of them called out.\n\nEthan felt his chest go tight. Marcus spoke up calmly. \"That's not funny. Come on, Ethan, let's just go over there.\"\n\nThey chose a quiet corner and began building together, taking turns placing each piece. First came the straight track, then a steep ramp that sent the red truck flying through the air.\n\nIt caught everyone's attention.\n\nEthan thought Marcus had made the whole thing better, because working together had been the real secret all along.\n\n** End **\n** Takeaways **\n- Asking a friend for help makes hard things better.\n- Walking away from unkind words is a smart, strong choice.\n- Taking turns with someone can turn a good idea into a great one.\n\n** Explanation of the output **\nThe story integrates vehicle interests through Ethan's red truck and track-building activity, naturally modeling irregular past tense (*brought, chose, came, caught, flew, spoke*), causal language (*because*), and perspective-taking (*he felt, Ethan thought*). The bullying-response scene shows characters distinguishing hurtful teasing from playful humor, using a calm short reply and walking away, while the collaboration sequence models turn-taking, descriptive vocabulary, and friendship as a supportive language-comprehension and social-communication context.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 279,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:09:04.046227"
+}

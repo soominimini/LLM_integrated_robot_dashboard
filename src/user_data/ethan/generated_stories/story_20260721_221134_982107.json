@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Cape That Went Missing\n\nEthan was the biggest superhero fan in his whole third-grade class. Before school started, he had carefully made a red cape for Superhero Day, but when he reached into his backpack, the cape was gone.\n\nEthan felt his stomach drop like a falling rocket.\n\n\"I think I left it in the art room,\" he said quietly, because he was too embarrassed to speak loudly.\n\nA girl named Rosa, who sat three chairs to his right, looked over. \"I went to the art room earlier,\" she said. \"I can show you where the lost-and-found basket is, although it's kind of hard to find.\"\n\nTogether, they searched through the crowded, cluttered basket while Rosa held the flashlight steady and Ethan reached inside.\n\n\"Got it!\" Ethan cheered, grabbing the crinkled, bright-red cape.\n\nRosa smiled. \"That took real perseverance.\"\n\nEthan thought she was right. He also thought that finding a friend had been the best discovery of the whole day.\n\n** End **\n** Takeaways **\n- Asking someone for help makes hard things easier to solve together.\n- Trying again even when something feels difficult shows real courage.\n- Being kind to someone new is how friendships begin.\n\n** Explanation of the output **\nThe story is built around Ethan's superhero interest and uses a familiar school setting to support engagement and language comprehension. Therapy targets are woven naturally throughout: irregular past tense verbs (went, held, reached, felt), causal and sequential language (because, although, together), descriptive spatial vocabulary (three chairs to his right, cluttered, inside), and perspective-taking through character thoughts and dialogue. The friendship development theme is modelled concretely through Rosa's unprompted offer to help and Ethan's grateful response, showing how friendships form through small acts of kindness.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 293,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:11:34.982107"
+}

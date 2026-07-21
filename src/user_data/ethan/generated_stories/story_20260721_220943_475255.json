@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Broken Track\n\nEthan found the most remarkable train set at the back of the school library — three shiny red engines, a long curved track, and one tiny yellow caboose. While he was setting everything up, he noticed a broken piece right in the middle of the track.\n\n\"That happened because the connector is cracked,\" he thought, feeling frustrated.\n\nA girl named Rosa came over and saw his worried face. \"I think I know where the replacement pieces are,\" she said. \"There's a whole box of extra track behind the bookshelf.\"\n\n\"Really? Could you help me reach it?\" Ethan asked.\n\nRosa grabbed the tall, rectangular box while Ethan chose the right connector piece. Together, they snapped it in carefully. After that, they took turns placing each engine on the track.\n\nFinally, the three red trains ran smoothly around the entire loop. Ethan grinned so wide his cheeks ached.\n\n\"That was actually really fun,\" Rosa said. \"Same time next week?\"\n\n\"Definitely,\" Ethan said, already looking forward to it.\n\n** End **\n** Takeaways **\n- Asking someone for help means you're being smart, not giving up.\n- Taking turns makes things more fun for everyone.\n- A good friendship can start with just one kind question.\n\n** Explanation of the output **\nThe story weaves vehicles (trains), descriptive language (\"tall, rectangular box,\" \"shiny red engines\"), collaboration, and reciprocal conversation naturally through the plot. Irregular past tense (found, chose, took, came, ran, saw), causal language (because, so), and perspective-taking (thought, feeling, looking forward to) are modelled in context across narration and dialogue, supporting Ethan's language comprehension and literacy development goals.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 272,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:09:43.475255"
+}

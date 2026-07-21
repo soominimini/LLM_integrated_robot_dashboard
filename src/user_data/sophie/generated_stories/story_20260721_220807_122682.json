@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Runaway Rabbit\n\nSophie is in the garden with her mum. They are planting red flowers in a big, round pot. Sophie's rabbit, Cheddar, is sitting under the chair. Cheddar sees the flowers and runs away! Cheddar is running across the soft, green grass. Sophie and her mum are chasing Cheddar together. Sophie catches Cheddar near the tall brown fence. Sophie carries Cheddar back to her mum. Her mum gives Sophie a big hug. They put Cheddar in his cosy hutch and finish planting the red flowers.\n\n** End **\n** Questions **\n1. WHERE is Sophie at the start of the story?\n2. WHO is in the garden with Sophie?\n3. WHAT are Sophie and her mum planting?\n4. WHERE is Cheddar sitting?\n5. WHERE does Sophie catch Cheddar?\n6. WHAT do Sophie and her mum finish planting?\n7. WHERE do they put Cheddar?\n\n** Explanation of the output **\nThe story places Sophie in a warm family scene that naturally models descriptive adjectives (red, big, round, soft, green, tall, brown, cosy), spatial terms (under, across, near), collaboration through shared action, and target sounds including /r/ (rabbit, red, round, runs), /ch/ (Cheddar, chasing, catches), and /th/ (the, they, their), all woven into observable, concrete events with her family pet.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 215,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T22:08:07.122682"
+}

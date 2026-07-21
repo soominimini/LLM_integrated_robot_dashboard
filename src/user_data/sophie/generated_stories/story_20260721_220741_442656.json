@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is sitting on the green grass. Sophie is looking at the big flowers in the garden. A tiny fairy is hiding under a red flower. The fairy has small, silver wings. Sophie and the fairy are picking flowers together. They put the flowers in a round basket. Sophie's mom is standing near the gate. Sophie gives the flowers to her mom. The mom is smiling. The fairy waves her magic wand. Three sparkly stars land on the basket!\n\n** End **\n** Questions **\n1. WHERE is Sophie sitting?\n2. WHAT is the fairy hiding under?\n3. WHAT does the fairy have?\n4. WHAT are Sophie and the fairy putting in the basket?\n5. WHERE is Sophie's mom standing?\n6. WHO gives the flowers to the mom?\n7. WHAT does the fairy wave?\n\n** Explanation of the output **\nThe story uses a fairy-themed family scene to naturally model descriptive adjectives (green, tiny, red, small, silver, round), spatial terms (under, near, on), plural nouns (flowers, stars, wings), and collaborative action between characters, all supporting Sophie's language comprehension, vocabulary development, and social-emotional goals around family and connection.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 195,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T22:07:41.442656"
+}

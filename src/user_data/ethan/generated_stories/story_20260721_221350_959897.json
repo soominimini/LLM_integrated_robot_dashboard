@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Cape That Saved Movie Night\n\nEthan ran through the house wearing his red cape, searching for the perfect hiding spot for his superhero rescue mission. While he darted behind the couch, he heard a small, worried sound coming from his little sister, Ruby.\n\n\"My rabbit drawing is gone,\" Ruby said, her voice thin and trembling. \"I worked so hard on it.\"\n\nEthan thought about how crushed Ruby felt, because that drawing had taken her three whole afternoons. He chose to stop his mission and help her look.\n\n\"First, we check under the chairs,\" Ethan said. \"Then we search the tall shelves.\"\n\nTogether they went through every room. After they checked the kitchen, Ruby caught a glimpse of rolled paper behind the recycling bin.\n\n\"There it is!\" she cried.\n\nRuby threw her arms around Ethan so suddenly that he nearly toppled backward. Their mom watched from the doorway, smiling warmly.\n\n\"Real superheroes,\" Mom said, \"always look after their team.\"\n\nEthan wore his cape proudly all through movie night.\n\n** End **\n** Takeaways **\n- Working together with someone you love helps you solve problems faster.\n- Noticing when someone needs help — and choosing to help — is what real kindness looks like.\n- Taking turns and sharing a task makes both people feel important and valued.\n\n** Explanation of the output **\nThe story centres on a family home setting with sibling cooperation, naturally embedding collaborative play, descriptive and spatial language (\"behind the recycling bin,\" \"tall shelves\"), and perspective-taking (\"Ethan thought about how crushed Ruby felt\"). Target sounds appear in words like *through*, *three*, *red*, *rabbit*, *recherché*, and *chair*, while irregular past tense verbs (*went*, *chose*, *caught*, *wore*, *threw*) and causal language (*because*, *so*) are woven throughout to support Ethan's speech-language therapy goals.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 298,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T22:13:50.959897"
+}

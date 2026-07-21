@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Missing Controller\n\nEthan ran downstairs because today was finally three-player game day. He, his dad, and his little sister Mia were going to race through the Rainbow Realm together.\n\nWhile Ethan searched the cluttered shelf, he realized the red controller had gone missing. Mia sat quietly in the corner, her face unusually still.\n\n\"Mia, have you seen it?\" Ethan asked.\n\nMia shook her head, but her eyes darted sideways toward the couch cushions.\n\nEthan felt his chest tighten. Although he was frustrated, he took a slow breath before speaking again. \"I think maybe it's hidden somewhere nearby. Can we look together?\"\n\nMia's shoulders dropped with relief. \"I accidentally broke the thumb button,\" she whispered. \"I was scared to tell you.\"\n\nEthan found the controller behind three thick cushions. The button was cracked, but Dad brought some strong tape from the drawer.\n\nAfter they fixed it together, the three of them raced through the bright, cheerful realm, laughing loudly the whole time.\n\n** End **\n** Takeaways **\n- Staying calm when you're upset helps fix problems faster.\n- Working together as a family makes hard things easier.\n- Telling the truth, even when it's scary, helps everyone feel better.\n\n** Explanation of the output **\nThe story centres on a family outing activity at home, weaving in collaboration, descriptive language, and conflict resolution through Ethan and Mia's natural interaction. Therapy targets including irregular past tense (went, found, broke, brought), causal language (because, so), perspective-taking (she felt scared, Ethan thought), and target sounds (three, red, controller, chair-shaped cracked) are embedded in context rather than drilled.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 268,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T22:16:50.565591"
+}

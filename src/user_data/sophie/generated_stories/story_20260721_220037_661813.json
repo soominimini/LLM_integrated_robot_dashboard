@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a big, red flower. The fairy has shiny wings and a small wand. The fairy is looking for three lost flowers. Sophie helps the fairy look. Sophie finds the flowers under a green chair! The fairy and Sophie put the flowers in a round basket together. The fairy says, \"Thank you, Sophie!\" Sophie and the fairy are smiling. The basket is on the table now.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHERE is Sophie at the start?\n3. WHAT is the fairy sitting on?\n4. WHAT is the fairy looking for?\n5. WHERE does Sophie find the flowers?\n6. WHAT do Sophie and the fairy put the flowers in?\n7. WHERE is the basket at the end?\n\n** Explanation of the output **\nThe story uses descriptive adjectives (tiny, big, red, shiny, small, green, round), spatial terms (on, under, in), and collaboration between Sophie and the fairy to naturally weave in the therapy goals of descriptive language, turn-taking, and overcoming challenges with a friend's help. The WH-questions target literal language comprehension at the WHO/WHAT/WHERE level, supporting early literacy and narrative understanding appropriate for a 5-year-old.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 212,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:00:37.661813"
+}

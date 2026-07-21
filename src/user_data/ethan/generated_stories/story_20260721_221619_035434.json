@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Great Train Mural\n\nEthan sat cross-legged on the classroom floor, staring at the enormous blank paper spread before him. Their teacher, Mrs. Chen, had chosen three students to paint a giant train mural for the school hallway. Ethan thought it was the most thrilling project he had ever heard of.\n\nThe trouble was, Ethan froze. He had brought three red and orange markers, although he wasn't sure where to begin because the paper felt impossibly wide.\n\nA girl named Rosa came and sat beside him. \"Maybe the red train goes in the middle,\" she said, \"while I draw the tracks underneath.\"\n\n\"I was thinking the same thing,\" Ethan said, surprised.\n\nFirst, Rosa drew long, straight tracks. Then Ethan drew a chunky red train that stretched across three whole chairs. After that, they chose bright colors together and took turns filling every carriage.\n\nFinally, Mrs. Chen hung the finished mural high on the wall. Ethan and Rosa stood back and grinned at what they had built together.\n\n** End **\n** Takeaways **\n- Working together makes hard things feel easier and more fun.\n- Asking a friend for ideas helps when you feel stuck.\n- Sharing the work means everyone can feel proud of what gets made.\n\n** Explanation of the output **\nThe story is set entirely at school and built around a vehicle theme — a collaborative train mural — to engage Ethan's interests while targeting descriptive language, spatial terms, and adjectives through narration. Irregular past tense verbs (brought, chose, came, stood), causal language (because), and perspective-taking language (thought, wasn't sure) are woven naturally into dialogue and narrative, supporting Ethan's language comprehension and literacy development goals.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 282,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:16:19.035434"
+}

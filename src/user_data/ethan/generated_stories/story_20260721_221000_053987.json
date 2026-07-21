@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Missing Cape\n\nEthan ran into the school library because the Superhero Design Contest was about to begin. Three chairs sat arranged around a wide table, where craft supplies were spread across every corner.\n\n\"I brought red markers and golden ribbon,\" said Ethan, setting his bag down carefully.\n\nHis classmate Rosa chose the scissors while another friend, Theo, reached for the thick blue paper. Although Ethan had planned everything the night before, he suddenly realized he had forgotten the silver sticker stars at home.\n\n\"Those were the best part,\" Ethan said quietly, feeling his stomach drop like a stone.\n\nRosa looked up. \"Maybe we could share my sparkly ones? They're small, but they catch the light.\"\n\nEthan thought for a moment, then nodded. \"That actually works really well.\"\n\nAfter they took turns cutting and decorating together, their cape looked amazing — three colors swirling like a tiny galaxy. The teacher held it up for the whole class to see.\n\nEthan felt proud, warm, and grateful all at once.\n\n** End **\n** Takeaways **\n- Asking a friend for help can make something even better than you planned.\n- Taking turns and sharing makes the whole team stronger.\n- When things go wrong, staying calm helps you find a solution.\n\n** Explanation of the output **\nThe story is set in a familiar school environment and woven around Ethan's love of superheroes, naturally embedding adjectives, spatial terms, and descriptive language throughout. Irregular past tense verbs (brought, forgot, reached, caught), advanced conjunctions (although, because, after), and perspective-taking language (thought, felt, realized) are modelled organically in narration and dialogue. Collaboration, turn-taking, and friendship are demonstrated through Rosa and Theo's concrete actions rather than stated as lessons.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 287,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:10:00.053987"
+}

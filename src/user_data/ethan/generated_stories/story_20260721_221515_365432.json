@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Missing Controller\n\nEthan ran into the classroom, his red backpack bouncing because he was excited about Game Day Friday. Mrs. Chen had promised the class could play a cooperative video game together.\n\nWhile Ethan searched his desk for the school's spare controller, he realized it was gone. His chest felt tight and heavy, like a rock had dropped inside him.\n\n\"I think someone took it,\" Ethan muttered, frustrated.\n\nA girl named Ruby came over. \"I saw it before lunch, near the three reading chairs,\" she said, pointing across the room. \"Maybe it slid underneath?\"\n\nEthan thought she might be right. Together, they went over, crouched low, and found the controller hidden beneath the round blue chair.\n\n\"We found it!\" Ethan said, and his whole body relaxed.\n\nRuby grinned. \"Good thing we checked together.\"\n\nAfter that, Ethan chose Ruby as his partner for the game, because she had helped him when he felt worried and alone.\n\n** End **\n** Takeaways **\n- Asking for help from a friend can solve problems faster than trying alone.\n- Paying attention to how others feel helps you be a good friend.\n- Working together makes hard things much easier.\n\n** Explanation of the output **\nThe story is set in a school classroom and uses a lost-item obstacle to naturally weave in descriptive language, irregular past tense (\"found,\" \"chose,\" \"went\"), and causal connectors (\"because,\" \"so\"). Characters model emotion recognition and collaborative problem-solving through dialogue and action, supporting Ethan's language comprehension, inferencing, and social-communication goals without explicit instruction.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 258,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:15:15.365432"
+}

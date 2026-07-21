@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. Three rabbits are sitting in a big, round cage. Sophie sees one fluffy rabbit in the corner. The rabbit has long ears and a white chest. Sophie reaches through the bars because she wants to touch the rabbit. The rabbit hops away. A girl named Mia is there, too. Mia holds out a small orange carrot. The rabbit hops back to the front of the cage. Sophie and Mia are both touching the soft, fluffy rabbit.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT are the three rabbits sitting in?\n3. WHERE is the fluffy rabbit?\n4. WHAT does Mia hold out?\n5. WHAT does the rabbit do when Mia holds the carrot?\n6. WHO is touching the rabbit at the end?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (\"fluffy,\" \"big, round,\" \"soft\"), spatial terms (\"in the corner,\" \"to the front\"), plural nouns (\"rabbits,\" \"bars,\" \"ears\"), and a simple conjunction (\"because\") around a pet-shop setting that matches Sophie's interest theme. The WHO/WHAT/WHERE questions build literal language comprehension by targeting explicitly stated facts, supporting vocabulary development, turn-taking concepts, and friendship through Sophie and Mia's shared, collaborative interaction with the rabbit.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 212,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:58:25.377044"
+}

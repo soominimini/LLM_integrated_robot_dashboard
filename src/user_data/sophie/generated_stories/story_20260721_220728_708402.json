@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie is in the classroom. Sophie has a big, shiny crown for the princess play. Sophie puts the crown on the red chair. Now the crown is not on the chair! Sophie looks under the table. Sophie looks in the blue box. The crown is not there. Sophie asks her friend Mia for help. Mia and Sophie look together. Mia finds the crown behind the three big books. Sophie and Mia are so happy. The princess play can start!\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have?\n3. WHERE does Sophie put the crown?\n4. WHO does Sophie ask for help?\n5. WHERE does Mia find the crown?\n6. WHAT can start now?\n\n** Explanation of the output **\nThe story weaves descriptive adjectives (big, shiny, red, blue), spatial terms (under, in, behind, on), and collaboration between named characters naturally into the scene, supporting language comprehension goals. Princess-themed vocabulary and late-developing sounds (three, chair, crown, red) are embedded throughout without drilling, while the WHO/WHAT/WHERE questions target literal comprehension with answers explicitly stated in the text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 190,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:07:28.708402"
+}

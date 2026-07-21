@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Missing Treasure Chest\n\nEthan was at his best friend Charlie's house, and the two of them were building the most incredible video game level together. The map had three glowing rooms, each one more challenging than the last. Their hero character wore a bright red cape and carried a golden sword.\n\n\"I think the treasure chest should go in the far corner, behind the tall purple pillar,\" Ethan said, pointing at the screen.\n\n\"I thought we chose the middle room,\" Charlie said, because that was where Charlie had built a hidden ramp.\n\nEthan felt frustrated, although he stayed calm. \"Maybe we could try both spots before we decide,\" Ethan suggested.\n\nCharlie thought about it for a moment. \"That's actually a really smart idea.\"\n\nAfter they tested both locations, they found that Ethan's corner spot created a thrilling surprise for the player. Charlie cheered, and Ethan grinned so wide his cheeks ached.\n\nWorking together had made their level extraordinary.\n\n** End **\n** Takeaways **\n- Staying calm and using your words helps fix disagreements with friends.\n- Trying someone else's idea can lead to something even better.\n- Working as a team makes hard things more fun and more exciting.\n\n** Explanation of the output **\nThe story uses a video game building activity to naturally weave in descriptive language (spatial terms like \"far corner,\" \"tall purple pillar\"), irregular past tense (\"wore,\" \"chose,\" \"found,\" \"thought\"), and causal language (\"because,\" \"although\"). Conflict resolution is modelled through Ethan staying calm and suggesting a collaborative compromise, while the three-act structure supports narrative comprehension and perspective-taking through character dialogue and internal feeling words.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 273,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:09:26.820776"
+}

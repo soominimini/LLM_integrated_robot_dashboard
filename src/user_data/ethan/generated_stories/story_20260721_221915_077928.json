@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Muddy Racetrack\n\nEthan wore his favorite red jacket as he carried his three wooden trucks to the park. He had built a long, winding racetrack through the thick autumn leaves — golden ones, orange ones, and crunchy brown ones. The track was perfect.\n\nThen the clouds grew heavy and dark. Rain began falling in wide, cold sheets, and muddy puddles swallowed most of the track Ethan had worked so hard to build.\n\nWhile Ethan stood there staring, a boy named Marcus watched from beneath a tall oak tree. Marcus took a small step forward and spoke carefully. \"That track looks really cool. Could I help you fix it?\"\n\nEthan thought for a moment. \"Yeah, okay,\" Ethan said. \"You push the leaves while I choose the new path.\"\n\nThey took turns clearing mud and rebuilding the track together. After that, both trucks flew down the finished course and splashed through a puddle at the end.\n\nEthan laughed and thought maybe rain wasn't so bad after all.\n\n** End **\n** Takeaways **\n- Asking a friend for help can make hard things easier and more fun.\n- Taking turns and sharing ideas helps both people feel proud of what they made.\n- When things change in a way you didn't plan, you can find a new way forward.\n\n** Explanation of the output **\nThe story centers on Ethan's vehicle interest (wooden trucks, racetrack) while integrating autumn seasonal details as the central obstacle, supporting season-theme prominence. Therapy goals are embedded naturally: descriptive adjectives (\"golden,\" \"crunchy,\" \"wide, cold sheets\"), peer entry behavior modeled through Marcus watching then asking to join, irregular past tense (\"wore,\" \"spoke,\" \"chose,\" \"flew\"), causal language (\"because,\" \"so\"), and perspective-taking through character thought (\"maybe rain wasn't so bad\").\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 293,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-07-21T22:19:15.077928"
+}

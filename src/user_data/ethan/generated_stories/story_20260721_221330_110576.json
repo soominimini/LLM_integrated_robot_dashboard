@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Missing Controller\n\nEthan loved drawing his favorite video game characters on paper before class began. One morning, he reached into his backpack and found that his red marker — the one he always chose for his game hero's cape — was gone.\n\n\"I think I left it somewhere,\" Ethan said quietly, although he had searched three times already.\n\nA girl named Rosa, who sat across from him, watched carefully before she spoke. \"I saw a red marker near the art shelf yesterday,\" she said. \"Maybe it's still there.\"\n\nWhile Rosa finished her own drawing, Ethan waited patiently. Then they walked together to the tall, blue art shelf near the window. Ethan spotted the marker tucked between a round, yellow container and a thick green book.\n\n\"Found it!\" he said, and Rosa gave him a wide smile.\n\nAfter that, Rosa asked if Ethan wanted to draw characters together. He thought for a moment, then slid his paper toward her.\n\n\"Your turn,\" he said.\n\n** End **\n** Takeaways **\n- Asking for help makes hard things easier to solve.\n- Waiting for the right moment before joining in shows good thinking.\n- Taking turns makes activities more fun for everyone.\n\n** Explanation of the output **\nThe story is set in a school classroom and weaves in descriptive vocabulary (red, tall, round, thick), spatial language (across, near, between), and irregular past tense forms (chose, found, saw, thought, slid) naturally through narrative and dialogue. Social-communication goals — including peer entry, collaboration, and turn-taking — are modelled through Rosa's patient observation and Ethan's invitation to share, rather than stated as lessons.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 272,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:13:30.110576"
+}

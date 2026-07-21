@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet store. Sophie sees three rabbits in a big cage. One rabbit is white and fluffy. The rabbit is sitting in the corner of the cage. Sophie wants to pet the rabbit, but the rabbit runs to the back of the cage. A helper named Rosa works at the pet store. Rosa gives Sophie some carrots. Sophie puts the carrots on the floor of the cage. The white rabbit comes back. Sophie and Rosa are patting the fluffy rabbit together. Sophie is smiling.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHERE is Sophie?\n3. WHAT does Sophie see in the cage?\n4. WHERE is the white rabbit sitting?\n5. WHAT does Rosa give to Sophie?\n6. WHERE does Sophie put the carrots?\n7. WHAT are Sophie and Rosa doing together?\n\n** Explanation of the output **\nThe story features descriptive words (\"white,\" \"fluffy,\" \"big\"), spatial terms (\"in the corner,\" \"at the back\"), and collaboration between Sophie and Rosa — naturally supporting adjective use, location concepts, friendship, and overcoming a small challenge with help. Target sounds [th, r, ch] appear in words like \"three,\" \"rabbit,\" \"runs,\" and \"carrots,\" while plural forms, progressive verbs, and early conjunctions are woven throughout the narration.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 218,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:58:52.195716"
+}

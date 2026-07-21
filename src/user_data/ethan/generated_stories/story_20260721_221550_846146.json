@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nEthan and the Missing Cape\n\nEthan was the biggest superhero fan in Room Three. While his class worked on their superhero mural, Ethan chose the three reddest, brightest markers because he thought they were perfect for drawing capes.\n\nThen he reached into his bag and felt nothing. His favourite marker — the one with the thick, smooth tip — was gone.\n\nEthan felt his chest go tight, like a knot had been pulled too quickly. He began looking under the table, then behind his chair.\n\n\"Maybe it rolled near the bookshelf,\" said his classmate Rosa, crouching beside him.\n\n\"I don't think so,\" Ethan said. Although he felt embarrassed, he spoke up. \"Can you help me check?\"\n\nRosa found the marker hidden beneath a large, rectangular tray. She brought it back and gave it to Ethan.\n\n\"Thanks,\" Ethan said, grinning. \"You're basically my sidekick.\"\n\nRosa laughed. \"Then we're both saving the day.\"\n\nTogether, they finished the most amazing, colourful cape the mural had ever had.\n\n** End **\n** Takeaways **\n- Asking a friend for help means you solve problems faster together.\n- Speaking up when something is wrong takes courage, and it works.\n- Real teamwork makes something better than you could do alone.\n\n** Explanation of the output **\nThe story is set in a school classroom and woven with superhero interests to engage Ethan, while naturally embedding therapy targets including descriptive adjectives (\"reddest,\" \"rectangular\"), irregular past tense (\"chose,\" \"found,\" \"brought,\" \"gave,\" \"felt\"), causal and conjunction language (\"because,\" \"although,\" \"then\"), and perspective-taking. Social problem-solving is modelled through Ethan noticing the problem, feeling unsure, deciding to ask for help anyway, and succeeding because of that choice — demonstrating all four therapy goals through character action rather than explicit instruction.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 293,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T22:15:50.846146"
+}

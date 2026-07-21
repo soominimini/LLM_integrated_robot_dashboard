@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Leaf Race\n\nEthan brought his three favorite toy trucks to the big red maple tree because he wanted to race them down the hill. The autumn air was crisp, and bright orange leaves were falling like slow, spinning helicopters all around him.\n\nJust as Ethan chose the steepest path, dark clouds rolled in and rain began soaking the ground. The trail became too muddy and slippery for his trucks.\n\nA girl named Rosa came over, carrying a wide yellow umbrella. \"Your trucks are really cool,\" she said. \"While it's raining, maybe we could make a river channel through the mud and float leaves down instead?\"\n\nEthan thought it sounded strange at first, although he decided to try it. Together, they dug a winding channel with sticks, and water rushed through it fast. Rosa sent leaves, and Ethan gave them funny names like \"Crunchy Champion.\"\n\nAfter the rain stopped, the hill sparkled. Ethan realized the change had made things even more interesting than he had planned.\n\n** End **\n** Takeaways **\n- Working together with a friend can make a hard situation fun.\n- When plans change, trying something new can turn out even better.\n- Being open to a friend's idea helps everyone have a good time.\n\n** Explanation of the output **\nThe story weaves the season theme through vivid autumn imagery, weather-driven conflict, and a sensory resolution tied to change and growth. Therapy goals are embedded naturally: descriptive language appears in adjectives like \"crisp,\" \"winding,\" and \"slippery\"; collaboration and turn-taking are modeled through Ethan and Rosa's extended dialogue and shared digging activity; and irregular past tense forms, causal language, and complex conjunctions are distributed across narration and dialogue to support language comprehension and literacy development.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 292,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-07-21T22:12:56.093774"
+}

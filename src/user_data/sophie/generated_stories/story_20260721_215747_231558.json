@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Runaway Rabbit\n\nSophie is at the pet store. Sophie sees two big rabbits and three small rabbits in a cage. One small brown rabbit pushes the door open. The rabbit runs under the chair! Sophie and her friend Mia are watching the rabbit. Mia gets down on the floor. Sophie reaches her hand under the chair. Sophie catches the soft, fluffy rabbit. The rabbit sits in Sophie's arms. The pet store lady thanks Sophie and Mia. Sophie is smiling because she helped.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie see in the cage?\n3. WHERE does the rabbit run?\n4. WHO gets down on the floor?\n5. WHAT does Sophie catch?\n6. WHO thanks Sophie and Mia?\n\n** Explanation of the output **\nThe story naturally embeds adjectives (big, small, brown, soft, fluffy), spatial terms (under the chair, in the cage, in her arms), plural nouns (rabbits), and conjunctions (because) to support language targets. Sophie's teamwork with Mia models collaboration and friendship, and the manageable challenge of catching the rabbit supports the therapy goals of problem-solving with others and building confidence.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 194,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:57:47.231558"
+}

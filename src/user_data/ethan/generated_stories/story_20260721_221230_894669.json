@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Missing Cape\n\nEthan raced into the community center, clutching his bright red superhero cape because the Hero Club meeting was starting in three minutes. He searched everywhere — behind the tall blue lockers, under the round table — but the cape was gone.\n\n\"I think I left it outside,\" Ethan thought, feeling a tight, worried knot in his chest.\n\nA girl named Rosa came over and greeted him cheerfully. \"Hey, are you looking for something?\"\n\n\"Yeah, my red cape,\" Ethan said. \"I can't find it anywhere.\"\n\n\"I saw something red near the climbing wall,\" Rosa said. \"I'll help you check while the others save us seats.\"\n\nThey ran together, and Rosa spotted the crumpled cape tucked behind a rough, grey rock. Ethan grabbed it gratefully, and they both sprinted back just before the meeting began.\n\nAlthough Ethan had felt ready to give up, asking Rosa had changed everything. He wore his cape proudly and thought Rosa was the real superhero that day.\n\n** End **\n** Takeaways **\n- Asking a friend for help is a smart and brave thing to do.\n- Working together gets things done faster and feels better than working alone.\n- Starting a conversation with someone new can lead to a great friendship.\n\n** Explanation of the output **\nThe story is set in a child-friendly environment and uses a superhero theme to engage Ethan while naturally targeting descriptive vocabulary (bright red, tall blue, rough grey), collaboration, and perspective-taking through character thoughts and dialogue. Therapy goals — including irregular past tense (wore, felt, saw, ran), causal language (because, had changed), and reciprocal conversation modelled through Rosa and Ethan's exchange — are woven organically into the narrative rather than presented as explicit instruction.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 291,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:12:30.894669"
+}

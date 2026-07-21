@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Missing Map\n\nEthan went to the school game fair and chose the hardest challenge: a giant floor puzzle shaped like a video game quest map. The pieces were scattered across a wide, bumpy mat, and the edges were thick and rough.\n\nEthan began sorting the red border pieces, but after a while, he thought the middle section looked completely impossible. His shoulders drooped because he couldn't figure out where the treasure-room pieces belonged.\n\n\"I'm stuck,\" he told Maya, who was kneeling nearby. \"I think I need help, but I'm not sure where to start.\"\n\nMaya smiled. \"Maybe we split it — while you find the three corner pieces, I'll look for the bright green river ones.\"\n\nThey took turns placing pieces, checking with each other before moving anything.\n\nFinally, the last piece clicked in. The finished map showed a glowing rabbit riding a chair-shaped rocket, which made them both laugh out loud.\n\nEthan felt proud because they had built something neither could have finished alone.\n\n** End **\n** Takeaways **\n- Asking for help when you are stuck is a brave and smart thing to do.\n- Taking turns and listening to your partner helps you solve hard problems together.\n- Friendships grow stronger when you work through challenges as a team.\n\n** Explanation of the output **\nThe story is set at a familiar school fair using a video game quest theme to hook Ethan's interest, while naturally weaving in descriptive adjectives, spatial terms, and irregular past tense verbs. Collaboration, turn-taking, and self-advocacy are modelled through Ethan and Maya's dialogue, where Ethan clearly expresses his need for help and the two negotiate roles, demonstrating social problem-solving without explicit instruction.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 285,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T22:11:55.899526"
+}

@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Falling Crown\n\nSophie is playing outside. Red and orange leaves are falling from the trees. Sophie has a shiny crown on her head. Sophie is a princess today! Her friend Mia is there too. Mia is wearing a big purple cape. A gust of wind blows. The crown flies off Sophie's head and lands under a brown leaf pile. Mia runs to the leaf pile. Mia picks up the crown. Mia puts the crown back on Sophie's head. Sophie and Mia are laughing.\n\n** End **\n** Questions **\n1. WHO is playing outside?\n2. WHAT colors are the falling leaves?\n3. WHAT is on Sophie's head?\n4. WHO is wearing a purple cape?\n5. WHERE does the crown land?\n6. WHO picks up the crown?\n7. WHAT does Mia put back on Sophie's head?\n\n** Explanation of the output **\nThe autumn setting and wind obstacle naturally embed descriptive adjectives (red, orange, shiny, brown, purple) and spatial language (under, on), while Mia's helping role models friendship and turn-taking without stating them as lessons. WH-questions target literal language comprehension using only WHO/WHAT/WHERE, and the princess theme keeps Sophie engaged throughout.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 196,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-07-21T22:01:30.096119"
+}

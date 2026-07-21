@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny pink fairy sitting on a flower. The fairy has bright red wings. \"I lost my three stars,\" says the fairy. The stars are under the big green leaves. Sophie reaches under the leaves. Sophie picks up the stars. Sophie gives the stars to the fairy. \"Thank you!\" says the fairy. The fairy puts the stars on her wand. Sophie and the fairy are smiling. Sophie feels proud.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is sitting on the flower?\n3. WHAT color are the fairy's wings?\n4. WHERE are the three stars?\n5. WHO picks up the stars?\n6. WHAT does the fairy put the stars on?\n7. WHO is smiling at the end?\n\n** Explanation of the output **\nThe story is set in a familiar outdoor space with a fairy theme, weaving in descriptive adjectives (tiny, pink, bright red, big green), spatial terms (under the leaves), collaboration, and the late-developing sounds [th, r, ch] through words like three, reaches, and under. The WH-questions target literal comprehension of WHO, WHAT, and WHERE, directly supporting language comprehension and early literacy skills for a 5-year-old.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 206,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:58:39.672262"
+}

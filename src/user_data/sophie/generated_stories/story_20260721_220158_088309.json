@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie and her mom are in the living room. They are making a big, round crown. The crown has three red flowers on top. Sophie puts the flowers on the crown. Mom puts shiny stars on the crown. The stars are on the front of the crown. Sophie holds the crown up. It is too big! Mom gets a ribbon and ties it in the back. Now the crown fits. Sophie and her mom are happy princesses together.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHERE are Sophie and her mom?\n3. WHAT are Sophie and her mom making?\n4. WHAT is on top of the crown?\n5. WHERE are the shiny stars?\n6. WHAT does Mom use to fix the crown?\n7. WHAT are Sophie and her mom at the end?\n\n** Explanation of the output **\nThe story weaves in descriptive words (big, round, red, shiny), spatial terms (on top, on the front, in the back), turn-taking through shared crown-making, and a small challenge resolved together—supporting language comprehension, early literacy, and family belonging in a princess-themed scene Sophie can connect with.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 197,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T22:01:58.088309"
+}

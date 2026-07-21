@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has bright purple wings. The fairy is holding a little wand. Oh no! The wand falls under a big leaf. Sophie reaches under the big leaf. Sophie picks up the wand. Sophie gives the wand back to the fairy. The fairy claps her small hands. Sophie and the fairy are smiling. They sit together on the soft green grass.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is sitting on the red flower?\n3. WHAT does the fairy have?\n4. WHERE does the wand fall?\n5. WHO picks up the wand?\n6. WHAT do Sophie and the fairy sit on?\n7. WHAT does the fairy clap?\n\n** Explanation of the output **\nThe story uses observable fairy-themed actions and descriptive adjectives (tiny, red, bright purple, big, soft green) woven naturally into a concrete scene, supporting vocabulary and comprehension goals. The WHO/WHAT/WHERE questions target literal language comprehension, and the narrative models collaboration, spatial language (under a big leaf), present progressive verbs (sitting, holding, smiling), and late-developing sounds including /r/ (red, reaches, grass), /ch/ (reaches), and /th/ (the, together).\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 206,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T21:58:11.910619"
+}
