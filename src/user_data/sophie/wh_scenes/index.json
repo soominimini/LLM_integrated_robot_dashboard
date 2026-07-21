@@ -1,123 +1,112 @@
 [
   {
-    "id": "scene_1783447781_d7cc53",
-    "filename": "capture_2026-07-07 20:10:02.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447781_d7cc53.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447781_d7cc53.jpg",
-    "scene_description": "Two children, a boy and a girl, are riding a carnival ride together. They are seated in a green car with a yellow safety bar. A ferris wheel and colorful ride structures are visible in the background.",
+    "id": "scene_1784656127_b2765a",
+    "filename": "capture_2026-07-21 19:49:08.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656127_b2765a.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656127_b2765a.jpg",
+    "scene_description": "Two children are riding a green roller coaster car at an amusement park. They are holding onto a yellow safety bar. A Ferris wheel is visible in the background among trees.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:10:02"
+    "created_at": "2026-07-21T19:49:08"
   },
   {
-    "id": "scene_1783447823_fbd7a2",
-    "filename": "capture_2026-07-07 20:10:44.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447823_fbd7a2.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447823_fbd7a2.jpg",
-    "scene_description": "A child wearing a red and white striped jersey and blue shorts is kicking a black and white soccer ball on a green grass field. Other players are visible in the background.",
+    "id": "scene_1784656157_448a46",
+    "filename": "capture_2026-07-21 19:49:36.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656157_448a46.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656157_448a46.jpg",
+    "scene_description": "A boy wearing a red, white, and blue soccer uniform and red socks is kicking a black and white soccer ball on a green grass field. Other players in matching uniforms are visible in the background.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:10:44"
+    "created_at": "2026-07-21T19:49:36"
   },
   {
-    "id": "scene_1783447851_a2d42b",
-    "filename": "capture_2026-07-07 20:11:08.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447851_a2d42b.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447851_a2d42b.jpg",
-    "scene_description": "A smiling adult man is holding an open blue book and reading it outdoors, with trees visible in the background.",
+    "id": "scene_1784656182_76ebd1",
+    "filename": "capture_2026-07-21 19:49:59.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656182_76ebd1.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656182_76ebd1.jpg",
+    "scene_description": "A smiling adult man sits outdoors near trees, holding and reading an open blue book.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:11:08"
+    "created_at": "2026-07-21T19:49:59"
   },
   {
-    "id": "scene_1783447881_cd1092",
-    "filename": "capture_2026-07-07 20:11:41.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447881_cd1092.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447881_cd1092.jpg",
-    "scene_description": "A girl with long dark hair sits at a table writing in a book. A laptop computer is open on the table beside her. There are paintings on the wall behind her and a couch with blue pillows nearby.",
+    "id": "scene_1784656211_cfaed4",
+    "filename": "capture_2026-07-21 19:50:31.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656211_cfaed4.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656211_cfaed4.jpg",
+    "scene_description": "A girl with long dark hair sits at a table writing in a notebook. A laptop is open on the table beside her. There are books on the table and artwork on the wall behind her.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:11:41"
+    "created_at": "2026-07-21T19:50:31"
   },
   {
-    "id": "scene_1783447918_d73bd4",
-    "filename": "capture_2026-07-07 20:12:20.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447918_d73bd4.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447918_d73bd4.jpg",
-    "scene_description": "A family of four \u2014 one adult and three children \u2014 sit around a fire pit outdoors near a tent and trees. They appear to be roasting marshmallows or sticks over the fire.",
+    "id": "scene_1784656245_fd1e71",
+    "filename": "capture_2026-07-21 19:51:07.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656245_fd1e71.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656245_fd1e71.jpg",
+    "scene_description": "Four children are sitting around a campfire in a forest. They are roasting marshmallows on sticks over a fire pit. A green tent is visible in the background, and the children are seated in camping chairs.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:12:20"
+    "created_at": "2026-07-21T19:51:07"
   },
   {
-    "id": "scene_1783447947_6857d5",
-    "filename": "capture_2026-07-07 20:12:48.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447947_6857d5.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447947_6857d5.jpg",
-    "scene_description": "A person with long hair stands near a large window, holding a bag and standing next to a rolling suitcase. An airplane is flying in the sky outside the window.",
+    "id": "scene_1784656278_586331",
+    "filename": "capture_2026-07-21 19:51:39.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656278_586331.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656278_586331.jpg",
+    "scene_description": "A person with long hair stands facing away, holding a handbag and standing next to a rolling suitcase. In the sky through a large window, an airplane is flying.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:12:48"
+    "created_at": "2026-07-21T19:51:39"
   },
   {
-    "id": "scene_1783447979_5c6aac",
-    "filename": "capture_2026-07-07 20:13:18.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783447979_5c6aac.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783447979_5c6aac.jpg",
-    "scene_description": "A woman wearing an apron stands at a kitchen stove, stirring food in a dark pan. A basket of fruits and vegetables sits on the counter nearby.",
+    "id": "scene_1784656310_2f36f0",
+    "filename": "capture_2026-07-21 19:52:10.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656310_2f36f0.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656310_2f36f0.jpg",
+    "scene_description": "A woman wearing an apron is cooking at a gas stove, stirring food in a dark pan. Steam is rising from the pan. A basket of vegetables and fruits sits on the counter nearby. Kitchen utensils hang on the wall in the background.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:13:18"
+    "created_at": "2026-07-21T19:52:10"
   },
   {
-    "id": "scene_1783448010_69f134",
-    "filename": "capture_2026-07-07 20:13:55.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783448010_69f134.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783448010_69f134.jpg",
-    "scene_description": "A boy sits on green grass next to a tree trunk. Two American flags are displayed nearby, and a driveway or road is visible in the background.",
+    "id": "scene_1784656333_549d24",
+    "filename": "capture_2026-07-21 19:52:33.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656333_549d24.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656333_549d24.jpg",
+    "scene_description": "A boy sits on green grass leaning against a tree trunk. American flags are visible nearby, and a road runs behind him.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:13:55"
+    "created_at": "2026-07-21T19:52:33"
   },
   {
-    "id": "scene_1783448043_63205e",
-    "filename": "capture_2026-07-07 20:14:50.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783448043_63205e.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783448043_63205e.jpg",
-    "scene_description": "A woman wearing yellow rubber gloves and an orange shirt is kneeling on a kitchen floor, holding a striped mop cloth. Nearby are a blue bucket, a red bucket, and a cleaning cart. The background shows white kitchen cabinets and countertops.",
+    "id": "scene_1784656360_cd31e6",
+    "filename": "capture_2026-07-21 19:53:01.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656360_cd31e6.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656360_cd31e6.jpg",
+    "scene_description": "A woman wearing a pink top, blue jeans, and yellow rubber gloves is kneeling on a kitchen floor. She is holding a mop head. Nearby are a red bucket, a blue bucket, a mop with a blue handle, and a cleaning cart with supplies.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:14:50"
+    "created_at": "2026-07-21T19:53:01"
   },
   {
-    "id": "scene_1783448098_0b3295",
-    "filename": "capture_2026-07-07 20:16:47.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783448098_0b3295.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783448098_0b3295.jpg",
-    "scene_description": "A classroom scene showing a female teacher standing at a green chalkboard with math problems written on it. Several children are seated at desks with their hands raised.",
+    "id": "scene_1784656386_10a31b",
+    "filename": "capture_2026-07-21 19:53:28.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1784656386_10a31b.jpg",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1784656386_10a31b.jpg",
+    "scene_description": "A classroom scene showing a smiling adult woman standing at a green chalkboard. Several children are seated at desks with their hands raised in the air.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:16:47"
-  },
-  {
-    "id": "scene_1783448201_93633f",
-    "filename": "capture_2026-07-07 20:17:03.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1783448201_93633f.jpg",
-    "image_url": "/images/sophie/wh_scenes/images/scene_1783448201_93633f.jpg",
-    "scene_description": "A classroom scene showing a female teacher standing at a green chalkboard with math problems written on it. Several children are seated at desks with their hands raised.",
-    "question_count": 5,
-    "expressive_count": 5,
-    "status": "ready",
-    "created_at": "2026-07-07T20:17:03"
+    "created_at": "2026-07-21T19:53:28"
   }
 ]

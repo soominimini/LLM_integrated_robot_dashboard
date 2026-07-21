@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is in the living room with her dad. They are looking at a small, fluffy rabbit in a box. The rabbit is sitting in the corner of the box. Sophie picks up a soft carrot and puts it inside the box. Dad puts a tiny bowl of water next to the carrot. The rabbit hops over to the carrot. Sophie and her dad are laughing and clapping their hands. The rabbit is their new pet.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is Sophie with?\n3. WHAT are Sophie and her dad looking at?\n4. WHERE is the rabbit sitting?\n5. WHAT does Sophie put inside the box?\n6. WHAT does the rabbit hop over to?\n7. WHAT are Sophie and her dad doing?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (small, fluffy, soft, tiny), spatial terms (in the corner, inside, next to), collaborative action between Sophie and her dad, and target sounds [r] in rabbit and carrot, [th] in their, and [ch] in clapping — all supporting Sophie's language comprehension, descriptive vocabulary, and articulation goals within a warm family scene. All question answers are stated explicitly in the story text using only WHO/WHAT/WHERE forms appropriate for a 5-year-old.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 218,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T19:08:58.031121"
+}

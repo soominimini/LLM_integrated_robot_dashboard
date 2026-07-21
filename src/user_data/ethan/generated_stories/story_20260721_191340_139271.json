@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Rescue Mission\n\nEthan wore his red cape and ran three laps around the backyard because today was the day he would build the greatest superhero base ever. He had chosen the perfect corner, behind the tall, round bushes, where three old boxes waited.\n\nThe problem was the largest box, which was too heavy and too wide for Ethan to carry alone. He pushed hard, but the box stayed stubbornly still.\n\n\"Maybe I can help,\" said his neighbor, Priya, who watched from the other side of the fence. \"I think we could both carry it if we each took a side.\"\n\nEthan thought about it for a moment, then nodded. \"I will take the right side while you take the left.\"\n\nTogether, they moved the heavy box step by step until it reached the corner perfectly. After that, they took turns placing each smaller box carefully around it.\n\n\"This base is the best one I have ever seen,\" Priya said, and Ethan found himself grinning so wide his cheeks ached.\n\n** End **\n** Takeaways **\n- Asking for help makes hard things possible.\n- Taking turns makes a job easier and more fun.\n- Working with a friend can turn a tough challenge into something great.\n\n** Explanation of the output **\nThe story uses the superhero theme as a motivating hook while naturally embedding irregular past tense verbs (wore, ran, chose, found), advanced conjunctions (while, because, until, after), and causal language (because, if…then structure in dialogue). Descriptive spatial vocabulary (right side, left side, round, wide, heavy), perspective-taking language (Ethan thought, maybe), and a three-act structure with collaborative problem-solving together support language comprehension, narrative development, and social communication goals.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 283,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:13:40.139271"
+}

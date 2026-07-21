@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. There are three rabbits in a big cage. One rabbit has soft, white fur. Sophie wants to hold the small rabbit. The rabbit is sitting in the corner of the cage. A girl named Mia is there too. Mia reaches into the cage and picks up the rabbit. Mia hands the rabbit to Sophie. Sophie holds the fluffy rabbit. The rabbit is warm and soft. Sophie smiles at Mia. Mia smiles back at Sophie.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is in the big cage?\n3. WHO wants to hold the small rabbit?\n4. WHERE is the rabbit sitting?\n5. WHO picks up the rabbit?\n6. WHO does Mia hand the rabbit to?\n7. WHAT does Sophie do at the end?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (\"soft,\" \"fluffy,\" \"warm,\" \"small\"), spatial language (\"in the corner,\" \"into the cage\"), plural nouns (\"rabbits\"), and a collaboration sequence where Sophie receives help from Mia—naturally supporting descriptive language, turn-taking, and friendship goals within a pet-themed scene. The WHO/WHAT/WHERE questions target literal language comprehension at the 4–5 year developmental level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 202,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:05:14.231245"
+}

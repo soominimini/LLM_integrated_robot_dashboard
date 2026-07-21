@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Missing Level\n\nEthan ran into the living room, where his younger sister Mia sat crying beside the television. Her favourite game controller was broken, and she had been saving her best character all week.\n\n\"I thought you were being so careful,\" Ethan said, because he remembered reminding her before dinner.\n\nMia wiped her eyes. \"I dropped it by accident. Now my rabbit racer is gone forever.\"\n\nEthan felt a tight, heavy feeling in his chest, the kind that comes when someone you love is really hurting. Although he had planned to start his own quest, he sat beside her instead.\n\n\"Okay,\" he said. \"Let's check if Dad brought the old controller from the top shelf.\"\n\nThey found it together, tucked behind three dusty boxes. After they charged it, Mia's racer appeared on the screen, still wearing its tiny red champion ribbon.\n\nMia threw her arms around Ethan. \"You chose to help me,\" she said softly.\n\nEthan smiled. That felt better than any treasure chest in the whole game.\n\n** End **\n** Takeaways **\n- Helping someone you love feels even better than winning a game.\n- Noticing when someone is sad and doing something about it makes you a caring person.\n- Working together with family helps you solve problems faster.\n\n** Explanation of the output **\nThe story centers on a family moment at home, weaving in emotion understanding through Ethan recognizing Mia's sadness and responding with empathy rather than ignoring it. Descriptive and spatial language, irregular past tense verbs (found, brought, chose, wore, ran), and target sounds (three, rabbit, red, racer, chair/champion) are embedded naturally throughout the narrative and dialogue to support articulation and language development goals.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 284,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T19:15:13.032825"
+}

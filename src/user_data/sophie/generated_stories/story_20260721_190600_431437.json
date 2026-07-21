@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie is playing in the big, yellow castle. Sophie has a shiny crown. The crown falls behind the tall chair. Sophie cannot reach it. Her friend Mia is next to the chair. Mia gets down on her knees and reaches under the chair. Mia pulls out the shiny crown. Mia gives the crown to Sophie. Sophie puts the crown on her head. Sophie and Mia are smiling. The two friends sit together on the soft, red rug.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT does Sophie have?\n3. WHERE does the crown fall?\n4. WHO reaches under the chair?\n5. WHAT does Mia give to Sophie?\n6. WHERE do Sophie and Mia sit together?\n7. WHAT are Sophie and Mia doing at the end?\n\n** Explanation of the output **\nThe story uses a princess theme to naturally embed descriptive adjectives (big, yellow, shiny, tall, soft, red), spatial location phrases (behind the chair, under the chair, on the red rug), and collaboration through turn-taking between Sophie and Mia. Target speech sounds [th, r, ch] appear in words like the, reach, crown, chair, and together, supporting articulation practice within meaningful, connected context.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 205,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:06:00.431437"
+}

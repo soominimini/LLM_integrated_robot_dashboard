@@ -1,0 +1,65 @@
+{
+  "scene_description": "Four children are sitting around a campfire in a forest. They are roasting marshmallows on sticks over a fire pit. There is a tent in the background and camping chairs around the fire.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children holding over the fire?",
+      "answer": "sticks",
+      "visual_choices": [
+        "sticks",
+        "spoons",
+        "forks",
+        "flowers"
+      ],
+      "evidence_hint": "Look at what the children are holding out toward the fire."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the middle of the children?",
+      "answer": "a fire",
+      "visual_choices": [
+        "a fire",
+        "a table",
+        "a pool",
+        "a dog"
+      ],
+      "evidence_hint": "Look at the round pit in the center of the picture."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting in the picture?",
+      "answer": "four children",
+      "visual_choices": [
+        "four children",
+        "two adults",
+        "one baby",
+        "three dogs"
+      ],
+      "evidence_hint": "Look at all the people sitting around the fire."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children sitting?",
+      "answer": "in the woods",
+      "visual_choices": [
+        "in the woods",
+        "at a beach",
+        "in a kitchen",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the tall trees in the background."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the big green thing behind the children?",
+      "answer": "a tent",
+      "visual_choices": [
+        "a tent",
+        "a house",
+        "a car",
+        "a tree"
+      ],
+      "evidence_hint": "Look at the big green shape behind the children on the right side."
+    }
+  ]
+}

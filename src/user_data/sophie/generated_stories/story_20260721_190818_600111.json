@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Hiding Cat\n\nSophie and Mama are in the living room. They are looking for their little cat, Cheddar. Cheddar is not on the big red chair. Cheddar is not under the table. Sophie looks behind the tall bookshelf. Cheddar is there! Cheddar is sleeping on three soft blankets. Sophie runs to Mama and pulls her hand. Mama and Sophie walk to the bookshelf together. Mama gives Sophie a big hug. Sophie is happy. Cheddar opens her eyes and stretches her small paws.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHAT are Sophie and Mama looking for?\n3. WHERE is Cheddar sleeping?\n4. WHAT is Cheddar sleeping on?\n5. WHERE does Sophie find Cheddar?\n6. WHAT does Mama give Sophie?\n7. WHAT does Cheddar open?\n\n** Explanation of the output **\nThe story centers on a family pet-finding scene with Sophie and Mama, naturally embedding descriptive words (little, big red, tall, soft, small), spatial terms (on, under, behind), collaboration and turn-taking through Sophie and Mama searching and walking together, and target sounds [th, r, ch] in words like *three*, *there*, *running*, and *Cheddar*. All WH-questions are answerable from explicit story text, supporting literal language comprehension at the 5-year-old developmental level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 211,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T19:08:18.600111"
+}

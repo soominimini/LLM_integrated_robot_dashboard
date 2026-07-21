@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Glitching Quest\n\nEthan chose his favorite character — a brave red rabbit named Rush — before the tournament began. Rush was small but surprisingly fast, with bright orange armor that glowed like a torch.\n\nHalfway through the third level, the screen froze. Ethan felt his stomach drop.\n\n\"I think something broke,\" he said, although he wasn't sure what had happened.\n\nHis friend Maya came over and looked closely at the screen. \"Maybe it's the controller cable,\" she thought aloud. \"My brother taught me about loose connections.\"\n\n\"Could you show me?\" Ethan asked. \"I've never fixed that before.\"\n\nTogether, they checked every cable while Ethan held the flashlight. Maya found the loose wire and carefully pushed it back.\n\n\"That's it!\" Ethan said.\n\nThe screen flickered, then rushed back to life. Rush was still there, ready to run.\n\nEthan felt a warm, steady pride — not because he had won, but because he had asked for help, and Maya had answered.\n\n** End **\n** Takeaways **\n- Asking for help when you are stuck is a smart and brave thing to do.\n- Working together with a friend helps you solve problems faster.\n- Good friends show up for each other when things get hard.\n\n** Explanation of the output **\nThe story uses a video game setting to engage Ethan while naturally modeling irregular past tense (chose, taught, found), causal language (because), and perspective-taking (she thought, Ethan felt). Therapy goals — including descriptive vocabulary (bright orange, small but fast), collaboration, and self-advocacy (Ethan asking for help clearly) — are embedded in character actions and dialogue rather than stated as lessons.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 274,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:13:23.447647"
+}

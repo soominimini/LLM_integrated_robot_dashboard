@@ -1574,6 +1574,33 @@ def api_get_custom_games():
         return jsonify({"success": False, "error": str(e)}), 500
 
 
+def _store_generated_story(username, story_text, metadata=None):
+    """Persist a freshly generated story immediately, before the user approves it.
+
+    Drafts go to user_data/<username>/generated_stories/ — separate from
+    stories/, which holds only approved & fully processed stories. Only the
+    raw story text (plus generation metadata) is stored; no tagging, page
+    splitting, scenes, or questions.
+    """
+    try:
+        if not story_text or not str(story_text).strip():
+            return
+        import datetime
+        draft_dir = os.path.join(USER_DATA_DIR, username, "generated_stories")
+        os.makedirs(draft_dir, exist_ok=True)
+        now = datetime.datetime.now()
+        fname = f"story_{now.strftime('%Y%m%d_%H%M%S_%f')}.json"
+        with open(os.path.join(draft_dir, fname), "w") as f:
+            json.dump({
+                "story": story_text,
+                "metadata": metadata or {},
+                "generated_at": now.isoformat(),
+            }, f, indent=2, ensure_ascii=False)
+        print(f"[StoryDraft] Stored generated story for {username}: {fname}")
+    except Exception as e:
+        print(f"[StoryDraft] Failed to store generated story: {e}")
+
+
 @app.route("/api/generate_story", methods=["POST"])
 def api_generate_story():
     """Generate a therapeutic story for the logged-in user"""
@@ -1622,6 +1649,7 @@ def api_generate_story():
             language_age=language_age,
         )
         if result["success"]:
+            _store_generated_story(username, result.get("story"), result.get("metadata"))
             return jsonify(result), 200
         else:
             return jsonify({"error": result["error"]}), 500
@@ -1674,6 +1702,7 @@ def api_generate_story_stream():
                 "topics": topics or [],
             }
             yield f"data: {json.dumps({'meta': meta})}\n\n"
+            chunks = []
             for chunk in story_generator.generate_story_stream(
                     child_name=child_name,
                     age=age,
@@ -1684,7 +1713,12 @@ def api_generate_story_stream():
                     persona_context=_persona_context_for(username, age, kind="story"),
                     language_age=language_age,
             ):
+                chunks.append(chunk)
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
+            full_story = "".join(chunks).strip()
+            # generate_story_stream signals failure as a plain-text chunk
+            if full_story and not full_story.startswith("Error generating story"):
+                _store_generated_story(username, full_story, meta)
         except Exception as e:
             yield f"data: {json.dumps({'error': str(e)})}\n\n"
 

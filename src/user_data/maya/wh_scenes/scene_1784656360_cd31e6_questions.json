@@ -1,0 +1,65 @@
+{
+  "scene_description": "A woman wearing a pink top, blue jeans, and yellow rubber gloves is kneeling on a kitchen floor. She is holding a mop head. Nearby there is a red mop bucket, a blue bucket, and a cleaning cart with supplies. A mop with a blue handle stands upright.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a woman",
+      "visual_choices": [
+        "a woman",
+        "a child",
+        "a man",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person kneeling on the floor."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the gloves the woman is wearing?",
+      "answer": "yellow",
+      "visual_choices": [
+        "yellow",
+        "blue",
+        "red",
+        "green"
+      ],
+      "evidence_hint": "Look at the woman's hands."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman holding?",
+      "answer": "a mop head",
+      "visual_choices": [
+        "a mop head",
+        "a towel",
+        "a plate",
+        "a bag"
+      ],
+      "evidence_hint": "Look at what is in the woman's hands."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the woman?",
+      "answer": "in a kitchen",
+      "visual_choices": [
+        "in a kitchen",
+        "in a bedroom",
+        "in a garden",
+        "in a bathroom"
+      ],
+      "evidence_hint": "Look at the counters and cabinets behind the woman."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the mop bucket?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "yellow",
+        "green",
+        "purple"
+      ],
+      "evidence_hint": "Look at the big bucket on the floor near the woman."
+    }
+  ]
+}

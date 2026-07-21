@@ -1,0 +1,117 @@
+{
+  "scene_description": "A woman with long hair stands at a large airport window, holding a handbag and standing next to a rolling suitcase. She is looking out the window at an airplane flying in the sky.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the big thing flying in the sky?",
+      "sample_answers": [
+        "an airplane",
+        "a plane",
+        "a jet"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "an airplane",
+        "a bird",
+        "a kite"
+      ],
+      "evidence_hint": "Look up in the top part of the picture, in the sky."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the woman doing?",
+      "sample_answers": [
+        "looking out the window",
+        "watching the airplane",
+        "standing and looking"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "looking out the window",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at the woman's body \u2014 where is she facing and what is she doing?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the woman standing?",
+      "sample_answers": [
+        "by the window",
+        "at the airport",
+        "inside near a big window"
+      ],
+      "sentence_frame": "She is standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "by the window",
+        "outside",
+        "in the kitchen"
+      ],
+      "evidence_hint": "Look at what is right in front of the woman \u2014 what big thing is she next to?"
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the woman carrying with her?",
+      "sample_answers": [
+        "a suitcase",
+        "a bag and a suitcase",
+        "luggage"
+      ],
+      "sentence_frame": "She has ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a suitcase and a bag",
+        "a bicycle",
+        "a backpack"
+      ],
+      "evidence_hint": "Look near the woman's hands and feet \u2014 what objects are with her?"
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "The woman has a suitcase and is at the airport. What might she be getting ready to do?",
+      "sample_answers": [
+        "go on a trip",
+        "get on an airplane",
+        "travel somewhere",
+        "fly on a plane"
+      ],
+      "sentence_frame": "She might be getting ready to ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "go on a trip",
+        "go to sleep",
+        "go to school"
+      ],
+      "evidence_hint": "Look at the suitcase she has and the airplane outside \u2014 think about what people do at an airport."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on an airplane or to an airport? What did you see?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I saw a plane",
+        "I went on a trip",
+        "I never went"
+      ],
+      "sentence_frame": "I saw ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you traveled or went somewhere far away."
+    }
+  ]
+}

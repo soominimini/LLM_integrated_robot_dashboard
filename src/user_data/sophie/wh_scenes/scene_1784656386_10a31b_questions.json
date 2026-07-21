@@ -1,0 +1,65 @@
+{
+  "scene_description": "A classroom scene showing a smiling adult woman standing at a green chalkboard. Several children are seated at desks with their hands raised in the air.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children doing with their arms?",
+      "answer": "raising their hands",
+      "visual_choices": [
+        "raising their hands",
+        "clapping",
+        "waving goodbye",
+        "pointing outside"
+      ],
+      "evidence_hint": "Look at the children's arms in the air."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing at the front of the room?",
+      "answer": "a teacher",
+      "visual_choices": [
+        "a teacher",
+        "a child",
+        "a doctor",
+        "a parent"
+      ],
+      "evidence_hint": "Look at the adult standing near the chalkboard."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the wall behind the teacher?",
+      "answer": "a chalkboard",
+      "visual_choices": [
+        "a chalkboard",
+        "a window",
+        "a bookshelf",
+        "a poster"
+      ],
+      "evidence_hint": "Look at the big green board behind the teacher."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children sitting?",
+      "answer": "at desks",
+      "visual_choices": [
+        "at desks",
+        "on the floor",
+        "on a couch",
+        "at a lunch table"
+      ],
+      "evidence_hint": "Look at what is in front of the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the teacher's top?",
+      "answer": "pink",
+      "visual_choices": [
+        "pink",
+        "blue",
+        "yellow",
+        "red"
+      ],
+      "evidence_hint": "Look at the shirt the teacher is wearing."
+    }
+  ]
+}

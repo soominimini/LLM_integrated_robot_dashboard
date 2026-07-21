@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Red Truck Project\n\nEthan chose the red truck for his classroom vehicle project because it reminded him of his grandfather's old rusty truck. While he began sketching the wide, round wheels, a boy at the next table called out, \"That truck looks like a squashed tomato!\"\n\nA few kids laughed. Ethan felt a sharp prickle in his chest. He thought, *maybe I should just walk away and talk to the teacher.* So he quietly went to Mrs. Rivera and told her what happened.\n\nMrs. Rivera spoke calmly to the class, then asked Zara to sit beside Ethan and help finish the project together.\n\n\"I think the bumper should go here,\" Zara said, pointing to the front.\n\n\"And three small headlights, like bright stars?\" Ethan suggested.\n\nZara nodded, and they took turns drawing and cutting after that.\n\nFinally, their truck was colourful, detailed, and completely theirs. Ethan felt warm, like sunshine was sitting right inside his chest.\n\n** End **\n** Takeaways **\n- Asking a trusted adult for help when someone is unkind is always a brave and smart choice.\n- Working together and taking turns makes something better than you could build alone.\n- A good friend listens to your ideas and adds their own.\n\n** Explanation of the output **\nThe story is set in a classroom and uses a vehicle theme to engage Ethan while naturally modelling irregular past tense verbs (chose, went, spoke, began), causal language (because, so), and perspective-taking (he thought, maybe). The social-communication theme of responding to teasing is shown through Ethan's calm decision to seek adult support rather than react, modelling a safe, concrete response without moralising.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 278,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T19:14:56.299426"
+}

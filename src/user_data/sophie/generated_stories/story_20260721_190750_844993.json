@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is playing in the big yellow leaves. The leaves are falling down from the tall trees. Sophie sees a tiny fairy sitting on a red leaf. The fairy has small, wet wings. \"The rain made my wings wet,\" says the fairy. Sophie picks up a dry, orange leaf. Sophie holds the leaf over the fairy. The fairy's wings are dry now. \"Thank you, Sophie!\" says the fairy. The fairy and Sophie watch three more leaves fall down together.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT is falling from the trees?\n3. WHO is sitting on a red leaf?\n4. WHAT does Sophie pick up?\n5. WHO says \"Thank you, Sophie\"?\n6. WHAT are Sophie and the fairy watching?\n7. WHAT color is the leaf Sophie picks up?\n\n** Explanation of the output **\nThe story is set in autumn and features a fairy character to match Sophie's interest theme, while naturally modeling descriptive adjectives (big, tiny, tall, wet, dry, orange, red), spatial terms (on, over, down), collaborative helping behavior, and target sounds in words like three, red, and dry throughout the narrative and dialogue.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 199,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-07-21T19:07:50.844993"
+}

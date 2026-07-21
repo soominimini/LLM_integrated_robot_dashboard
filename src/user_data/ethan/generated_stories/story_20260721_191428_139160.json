@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Rescue Mission in the Rain\n\nEthan wore his favourite red cape and sprinted across the backyard, because today was the day he would complete his greatest mission. Golden leaves fell all around him like confetti from the sky. His secret base — a tall, three-sided fort he had built — was waiting.\n\nThen the clouds grew thick and dark, and heavy rain began pouring down. The trail became muddy, and Ethan's soggy map tore right through the middle.\n\n\"That looks really tough,\" said his neighbour Charlie, stepping outside under a yellow umbrella. \"Want me to help?\"\n\nEthan thought Charlie might feel left out if he said no, so he agreed. Together, they chose a new route, taking turns deciding which path was clearest. Charlie held the umbrella while Ethan read the map pieces.\n\nFinally, they reached the base together.\n\n\"We finished the mission,\" Charlie said, grinning.\n\nEthan felt something warm and bright — like sunshine breaking through the clouds after a storm.\n\n** End **\n** Takeaways **\n- Asking a friend for help makes hard things easier.\n- Taking turns and sharing ideas helps everyone win together.\n- Thinking about how someone else feels helps you make better choices.\n\n** Explanation of the output **\nThe story weaves the autumn season into the setting and uses a weather obstacle (sudden rain) to naturally model perseverance, collaboration, and turn-taking through superhero-themed play. Irregular past tense verbs (*wore, fell, chose, took, held, felt*), causal language (*because, so*), perspective-taking (*Charlie might feel left out*), and late-developing sounds (*three, trail, Charlie, right, red, reach*) are embedded organically into narrative and dialogue to support Ethan's language and literacy development.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 279,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-07-21T19:14:28.139160"
+}

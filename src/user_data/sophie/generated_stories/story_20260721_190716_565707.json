@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Shiny Crown\n\nSophie is playing in the big castle. The castle has three tall towers. Sophie finds a shiny red crown on the floor. Sophie wants to put the crown on top of the highest tower. But the tower is too tall for Sophie. Her friend Ruby is standing next to the tall tower. Ruby is holding a round chair. Sophie climbs on the chair and reaches the top. Sophie places the shiny crown on the tower. Ruby and Sophie are clapping their hands together.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT does Sophie find on the floor?\n3. WHAT color is the crown?\n4. WHERE does Sophie want to put the crown?\n5. WHO is standing next to the tall tower?\n6. WHAT is Ruby holding?\n7. WHAT are Ruby and Sophie doing at the end?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (shiny, red, tall, round), spatial terms (on the floor, on top of, next to), plural forms (towers, hands), and progressive verbs (standing, holding, clapping) to support language targets naturally. Collaboration, turn-taking, and overcoming a challenge with a friend's help are embedded in the action, with the princess-and-castle theme engaging Sophie's stated interests.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 213,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:07:16.565707"
+}

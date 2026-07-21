@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Lost Crown\n\nSophie is in the classroom. Sophie has a big, shiny crown. The crown is for the princess show today. Sophie puts the crown on the red chair. Then the crown is gone! Sophie looks under the table. Sophie looks inside her bag. Sophie asks her friend Mia for help. Mia looks behind the blue backpacks. Mia finds the crown there! Sophie and Mia are happy. The two friends walk together to the princess show. The teacher claps her hands.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have?\n3. WHAT is the crown for?\n4. WHO does Sophie ask for help?\n5. WHERE does Mia find the crown?\n6. WHO walks to the princess show?\n7. WHAT does the teacher do?\n\n** Explanation of the output **\nThe story is set in a classroom and uses a lost-item challenge resolved through asking for help and cooperating with a friend, naturally weaving in descriptive adjectives (big, shiny, red, blue), spatial terms (under, inside, behind), turn-taking, and friendship — all core therapy targets for Sophie's age and goals.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 190,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T19:08:42.182744"
+}

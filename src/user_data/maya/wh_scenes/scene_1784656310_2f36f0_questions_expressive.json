@@ -1,0 +1,117 @@
+{
+  "scene_description": "A woman wearing an apron is standing at a gas stove in a kitchen, stirring food in a dark pan with steam rising from it. Behind her is a wicker basket filled with colorful vegetables and fruits. Kitchen utensils hang on the wall.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the woman holding in her hand?",
+      "sample_answers": [
+        "a pan",
+        "a frying pan",
+        "a pot",
+        "a handle"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a pan",
+        "a spoon",
+        "a basket"
+      ],
+      "evidence_hint": "Look at what the woman is holding in her right hand."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the woman doing?",
+      "sample_answers": [
+        "cooking",
+        "stirring food",
+        "making food",
+        "cooking on the stove"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cooking",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at what the woman is doing with the pan on the stove."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the woman cooking?",
+      "sample_answers": [
+        "in the kitchen",
+        "at the stove",
+        "on the stove"
+      ],
+      "sentence_frame": "She is cooking ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the kitchen",
+        "outside",
+        "in the bedroom"
+      ],
+      "evidence_hint": "Look at the place around the woman \u2014 the stove and the kitchen behind her."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a pan for?",
+      "sample_answers": [
+        "cooking food",
+        "making food hot",
+        "frying food"
+      ],
+      "sentence_frame": "We use a pan for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cooking food",
+        "drinking water",
+        "drawing"
+      ],
+      "evidence_hint": "Look at the pan on the stove and think about what it is used for."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the woman do when the food is ready?",
+      "sample_answers": [
+        "eat the food",
+        "put it on a plate",
+        "serve the food"
+      ],
+      "sentence_frame": "When the food is ready, she might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "eat the food",
+        "go to sleep",
+        "play outside"
+      ],
+      "evidence_hint": "Look at the steam coming from the pan \u2014 the food is cooking. Think about what happens after cooking."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever helped cook food in the kitchen?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I helped mix",
+        "I stirred soup"
+      ],
+      "sentence_frame": "I helped ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you were in the kitchen with a grown-up."
+    }
+  ]
+}

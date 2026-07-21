@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie is in the classroom. Sophie has a shiny red crown for the princess play. Sophie puts the crown on the big table. The crown is not on the table now. Sophie looks under the chair. Sophie looks in the red bin. The crown is not there! Sophie asks her friend Mia for help. Mia looks behind the three green books. The crown is there! Sophie and Mia are happy. They put the crown on together. The teacher claps her hands.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have?\n3. WHERE does Sophie put the crown first?\n4. WHO does Sophie ask for help?\n5. WHERE is the crown?\n6. WHO puts the crown on together?\n7. WHAT does the teacher do?\n\n** Explanation of the output **\nThe story is set in a classroom and uses a lost-item challenge resolved through asking for help and cooperating with a friend, naturally embedding descriptive words (shiny, red, big, green), spatial terms (under, in, behind, on), target sounds (three, crown, chair), and grammar targets (plural nouns, progressive verbs, conjunctions) within a princess-themed scene Sophie can connect with.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 200,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T19:08:03.750677"
+}

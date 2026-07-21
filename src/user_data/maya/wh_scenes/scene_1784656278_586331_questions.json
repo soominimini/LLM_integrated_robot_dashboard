@@ -1,0 +1,65 @@
+{
+  "scene_description": "A person with long hair stands at a large window holding a handbag, with a rolling suitcase beside them. An airplane is flying in the sky outside the window.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is flying in the sky?",
+      "answer": "an airplane",
+      "visual_choices": [
+        "an airplane",
+        "a bird",
+        "a kite",
+        "a balloon"
+      ],
+      "evidence_hint": "Look up in the top right corner of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is next to the person on the ground?",
+      "answer": "a suitcase",
+      "visual_choices": [
+        "a suitcase",
+        "a bicycle",
+        "a stroller",
+        "a box"
+      ],
+      "evidence_hint": "Look at what is sitting on the floor near the person's feet."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing at the window?",
+      "answer": "a person",
+      "visual_choices": [
+        "a person",
+        "a dog",
+        "a baby",
+        "a robot"
+      ],
+      "evidence_hint": "Look in the middle of the picture near the big window."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the person holding in their hand?",
+      "answer": "a handbag",
+      "visual_choices": [
+        "a handbag",
+        "an umbrella",
+        "a bottle",
+        "a book"
+      ],
+      "evidence_hint": "Look at the person's arm and hand."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the person standing?",
+      "answer": "at a window",
+      "visual_choices": [
+        "at a window",
+        "in a kitchen",
+        "on a playground",
+        "in a bedroom"
+      ],
+      "evidence_hint": "Look at the big glass wall in front of the person."
+    }
+  ]
+}

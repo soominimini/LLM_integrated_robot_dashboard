@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young boy sits on green grass leaning against a large tree trunk. He is wearing a blue hoodie and blue sneakers. Two American flags are visible \u2014 one large one nearby and a smaller one in the background. There is a sidewalk and a road behind him, with trees and a flower bush in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "sample_answers": [
+        "a boy",
+        "a little boy",
+        "a kid"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "boy",
+        "girl",
+        "baby"
+      ],
+      "evidence_hint": "Look at the person sitting on the grass."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing?",
+      "sample_answers": [
+        "sitting",
+        "sitting by a tree",
+        "resting on the grass"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sitting",
+        "running",
+        "jumping"
+      ],
+      "evidence_hint": "Look at the boy's body and what he is doing."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the boy sitting?",
+      "sample_answers": [
+        "by a tree",
+        "on the grass",
+        "outside near a tree"
+      ],
+      "sentence_frame": "The boy is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "by a tree",
+        "in a classroom",
+        "on a bed"
+      ],
+      "evidence_hint": "Look at what is right behind the boy."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the big red, white, and blue thing hanging near the boy?",
+      "sample_answers": [
+        "a flag",
+        "an American flag",
+        "a big flag"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "flag",
+        "kite",
+        "blanket"
+      ],
+      "evidence_hint": "Look at the tall thing with red, white, and blue stripes near the tree."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "how",
+      "question": "How do you think the boy feels sitting outside by the tree?",
+      "sample_answers": [
+        "calm",
+        "relaxed",
+        "happy",
+        "quiet"
+      ],
+      "sentence_frame": "I think the boy feels ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "calm",
+        "scared",
+        "angry"
+      ],
+      "evidence_hint": "Look at the boy's body and the way he is sitting."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "where",
+      "question": "Do you ever sit outside? Where do you like to sit?",
+      "sample_answers": [
+        "in the yard",
+        "on the grass",
+        "by a tree",
+        "on my porch"
+      ],
+      "sentence_frame": "I like to sit ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "outside",
+        "inside",
+        "in the yard"
+      ],
+      "evidence_hint": "Think about a place you like to sit and relax."
+    }
+  ]
+}

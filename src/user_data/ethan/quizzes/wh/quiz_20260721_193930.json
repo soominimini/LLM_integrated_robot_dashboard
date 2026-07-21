@@ -1,0 +1,1306 @@
+[
+  {
+    "question": "How are apples and bananas alike?",
+    "type": "wh",
+    "correct_answer": "they are both fruits",
+    "accepted_answers": [
+      "they are both fruits",
+      "both fruits",
+      "they are fruits",
+      "both are fruits",
+      "they are both foods",
+      "both foods"
+    ]
+  },
+  {
+    "question": "What could you say to a classmate to start a conversation?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "What is bread made from?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "wheat",
+      "dough",
+      "wheat flour",
+      "grain"
+    ]
+  },
+  {
+    "question": "Why do people use umbrellas when it rains?",
+    "type": "wh",
+    "correct_answer": "to stay dry",
+    "accepted_answers": [
+      "to stay dry",
+      "to keep dry",
+      "so they don't get wet",
+      "to protect from rain",
+      "to keep the rain off"
+    ]
+  },
+  {
+    "question": "What kind of animal is a poodle?",
+    "type": "wh",
+    "correct_answer": "dog",
+    "accepted_answers": [
+      "dog",
+      "a dog",
+      "a pet",
+      "pet"
+    ]
+  },
+  {
+    "question": "What could you do if a friend looks sad at recess?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "How are a cat and a dog alike?",
+    "type": "wh",
+    "correct_answer": "they are both animals",
+    "accepted_answers": [
+      "they are both animals",
+      "both animals",
+      "both pets",
+      "they are both pets",
+      "they are both mammals"
+    ]
+  },
+  {
+    "question": "What do we do to our hands before eating?",
+    "type": "wh",
+    "correct_answer": "wash them",
+    "accepted_answers": [
+      "wash them",
+      "wash our hands",
+      "clean them",
+      "rinse them"
+    ]
+  },
+  {
+    "question": "Why can an apple be both a fruit and a snack?",
+    "type": "wh",
+    "correct_answer": "because it grows on a tree and you can eat it anytime",
+    "accepted_answers": [
+      "because it grows on a tree and you can eat it anytime",
+      "because it is a fruit you can eat as a snack",
+      "it grows on trees and people eat it as a snack",
+      "it is a fruit and people snack on it",
+      "because apples are fruits and also snacks"
+    ]
+  },
+  {
+    "question": "What could you say to ask a group if you can join their game?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "peer_entry_and_group_joining"
+  },
+  {
+    "question": "What is butter made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cream",
+      "dairy",
+      "cow's milk"
+    ]
+  },
+  {
+    "question": "How are a hammer and a screwdriver alike?",
+    "type": "wh",
+    "correct_answer": "they are both tools",
+    "accepted_answers": [
+      "they are both tools",
+      "both tools",
+      "they are tools used to build things",
+      "both used for fixing things"
+    ]
+  },
+  {
+    "question": "What might happen when dark clouds fill the sky?",
+    "type": "wh",
+    "correct_answer": "it might rain",
+    "accepted_answers": [
+      "it might rain",
+      "rain",
+      "a storm might come",
+      "it could storm",
+      "thunder and lightning",
+      "it will rain"
+    ]
+  },
+  {
+    "question": "What could you say if you need a break during a group activity?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "Why do plants need sunlight to grow?",
+    "type": "wh",
+    "correct_answer": "to make food",
+    "accepted_answers": [
+      "to make food",
+      "for energy",
+      "to grow",
+      "sunlight gives them energy to grow",
+      "to make their own food"
+    ]
+  },
+  {
+    "question": "What is cheese made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cow's milk",
+      "dairy",
+      "cream"
+    ]
+  },
+  {
+    "question": "How are oranges changed into orange juice?",
+    "type": "wh",
+    "correct_answer": "they are squeezed",
+    "accepted_answers": [
+      "they are squeezed",
+      "by squeezing them",
+      "squeezed",
+      "pressed",
+      "by pressing them",
+      "juiced"
+    ]
+  },
+  {
+    "question": "What could you do if you and a friend disagree about which game to play?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "conflict_resolution"
+  },
+  {
+    "question": "What kind of animal is a salmon?",
+    "type": "wh",
+    "correct_answer": "fish",
+    "accepted_answers": [
+      "fish",
+      "a fish",
+      "seafood"
+    ]
+  },
+  {
+    "question": "Why do we put food in the refrigerator?",
+    "type": "wh",
+    "correct_answer": "to keep it fresh",
+    "accepted_answers": [
+      "to keep it fresh",
+      "so it doesn't spoil",
+      "to keep it cold",
+      "to stop it going bad",
+      "to preserve it"
+    ]
+  },
+  {
+    "question": "How are a rose and a daisy alike?",
+    "type": "wh",
+    "correct_answer": "they are both flowers",
+    "accepted_answers": [
+      "they are both flowers",
+      "both flowers",
+      "both plants",
+      "they are both plants"
+    ]
+  },
+  {
+    "question": "What could you say to make a new classmate feel welcome?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "What do you use a thermometer for?",
+    "type": "wh",
+    "correct_answer": "to measure temperature",
+    "accepted_answers": [
+      "to measure temperature",
+      "to check temperature",
+      "to see if someone has a fever",
+      "measuring temperature"
+    ]
+  },
+  {
+    "question": "Why does a boat float on water?",
+    "type": "wh",
+    "correct_answer": "because it is less dense than water",
+    "accepted_answers": [
+      "because it is less dense than water",
+      "because it is lighter than water",
+      "it is built to float",
+      "because of its shape",
+      "it displaces water"
+    ]
+  },
+  {
+    "question": "What is a poodle a kind of?",
+    "type": "wh",
+    "correct_answer": "dog",
+    "accepted_answers": [
+      "dog",
+      "a dog",
+      "pet",
+      "animal"
+    ]
+  },
+  {
+    "question": "What could you do if someone keeps saying something that hurts your feelings?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "How are a bicycle and a car alike?",
+    "type": "wh",
+    "correct_answer": "they are both vehicles",
+    "accepted_answers": [
+      "they are both vehicles",
+      "both vehicles",
+      "both used for transportation",
+      "both ways to travel",
+      "both have wheels"
+    ]
+  },
+  {
+    "question": "What do we call the category that includes dogs, cats, and rabbits?",
+    "type": "wh",
+    "correct_answer": "pets",
+    "accepted_answers": [
+      "pets",
+      "animals",
+      "pet animals",
+      "domestic animals"
+    ]
+  },
+  {
+    "question": "Why do we wear a coat in winter?",
+    "type": "wh",
+    "correct_answer": "to stay warm",
+    "accepted_answers": [
+      "to stay warm",
+      "to keep warm",
+      "because it is cold",
+      "to protect from the cold"
+    ]
+  },
+  {
+    "question": "What could you say to keep a conversation going with a friend?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "What is yogurt made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cow's milk",
+      "dairy",
+      "cream"
+    ]
+  },
+  {
+    "question": "How are a table and a chair alike?",
+    "type": "wh",
+    "correct_answer": "they are both furniture",
+    "accepted_answers": [
+      "they are both furniture",
+      "both furniture",
+      "both found in a house",
+      "both used in a home"
+    ]
+  },
+  {
+    "question": "What do you do first when you want to bake a cake?",
+    "type": "wh",
+    "correct_answer": "gather the ingredients",
+    "accepted_answers": [
+      "gather the ingredients",
+      "get the ingredients",
+      "collect the ingredients",
+      "get what you need",
+      "read the recipe"
+    ]
+  },
+  {
+    "question": "What could you do if your partner in a group project is not sharing the materials?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Why do we use a map when we travel somewhere new?",
+    "type": "wh",
+    "correct_answer": "to find our way",
+    "accepted_answers": [
+      "to find our way",
+      "to know where to go",
+      "for directions",
+      "to navigate",
+      "so we don't get lost"
+    ]
+  },
+  {
+    "question": "What is pasta made from?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "wheat",
+      "wheat flour",
+      "dough",
+      "grain"
+    ]
+  },
+  {
+    "question": "How are a hammer and a saw alike?",
+    "type": "wh",
+    "correct_answer": "they are both tools",
+    "accepted_answers": [
+      "they are both tools",
+      "both tools",
+      "both used for building",
+      "both used for woodwork"
+    ]
+  },
+  {
+    "question": "What could you do if you think your friend might feel left out of a game?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "Why do we need to drink water every day?",
+    "type": "wh",
+    "correct_answer": "to stay hydrated",
+    "accepted_answers": [
+      "to stay hydrated",
+      "to keep our body working",
+      "because our body needs water",
+      "to stay healthy",
+      "to keep hydrated"
+    ]
+  },
+  {
+    "question": "What kind of animal is a sparrow?",
+    "type": "wh",
+    "correct_answer": "bird",
+    "accepted_answers": [
+      "bird",
+      "a bird"
+    ]
+  },
+  {
+    "question": "How are a lemon and a lime alike?",
+    "type": "wh",
+    "correct_answer": "they are both fruits",
+    "accepted_answers": [
+      "they are both fruits",
+      "both fruits",
+      "both citrus fruits",
+      "both sour fruits"
+    ]
+  },
+  {
+    "question": "What could you say if you do not understand the instructions for an activity?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "What do you use scissors for?",
+    "type": "wh",
+    "correct_answer": "cutting",
+    "accepted_answers": [
+      "cutting",
+      "to cut things",
+      "to cut paper",
+      "cutting paper"
+    ]
+  },
+  {
+    "question": "Why do we sleep at night?",
+    "type": "wh",
+    "correct_answer": "to rest our body",
+    "accepted_answers": [
+      "to rest our body",
+      "to rest",
+      "so our body can recover",
+      "to give our body energy",
+      "because our body needs rest"
+    ]
+  },
+  {
+    "question": "What is the broader category that includes both fruits and vegetables?",
+    "type": "wh",
+    "correct_answer": "food",
+    "accepted_answers": [
+      "food",
+      "plant foods",
+      "plants",
+      "produce",
+      "healthy foods"
+    ]
+  },
+  {
+    "question": "What could you do if a classmate seems nervous about a new activity?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "social_problem_solving"
+  },
+  {
+    "question": "How are a piano and a guitar alike?",
+    "type": "wh",
+    "correct_answer": "they are both musical instruments",
+    "accepted_answers": [
+      "they are both musical instruments",
+      "both instruments",
+      "both make music",
+      "both musical instruments"
+    ]
+  },
+  {
+    "question": "What do you use a ruler for?",
+    "type": "wh",
+    "correct_answer": "measuring",
+    "accepted_answers": [
+      "measuring",
+      "to measure things",
+      "to measure length",
+      "to draw straight lines"
+    ]
+  },
+  {
+    "question": "Why do birds have feathers?",
+    "type": "wh",
+    "correct_answer": "to fly and stay warm",
+    "accepted_answers": [
+      "to fly and stay warm",
+      "to fly",
+      "to stay warm",
+      "for flying",
+      "for warmth",
+      "to help them fly and keep warm"
+    ]
+  },
+  {
+    "question": "What could you say to invite a classmate to play with you at recess?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "What is the category that includes both soccer and basketball?",
+    "type": "wh",
+    "correct_answer": "sports",
+    "accepted_answers": [
+      "sports",
+      "games",
+      "ball sports",
+      "team sports"
+    ]
+  },
+  {
+    "question": "How are a river and a lake alike?",
+    "type": "wh",
+    "correct_answer": "they are both bodies of water",
+    "accepted_answers": [
+      "they are both bodies of water",
+      "both water",
+      "both contain water",
+      "both are water",
+      "both natural water"
+    ]
+  },
+  {
+    "question": "What can you do if a pencil breaks while you are working?",
+    "type": "wh",
+    "correct_answer": "sharpen it",
+    "accepted_answers": [
+      "sharpen it",
+      "get a new pencil",
+      "use a sharpener",
+      "ask for another pencil"
+    ]
+  },
+  {
+    "question": "What could you do if you feel frustrated during a group game?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "Why do fish live in water?",
+    "type": "wh",
+    "correct_answer": "because they breathe through gills",
+    "accepted_answers": [
+      "because they breathe through gills",
+      "they need water to breathe",
+      "they use gills to get oxygen from water",
+      "water has the oxygen they need"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a hammer and a screwdriver?",
+    "type": "wh",
+    "correct_answer": "tools",
+    "accepted_answers": [
+      "tools",
+      "building tools",
+      "hand tools"
+    ]
+  },
+  {
+    "question": "How are a coat and a hat alike?",
+    "type": "wh",
+    "correct_answer": "they are both clothing",
+    "accepted_answers": [
+      "they are both clothing",
+      "both clothes",
+      "both worn on the body",
+      "both keep you warm",
+      "both items of clothing"
+    ]
+  },
+  {
+    "question": "What could you say if someone at school is being unkind to you?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "What do you use a calendar for?",
+    "type": "wh",
+    "correct_answer": "to keep track of dates",
+    "accepted_answers": [
+      "to keep track of dates",
+      "to see what day it is",
+      "to plan events",
+      "to track days and months",
+      "to know the date"
+    ]
+  },
+  {
+    "question": "Why do we use a seatbelt in a car?",
+    "type": "wh",
+    "correct_answer": "to stay safe",
+    "accepted_answers": [
+      "to stay safe",
+      "for safety",
+      "to protect us in a crash",
+      "so we don't get hurt"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a sofa and a bed?",
+    "type": "wh",
+    "correct_answer": "furniture",
+    "accepted_answers": [
+      "furniture",
+      "home furniture",
+      "household furniture"
+    ]
+  },
+  {
+    "question": "What could you do if you want to join a group that is already playing a game at recess?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "peer_entry_and_group_joining"
+  },
+  {
+    "question": "How are a spoon and a fork alike?",
+    "type": "wh",
+    "correct_answer": "they are both utensils",
+    "accepted_answers": [
+      "they are both utensils",
+      "both utensils",
+      "both eating tools",
+      "both used to eat",
+      "both cutlery"
+    ]
+  },
+  {
+    "question": "What do you use a dictionary for?",
+    "type": "wh",
+    "correct_answer": "to find the meaning of words",
+    "accepted_answers": [
+      "to find the meaning of words",
+      "to look up words",
+      "to find word meanings",
+      "to check spelling"
+    ]
+  },
+  {
+    "question": "Why do we wash fruits and vegetables before eating them?",
+    "type": "wh",
+    "correct_answer": "to remove dirt and germs",
+    "accepted_answers": [
+      "to remove dirt and germs",
+      "to clean them",
+      "to get rid of germs",
+      "to wash off dirt",
+      "to make them safe to eat"
+    ]
+  },
+  {
+    "question": "What could you say to a friend who is upset after losing a game?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "What is the category that includes both a trumpet and a drum?",
+    "type": "wh",
+    "correct_answer": "musical instruments",
+    "accepted_answers": [
+      "musical instruments",
+      "instruments",
+      "music instruments"
+    ]
+  },
+  {
+    "question": "How are a bus and a train alike?",
+    "type": "wh",
+    "correct_answer": "they are both vehicles that carry many people",
+    "accepted_answers": [
+      "they are both vehicles that carry many people",
+      "they are both vehicles",
+      "both vehicles",
+      "both carry people",
+      "both public transport",
+      "both transportation"
+    ]
+  },
+  {
+    "question": "What do you use a clock for?",
+    "type": "wh",
+    "correct_answer": "to tell the time",
+    "accepted_answers": [
+      "to tell the time",
+      "to see what time it is",
+      "to check the time",
+      "for telling time"
+    ]
+  },
+  {
+    "question": "What could you do if you and a partner cannot agree on how to do a school project?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "conflict_resolution"
+  },
+  {
+    "question": "Why do we use sunscreen at the beach?",
+    "type": "wh",
+    "correct_answer": "to protect our skin from the sun",
+    "accepted_answers": [
+      "to protect our skin from the sun",
+      "to stop sunburn",
+      "to protect from UV rays",
+      "to keep our skin safe"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a rose and a tulip?",
+    "type": "wh",
+    "correct_answer": "flowers",
+    "accepted_answers": [
+      "flowers",
+      "plants",
+      "garden flowers"
+    ]
+  },
+  {
+    "question": "How are a library and a bookstore alike?",
+    "type": "wh",
+    "correct_answer": "they both have books",
+    "accepted_answers": [
+      "they both have books",
+      "both have books",
+      "both places with books",
+      "both places you find books"
+    ]
+  },
+  {
+    "question": "What could you say if you need help understanding something in class?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "What do you use a magnifying glass for?",
+    "type": "wh",
+    "correct_answer": "to make things look bigger",
+    "accepted_answers": [
+      "to make things look bigger",
+      "to see small things more clearly",
+      "to magnify things",
+      "to zoom in on things"
+    ]
+  },
+  {
+    "question": "Why do we use a bandage when we get a cut?",
+    "type": "wh",
+    "correct_answer": "to protect the cut and help it heal",
+    "accepted_answers": [
+      "to protect the cut and help it heal",
+      "to protect the cut",
+      "to help it heal",
+      "to cover the wound",
+      "to stop bleeding",
+      "to keep germs out"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a shark and a goldfish?",
+    "type": "wh",
+    "correct_answer": "fish",
+    "accepted_answers": [
+      "fish",
+      "sea animals",
+      "water animals",
+      "aquatic animals"
+    ]
+  },
+  {
+    "question": "What could you do if you notice a classmate sitting alone at lunch?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "social_problem_solving"
+  },
+  {
+    "question": "How are a notebook and a textbook alike?",
+    "type": "wh",
+    "correct_answer": "they are both books",
+    "accepted_answers": [
+      "they are both books",
+      "both books",
+      "both used at school",
+      "both have pages"
+    ]
+  },
+  {
+    "question": "What do you use a stethoscope for?",
+    "type": "wh",
+    "correct_answer": "to listen to heartbeats",
+    "accepted_answers": [
+      "to listen to heartbeats",
+      "to hear the heart",
+      "to listen to the body",
+      "doctors use it to check the heart"
+    ]
+  },
+  {
+    "question": "Why do we need to exercise regularly?",
+    "type": "wh",
+    "correct_answer": "to keep our body healthy and strong",
+    "accepted_answers": [
+      "to keep our body healthy and strong",
+      "to keep our body healthy",
+      "to stay healthy",
+      "to stay strong",
+      "to keep fit",
+      "for our health"
+    ]
+  },
+  {
+    "question": "What could you do if a friend thinks you are upset with them but you are not?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "What is the category that includes both a lion and a tiger?",
+    "type": "wh",
+    "correct_answer": "big cats",
+    "accepted_answers": [
+      "big cats",
+      "wild cats",
+      "cats",
+      "wild animals",
+      "animals"
+    ]
+  },
+  {
+    "question": "How are a doctor and a nurse alike?",
+    "type": "wh",
+    "correct_answer": "they both help sick people",
+    "accepted_answers": [
+      "they both help sick people",
+      "both help people",
+      "both work in healthcare",
+      "both medical workers",
+      "both care for patients"
+    ]
+  },
+  {
+    "question": "What do you use a compass for?",
+    "type": "wh",
+    "correct_answer": "to find direction",
+    "accepted_answers": [
+      "to find direction",
+      "to know which way to go",
+      "to find north",
+      "for navigation"
+    ]
+  },
+  {
+    "question": "What could you say to a teammate who made a mistake during a game?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Why do we use a helmet when riding a bike?",
+    "type": "wh",
+    "correct_answer": "to protect our head",
+    "accepted_answers": [
+      "to protect our head",
+      "for safety",
+      "to keep our head safe",
+      "in case we fall"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a carrot and a potato?",
+    "type": "wh",
+    "correct_answer": "vegetables",
+    "accepted_answers": [
+      "vegetables",
+      "veggies",
+      "root vegetables",
+      "foods"
+    ]
+  },
+  {
+    "question": "How are a pen and a pencil alike?",
+    "type": "wh",
+    "correct_answer": "they are both used for writing",
+    "accepted_answers": [
+      "they are both used for writing",
+      "both writing tools",
+      "both used to write",
+      "both stationery"
+    ]
+  },
+  {
+    "question": "What could you do if you feel like you need a quiet moment during a busy activity?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "What do you use a telescope for?",
+    "type": "wh",
+    "correct_answer": "to see things far away",
+    "accepted_answers": [
+      "to see things far away",
+      "to look at stars",
+      "to see distant objects",
+      "to view the sky"
+    ]
+  },
+  {
+    "question": "Why do we put salt on icy roads in winter?",
+    "type": "wh",
+    "correct_answer": "to melt the ice",
+    "accepted_answers": [
+      "to melt the ice",
+      "so the ice melts",
+      "to make roads safer",
+      "to stop ice forming"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a mango and a pineapple?",
+    "type": "wh",
+    "correct_answer": "fruits",
+    "accepted_answers": [
+      "fruits",
+      "tropical fruits",
+      "food"
+    ]
+  },
+  {
+    "question": "What could you do if you think a friend might want to try a different activity than you?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "How are a pond and an ocean alike?",
+    "type": "wh",
+    "correct_answer": "they are both bodies of water",
+    "accepted_answers": [
+      "they are both bodies of water",
+      "both water",
+      "both contain water",
+      "both are water"
+    ]
+  },
+  {
+    "question": "What do you use a fire extinguisher for?",
+    "type": "wh",
+    "correct_answer": "to put out fires",
+    "accepted_answers": [
+      "to put out fires",
+      "to stop fires",
+      "to fight fires",
+      "to extinguish fires"
+    ]
+  },
+  {
+    "question": "Why do we turn off lights when we leave a room?",
+    "type": "wh",
+    "correct_answer": "to save electricity",
+    "accepted_answers": [
+      "to save electricity",
+      "to save energy",
+      "to not waste power",
+      "to conserve energy"
+    ]
+  },
+  {
+    "question": "What could you say to a friend who helped you with something difficult?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "What is the category that includes both a sweater and a jacket?",
+    "type": "wh",
+    "correct_answer": "clothing",
+    "accepted_answers": [
+      "clothing",
+      "clothes",
+      "outerwear",
+      "garments"
+    ]
+  },
+  {
+    "question": "How are a nurse and a dentist alike?",
+    "type": "wh",
+    "correct_answer": "they both help keep people healthy",
+    "accepted_answers": [
+      "they both help keep people healthy",
+      "they both help people stay healthy",
+      "both help people",
+      "both are healthcare workers",
+      "both medical workers"
+    ]
+  },
+  {
+    "question": "What do you use a scale for?",
+    "type": "wh",
+    "correct_answer": "to measure weight",
+    "accepted_answers": [
+      "to measure weight",
+      "to weigh things",
+      "to find out how heavy something is"
+    ]
+  },
+  {
+    "question": "What could you do if someone keeps interrupting you while you are talking?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "conflict_resolution"
+  },
+  {
+    "question": "Why do we recycle paper and plastic?",
+    "type": "wh",
+    "correct_answer": "to protect the environment",
+    "accepted_answers": [
+      "to protect the environment",
+      "to reduce waste",
+      "to help the planet",
+      "to save resources",
+      "to keep the earth clean"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a robin and an eagle?",
+    "type": "wh",
+    "correct_answer": "birds",
+    "accepted_answers": [
+      "birds",
+      "animals",
+      "flying animals"
+    ]
+  },
+  {
+    "question": "How are a library and a school alike?",
+    "type": "wh",
+    "correct_answer": "they are both places where you learn",
+    "accepted_answers": [
+      "they are both places where you learn",
+      "both places to learn",
+      "both places for learning",
+      "both educational places",
+      "both have books for learning"
+    ]
+  },
+  {
+    "question": "What could you do if a group of kids is playing a game and you want to watch first before joining?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "peer_entry_and_group_joining"
+  },
+  {
+    "question": "What do you use a sponge for?",
+    "type": "wh",
+    "correct_answer": "cleaning",
+    "accepted_answers": [
+      "cleaning",
+      "to clean things",
+      "to wash dishes",
+      "to wipe surfaces"
+    ]
+  },
+  {
+    "question": "Why do we need to eat breakfast in the morning?",
+    "type": "wh",
+    "correct_answer": "to give our body energy for the day",
+    "accepted_answers": [
+      "to give our body energy for the day",
+      "to give us energy",
+      "for energy",
+      "to start the day with energy",
+      "so we have energy to learn"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a sofa and a bookshelf?",
+    "type": "wh",
+    "correct_answer": "furniture",
+    "accepted_answers": [
+      "furniture",
+      "home furniture",
+      "household items"
+    ]
+  },
+  {
+    "question": "What could you say to let a friend know you are not happy with how they treated you?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "How are a frog and a toad alike?",
+    "type": "wh",
+    "correct_answer": "they are both amphibians",
+    "accepted_answers": [
+      "they are both amphibians",
+      "both amphibians",
+      "both live on land and in water",
+      "both similar animals"
+    ]
+  },
+  {
+    "question": "What do you use a broom for?",
+    "type": "wh",
+    "correct_answer": "sweeping the floor",
+    "accepted_answers": [
+      "sweeping the floor",
+      "to sweep",
+      "to clean the floor",
+      "to sweep up dirt"
+    ]
+  },
+  {
+    "question": "Why do we use a lock on a door?",
+    "type": "wh",
+    "correct_answer": "to keep it secure",
+    "accepted_answers": [
+      "to keep it secure",
+      "for safety",
+      "to keep people out",
+      "to protect what is inside"
+    ]
+  },
+  {
+    "question": "What could you do if you are working in a group and someone is not following the rules of the game?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "What is the category that includes both a whale and a dolphin?",
+    "type": "wh",
+    "correct_answer": "marine mammals",
+    "accepted_answers": [
+      "marine mammals",
+      "sea mammals",
+      "ocean animals",
+      "mammals",
+      "sea animals"
+    ]
+  },
+  {
+    "question": "How are a backpack and a suitcase alike?",
+    "type": "wh",
+    "correct_answer": "they are both used to carry things",
+    "accepted_answers": [
+      "they are both used to carry things",
+      "both carry things",
+      "both bags",
+      "both used for storage"
+    ]
+  },
+  {
+    "question": "What do you use a ladle for?",
+    "type": "wh",
+    "correct_answer": "serving soup or liquid",
+    "accepted_answers": [
+      "serving soup or liquid",
+      "serving soup",
+      "to scoop soup",
+      "to serve liquid",
+      "to ladle food",
+      "to scoop liquid"
+    ]
+  },
+  {
+    "question": "What could you say to start a conversation with someone you have never met before?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "Why do we need to brush our teeth every day?",
+    "type": "wh",
+    "correct_answer": "to keep our teeth clean and healthy",
+    "accepted_answers": [
+      "to keep our teeth clean and healthy",
+      "to keep teeth clean",
+      "to prevent cavities",
+      "to remove germs",
+      "to keep teeth healthy",
+      "to stop tooth decay"
+    ]
+  },
+  {
+    "question": "What is the category that includes both a hammer and a wrench?",
+    "type": "wh",
+    "correct_answer": "tools",
+    "accepted_answers": [
+      "tools",
+      "hand tools",
+      "building tools"
+    ]
+  },
+  {
+    "question": "How are a lake and a swimming pool alike?",
+    "type": "wh",
+    "correct_answer": "they are both places to swim",
+    "accepted_answers": [
+      "they are both places to swim",
+      "both places to swim",
+      "both have water",
+      "both used for swimming",
+      "both bodies of water"
+    ]
+  },
+  {
+    "question": "What could you do if you feel worried about something at school?",
+    "type": "wh",
+    "correct_answer": "",
+    "accepted_answers": [],
+    "open_ended": true,
+    "social_target": "social_problem_solving"
+  },
+  {
+    "question": "What do you use a whisk for?",
+    "type": "wh",
+    "correct_answer": "mixing ingredients",
+    "accepted_answers": [
+      "mixing ingredients",
+      "to mix food",
+      "to beat eggs",
+      "to stir ingredients together"
+    ]
+  },
+  {
+    "question": "Why do we use a filter in a water bottle?",
+    "type": "wh",
+    "correct_answer": "to clean the water",
+    "accepted_answers": [
+      "to clean the water",
+      "to remove dirt",
+      "to purify the water",
+      "to make water safe to drink"
+    ]
+  }
+]

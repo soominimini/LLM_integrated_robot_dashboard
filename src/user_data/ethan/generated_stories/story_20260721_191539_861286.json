@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nEthan and the Missing Cape\n\nEthan wore his favourite red cape to school because it was Superhero Day, and he thought he looked exactly like a real hero. Before morning reading began, he carefully hung the cape on his chair.\n\nThen it was gone.\n\nEthan searched everywhere — behind the round reading chair, under the three long tables, beside the chunky yellow bookshelf. Nothing. His stomach felt heavy, like a stone had dropped inside it.\n\n\"Maybe someone moved it by mistake,\" said his classmate Rosa, who had already found her own purple cape. \"Let's think. Who came near your chair after you hung it up?\"\n\nTogether they chose to ask their teacher, Ms. Chen, rather than accuse anyone. Ms. Chen checked the coat room and found the cape hidden beneath a bright red jacket that looked almost identical.\n\n\"We found it!\" Rosa cheered.\n\nEthan pulled on the cape and grinned. He thought being a real hero meant saving the day alone — but the best rescue missions, he discovered, were done as a team.\n\n** End **\n** Takeaways **\n- Asking for help is a great idea when a problem feels too big to solve alone.\n- Working together with a friend helps you find solutions faster.\n- Taking a moment to think before reacting leads to a better outcome for everyone.\n\n** Explanation of the output **\nThe story is set entirely at school and weaves Ethan's superhero interest into a social problem-solving scenario involving a lost item and collaborative thinking. Language targets are embedded naturally, including irregular past tense (wore, hung, found, came, thought), causal language (because, rather than), perspective-taking (he thought, she feels), descriptive adjectives (round, chunky, bright), and figurative language (stomach felt heavy like a stone), all supporting comprehension, narrative sequencing, and social-communication development appropriate for an 8-year-old.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 306,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-07-21T19:15:39.861286"
+}

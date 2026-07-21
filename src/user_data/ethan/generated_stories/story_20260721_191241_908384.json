@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Champion's Quest\n\nEthan ran toward the school computer lab because he had finally reached Level Three of Dragon Race, the fastest, most thrilling game in the whole building. He chose his red dragon and took a deep breath.\n\nThen everything went wrong.\n\nHis dragon flew straight into a rocky wall and became completely stuck. No matter which button Ethan pressed, the dragon wouldn't move. Ethan slumped in his chair, feeling the heavy weight of disappointment settle over him like a gray cloud.\n\nThree kids nearby were already talking about the tricky third level while they played together. Ethan watched quietly for a moment, then waited until they paused before asking, \"Could I try with you guys? I think I need some help.\"\n\nA girl named Rosa smiled. \"We thought nobody else knew about this level! Come on, take a turn.\"\n\nTogether they found the hidden tunnel and brought the dragon safely through. Ethan laughed out loud, feeling proud and surprisingly grateful for three new friends.\n\n** End **\n** Takeaways **\n- Asking for help when something is hard is a smart and brave thing to do.\n- Waiting for the right moment before joining a group is a kind and friendly choice.\n- Working together with others makes hard challenges feel possible and even fun.\n\n** Explanation of the output **\nThe story is built around a video game setting to engage Ethan's interests while naturally modelling irregular past tense verbs (flew, chose, took, found, brought), causal language (because, then), and perspective-taking (feeling, thinking). Therapy goals including descriptive language, collaboration, peer entry, and overcoming challenges are woven into the characters' actions and dialogue rather than stated as lessons, supporting language comprehension and social-communication development.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 289,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:12:41.908384"
+}

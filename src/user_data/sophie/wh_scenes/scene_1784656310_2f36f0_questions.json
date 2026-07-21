@@ -1,0 +1,65 @@
+{
+  "scene_description": "A woman wearing an apron is cooking at a gas stove, stirring food in a dark pan. Steam is rising from the pan. A basket of vegetables and fruits sits on the counter nearby. Kitchen utensils hang on the wall in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a woman",
+      "visual_choices": [
+        "a woman",
+        "a boy",
+        "a baby",
+        "a man"
+      ],
+      "evidence_hint": "Look at the person standing at the stove."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman holding?",
+      "answer": "a pan",
+      "visual_choices": [
+        "a pan",
+        "a spoon",
+        "a cup",
+        "a plate"
+      ],
+      "evidence_hint": "Look at what is in the woman's hands."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the basket on the counter?",
+      "answer": "fruits and vegetables",
+      "visual_choices": [
+        "fruits and vegetables",
+        "bread and eggs",
+        "toys",
+        "dishes"
+      ],
+      "evidence_hint": "Look at the basket next to the stove."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the woman standing?",
+      "answer": "at the stove",
+      "visual_choices": [
+        "at the stove",
+        "at a table",
+        "in a garden",
+        "near a sink"
+      ],
+      "evidence_hint": "Look at what is right in front of the woman."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is coming out of the pan?",
+      "answer": "steam",
+      "visual_choices": [
+        "steam",
+        "fire",
+        "water",
+        "smoke"
+      ],
+      "evidence_hint": "Look above the pan on the stove."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. Sophie sees three rabbits in a big, soft bed. One rabbit is small and white. One rabbit is big and brown. The small rabbit is sitting next to a red bowl. Sophie wants to touch the small rabbit. The rabbit hops under the chair! A girl named Mia is there too. Mia reaches under the chair and picks up the rabbit. Mia gives the rabbit to Sophie. Sophie holds the fluffy, soft rabbit. Sophie and Mia are smiling.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT are the rabbits sitting in?\n3. WHAT color is the small rabbit?\n4. WHERE does the rabbit hop?\n5. WHO picks up the rabbit?\n6. WHO gives the rabbit to Sophie?\n7. WHAT are Sophie and Mia doing at the end?\n\n** Explanation of the output **\nThe story builds descriptive vocabulary through adjectives and color words (fluffy, soft, big, small, white, brown, red) and spatial terms (under the chair, next to the bowl), woven naturally into a pet-themed scene. Collaborative turn-taking between Sophie and Mia models friendship and overcoming a small challenge with help, while target sounds /r/, /ch/, and /th/ appear in words like rabbit, chair, and three across the narrative.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 217,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:07:35.372031"
+}

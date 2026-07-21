@@ -1,0 +1,1305 @@
+[
+  {
+    "question": "What do we use a cup for?",
+    "type": "wh",
+    "correct_answer": "drinking",
+    "accepted_answers": [
+      "drinking",
+      "to drink",
+      "drink water",
+      "drink juice",
+      "drink milk"
+    ]
+  },
+  {
+    "question": "Where does milk come from?",
+    "type": "wh",
+    "correct_answer": "cow",
+    "accepted_answers": [
+      "cow",
+      "cows",
+      "a cow",
+      "the cow"
+    ]
+  },
+  {
+    "question": "What do we use scissors for?",
+    "type": "wh",
+    "correct_answer": "cutting",
+    "accepted_answers": [
+      "cutting",
+      "to cut",
+      "cut paper",
+      "cut things"
+    ]
+  },
+  {
+    "question": "Where do fish live?",
+    "type": "wh",
+    "correct_answer": "water",
+    "accepted_answers": [
+      "water",
+      "in water",
+      "the ocean",
+      "ocean",
+      "river",
+      "lake",
+      "sea",
+      "pond"
+    ]
+  },
+  {
+    "question": "What do we use a spoon for?",
+    "type": "wh",
+    "correct_answer": "eating",
+    "accepted_answers": [
+      "eating",
+      "to eat",
+      "scooping food",
+      "eating soup",
+      "stirring"
+    ]
+  },
+  {
+    "question": "Where do birds live?",
+    "type": "wh",
+    "correct_answer": "nest",
+    "accepted_answers": [
+      "nest",
+      "a nest",
+      "in a nest",
+      "trees",
+      "in trees",
+      "outside"
+    ]
+  },
+  {
+    "question": "What is bread made from?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "wheat",
+      "dough",
+      "wheat flour"
+    ]
+  },
+  {
+    "question": "Who helps you when you are sick?",
+    "type": "wh",
+    "correct_answer": "doctor",
+    "accepted_answers": [
+      "doctor",
+      "a doctor",
+      "nurse",
+      "a nurse",
+      "mom",
+      "dad",
+      "parent"
+    ]
+  },
+  {
+    "question": "What do we use an umbrella for?",
+    "type": "wh",
+    "correct_answer": "staying dry",
+    "accepted_answers": [
+      "staying dry",
+      "to stay dry",
+      "rain",
+      "keeping rain off",
+      "blocking rain",
+      "not getting wet"
+    ]
+  },
+  {
+    "question": "Where do we buy food?",
+    "type": "wh",
+    "correct_answer": "grocery store",
+    "accepted_answers": [
+      "grocery store",
+      "store",
+      "supermarket",
+      "market",
+      "the store",
+      "shop"
+    ]
+  },
+  {
+    "question": "What do we use a toothbrush for?",
+    "type": "wh",
+    "correct_answer": "brushing teeth",
+    "accepted_answers": [
+      "brushing teeth",
+      "to brush teeth",
+      "cleaning teeth",
+      "brush our teeth"
+    ]
+  },
+  {
+    "question": "Where do we sleep?",
+    "type": "wh",
+    "correct_answer": "bed",
+    "accepted_answers": [
+      "bed",
+      "in bed",
+      "bedroom",
+      "in the bedroom"
+    ]
+  },
+  {
+    "question": "What do eggs come from?",
+    "type": "wh",
+    "correct_answer": "chickens",
+    "accepted_answers": [
+      "chickens",
+      "a chicken",
+      "hens",
+      "a hen",
+      "birds"
+    ]
+  },
+  {
+    "question": "Who teaches kids at school?",
+    "type": "wh",
+    "correct_answer": "teacher",
+    "accepted_answers": [
+      "teacher",
+      "a teacher",
+      "teachers"
+    ]
+  },
+  {
+    "question": "What do we use a pencil for?",
+    "type": "wh",
+    "correct_answer": "writing",
+    "accepted_answers": [
+      "writing",
+      "to write",
+      "drawing",
+      "to draw",
+      "writing and drawing"
+    ]
+  },
+  {
+    "question": "Where do we wash our hands?",
+    "type": "wh",
+    "correct_answer": "sink",
+    "accepted_answers": [
+      "sink",
+      "at the sink",
+      "bathroom",
+      "in the bathroom",
+      "kitchen"
+    ]
+  },
+  {
+    "question": "What do we use a pillow for?",
+    "type": "wh",
+    "correct_answer": "resting our head",
+    "accepted_answers": [
+      "resting our head",
+      "sleeping",
+      "to sleep",
+      "to rest our head",
+      "laying our head on it"
+    ]
+  },
+  {
+    "question": "Where do we cook food?",
+    "type": "wh",
+    "correct_answer": "kitchen",
+    "accepted_answers": [
+      "kitchen",
+      "in the kitchen",
+      "stove",
+      "on the stove"
+    ]
+  },
+  {
+    "question": "What is butter made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cream",
+      "dairy",
+      "cow's milk"
+    ]
+  },
+  {
+    "question": "Who drives a school bus?",
+    "type": "wh",
+    "correct_answer": "bus driver",
+    "accepted_answers": [
+      "bus driver",
+      "a bus driver",
+      "driver"
+    ]
+  },
+  {
+    "question": "What do we use a blanket for?",
+    "type": "wh",
+    "correct_answer": "staying warm",
+    "accepted_answers": [
+      "staying warm",
+      "to stay warm",
+      "keeping warm",
+      "warmth",
+      "sleeping"
+    ]
+  },
+  {
+    "question": "Where do apples grow?",
+    "type": "wh",
+    "correct_answer": "tree",
+    "accepted_answers": [
+      "tree",
+      "on a tree",
+      "trees",
+      "apple tree",
+      "on an apple tree"
+    ]
+  },
+  {
+    "question": "What do we use a fork for?",
+    "type": "wh",
+    "correct_answer": "eating",
+    "accepted_answers": [
+      "eating",
+      "to eat",
+      "picking up food",
+      "eating food"
+    ]
+  },
+  {
+    "question": "Who puts out fires?",
+    "type": "wh",
+    "correct_answer": "firefighter",
+    "accepted_answers": [
+      "firefighter",
+      "a firefighter",
+      "firefighters",
+      "fireman",
+      "firemen"
+    ]
+  },
+  {
+    "question": "What do we use soap for?",
+    "type": "wh",
+    "correct_answer": "cleaning",
+    "accepted_answers": [
+      "cleaning",
+      "to clean",
+      "washing",
+      "to wash",
+      "getting clean",
+      "washing hands"
+    ]
+  },
+  {
+    "question": "Where do we go to learn and study?",
+    "type": "wh",
+    "correct_answer": "school",
+    "accepted_answers": [
+      "school",
+      "to school",
+      "at school"
+    ]
+  },
+  {
+    "question": "What do we use a key for?",
+    "type": "wh",
+    "correct_answer": "opening a door",
+    "accepted_answers": [
+      "opening a door",
+      "to open a door",
+      "unlocking",
+      "to unlock",
+      "locking",
+      "opening locks"
+    ]
+  },
+  {
+    "question": "Where does honey come from?",
+    "type": "wh",
+    "correct_answer": "bees",
+    "accepted_answers": [
+      "bees",
+      "a bee",
+      "from bees",
+      "beehive",
+      "a beehive"
+    ]
+  },
+  {
+    "question": "What do we use a broom for?",
+    "type": "wh",
+    "correct_answer": "sweeping",
+    "accepted_answers": [
+      "sweeping",
+      "to sweep",
+      "cleaning the floor",
+      "sweeping the floor"
+    ]
+  },
+  {
+    "question": "Who delivers letters and packages?",
+    "type": "wh",
+    "correct_answer": "mail carrier",
+    "accepted_answers": [
+      "mail carrier",
+      "mailman",
+      "postman",
+      "postal worker",
+      "delivery person"
+    ]
+  },
+  {
+    "question": "What do we use a clock for?",
+    "type": "wh",
+    "correct_answer": "telling time",
+    "accepted_answers": [
+      "telling time",
+      "to tell time",
+      "checking the time",
+      "seeing the time"
+    ]
+  },
+  {
+    "question": "Where do we swim?",
+    "type": "wh",
+    "correct_answer": "pool",
+    "accepted_answers": [
+      "pool",
+      "swimming pool",
+      "in a pool",
+      "ocean",
+      "lake",
+      "river"
+    ]
+  },
+  {
+    "question": "What is cheese made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cow's milk",
+      "dairy"
+    ]
+  },
+  {
+    "question": "Who helps keep us safe in the neighborhood?",
+    "type": "wh",
+    "correct_answer": "police officer",
+    "accepted_answers": [
+      "police officer",
+      "a police officer",
+      "police",
+      "cop"
+    ]
+  },
+  {
+    "question": "What do we use a chair for?",
+    "type": "wh",
+    "correct_answer": "sitting",
+    "accepted_answers": [
+      "sitting",
+      "to sit",
+      "sitting down"
+    ]
+  },
+  {
+    "question": "Where do we go when we are very sick?",
+    "type": "wh",
+    "correct_answer": "hospital",
+    "accepted_answers": [
+      "hospital",
+      "the hospital",
+      "doctor's office",
+      "clinic"
+    ]
+  },
+  {
+    "question": "What do we use a bag for?",
+    "type": "wh",
+    "correct_answer": "carrying things",
+    "accepted_answers": [
+      "carrying things",
+      "to carry things",
+      "holding things",
+      "to hold things"
+    ]
+  },
+  {
+    "question": "Where do carrots grow?",
+    "type": "wh",
+    "correct_answer": "underground",
+    "accepted_answers": [
+      "underground",
+      "in the ground",
+      "ground",
+      "soil",
+      "in soil",
+      "in the dirt"
+    ]
+  },
+  {
+    "question": "What do we use a comb for?",
+    "type": "wh",
+    "correct_answer": "combing hair",
+    "accepted_answers": [
+      "combing hair",
+      "to comb hair",
+      "brushing hair",
+      "fixing hair",
+      "untangling hair"
+    ]
+  },
+  {
+    "question": "Who fixes broken bones?",
+    "type": "wh",
+    "correct_answer": "doctor",
+    "accepted_answers": [
+      "doctor",
+      "a doctor",
+      "nurse",
+      "surgeon"
+    ]
+  },
+  {
+    "question": "What do we use a towel for?",
+    "type": "wh",
+    "correct_answer": "drying off",
+    "accepted_answers": [
+      "drying off",
+      "to dry off",
+      "drying ourselves",
+      "drying our hands",
+      "drying our body"
+    ]
+  },
+  {
+    "question": "Where do we borrow books for free?",
+    "type": "wh",
+    "correct_answer": "library",
+    "accepted_answers": [
+      "library",
+      "the library",
+      "at the library"
+    ]
+  },
+  {
+    "question": "What is orange juice made from?",
+    "type": "wh",
+    "correct_answer": "oranges",
+    "accepted_answers": [
+      "oranges",
+      "an orange",
+      "orange fruit"
+    ]
+  },
+  {
+    "question": "Who takes care of animals at a zoo?",
+    "type": "wh",
+    "correct_answer": "zookeeper",
+    "accepted_answers": [
+      "zookeeper",
+      "a zookeeper",
+      "zookeepers",
+      "animal keeper"
+    ]
+  },
+  {
+    "question": "What do we use a lamp for?",
+    "type": "wh",
+    "correct_answer": "light",
+    "accepted_answers": [
+      "light",
+      "to give light",
+      "lighting up a room",
+      "seeing in the dark",
+      "to see"
+    ]
+  },
+  {
+    "question": "Where do planes land and take off?",
+    "type": "wh",
+    "correct_answer": "airport",
+    "accepted_answers": [
+      "airport",
+      "an airport",
+      "the airport",
+      "runway"
+    ]
+  },
+  {
+    "question": "What do we put on bread to make a sandwich?",
+    "type": "wh",
+    "correct_answer": "filling",
+    "accepted_answers": [
+      "filling",
+      "cheese",
+      "meat",
+      "peanut butter",
+      "jelly",
+      "butter",
+      "ham",
+      "turkey",
+      "vegetables"
+    ]
+  },
+  {
+    "question": "Who reads stories to kids at bedtime?",
+    "type": "wh",
+    "correct_answer": "parent",
+    "accepted_answers": [
+      "parent",
+      "mom",
+      "dad",
+      "mommy",
+      "daddy",
+      "grandma",
+      "grandpa",
+      "caregiver"
+    ]
+  },
+  {
+    "question": "What do we use a brush for?",
+    "type": "wh",
+    "correct_answer": "brushing hair",
+    "accepted_answers": [
+      "brushing hair",
+      "to brush hair",
+      "painting",
+      "to paint",
+      "cleaning"
+    ]
+  },
+  {
+    "question": "Where do we put dirty clothes?",
+    "type": "wh",
+    "correct_answer": "laundry basket",
+    "accepted_answers": [
+      "laundry basket",
+      "hamper",
+      "washing machine",
+      "laundry bin",
+      "basket"
+    ]
+  },
+  {
+    "question": "What do we use a knife for?",
+    "type": "wh",
+    "correct_answer": "cutting food",
+    "accepted_answers": [
+      "cutting",
+      "cutting food",
+      "to cut",
+      "to cut food",
+      "slicing"
+    ]
+  },
+  {
+    "question": "Where do trains travel on?",
+    "type": "wh",
+    "correct_answer": "tracks",
+    "accepted_answers": [
+      "tracks",
+      "train tracks",
+      "rails",
+      "railroad tracks"
+    ]
+  },
+  {
+    "question": "What do we use a straw for?",
+    "type": "wh",
+    "correct_answer": "drinking",
+    "accepted_answers": [
+      "drinking",
+      "to drink",
+      "sipping",
+      "to sip"
+    ]
+  },
+  {
+    "question": "Who cuts your hair?",
+    "type": "wh",
+    "correct_answer": "hairdresser",
+    "accepted_answers": [
+      "hairdresser",
+      "barber",
+      "hair stylist",
+      "stylist"
+    ]
+  },
+  {
+    "question": "What do we use a pot for?",
+    "type": "wh",
+    "correct_answer": "cooking",
+    "accepted_answers": [
+      "cooking",
+      "to cook",
+      "boiling water",
+      "making soup",
+      "heating food"
+    ]
+  },
+  {
+    "question": "Where do we keep food cold?",
+    "type": "wh",
+    "correct_answer": "refrigerator",
+    "accepted_answers": [
+      "refrigerator",
+      "fridge",
+      "the fridge",
+      "the refrigerator",
+      "freezer"
+    ]
+  },
+  {
+    "question": "What is yogurt made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cow's milk",
+      "dairy"
+    ]
+  },
+  {
+    "question": "Who works in a bakery?",
+    "type": "wh",
+    "correct_answer": "baker",
+    "accepted_answers": [
+      "baker",
+      "a baker",
+      "bakers"
+    ]
+  },
+  {
+    "question": "What do we use a bowl for?",
+    "type": "wh",
+    "correct_answer": "holding food",
+    "accepted_answers": [
+      "holding food",
+      "eating from",
+      "eating cereal",
+      "soup",
+      "holding soup",
+      "eating"
+    ]
+  },
+  {
+    "question": "Where do we see movies on a big screen?",
+    "type": "wh",
+    "correct_answer": "movie theater",
+    "accepted_answers": [
+      "movie theater",
+      "cinema",
+      "theater",
+      "the movies"
+    ]
+  },
+  {
+    "question": "What do strawberries grow on?",
+    "type": "wh",
+    "correct_answer": "plant",
+    "accepted_answers": [
+      "plant",
+      "a plant",
+      "strawberry plant",
+      "the ground",
+      "vines",
+      "bushes"
+    ]
+  },
+  {
+    "question": "Who flies an airplane?",
+    "type": "wh",
+    "correct_answer": "pilot",
+    "accepted_answers": [
+      "pilot",
+      "a pilot",
+      "pilots"
+    ]
+  },
+  {
+    "question": "What do we use a mirror for?",
+    "type": "wh",
+    "correct_answer": "seeing ourselves",
+    "accepted_answers": [
+      "seeing ourselves",
+      "to see ourselves",
+      "looking at ourselves",
+      "to look at ourselves"
+    ]
+  },
+  {
+    "question": "Where do we play on swings and slides?",
+    "type": "wh",
+    "correct_answer": "playground",
+    "accepted_answers": [
+      "playground",
+      "the playground",
+      "park",
+      "the park"
+    ]
+  },
+  {
+    "question": "What do we use a plate for?",
+    "type": "wh",
+    "correct_answer": "holding food",
+    "accepted_answers": [
+      "holding food",
+      "eating from",
+      "putting food on",
+      "serving food"
+    ]
+  },
+  {
+    "question": "Where do cows live on a farm?",
+    "type": "wh",
+    "correct_answer": "barn",
+    "accepted_answers": [
+      "barn",
+      "a barn",
+      "field",
+      "pasture",
+      "stable"
+    ]
+  },
+  {
+    "question": "What do we use glue for?",
+    "type": "wh",
+    "correct_answer": "sticking things together",
+    "accepted_answers": [
+      "sticking things together",
+      "to stick things",
+      "gluing",
+      "to glue",
+      "attaching things"
+    ]
+  },
+  {
+    "question": "Who helps sick animals get better?",
+    "type": "wh",
+    "correct_answer": "veterinarian",
+    "accepted_answers": [
+      "veterinarian",
+      "vet",
+      "a vet",
+      "animal doctor"
+    ]
+  },
+  {
+    "question": "What do we use a phone for?",
+    "type": "wh",
+    "correct_answer": "calling people",
+    "accepted_answers": [
+      "calling people",
+      "to call",
+      "talking to people",
+      "making calls",
+      "communication"
+    ]
+  },
+  {
+    "question": "Where do we go to pray or worship?",
+    "type": "wh",
+    "correct_answer": "church",
+    "accepted_answers": [
+      "church",
+      "mosque",
+      "temple",
+      "synagogue",
+      "place of worship"
+    ]
+  },
+  {
+    "question": "What is applesauce made from?",
+    "type": "wh",
+    "correct_answer": "apples",
+    "accepted_answers": [
+      "apples",
+      "an apple",
+      "apple"
+    ]
+  },
+  {
+    "question": "Who builds houses?",
+    "type": "wh",
+    "correct_answer": "builder",
+    "accepted_answers": [
+      "builder",
+      "a builder",
+      "construction worker",
+      "carpenter",
+      "workers"
+    ]
+  },
+  {
+    "question": "What do we use a ruler for?",
+    "type": "wh",
+    "correct_answer": "measuring",
+    "accepted_answers": [
+      "measuring",
+      "to measure",
+      "drawing straight lines",
+      "measuring things"
+    ]
+  },
+  {
+    "question": "Where do we go to ride rides and see animals?",
+    "type": "wh",
+    "correct_answer": "zoo",
+    "accepted_answers": [
+      "zoo",
+      "the zoo",
+      "fair",
+      "amusement park"
+    ]
+  },
+  {
+    "question": "What do we use a jacket for?",
+    "type": "wh",
+    "correct_answer": "staying warm",
+    "accepted_answers": [
+      "staying warm",
+      "to stay warm",
+      "keeping warm",
+      "warmth",
+      "wearing outside"
+    ]
+  },
+  {
+    "question": "Where does wool come from?",
+    "type": "wh",
+    "correct_answer": "sheep",
+    "accepted_answers": [
+      "sheep",
+      "a sheep",
+      "from sheep"
+    ]
+  },
+  {
+    "question": "What do we use a trash can for?",
+    "type": "wh",
+    "correct_answer": "throwing away garbage",
+    "accepted_answers": [
+      "throwing away garbage",
+      "garbage",
+      "trash",
+      "putting trash in",
+      "throwing things away",
+      "waste"
+    ]
+  },
+  {
+    "question": "Who cooks food in a restaurant?",
+    "type": "wh",
+    "correct_answer": "chef",
+    "accepted_answers": [
+      "chef",
+      "a chef",
+      "cook",
+      "a cook"
+    ]
+  },
+  {
+    "question": "What do we use boots for?",
+    "type": "wh",
+    "correct_answer": "protecting our feet",
+    "accepted_answers": [
+      "protecting our feet",
+      "wearing in rain",
+      "keeping feet dry",
+      "walking in mud",
+      "wearing outside"
+    ]
+  },
+  {
+    "question": "Where do we go to get on a train?",
+    "type": "wh",
+    "correct_answer": "train station",
+    "accepted_answers": [
+      "train station",
+      "station",
+      "the station",
+      "platform"
+    ]
+  },
+  {
+    "question": "What is peanut butter made from?",
+    "type": "wh",
+    "correct_answer": "peanuts",
+    "accepted_answers": [
+      "peanuts",
+      "peanut",
+      "nuts"
+    ]
+  },
+  {
+    "question": "Who sails a boat?",
+    "type": "wh",
+    "correct_answer": "sailor",
+    "accepted_answers": [
+      "sailor",
+      "a sailor",
+      "captain",
+      "a captain",
+      "sailors"
+    ]
+  },
+  {
+    "question": "What do we use a calendar for?",
+    "type": "wh",
+    "correct_answer": "keeping track of days",
+    "accepted_answers": [
+      "keeping track of days",
+      "to see the date",
+      "checking the date",
+      "knowing the date",
+      "tracking days"
+    ]
+  },
+  {
+    "question": "Where do we go to get medicine?",
+    "type": "wh",
+    "correct_answer": "pharmacy",
+    "accepted_answers": [
+      "pharmacy",
+      "drugstore",
+      "the pharmacy",
+      "chemist",
+      "doctor's office"
+    ]
+  },
+  {
+    "question": "What do we use a sponge for?",
+    "type": "wh",
+    "correct_answer": "cleaning",
+    "accepted_answers": [
+      "cleaning",
+      "to clean",
+      "washing dishes",
+      "wiping things",
+      "scrubbing"
+    ]
+  },
+  {
+    "question": "Where do we see animals like lions and elephants?",
+    "type": "wh",
+    "correct_answer": "zoo",
+    "accepted_answers": [
+      "zoo",
+      "the zoo",
+      "safari",
+      "jungle",
+      "wild"
+    ]
+  },
+  {
+    "question": "What do grapes grow on?",
+    "type": "wh",
+    "correct_answer": "vine",
+    "accepted_answers": [
+      "vine",
+      "a vine",
+      "vines",
+      "grapevine"
+    ]
+  },
+  {
+    "question": "Who helps you cross the street safely?",
+    "type": "wh",
+    "correct_answer": "crossing guard",
+    "accepted_answers": [
+      "crossing guard",
+      "a crossing guard",
+      "police officer",
+      "adult",
+      "parent"
+    ]
+  },
+  {
+    "question": "What do we use a map for?",
+    "type": "wh",
+    "correct_answer": "finding our way",
+    "accepted_answers": [
+      "finding our way",
+      "to find our way",
+      "directions",
+      "getting directions",
+      "navigation"
+    ]
+  },
+  {
+    "question": "Where do we go to see a play or show?",
+    "type": "wh",
+    "correct_answer": "theater",
+    "accepted_answers": [
+      "theater",
+      "the theater",
+      "auditorium",
+      "stage",
+      "concert hall"
+    ]
+  },
+  {
+    "question": "What is ice cream made from?",
+    "type": "wh",
+    "correct_answer": "milk",
+    "accepted_answers": [
+      "milk",
+      "cream",
+      "dairy",
+      "milk and cream"
+    ]
+  },
+  {
+    "question": "Who takes care of babies?",
+    "type": "wh",
+    "correct_answer": "parent",
+    "accepted_answers": [
+      "parent",
+      "mom",
+      "dad",
+      "mommy",
+      "daddy",
+      "babysitter",
+      "caregiver",
+      "grandparent"
+    ]
+  },
+  {
+    "question": "What do we use a ladder for?",
+    "type": "wh",
+    "correct_answer": "climbing up high",
+    "accepted_answers": [
+      "climbing up high",
+      "to climb",
+      "reaching high places",
+      "going up",
+      "climbing"
+    ]
+  },
+  {
+    "question": "Where do we go to exercise and play sports?",
+    "type": "wh",
+    "correct_answer": "gym",
+    "accepted_answers": [
+      "gym",
+      "gymnasium",
+      "park",
+      "sports field",
+      "playground",
+      "field"
+    ]
+  },
+  {
+    "question": "What do we use a paintbrush for?",
+    "type": "wh",
+    "correct_answer": "painting",
+    "accepted_answers": [
+      "painting",
+      "to paint",
+      "making art",
+      "drawing pictures"
+    ]
+  },
+  {
+    "question": "Where do we go to get a haircut?",
+    "type": "wh",
+    "correct_answer": "hair salon",
+    "accepted_answers": [
+      "hair salon",
+      "salon",
+      "barbershop",
+      "barber",
+      "hairdresser"
+    ]
+  },
+  {
+    "question": "What do bananas grow on?",
+    "type": "wh",
+    "correct_answer": "tree",
+    "accepted_answers": [
+      "tree",
+      "a tree",
+      "banana tree",
+      "plant",
+      "banana plant"
+    ]
+  },
+  {
+    "question": "Who helps you when you are lost?",
+    "type": "wh",
+    "correct_answer": "police officer",
+    "accepted_answers": [
+      "police officer",
+      "a police officer",
+      "adult",
+      "a grown-up",
+      "parent",
+      "teacher"
+    ]
+  },
+  {
+    "question": "What do we use a thermometer for?",
+    "type": "wh",
+    "correct_answer": "checking temperature",
+    "accepted_answers": [
+      "checking temperature",
+      "to check temperature",
+      "measuring temperature",
+      "seeing if we have a fever"
+    ]
+  },
+  {
+    "question": "Where do we put our head when we sleep?",
+    "type": "wh",
+    "correct_answer": "pillow",
+    "accepted_answers": [
+      "pillow",
+      "on a pillow",
+      "the pillow"
+    ]
+  },
+  {
+    "question": "What do we use a watering can for?",
+    "type": "wh",
+    "correct_answer": "watering plants",
+    "accepted_answers": [
+      "watering plants",
+      "to water plants",
+      "giving plants water",
+      "watering flowers"
+    ]
+  },
+  {
+    "question": "Where do we keep our clothes?",
+    "type": "wh",
+    "correct_answer": "closet",
+    "accepted_answers": [
+      "closet",
+      "wardrobe",
+      "dresser",
+      "drawer",
+      "in a closet",
+      "in a dresser"
+    ]
+  },
+  {
+    "question": "What is lemonade made from?",
+    "type": "wh",
+    "correct_answer": "lemons",
+    "accepted_answers": [
+      "lemons",
+      "lemon",
+      "lemon juice"
+    ]
+  },
+  {
+    "question": "Who drives an ambulance?",
+    "type": "wh",
+    "correct_answer": "paramedic",
+    "accepted_answers": [
+      "paramedic",
+      "a paramedic",
+      "EMT",
+      "ambulance driver",
+      "emergency worker"
+    ]
+  },
+  {
+    "question": "What do we use a lunchbox for?",
+    "type": "wh",
+    "correct_answer": "carrying food",
+    "accepted_answers": [
+      "carrying food",
+      "to carry food",
+      "holding lunch",
+      "bringing food to school",
+      "packing lunch"
+    ]
+  },
+  {
+    "question": "Where do we go to buy books?",
+    "type": "wh",
+    "correct_answer": "bookstore",
+    "accepted_answers": [
+      "bookstore",
+      "book shop",
+      "store",
+      "library"
+    ]
+  },
+  {
+    "question": "What do we use a seatbelt for?",
+    "type": "wh",
+    "correct_answer": "staying safe in the car",
+    "accepted_answers": [
+      "staying safe in the car",
+      "staying safe",
+      "to stay safe",
+      "safety",
+      "keeping safe in the car",
+      "protection"
+    ]
+  },
+  {
+    "question": "Where do we wash our body?",
+    "type": "wh",
+    "correct_answer": "bathtub",
+    "accepted_answers": [
+      "bathtub",
+      "shower",
+      "bathroom",
+      "in the bath",
+      "in the shower"
+    ]
+  },
+  {
+    "question": "What do we use a backpack for?",
+    "type": "wh",
+    "correct_answer": "carrying things",
+    "accepted_answers": [
+      "carrying things",
+      "to carry things",
+      "carrying books",
+      "bringing things to school"
+    ]
+  },
+  {
+    "question": "Where do we go to get on a bus?",
+    "type": "wh",
+    "correct_answer": "bus stop",
+    "accepted_answers": [
+      "bus stop",
+      "the bus stop",
+      "station"
+    ]
+  },
+  {
+    "question": "What is pasta made from?",
+    "type": "wh",
+    "correct_answer": "flour",
+    "accepted_answers": [
+      "flour",
+      "wheat",
+      "wheat flour",
+      "dough"
+    ]
+  },
+  {
+    "question": "Who grows food on a farm?",
+    "type": "wh",
+    "correct_answer": "farmer",
+    "accepted_answers": [
+      "farmer",
+      "a farmer",
+      "farmers"
+    ]
+  }
+]

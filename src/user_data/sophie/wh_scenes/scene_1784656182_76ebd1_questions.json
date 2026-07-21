@@ -1,0 +1,65 @@
+{
+  "scene_description": "A smiling adult man sits outdoors near trees, holding and reading an open blue book.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the man holding?",
+      "answer": "a blue book",
+      "visual_choices": [
+        "a blue book",
+        "a red ball",
+        "a white cup",
+        "a yellow bag"
+      ],
+      "evidence_hint": "Look at what is in the man's hands."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a man",
+      "visual_choices": [
+        "a man",
+        "a girl",
+        "a baby",
+        "a woman"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the book?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "green",
+        "orange"
+      ],
+      "evidence_hint": "Look at the book the man is holding."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the man sitting?",
+      "answer": "outside near trees",
+      "visual_choices": [
+        "outside near trees",
+        "in a kitchen",
+        "in a classroom",
+        "in a bedroom"
+      ],
+      "evidence_hint": "Look at the background behind the man."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the man doing?",
+      "answer": "reading a book",
+      "visual_choices": [
+        "reading a book",
+        "eating food",
+        "playing a game",
+        "writing on paper"
+      ],
+      "evidence_hint": "Look at the man's hands and the open book."
+    }
+  ]
+}

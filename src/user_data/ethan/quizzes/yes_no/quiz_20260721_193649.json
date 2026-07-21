@@ -1,0 +1,810 @@
+[
+  {
+    "question": "Is a dog a kind of animal?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to take someone else's pencil without asking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": [],
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "Is an apple both a fruit and a food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you wait your turn when playing a board game?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Is bread made from flour?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a poodle a kind of dog?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it polite to interrupt someone while they are speaking?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": [],
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "Is yogurt made from milk?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are roses and tulips both kinds of flowers?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ask to join a game before jumping in?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "peer_entry_and_group_joining"
+  },
+  {
+    "question": "Is a salmon a kind of fish?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is cheese made from milk?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If a classmate looks sad, is it kind to ask if they are okay?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "Is a hammer used for cutting wood?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are carrots and broccoli both vegetables?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you use words to explain your side during a disagreement with a friend?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "conflict_resolution"
+  },
+  {
+    "question": "Is a whale a kind of mammal?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Do we pack a backpack before going to school?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to call a classmate a mean name to make others laugh?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": [],
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "Is orange juice made from oranges?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a piano a musical instrument?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you share art supplies when working on a group project?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Is a butterfly a kind of insect?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is butter made from cream?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If your friend wants to play a different game than you, can you take turns choosing?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "conflict_resolution"
+  },
+  {
+    "question": "Is a cactus a kind of plant?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are boots and sneakers both kinds of shoes?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it a good idea to walk away if someone keeps teasing you?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "Is a thermometer used to measure temperature?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is pasta made from flour and water?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you include a classmate who is sitting alone at recess?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "Is a robin a kind of bird?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a lemon both a fruit and sour?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If you need help during class, is it okay to raise your hand and ask the teacher?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "Is a telescope used to look at things far away?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are sharks and dolphins both animals that live in the ocean?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it a good idea to watch what a group is doing before asking to join?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "peer_entry_and_group_joining"
+  },
+  {
+    "question": "Is a dictionary used to look up the meaning of words?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is cotton candy made from sugar?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a tomato be both a fruit and a food?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If someone gives you a gift, is it polite to say thank you?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "Is a frog a kind of amphibian?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is a stethoscope a tool used by doctors?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If your friend does not know the rules of a game, should you explain them?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Is a maple tree a kind of tree?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is tofu made from soybeans?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you tell a trusted adult if someone at school is bullying you?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "Is a microscope used to see very tiny things up close?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are tigers and lions both kinds of big cats?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If a friend shares something private with you, should you keep it to yourself?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "Is a submarine a vehicle that travels underwater?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is peanut butter made from peanuts?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a bat be both a mammal and an animal that flies?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it helpful to ask a new classmate about their interests to start a friendship?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "Is a compass used to find directions like north and south?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is maple syrup made from tree sap?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If you feel overwhelmed, is it okay to ask for a short break?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "Is a violin a kind of string instrument?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are penguins and eagles both kinds of birds?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If you accidentally bump into someone, should you say sorry?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "Is a crab a kind of animal that lives in the ocean?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is chocolate made from cacao beans?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a swan be both a bird and an animal that swims?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If your partner in a project has a different idea, should you listen to their idea first?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "Is a calculator used to solve math problems?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is vinegar made from fermented liquid?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to push someone out of line so you can go first?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": [],
+    "social_target": "social_problem_solving"
+  },
+  {
+    "question": "Is a crocodile a kind of reptile?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are hammers and screwdrivers both kinds of tools?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If you lose a game, should you congratulate the winner?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Is a globe a model that shows the shape of the Earth?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is honey made by bees?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a strawberry be both red and a fruit?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If a classmate looks confused about an assignment, is it kind to offer to help?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "Is a thermometer a kind of measuring tool?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is popcorn made from corn kernels?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you ask before borrowing a friend's book?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "social_problem_solving"
+  },
+  {
+    "question": "Is a cello a kind of musical instrument?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are frogs and salamanders both kinds of amphibians?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If someone is crying, is it likely that they are feeling upset?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "Is a flashlight used to make light in a dark place?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is ice cream made from cream and sugar?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a seagull be both a bird and an animal that lives near the ocean?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it a good idea to say how you feel using words instead of yelling?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "Is a ruler used to measure length?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is toothpaste used to clean your teeth?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If you do not understand what someone said, is it okay to ask them to repeat it?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "Is a cactus both a plant and something that can grow in the desert?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are buses and trains both kinds of transportation?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If your friend wins a prize, should you feel happy for them?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "Is a sponge used to clean and absorb water?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is olive oil made from olives?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to spread a rumor about a classmate to make them look bad?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": [],
+    "social_target": "teasing_bullying_and_rejection_response"
+  },
+  {
+    "question": "Is a kangaroo a kind of mammal?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are apples and pears both kinds of fruit that grow on trees?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you greet someone when you start a conversation with them?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "Is a broom used to sweep the floor?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is salsa made from tomatoes?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a duck be both a bird and an animal that swims?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If a friend tells you they do not want to play a rough game, should you respect that?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "self_advocacy_and_communication_of_needs"
+  },
+  {
+    "question": "Is a magnifying glass used to make small things look bigger?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is lemonade made from lemons, water, and sugar?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it a good idea to find a common interest when making a new friend?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "friendship_development"
+  },
+  {
+    "question": "Is a penguin a kind of bird that cannot fly?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are oak trees and pine trees both kinds of trees?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If two friends disagree about the rules of a game, should they calmly talk it out?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "conflict_resolution"
+  },
+  {
+    "question": "Is a scale used to measure how heavy something is?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is flour made by grinding wheat?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a bat be both a mammal and a nocturnal animal?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If someone is laughing and smiling, are they likely feeling happy?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "emotion_understanding"
+  },
+  {
+    "question": "Is a ladder used to help people climb up high places?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is apple cider made from apples?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Should you take turns talking during a conversation with a friend?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "reciprocal_conversation"
+  },
+  {
+    "question": "Is a cobra a kind of snake?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are drums and trumpets both kinds of musical instruments?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If you accidentally break something belonging to a friend, should you tell them?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "social_problem_solving"
+  },
+  {
+    "question": "Is a parachute used to slow down a fall from the sky?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is cocoa powder made from cacao beans?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Can a coconut be both a fruit and a food that contains liquid inside?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If a classmate is left out of a group activity, should you invite them to join?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "peer_entry_and_group_joining"
+  },
+  {
+    "question": "Is a compass a tool used for drawing circles?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is raisin bread made with dried grapes?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is it okay to keep playing a game even when it is someone else's turn?",
+    "type": "yes_no",
+    "correct_answer": "no",
+    "accepted_answers": [],
+    "social_target": "cooperative_play_and_group_participation"
+  },
+  {
+    "question": "Is a dolphin a kind of mammal that lives in the ocean?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Are soccer and basketball both kinds of sports?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "If a friend seems upset after losing a game, is it kind to say something encouraging?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": [],
+    "social_target": "perspective_taking_theory_of_mind"
+  },
+  {
+    "question": "Is a funnel used to pour liquid into a narrow opening?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  },
+  {
+    "question": "Is soy sauce made from fermented soybeans?",
+    "type": "yes_no",
+    "correct_answer": "yes",
+    "accepted_answers": []
+  }
+]

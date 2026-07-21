@@ -1,0 +1,65 @@
+{
+  "scene_description": "A person with long hair stands facing away, holding a handbag and standing next to a rolling suitcase. In the sky through a large window, an airplane is flying.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is flying in the sky?",
+      "answer": "an airplane",
+      "visual_choices": [
+        "an airplane",
+        "a bird",
+        "a kite",
+        "a balloon"
+      ],
+      "evidence_hint": "Look up in the top right corner of the picture."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing in the picture?",
+      "answer": "a person",
+      "visual_choices": [
+        "a person",
+        "a dog",
+        "a baby",
+        "two children"
+      ],
+      "evidence_hint": "Look at the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the person holding in their hand?",
+      "answer": "a handbag",
+      "visual_choices": [
+        "a handbag",
+        "an umbrella",
+        "a ball",
+        "a book"
+      ],
+      "evidence_hint": "Look at the person's hand near their side."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is next to the person on the floor?",
+      "answer": "a suitcase",
+      "visual_choices": [
+        "a suitcase",
+        "a bicycle",
+        "a chair",
+        "a box"
+      ],
+      "evidence_hint": "Look at the bottom of the picture near the person's feet."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the airplane?",
+      "answer": "in the sky",
+      "visual_choices": [
+        "in the sky",
+        "on the ground",
+        "in the water",
+        "on a road"
+      ],
+      "evidence_hint": "Look at the top part of the picture."
+    }
+  ]
+}

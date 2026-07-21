@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nThe Great Train Race\n\nEthan loved trains more than almost anything. His favourite was a bright red engine with three silver wheels on each side. One afternoon, he brought his train set to the community centre, where the playroom had the longest track he had ever seen.\n\nWhile Ethan was connecting the curved pieces, a boy named Theo came over and sat across from him.\n\n\"That red one is really fast,\" Theo said. \"I think I saw it win a race before.\"\n\n\"It did!\" Ethan replied. \"I chose it because the wheels are really smooth and round.\"\n\nTogether they built a long track that ran under a chair and through a tunnel. Ethan took one end, Theo took the other, and they became a great team. Although fitting the pieces together was tricky, they found a way by taking turns deciding which piece went next.\n\nFinally, the train raced through the whole track without stopping. Ethan grinned so wide his cheeks hurt.\n\n\"We should race again tomorrow,\" Theo said.\n\nEthan thought that sounded like the best idea he had heard all week.\n\n** End **\n** Takeaways **\n- Asking a friend for help makes hard things much easier.\n- Taking turns means everyone gets to share and feel important.\n- Working together with someone new can start a great friendship.\n\n** Explanation of the output **\nThe story uses vehicles (trains) as Ethan's interest hook and weaves in descriptive vocabulary, spatial language, and irregular past tense naturally through narration and dialogue. Collaboration, turn-taking, and reciprocal conversation are demonstrated through Ethan and Theo's extended exchange and joint building activity. Target sounds [th, r, ch] appear throughout in words like three, red, round, through, Theo, and chair.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 289,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-07-21T19:13:06.905765"
+}

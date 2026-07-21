@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nThe Missing Controller\n\nEthan ran downstairs because today was finally Saturday — the best day for playing his favourite racing game. He searched behind the red couch cushions and checked under the brown wooden table, but the controller was gone.\n\n\"Dad took it to the garage,\" his older sister Maya said, although she looked just as surprised as Ethan felt.\n\nEthan found Dad surrounded by tangled wires and dusty shelves. While Dad reorganised everything, he spoke quietly. \"I think I brought it in here by mistake. Want to help me sort through this together?\"\n\nEthan began picking up boxes, checking each shelf carefully. After they sorted three rows, Ethan reached behind a deep green toolbox — and there it was.\n\n\"We found it because we worked as a team,\" Dad said, grinning.\n\nEthan thought about that. He taught himself something real that afternoon, something even better than reaching the next race level — that the best helper he had was right beside him all along.\n\n** End **\n** Takeaways **\n- Working together with someone you trust helps you solve problems faster.\n- Asking a family member for help makes hard things easier.\n- Being patient and checking carefully is better than giving up.\n\n** Explanation of the output **\nThe story centres on a family home routine and models collaboration, descriptive language, and perspective-taking through Ethan and Dad's shared problem-solving. Therapy targets — including irregular past tense (found, brought, spoke, taught), causal language (because), and advanced conjunctions (while, although, after) — are woven naturally into narration and dialogue. The video game interest theme drives the plot, while the peer/family entry moment is reflected in Ethan observing Dad's situation before joining in helpfully.\n",
+  "metadata": {
+    "child_name": "ethan",
+    "age": 8,
+    "language_age": null,
+    "age_tier": "school_age",
+    "target_word_range": [
+      130,
+      200
+    ],
+    "word_count": 287,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-07-21T19:16:00.636181"
+}

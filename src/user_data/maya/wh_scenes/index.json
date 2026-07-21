@@ -1,112 +1,112 @@
 [
   {
-    "id": "scene_1783447161_9e5147",
-    "filename": "capture_2026-07-07 19:59:42.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447161_9e5147.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447161_9e5147.jpg",
-    "scene_description": "A classroom scene showing a female teacher standing in front of a green chalkboard with math problems written on it. Several children are seated with their hands raised. The teacher's name 'Ms. Miller' is written on the board.",
+    "id": "scene_1784656127_b2765a",
+    "filename": "capture_2026-07-21 19:49:08.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656127_b2765a.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656127_b2765a.jpg",
+    "scene_description": "Two children are riding a green roller coaster car at an amusement park. They are holding onto a yellow safety bar. A Ferris wheel is visible in the background among green trees.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T19:59:42"
+    "created_at": "2026-07-21T19:49:08"
   },
   {
-    "id": "scene_1783447227_451f00",
-    "filename": "capture_2026-07-07 20:00:47.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447227_451f00.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447227_451f00.jpg",
-    "scene_description": "A woman wearing a pink top and yellow rubber gloves is kneeling on a kitchen floor. She is holding a striped cloth and is surrounded by cleaning supplies including a blue bucket, a red bucket, and a mop with a blue handle.",
+    "id": "scene_1784656157_448a46",
+    "filename": "capture_2026-07-21 19:49:36.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656157_448a46.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656157_448a46.jpg",
+    "scene_description": "A boy wearing a red, white, and blue soccer uniform and red socks is kicking a black and white soccer ball on a green grass field. Other players in similar uniforms are visible in the background.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:00:47"
+    "created_at": "2026-07-21T19:49:36"
   },
   {
-    "id": "scene_1783447261_f9e1ce",
-    "filename": "capture_2026-07-07 20:01:21.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447261_f9e1ce.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447261_f9e1ce.jpg",
-    "scene_description": "A boy sits on the grass leaning against a tree trunk. There are American flags displayed nearby, and a driveway and flowers are visible in the background.",
+    "id": "scene_1784656182_76ebd1",
+    "filename": "capture_2026-07-21 19:49:59.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656182_76ebd1.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656182_76ebd1.jpg",
+    "scene_description": "A man with dark hair and a beard is sitting outdoors near trees, holding and reading an open blue book. He is wearing a light blue shirt and smiling.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:01:21"
+    "created_at": "2026-07-21T19:49:59"
   },
   {
-    "id": "scene_1783447296_289daa",
-    "filename": "capture_2026-07-07 20:01:56.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447296_289daa.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447296_289daa.jpg",
-    "scene_description": "A woman wearing an apron stands at a kitchen stove, stirring food in a pan. A basket of vegetables and fruits sits on the counter nearby. A ladle hangs on the wall behind her.",
+    "id": "scene_1784656211_cfaed4",
+    "filename": "capture_2026-07-21 19:50:31.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656211_cfaed4.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656211_cfaed4.jpg",
+    "scene_description": "A girl with long dark hair sits at a table writing in a notebook. A laptop is open beside her. There are books on the table and artwork on the wall behind her.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:01:56"
+    "created_at": "2026-07-21T19:50:31"
   },
   {
-    "id": "scene_1783447334_f3a12a",
-    "filename": "capture_2026-07-07 20:02:35.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447334_f3a12a.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447334_f3a12a.jpg",
-    "scene_description": "A person with long hair stands with their back to the viewer, holding a handbag and standing next to a rolling suitcase. They are looking out a large window at an airplane flying in the sky.",
+    "id": "scene_1784656245_fd1e71",
+    "filename": "capture_2026-07-21 19:51:07.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656245_fd1e71.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656245_fd1e71.jpg",
+    "scene_description": "Four children are sitting around a campfire in a forest. They are roasting marshmallows on sticks over a fire pit. There is a tent in the background and camping chairs around the fire.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:02:35"
+    "created_at": "2026-07-21T19:51:07"
   },
   {
-    "id": "scene_1783447367_7d43c2",
-    "filename": "capture_2026-07-07 20:03:08.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447367_7d43c2.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447367_7d43c2.jpg",
-    "scene_description": "A group of children and an adult sitting around a campfire in the woods, roasting marshmallows on sticks. A green tent and blue camping chairs are visible in the background.",
+    "id": "scene_1784656278_586331",
+    "filename": "capture_2026-07-21 19:51:39.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656278_586331.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656278_586331.jpg",
+    "scene_description": "A person with long hair stands at a large window holding a handbag, with a rolling suitcase beside them. An airplane is flying in the sky outside the window.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:03:08"
+    "created_at": "2026-07-21T19:51:39"
   },
   {
-    "id": "scene_1783447398_e3ae20",
-    "filename": "capture_2026-07-07 20:03:38.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447398_e3ae20.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447398_e3ae20.jpg",
-    "scene_description": "A person with long dark hair sits at a table writing in a notebook. A laptop is open on the table nearby. There is a blue couch and artwork on the wall in the background.",
+    "id": "scene_1784656310_2f36f0",
+    "filename": "capture_2026-07-21 19:52:10.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656310_2f36f0.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656310_2f36f0.jpg",
+    "scene_description": "A woman wearing an apron stands at a gas stove in a kitchen, stirring a pan with steam rising from it. Behind her is a basket filled with vegetables and fruit on the counter. Cooking utensils hang on the wall.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:03:38"
+    "created_at": "2026-07-21T19:52:10"
   },
   {
-    "id": "scene_1783447431_51406f",
-    "filename": "capture_2026-07-07 20:04:08.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447431_51406f.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447431_51406f.jpg",
-    "scene_description": "A man with short dark hair and a beard is holding an open blue book and smiling. He is wearing a light blue polo shirt. Trees are visible in the background.",
+    "id": "scene_1784656333_549d24",
+    "filename": "capture_2026-07-21 19:52:33.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656333_549d24.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656333_549d24.jpg",
+    "scene_description": "A boy sits on green grass leaning against a large tree trunk. There are American flags visible nearby, a sidewalk, and trees in the background.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:04:08"
+    "created_at": "2026-07-21T19:52:33"
   },
   {
-    "id": "scene_1783447465_d00cf5",
-    "filename": "capture_2026-07-07 20:04:44.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447465_d00cf5.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447465_d00cf5.jpg",
-    "scene_description": "A child wearing a red, white, and blue soccer uniform is kicking a black and white soccer ball on a green grass field. Other children in similar uniforms are visible in the background.",
+    "id": "scene_1784656360_cd31e6",
+    "filename": "capture_2026-07-21 19:53:01.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656360_cd31e6.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656360_cd31e6.jpg",
+    "scene_description": "A woman wearing a pink top, blue jeans, and yellow rubber gloves is kneeling on a kitchen floor. She is holding a mop head. Nearby there is a red mop bucket, a blue bucket, and a cleaning cart with supplies. A mop with a blue handle stands upright.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:04:44"
+    "created_at": "2026-07-21T19:53:01"
   },
   {
-    "id": "scene_1783447492_de5228",
-    "filename": "capture_2026-07-07 20:05:12.jpg",
-    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1783447492_de5228.jpg",
-    "image_url": "/images/maya/wh_scenes/images/scene_1783447492_de5228.jpg",
-    "scene_description": "Two children are riding a roller coaster at an amusement park. They are sitting in a green car and holding onto a yellow safety bar. A Ferris wheel is visible in the background.",
+    "id": "scene_1784656386_10a31b",
+    "filename": "capture_2026-07-21 19:53:28.jpg",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/maya/wh_scenes/images/scene_1784656386_10a31b.jpg",
+    "image_url": "/images/maya/wh_scenes/images/scene_1784656386_10a31b.jpg",
+    "scene_description": "A classroom scene showing a smiling adult woman standing at a green chalkboard with math problems written on it. Several children are seated at desks with their hands raised in the air.",
     "question_count": 5,
     "expressive_count": 5,
     "status": "ready",
-    "created_at": "2026-07-07T20:05:12"
+    "created_at": "2026-07-21T19:53:28"
   }
 ]
