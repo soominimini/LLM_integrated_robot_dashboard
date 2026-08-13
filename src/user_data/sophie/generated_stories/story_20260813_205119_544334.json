@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Shiny Crown\n\nSophie is in the playroom. Sophie finds a big, shiny crown on the chair. Sophie puts the crown on her head. The crown is too big! It falls over her eyes. Sophie cannot see. Sophie's friend Ruby is sitting on the red rug. Ruby has three ribbons. Ruby ties the ribbons around the crown. Now the crown sits right on Sophie's head! Sophie and Ruby are both wearing crowns. They are marching around the room together. Sophie is smiling because the crown fits!\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie find on the chair?\n3. WHO is sitting on the red rug?\n4. WHAT does Ruby tie around the crown?\n5. WHERE are Sophie and Ruby marching?\n6. WHAT are Sophie and Ruby both wearing?\n\n** Explanation of the output **\nThe story uses a princess theme (crown, ribbons, marching) to naturally embed descriptive words, spatial terms, and simple conjunctions while modelling collaboration and friendship through Sophie and Ruby's shared problem-solving. WH-questions target literal language comprehension at the 4–5 year level, with all answers explicitly stated in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 195,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:51:19.544334"
+}

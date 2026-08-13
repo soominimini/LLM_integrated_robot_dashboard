@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy in the Leaves\n\nSophie is playing in the tall, red leaves. The leaves are falling from the big tree. A tiny fairy lands on a brown leaf. The fairy has small, sparkly wings. Sophie picks up the leaf. The fairy sits on Sophie's hand. A cold wind blows all the leaves away. Sophie holds the leaf very still. The fairy is safe on Sophie's warm hand. Sophie and the fairy watch the orange and yellow leaves swirl around the garden together.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT is falling from the big tree?\n3. WHO lands on the brown leaf?\n4. WHAT does the fairy have?\n5. WHAT blows all the leaves away?\n6. WHERE does the fairy sit?\n7. WHAT do Sophie and the fairy watch together?\n\n** Explanation of the output **\nThe story weaves descriptive adjectives (tall, red, brown, small, sparkly, cold, orange, yellow) and spatial terms (on, around) into a simple fairy scene set in autumn, supporting language comprehension and literacy goals. Sophie and the fairy collaborating to stay safe during the cold wind naturally models friendship, overcoming a challenge with support, and turn-taking through shared, observable actions.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 207,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T20:57:12.798566"
+}

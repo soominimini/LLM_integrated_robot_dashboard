@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Falling Leaves\n\nSophie is in the big park. Red and yellow leaves are falling from the trees. Sophie has a small brown dog. The dog is called Chip. Chip is running after the leaves. Sophie is throwing three big leaves into the air. The wind blows the leaves under a bench. Sophie and Chip run to the bench. Sophie picks up the crunchy leaves. Chip wags his tail. Sophie puts the leaves in a tall pile. Chip jumps into the pile. Sophie laughs. The leaves are all around Chip.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT color are the falling leaves?\n3. WHO is Chip?\n4. WHERE do the leaves blow?\n5. WHAT does Sophie put in a tall pile?\n6. WHO jumps into the pile?\n\n** Explanation of the output **\nThe story uses concrete, observable actions and vivid autumn details to support language comprehension, while naturally weaving in descriptive words (big, small, brown, crunchy, tall), spatial terms (under a bench, around Chip), plural nouns (leaves, trees), and the -ing verb form (running, throwing, falling) to address the stated speech-language therapy goals.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 194,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T21:01:50.087521"
+}

@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Crown\n\nSophie is in the classroom. Sophie has a shiny, red crown for the princess show. Sophie puts the crown on the table. The crown falls under the chair! Sophie cannot reach the crown. Sophie's friend Mia is sitting next to Sophie. Mia reaches under the chair and picks up the crown. Mia gives the crown to Sophie. Sophie and Mia are both smiling. The teacher sees Sophie and Mia sharing. The teacher claps her hands. The princess show is ready to start!\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have?\n3. WHERE does the crown fall?\n4. WHO picks up the crown?\n5. WHO sees Sophie and Mia sharing?\n6. WHAT does the teacher do?\n7. WHAT is ready to start?\n\n** Explanation of the output **\nThe story is set in a classroom and uses Sophie's interest in princesses to motivate the scene, while naturally weaving in descriptive vocabulary (\"shiny, red\"), spatial terms (\"on the table,\" \"under the chair\"), collaborative action between named characters, and early conjunctions (\"and\"), supporting language comprehension, descriptive language, and social-emotional goals. All WH-questions target WHO, WHAT, and WHERE, with every answer stated explicitly in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 207,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T20:59:19.563409"
+}

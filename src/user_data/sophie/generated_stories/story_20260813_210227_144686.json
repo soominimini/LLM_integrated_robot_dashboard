@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Rabbit\n\nSophie is at the pet shop. Three small rabbits are sitting in a big cage. Sophie sees a tiny brown rabbit in the corner. \"That rabbit is so little!\" Sophie says. The rabbit is chewing on a crunchy carrot. A girl named Mia is there too. Mia holds out a carrot. \"Let's give them the carrots together,\" Mia says. Sophie and Mia take turns putting carrots through the cage. The tiny brown rabbit hops over. Sophie and Mia are laughing and clapping their hands.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT are the rabbits sitting in?\n3. WHAT color is the tiny rabbit?\n4. WHAT is the rabbit chewing?\n5. WHO holds out a carrot?\n6. WHAT do Sophie and Mia put through the cage?\n7. WHAT are Sophie and Mia doing at the end?\n\n** Explanation of the output **\nThe story features a pet-themed scene at a shop, naturally embedding descriptive words (tiny, brown, big, crunchy), spatial terms (in the corner, through the cage), plural nouns (rabbits, carrots), -ing verbs (sitting, chewing, laughing, clapping), and the conjunction \"together\" to model collaboration and turn-taking. Target sounds /r/, /ch/, and /th/ appear in words like rabbit, three, crunchy, chewing, and together, supporting articulation goals within a warm friendship context.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 222,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T21:02:27.144686"
+}

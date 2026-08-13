@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is playing in the big, red leaves. The leaves are falling from the tall trees. Sophie sees a tiny fairy sitting on a round leaf. The fairy has bright wings and a little wand. \"The wind is too strong!\" says the fairy. Sophie picks up a yellow leaf. Sophie holds the leaf next to the fairy. The leaf blocks the cold wind. The fairy smiles. \"Thank you, Sophie!\" the fairy says. Sophie and the fairy sit together on the soft, warm ground.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT is falling from the trees?\n3. WHO is sitting on the round leaf?\n4. WHAT does the fairy have?\n5. WHAT does Sophie pick up?\n6. WHERE do Sophie and the fairy sit together?\n7. WHO says thank you to Sophie?\n\n** Explanation of the output **\nThe story uses vivid autumn details and fairy characters to naturally embed descriptive adjectives (big, red, tall, round, tiny, bright, yellow, cold, soft, warm), spatial language (on, next to, from), and collaborative action between Sophie and the fairy to support language comprehension, friendship themes, and overcoming challenges with support. WH-questions target literal recall of concrete, story-stated facts to build early literacy comprehension skills.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 214,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T21:01:18.272292"
+}

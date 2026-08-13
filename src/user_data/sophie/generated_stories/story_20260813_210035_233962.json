@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy Wings\n\nSophie is in the classroom. Sophie sees two tiny wings on the floor. The wings are small and pink. Sophie's friend Chloe is sitting next to her. \"I think a fairy was here!\" says Sophie. Chloe looks under the chair. Three red crayons are there too. Sophie and Chloe pick up the crayons and the wings. They put the wings on the table. Their teacher, Miss Chen, comes over. Miss Chen puts the pretty wings in a special box on the shelf.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie see on the floor?\n3. WHAT color are the wings?\n4. WHO is sitting next to Sophie?\n5. WHERE does Chloe look?\n6. WHAT does Miss Chen put the wings in?\n7. WHERE is the box?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (\"small and pink,\" \"tiny,\" \"pretty\"), spatial terms (\"under the chair,\" \"on the table,\" \"on the shelf\"), collaboration between Sophie and Chloe, and naturally models late-developing sounds through words like \"three,\" \"chair,\" \"crayons,\" and \"their,\" supporting articulation, vocabulary, and language comprehension goals.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 194,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T21:00:35.233962"
+}

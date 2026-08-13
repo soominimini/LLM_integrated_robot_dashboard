@@ -10,6 +10,9 @@ source .venv/bin/activate
 python src/web_user_server.py
 http://127.0.0.1:8080
 
+# Stop web app
+kill -9 $(lsof -t -i :8080)
+
 # Object detection
 Generate games > Object detection to customize list
 

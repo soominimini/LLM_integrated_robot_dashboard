@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Runaway Crown\n\nSophie is playing in the garden. Sophie has a big, shiny crown on her head. Sophie is wearing a long red dress. The crown falls off. It rolls under the rose bush. Sophie's friend Chloe is there. \"I see it!\" Chloe says. Chloe reaches under the rose bush. She gives the crown back to Sophie. \"Thank you, Chloe!\" Sophie says. Sophie puts the crown back on her head. Sophie and Chloe are smiling. They sit on the three big rocks together.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT does Sophie have on her head?\n3. WHAT color is Sophie's dress?\n4. WHERE does the crown roll?\n5. WHO sees the crown?\n6. WHO gives the crown back to Sophie?\n7. WHERE do Sophie and Chloe sit?\n\n** Explanation of the output **\nThe story uses descriptive adjectives (big, shiny, long, red), spatial terms (under the rose bush, on her head), and natural turn-taking between Sophie and Chloe to target language comprehension, collaboration, and friendship. Late-developing sounds are embedded in words such as three, crown, reaches, and dress, and all WH-question answers are stated explicitly in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 202,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T21:02:14.616608"
+}

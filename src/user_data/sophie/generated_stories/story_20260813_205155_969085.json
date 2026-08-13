@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Shiny Crown\n\nSophie is in the big castle. Sophie has a shiny crown. The crown is on top of a tall, tall chair. Sophie cannot reach it. Her friend Ruby is there, too. Ruby stands on a red box. Ruby picks up the crown and gives it to Sophie. Sophie puts the beautiful crown on her head. Three little birds are watching from the window. Sophie and Ruby are laughing and clapping their hands. Sophie is wearing her crown. Ruby and Sophie are the two best princesses.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have?\n3. WHERE is the crown?\n4. WHO stands on the red box?\n5. WHAT does Ruby pick up?\n6. WHO is watching from the window?\n7. WHAT are Sophie and Ruby doing?\n\n** Explanation of the output **\nThe story uses princess-themed content to engage Sophie while naturally embedding descriptive adjectives (\"shiny,\" \"tall,\" \"beautiful,\" \"red\"), spatial terms (\"on top of,\" \"from the window\"), plural nouns (\"birds,\" \"hands,\" \"princesses\"), and the collaborative act of asking for and receiving help — all supporting vocabulary development, language comprehension, and early literacy through answerable, explicitly stated WHO/WHAT/WHERE questions.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 202,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:51:55.969085"
+}

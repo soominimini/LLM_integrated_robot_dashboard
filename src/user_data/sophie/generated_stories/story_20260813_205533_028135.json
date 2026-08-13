@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Hiding Cat\n\nSophie and her dad are looking for their cat, Chip. Chip is not in the big chair. Chip is not under the table. Sophie looks behind the red couch. Chip is not there. Dad checks the three boxes near the door. Sophie sees a fluffy tail under her brown blanket. Sophie lifts the soft blanket. Chip is curled up and sleeping. Sophie calls her dad. Dad runs over to Sophie. They both pat Chip together. Chip opens her bright green eyes.\n\n** End **\n** Questions **\n1. WHO is Sophie looking for?\n2. WHERE does Sophie look behind?\n3. WHAT does Dad check near the door?\n4. WHAT does Sophie see under the blanket?\n5. WHO runs over to Sophie?\n6. WHAT color are Chip's eyes?\n7. WHERE is Chip sleeping?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (big, red, fluffy, soft, brown, bright green) and spatial terms (behind, under, near) through Sophie and her dad's search routine, naturally modeling collaboration and turn-taking within a warm family scene. WH-questions target literal comprehension using only WHO/WHAT/WHERE, supporting early language comprehension and literacy development at the 5-year-old level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 200,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:55:33.028135"
+}

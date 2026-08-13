@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie's Lost Rabbit\n\nSophie is in the classroom. Sophie has a small, brown rabbit in her bag. The rabbit is for Show and Tell. Sophie puts the bag under the chair. Oh no! The rabbit is not in the bag. Sophie looks on the table and on the floor. Sophie asks her friend Mia for help. Mia looks behind the red chairs. The rabbit is there! Sophie and Mia carry the rabbit to the front together. The teacher gives the two friends a big thumbs up.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is in Sophie's bag?\n3. WHERE does Sophie put the bag?\n4. WHO does Sophie ask for help?\n5. WHERE does Mia find the rabbit?\n6. WHO gives the friends a thumbs up?\n\n** Explanation of the output **\nThe story weaves descriptive words (small, brown, red, big), spatial terms (under the chair, on the table, behind), collaboration, and turn-taking into a simple classroom scene built around Sophie's interest in pets. Target sounds /r/, /ch/, and /th/ appear naturally in words like rabbit, chair, teacher, and thumbs, supporting articulation goals without explicit drilling.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 194,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T21:00:46.461035"
+}

@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has small wings and a little wand. The fairy is looking for three bright stars. The stars are in the big tree! Sophie points to the tall tree. The fairy claps her wings. Sophie and the fairy reach up together. They grab the three shiny stars from the branches. The fairy puts the stars in her round basket. Sophie and the fairy are smiling.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is sitting on the red flower?\n3. WHAT does the fairy have in her hand?\n4. WHAT is the fairy looking for?\n5. WHERE are the three stars?\n6. WHAT does the fairy put the stars in?\n7. WHO is smiling at the end?\n\n** Explanation of the output **\nThe story builds language targets naturally — descriptive adjectives (\"tiny,\" \"red,\" \"bright,\" \"round\"), spatial terms (\"on,\" \"in,\" \"from the branches\"), plural nouns (\"stars,\" \"wings\"), and present progressive verbs (\"sitting,\" \"looking,\" \"smiling\") are all woven into a fairy-themed scene Sophie can picture and enjoy. The collaboration between Sophie and the fairy models turn-taking and peer support, while the WH-questions target literal comprehension using observable facts stated directly in the text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 220,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T21:02:39.345136"
+}

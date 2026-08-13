@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has small wings and a little wand. Sophie sits down next to the fairy. The fairy wants to reach three big leaves on a tall branch. The leaves are up high. Sophie holds out her hand. The fairy steps onto Sophie's hand. Sophie lifts the fairy up to the tall branch. The fairy taps the leaves with her wand. The leaves turn bright pink and yellow.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is sitting on the red flower?\n3. WHAT does the fairy have?\n4. WHAT does the fairy want to reach?\n5. WHERE are the three leaves?\n6. WHAT does Sophie lift the fairy up to?\n7. WHAT color do the leaves turn?\n\n** Explanation of the output **\nThe story uses concrete, observable actions and vivid descriptive words (tiny, red, small, tall, bright, pink, yellow) and spatial phrases (on a red flower, up high, onto Sophie's hand) to target adjectives and location concepts naturally. The collaboration between Sophie and the fairy models turn-taking and helping others, while target sounds /th/, /r/, and /ch/ appear in words like three, red, branch, and reach woven into the narrative without explicit drilling.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 222,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:52:45.603084"
+}

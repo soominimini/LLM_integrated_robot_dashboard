@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Windy Crown\n\nSophie is playing outside in the big, orange autumn leaves. Sophie has a shiny crown on her head. Sophie is a princess today! Her friend Mia is there, too. Mia is holding a tall, red flag. The wind blows Sophie's crown off her head. The crown lands under a pile of crunchy leaves. Mia helps Sophie look through the leaves. Mia finds the crown near a tree. Mia gives the crown back to Sophie. Sophie puts the crown on her head. The two friends cheer together.\n\n** End **\n** Questions **\n1. WHO is playing outside?\n2. WHAT is on Sophie's head?\n3. WHAT is Mia holding?\n4. WHERE does the crown land?\n5. WHO finds the crown?\n6. WHERE is the crown when Mia finds it?\n7. WHAT do Sophie and Mia do at the end?\n\n** Explanation of the output **\nThe story uses autumn leaves, wind, and a lost crown to weave in descriptive words (big, orange, shiny, tall, red, crunchy), spatial terms (under, near), collaboration, and friendship in a concrete, princess-themed outdoor scene. All WH-questions target WHO/WHAT/WHERE with answers stated word-for-word in the text, supporting literal language comprehension and early literacy skills.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 205,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T21:01:32.816886"
+}

@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Windy Crown\n\nSophie is in the royal garden. Red and orange leaves are falling from the tall trees. Sophie is wearing her shiny gold crown. The wind blows the crown off her head! The crown lands under a big brown leaf. Sophie's friend Rosie is standing near the rose bushes. Rosie picks up the crown and walks over to Sophie. Rosie puts the crown back on Sophie's head. Sophie claps her hands. The two friends sit together on the soft green grass and watch the leaves falling down.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is falling from the tall trees?\n3. WHAT is Sophie wearing?\n4. WHERE does the crown land?\n5. WHO picks up the crown?\n6. WHO puts the crown back on Sophie's head?\n7. WHAT do the two friends watch?\n\n** Explanation of the output **\nThe story uses vivid autumn details, descriptive words (shiny, tall, soft, big brown), and spatial language (under, near, on) to support language comprehension, while Rosie's helping role models friendship and overcoming a challenge with support. WH-questions target literal recall of who, what, and where — core comprehension goals for a 5-year-old — and all answers appear directly in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 212,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T21:01:06.464672"
+}

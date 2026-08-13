@@ -1,27 +1,4 @@
 #!/usr/bin/env python3.9
-"""Validate a spatial-direction setup for the scene game's 'direction' mode.
-
-The robot asks the child to arrange two named objects in a particular
-spatial relation, e.g. "Put the banana under the blue block." This worker
-takes a single camera frame and decides whether the arrangement matches.
-
-Input (args):
-    --image      path to the captured JPEG
-    --obj-a      moving object the robot named first (e.g. "banana")
-    --obj-b      reference object (e.g. "blue block")
-    --relation   one of: next_to, above, under, behind, in_front_of
-    --toy-list   optional comma-separated list of valid toys (constrains ID)
-
-Output (stdout, single JSON line):
-    {
-      "obj_a_found":     true | false,
-      "obj_b_found":     true | false,
-      "actual_relation": "next_to" | "above" | "under" | "behind"
-                       | "in_front_of" | "other",
-      "correct":         true | false,
-      "reason":          "<short child-friendly explanation>"
-    }
-"""
 
 import os
 import argparse
@@ -37,15 +14,22 @@ from google.genai import types
 # sentence (e.g. "beside" instead of "next to") but always passes the
 # canonical key to this worker.
 RELATION_PHRASE = {
+    "on": "on",
+    "off": "off",
     "next_to": "next to",
-    "above": "above",
     "under": "under",
-    "behind": "behind",
-    "in_front_of": "in front of",
-    "in": "in",
-    "out": "out of",
+    "above": "above",
+    "away_from": "away from",
 }
 
+RELATION_RULES = {
+    "on": "on top of, touching each other, not next to, not under",
+    "off": "not on, not touching each other",
+    "next_to": "side by side, not under, not above",
+    "under": "below, lower than, not next to, not above",
+    "above": "above, higher than, not next to, not under",
+    "away_from": "There must be a significant, visible empty gap separating the two objects (e.g., a distance wider than the reference object itself)."
+}
 
 def main():
     # Gemini Robotics-ER is the embodied-reasoning model (also used by the
@@ -73,58 +57,31 @@ def main():
         image_bytes = f.read()
 
     rel_phrase = RELATION_PHRASE[args.relation]
-    toy_clause = ""
-    if args.toy_list:
-        toy_clause = (
-            f"The valid game objects are: {args.toy_list}. "
-            "Only identify objects from this list.\n"
-        )
+
+    active_rule = RELATION_RULES[args.relation]
 
     prompt = (
-        "You are judging a children's spatial-direction game.\n"
-        f"{toy_clause}"
+        "You are validating a therapeutic spatial-direction game for a QT robot interacting with young children. Accuracy is critical."
         f"The child was asked to arrange the scene so that the {args.obj_a} is "
         f"{rel_phrase} the {args.obj_b}.\n"
         "\n"
-        "The image is taken from the front of the child (camera-facing view).\n"
-        "Decide:\n"
+        "An image is taken from the front of the child (camera-facing view).\n"
+        "Criteria:\n"
         f"1. Is the {args.obj_a} present in the scene?\n"
         f"2. Is the {args.obj_b} present in the scene?\n"
-        f"3. What is the actual spatial relation of the {args.obj_a} TO the "
-        f"{args.obj_b}? Pick ONE:\n"
-        "   - next_to       (side by side, roughly same height)\n"
-        "   - above         (higher than / on top of)\n"
-        "   - under         (lower than / underneath)\n"
-        "   - behind        (further from the camera, partially hidden)\n"
-        "   - in_front_of   (closer to camera, may partially block the other)\n"
-        "   - in            (inside / contained by the other; partially hidden by its walls or rim)\n"
-        "   - out           (outside / not contained by the other; fully visible and separate)\n"
-        "   - other         (none of the above clearly applies)\n"
-        f"4. Does that match the requested relation '{args.relation}'?\n"
-        "\n"
-        "Tips:\n"
-        "2D images cause spatial states to overlap (e.g., an object poking out 'under' a bowl also looks 'next_to' it). If the visual evidence supports multiple valid interpretations, give the benefit of the doubt and prioritize the child's requested relation over competing overlapping states."
-        "- 'behind' means partially hidden by the reference object, or visibly\n"
-        "  smaller/further along the camera's depth axis.\n"
-        "- 'in_front_of' means the moving object partly occludes or sits\n"
-        "  closer to the camera than the reference object.\n"
-        "- 'in' means the moving object is contained by the reference object\n"
-        "  (e.g. ball inside a cup or box) — typically partly hidden by the\n"
-        "  rim/walls of the container.\n"
-        "- 'out' means the moving object is clearly outside the reference\n"
-        "  object, fully visible, with a visible gap between them.\n"
-        "-  To be visible while 'under' a solid object (like a bowl), the moving object will be 'poking out.' Consider it 'under' if it is physically touching or partially hidden by the bottom edge or base of the reference object, even if it appears to be sitting next to or in front of it in 2D space.\n"
-        "If you cannot tell confidently, return 'other'.\n"
-        "\n"
-        "Return ONLY a JSON object with no markdown fences:\n"
+        f"3. Verification: Does the spatial arrangement meet the following rule for '{args.relation}'? ({active_rule})\n"
+        "Instructions:\n"
+        "Return ONLY a JSON object with no markdown fences.\n"
         "{\n"
         "  \"obj_a_found\": true|false,\n"
         "  \"obj_b_found\": true|false,\n"
-        "  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n"
+        "  \"actual_relation\": \"on|off|next_to|under|above|away_from\",\n"
         "  \"correct\": true|false,\n"
         "  \"reason\": \"<short, child-friendly explanation>\"\n"
         "}\n"
-        "If either object is missing, set correct=false."
+        f"`actual_relation` is deprecated; just set it to '{args.relation}' regardless of whether the criteria is met.\n"
+        "Set `correct` to true if and only if both objects are found and the verification is satisfied.\n"
+        "Set `reason` to a short explanation for the child to understand your verdict.\n"
     )
 
     client = genai.Client(api_key=api_key)

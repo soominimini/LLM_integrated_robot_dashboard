@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie is in the kitchen with her mom. They are making a tall, pink cake. Sophie puts the red cherries on top. Mom puts the round candles on top, too. Then Sophie finds a shiny crown in a box under the table. Sophie puts the crown on her head. Mom cheers for Sophie! The crown is big and gold. Sophie and Mom are sitting together at the table. Mom is wrapping three ribbons around the cake. The ribbons are soft and purple. Sophie thinks the cake is beautiful.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is with Sophie in the kitchen?\n3. WHAT are Sophie and Mom making?\n4. WHAT does Sophie find in the box?\n5. WHERE is the box?\n6. WHAT color is the crown?\n7. WHAT are the three ribbons wrapped around?\n\n** Explanation of the output **\nThe story builds descriptive vocabulary (tall, pink, round, shiny, big, gold, soft, purple) and spatial terms (on top, under the table) through a warm family scene, naturally modelling collaboration and belonging between Sophie and her mom. The WH-questions target literal comprehension at the WHO/WHAT/WHERE level, supporting early literacy and language development for a 5-year-old.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 208,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:55:53.098828"
+}

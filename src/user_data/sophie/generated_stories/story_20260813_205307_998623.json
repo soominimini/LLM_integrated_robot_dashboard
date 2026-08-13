@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. The pet shop has three rabbits. One rabbit is small and fluffy. The fluffy rabbit is sitting in the corner. Sophie wants to hold the rabbit. But the rabbit is under a big wooden chair. A helper named Rosa is there. Rosa gets down on her knees. Rosa reaches under the chair. Rosa picks up the fluffy rabbit. Rosa puts the rabbit in Sophie's arms. Sophie is smiling. The rabbit is soft and warm. Sophie and Rosa are both laughing.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does the pet shop have?\n3. WHERE is the fluffy rabbit?\n4. WHO helps Sophie?\n5. WHAT does Rosa put in Sophie's arms?\n6. WHO is smiling?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (small, fluffy, big, soft, warm), spatial terms (in the corner, under the chair), and collaborative action (Rosa helping Sophie) around the pet interest theme, supporting language comprehension, descriptive vocabulary, and friendship goals. The WHO/WHAT/WHERE questions target literal comprehension at the 5-year-old level, with every answer traceable word-for-word in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 196,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:53:07.998623"
+}

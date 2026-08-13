@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Lost Rabbit\n\nSophie is in the classroom. Sophie has a small, brown rabbit for Show and Tell. Sophie puts the rabbit in a box on the table. Then the rabbit is not there! Sophie looks under the chair. The rabbit is not under the chair. Sophie's friend Chloe is looking, too. Chloe sees the rabbit. The rabbit is behind the big, red chair. Sophie and Chloe are cheering. The teacher gives Sophie three stickers. Sophie and Chloe are smiling because they found the rabbit together.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have for Show and Tell?\n3. WHERE does Sophie put the rabbit?\n4. WHO is looking with Sophie?\n5. WHERE is the rabbit?\n6. WHAT does the teacher give Sophie?\n\n** Explanation of the output **\nThe story embeds descriptive adjectives (\"small,\" \"brown,\" \"big,\" \"red\") and spatial terms (\"on the table,\" \"under the chair,\" \"behind the chair\") naturally into the scene, supporting vocabulary and language comprehension goals. Collaboration and friendship are shown through Sophie and Chloe working together to find the rabbit, and target sounds /th/, /r/, and /ch/ are woven into high-frequency story words (\"three,\" \"rabbit,\" \"chair,\" \"cheering\") without explicit drilling.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 207,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T21:00:08.246717"
+}

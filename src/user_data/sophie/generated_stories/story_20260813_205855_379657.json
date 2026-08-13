@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the classroom. Sophie sees a tiny fairy sitting on the red chair. The fairy has bright wings and a small magic wand. The fairy is looking for her three friends. Sophie asks her classmates to help. The children look under the table and on the big blue shelf. Sophie finds three little fairies hiding behind the round books! Sophie and her classmates put all four fairies together on the table. The fairies are clapping their wings. Sophie and her friends are smiling.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is the fairy sitting on?\n3. WHAT does the fairy have?\n4. WHO does Sophie ask for help?\n5. WHERE does Sophie find the three fairies?\n6. WHERE do Sophie and her classmates put the fairies?\n7. WHAT are the fairies doing?\n\n** Explanation of the output **\nThe story is set in a classroom and uses the fairy theme to naturally embed descriptive adjectives (red, bright, big blue, round), spatial terms (under the table, on the shelf, behind the books), and cooperation between named characters. Questions target WHO/WHAT/WHERE comprehension at the 5-year-old level, supporting language comprehension, literacy development, and friendship through observable, answerable story facts.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 211,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T20:58:55.379657"
+}

@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden. Sophie sees a tiny fairy sitting on a red flower. The fairy has small, sparkly wings. \"My three friends are coming,\" the fairy says. Sophie puts a round leaf on the ground. The fairy puts a smooth stone next to the leaf. Sophie puts a yellow flower on top of the stone. The fairy claps her little hands. \"It is a chair!\" the fairy says. Sophie and the fairy sit together under the tall, green tree.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is the fairy sitting on?\n3. WHAT does the fairy have?\n4. WHAT does Sophie put on the ground?\n5. WHAT does the fairy put next to the leaf?\n6. WHERE do Sophie and the fairy sit?\n7. WHO claps her little hands?\n\n** Explanation of the output **\nThe story builds language comprehension through descriptive adjectives (tiny, red, round, smooth, yellow, tall), spatial terms (on, next to, on top of, under), and collaboration modeled through turn-taking between Sophie and the fairy. Therapy goals — including friendship, overcoming a challenge with help, and late-developing sounds (three, chair, round, red) — are woven naturally into the fairy-themed narrative.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 208,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:54:05.450118"
+}

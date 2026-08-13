@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Big Red Leaves\n\nSophie is in the park with her dog, Rosie. Big red leaves are falling down. Sophie picks up a yellow leaf and gives it to Rosie. Rosie drops the leaf on the ground! Sophie's friend Mia runs over. \"Let's make a big pile!\" says Mia. Sophie and Mia rake three large piles of crunchy leaves. Then the wind blows the leaves up into the air. Sophie and Mia catch the leaves in their arms. Rosie jumps into the middle pile. Sophie and Mia are laughing together.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is with Sophie in the park?\n3. WHAT are falling down?\n4. WHAT does Sophie give to Rosie?\n5. WHO runs over to Sophie?\n6. WHAT do Sophie and Mia make?\n7. WHO jumps into the middle pile?\n\n** Explanation of the output **\nThe story weaves in descriptive words (big, red, yellow, large, crunchy), turn-taking and friendship through Sophie and Mia working together, and target sounds in words like three, red, crunchy, and Rosie. The pet interest theme is woven throughout via Rosie the dog, and all WH-question answers are stated word-for-word in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 204,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T20:57:59.888660"
+}

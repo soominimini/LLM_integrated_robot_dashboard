@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet store with her friend Chloe. The pet store has three rabbits in a big, round cage. One rabbit is sitting in the corner. Sophie sees the small, white rabbit. Sophie wants to reach the rabbit, but the latch is too tricky. Chloe helps Sophie open the latch. Sophie takes a turn holding the soft, fluffy rabbit. The rabbit has long ears and a pink nose. Sophie and Chloe are smiling. The lady at the store is watching the two friends.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is with Sophie at the pet store?\n3. WHAT is inside the big, round cage?\n4. WHERE is one rabbit sitting?\n5. WHO helps Sophie open the latch?\n6. WHAT does the rabbit have?\n7. WHO is watching Sophie and Chloe?\n\n** Explanation of the output **\nThe story supports descriptive language (\"small, white,\" \"soft, fluffy,\" \"big, round\") and collaboration through Sophie and Chloe's turn-taking at the cage latch, weaving in friendship and overcoming a challenge naturally. Target speech sounds /r/, /th/, and /ch/ are embedded in words like *rabbit*, *three*, and *Chloe*/*latch*, and WH-questions are answerable using exact story text to build literal language comprehension.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 211,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:54:20.224596"
+}

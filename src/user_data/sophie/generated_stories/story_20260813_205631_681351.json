@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden with her mum. They are looking at the red flowers. Sophie sees something small under a big green leaf. She reaches under the leaf. There is a tiny fairy sitting there! The fairy has little wings and a shiny wand. The fairy drops her wand in the mud. Sophie picks up the wand. Sophie gives it back to the fairy. The fairy smiles. Mum is watching and clapping her hands. Sophie and Mum are very happy in the garden.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is with Sophie in the garden?\n3. WHAT are Sophie and Mum looking at?\n4. WHERE is the tiny fairy sitting?\n5. WHAT does the fairy drop?\n6. WHO picks up the wand?\n7. WHO is clapping her hands?\n\n** Explanation of the output **\nThe story centres on a family moment between Sophie and her mum, naturally modelling descriptive words (red, big, green, tiny, shiny), spatial terms (under, in), collaboration through Sophie helping the fairy, and belonging through shared joy — all woven into a fairy-themed scene that targets late-developing sounds (three, red, reaches) and grammatical forms (dropping, clapping, plural flowers/hands) without explicit instruction.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 209,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:56:31.681351"
+}

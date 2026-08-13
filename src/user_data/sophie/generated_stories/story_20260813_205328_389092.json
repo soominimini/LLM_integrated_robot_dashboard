@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie is at the castle. Sophie has a big, shiny crown. Sophie puts the crown on the tall chair. The crown falls behind the chair! \"Oh no,\" says Sophie. Her friend Ruby is there. Ruby gets down on the floor. Ruby reaches under the chair and grabs the crown. Ruby gives the crown to Sophie. Sophie puts the crown on her head. Sophie and Ruby are smiling. The two friends sit together on the soft, red rug.\n\n** End **\n** Questions **\n1. WHO is in the story?\n2. WHERE is Sophie?\n3. WHAT does Sophie put on the tall chair?\n4. WHERE does the crown fall?\n5. WHO reaches under the chair?\n6. WHAT does Ruby give to Sophie?\n7. WHERE do Sophie and Ruby sit?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (big, shiny, tall, soft, red), spatial terms (behind, under, on), collaboration and friendship through Ruby helping Sophie, and a small manageable challenge resolved together — all supporting Sophie's language comprehension, literacy development, and social-emotional goals. Target sounds /r/, /ch/, and /th/ appear naturally in words like Ruby, reaches, chair, and together, and plural and progressive forms are embedded throughout.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 207,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:53:28.389092"
+}

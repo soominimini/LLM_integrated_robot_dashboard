@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Windy Leaves\n\nSophie is at the park with her dog, Remy. Red and orange leaves are falling from the tall trees. Sophie is holding a big pile of leaves. Remy is jumping into the leaves! The wind starts blowing. The wind blows the leaves away. Sophie's friend Mia runs over to help. Mia picks up the crunchy leaves. Sophie picks up the crunchy leaves. They put the leaves into a big pile under the tree. Sophie and Mia are smiling. Remy is wagging his tail.\n\n** End **\n** Questions **\n1. WHO is at the park with Sophie?\n2. WHAT color are the leaves?\n3. WHERE are the leaves falling from?\n4. WHAT does the wind do to the leaves?\n5. WHO runs over to help Sophie?\n6. WHERE do Sophie and Mia put the leaves?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (\"red,\" \"orange,\" \"big,\" \"crunchy\"), spatial language (\"under the tree\"), and collaboration through Sophie and Mia working together, naturally supporting descriptive language, friendship, and overcoming a weather challenge. The WH-questions target literal language comprehension using WHO and WHERE and WHAT, all directly answerable from the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 201,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T20:58:29.240349"
+}

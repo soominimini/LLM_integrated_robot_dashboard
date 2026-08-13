@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is in the garden with her mom. Sophie is looking under the big red flowers. She is searching for something small and special. Mom is watering the round, green plants. Sophie sees tiny wings behind a flower. A little fairy is sitting on a leaf! The fairy has a shiny wand in her hand. Sophie calls to her mom. Mom comes over and looks. Sophie and her mom are watching the fairy together. The fairy waves her wand and three stars appear on the leaf.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHO is with Sophie in the garden?\n3. WHAT is Mom doing?\n4. WHAT does Sophie see behind the flower?\n5. WHERE is the fairy sitting?\n6. WHAT does the fairy have in her hand?\n7. WHAT appears on the leaf?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (big red, round green, tiny, shiny), spatial terms (under, behind, on), and collaborative action between Sophie and her mom to support language comprehension, descriptive vocabulary, and connection within a family setting. The fairy theme, target sounds (three, red, chair-shaped wings), and observable, concrete sentences support both articulation targets and literal comprehension skills appropriate for a 5-year-old.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 214,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:54:38.434331"
+}

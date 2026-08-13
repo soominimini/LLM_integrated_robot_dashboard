@@ -1,0 +1,764 @@
+21:42:53 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-23.log (daily rotation)
+21:42:53 [----]  * Serving Flask app 'web_user_server'
+21:42:53 [----]  * Debug mode: on
+21:43:11 [----] [trace] step tracing active -> /home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/logs/trace-2026-07-23.log (daily rotation)
+21:43:11 [7680] ┌─ WORK  GET /
+21:43:11 [eefc] ┌─ WORK  GET /
+21:43:11 [7680] └─ DONE  GET / -> 200 in 15ms
+21:43:11 [eefc] └─ DONE  GET / -> 200 in 20ms
+21:43:16 [6057] ┌─ WORK  POST /api/login | fields: username
+21:43:16 [6057] └─ DONE  POST /api/login -> 200 in 7ms
+21:43:17 [e6ed] ┌─ WORK  GET /
+21:43:17 [e6ed] └─ DONE  GET / -> 200 in 10ms
+21:44:35 [fc27] ┌─ WORK  GET /object_game_generate
+21:44:35 [fc27] └─ DONE  GET /object_game_generate -> 200 in 4ms
+21:44:35 [4f43] ┌─ WORK  GET /api/scene_game/toys┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:44:35 [f6dd] 
+21:44:35 [e0f1] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:44:35 [4f43] └─ DONE  GET /api/scene_game/toys -> 200 in 5ms
+21:44:35 [e0f1] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:44:35 [f6dd] └─ DONE  GET /api/scene_game/pool_status -> 200 in 12ms
+21:53:38 [7c35] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, per_item
+21:53:38 [7c35] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 4ms
+21:53:38 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'intermediate_adjectives', 'pronouns_intermediate', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:53:38 [----] [Claude:scene-game-question-batch] >>> PROMPT (3607 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:53:38 [----] ┌─ WORK  GET /api/scene_game/pool_status | args: kindYou are generating questions for an object detection game for a 4-year-old child.
+21:53:38 [----] Available physical toys: lemon, tray.
+21:53:38 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep every question within that length.
+21:53:38 [----] Do NOT reuse any of these recently played questions:
+21:53:38 [----]   - I'm looking for a tiny purple fruit!
+21:53:38 [----]   - Find something with little seeds on the outside!
+21:53:38 [----]   - Can you find a cool it toy?
+21:53:38 [----]   - Can you find a it toy?
+21:53:38 [----]   - Show me a it toy!
+21:53:38 [----]   - Can you bring me a red vehicle?
+21:53:38 [----]   - Find me a white vehicle please!
+21:53:38 [----]   - I'm looking for a dark black vehicle!
+21:53:38 [----]   - Can you find a cool ocean-colored dinosaur toy?
+21:53:38 [----]   - Show me a dinosaur that matches the sky!
+21:53:38 [----]   - Bring me a dinosaur the color of water!
+21:53:38 [----]   - Can you find a dinosaur that looks like grass?
+21:53:38 [----]   - Show me a dinosaur the color of a frog!
+21:53:38 [----]   - I'm looking for a leafy-colored dinosaur toy!
+21:53:38 [----]   - Can you find a firetruck-colored vehicle toy?
+21:53:38 [----]   - Show me a vehicle that looks like a strawberry!
+21:53:38 [----]   - Bring me a bright apple-colored vehicle!
+21:53:38 [----]   - Can you find a snowy-colored vehicle toy?
+21:53:38 [----]   - Show me a vehicle that looks like a cloud!
+21:53:38 [----]   - Can you bring me a scaly prehistoric animal toy?
+21:53:38 [----] Generate exactly 3 DIFFERENT inference-style requests for EACH target that let the child figure out THAT target without naming it.
+21:53:38 [----] Do this for ALL 2 target objects listed below (6 questions in total — exactly 3 per target):
+21:53:38 [----]   1. lemon
+21:53:38 [----]   2. tray
+21:53:38 [----] 
+21:53:38 [----] HARD RULE — a question must NEVER contain the name of ITS target or ANY other toy. It must contain NONE of these words:
+21:53:38 [----]   lemon, tray
+21:53:38 [----] Refer to the target only as "it", "something", or "one". The child must INFER which object is meant.
+21:53:38 [----] CLUE STYLE — each spoken question must be ONE of these two kinds:
+21:53:38 [----]   (a) An ASSOCIATION / FUNCTION clue (what animal eats it, what you do with it, where you find it). These are the best clues and may stand alone. Good: "Get me something rabbits love to eat!"
+21:53:38 [----]   (b) A PHYSICAL-PROPERTY clue (color/shape/size/texture). When you describe properties you MUST also name the object's CATEGORY (fruit, vegetable, animal, ...) so the child knows what kind of thing to look for. Good: "I want a skinny, bright orange vegetable!" BAD: "I want something skinny and bright orange!" (no category word).
+21:53:38 [----] HOW THE CHILD ANSWERS — the child finds the matching toy, picks it up, and holds it up to the robot's camera. So every request must ask the child to find and SHOW or BRING the object — never to merely point at it.
+21:53:38 [----] PHRASING VARIETY — vary the sentence opener across the whole set; do NOT start most questions with "Get me" or "I want". Rotate among natural openers such as "Can you find ...", "Let's find ...", "Can you bring me ...", "Show me ...", "Where is ...", "I'm looking for ...", "Which one is ...", "Find ...".
+21:53:38 [----] CRITERIA RULE — each "criteria" is a short concrete descriptor: at most ONE adjective plus the CATEGORY noun (e.g. "orange vegetable", "red fruit"); never a function phrase, compound, or multi-object.
+21:53:38 [----] UNIQUENESS RULE — a target's 3 questions must each use a DIFFERENT property or association, and every question must fit ONLY its own target among the toys (use a distinguishing feature no other listed toy shares).
+21:53:38 [----] Use simple, clear language appropriate for ages 4-6.
+21:53:38 [----] Example object: {"target": "carrot", "question": "Can you find something rabbits love to eat?", "criteria": "orange vegetable"}
+21:53:38 [----] 
+21:53:38 [----] Return ONLY a JSON object, no other text:
+21:53:38 [----] {"questions": [ {"target": "<exact toy name>", "question": "<sentence, contains no toy name>", "criteria": "<one noun + at most one adjective>"}, ... ]}
+21:53:38 [1734] The array MUST hold exactly 6 objects: 3 for each target.┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:38 [----] 
+21:53:38 [c83c] 
+21:53:38 [c83c] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms
+21:53:38 [1734] 
+21:53:40 [e141] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:40 [22d0] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:40 [e141] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:53:40 [22d0] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:53:42 [ceb9] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:42 [cc94] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:42 [ceb9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:53:42 [cc94] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:53:42 [----] [Claude:scene-game-question-batch] <<< RESPONSE (645 chars):
+21:53:42 [----] ```json
+21:53:42 [----] {"questions": [
+21:53:42 [----]   {"target": "lemon", "question": "Can you find a sour yellow fruit?", "criteria": "yellow fruit"},
+21:53:42 [----]   {"target": "lemon", "question": "Show me something you squeeze for juice!", "criteria": "fruit"},
+21:53:42 [----]   {"target": "lemon", "question": "I'm looking for a bumpy oval fruit!", "criteria": "oval fruit"},
+21:53:42 [----]   {"target": "tray", "question": "Can you bring me something you carry food on?", "criteria": "tray"},
+21:53:42 [----]   {"target": "tray", "question": "Show me something flat that holds dishes!", "criteria": "flat object"},
+21:53:42 [----]   {"target": "tray", "question": "Find something you use to serve snacks!", "criteria": "serving object"}
+21:53:42 [----] ]}
+21:53:42 [----] ```
+21:53:42 [----] [SceneGame] batch generation: 6 usable question(s) from ONE API call (asked for 6)
+21:53:42 [----] [SceneGame] criteria pool: added 6 question(s) from ONE API call for maya
+21:53:42 [----] [SceneGame] criteria pool ready for maya: 6 question(s)
+21:53:44 [0502] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:44 [0398] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:53:44 [0502] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:53:44 [0398] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:53:45 [eeeb] ┌─ WORK  GET /play_scene
+21:53:47 [d0e0] ┌─ WORK  GET /play_scene
+21:53:51 [4259] ┌─ WORK  GET /play_scene
+21:53:54 [163d] ┌─ WORK  POST /api/scene_game/toys | fields: action
+21:53:54 [163d] └─ DONE  POST /api/scene_game/toys -> 200 in 4ms
+21:53:58 [6402] ┌─ WORK  GET /play_scene
+21:53:58 [d0e0] └─ DONE  GET /play_scene -> 200 in 10787ms└─ DONE  GET /play_scene -> 200 in 7222ms
+21:53:58 [4259] └─ DONE  GET /play_scene -> 200 in 15ms└─ DONE  GET /play_scene -> 200 in 12765ms
+21:53:58 [6402] 
+21:53:58 [eeeb] 
+21:54:03 [179c] ┌─ WORK  POST /api/scene/start | fields: mode
+21:54:03 [179c] └─ DONE  POST /api/scene/start -> 200 in 2ms
+21:54:13 [a4a6] ┌─ WORK  GET /
+21:54:13 [a4a6] └─ DONE  GET / -> 200 in 1ms
+21:54:15 [ae24] ┌─ WORK  GET /object_game_generate
+21:54:15 [ae24] └─ DONE  GET /object_game_generate -> 200 in 1ms
+21:54:15 [3ae0] ┌─ WORK  GET /api/scene_game/toys
+21:54:15 [2758] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:15 [3ae0] └─ DONE  GET /api/scene_game/toys -> 200 in 2ms┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:15 [4bc9] 
+21:54:15 [2758] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:54:15 [4bc9] └─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:54:17 [aa33] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, per_item
+21:54:17 [aa33] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms
+21:54:17 [----] [KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'intermediate_adjectives', 'pronouns_intermediate', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:54:17 [----] [Claude:scene-game-question-batch] >>> PROMPT (3731 chars) | model: claude-sonnet-4-6 | system: You generate game questions for children. Return JSON only.
+21:54:17 [----] You are generating questions for an object detection game for a 4-year-old child.
+21:54:17 [----] Available physical toys: lemon, tomato, apple, banana, tray, box, bowl.
+21:54:17 [----] TARGET MLU (knowledge base): the child's mean length of utterance is about 5-6 words. Keep every question within that length.
+21:54:17 [----] Do NOT reuse any of these recently played questions:
+21:54:17 [----]   - I'm looking for a tiny purple fruit!
+21:54:17 [----]   - Find something with little seeds on the outside!
+21:54:17 [----]   - Can you find a cool it toy?
+21:54:17 [----]   - Can you find a it toy?
+21:54:17 [----]   - Show me a it toy!
+21:54:17 [----]   - Can you bring me a red vehicle?
+21:54:17 [----]   - Find me a white vehicle please!
+21:54:17 [----]   - I'm looking for a dark black vehicle!
+21:54:17 [----]   - Can you find a cool ocean-colored dinosaur toy?
+21:54:17 [----]   - Show me a dinosaur that matches the sky!
+21:54:17 [----]   - Bring me a dinosaur the color of water!
+21:54:17 [----]   - Can you find a dinosaur that looks like grass?
+21:54:17 [----]   - Show me a dinosaur the color of a frog!
+21:54:17 [----]   - I'm looking for a leafy-colored dinosaur toy!
+21:54:17 [----]   - Can you find a firetruck-colored vehicle toy?
+21:54:17 [----]   - Show me a vehicle that looks like a strawberry!
+21:54:17 [----]   - Bring me a bright apple-colored vehicle!
+21:54:17 [----]   - Can you find a snowy-colored vehicle toy?
+21:54:17 [----]   - Show me a vehicle that looks like a cloud!
+21:54:17 [----]   - Can you bring me a scaly prehistoric animal toy?
+21:54:17 [----] Generate exactly 3 DIFFERENT inference-style requests for EACH target that let the child figure out THAT target without naming it.
+21:54:17 [----] Do this for ALL 7 target objects listed below (21 questions in total — exactly 3 per target):
+21:54:17 [----]   1. lemon
+21:54:17 [----]   2. tomato
+21:54:17 [----]   3. apple
+21:54:17 [----]   4. banana
+21:54:17 [----]   5. tray
+21:54:17 [----]   6. box
+21:54:17 [----]   7. bowl
+21:54:17 [----] 
+21:54:17 [----] HARD RULE — a question must NEVER contain the name of ITS target or ANY other toy. It must contain NONE of these words:
+21:54:17 [----]   lemon, tomato, apple, banana, tray, box, bowl
+21:54:17 [----] Refer to the target only as "it", "something", or "one". The child must INFER which object is meant.
+21:54:17 [----] CLUE STYLE — each spoken question must be ONE of these two kinds:
+21:54:17 [----]   (a) An ASSOCIATION / FUNCTION clue (what animal eats it, what you do with it, where you find it). These are the best clues and may stand alone. Good: "Get me something rabbits love to eat!"
+21:54:17 [----]   (b) A PHYSICAL-PROPERTY clue (color/shape/size/texture). When you describe properties you MUST also name the object's CATEGORY (fruit, vegetable, animal, ...) so the child knows what kind of thing to look for. Good: "I want a skinny, bright orange vegetable!" BAD: "I want something skinny and bright orange!" (no category word).
+21:54:17 [----] HOW THE CHILD ANSWERS — the child finds the matching toy, picks it up, and holds it up to the robot's camera. So every request must ask the child to find and SHOW or BRING the object — never to merely point at it.
+21:54:17 [----] PHRASING VARIETY — vary the sentence opener across the whole set; do NOT start most questions with "Get me" or "I want". Rotate among natural openers such as "Can you find ...", "Let's find ...", "Can you bring me ...", "Show me ...", "Where is ...", "I'm looking for ...", "Which one is ...", "Find ...".
+21:54:17 [----] CRITERIA RULE — each "criteria" is a short concrete descriptor: at most ONE adjective plus the CATEGORY noun (e.g. "orange vegetable", "red fruit"); never a function phrase, compound, or multi-object.
+21:54:17 [----] UNIQUENESS RULE — a target's 3 questions must each use a DIFFERENT property or association, and every question must fit ONLY its own target among the toys (use a distinguishing feature no other listed toy shares).
+21:54:17 [----] Use simple, clear language appropriate for ages 4-6.
+21:54:17 [----] Example object: {"target": "carrot", "question": "Can you find something rabbits love to eat?", "criteria": "orange vegetable"}
+21:54:17 [----] 
+21:54:17 [----] Return ONLY a JSON object, no other text:
+21:54:17 [----] {"questions": [ {"target": "<exact toy name>", "question": "<sentence, contains no toy name>", "criteria": "<one noun + at most one adjective>"}, ... ]}
+21:54:17 [----] The array MUST hold exactly 21 objects: 3 for each target.
+21:54:17 [faa4] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:17 [140a] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:17 [faa4] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:54:17 [140a] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:54:19 [2fe1] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:19 [18ea] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:19 [2fe1] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:54:19 [18ea] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:54:21 [9f54] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:21 [418f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:21 [9f54] └─ DONE  GET /api/scene_game/pool_status -> 200 in 11ms
+21:54:21 [418f] └─ DONE  GET /api/scene_game/pool_status -> 200 in 13ms
+21:54:23 [7dcc] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:23 [0aca] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:23 [7dcc] └─ DONE  GET /api/scene_game/pool_status -> 200 in 3ms
+21:54:23 [0aca] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:54:25 [fa15] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:25 [ca7f] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:25 [fa15] └─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 4ms
+21:54:25 [ca7f] 
+21:54:26 [----] [Claude:scene-game-question-batch] <<< RESPONSE (2302 chars):
+21:54:26 [----] ```json
+21:54:26 [----] {
+21:54:26 [----]   "questions": [
+21:54:26 [----]     {"target": "lemon", "question": "Can you find a sour yellow fruit?", "criteria": "yellow fruit"},
+21:54:26 [----]     {"target": "lemon", "question": "Show me something you squeeze into lemonade!", "criteria": "sour fruit"},
+21:54:26 [----]     {"target": "lemon", "question": "I'm looking for a bumpy yellow fruit!", "criteria": "bumpy fruit"},
+21:54:26 [----] 
+21:54:26 [----]     {"target": "tomato", "question": "Can you bring me a round red vegetable?", "criteria": "red vegetable"},
+21:54:26 [----]     {"target": "tomato", "question": "Find something we put on pizza sauce!", "criteria": "red vegetable"},
+21:54:26 [----]     {"target": "tomato", "question": "Show me a juicy red vegetable!", "criteria": "juicy vegetable"},
+21:54:26 [----] 
+21:54:26 [----]     {"target": "apple", "question": "Can you find a crunchy red fruit?", "criteria": "red fruit"},
+21:54:26 [----]     {"target": "apple", "question": "I'm looking for something a teacher loves to get!", "criteria": "round fruit"},
+21:54:26 [----]     {"target": "apple", "question": "Bring me a shiny round fruit!", "criteria": "shiny fruit"},
+21:54:26 [----] 
+21:54:26 [----]     {"target": "banana", "question": "Can you find a long curved fruit?", "criteria": "curved fruit"},
+21:54:26 [----]     {"target": "banana", "question": "Show me something monkeys love to eat!", "criteria": "yellow fruit"},
+21:54:26 [----]     {"target": "banana", "question": "I'm looking for a soft yellow fruit!", "criteria": "soft fruit"},
+21:54:26 [----] 
+21:54:26 [----]     {"target": "tray", "question": "Find something flat we carry food on!", "criteria": "flat carrier"},
+21:54:26 [----]     {"target": "tray", "question": "Can you bring me a flat thing for serving?", "criteria": "fla
+21:54:26 [----] ...(+802 more chars)
+21:54:26 [----] [SceneGame] batch generation: 21 usable question(s) from ONE API call (asked for 21)
+21:54:26 [----] [SceneGame] criteria pool: added 21 question(s) from ONE API call for maya
+21:54:26 [----] [SceneGame] criteria pool ready for maya: 21 question(s)
+21:54:27 [e4ba] ┌─ WORK  GET /api/scene_game/pool_status | args: kind┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:27 [5b4f] 
+21:54:27 [e4ba] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:54:27 [5b4f] └─ DONE  GET /api/scene_game/pool_status -> 200 in 6ms
+21:54:47 [1a2c] ┌─ WORK  POST /api/scene_game/pregenerate | fields: kind, relations
+21:54:47 [1a2c] └─ DONE  POST /api/scene_game/pregenerate -> 200 in 2ms[KB] derived level_age=4 mlu=5-6 targets=['action_verbs_higher_level', 'basic_adjectives', 'intermediate_adjectives', 'pronouns_intermediate', 'location_prepositions', 'size_noun', 'location_noun', 'ing_form', 'wh_questions_early', 'wh_questions_location'] speech[4-5]=['later_sounds'] interests=['unicorns', 'animals', 'pets', 'princesses', 'pretend_play'] for user=maya age=4 language_age=None gender='female' kind=question
+21:54:47 [----] 
+21:54:47 [2977] ┌─ WORK  GET /api/scene_game/pool_status | args: kind[SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [056e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:47 [----] 
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='behind' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='apple' reference-object='banana'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the apple behind the banana."  [canonical relation='behind', spoken phrase='behind']
+21:54:47 [2977] └─ DONE  GET /api/scene_game/pool_status -> 200 in 19ms└─ DONE  GET /api/scene_game/pool_status -> 200 in 16ms
+21:54:47 [056e] 
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='on' (containment/on: movable object onto a flat surface container)
+21:54:47 [----] [SceneGame][direction]   picked move-object='lemon' reference-object='tray'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the lemon on the tray."  [canonical relation='above', spoken phrase='on']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='on' (containment/on: movable object onto a flat surface container)
+21:54:47 [----] [SceneGame][direction]   picked move-object='tomato' reference-object='tray'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the tomato on the tray."  [canonical relation='above', spoken phrase='on']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='behind' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='tray' reference-object='apple'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the tray behind the apple."  [canonical relation='behind', spoken phrase='behind']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='under' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='tray' reference-object='lemon'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the tray under the lemon."  [canonical relation='under', spoken phrase='under']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='next_to' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='lemon' reference-object='banana'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the lemon next to the banana."  [canonical relation='next_to', spoken phrase='next to']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='in_front_of' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='lemon' reference-object='tray'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the lemon in front of the tray."  [canonical relation='in_front_of', spoken phrase='in front of']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='in_front_of' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='tray' reference-object='lemon'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the tray in front of the lemon."  [canonical relation='in_front_of', spoken phrase='in front of']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='next_to' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='apple' reference-object='lemon'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the apple beside the lemon."  [canonical relation='next_to', spoken phrase='beside']
+21:54:47 [----] [SceneGame][direction] generate: toys=['lemon', 'tomato', 'apple', 'banana', 'tray', 'box', 'bowl'] allowed=['on', 'in', 'under', 'next_to', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   categories: fruit=['lemon', 'tomato', 'apple', 'banana'], container=['tray', 'box', 'bowl']
+21:54:47 [----] [SceneGame][direction]   containers: enclosing/in=['box', 'bowl'] surface/on=['tray']; movable objects=['lemon', 'tomato', 'apple', 'banana']
+21:54:47 [----] [SceneGame][direction]   relations toys support=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']; after therapist filter ['behind', 'in', 'in_front_of', 'next_to', 'on', 'under'] -> usable=['in', 'on', 'next_to', 'under', 'behind', 'in_front_of']
+21:54:47 [----] [SceneGame][direction]   chose relation='in_front_of' (positional: two distinct toys, spoken phrase picked at random)
+21:54:47 [----] [SceneGame][direction]   picked move-object='banana' reference-object='box'
+21:54:47 [----] [SceneGame][direction] ROUND: "Let's put the banana in front of the box."  [canonical relation='in_front_of', spoken phrase='in front of']
+21:54:47 [----] [SceneGame] direction pool ready for maya: 10 question(s)
+21:54:49 [bc5e] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:49 [81fa] ┌─ WORK  GET /api/scene_game/pool_status | args: kind
+21:54:49 [81fa] └─ DONE  GET /api/scene_game/pool_status -> 200 in 2ms
+21:54:49 [bc5e] └─ DONE  GET /api/scene_game/pool_status -> 200 in 5ms
+21:54:54 [f3de] ┌─ WORK  GET /play_scene
+21:54:54 [f3de] └─ DONE  GET /play_scene -> 200 in 1ms
+21:54:58 [1e9d] ┌─ WORK  POST /api/scene/start | fields: mode
+21:54:58 [1e9d] self.engine :  qwen
+21:55:04 [1e9d] └─ DONE  POST /api/scene/start -> 200 in 5891ms
+21:55:09 [47b8] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:55:12 [47b8] [Gemini:scene-game-detect] >>> PROMPT (368 chars) | system: (gemini-robotics-er object detector)
+21:55:12 [47b8] Point to no more than 1 item a person is holding in the image.
+21:55:12 [47b8]               Return the object's identifying name, its dominant color, and its shape.
+21:55:12 [47b8]               The answer should follow the json format:
+21:55:12 [47b8]               [{"point": <point>, "label": <label>, "color": <color>, "shape": <shape>}, ...].
+21:55:12 [47b8]               The points are in [y, x] format normalized to 0-1000.
+21:55:12 [47b8] [SceneGame] gemini_analyze_image raw: ```json
+21:55:12 [47b8] [
+21:55:12 [47b8]   {
+21:55:12 [47b8]     "point": [545, 868],
+21:55:12 [47b8]     "label": "grape-shaped object",
+21:55:12 [47b8]     "color": "blue",
+21:55:12 [47b8]     "shape": "cluster of spheres"
+21:55:12 [47b8]   }
+21:55:12 [47b8] ]
+21:55:12 [47b8] ```
+21:55:12 [47b8] [SceneGame] Detected object: grape-shaped object, color: blue, shape: cluster of spheres, point: [545, 868]
+21:55:12 [47b8] [SceneGame] Robot looking at pixel (556, 262)
+21:55:12 [47b8] [SceneGame] Detected object: grape-shaped object, color: blue, shape: cluster of spheres
+21:55:12 [47b8] [Claude:scene-game-criteria-match] >>> PROMPT (906 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:55:12 [47b8] A child showed a physical object. The vision system detected:
+21:55:12 [47b8]   label: "grape-shaped object"
+21:55:12 [47b8]   color: "blue"
+21:55:12 [47b8]   shape: "cluster of spheres"
+21:55:12 [47b8] The game asked for: "yellow fruit".
+21:55:12 [47b8] 
+21:55:12 [47b8] Decide if the detected object matches the criteria. Use ALL of the
+21:55:12 [47b8] detected attributes (label AND color AND shape), not just the label.
+21:55:12 [47b8] 
+21:55:12 [47b8] Examples of correct matches:
+21:55:12 [47b8] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:55:12 [47b8]   (label gives "car", color gives "red")
+21:55:12 [47b8] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:55:12 [47b8] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:55:12 [47b8] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:55:12 [47b8] 
+21:55:12 [47b8] Examples of non-matches:
+21:55:12 [47b8] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:55:12 [47b8]   ("truck" isn't a car)
+21:55:12 [47b8] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:55:12 [47b8] 
+21:55:12 [47b8] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:55:14 [47b8] [Claude:scene-game-criteria-match] <<< RESPONSE (176 chars):
+21:55:14 [47b8] {"match": false, "reason": "The object is blue, not yellow. Although grapes are a fruit and the shape matches a cluster of spheres, the color requirement (yellow) is not met."}
+21:55:14 [47b8] [SceneGame] Criteria match Claude raw: {"match": false, "reason": "The object is blue, not yellow. Although grapes are a fruit and the shape matches a cluster of spheres, the color requirement (yellow) is not met."}
+21:55:14 [47b8] [SceneGame] Criteria match parsed: {
+21:55:14 [47b8]   "match": false,
+21:55:14 [47b8]   "reason": "The object is blue, not yellow. Although grapes are a fruit and the shape matches a cluster of spheres, the color requirement (yellow) is not met."
+21:55:14 [47b8] }
+21:55:14 [47b8] self.engine :  qwen
+21:55:22 [47b8] └─ DONE  POST /api/scene_game/answer -> 200 in 12949ms
+21:55:29 [5c5f] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:55:32 [5c5f] [Gemini:scene-game-detect] >>> PROMPT (368 chars) | system: (gemini-robotics-er object detector)
+21:55:32 [5c5f] Point to no more than 1 item a person is holding in the image.
+21:55:32 [5c5f]               Return the object's identifying name, its dominant color, and its shape.
+21:55:32 [5c5f]               The answer should follow the json format:
+21:55:32 [5c5f]               [{"point": <point>, "label": <label>, "color": <color>, "shape": <shape>}, ...].
+21:55:32 [5c5f]               The points are in [y, x] format normalized to 0-1000.
+21:55:32 [5c5f] [SceneGame] gemini_analyze_image raw: ```json
+21:55:32 [5c5f] [
+21:55:32 [5c5f]   {"point": [442, 442], "label": "apple", "color": "red", "shape": "round"}
+21:55:32 [5c5f] ]
+21:55:32 [5c5f] ```
+21:55:32 [5c5f] [SceneGame] Detected object: apple, color: red, shape: round, point: [442, 442]
+21:55:32 [5c5f] [SceneGame] Robot looking at pixel (283, 212)
+21:55:32 [5c5f] [SceneGame] Detected object: apple, color: red, shape: round
+21:55:32 [5c5f] [Claude:scene-game-criteria-match] >>> PROMPT (878 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:55:32 [5c5f] A child showed a physical object. The vision system detected:
+21:55:32 [5c5f]   label: "apple"
+21:55:32 [5c5f]   color: "red"
+21:55:32 [5c5f]   shape: "round"
+21:55:32 [5c5f] The game asked for: "yellow fruit".
+21:55:32 [5c5f] 
+21:55:32 [5c5f] Decide if the detected object matches the criteria. Use ALL of the
+21:55:32 [5c5f] detected attributes (label AND color AND shape), not just the label.
+21:55:32 [5c5f] 
+21:55:32 [5c5f] Examples of correct matches:
+21:55:32 [5c5f] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:55:32 [5c5f]   (label gives "car", color gives "red")
+21:55:32 [5c5f] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:55:32 [5c5f] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:55:32 [5c5f] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:55:32 [5c5f] 
+21:55:32 [5c5f] Examples of non-matches:
+21:55:32 [5c5f] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:55:32 [5c5f]   ("truck" isn't a car)
+21:55:32 [5c5f] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:55:32 [5c5f] 
+21:55:32 [5c5f] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:55:35 [5c5f] [Claude:scene-game-criteria-match] <<< RESPONSE (161 chars):
+21:55:35 [5c5f] {"match": false, "reason": "The detected object is a red apple, but the criteria requires a yellow fruit. The color 'red' does not match the required 'yellow'."}
+21:55:35 [5c5f] [SceneGame] Criteria match Claude raw: {"match": false, "reason": "The detected object is a red apple, but the criteria requires a yellow fruit. The color 'red' does not match the required 'yellow'."}
+21:55:35 [5c5f] [SceneGame] Criteria match parsed: {
+21:55:35 [5c5f]   "match": false,
+21:55:35 [5c5f]   "reason": "The detected object is a red apple, but the criteria requires a yellow fruit. The color 'red' does not match the required 'yellow'."
+21:55:35 [5c5f] }
+21:55:35 [5c5f] self.engine :  qwen
+21:55:43 [5c5f] └─ DONE  POST /api/scene_game/answer -> 200 in 13695ms
+21:56:17 [6890] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:56:20 [6890] [Gemini:scene-game-detect] >>> PROMPT (368 chars) | system: (gemini-robotics-er object detector)
+21:56:20 [6890] Point to no more than 1 item a person is holding in the image.
+21:56:20 [6890]               Return the object's identifying name, its dominant color, and its shape.
+21:56:20 [6890]               The answer should follow the json format:
+21:56:20 [6890]               [{"point": <point>, "label": <label>, "color": <color>, "shape": <shape>}, ...].
+21:56:20 [6890]               The points are in [y, x] format normalized to 0-1000.
+21:56:20 [6890] [SceneGame] gemini_analyze_image raw: ```json
+21:56:20 [6890] [
+21:56:20 [6890]   {"point": [675, 319], "label": "toy dinosaur", "color": "blue", "shape": "stegosaurus"}
+21:56:20 [6890] ]
+21:56:20 [6890] ```
+21:56:20 [6890] [SceneGame] Detected object: toy dinosaur, color: blue, shape: stegosaurus, point: [675, 319]
+21:56:20 [6890] [SceneGame] Robot looking at pixel (204, 324)
+21:56:20 [6890] [SceneGame] Detected object: toy dinosaur, color: blue, shape: stegosaurus
+21:56:20 [6890] [Claude:scene-game-criteria-match] >>> PROMPT (892 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:56:20 [6890] A child showed a physical object. The vision system detected:
+21:56:20 [6890]   label: "toy dinosaur"
+21:56:20 [6890]   color: "blue"
+21:56:20 [6890]   shape: "stegosaurus"
+21:56:20 [6890] The game asked for: "yellow fruit".
+21:56:20 [6890] 
+21:56:20 [6890] Decide if the detected object matches the criteria. Use ALL of the
+21:56:20 [6890] detected attributes (label AND color AND shape), not just the label.
+21:56:20 [6890] 
+21:56:20 [6890] Examples of correct matches:
+21:56:20 [6890] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:56:20 [6890]   (label gives "car", color gives "red")
+21:56:20 [6890] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:56:20 [6890] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:56:20 [6890] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:56:20 [6890] 
+21:56:20 [6890] Examples of non-matches:
+21:56:20 [6890] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:56:20 [6890]   ("truck" isn't a car)
+21:56:20 [6890] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:56:20 [6890] 
+21:56:20 [6890] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:56:22 [6890] [Claude:scene-game-criteria-match] <<< RESPONSE (199 chars):
+21:56:22 [6890] {"match": false, "reason": "The detected object is a blue toy dinosaur (stegosaurus shape), not a yellow fruit. The color is blue (not yellow), and the label/shape indicate a dinosaur, not a fruit."}
+21:56:22 [6890] [SceneGame] Criteria match Claude raw: {"match": false, "reason": "The detected object is a blue toy dinosaur (stegosaurus shape), not a yellow fruit. The color is blue (not yellow), and the label/shape indicate a dinosaur, not a fruit."}
+21:56:22 [6890] [SceneGame] Criteria match parsed: {
+21:56:22 [6890]   "match": false,
+21:56:22 [6890]   "reason": "The detected object is a blue toy dinosaur (stegosaurus shape), not a yellow fruit. The color is blue (not yellow), and the label/shape indicate a dinosaur, not a fruit."
+21:56:22 [6890] }
+21:56:22 [6890] self.engine :  qwen
+21:56:31 [6890] └─ DONE  POST /api/scene_game/answer -> 200 in 13451ms
+21:58:20 [9226] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:58:23 [9226] [Gemini:scene-game-detect] >>> PROMPT (368 chars) | system: (gemini-robotics-er object detector)
+21:58:23 [9226] Point to no more than 1 item a person is holding in the image.
+21:58:23 [9226]               Return the object's identifying name, its dominant color, and its shape.
+21:58:23 [9226]               The answer should follow the json format:
+21:58:23 [9226]               [{"point": <point>, "label": <label>, "color": <color>, "shape": <shape>}, ...].
+21:58:23 [9226]               The points are in [y, x] format normalized to 0-1000.
+21:58:23 [9226] [SceneGame] gemini_analyze_image raw: ```json
+21:58:23 [9226] [
+21:58:23 [9226]   {"point": [215, 563], "label": "lemon", "color": "yellow", "shape": "oval"}
+21:58:23 [9226] ]
+21:58:23 [9226] ```
+21:58:23 [9226] [SceneGame] Detected object: lemon, color: yellow, shape: oval, point: [215, 563]
+21:58:23 [9226] [SceneGame] Robot looking at pixel (360, 103)
+21:58:23 [9226] [SceneGame] Detected object: lemon, color: yellow, shape: oval
+21:58:23 [9226] [Claude:scene-game-criteria-match] >>> PROMPT (880 chars) | model: claude-sonnet-4-6 | system: You validate object matches. Return JSON only.
+21:58:23 [9226] A child showed a physical object. The vision system detected:
+21:58:23 [9226]   label: "lemon"
+21:58:23 [9226]   color: "yellow"
+21:58:23 [9226]   shape: "oval"
+21:58:23 [9226] The game asked for: "yellow fruit".
+21:58:23 [9226] 
+21:58:23 [9226] Decide if the detected object matches the criteria. Use ALL of the
+21:58:23 [9226] detected attributes (label AND color AND shape), not just the label.
+21:58:23 [9226] 
+21:58:23 [9226] Examples of correct matches:
+21:58:23 [9226] - criteria "red car" + label "toy car" + color "red" → MATCH
+21:58:23 [9226]   (label gives "car", color gives "red")
+21:58:23 [9226] - criteria "yellow fruit" + label "banana" + color "yellow" → MATCH
+21:58:23 [9226] - criteria "green dinosaur" + label "t-rex" + color "green" → MATCH
+21:58:23 [9226] - criteria "round ball" + label "ball" + shape "round" → MATCH
+21:58:23 [9226] 
+21:58:23 [9226] Examples of non-matches:
+21:58:23 [9226] - criteria "red car" + label "truck" + color "red" → NO MATCH
+21:58:23 [9226]   ("truck" isn't a car)
+21:58:23 [9226] - criteria "red apple" + label "apple" + color "green" → NO MATCH
+21:58:23 [9226] 
+21:58:23 [9226] Return ONLY a JSON object: {"match": true or false, "reason": "<brief explanation>"}
+21:58:25 [9226] [Claude:scene-game-criteria-match] <<< RESPONSE (115 chars):
+21:58:25 [9226] {"match": true, "reason": "A lemon is a fruit, its color is yellow, matching the criteria 'yellow fruit' exactly."}
+21:58:25 [9226] [SceneGame] Criteria match Claude raw: {"match": true, "reason": "A lemon is a fruit, its color is yellow, matching the criteria 'yellow fruit' exactly."}
+21:58:25 [9226] [SceneGame] Criteria match parsed: {
+21:58:25 [9226]   "match": true,
+21:58:25 [9226]   "reason": "A lemon is a fruit, its color is yellow, matching the criteria 'yellow fruit' exactly."
+21:58:25 [9226] }
+21:58:25 [9226] self.engine :  qwen
+21:58:32 [9226] └─ DONE  POST /api/scene_game/answer -> 200 in 11873ms
+21:58:38 [0179] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:58:41 [0179] [Gemini:scene-game-detect] >>> PROMPT (368 chars) | system: (gemini-robotics-er object detector)
+21:58:41 [0179] Point to no more than 1 item a person is holding in the image.
+21:58:41 [0179]               Return the object's identifying name, its dominant color, and its shape.
+21:58:41 [0179]               The answer should follow the json format:
+21:58:41 [0179]               [{"point": <point>, "label": <label>, "color": <color>, "shape": <shape>}, ...].
+21:58:41 [0179]               The points are in [y, x] format normalized to 0-1000.
+21:58:41 [0179] [SceneGame] gemini_analyze_image raw: I did not find any bounding box detections for holding.
+21:58:41 [0179] [SceneGame] analyze script exec failed: Expecting value: line 1 column 1 (char 0)
+21:58:41 [0179] self.engine :  qwen
+21:58:48 [cc56] ┌─ WORK  POST /api/scene/start | fields: mode
+21:58:48 [cc56] self.engine :  qwen
+21:58:48 [0179] └─ DONE  POST /api/scene_game/answer -> 200 in 9630ms
+21:58:53 [cc56] └─ DONE  POST /api/scene/start -> 200 in 5072ms
+21:59:05 [8db9] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:59:18 [8db9] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "in_front_of", "correct": false, "reason": "The apple is in front of the banana, but it was supposed to be behind it.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.\nThe child was asked to arrange the scene so that the apple is behind the banana.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the apple present in the scene?\n2. Is the banana present in the scene?\n3. What is the actual spatial relation of the apple TO the banana? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"in_front_of\",\n  \"correct\": false,\n  \"reason\": \"The apple is in front of the banana, but it was supposed to be behind it.\"\n}"}
+21:59:18 [8db9] [Gemini:scene-game-validate-spatial-video] >>> PROMPT (2190 chars) | system: (gemini video spatial validator)
+21:59:18 [8db9] You are judging a children's spatial-direction game.
+21:59:18 [8db9] The valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.
+21:59:18 [8db9] The child was asked to arrange the scene so that the apple is behind the banana.
+21:59:18 [8db9] 
+21:59:18 [8db9] You are watching a short video (camera-facing view) of the child's
+21:59:18 [8db9] setup. Use motion ACROSS frames to infer depth and containment more
+21:59:18 [8db9] reliably than a single still frame would allow.
+21:59:18 [8db9] 
+21:59:18 [8db9] 1. Is the apple present in the scene?
+21:59:18 [8db9] 2. Is the banana present in the scene?
+21:59:18 [8db9] 3. What is the actual spatial relation of the apple TO the banana? Pick ONE:
+21:59:18 [8db9]    - next_to       (side by side, similar height)
+21:59:18 [8db9]    - above         (higher than / on top of)
+21:59:18 [8db9]    - under         (lower than / underneath)
+21:59:18 [8db9]    - behind        (further from camera; partially hidden by the other)
+21:59:18 [8db9]    - in_front_of   (closer to camera; may partially block the other)
+21:59:18 [8db9]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:59:18 [8db9]    - out           (outside / not contained by the other; fully visible and separate)
+21:59:18 [8db9]    - other         (can't tell confidently)
+21:59:18 [8db9] 4. Does that match the requested relation 'behind'?
+21:59:18 [8db9] 
+21:59:18 [8db9] Cues to use across frames:
+21:59:18 [8db9] - Parallax: an object CLOSER to the camera shifts MORE in the image
+21:59:18 [8db9]   than a FARTHER object for the same scene motion. (depth)
+21:59:18 [8db9] - Occlusion: an object that consistently hides part of another is
+21:59:18 [8db9]   in front of it. (depth)
+21:59:18 [8db9] - Containment ('in'): if the moving object stays inside the rim of
+21:59:18 [8db9]   the reference object across the clip — partly hidden by the
+21:59:18 [8db9]   container's walls — it is 'in'. If the child visibly LIFTS the
+21:59:18 [8db9]   moving object OUT of the container during the clip, classify by
+21:59:18 [8db9]   the END state of the video.
+21:59:18 [8db9] - Separation ('out'): if there is a clear visible gap between the
+21:59:18 [8db9]   two objects throughout the clip (or by the end of it), it is 'out'.
+21:59:18 [8db9] If you cannot tell confidently from any of these cues, return 'other'.
+21:59:18 [8db9] 
+21:59:18 [8db9] Return ONLY a JSON object with no markdown fences:
+21:59:18 [8db9] {
+21:59:18 [8db9]   "obj_a_found": true|false,
+21:59:18 [8db9]   "obj_b_found": true|false,
+21:59:18 [8db9]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:59:18 [8db9]   "correct": true|false,
+21:59:18 [8db9]   "reason": "<short, child-friendly explanation>"
+21:59:18 [8db9] }
+21:59:18 [8db9] If either object is missing, set correct=false.
+21:59:18 [8db9] self.engine :  qwen
+21:59:24 [8db9] └─ DONE  POST /api/scene_game/answer -> 200 in 19148ms
+21:59:32 [9ae4] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+21:59:46 [9ae4] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "behind", "correct": true, "reason": "The apple is placed further away from the camera than the banana, so it is behind it.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.\nThe child was asked to arrange the scene so that the apple is behind the banana.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the apple present in the scene?\n2. Is the banana present in the scene?\n3. What is the actual spatial relation of the apple TO the banana? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"behind\",\n  \"correct\": true,\n  \"reason\": \"The apple is placed further away from the camera than the banana, so it is behind it.\"\n}"}
+21:59:46 [9ae4] [Gemini:scene-game-validate-spatial-video] >>> PROMPT (2190 chars) | system: (gemini video spatial validator)
+21:59:46 [9ae4] You are judging a children's spatial-direction game.
+21:59:46 [9ae4] The valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.
+21:59:46 [9ae4] The child was asked to arrange the scene so that the apple is behind the banana.
+21:59:46 [9ae4] 
+21:59:46 [9ae4] You are watching a short video (camera-facing view) of the child's
+21:59:46 [9ae4] setup. Use motion ACROSS frames to infer depth and containment more
+21:59:46 [9ae4] reliably than a single still frame would allow.
+21:59:46 [9ae4] 
+21:59:46 [9ae4] 1. Is the apple present in the scene?
+21:59:46 [9ae4] 2. Is the banana present in the scene?
+21:59:46 [9ae4] 3. What is the actual spatial relation of the apple TO the banana? Pick ONE:
+21:59:46 [9ae4]    - next_to       (side by side, similar height)
+21:59:46 [9ae4]    - above         (higher than / on top of)
+21:59:46 [9ae4]    - under         (lower than / underneath)
+21:59:46 [9ae4]    - behind        (further from camera; partially hidden by the other)
+21:59:46 [9ae4]    - in_front_of   (closer to camera; may partially block the other)
+21:59:46 [9ae4]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+21:59:46 [9ae4]    - out           (outside / not contained by the other; fully visible and separate)
+21:59:46 [9ae4]    - other         (can't tell confidently)
+21:59:46 [9ae4] 4. Does that match the requested relation 'behind'?
+21:59:46 [9ae4] 
+21:59:46 [9ae4] Cues to use across frames:
+21:59:46 [9ae4] - Parallax: an object CLOSER to the camera shifts MORE in the image
+21:59:46 [9ae4]   than a FARTHER object for the same scene motion. (depth)
+21:59:46 [9ae4] - Occlusion: an object that consistently hides part of another is
+21:59:46 [9ae4]   in front of it. (depth)
+21:59:46 [9ae4] - Containment ('in'): if the moving object stays inside the rim of
+21:59:46 [9ae4]   the reference object across the clip — partly hidden by the
+21:59:46 [9ae4]   container's walls — it is 'in'. If the child visibly LIFTS the
+21:59:46 [9ae4]   moving object OUT of the container during the clip, classify by
+21:59:46 [9ae4]   the END state of the video.
+21:59:46 [9ae4] - Separation ('out'): if there is a clear visible gap between the
+21:59:46 [9ae4]   two objects throughout the clip (or by the end of it), it is 'out'.
+21:59:46 [9ae4] If you cannot tell confidently from any of these cues, return 'other'.
+21:59:46 [9ae4] 
+21:59:46 [9ae4] Return ONLY a JSON object with no markdown fences:
+21:59:46 [9ae4] {
+21:59:46 [9ae4]   "obj_a_found": true|false,
+21:59:46 [9ae4]   "obj_b_found": true|false,
+21:59:46 [9ae4]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+21:59:46 [9ae4]   "correct": true|false,
+21:59:46 [9ae4]   "reason": "<short, child-friendly explanation>"
+21:59:46 [9ae4] }
+21:59:46 [9ae4] If either object is missing, set correct=false.
+21:59:46 [9ae4] self.engine :  qwen
+21:59:53 [9ae4] └─ DONE  POST /api/scene_game/answer -> 200 in 20625ms
+21:59:59 [2259] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+22:00:12 [2259] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "behind", "correct": true, "reason": "The apple is further away from the camera than the banana.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.\nThe child was asked to arrange the scene so that the apple is behind the banana.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the apple present in the scene?\n2. Is the banana present in the scene?\n3. What is the actual spatial relation of the apple TO the banana? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"behind\",\n  \"correct\": true,\n  \"reason\": \"The apple is further away from the camera than the banana.\"\n}"}
+22:00:12 [2259] [Gemini:scene-game-validate-spatial-video] >>> PROMPT (2190 chars) | system: (gemini video spatial validator)
+22:00:12 [2259] You are judging a children's spatial-direction game.
+22:00:12 [2259] The valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.
+22:00:12 [2259] The child was asked to arrange the scene so that the apple is behind the banana.
+22:00:12 [2259] 
+22:00:12 [2259] You are watching a short video (camera-facing view) of the child's
+22:00:12 [2259] setup. Use motion ACROSS frames to infer depth and containment more
+22:00:12 [2259] reliably than a single still frame would allow.
+22:00:12 [2259] 
+22:00:12 [2259] 1. Is the apple present in the scene?
+22:00:12 [2259] 2. Is the banana present in the scene?
+22:00:12 [2259] 3. What is the actual spatial relation of the apple TO the banana? Pick ONE:
+22:00:12 [2259]    - next_to       (side by side, similar height)
+22:00:12 [2259]    - above         (higher than / on top of)
+22:00:12 [2259]    - under         (lower than / underneath)
+22:00:12 [2259]    - behind        (further from camera; partially hidden by the other)
+22:00:12 [2259]    - in_front_of   (closer to camera; may partially block the other)
+22:00:12 [2259]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+22:00:12 [2259]    - out           (outside / not contained by the other; fully visible and separate)
+22:00:12 [2259]    - other         (can't tell confidently)
+22:00:12 [2259] 4. Does that match the requested relation 'behind'?
+22:00:12 [2259] 
+22:00:12 [2259] Cues to use across frames:
+22:00:12 [2259] - Parallax: an object CLOSER to the camera shifts MORE in the image
+22:00:12 [2259]   than a FARTHER object for the same scene motion. (depth)
+22:00:12 [2259] - Occlusion: an object that consistently hides part of another is
+22:00:12 [2259]   in front of it. (depth)
+22:00:12 [2259] - Containment ('in'): if the moving object stays inside the rim of
+22:00:12 [2259]   the reference object across the clip — partly hidden by the
+22:00:12 [2259]   container's walls — it is 'in'. If the child visibly LIFTS the
+22:00:12 [2259]   moving object OUT of the container during the clip, classify by
+22:00:12 [2259]   the END state of the video.
+22:00:12 [2259] - Separation ('out'): if there is a clear visible gap between the
+22:00:12 [2259]   two objects throughout the clip (or by the end of it), it is 'out'.
+22:00:12 [2259] If you cannot tell confidently from any of these cues, return 'other'.
+22:00:12 [2259] 
+22:00:12 [2259] Return ONLY a JSON object with no markdown fences:
+22:00:12 [2259] {
+22:00:12 [2259]   "obj_a_found": true|false,
+22:00:12 [2259]   "obj_b_found": true|false,
+22:00:12 [2259]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+22:00:12 [2259]   "correct": true|false,
+22:00:12 [2259]   "reason": "<short, child-friendly explanation>"
+22:00:12 [2259] }
+22:00:12 [2259] If either object is missing, set correct=false.
+22:00:12 [2259] self.engine :  qwen
+22:00:18 [2259] └─ DONE  POST /api/scene_game/answer -> 200 in 19100ms
+22:01:05 [5d77] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+22:01:22 [5d77] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "above", "correct": false, "reason": "The apple is being held higher than the banana, rather than behind it.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.\nThe child was asked to arrange the scene so that the apple is behind the banana.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the apple present in the scene?\n2. Is the banana present in the scene?\n3. What is the actual spatial relation of the apple TO the banana? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"above\",\n  \"correct\": false,\n  \"reason\": \"The apple is being held higher than the banana, rather than behind it.\"\n}"}
+22:01:22 [5d77] [Gemini:scene-game-validate-spatial-video] >>> PROMPT (2190 chars) | system: (gemini video spatial validator)
+22:01:22 [5d77] You are judging a children's spatial-direction game.
+22:01:22 [5d77] The valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.
+22:01:22 [5d77] The child was asked to arrange the scene so that the apple is behind the banana.
+22:01:22 [5d77] 
+22:01:22 [5d77] You are watching a short video (camera-facing view) of the child's
+22:01:22 [5d77] setup. Use motion ACROSS frames to infer depth and containment more
+22:01:22 [5d77] reliably than a single still frame would allow.
+22:01:22 [5d77] 
+22:01:22 [5d77] 1. Is the apple present in the scene?
+22:01:22 [5d77] 2. Is the banana present in the scene?
+22:01:22 [5d77] 3. What is the actual spatial relation of the apple TO the banana? Pick ONE:
+22:01:22 [5d77]    - next_to       (side by side, similar height)
+22:01:22 [5d77]    - above         (higher than / on top of)
+22:01:22 [5d77]    - under         (lower than / underneath)
+22:01:22 [5d77]    - behind        (further from camera; partially hidden by the other)
+22:01:22 [5d77]    - in_front_of   (closer to camera; may partially block the other)
+22:01:22 [5d77]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+22:01:22 [5d77]    - out           (outside / not contained by the other; fully visible and separate)
+22:01:22 [5d77]    - other         (can't tell confidently)
+22:01:22 [5d77] 4. Does that match the requested relation 'behind'?
+22:01:22 [5d77] 
+22:01:22 [5d77] Cues to use across frames:
+22:01:22 [5d77] - Parallax: an object CLOSER to the camera shifts MORE in the image
+22:01:22 [5d77]   than a FARTHER object for the same scene motion. (depth)
+22:01:22 [5d77] - Occlusion: an object that consistently hides part of another is
+22:01:22 [5d77]   in front of it. (depth)
+22:01:22 [5d77] - Containment ('in'): if the moving object stays inside the rim of
+22:01:22 [5d77]   the reference object across the clip — partly hidden by the
+22:01:22 [5d77]   container's walls — it is 'in'. If the child visibly LIFTS the
+22:01:22 [5d77]   moving object OUT of the container during the clip, classify by
+22:01:22 [5d77]   the END state of the video.
+22:01:22 [5d77] - Separation ('out'): if there is a clear visible gap between the
+22:01:22 [5d77]   two objects throughout the clip (or by the end of it), it is 'out'.
+22:01:22 [5d77] If you cannot tell confidently from any of these cues, return 'other'.
+22:01:22 [5d77] 
+22:01:22 [5d77] Return ONLY a JSON object with no markdown fences:
+22:01:22 [5d77] {
+22:01:22 [5d77]   "obj_a_found": true|false,
+22:01:22 [5d77]   "obj_b_found": true|false,
+22:01:22 [5d77]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+22:01:22 [5d77]   "correct": true|false,
+22:01:22 [5d77]   "reason": "<short, child-friendly explanation>"
+22:01:22 [5d77] }
+22:01:22 [5d77] If either object is missing, set correct=false.
+22:01:22 [5d77] self.engine :  qwen
+22:01:28 [5d77] └─ DONE  POST /api/scene_game/answer -> 200 in 23060ms
+22:01:37 [88e1] ┌─ WORK  POST /api/scene_game/answer | fields: mode, target, criteria, obj_a, obj_b, relation
+22:01:51 [88e1] [SceneGame] gemini_validate_spatial_video raw: {"obj_a_found": true, "obj_b_found": true, "actual_relation": "behind", "correct": true, "reason": "The apple is held further away from the camera than the banana.", "prompt": "You are judging a children's spatial-direction game.\nThe valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.\nThe child was asked to arrange the scene so that the apple is behind the banana.\n\nYou are watching a short video (camera-facing view) of the child's\nsetup. Use motion ACROSS frames to infer depth and containment more\nreliably than a single still frame would allow.\n\n1. Is the apple present in the scene?\n2. Is the banana present in the scene?\n3. What is the actual spatial relation of the apple TO the banana? Pick ONE:\n   - next_to       (side by side, similar height)\n   - above         (higher than / on top of)\n   - under         (lower than / underneath)\n   - behind        (further from camera; partially hidden by the other)\n   - in_front_of   (closer to camera; may partially block the other)\n   - in            (inside / contained by the other; partially hidden by its walls or rim)\n   - out           (outside / not contained by the other; fully visible and separate)\n   - other         (can't tell confidently)\n4. Does that match the requested relation 'behind'?\n\nCues to use across frames:\n- Parallax: an object CLOSER to the camera shifts MORE in the image\n  than a FARTHER object for the same scene motion. (depth)\n- Occlusion: an object that consistently hides part of another is\n  in front of it. (depth)\n- Containment ('in'): if the moving object stays inside the rim of\n  the reference object across the clip \u2014 partly hidden by the\n  container's walls \u2014 it is 'in'. If the child visibly LIFTS the\n  moving object OUT of the container during the clip, classify by\n  the END state of the video.\n- Separation ('out'): if there is a clear visible gap between the\n  two objects throughout the clip (or by the end of it), it is 'out'.\nIf you cannot tell confidently from any of these cues, return 'other'.\n\nReturn ONLY a JSON object with no markdown fences:\n{\n  \"obj_a_found\": true|false,\n  \"obj_b_found\": true|false,\n  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n  \"correct\": true|false,\n  \"reason\": \"<short, child-friendly explanation>\"\n}\nIf either object is missing, set correct=false.", "raw_response": "{\n  \"obj_a_found\": true,\n  \"obj_b_found\": true,\n  \"actual_relation\": \"behind\",\n  \"correct\": true,\n  \"reason\": \"The apple is held further away from the camera than the banana.\"\n}"}
+22:01:51 [88e1] [Gemini:scene-game-validate-spatial-video] >>> PROMPT (2190 chars) | system: (gemini video spatial validator)
+22:01:51 [88e1] You are judging a children's spatial-direction game.
+22:01:51 [88e1] The valid game objects are: lemon,tomato,apple,banana,tray,box,bowl. Only identify objects from this list.
+22:01:51 [88e1] The child was asked to arrange the scene so that the apple is behind the banana.
+22:01:51 [88e1] 
+22:01:51 [88e1] You are watching a short video (camera-facing view) of the child's
+22:01:51 [88e1] setup. Use motion ACROSS frames to infer depth and containment more
+22:01:51 [88e1] reliably than a single still frame would allow.
+22:01:51 [88e1] 
+22:01:51 [88e1] 1. Is the apple present in the scene?
+22:01:51 [88e1] 2. Is the banana present in the scene?
+22:01:51 [88e1] 3. What is the actual spatial relation of the apple TO the banana? Pick ONE:
+22:01:51 [88e1]    - next_to       (side by side, similar height)
+22:01:51 [88e1]    - above         (higher than / on top of)
+22:01:51 [88e1]    - under         (lower than / underneath)
+22:01:51 [88e1]    - behind        (further from camera; partially hidden by the other)
+22:01:51 [88e1]    - in_front_of   (closer to camera; may partially block the other)
+22:01:51 [88e1]    - in            (inside / contained by the other; partially hidden by its walls or rim)
+22:01:51 [88e1]    - out           (outside / not contained by the other; fully visible and separate)
+22:01:51 [88e1]    - other         (can't tell confidently)
+22:01:51 [88e1] 4. Does that match the requested relation 'behind'?
+22:01:51 [88e1] 
+22:01:51 [88e1] Cues to use across frames:
+22:01:51 [88e1] - Parallax: an object CLOSER to the camera shifts MORE in the image
+22:01:51 [88e1]   than a FARTHER object for the same scene motion. (depth)
+22:01:51 [88e1] - Occlusion: an object that consistently hides part of another is
+22:01:51 [88e1]   in front of it. (depth)
+22:01:51 [88e1] - Containment ('in'): if the moving object stays inside the rim of
+22:01:51 [88e1]   the reference object across the clip — partly hidden by the
+22:01:51 [88e1]   container's walls — it is 'in'. If the child visibly LIFTS the
+22:01:51 [88e1]   moving object OUT of the container during the clip, classify by
+22:01:51 [88e1]   the END state of the video.
+22:01:51 [88e1] - Separation ('out'): if there is a clear visible gap between the
+22:01:51 [88e1]   two objects throughout the clip (or by the end of it), it is 'out'.
+22:01:51 [88e1] If you cannot tell confidently from any of these cues, return 'other'.
+22:01:51 [88e1] 
+22:01:51 [88e1] Return ONLY a JSON object with no markdown fences:
+22:01:51 [88e1] {
+22:01:51 [88e1]   "obj_a_found": true|false,
+22:01:51 [88e1]   "obj_b_found": true|false,
+22:01:51 [88e1]   "actual_relation": "next_to|above|under|behind|in_front_of|in|out|other",
+22:01:51 [88e1]   "correct": true|false,
+22:01:51 [88e1]   "reason": "<short, child-friendly explanation>"
+22:01:51 [88e1] }
+22:01:51 [88e1] If either object is missing, set correct=false.
+22:01:51 [88e1] self.engine :  qwen
+22:01:58 [88e1] └─ DONE  POST /api/scene_game/answer -> 200 in 21565ms

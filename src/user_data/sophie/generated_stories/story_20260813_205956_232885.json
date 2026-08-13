@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy Wings\n\nSophie is sitting at the craft table. Sophie is making fairy wings. The wings are big and sparkly. Sophie's glue and ribbons are on the table. Oh no! The red ribbon falls under the chair. Sophie cannot reach it. Sophie asks her friend Mia for help. Mia gets down and reaches under the chair. Mia finds the red ribbon. Sophie and Mia stick the ribbons onto the wings together. The wings look beautiful. The teacher sees the three sparkly wings on the table and smiles.\n\n** End **\n** Questions **\n1. WHERE is Sophie sitting?\n2. WHAT is Sophie making?\n3. WHAT falls under the chair?\n4. WHO helps Sophie find the ribbon?\n5. WHERE does Mia find the ribbon?\n6. WHO sees the sparkly wings on the table?\n7. WHAT does the teacher see on the table?\n\n** Explanation of the output **\nThe story supports language comprehension by weaving in descriptive adjectives (\"big,\" \"sparkly,\" \"red\"), spatial terms (\"on the table,\" \"under the chair\"), present-progressive verbs (\"sitting,\" \"making\"), and simple conjunctions (\"and\"), while the craft scene naturally models collaboration, turn-taking, and asking for help — all core social-language and early literacy targets for a 5-year-old.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 206,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T20:59:56.232885"
+}

@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Three Fish\n\nSophie is in the classroom. Three fish are swimming in the big blue tank on the shelf. Sophie wants to feed the fish. Sophie looks for the red food can. The can is not on the shelf. The can is not on the table. Sophie asks her friend Chloe for help. Chloe finds the red can under the chair. Sophie and Chloe feed the fish together. The three fish swim up and eat the food. Sophie and Chloe are so happy!\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT are the three fish doing?\n3. WHAT is Sophie looking for?\n4. WHO helps Sophie find the can?\n5. WHERE is the red can?\n6. WHAT do Sophie and Chloe do together?\n7. WHAT do the three fish do?\n\n** Explanation of the output **\nThe story is set in a classroom and features Sophie and a friend finding a lost item together, naturally weaving in collaboration, asking for help, descriptive words (big, blue, red), spatial terms (on the shelf, under the chair), plural nouns (fish, chairs), and target sounds (three, chair, red) through observable, concrete actions. All WH-questions target WHO/WHAT/WHERE and have explicit, word-for-word answers in the story text, supporting literal language comprehension at the 5-year-old developmental level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 220,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "school"
+    ]
+  },
+  "generated_at": "2026-08-13T20:59:07.990134"
+}

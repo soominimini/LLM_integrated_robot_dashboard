@@ -1,32 +1,4 @@
 #!/usr/bin/env python3.9
-"""Validate a spatial-direction setup from a short video clip.
-
-Used for the depth relations (behind / in_front_of) where a single 2D
-frame cannot reliably disambiguate the configuration. The child holds
-the objects (or slowly tilts the camera) during a ~3-second capture so
-the model can use parallax across frames to infer relative depth.
-
-The video is uploaded via the Gemini Files API (mirroring the pattern in
-``robotics-samples/Getting Started/gemini_robotics_er.ipynb`` cell 62)
-and the file handle is passed as a content part to ``generate_content``.
-
-Input (args):
-    --video      path to the captured MP4
-    --obj-a      moving object the robot named first (e.g. "banana")
-    --obj-b      reference object (e.g. "blue block")
-    --relation   one of: next_to, above, under, behind, in_front_of
-    --toy-list   optional comma-separated list of valid toys
-
-Output (stdout, single JSON line; same schema as the still worker):
-    {
-      "obj_a_found":     true | false,
-      "obj_b_found":     true | false,
-      "actual_relation": "next_to" | "above" | "under" | "behind"
-                       | "in_front_of" | "other",
-      "correct":         true | false,
-      "reason":          "<short child-friendly explanation>"
-    }
-"""
 
 import argparse
 import json
@@ -39,15 +11,18 @@ from google.genai import types
 
 
 RELATION_PHRASE = {
-    "next_to": "next to",
-    "above": "on top of",
-    "under": "under",
+    "in": "in",
+    "out": "out",
     "behind": "behind",
     "in_front_of": "in front of",
-    "in": "in",
-    "out": "out of",
 }
 
+RELATION_RULES = {
+    "in": "inside, contained by; partially hidden by walls or rim of",
+    "out": "outside, not inside, not contained by",
+    "behind": "further from camera than, may be partially hidden by",
+    "in_front_of": "closer to camera than, may partially block",
+}
 
 def _state_name(file_obj):
     """Return the upload state as a string regardless of SDK enum shape."""
@@ -104,60 +79,39 @@ def main():
         return 1
 
     rel_phrase = RELATION_PHRASE[args.relation]
-    toy_clause = ""
-    if args.toy_list:
-        toy_clause = (
-            f"The valid game objects are: {args.toy_list}. "
-            "Only identify objects from this list.\n"
-        )
+
+    active_rule = RELATION_RULES[args.relation]
 
     prompt = (
-        "You are judging a children's spatial-direction game.\n"
-        f"{toy_clause}"
+        "You are validating a therapeutic spatial-direction game for a QT robot interacting with young children. Accuracy is critical."
         f"The child was asked to arrange the scene so that the {args.obj_a} is "
         f"{rel_phrase} the {args.obj_b}.\n"
         "\n"
-        "You are watching a short video (camera-facing view) of the child's\n"
-        "setup. Use motion ACROSS frames to infer depth and containment more\n"
-        "reliably than a single still frame would allow.\n"
-        "\n"
+        "A video is taken from the front of the child (camera-facing view).\n"
+        "Criteria:\n"
         f"1. Is the {args.obj_a} present in the scene?\n"
         f"2. Is the {args.obj_b} present in the scene?\n"
-        f"3. What is the actual spatial relation of the {args.obj_a} TO the "
-        f"{args.obj_b}? Pick ONE:\n"
-        "   - next_to       (side by side, similar height)\n"
-        "   - above         (higher than / on top of)\n"
-        "   - under         (lower than / underneath)\n"
-        "   - behind        (further from camera; partially hidden by the other)\n"
-        "   - in_front_of   (closer to camera; may partially block the other)\n"
-        "   - in            (inside / contained by the other; partially hidden by its walls or rim)\n"
-        "   - out           (outside / not contained by the other; fully visible and separate)\n"
-        "   - other         (can't tell confidently)\n"
-        f"4. Does that match the requested relation '{args.relation}'?\n"
-        "\n"
-        "Cues to use across frames:\n"
-        "- Parallax: an object CLOSER to the camera shifts MORE in the image\n"
-        "  than a FARTHER object for the same scene motion. (depth)\n"
-        "- Occlusion: an object that consistently hides part of another is\n"
-        "  in front of it. (depth)\n"
-        "- Containment ('in'): if the moving object stays inside the rim of\n"
-        "  the reference object across the clip — partly hidden by the\n"
-        "  container's walls — it is 'in'. If the child visibly LIFTS the\n"
-        "  moving object OUT of the container during the clip, classify by\n"
-        "  the END state of the video.\n"
-        "- Separation ('out'): if there is a clear visible gap between the\n"
-        "  two objects throughout the clip (or by the end of it), it is 'out'.\n"
-        "If you cannot tell confidently from any of these cues, return 'other'.\n"
-        "\n"
-        "Return ONLY a JSON object with no markdown fences:\n"
+        f"3. Verification: Does the spatial arrangement meet the following rule for '{args.relation}'? ({active_rule})\n"
+        "Instructions:\n"
+        "Return ONLY a JSON object with no markdown fences.\n"
         "{\n"
         "  \"obj_a_found\": true|false,\n"
         "  \"obj_b_found\": true|false,\n"
-        "  \"actual_relation\": \"next_to|above|under|behind|in_front_of|in|out|other\",\n"
+        "  \"actual_relation\": \"in|out|behind|in_front_of|other\",\n"
         "  \"correct\": true|false,\n"
         "  \"reason\": \"<short, child-friendly explanation>\"\n"
         "}\n"
-        "If either object is missing, set correct=false."
+        f"`actual_relation` is deprecated; just set it to '{args.relation}' regardless of whether the criteria is met.\n"
+        "Set `correct` to true if and only if both objects are found and the verification is satisfied.\n"
+        "Set `reason` to a short explanation for the child to understand your verdict.\n"
+        "\n"
+        "Tips:\n"
+        "Use motion ACROSS frames to infer depth and containment more reliably than a single frame would allow.\n"
+        "An object CLOSER to the camera shifts MORE in the image than a FARTHER object for the same scene motion.\n"
+        "An object that consistently hides part of another is in front of it.\n"
+        "If the moving object stays inside the rim of the reference object across the clip — partly hidden by the container's walls — it is 'in'.\n"
+        "If the child visibly LIFTS the moving object OUT of the container during the clip, classify by the END state (last frame) of the video.\n"
+        "If there is a clear visible gap between the two objects by the end of the clip, it is 'out'.\n"
     )
 
     response = client.models.generate_content(

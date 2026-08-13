@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. Sophie sees three rabbits in a big, white cage. One rabbit is small and brown. Sophie reaches into the cage. The small rabbit hops to the chair next to the cage! Sophie calls her friend Mia. Mia runs over to help. Mia holds open the cage door. Sophie gently picks up the rabbit. They put the rabbit back in the cage. The rabbit sits on Sophie's thumb! Sophie and Mia are smiling.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie see in the cage?\n3. WHERE does the small rabbit hop?\n4. WHO does Sophie call for help?\n5. WHO holds open the cage door?\n6. WHAT does the rabbit sit on?\n7. WHO is smiling at the end?\n\n** Explanation of the output **\nThe story practises late-developing sounds (three, rabbit, chair, thumb) and descriptive words (small, big, white, brown) naturally within a pet-theme scene that requires collaboration and peer support. WH-questions target literal comprehension of who, what, and where — all directly answerable from stated story facts.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 189,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:51:37.434897"
+}

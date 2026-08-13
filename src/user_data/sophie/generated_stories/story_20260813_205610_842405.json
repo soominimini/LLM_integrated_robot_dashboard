@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Missing Cat\n\nSophie and her dad are looking for their cat, Cheddar. Cheddar is orange and very fluffy. Sophie looks under the chair. Cheddar is not there. Dad looks behind the big red couch. Cheddar is not there either. Sophie walks to the bedroom. She sees a round, fluffy shape on the pillow. \"Dad, Cheddar is on the pillow!\" Sophie calls. Dad runs in and smiles. Sophie and Dad pet the sleeping cat together. Cheddar opens three sleepy eyes and purrs. Sophie and Dad laugh.\n\n** End **\n** Questions **\n1. WHO is looking for Cheddar?\n2. WHAT color is Cheddar?\n3. WHERE does Sophie look first?\n4. WHERE does Dad look?\n5. WHERE is Cheddar sleeping?\n6. WHAT does Sophie call Cheddar?\n7. WHAT does Cheddar do when Sophie and Dad pet her?\n\n** Explanation of the output **\nThe story centers on a family home-search scene with Sophie and her dad, naturally modeling descriptive adjectives (\"orange,\" \"fluffy,\" \"big red\"), spatial location terms (\"under the chair,\" \"behind the couch,\" \"on the pillow\"), collaboration and turn-taking between characters, and target sounds /ch/ (Cheddar, chair, couch), /r/ (round, red, runs), and /th/ (three, there, together) embedded in high-frequency words throughout the narrative.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 208,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:56:10.842405"
+}

@@ -1,116 +1,13 @@
 {
   "prompt_version": 2,
-  "toys_fp": "lemon|tray",
+  "toys_fp": "bowl|carrot|tray",
   "child_age": 4,
   "language_age": 4,
-  "questions": [
-    {
-      "question": "Let's put the lemon below the tray.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "under",
-      "phrase": "below",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the lemon on the tray.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "above",
-      "phrase": "on",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tray under the lemon.",
-      "mode": "direction",
-      "obj_a": "tray",
-      "obj_b": "lemon",
-      "relation": "under",
-      "phrase": "under",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the lemon in front of the tray.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "in_front_of",
-      "phrase": "in front of",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the lemon beside the tray.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "next_to",
-      "phrase": "beside",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tray beside the lemon.",
-      "mode": "direction",
-      "obj_a": "tray",
-      "obj_b": "lemon",
-      "relation": "next_to",
-      "phrase": "beside",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the lemon behind the tray.",
-      "mode": "direction",
-      "obj_a": "lemon",
-      "obj_b": "tray",
-      "relation": "behind",
-      "phrase": "behind",
-      "category": "fruit",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tray in front of the lemon.",
-      "mode": "direction",
-      "obj_a": "tray",
-      "obj_b": "lemon",
-      "relation": "in_front_of",
-      "phrase": "in front of",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    },
-    {
-      "question": "Let's put the tray behind the lemon.",
-      "mode": "direction",
-      "obj_a": "tray",
-      "obj_b": "lemon",
-      "relation": "behind",
-      "phrase": "behind",
-      "category": "container",
-      "target": null,
-      "criteria": null
-    }
-  ],
+  "questions": [],
   "relations": [
     "behind",
     "in",
-    "in_front_of",
-    "next_to",
-    "on",
-    "under"
+    "in_front_of"
   ],
-  "generated_at": "2026-07-21 20:37:27"
+  "generated_at": "2026-07-29 03:47:24"
 }

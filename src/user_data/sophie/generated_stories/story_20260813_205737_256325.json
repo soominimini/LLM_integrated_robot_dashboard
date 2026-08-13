@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Windy Crown\n\nSophie is playing outside. Big red and orange leaves are falling from the trees. Sophie has a shiny crown on her head. Sophie is a princess today! Her friend Mia is there too. A big gust of wind blows the crown up into a tall tree. Sophie is sad. Mia picks up a long stick. Mia uses the stick to reach the crown. The crown drops down into Sophie's hands. Sophie puts the crown back on her head. Sophie and Mia are both smiling.\n\n** End **\n** Questions **\n1. WHO is playing outside?\n2. WHAT is falling from the trees?\n3. WHAT does Sophie have on her head?\n4. WHO is there with Sophie?\n5. WHERE does the wind blow the crown?\n6. WHAT does Mia use to reach the crown?\n7. WHAT does Sophie put back on her head?\n\n** Explanation of the output **\nThe autumn setting and wind obstacle weave in seasonal/nature language and descriptive words (big, shiny, tall, long), while Mia using a stick to help Sophie models collaboration, turn-taking, and overcoming challenges with a friend's support—all integrated naturally without explicit instruction.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 196,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T20:57:37.256325"
+}

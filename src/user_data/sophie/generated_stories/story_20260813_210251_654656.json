@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Sparkly Crown\n\nSophie is playing in her big castle. The castle has tall, pink towers. Sophie finds a sparkly crown on the floor. The crown is sitting under a chair. Sophie wants to put the crown on top of the tower. But the tower is too tall! Sophie's friend Lily is standing next to her. Lily holds the crown, and Sophie climbs up. Sophie places the crown on the tall tower. The two friends are clapping and jumping. Sophie is so proud. The sparkly crown is on top of the castle!\n\n** End **\n** Questions **\n1. WHO is playing in the castle?\n2. WHAT does Sophie find on the floor?\n3. WHERE is the crown sitting?\n4. WHO is standing next to Sophie?\n5. WHAT do the two friends do after the crown is placed?\n6. WHERE does Sophie place the crown?\n7. WHAT is on top of the castle?\n\n** Explanation of the output **\nThe story uses a princess theme to naturally embed descriptive adjectives (sparkly, tall, pink), spatial terms (under, on top, next to), and collaborative action between named characters, directly supporting Sophie's goals in descriptive language, friendship, and overcoming challenges with help. WH-questions target literal comprehension of who, what, and where, which are the appropriate question forms for a 5-year-old developing language comprehension and early literacy skills.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 229,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T21:02:51.654656"
+}

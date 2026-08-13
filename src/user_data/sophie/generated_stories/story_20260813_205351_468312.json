@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Hiding Hamster\n\nSophie and her friend Mia are at Sophie's house. They are playing with Sophie's hamster. The hamster is small and brown. The hamster runs off the table! Sophie looks under the chair. Mia looks behind the big red box. \"I see the hamster!\" says Mia. The hamster is sitting under the chair. Sophie reaches under the chair and picks the hamster up. \"Thank you, Mia!\" says Sophie. Mia and Sophie are smiling. They put the hamster back in his cozy, round cage.\n\n** End **\n** Questions **\n1. WHERE are Sophie and Mia playing?\n2. WHAT color is the hamster?\n3. WHAT does the hamster run off?\n4. WHERE does Sophie look?\n5. WHO sees the hamster first?\n6. WHERE is the hamster sitting?\n7. WHERE do Sophie and Mia put the hamster?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (small, brown, big red, cozy, round) and spatial terms (under, behind, back in) to support Sophie's language targets, while the two-character search and sharing of the find models collaboration and turn-taking. All WH-questions target WHO/WHAT/WHERE concepts with answers stated word-for-word in the text, supporting literal comprehension at a 5-year-old level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 204,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:53:51.468312"
+}

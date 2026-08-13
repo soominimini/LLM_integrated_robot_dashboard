@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie and her mom are in the living room. They are making a big, round crown. Sophie puts red ribbons on the crown. Mom puts three shiny stars on the crown. \"The crown is ready!\" says Sophie. Sophie's little brother reaches for the crown. The crown falls under the chair. Sophie and Mom reach under the chair together. They grab the crown. Sophie puts the crown on her brother's head. Her brother laughs. Sophie and Mom are smiling.\n\n** End **\n** Questions **\n1. WHO is in the living room with Sophie?\n2. WHAT are Sophie and Mom making?\n3. WHAT does Sophie put on the crown?\n4. WHAT does Mom put on the crown?\n5. WHERE does the crown fall?\n6. WHO puts the crown on her brother's head?\n7. WHAT does Sophie's brother do at the end?\n\n** Explanation of the output **\nThe story weaves in descriptive words (\"big, round,\" \"red ribbons,\" \"shiny stars\"), spatial language (\"under the chair\"), and collaborative action between Sophie, Mom, and her brother to naturally support language comprehension, adjective use, and relationship-building goals. All question answers appear word-for-word in the story, targeting WHO/WHAT/WHERE comprehension at the 5-year-old developmental level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 206,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:56:53.200922"
+}

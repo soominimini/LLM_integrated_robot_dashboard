@@ -1,0 +1,18 @@
+{
+  "story": "** Title **\nSophie and the Fluffy Rabbit\n\nSophie is at the pet shop. Sophie sees three rabbits in a big cage. One rabbit is small and white and fluffy. Sophie wants to pet the fluffy rabbit, but the rabbit runs to the back of the cage. A girl named Chloe is standing next to Sophie. Chloe holds out a red carrot. The fluffy rabbit hops to the front of the cage. Sophie and Chloe are smiling. The woman at the shop opens the cage. Sophie reaches in and touches the soft, fluffy rabbit.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie see in the big cage?\n3. WHAT rabbit does Sophie want to pet?\n4. WHO is standing next to Sophie?\n5. WHAT does Chloe hold out?\n6. WHO opens the cage?\n7. WHAT does Sophie touch?\n\n** Explanation of the output **\nThe story builds descriptive language through adjectives like \"small,\" \"white,\" \"fluffy,\" and \"soft,\" and uses spatial terms like \"back of the cage\" and \"front of the cage\" to support location concepts. Collaboration and friendship are woven in naturally through Sophie and Chloe working together, and target sounds /r/, /ch/, and /th/ appear in words like \"rabbit,\" \"reaches,\" and \"three\" throughout the narrative.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 212,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": []
+  },
+  "generated_at": "2026-08-13T20:52:17.297093"
+}

@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Fairy in the Leaves\n\nSophie is outside. Big red and orange leaves are falling from the trees. Sophie sees a tiny fairy sitting on a leaf pile. The fairy has bright yellow wings. \"The wind is blowing my leaves away!\" says the fairy. Sophie helps the fairy push the leaves into a big pile. They take turns pushing the crunchy leaves together. The pile gets very tall. The fairy claps her wings. Sophie and the fairy sit on top of the big, soft pile.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT is falling from the trees?\n3. WHO is sitting on the leaf pile?\n4. WHAT color are the fairy's wings?\n5. WHAT do Sophie and the fairy push together?\n6. WHO claps her wings?\n7. WHERE do Sophie and the fairy sit?\n\n** Explanation of the output **\nThe story weaves descriptive adjectives (big, red, orange, crunchy, soft), spatial terms (on, together, on top of), and turn-taking into a concrete fairy-and-seasons scene, targeting Sophie's language comprehension through observable actions. All WH-questions have explicit, word-for-word answers in the story, supporting literal comprehension and early literacy development at the 5-year-old level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 201,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T20:57:48.592384"
+}

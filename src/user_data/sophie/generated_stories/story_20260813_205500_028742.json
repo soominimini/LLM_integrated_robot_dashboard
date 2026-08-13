@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Royal Crown\n\nSophie is in the living room with her mom. Sophie has a big, shiny crown. Mom is sitting on the red chair. Sophie puts the crown on Mom's head. The crown falls off and rolls under the table! Sophie gets down on her three hands and knees. Sophie reaches under the table and grabs the crown. Mom is laughing. Sophie places the crown back on Mom's head. Mom says, \"Thank you, my princess!\" Sophie and Mom are smiling together.\n\n** End **\n** Questions **\n1. WHERE is Sophie?\n2. WHAT does Sophie have?\n3. WHERE is Mom sitting?\n4. WHERE does the crown roll?\n5. WHO grabs the crown?\n6. WHAT does Mom say?\n7. WHO are smiling together?\n\n** Explanation of the output **\nThe story centers on a warm family moment between Sophie and her mom, naturally weaving in descriptive words (big, shiny, red), spatial terms (under the table), collaboration (Sophie helping Mom), and belonging through the affectionate exchange — all core therapy goals. Target speech sounds [th, r, ch] appear naturally in words like three, reaches, crown, and chair, while language targets including plurals, progressive verbs, conjunctions, and location noun phrases are embedded throughout the narrative and dialogue.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 210,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:55:00.028742"
+}

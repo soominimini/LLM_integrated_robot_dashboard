@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie is playing in the red and yellow leaves. The leaves are falling from the big tree. A tiny fairy sits on a branch. The fairy has bright orange wings. Sophie reaches up and touches the branch. The fairy drops her small wand into a pile of leaves. Sophie looks under the leaves. Sophie finds the wand. Sophie gives the wand back to the fairy. The fairy claps her little hands. Sophie and the fairy sit together on the crunchy leaves.\n\n** End **\n** Questions **\n1. WHERE is Sophie playing?\n2. WHAT is falling from the big tree?\n3. WHO sits on the branch?\n4. WHAT does the fairy drop?\n5. WHERE does Sophie find the wand?\n6. WHO gives the wand back to the fairy?\n7. WHAT do Sophie and the fairy sit on?\n\n** Explanation of the output **\nThe story uses a fairy theme with vivid autumn details to naturally model descriptive adjectives (tiny, bright orange, crunchy), spatial language (under the leaves, on the branch), and collaborative interaction between Sophie and the fairy, supporting friendship and problem-solving goals. WH-questions target language comprehension at the WHO/WHAT/WHERE level, with all answers explicitly stated in the story text.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 208,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T21:02:02.790920"
+}

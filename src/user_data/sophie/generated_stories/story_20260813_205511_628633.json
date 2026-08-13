@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Tiny Fairy\n\nSophie and her mum are sitting on the big, soft rug. They are making fairy wings together. Sophie cuts the white paper. Mum adds three red stars. The wings are on the table. Sophie picks up the shiny wand. Then a tiny fairy flies through the window! The fairy sits on the round chair. The fairy has bright green wings. Sophie gives the fairy a small star. Mum and Sophie are clapping their hands. The tiny fairy waves the wand. Red stars fall on the rug!\n\n** End **\n** Questions **\n1. WHO is sitting on the rug?\n2. WHAT are Sophie and Mum making?\n3. WHERE are the wings?\n4. WHO flies through the window?\n5. WHERE does the fairy sit?\n6. WHAT does Sophie give the fairy?\n7. WHAT falls on the rug?\n\n** Explanation of the output **\nThe story centres Sophie and her mum in a shared imaginative activity, naturally embedding adjectives (big, soft, tiny, shiny, round, bright), spatial terms (on the rug, through the window, on the chair), turn-taking, and target sounds (three, red, chair) within a warm family scene. The five-to-seven WHO/WHAT/WHERE questions all have word-for-word answers in the story, supporting literal language comprehension and early literacy at the 5-year developmental level.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 217,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "family"
+    ]
+  },
+  "generated_at": "2026-08-13T20:55:11.628633"
+}

@@ -1,0 +1,20 @@
+{
+  "story": "** Title **\nSophie and the Rainy Fairy Garden\n\nSophie is sitting in the garden. Three tiny fairies are flying near the red flowers. The fairies have bright wings and small magic wands. Sophie and the fairies are picking up fallen yellow leaves. A big rain cloud moves over the garden. Cold raindrops fall on the flowers. The fairies fly under a wide green leaf. Sophie runs under the leaf too. Sophie and the fairies are sitting together under the leaf. The rain stops. The garden is wet and shiny. Sophie and the fairies come out again.\n\n** End **\n** Questions **\n1. WHO is sitting in the garden?\n2. WHERE are the fairies flying?\n3. WHAT do the fairies have?\n4. WHAT are Sophie and the fairies picking up?\n5. WHERE do the fairies fly when the rain comes?\n6. WHAT falls on the flowers?\n7. WHAT is the garden after the rain stops?\n\n** Explanation of the output **\nThe story weaves in descriptive adjectives (bright, red, yellow, wide, green, cold, wet, shiny) and spatial terms (under, near, together) naturally through the fairy-and-garden scene, supporting Sophie's goals in descriptive language and location concepts. Collaboration and friendship are shown through Sophie joining the fairies — picking leaves and sheltering together — while the autumn rain provides a gentle seasonal obstacle resolved through togetherness.\n",
+  "metadata": {
+    "child_name": "sophie",
+    "age": 5,
+    "language_age": null,
+    "age_tier": "wh_question_format",
+    "target_word_range": [
+      70,
+      100
+    ],
+    "word_count": 225,
+    "generated_at": null,
+    "model": "claude-sonnet-4-6",
+    "topics": [
+      "season"
+    ]
+  },
+  "generated_at": "2026-08-13T20:58:15.547873"
+}
