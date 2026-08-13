@@ -1,0 +1,65 @@
+{
+  "scene_description": "A classroom scene where a female teacher stands in front of a green chalkboard with math problems written on it. Several children are seated at desks with their hands raised.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What color is the board on the wall?",
+      "answer": "green",
+      "visual_choices": [
+        "green",
+        "white",
+        "blue",
+        "black"
+      ],
+      "evidence_hint": "Look at the big board behind the teacher."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing in front of the board?",
+      "answer": "a teacher",
+      "visual_choices": [
+        "a teacher",
+        "a child",
+        "a doctor",
+        "a parent"
+      ],
+      "evidence_hint": "Look at the adult standing up near the board."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children doing with their arms?",
+      "answer": "raising their hands",
+      "visual_choices": [
+        "raising their hands",
+        "clapping",
+        "waving goodbye",
+        "holding books"
+      ],
+      "evidence_hint": "Look at the arms of the children sitting down."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the teacher standing?",
+      "answer": "in front of the board",
+      "visual_choices": [
+        "in front of the board",
+        "at a desk",
+        "by a window",
+        "outside"
+      ],
+      "evidence_hint": "Look at where the teacher is standing in the room."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is written on the board?",
+      "answer": "numbers",
+      "visual_choices": [
+        "numbers",
+        "pictures",
+        "letters only",
+        "nothing"
+      ],
+      "evidence_hint": "Look closely at the green board behind the teacher."
+    }
+  ]
+}

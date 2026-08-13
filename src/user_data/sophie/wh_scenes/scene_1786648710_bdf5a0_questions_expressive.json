@@ -1,0 +1,115 @@
+{
+  "scene_description": "A woman with long hair stands inside an airport terminal, holding a handbag and standing next to a rolling suitcase. She is looking out a large window at an airplane flying in the sky.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What do you see in the sky?",
+      "sample_answers": [
+        "an airplane",
+        "a plane",
+        "a jet"
+      ],
+      "sentence_frame": "I see ___ in the sky.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "an airplane",
+        "a bird",
+        "a kite"
+      ],
+      "evidence_hint": "Look up in the top right corner of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the woman doing?",
+      "sample_answers": [
+        "looking out the window",
+        "watching the airplane",
+        "standing and looking"
+      ],
+      "sentence_frame": "The woman is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "looking out the window",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at where the woman's face and body are pointing."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the woman standing?",
+      "sample_answers": [
+        "at the airport",
+        "inside near a big window",
+        "in a building"
+      ],
+      "sentence_frame": "The woman is standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at the airport",
+        "at a park",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at the big windows and the airplane outside \u2014 what kind of place has airplanes?"
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is next to the woman on the floor?",
+      "sample_answers": [
+        "a suitcase",
+        "a bag",
+        "luggage"
+      ],
+      "sentence_frame": "Next to her is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a suitcase",
+        "a chair",
+        "a box"
+      ],
+      "evidence_hint": "Look at the floor right next to the woman's feet."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the woman do next with her suitcase?",
+      "sample_answers": [
+        "get on an airplane",
+        "go on a trip",
+        "walk to the gate"
+      ],
+      "sentence_frame": "Next, she might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "get on an airplane",
+        "go to sleep",
+        "cook dinner"
+      ],
+      "evidence_hint": "Look at her suitcase and the airplane \u2014 people bring suitcases when they travel."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been to an airport or seen an airplane?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I saw a plane",
+        "I went on an airplane"
+      ],
+      "sentence_frame": "I ___ an airplane.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you traveled or saw a big plane."
+    }
+  ]
+}

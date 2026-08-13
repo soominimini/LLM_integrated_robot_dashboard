@@ -1,0 +1,65 @@
+{
+  "scene_description": "A woman wearing an apron is standing at a stove, stirring something in a dark pan. Behind her is a basket filled with colorful fruits and vegetables. Kitchen utensils hang on the wall in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a woman",
+      "visual_choices": [
+        "a woman",
+        "a boy",
+        "a baby",
+        "a man"
+      ],
+      "evidence_hint": "Look at the person standing at the stove."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman stirring?",
+      "answer": "a pan",
+      "visual_choices": [
+        "a pan",
+        "a bowl",
+        "a cup",
+        "a pot of soup"
+      ],
+      "evidence_hint": "Look at what is sitting on the stove in front of her."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the basket?",
+      "answer": "fruits and vegetables",
+      "visual_choices": [
+        "fruits and vegetables",
+        "toys",
+        "bread",
+        "flowers"
+      ],
+      "evidence_hint": "Look at the big basket behind the woman."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the woman standing?",
+      "answer": "at the stove",
+      "visual_choices": [
+        "at the stove",
+        "at a table",
+        "in a garden",
+        "near a sink"
+      ],
+      "evidence_hint": "Look at what is right in front of the woman."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman wearing over her clothes?",
+      "answer": "an apron",
+      "visual_choices": [
+        "an apron",
+        "a jacket",
+        "a scarf",
+        "a hat"
+      ],
+      "evidence_hint": "Look at what is covering the front of the woman's clothes."
+    }
+  ]
+}

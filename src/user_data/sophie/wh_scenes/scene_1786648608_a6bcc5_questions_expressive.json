@@ -1,0 +1,116 @@
+{
+  "scene_description": "Four people \u2014 two adults and two children \u2014 are sitting around a campfire in a fire pit in the woods. They appear to be roasting marshmallows on sticks. A green tent and camping chairs are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What do you see in the middle of the picture?",
+      "sample_answers": [
+        "a fire",
+        "a campfire",
+        "flames",
+        "a fire pit"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a campfire",
+        "a swimming pool",
+        "a sandbox"
+      ],
+      "evidence_hint": "Look at the round metal bowl in the center of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the people doing with their sticks?",
+      "sample_answers": [
+        "roasting marshmallows",
+        "holding sticks over the fire",
+        "cooking something"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "roasting marshmallows",
+        "painting",
+        "fishing"
+      ],
+      "evidence_hint": "Look at the sticks the people are holding toward the fire."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the people sitting?",
+      "sample_answers": [
+        "in the woods",
+        "outside",
+        "at a campsite",
+        "near the trees"
+      ],
+      "sentence_frame": "They are sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the woods",
+        "at school",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at the trees and ground around the people."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the green thing behind the people?",
+      "sample_answers": [
+        "a tent",
+        "a camping tent"
+      ],
+      "sentence_frame": "The green thing is ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a tent",
+        "a car",
+        "a house"
+      ],
+      "evidence_hint": "Look behind the people at the big green rounded shape."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the people eat after they cook their marshmallows?",
+      "sample_answers": [
+        "marshmallows",
+        "a s'more",
+        "the cooked marshmallow"
+      ],
+      "sentence_frame": "They might eat ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "marshmallows",
+        "pizza",
+        "cereal"
+      ],
+      "evidence_hint": "Look at what is on the ends of the sticks over the fire."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been camping or sat around a campfire?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I went camping",
+        "I roasted marshmallows"
+      ],
+      "sentence_frame": "I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you were outside at night or on a trip."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_description": "A family of four sits around a campfire in the woods. Two adults and two children are seated in camping chairs near a round fire pit. A green tent is visible in the background among tall trees.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is in the middle of the people?",
+      "answer": "a fire",
+      "visual_choices": [
+        "a fire",
+        "a swimming pool",
+        "a sandbox",
+        "a table"
+      ],
+      "evidence_hint": "Look at the round bowl on the ground between everyone."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting in the chairs?",
+      "answer": "people",
+      "visual_choices": [
+        "people",
+        "animals",
+        "robots",
+        "babies"
+      ],
+      "evidence_hint": "Look at the chairs around the fire."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is behind the people?",
+      "answer": "a green tent",
+      "visual_choices": [
+        "a green tent",
+        "a red barn",
+        "a yellow bus",
+        "a blue house"
+      ],
+      "evidence_hint": "Look at the background behind the chairs."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the people sitting?",
+      "answer": "in the woods",
+      "visual_choices": [
+        "in the woods",
+        "at a beach",
+        "in a kitchen",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the tall trees all around them."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the camping chairs?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "orange",
+        "purple"
+      ],
+      "evidence_hint": "Look at the chairs the people are sitting in."
+    }
+  ]
+}

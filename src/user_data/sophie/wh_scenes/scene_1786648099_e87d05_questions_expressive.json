@@ -1,0 +1,116 @@
+{
+  "scene_description": "Two children \u2014 a boy and a girl \u2014 are riding a roller coaster or amusement ride at a fair or amusement park. They are seated in a green car, holding a yellow safety bar, and smiling. A Ferris wheel and colorful ride structures are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "sample_answers": [
+        "a boy and a girl",
+        "two kids",
+        "two children"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a boy and a girl",
+        "two moms",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the people sitting in the ride."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the kids doing?",
+      "sample_answers": [
+        "riding a ride",
+        "going on a roller coaster",
+        "holding the bar"
+      ],
+      "sentence_frame": "The kids are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "riding a ride",
+        "eating lunch",
+        "swimming"
+      ],
+      "evidence_hint": "Look at what the children are sitting in and holding."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the kids?",
+      "sample_answers": [
+        "at a fair",
+        "at an amusement park",
+        "outside at a park"
+      ],
+      "sentence_frame": "The kids are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at a fair",
+        "at school",
+        "at home"
+      ],
+      "evidence_hint": "Look at the Ferris wheel and colorful rides in the background."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the yellow bar for?",
+      "sample_answers": [
+        "to hold on",
+        "to keep them safe",
+        "so they don't fall"
+      ],
+      "sentence_frame": "The bar is for ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "holding on",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at what the kids are doing with their hands on the bar."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do the kids look \u2014 happy or scared?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "they are smiling",
+        "they look like they're having fun"
+      ],
+      "sentence_frame": "The kids look ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "scared",
+        "sad"
+      ],
+      "evidence_hint": "Look at the kids' faces and smiles."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on a ride at a fair? What was it like?",
+      "sample_answers": [
+        "yes, it was fun",
+        "no",
+        "I went on a ride",
+        "it was fast"
+      ],
+      "sentence_frame": "I went on a ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you went somewhere fun like a fair or park."
+    }
+  ]
+}

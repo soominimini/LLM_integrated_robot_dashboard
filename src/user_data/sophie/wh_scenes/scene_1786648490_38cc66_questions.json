@@ -1,0 +1,65 @@
+{
+  "scene_description": "A girl with long dark hair sits at a table writing in a notebook. A laptop is open on the table beside her. There is a blue couch, artwork on the wall, and a fireplace in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a baby",
+        "a teacher",
+        "a boy"
+      ],
+      "evidence_hint": "Look at the person sitting at the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding?",
+      "answer": "a pen",
+      "visual_choices": [
+        "a pen",
+        "a fork",
+        "a crayon",
+        "a spoon"
+      ],
+      "evidence_hint": "Look at what is in the girl's hand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the table next to the girl?",
+      "answer": "a laptop",
+      "visual_choices": [
+        "a laptop",
+        "a plate",
+        "a toy",
+        "a cup"
+      ],
+      "evidence_hint": "Look at the table beside the girl."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "answer": "at a table",
+      "visual_choices": [
+        "at a table",
+        "on a bed",
+        "on the floor",
+        "on a swing"
+      ],
+      "evidence_hint": "Look at what is under the girl's arms and notebook."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the couch in the background?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "green",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the couch behind the girl."
+    }
+  ]
+}

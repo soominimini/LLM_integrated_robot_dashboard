@@ -1,0 +1,65 @@
+{
+  "scene_description": "A person with long hair stands facing away, holding a bag and standing next to a rolling suitcase. An airplane is flying in the sky in the upper right corner. The setting appears to be an airport observation area or terminal with large windows.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is flying in the sky?",
+      "answer": "an airplane",
+      "visual_choices": [
+        "an airplane",
+        "a bird",
+        "a kite",
+        "a balloon"
+      ],
+      "evidence_hint": "Look at the top right corner of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is next to the person on the ground?",
+      "answer": "a suitcase",
+      "visual_choices": [
+        "a suitcase",
+        "a bicycle",
+        "a stroller",
+        "a box"
+      ],
+      "evidence_hint": "Look at the bottom of the picture near the person's feet."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing in the picture?",
+      "answer": "a person",
+      "visual_choices": [
+        "a person",
+        "a dog",
+        "a baby",
+        "a robot"
+      ],
+      "evidence_hint": "Look at the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the person holding in their hand?",
+      "answer": "a bag",
+      "visual_choices": [
+        "a bag",
+        "an umbrella",
+        "a ball",
+        "a book"
+      ],
+      "evidence_hint": "Look at the person's hand on the right side."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the airplane?",
+      "answer": "in the sky",
+      "visual_choices": [
+        "in the sky",
+        "on the ground",
+        "in the water",
+        "on a road"
+      ],
+      "evidence_hint": "Look at the top right corner of the picture."
+    }
+  ]
+}

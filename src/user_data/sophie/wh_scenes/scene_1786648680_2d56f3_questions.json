@@ -1,0 +1,65 @@
+{
+  "scene_description": "A family of four \u2014 one adult and three children \u2014 sit on camping chairs around a fire pit in a wooded area. A green tent is visible in the background. The children appear to be roasting marshmallows over the fire.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is in the middle of the group?",
+      "answer": "a fire",
+      "visual_choices": [
+        "a fire",
+        "a pool",
+        "a table",
+        "a sandbox"
+      ],
+      "evidence_hint": "Look at the round metal bowl in front of everyone."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting in the chairs?",
+      "answer": "an adult and children",
+      "visual_choices": [
+        "an adult and children",
+        "two dogs",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at all the people sitting around the fire."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is set up behind the people?",
+      "answer": "a tent",
+      "visual_choices": [
+        "a tent",
+        "a house",
+        "a car",
+        "a swing"
+      ],
+      "evidence_hint": "Look behind the people in the background."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the people sitting?",
+      "answer": "in the woods",
+      "visual_choices": [
+        "in the woods",
+        "at a beach",
+        "in a kitchen",
+        "in a gym"
+      ],
+      "evidence_hint": "Look at the tall trees all around them."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children holding toward the fire?",
+      "answer": "sticks",
+      "visual_choices": [
+        "sticks",
+        "spoons",
+        "books",
+        "balls"
+      ],
+      "evidence_hint": "Look at what the children are pointing at the fire."
+    }
+  ]
+}

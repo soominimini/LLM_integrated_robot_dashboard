@@ -1,0 +1,118 @@
+{
+  "scene_description": "A classroom scene showing a female teacher standing at a green chalkboard with multiplication facts written on it. Several children are seated facing the teacher, and multiple students have their hands raised. The teacher's name 'Ms. Miller' is written on the board.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is standing at the chalkboard?",
+      "sample_answers": [
+        "the teacher",
+        "a lady",
+        "Ms. Miller",
+        "the grown-up"
+      ],
+      "sentence_frame": "The ___ is standing at the board.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "teacher",
+        "student",
+        "mom"
+      ],
+      "evidence_hint": "Look at the person standing in front of the big green board."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the kids doing with their hands?",
+      "sample_answers": [
+        "raising their hands",
+        "putting their hands up",
+        "reaching up"
+      ],
+      "sentence_frame": "The kids are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "raising their hands",
+        "clapping",
+        "waving goodbye"
+      ],
+      "evidence_hint": "Look at the children's arms and hands in the picture."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the teacher and kids?",
+      "sample_answers": [
+        "in a classroom",
+        "at school",
+        "in school"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in a classroom",
+        "at the park",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at the chalkboard, desks, and the whole room around them."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the chalkboard used for?",
+      "sample_answers": [
+        "writing",
+        "teaching",
+        "showing numbers",
+        "writing things for kids to see"
+      ],
+      "sentence_frame": "The chalkboard is used for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "writing",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at what is written on the big green board."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the teacher do next when she sees the kids' hands up?",
+      "sample_answers": [
+        "call on a student",
+        "pick a kid to answer",
+        "point to someone"
+      ],
+      "sentence_frame": "The teacher might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "call on a student",
+        "go to sleep",
+        "eat a snack"
+      ],
+      "evidence_hint": "Look at the kids raising their hands and think about what teachers do when that happens."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you raise your hand at school?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I raise my hand",
+        "sometimes"
+      ],
+      "sentence_frame": "I raise my hand when ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no",
+        "sometimes"
+      ],
+      "evidence_hint": "Think about what you do in your classroom."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "scene_description": "A woman with long hair stands at a large airport window, holding a rolling suitcase and a handbag, looking out at an airplane flying in the sky.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is flying in the sky?",
+      "sample_answers": [
+        "an airplane",
+        "a plane",
+        "a jet"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "an airplane",
+        "a bird",
+        "a kite"
+      ],
+      "evidence_hint": "Look up in the top right corner of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the woman doing?",
+      "sample_answers": [
+        "standing and watching",
+        "looking at the airplane",
+        "watching the plane fly"
+      ],
+      "sentence_frame": "The woman is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "watching the airplane",
+        "running",
+        "eating"
+      ],
+      "evidence_hint": "Look at what the woman's body is doing and where she is facing."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the woman standing?",
+      "sample_answers": [
+        "by a big window",
+        "at the airport",
+        "near a window"
+      ],
+      "sentence_frame": "The woman is standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "by a big window",
+        "in a kitchen",
+        "in a park"
+      ],
+      "evidence_hint": "Look at the big glass wall behind the woman."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do people use a suitcase for?",
+      "sample_answers": [
+        "to carry clothes",
+        "to pack things",
+        "to bring stuff on a trip"
+      ],
+      "sentence_frame": "People use a suitcase to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "carry clothes on a trip",
+        "cook food",
+        "draw pictures"
+      ],
+      "evidence_hint": "Look at the rolling bag next to the woman and think about trips."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the woman do next?",
+      "sample_answers": [
+        "get on an airplane",
+        "go to her gate",
+        "take a trip"
+      ],
+      "sentence_frame": "Next, the woman might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "get on an airplane",
+        "go to sleep",
+        "cook dinner"
+      ],
+      "evidence_hint": "Look at her suitcase and the airplane outside the window."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on an airplane or to an airport?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I went on a plane",
+        "I saw a big airplane"
+      ],
+      "sentence_frame": "I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you traveled somewhere."
+    }
+  ]
+}

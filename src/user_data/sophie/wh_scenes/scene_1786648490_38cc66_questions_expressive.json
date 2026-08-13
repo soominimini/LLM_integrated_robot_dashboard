@@ -1,0 +1,118 @@
+{
+  "scene_description": "A girl with long dark hair sits at a table writing in an open notebook. A laptop is open nearby on the table. The room has a couch, artwork on the walls, and a fireplace in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is on the table in front of the girl?",
+      "sample_answers": [
+        "a notebook",
+        "a book",
+        "a laptop",
+        "a computer"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "notebook",
+        "plate",
+        "toy"
+      ],
+      "evidence_hint": "Look at the table right in front of the girl."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing?",
+      "sample_answers": [
+        "writing",
+        "doing homework",
+        "writing in a book"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "writing",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the girl's hand and what she is holding."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "sample_answers": [
+        "at a table",
+        "inside",
+        "in a room",
+        "at a desk"
+      ],
+      "sentence_frame": "The girl is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at a table",
+        "on a bed",
+        "outside"
+      ],
+      "evidence_hint": "Look at the place around the girl."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a pencil or pen for?",
+      "sample_answers": [
+        "writing",
+        "drawing",
+        "making letters"
+      ],
+      "sentence_frame": "We use a pen for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "writing",
+        "eating",
+        "cutting"
+      ],
+      "evidence_hint": "Look at what the girl is holding in her hand."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the girl do when she is finished writing?",
+      "sample_answers": [
+        "close the notebook",
+        "use the laptop",
+        "put down her pen"
+      ],
+      "sentence_frame": "When she is done, she might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "use the laptop",
+        "go to sleep",
+        "play outside"
+      ],
+      "evidence_hint": "Look at the laptop on the table next to her."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you ever write or draw at a table like this girl?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I draw at home",
+        "I write at school"
+      ],
+      "sentence_frame": "I like to ___ at the table.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "write",
+        "draw",
+        "color"
+      ],
+      "evidence_hint": "Think about what you do when you sit at a table."
+    }
+  ]
+}

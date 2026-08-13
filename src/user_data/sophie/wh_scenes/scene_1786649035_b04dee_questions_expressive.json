@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young boy wearing a blue hoodie and blue sneakers is sitting on green grass, leaning against a tree trunk. American flags are displayed on poles along the roadside nearby. A road and trees are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "sample_answers": [
+        "a boy",
+        "a little boy",
+        "a kid"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "boy",
+        "girl",
+        "baby"
+      ],
+      "evidence_hint": "Look at the person sitting on the grass."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing?",
+      "sample_answers": [
+        "sitting",
+        "sitting on the grass",
+        "resting by a tree"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sitting",
+        "running",
+        "jumping"
+      ],
+      "evidence_hint": "Look at the boy's body and where he is."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the boy sitting?",
+      "sample_answers": [
+        "on the grass",
+        "by a tree",
+        "outside near the road"
+      ],
+      "sentence_frame": "The boy is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the grass by a tree",
+        "in a house",
+        "at a table"
+      ],
+      "evidence_hint": "Look at what is under the boy and what is behind him."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What do you see on the poles near the road?",
+      "sample_answers": [
+        "flags",
+        "American flags",
+        "red, white, and blue flags"
+      ],
+      "sentence_frame": "I see ___ on the poles.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "flags",
+        "balloons",
+        "signs"
+      ],
+      "evidence_hint": "Look at the tall poles near the road in the background."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "how",
+      "question": "How do you think the boy feels sitting quietly by the tree?",
+      "sample_answers": [
+        "calm",
+        "relaxed",
+        "peaceful",
+        "tired"
+      ],
+      "sentence_frame": "I think the boy feels ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "calm",
+        "scared",
+        "angry"
+      ],
+      "evidence_hint": "Look at the boy's body \u2014 he is sitting still and quiet by the tree."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "where",
+      "question": "Have you ever sat outside on the grass? Where was it?",
+      "sample_answers": [
+        "at the park",
+        "in my yard",
+        "yes, outside",
+        "at school"
+      ],
+      "sentence_frame": "I sat outside at ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "the park",
+        "my yard",
+        "school"
+      ],
+      "evidence_hint": "Think about a time you were outside sitting on the grass."
+    }
+  ]
+}

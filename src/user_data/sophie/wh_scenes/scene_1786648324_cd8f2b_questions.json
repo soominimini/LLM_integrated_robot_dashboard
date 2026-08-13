@@ -1,0 +1,65 @@
+{
+  "scene_description": "A smiling adult man with a beard is holding and reading an open blue book outdoors, with trees visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the man holding?",
+      "answer": "a blue book",
+      "visual_choices": [
+        "a blue book",
+        "a ball",
+        "a phone",
+        "a bag"
+      ],
+      "evidence_hint": "Look at what is in the man's hands."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a man",
+      "visual_choices": [
+        "a man",
+        "a girl",
+        "a baby",
+        "a woman"
+      ],
+      "evidence_hint": "Look at the person in the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the book?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the book the man is holding."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the man?",
+      "answer": "outside near trees",
+      "visual_choices": [
+        "outside near trees",
+        "in a kitchen",
+        "in a bedroom",
+        "in a store"
+      ],
+      "evidence_hint": "Look at what is behind the man."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the man doing?",
+      "answer": "reading a book",
+      "visual_choices": [
+        "reading a book",
+        "eating food",
+        "kicking a ball",
+        "drawing a picture"
+      ],
+      "evidence_hint": "Look at the man's hands and face."
+    }
+  ]
+}

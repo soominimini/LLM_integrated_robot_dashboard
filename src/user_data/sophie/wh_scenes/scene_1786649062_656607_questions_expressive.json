@@ -1,0 +1,115 @@
+{
+  "scene_description": "A young boy wearing a blue hoodie and blue sneakers is sitting on green grass, leaning against a large tree trunk. There are American flags displayed along a driveway or road nearby, and a hanging flower basket is visible on the tree. Trees and a road are in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "sample_answers": [
+        "a boy",
+        "a little boy",
+        "a kid"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "boy",
+        "girl",
+        "baby"
+      ],
+      "evidence_hint": "Look at the person sitting on the grass."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing?",
+      "sample_answers": [
+        "sitting",
+        "sitting by a tree",
+        "resting on the grass"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sitting",
+        "running",
+        "jumping"
+      ],
+      "evidence_hint": "Look at the boy's body and where he is."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the boy sitting?",
+      "sample_answers": [
+        "on the grass",
+        "by a tree",
+        "outside by a tree"
+      ],
+      "sentence_frame": "The boy is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "by a tree",
+        "in a house",
+        "at a table"
+      ],
+      "evidence_hint": "Look at what is right behind the boy."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is hanging on the tree?",
+      "sample_answers": [
+        "flowers",
+        "a flower basket",
+        "a basket with flowers"
+      ],
+      "sentence_frame": "I see ___ on the tree.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a flower basket",
+        "a bird",
+        "a ball"
+      ],
+      "evidence_hint": "Look up near the top of the tree trunk."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What flags do you see in the picture?",
+      "sample_answers": [
+        "American flags",
+        "red white and blue flags",
+        "flags"
+      ],
+      "sentence_frame": "I see ___ flags.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "American flags",
+        "colorful kites",
+        "balloons"
+      ],
+      "evidence_hint": "Look in the background near the road."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "where",
+      "question": "Have you ever sat outside by a tree? Where was it?",
+      "sample_answers": [
+        "at the park",
+        "in my yard",
+        "yes at school"
+      ],
+      "sentence_frame": "I sat outside ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "at the park",
+        "in my yard",
+        "at school"
+      ],
+      "evidence_hint": "Think about a time you played or rested outside."
+    }
+  ]
+}

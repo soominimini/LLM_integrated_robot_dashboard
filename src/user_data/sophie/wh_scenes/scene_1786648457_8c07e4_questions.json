@@ -1,0 +1,65 @@
+{
+  "scene_description": "A girl with long dark hair is sitting on the floor at a low table, writing in a notebook. A laptop is open on the table beside her. There are colorful paintings on the wall behind her and a couch with blue pillows nearby.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a baby",
+        "a teacher",
+        "a boy"
+      ],
+      "evidence_hint": "Look at the person sitting at the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding?",
+      "answer": "a pen",
+      "visual_choices": [
+        "a pen",
+        "a fork",
+        "a crayon",
+        "a spoon"
+      ],
+      "evidence_hint": "Look at what is in the girl's hand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is open on the table?",
+      "answer": "a laptop",
+      "visual_choices": [
+        "a laptop",
+        "a lunchbox",
+        "a TV",
+        "a book"
+      ],
+      "evidence_hint": "Look at the table next to the girl."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "answer": "on the floor",
+      "visual_choices": [
+        "on the floor",
+        "on a bed",
+        "on a chair",
+        "on the grass"
+      ],
+      "evidence_hint": "Look below the girl and the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl writing in?",
+      "answer": "a notebook",
+      "visual_choices": [
+        "a notebook",
+        "a lunchbox",
+        "a folder",
+        "a bag"
+      ],
+      "evidence_hint": "Look at what is in front of the girl on the table."
+    }
+  ]
+}

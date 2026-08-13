@@ -1,0 +1,65 @@
+{
+  "scene_description": "A boy wearing a red, white, and blue soccer uniform is running on a green grass field and kicking a black and white soccer ball. Another player and a coach or teammate are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the boy kicking?",
+      "answer": "a soccer ball",
+      "visual_choices": [
+        "a soccer ball",
+        "a balloon",
+        "a helmet",
+        "a shoe"
+      ],
+      "evidence_hint": "Look near the boy's feet at the bottom of the picture."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in the front of the picture?",
+      "answer": "a boy",
+      "visual_choices": [
+        "a boy",
+        "a dog",
+        "a baby",
+        "an adult"
+      ],
+      "evidence_hint": "Look at the big person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the boy's shirt?",
+      "answer": "red and white",
+      "visual_choices": [
+        "red and white",
+        "all yellow",
+        "all green",
+        "blue and black"
+      ],
+      "evidence_hint": "Look at the shirt the boy is wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the boy playing?",
+      "answer": "on a grass field",
+      "visual_choices": [
+        "on a grass field",
+        "in a pool",
+        "on a sidewalk",
+        "in a gym"
+      ],
+      "evidence_hint": "Look at the ground all around the boy."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the soccer ball?",
+      "answer": "black and white",
+      "visual_choices": [
+        "black and white",
+        "all red",
+        "all orange",
+        "yellow and blue"
+      ],
+      "evidence_hint": "Look at the ball near the boy's feet."
+    }
+  ]
+}

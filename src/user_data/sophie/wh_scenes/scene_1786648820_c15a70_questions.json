@@ -1,0 +1,65 @@
+{
+  "scene_description": "A woman wearing an apron stands at a stove in a kitchen, stirring food in a pan. Behind her is a basket filled with vegetables and fruit. Kitchen utensils hang on the wall.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a woman",
+      "visual_choices": [
+        "a woman",
+        "a boy",
+        "a baby",
+        "a man"
+      ],
+      "evidence_hint": "Look at the person standing at the stove."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman holding?",
+      "answer": "a spoon",
+      "visual_choices": [
+        "a spoon",
+        "a fork",
+        "a cup",
+        "a knife"
+      ],
+      "evidence_hint": "Look at what is in the woman's hand over the pan."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman wearing over her clothes?",
+      "answer": "an apron",
+      "visual_choices": [
+        "an apron",
+        "a coat",
+        "a hat",
+        "a scarf"
+      ],
+      "evidence_hint": "Look at the front of the woman's body."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the pan?",
+      "answer": "on the stove",
+      "visual_choices": [
+        "on the stove",
+        "on the table",
+        "in the sink",
+        "on the floor"
+      ],
+      "evidence_hint": "Look at the bottom of the picture near the burners."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the basket behind the woman?",
+      "answer": "vegetables and fruit",
+      "visual_choices": [
+        "vegetables and fruit",
+        "toys",
+        "books",
+        "dishes"
+      ],
+      "evidence_hint": "Look at the big basket on the counter behind the woman."
+    }
+  ]
+}

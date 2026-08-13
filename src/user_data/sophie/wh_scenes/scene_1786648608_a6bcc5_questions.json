@@ -1,0 +1,65 @@
+{
+  "scene_description": "Four people \u2014 two adults and two children \u2014 are sitting on chairs around a campfire in a fire pit. There is a green tent behind them and trees in the background. One child is holding a stick over the fire.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is in the middle of the people?",
+      "answer": "a campfire",
+      "visual_choices": [
+        "a campfire",
+        "a swimming pool",
+        "a table",
+        "a sandbox"
+      ],
+      "evidence_hint": "Look at the round pit in the center of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child holding over the fire?",
+      "answer": "a stick",
+      "visual_choices": [
+        "a stick",
+        "a spoon",
+        "a flag",
+        "a bat"
+      ],
+      "evidence_hint": "Look at the child's hands near the fire."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the people sitting?",
+      "answer": "in the woods",
+      "visual_choices": [
+        "in the woods",
+        "at a beach",
+        "in a kitchen",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the trees and ground behind the people."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting closest to the tent?",
+      "answer": "a boy",
+      "visual_choices": [
+        "a boy",
+        "a baby",
+        "a dog",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at the person sitting on the right side near the green tent."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the tent?",
+      "answer": "green",
+      "visual_choices": [
+        "green",
+        "red",
+        "yellow",
+        "blue"
+      ],
+      "evidence_hint": "Look behind the people for the tent."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_description": "A woman wearing yellow rubber gloves and a pink top is kneeling on a kitchen floor, holding a striped mop head. Near her are a blue bucket, a red bucket, and a cleaning cart with supplies. The kitchen has white cabinets and countertops in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a woman",
+      "visual_choices": [
+        "a woman",
+        "a boy",
+        "a baby",
+        "a man"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the gloves the woman is wearing?",
+      "answer": "yellow",
+      "visual_choices": [
+        "yellow",
+        "blue",
+        "red",
+        "green"
+      ],
+      "evidence_hint": "Look at the woman's hands."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the woman holding?",
+      "answer": "a mop head",
+      "visual_choices": [
+        "a mop head",
+        "a towel",
+        "a book",
+        "a plate"
+      ],
+      "evidence_hint": "Look at what is in the woman's hands."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the woman?",
+      "answer": "in a kitchen",
+      "visual_choices": [
+        "in a kitchen",
+        "in a bedroom",
+        "in a garden",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the cabinets and counters behind the woman."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the big bucket on the floor?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "green",
+        "orange",
+        "purple"
+      ],
+      "evidence_hint": "Look at the floor near the woman's feet."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_description": "A person with long dark hair sits at a table writing in an open book or notebook. A laptop computer is open on the table nearby. There are colorful paintings on the wall in the background, a blue couch, and a fireplace.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is sitting at the table?",
+      "answer": "a person",
+      "visual_choices": [
+        "a person",
+        "a dog",
+        "a baby",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the person holding?",
+      "answer": "a pen",
+      "visual_choices": [
+        "a pen",
+        "a fork",
+        "a crayon",
+        "a spoon"
+      ],
+      "evidence_hint": "Look at the person's hand near the book."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is open on the table in front of the person?",
+      "answer": "a book",
+      "visual_choices": [
+        "a book",
+        "a plate",
+        "a box",
+        "a bag"
+      ],
+      "evidence_hint": "Look at the table right in front of the person."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the other thing on the table?",
+      "answer": "a laptop",
+      "visual_choices": [
+        "a laptop",
+        "a TV",
+        "a phone",
+        "a lamp"
+      ],
+      "evidence_hint": "Look at the left side of the table."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the person sitting?",
+      "answer": "at a table",
+      "visual_choices": [
+        "at a table",
+        "on the grass",
+        "in a bed",
+        "on the floor"
+      ],
+      "evidence_hint": "Look at what is underneath the book and laptop."
+    }
+  ]
+}

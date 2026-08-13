@@ -1,0 +1,117 @@
+{
+  "scene_description": "A woman wearing yellow rubber gloves and a pink sweater is kneeling on a kitchen floor, holding a mop head. Next to her is a cleaning cart with blue and red buckets and a mop with a blue handle. The kitchen has white cabinets and countertops with various items on them.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the woman holding in her hands?",
+      "sample_answers": [
+        "a mop",
+        "a mop head",
+        "a cleaning cloth"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a mop",
+        "a broom",
+        "a towel"
+      ],
+      "evidence_hint": "Look at what the woman has in her hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the woman doing?",
+      "sample_answers": [
+        "cleaning the floor",
+        "mopping",
+        "scrubbing the floor"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cleaning the floor",
+        "cooking",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the woman's body and what she is doing with the mop."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the woman cleaning?",
+      "sample_answers": [
+        "in the kitchen",
+        "on the kitchen floor",
+        "inside"
+      ],
+      "sentence_frame": "She is cleaning ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the kitchen",
+        "in the bathroom",
+        "outside"
+      ],
+      "evidence_hint": "Look at the cabinets and counters around her to figure out what room this is."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What are the yellow gloves for?",
+      "sample_answers": [
+        "to keep her hands clean",
+        "to protect her hands",
+        "so her hands don't get dirty"
+      ],
+      "sentence_frame": "The gloves are for ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "keeping her hands clean",
+        "keeping her hands warm",
+        "playing outside"
+      ],
+      "evidence_hint": "Look at the yellow gloves on her hands and think about why people wear gloves when they clean."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the woman do next with the mop?",
+      "sample_answers": [
+        "mop the floor",
+        "put it in the bucket",
+        "start mopping"
+      ],
+      "sentence_frame": "Next, she might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "mop the floor",
+        "eat lunch",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at the mop and the bucket of water next to her."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you help clean at home? What do you do?",
+      "sample_answers": [
+        "I sweep",
+        "I pick up toys",
+        "I help mop",
+        "yes",
+        "no"
+      ],
+      "sentence_frame": "At home, I help ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "sweep",
+        "pick up toys",
+        "wipe the table"
+      ],
+      "evidence_hint": "Think about chores you do at your house."
+    }
+  ]
+}

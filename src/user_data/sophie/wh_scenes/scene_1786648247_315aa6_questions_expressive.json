@@ -1,0 +1,117 @@
+{
+  "scene_description": "A boy wearing a red, white, and blue striped soccer uniform is running and about to kick a soccer ball on a green grass field. Other players in matching uniforms are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What kind of ball do you see in the picture?",
+      "sample_answers": [
+        "a soccer ball",
+        "a ball",
+        "a black and white ball"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "soccer ball",
+        "basketball",
+        "tennis ball"
+      ],
+      "evidence_hint": "Look near the boy's feet at the bottom of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing with his foot?",
+      "sample_answers": [
+        "kicking the ball",
+        "running to kick",
+        "kicking a soccer ball"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "kicking the ball",
+        "throwing the ball",
+        "sitting down"
+      ],
+      "evidence_hint": "Look at the boy's legs and where his foot is pointing."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the boy playing soccer?",
+      "sample_answers": [
+        "on the grass",
+        "outside on a field",
+        "on a soccer field"
+      ],
+      "sentence_frame": "He is playing on ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a grass field",
+        "a playground",
+        "inside a gym"
+      ],
+      "evidence_hint": "Look at the ground and the area around the boy."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the boy wearing on his body?",
+      "sample_answers": [
+        "a uniform",
+        "a red and white shirt",
+        "a soccer uniform",
+        "a jersey and shorts"
+      ],
+      "sentence_frame": "He is wearing ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a uniform",
+        "a swimsuit",
+        "pajamas"
+      ],
+      "evidence_hint": "Look at the clothes on the boy's body."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What do you think will happen to the ball next?",
+      "sample_answers": [
+        "it will fly",
+        "the ball will move",
+        "he will kick it far",
+        "it will go fast"
+      ],
+      "sentence_frame": "Next, the ball will ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "fly through the air",
+        "stay still",
+        "disappear"
+      ],
+      "evidence_hint": "Look at the boy's foot and how close it is to the ball right now."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever kicked a ball before?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I kick a ball at the park",
+        "I play soccer too"
+      ],
+      "sentence_frame": "I kicked a ball ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you played outside with a ball."
+    }
+  ]
+}

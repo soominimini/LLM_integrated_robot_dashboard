@@ -1,0 +1,65 @@
+{
+  "scene_description": "A person with long hair stands facing large windows, holding a rolling suitcase with a bag on top. An airplane is visible flying in the sky outside the windows.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the person pulling?",
+      "answer": "a suitcase",
+      "visual_choices": [
+        "a suitcase",
+        "a stroller",
+        "a shopping cart",
+        "a wagon"
+      ],
+      "evidence_hint": "Look at what the person is holding with their hand near the ground."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is flying in the sky?",
+      "answer": "an airplane",
+      "visual_choices": [
+        "an airplane",
+        "a bird",
+        "a kite",
+        "a helicopter"
+      ],
+      "evidence_hint": "Look up in the top right corner of the picture."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing by the window?",
+      "answer": "a person",
+      "visual_choices": [
+        "a person",
+        "a dog",
+        "a baby",
+        "a robot"
+      ],
+      "evidence_hint": "Look in the middle of the picture near the big windows."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the airplane?",
+      "answer": "in the sky",
+      "visual_choices": [
+        "in the sky",
+        "on the ground",
+        "in the water",
+        "on a road"
+      ],
+      "evidence_hint": "Look through the big windows at the top of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on top of the suitcase?",
+      "answer": "a bag",
+      "visual_choices": [
+        "a bag",
+        "a hat",
+        "a box",
+        "a jacket"
+      ],
+      "evidence_hint": "Look at the suitcase and what is sitting on top of it."
+    }
+  ]
+}

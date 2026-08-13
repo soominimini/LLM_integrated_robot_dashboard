@@ -1,0 +1,114 @@
+{
+  "scene_description": "A smiling man with dark hair sits outdoors holding an open blue book. He is looking down at the book and smiling. Trees with green and yellow leaves are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the man holding?",
+      "sample_answers": [
+        "a book",
+        "a blue book",
+        "a big book"
+      ],
+      "sentence_frame": "He is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a book",
+        "a ball",
+        "a phone"
+      ],
+      "evidence_hint": "Look at what is in the man's hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the man doing?",
+      "sample_answers": [
+        "reading",
+        "reading a book",
+        "looking at a book"
+      ],
+      "sentence_frame": "The man is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reading",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at the man's hands and eyes \u2014 what is he doing with the book?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the man reading his book?",
+      "sample_answers": [
+        "outside",
+        "outdoors",
+        "near the trees",
+        "in a park"
+      ],
+      "sentence_frame": "He is reading ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "outside near trees",
+        "in a bedroom",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at what is behind the man \u2014 do you see trees or a room?"
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How does the man feel? Look at his face.",
+      "sample_answers": [
+        "happy",
+        "he is smiling",
+        "he feels good",
+        "excited"
+      ],
+      "sentence_frame": "He feels ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the man's mouth and face \u2014 what does his face look like?"
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a book for?",
+      "sample_answers": [
+        "reading",
+        "learning",
+        "looking at pictures",
+        "reading stories"
+      ],
+      "sentence_frame": "We use a book for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reading",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Think about what people do with books \u2014 what does the man do with it?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "What is your favorite book?",
+      "sample_answers": [
+        "I like dinosaur books",
+        "my favorite is a princess book",
+        "I don't know"
+      ],
+      "sentence_frame": "My favorite book is ___.",
+      "support_level": "modeling",
+      "verbal_choices": null,
+      "evidence_hint": "Think about a book you have read or heard at home or school."
+    }
+  ]
+}

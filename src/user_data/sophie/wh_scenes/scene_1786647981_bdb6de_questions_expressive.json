@@ -1,0 +1,117 @@
+{
+  "scene_description": "Two children, a boy and a girl, are riding a roller coaster at an amusement park. They are holding a safety bar and appear to be moving fast. A Ferris wheel is visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "sample_answers": [
+        "a boy and a girl",
+        "two kids",
+        "two children"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a boy and a girl",
+        "a mom and dad",
+        "two babies"
+      ],
+      "evidence_hint": "Look at the people sitting in the ride."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the children doing?",
+      "sample_answers": [
+        "riding a roller coaster",
+        "going on a ride",
+        "holding the bar"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "riding a roller coaster",
+        "eating lunch",
+        "playing on a slide"
+      ],
+      "evidence_hint": "Look at what the children are sitting in and what their hands are doing."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children?",
+      "sample_answers": [
+        "at an amusement park",
+        "at a fair",
+        "outside at a park"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at an amusement park",
+        "at school",
+        "at home"
+      ],
+      "evidence_hint": "Look at the rides and the big wheel in the background."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the safety bar for?",
+      "sample_answers": [
+        "to hold on",
+        "to keep them safe",
+        "so they don't fall"
+      ],
+      "sentence_frame": "The bar is for ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "holding on so they stay safe",
+        "eating food",
+        "opening a door"
+      ],
+      "evidence_hint": "Look at where the children's hands are and think about why they hold on tight."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How does the girl look \u2014 is she happy, scared, or excited?",
+      "sample_answers": [
+        "excited",
+        "happy",
+        "she is smiling",
+        "she looks like she is having fun"
+      ],
+      "sentence_frame": "She looks ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "excited",
+        "scared",
+        "happy"
+      ],
+      "evidence_hint": "Look at the girl's face and her expression."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on a ride at a park? What was it like?",
+      "sample_answers": [
+        "yes, it was fun",
+        "no",
+        "I went on a slide",
+        "it was fast"
+      ],
+      "sentence_frame": "I went on ___ and it was ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "fun",
+        "scary",
+        "fast"
+      ],
+      "evidence_hint": "Think about a time you went somewhere fun with rides."
+    }
+  ]
+}

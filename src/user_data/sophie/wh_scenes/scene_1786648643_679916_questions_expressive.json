@@ -1,0 +1,121 @@
+{
+  "scene_description": "A family is camping in the woods. Four people \u2014 two adults and two children \u2014 are sitting around a round fire pit with a campfire burning inside it. They are roasting marshmallows on sticks. A green tent is set up behind them, and camping chairs are arranged around the fire. Trees surround the campsite.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is in the middle of the picture, where everyone is sitting around?",
+      "sample_answers": [
+        "a fire",
+        "a campfire",
+        "a fire pit",
+        "fire in a bowl"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "campfire",
+        "swimming pool",
+        "sandbox"
+      ],
+      "evidence_hint": "Look at the round bowl in the middle of the picture with orange flames."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the people doing with their sticks?",
+      "sample_answers": [
+        "roasting marshmallows",
+        "cooking marshmallows",
+        "holding sticks over the fire",
+        "making s'mores"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "roasting marshmallows",
+        "fishing",
+        "painting"
+      ],
+      "evidence_hint": "Look at the sticks the people are holding toward the fire."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the people sitting?",
+      "sample_answers": [
+        "outside in the woods",
+        "at a campsite",
+        "in the forest",
+        "near the trees"
+      ],
+      "sentence_frame": "They are sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the woods",
+        "at the beach",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at the trees and ground around the people."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the tent used for when people go camping?",
+      "sample_answers": [
+        "sleeping",
+        "sleeping inside",
+        "to sleep in",
+        "staying the night"
+      ],
+      "sentence_frame": "The tent is used for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sleeping",
+        "cooking",
+        "swimming"
+      ],
+      "evidence_hint": "Look at the green tent behind the people and think about what campers do at night."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the people eat next, after the marshmallows are done cooking?",
+      "sample_answers": [
+        "eat the marshmallows",
+        "eat them",
+        "have a snack",
+        "eat s'mores"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "eat the marshmallows",
+        "go swimming",
+        "drive a car"
+      ],
+      "evidence_hint": "Look at the marshmallows on the sticks over the fire and think about what comes after cooking food."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been camping or sat around a fire?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I went camping",
+        "I roasted marshmallows",
+        "I never did that"
+      ],
+      "sentence_frame": "I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you were outside with your family."
+    }
+  ]
+}
