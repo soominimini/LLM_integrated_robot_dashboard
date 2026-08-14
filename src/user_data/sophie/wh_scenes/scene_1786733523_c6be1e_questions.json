@@ -1,0 +1,65 @@
+{
+  "scene_description": "A child wearing a blue helmet, knee pads, and blue inline skates is roller skating outdoors. Two other children are visible skating behind them. There is a fence and a wall with graffiti in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is on the child's head?",
+      "answer": "a blue helmet",
+      "visual_choices": [
+        "a blue helmet",
+        "a hat",
+        "a hood",
+        "a headband"
+      ],
+      "evidence_hint": "Look at the top of the child's head in the front."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child wearing on their feet?",
+      "answer": "inline skates",
+      "visual_choices": [
+        "inline skates",
+        "sneakers",
+        "boots",
+        "sandals"
+      ],
+      "evidence_hint": "Look at the child's feet near the ground."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "children",
+      "visual_choices": [
+        "children",
+        "adults",
+        "babies",
+        "teachers"
+      ],
+      "evidence_hint": "Look at all the people skating in the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children doing?",
+      "answer": "roller skating",
+      "visual_choices": [
+        "roller skating",
+        "riding bikes",
+        "running",
+        "jumping rope"
+      ],
+      "evidence_hint": "Look at the children's feet and what they are wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children skating?",
+      "answer": "outside",
+      "visual_choices": [
+        "outside",
+        "in a gym",
+        "in a bedroom",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the ground and the background behind the children."
+    }
+  ]
+}

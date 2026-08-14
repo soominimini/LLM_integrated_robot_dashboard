@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young child wearing a colorful snowsuit, red mittens, red boots, and a red pom-pom hat is lying on their stomach on an orange sled, sliding down a snowy hill with arms and legs spread out.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the child riding on?",
+      "sample_answers": [
+        "a sled",
+        "an orange sled",
+        "a snow sled"
+      ],
+      "sentence_frame": "The child is riding on ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a sled",
+        "a bike",
+        "a skateboard"
+      ],
+      "evidence_hint": "Look under the child \u2014 what orange thing are they lying on?"
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the child doing in the picture?",
+      "sample_answers": [
+        "sledding",
+        "sliding down the hill",
+        "riding a sled in the snow"
+      ],
+      "sentence_frame": "The child is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sledding",
+        "swimming",
+        "jumping"
+      ],
+      "evidence_hint": "Look at the child's whole body and the snow around them."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the child sledding?",
+      "sample_answers": [
+        "in the snow",
+        "outside on a snowy hill",
+        "on a hill"
+      ],
+      "sentence_frame": "The child is sledding ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the snow",
+        "at the beach",
+        "in the house"
+      ],
+      "evidence_hint": "Look at everything around the child \u2014 what color is the ground?"
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a sled for?",
+      "sample_answers": [
+        "sliding down a hill",
+        "going fast in the snow",
+        "riding in the snow"
+      ],
+      "sentence_frame": "We use a sled for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sliding in the snow",
+        "cooking food",
+        "reading books"
+      ],
+      "evidence_hint": "Look at what the child is doing with the sled right now."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do you think the child feels while sledding?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "having fun"
+      ],
+      "sentence_frame": "The child feels ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "scared",
+        "bored"
+      ],
+      "evidence_hint": "Look at the child's face and body \u2014 do they look like they are having fun?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever played in the snow? What did you do?",
+      "sample_answers": [
+        "I made a snowman",
+        "I went sledding",
+        "I threw snowballs",
+        "yes",
+        "no"
+      ],
+      "sentence_frame": "I played in the snow and ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "sledded",
+        "made a snowman",
+        "threw snowballs"
+      ],
+      "evidence_hint": "Think about a time you were outside in the snow."
+    }
+  ]
+}

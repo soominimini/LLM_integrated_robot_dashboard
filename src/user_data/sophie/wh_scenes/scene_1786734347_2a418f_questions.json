@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two girls are riding bicycles on a street near a house. The older girl has a blue backpack and is riding a white bike with colorful wheels. The younger girl is riding a white bike behind her.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the girls riding?",
+      "answer": "bicycles",
+      "visual_choices": [
+        "bicycles",
+        "scooters",
+        "skateboards",
+        "horses"
+      ],
+      "evidence_hint": "Look at what the girls are sitting on and moving with."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the older girl wearing on her back?",
+      "answer": "a backpack",
+      "visual_choices": [
+        "a backpack",
+        "a jacket",
+        "a basket",
+        "a towel"
+      ],
+      "evidence_hint": "Look at the back of the bigger girl."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is riding the bike in front?",
+      "answer": "the older girl",
+      "visual_choices": [
+        "the older girl",
+        "a boy",
+        "a man",
+        "the younger girl"
+      ],
+      "evidence_hint": "Look at the bike that is closest to the front of the picture."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the girls riding their bikes?",
+      "answer": "on the street",
+      "visual_choices": [
+        "on the street",
+        "in a park",
+        "in a gym",
+        "on the grass"
+      ],
+      "evidence_hint": "Look at the ground underneath the bikes."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the wheels on the front bike?",
+      "answer": "green and pink",
+      "visual_choices": [
+        "green and pink",
+        "all black",
+        "red and blue",
+        "yellow and white"
+      ],
+      "evidence_hint": "Look at the round wheels on the bigger girl's bike."
+    }
+  ]
+}

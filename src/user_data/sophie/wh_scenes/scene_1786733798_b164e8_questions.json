@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl with a ponytail is painting a colorful rainbow on a large piece of paper. She is holding a paintbrush in one hand and a small blue cup in the other. The rainbow has multiple colors including red, orange, blue, and brown.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl painting?",
+      "answer": "a rainbow",
+      "visual_choices": [
+        "a rainbow",
+        "a house",
+        "a flower",
+        "a sun"
+      ],
+      "evidence_hint": "Look at the big picture on the paper in front of the girl."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in this picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a baby",
+        "a teacher",
+        "a boy"
+      ],
+      "evidence_hint": "Look at the person holding the paintbrush."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding in her hand?",
+      "answer": "a paintbrush",
+      "visual_choices": [
+        "a paintbrush",
+        "a pencil",
+        "a spoon",
+        "a crayon"
+      ],
+      "evidence_hint": "Look at what the girl is touching the paper with."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the small cup the girl is holding?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the small cup in the girl's other hand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What colors are in the rainbow?",
+      "answer": "red, blue, brown",
+      "visual_choices": [
+        "red, blue, brown",
+        "pink and purple",
+        "only yellow",
+        "black and white"
+      ],
+      "evidence_hint": "Look at the stripes in the big picture on the paper."
+    }
+  ]
+}

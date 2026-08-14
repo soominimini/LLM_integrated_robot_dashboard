@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young child with curly red hair is sitting in a sandbox at a playground, playing with a yellow bucket and a pink shovel. There is playground equipment visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What color is the bucket?",
+      "answer": "yellow",
+      "visual_choices": [
+        "yellow",
+        "red",
+        "blue",
+        "green"
+      ],
+      "evidence_hint": "Look at the toy next to the child's hands."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is playing in the sandbox?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a dog",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person sitting in the sand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child playing with?",
+      "answer": "a bucket and shovel",
+      "visual_choices": [
+        "a bucket and shovel",
+        "a ball",
+        "a book",
+        "a toy car"
+      ],
+      "evidence_hint": "Look at the toys near the child's hands."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the child sitting?",
+      "answer": "in a sandbox",
+      "visual_choices": [
+        "in a sandbox",
+        "on the grass",
+        "in a pool",
+        "at a table"
+      ],
+      "evidence_hint": "Look at the ground all around the child."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the child's jacket?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "yellow",
+        "black"
+      ],
+      "evidence_hint": "Look at the clothes the child is wearing."
+    }
+  ]
+}

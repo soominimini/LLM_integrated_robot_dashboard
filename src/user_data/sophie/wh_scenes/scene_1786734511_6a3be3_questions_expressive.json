@@ -1,0 +1,119 @@
+{
+  "scene_description": "A young girl with blonde hair wearing a red dress is standing in an apple orchard. She is reaching out to touch or pick a red apple from a tree branch with one hand, while holding another red apple in her other hand. The trees are full of red apples and green leaves.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding in her hand?",
+      "sample_answers": [
+        "an apple",
+        "a red apple",
+        "fruit"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "an apple",
+        "a ball",
+        "a flower"
+      ],
+      "evidence_hint": "Look at what the girl has in her hand near her tummy."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with her other arm?",
+      "sample_answers": [
+        "reaching for an apple",
+        "picking an apple",
+        "touching the tree"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reaching for an apple",
+        "throwing an apple",
+        "eating an apple"
+      ],
+      "evidence_hint": "Look at the girl's arm that is stretched out toward the tree."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl standing?",
+      "sample_answers": [
+        "in a tree",
+        "outside by apple trees",
+        "in an orchard",
+        "in a garden"
+      ],
+      "sentence_frame": "She is standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "by apple trees",
+        "in a kitchen",
+        "at a store"
+      ],
+      "evidence_hint": "Look at all the trees and fruit around the girl."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we do with apples?",
+      "sample_answers": [
+        "eat them",
+        "bite them",
+        "make juice",
+        "cook them"
+      ],
+      "sentence_frame": "We ___  apples.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "eat them",
+        "wear them",
+        "drive them"
+      ],
+      "evidence_hint": "Think about what you do with apples at home or at lunch."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How does the girl look \u2014 happy or sad?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "she is smiling",
+        "she looks happy"
+      ],
+      "sentence_frame": "She looks ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the girl's face and her smile."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever eaten an apple? What did it taste like?",
+      "sample_answers": [
+        "yes",
+        "it was sweet",
+        "it was crunchy",
+        "I like apples"
+      ],
+      "sentence_frame": "Apples taste ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "sweet",
+        "sour",
+        "crunchy"
+      ],
+      "evidence_hint": "Think about a time you ate an apple."
+    }
+  ]
+}

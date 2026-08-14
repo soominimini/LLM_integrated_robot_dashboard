@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young child sits at a table outdoors and uses a long spoon to eat from a tall glass dessert cup, likely an ice cream sundae, placed on a plate.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is sitting at the table?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a teacher",
+        "a baby",
+        "an adult"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child holding?",
+      "answer": "a spoon",
+      "visual_choices": [
+        "a spoon",
+        "a fork",
+        "a crayon",
+        "a straw"
+      ],
+      "evidence_hint": "Look at what is in the child's hand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the tall glass?",
+      "answer": "ice cream",
+      "visual_choices": [
+        "ice cream",
+        "juice",
+        "soup",
+        "water"
+      ],
+      "evidence_hint": "Look at the tall cup on the table in front of the child."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the food sitting?",
+      "answer": "on a plate",
+      "visual_choices": [
+        "on a plate",
+        "on the floor",
+        "in a bag",
+        "in a bowl"
+      ],
+      "evidence_hint": "Look at what is under the tall glass."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child sitting on?",
+      "answer": "a chair",
+      "visual_choices": [
+        "a chair",
+        "a bench",
+        "the floor",
+        "a stool"
+      ],
+      "evidence_hint": "Look behind and around the child's body."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_description": "A girl with red hair and a red headband is decorating a gingerbread house. The gingerbread house has white icing, candy decorations, and small figurines around it. Christmas tree lights are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl decorating?",
+      "answer": "a gingerbread house",
+      "visual_choices": [
+        "a gingerbread house",
+        "a birthday cake",
+        "a sandcastle",
+        "a cardboard box"
+      ],
+      "evidence_hint": "Look at the brown house-shaped object in front of the girl."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in this picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a baby",
+        "a boy",
+        "a grandma"
+      ],
+      "evidence_hint": "Look at the person sitting at the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the girl's head?",
+      "answer": "a headband",
+      "visual_choices": [
+        "a headband",
+        "a hat",
+        "a bow",
+        "a hood"
+      ],
+      "evidence_hint": "Look at the top of the girl's head."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the gingerbread house?",
+      "answer": "on the table",
+      "visual_choices": [
+        "on the table",
+        "on the floor",
+        "on a shelf",
+        "in a box"
+      ],
+      "evidence_hint": "Look at what the gingerbread house is sitting on."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the icing on the gingerbread house?",
+      "answer": "white",
+      "visual_choices": [
+        "white",
+        "pink",
+        "yellow",
+        "blue"
+      ],
+      "evidence_hint": "Look at the decorations on the roof and edges of the house."
+    }
+  ]
+}

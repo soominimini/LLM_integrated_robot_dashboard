@@ -1,0 +1,65 @@
+{
+  "scene_description": "A girl in a red sweater is decorating a Christmas tree by hanging a candy cane ornament. An adult's hands are helping. In the background, two other children are visible near the tree, which has red and gold ornaments.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl putting on the tree?",
+      "answer": "a candy cane",
+      "visual_choices": [
+        "a candy cane",
+        "a star",
+        "a bow",
+        "a bell"
+      ],
+      "evidence_hint": "Look at what the girl is holding near the tree."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's sweater?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "blue",
+        "green",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the clothes the girl is wearing."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is helping the girl at the tree?",
+      "answer": "an adult",
+      "visual_choices": [
+        "an adult",
+        "a dog",
+        "a baby",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at the hands reaching toward the girl from the left side."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children standing?",
+      "answer": "by a Christmas tree",
+      "visual_choices": [
+        "by a Christmas tree",
+        "at a table",
+        "in a kitchen",
+        "outside in snow"
+      ],
+      "evidence_hint": "Look at the big green tree behind the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the Christmas tree?",
+      "answer": "red and gold ornaments",
+      "visual_choices": [
+        "red and gold ornaments",
+        "wrapped presents",
+        "candles",
+        "paper chains"
+      ],
+      "evidence_hint": "Look at the round decorations hanging on the tree."
+    }
+  ]
+}

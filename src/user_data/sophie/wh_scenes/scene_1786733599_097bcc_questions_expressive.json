@@ -1,0 +1,118 @@
+{
+  "scene_description": "A smiling girl with long brown hair wearing a white shirt holds a colorful parachute with other children in a sunny outdoor park. Balloons float in the air above them, and trees are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What colorful thing are the children holding?",
+      "sample_answers": [
+        "a parachute",
+        "a colorful cloth",
+        "a rainbow blanket"
+      ],
+      "sentence_frame": "They are holding ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a parachute",
+        "a kite",
+        "a blanket"
+      ],
+      "evidence_hint": "Look at the big colorful thing the children have in their hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the children doing with the parachute?",
+      "sample_answers": [
+        "holding it",
+        "waving it",
+        "playing with it",
+        "shaking it"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "holding and waving it",
+        "eating it",
+        "throwing it away"
+      ],
+      "evidence_hint": "Look at the children's hands and the parachute."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "sample_answers": [
+        "outside",
+        "in a park",
+        "on the grass",
+        "outdoors"
+      ],
+      "sentence_frame": "The children are playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in a park",
+        "in a classroom",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at the ground and the trees around the children."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is floating up in the sky above the children?",
+      "sample_answers": [
+        "balloons",
+        "bubbles",
+        "balls in the air"
+      ],
+      "sentence_frame": "I see ___ in the sky.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "balloons",
+        "birds",
+        "clouds"
+      ],
+      "evidence_hint": "Look up high in the picture, above the children's heads."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How does the girl look \u2014 is she happy or sad?",
+      "sample_answers": [
+        "happy",
+        "she is smiling",
+        "she looks excited",
+        "she looks like she is having fun"
+      ],
+      "sentence_frame": "She looks ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the girl's face in the middle of the picture."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever played with a parachute or a big colorful cloth?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I played with one at school",
+        "I don't know"
+      ],
+      "sentence_frame": "I ___ played with a parachute.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about games you have played outside or at school."
+    }
+  ]
+}

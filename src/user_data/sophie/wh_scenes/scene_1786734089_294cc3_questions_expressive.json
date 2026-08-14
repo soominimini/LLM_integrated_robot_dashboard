@@ -1,0 +1,118 @@
+{
+  "scene_description": "A girl in a red sweater is decorating a Christmas tree by hanging a candy cane ornament. An adult hand is helping her. In the background, two other children stand near the decorated tree, which has red and gold ornaments and colorful lights.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What kind of tree do you see in the picture?",
+      "sample_answers": [
+        "a Christmas tree",
+        "a tree with ornaments",
+        "a decorated tree"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "Christmas tree",
+        "apple tree",
+        "palm tree"
+      ],
+      "evidence_hint": "Look at the big green tree with decorations on it."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with the candy cane?",
+      "sample_answers": [
+        "hanging it on the tree",
+        "putting it on the tree",
+        "decorating the tree"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "hanging it on the tree",
+        "eating it",
+        "throwing it"
+      ],
+      "evidence_hint": "Look at the girl's hands and what she is doing near the tree."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the candy cane going?",
+      "sample_answers": [
+        "on the tree",
+        "on the Christmas tree",
+        "on a branch"
+      ],
+      "sentence_frame": "The candy cane is going ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the tree",
+        "in a bowl",
+        "on the floor"
+      ],
+      "evidence_hint": "Look at where the girl is reaching with the candy cane."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What decorations do you see on the Christmas tree?",
+      "sample_answers": [
+        "ornaments",
+        "red and gold balls",
+        "a candy cane and ornaments",
+        "lights"
+      ],
+      "sentence_frame": "I see ___ on the tree.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "ornaments and lights",
+        "flowers",
+        "books"
+      ],
+      "evidence_hint": "Look closely at the tree and find the round and shiny things on it."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children do next after decorating the tree?",
+      "sample_answers": [
+        "open presents",
+        "look at the tree",
+        "keep decorating",
+        "turn on the lights"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "open presents",
+        "go swimming",
+        "eat breakfast"
+      ],
+      "evidence_hint": "Think about what people do after they finish decorating a Christmas tree."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever decorated a Christmas tree? What did you put on it?",
+      "sample_answers": [
+        "ornaments",
+        "lights",
+        "a star",
+        "yes, I put balls on it"
+      ],
+      "sentence_frame": "I put ___ on the tree.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "ornaments",
+        "lights",
+        "a star"
+      ],
+      "evidence_hint": "Think about your own holiday decorating at home."
+    }
+  ]
+}

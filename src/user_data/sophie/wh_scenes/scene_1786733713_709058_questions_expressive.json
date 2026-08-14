@@ -1,0 +1,117 @@
+{
+  "scene_description": "Two children are walking along a wooden boardwalk path covered in fallen autumn leaves in a forest. The child in the foreground is a girl wearing a blue coat, orange shirt, and yellow rain boots. A smaller child in a yellow jacket is walking ahead on the path. Trees with colorful fall foliage surround them.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl wearing on her feet?",
+      "sample_answers": [
+        "yellow boots",
+        "rain boots",
+        "yellow rain boots"
+      ],
+      "sentence_frame": "She is wearing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "yellow boots",
+        "sneakers",
+        "sandals"
+      ],
+      "evidence_hint": "Look down at the girl's feet in the front of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the two children doing?",
+      "sample_answers": [
+        "walking",
+        "walking on a path",
+        "walking in the woods"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "walking",
+        "running",
+        "sitting"
+      ],
+      "evidence_hint": "Look at both children's legs and feet on the path."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children walking?",
+      "sample_answers": [
+        "in the woods",
+        "in the forest",
+        "on a wooden path",
+        "outside"
+      ],
+      "sentence_frame": "They are walking ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the woods",
+        "at the beach",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the trees and the ground around the children."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is on the ground and the path?",
+      "sample_answers": [
+        "leaves",
+        "red and brown leaves",
+        "fallen leaves"
+      ],
+      "sentence_frame": "I see ___ on the ground.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "leaves",
+        "snow",
+        "flowers"
+      ],
+      "evidence_hint": "Look at the colors on the path and the ground all around the children."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children do next on their walk?",
+      "sample_answers": [
+        "keep walking",
+        "walk to the trees",
+        "catch up to the little one",
+        "go further into the woods"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "keep walking",
+        "sit down",
+        "go swimming"
+      ],
+      "evidence_hint": "Look at where the path goes and which direction the children are moving."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever walked outside in the fall and seen leaves on the ground?",
+      "sample_answers": [
+        "yes",
+        "I jumped in leaves",
+        "I walked outside",
+        "no"
+      ],
+      "sentence_frame": "I ___ outside.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you were outside when it was fall."
+    }
+  ]
+}

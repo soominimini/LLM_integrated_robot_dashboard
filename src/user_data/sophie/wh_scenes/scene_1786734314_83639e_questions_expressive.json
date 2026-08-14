@@ -1,0 +1,115 @@
+{
+  "scene_description": "A young girl with pigtails is outdoors blowing bubbles through a bubble wand. Several colorful bubbles float in the air around her. She is wearing a white shirt and is surrounded by a green, blurry background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding in her hand?",
+      "sample_answers": [
+        "a bubble wand",
+        "a wand",
+        "a stick for bubbles"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a bubble wand",
+        "a spoon",
+        "a pencil"
+      ],
+      "evidence_hint": "Look at what the girl has in her hand near her mouth."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing?",
+      "sample_answers": [
+        "blowing bubbles",
+        "making bubbles",
+        "blowing into a wand"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "blowing bubbles",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the girl's mouth and the bubbles floating around her."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl playing with bubbles?",
+      "sample_answers": [
+        "outside",
+        "in the yard",
+        "outdoors"
+      ],
+      "sentence_frame": "She is playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "outside",
+        "in the kitchen",
+        "in bed"
+      ],
+      "evidence_hint": "Look at the green trees and grass in the background."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do you do with a bubble wand?",
+      "sample_answers": [
+        "you blow into it",
+        "you make bubbles",
+        "you blow bubbles with it"
+      ],
+      "sentence_frame": "You use a bubble wand to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "blow bubbles",
+        "eat food",
+        "draw pictures"
+      ],
+      "evidence_hint": "Look at what the girl is doing with the wand right now."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might happen to the bubbles next?",
+      "sample_answers": [
+        "they will pop",
+        "they will float away",
+        "they will go up in the air"
+      ],
+      "sentence_frame": "The bubbles might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "pop",
+        "float away",
+        "get bigger"
+      ],
+      "evidence_hint": "Look at the bubbles floating in the air and think about what bubbles usually do."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever blown bubbles? What did you do?",
+      "sample_answers": [
+        "yes, I blew bubbles",
+        "I played with bubbles outside",
+        "I popped the bubbles"
+      ],
+      "sentence_frame": "I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "blew bubbles",
+        "popped bubbles",
+        "never tried it"
+      ],
+      "evidence_hint": "Think about a time you played with bubbles."
+    }
+  ]
+}

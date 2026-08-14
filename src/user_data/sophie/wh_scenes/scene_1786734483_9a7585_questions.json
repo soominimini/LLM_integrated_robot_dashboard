@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children are at the beach building a sandcastle together. A boy wearing sunglasses and a blue shirt is crouching on the left, and a girl in a swimsuit is sitting on the right. There is a yellow bucket near the girl, and the ocean and blue sky are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children building?",
+      "answer": "a sandcastle",
+      "visual_choices": [
+        "a sandcastle",
+        "a snowman",
+        "a tower of blocks",
+        "a tent"
+      ],
+      "evidence_hint": "Look at what is in the middle between the two children."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is wearing sunglasses?",
+      "answer": "the boy",
+      "visual_choices": [
+        "the boy",
+        "the girl",
+        "a grown-up",
+        "no one"
+      ],
+      "evidence_hint": "Look at the faces of the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the bucket?",
+      "answer": "yellow",
+      "visual_choices": [
+        "yellow",
+        "red",
+        "blue",
+        "green"
+      ],
+      "evidence_hint": "Look near the girl's hands on the right side."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "answer": "at the beach",
+      "visual_choices": [
+        "at the beach",
+        "in a park",
+        "in a sandbox",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the ground and the water behind the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the boy wearing on his face?",
+      "answer": "sunglasses",
+      "visual_choices": [
+        "sunglasses",
+        "a hat",
+        "a mask",
+        "goggles"
+      ],
+      "evidence_hint": "Look closely at the boy's face on the left."
+    }
+  ]
+}

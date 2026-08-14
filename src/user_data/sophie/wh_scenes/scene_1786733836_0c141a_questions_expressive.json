@@ -1,0 +1,116 @@
+{
+  "scene_description": "A large giraffe leans its long neck over a fence at a zoo. Two people \u2014 a man with a beard wearing a plaid shirt and a child wearing a hat \u2014 are reaching their hands out toward the giraffe, appearing to feed it.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What animal do you see in the picture?",
+      "sample_answers": [
+        "a giraffe",
+        "giraffe",
+        "a big giraffe"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "giraffe",
+        "elephant",
+        "lion"
+      ],
+      "evidence_hint": "Look at the tall animal with spots and a long neck."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the people doing with their hands?",
+      "sample_answers": [
+        "feeding the giraffe",
+        "reaching out to the giraffe",
+        "giving food to the giraffe"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "feeding the giraffe",
+        "petting a dog",
+        "waving goodbye"
+      ],
+      "evidence_hint": "Look at the people's hands and where they are pointing them."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the giraffe standing?",
+      "sample_answers": [
+        "behind the fence",
+        "on the other side of the fence",
+        "at the zoo"
+      ],
+      "sentence_frame": "The giraffe is ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "behind the fence",
+        "in a house",
+        "in the water"
+      ],
+      "evidence_hint": "Look at the fence and where the giraffe's body is."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who is with the giraffe in this picture?",
+      "sample_answers": [
+        "a man and a kid",
+        "a dad and a child",
+        "two people"
+      ],
+      "sentence_frame": "I see a ___ and a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a man and a child",
+        "two dogs",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at the people standing near the giraffe."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the giraffe do next with its mouth?",
+      "sample_answers": [
+        "eat the food",
+        "take the food",
+        "bite the food"
+      ],
+      "sentence_frame": "The giraffe might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "eat the food",
+        "run away",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at the giraffe's head leaning toward the people's hands."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been to the zoo? What animal did you see?",
+      "sample_answers": [
+        "yes, I saw a giraffe",
+        "I saw lions",
+        "no",
+        "I want to go"
+      ],
+      "sentence_frame": "I saw a ___ at the zoo.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "giraffe",
+        "lion",
+        "elephant"
+      ],
+      "evidence_hint": "Think about a time you visited animals."
+    }
+  ]
+}

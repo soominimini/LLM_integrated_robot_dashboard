@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children walk along a wooden path covered in fallen autumn leaves in a forest. The child in the foreground wears a blue coat, an orange shirt, and yellow boots. A second, smaller child walks ahead on the path wearing a yellow jacket.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What color are the boots on the child in front?",
+      "answer": "yellow",
+      "visual_choices": [
+        "yellow",
+        "red",
+        "black",
+        "blue"
+      ],
+      "evidence_hint": "Look at the feet of the child closest to you."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in this picture?",
+      "answer": "two children",
+      "visual_choices": [
+        "two children",
+        "a dog and a child",
+        "two adults",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at all the people on the path."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the coat on the child in front?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "green",
+        "purple"
+      ],
+      "evidence_hint": "Look at the jacket the closest child is wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children walking?",
+      "answer": "on a wooden path",
+      "visual_choices": [
+        "on a wooden path",
+        "on a beach",
+        "in a kitchen",
+        "on a sidewalk"
+      ],
+      "evidence_hint": "Look at the ground under the children's feet."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is covering the path?",
+      "answer": "fallen leaves",
+      "visual_choices": [
+        "fallen leaves",
+        "snow",
+        "sand",
+        "water"
+      ],
+      "evidence_hint": "Look at what is scattered all over the wooden path."
+    }
+  ]
+}

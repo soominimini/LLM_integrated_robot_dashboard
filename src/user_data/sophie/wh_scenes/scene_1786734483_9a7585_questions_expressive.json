@@ -1,0 +1,116 @@
+{
+  "scene_description": "Two children are playing on a sandy beach near the ocean. A boy wearing sunglasses and a blue shirt is crouching down and placing or patting a small blue object near a sandcastle. A girl in a swimsuit is sitting across from him next to a yellow bucket. Between them is a large sandcastle made of several sand mounds.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children building in the sand?",
+      "sample_answers": [
+        "a sandcastle",
+        "a castle",
+        "a sand tower"
+      ],
+      "sentence_frame": "They are building a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sandcastle",
+        "snowman",
+        "house"
+      ],
+      "evidence_hint": "Look at the big sandy structure in the middle of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing with his hands?",
+      "sample_answers": [
+        "patting the sand",
+        "building the sandcastle",
+        "putting something in the sand"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "patting the sand",
+        "eating",
+        "swimming"
+      ],
+      "evidence_hint": "Look at the boy's hands near the bottom of the sandcastle."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "sample_answers": [
+        "at the beach",
+        "on the sand",
+        "by the ocean"
+      ],
+      "sentence_frame": "They are playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at the beach",
+        "in a park",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the ground under the children and the water behind them."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the yellow bucket used for?",
+      "sample_answers": [
+        "to carry sand",
+        "to make the sandcastle",
+        "to hold sand or water"
+      ],
+      "sentence_frame": "The bucket is used for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "carrying sand",
+        "drinking",
+        "cooking"
+      ],
+      "evidence_hint": "Look at the yellow bucket next to the girl and think about what you do with a bucket at the beach."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children do next with the sandcastle?",
+      "sample_answers": [
+        "make it bigger",
+        "add more sand",
+        "keep building"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "make it bigger",
+        "go to sleep",
+        "eat dinner"
+      ],
+      "evidence_hint": "Look at what the children are doing right now and think about what comes next."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been to the beach? What did you do there?",
+      "sample_answers": [
+        "I played in the sand",
+        "I swam",
+        "I built a sandcastle",
+        "yes"
+      ],
+      "sentence_frame": "At the beach, I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "played in the sand",
+        "swam",
+        "built a sandcastle"
+      ],
+      "evidence_hint": "Think about a time you went somewhere with sand or water."
+    }
+  ]
+}

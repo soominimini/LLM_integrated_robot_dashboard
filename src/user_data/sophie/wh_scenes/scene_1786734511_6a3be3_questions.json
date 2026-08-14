@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl with blonde hair wearing a red dress is standing in an apple orchard. She is reaching toward an apple on a tree with one hand and holding a red apple in her other hand. The trees are full of red apples and green leaves.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding in her hand?",
+      "answer": "a red apple",
+      "visual_choices": [
+        "a red apple",
+        "a orange",
+        "a ball",
+        "a flower"
+      ],
+      "evidence_hint": "Look at what the girl is holding close to her body."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in this picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a boy",
+        "a baby",
+        "a grandma"
+      ],
+      "evidence_hint": "Look at the person standing in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's dress?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "blue",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the clothes the girl is wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the apples growing?",
+      "answer": "on a tree",
+      "visual_choices": [
+        "on a tree",
+        "on the ground",
+        "in a basket",
+        "on a table"
+      ],
+      "evidence_hint": "Look at the big green plant behind the girl."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl reaching toward?",
+      "answer": "an apple on the tree",
+      "visual_choices": [
+        "an apple on the tree",
+        "a bird",
+        "a leaf",
+        "a flower"
+      ],
+      "evidence_hint": "Look at the girl's arm that is stretched out to the side."
+    }
+  ]
+}

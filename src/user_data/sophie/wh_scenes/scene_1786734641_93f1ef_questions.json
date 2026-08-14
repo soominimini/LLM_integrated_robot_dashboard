@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young child wearing a beige coat and jeans sits outdoors among fallen autumn leaves, reaching out a hand toward a white squirrel that is standing up and sniffing the child's hand.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What animal is in the picture?",
+      "answer": "a squirrel",
+      "visual_choices": [
+        "a squirrel",
+        "a rabbit",
+        "a cat",
+        "a bird"
+      ],
+      "evidence_hint": "Look at the small furry animal near the child's hand."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting on the ground?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a dog",
+        "a baby",
+        "an adult"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the squirrel?",
+      "answer": "white",
+      "visual_choices": [
+        "white",
+        "brown",
+        "black",
+        "orange"
+      ],
+      "evidence_hint": "Look closely at the fur on the squirrel."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the child and squirrel?",
+      "answer": "on fallen leaves",
+      "visual_choices": [
+        "on fallen leaves",
+        "in the water",
+        "on the sand",
+        "in the snow"
+      ],
+      "evidence_hint": "Look at the ground all around the child and squirrel."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child wearing?",
+      "answer": "a beige coat",
+      "visual_choices": [
+        "a beige coat",
+        "a red dress",
+        "a blue jacket",
+        "a striped shirt"
+      ],
+      "evidence_hint": "Look at the clothes on the child's body."
+    }
+  ]
+}

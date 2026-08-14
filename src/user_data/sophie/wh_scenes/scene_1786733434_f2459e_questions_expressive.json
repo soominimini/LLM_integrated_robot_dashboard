@@ -1,0 +1,119 @@
+{
+  "scene_description": "Three children are sitting at a table doing a craft project. A girl in a teal shirt is cutting a colorful paper ball shape with scissors. A boy in a red shirt is working in the background, and another child is also at the table. The table is covered with craft supplies including paper, scissors, and markers.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding in her hands?",
+      "sample_answers": [
+        "scissors",
+        "paper",
+        "a ball",
+        "a paper ball"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "scissors",
+        "a crayon",
+        "a book"
+      ],
+      "evidence_hint": "Look at what the girl in the teal shirt has in her hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with the scissors?",
+      "sample_answers": [
+        "cutting",
+        "cutting paper",
+        "cutting a ball shape"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cutting",
+        "drawing",
+        "gluing"
+      ],
+      "evidence_hint": "Look at the girl's hands and the scissors."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children doing their craft?",
+      "sample_answers": [
+        "at a table",
+        "on a table",
+        "inside"
+      ],
+      "sentence_frame": "The children are doing their craft ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at a table",
+        "on the floor",
+        "outside"
+      ],
+      "evidence_hint": "Look at where the children are sitting and what is under their supplies."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What craft supplies do you see on the table?",
+      "sample_answers": [
+        "scissors",
+        "paper",
+        "markers",
+        "scissors and paper"
+      ],
+      "sentence_frame": "I see ___ on the table.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "scissors",
+        "paper",
+        "markers"
+      ],
+      "evidence_hint": "Look at all the things spread out on the table."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children be making with all that paper and scissors?",
+      "sample_answers": [
+        "a paper ball",
+        "a craft",
+        "a decoration",
+        "a project"
+      ],
+      "sentence_frame": "They might be making ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a paper ball",
+        "a card",
+        "a paper hat"
+      ],
+      "evidence_hint": "Look at the colorful round shape the girl is cutting and the supplies on the table."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever used scissors to make something? What did you make?",
+      "sample_answers": [
+        "yes",
+        "I cut paper",
+        "I made a card",
+        "I made a snowflake"
+      ],
+      "sentence_frame": "I made ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "a card",
+        "a snowflake",
+        "a picture"
+      ],
+      "evidence_hint": "Think about a time you did a craft at home or school."
+    }
+  ]
+}

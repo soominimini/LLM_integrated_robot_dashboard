@@ -1,0 +1,114 @@
+{
+  "scene_description": "Two girls are riding bicycles outside on a street near a house with trees. The older girl has a backpack and is riding a white bike with colorful wheels. The younger girl is riding a smaller white bike behind her.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the girls riding?",
+      "sample_answers": [
+        "bikes",
+        "bicycles",
+        "two bikes"
+      ],
+      "sentence_frame": "The girls are riding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "bikes",
+        "scooters",
+        "skateboards"
+      ],
+      "evidence_hint": "Look at what the girls are sitting on and moving with."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the girls doing in this picture?",
+      "sample_answers": [
+        "riding bikes",
+        "biking outside",
+        "pedaling their bikes"
+      ],
+      "sentence_frame": "The girls are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "riding bikes",
+        "running",
+        "swimming"
+      ],
+      "evidence_hint": "Look at what both girls are doing with their bodies."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the girls riding their bikes?",
+      "sample_answers": [
+        "outside",
+        "on the street",
+        "near a house"
+      ],
+      "sentence_frame": "They are riding ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the street outside",
+        "inside a gym",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the ground and the things around the girls."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the big girl carrying on her back?",
+      "sample_answers": [
+        "a backpack",
+        "a bag",
+        "a blue backpack"
+      ],
+      "sentence_frame": "She is carrying ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a backpack",
+        "a lunchbox",
+        "a helmet"
+      ],
+      "evidence_hint": "Look at the older girl's back and shoulders."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the girls do when they stop riding their bikes?",
+      "sample_answers": [
+        "go inside",
+        "park their bikes",
+        "take off their backpack"
+      ],
+      "sentence_frame": "When they stop, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "park their bikes",
+        "jump in the water",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at where they are riding and think about what comes after a bike ride."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever ridden a bike? What was it like?",
+      "sample_answers": [
+        "yes, it was fun",
+        "I ride my bike outside",
+        "no, I haven't"
+      ],
+      "sentence_frame": "I ___ a bike.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "ride",
+        "don't ride"
+      ],
+      "evidence_hint": "Think about your own experience with bikes."
+    }
+  ]
+}

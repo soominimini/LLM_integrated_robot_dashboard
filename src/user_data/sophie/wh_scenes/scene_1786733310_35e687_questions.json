@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children wearing red winter hats and mittens stand on either side of a snowman in a snowy outdoor setting with snow-covered trees in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children building?",
+      "answer": "a snowman",
+      "visual_choices": [
+        "a snowman",
+        "a sandcastle",
+        "a birdhouse",
+        "a tent"
+      ],
+      "evidence_hint": "Look at the big white figure standing between the two children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the children's hats?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "blue",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the tops of the children's heads."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing next to the snowman?",
+      "answer": "two children",
+      "visual_choices": [
+        "two children",
+        "a dog",
+        "one adult",
+        "a baby"
+      ],
+      "evidence_hint": "Look on both sides of the snowman."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children?",
+      "answer": "in the snow",
+      "visual_choices": [
+        "in the snow",
+        "at the beach",
+        "in a classroom",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the ground and all around the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the snowman's face?",
+      "answer": "a nose and eyes",
+      "visual_choices": [
+        "a nose and eyes",
+        "a big smile",
+        "glasses",
+        "a mask"
+      ],
+      "evidence_hint": "Look closely at the snowman's face in the middle of the picture."
+    }
+  ]
+}

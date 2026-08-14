@@ -1,0 +1,119 @@
+{
+  "scene_description": "A young child wearing a cream-colored coat and jeans sits outdoors among fallen autumn leaves. The child is holding out their hand toward a small white squirrel, appearing to offer it food. The ground is covered with orange and yellow leaves.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What animal do you see in the picture?",
+      "sample_answers": [
+        "a squirrel",
+        "a white squirrel",
+        "a little animal"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "squirrel",
+        "rabbit",
+        "cat"
+      ],
+      "evidence_hint": "Look at the small furry animal near the child's hand."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the child doing with her hand?",
+      "sample_answers": [
+        "holding out food",
+        "feeding the squirrel",
+        "giving food to the squirrel"
+      ],
+      "sentence_frame": "The child is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "feeding the squirrel",
+        "petting the squirrel",
+        "throwing food"
+      ],
+      "evidence_hint": "Look at the child's hand reaching toward the squirrel."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the child sitting?",
+      "sample_answers": [
+        "outside",
+        "on the leaves",
+        "in the park",
+        "on the ground"
+      ],
+      "sentence_frame": "The child is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the leaves outside",
+        "in a house",
+        "at a table"
+      ],
+      "evidence_hint": "Look at what is on the ground all around the child."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the squirrel doing?",
+      "sample_answers": [
+        "reaching for food",
+        "eating",
+        "taking food from the child",
+        "standing up"
+      ],
+      "sentence_frame": "The squirrel is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reaching for food",
+        "running away",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the squirrel's body and where it is facing."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the squirrel do next?",
+      "sample_answers": [
+        "eat the food",
+        "take the food",
+        "run away",
+        "grab it with its paws"
+      ],
+      "sentence_frame": "The squirrel might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "eat the food",
+        "run away",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at how close the squirrel is to the child's hand."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen a squirrel? What did it do?",
+      "sample_answers": [
+        "yes, it ran",
+        "it climbed a tree",
+        "I saw one in the park",
+        "no"
+      ],
+      "sentence_frame": "I saw a squirrel and it ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "ran",
+        "climbed",
+        "ate"
+      ],
+      "evidence_hint": "Think about a time you were outside and saw an animal."
+    }
+  ]
+}

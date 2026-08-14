@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young girl with braids sits on green grass next to a tree trunk, holding and looking down at an open book or tablet. Yellow flowers (dandelions) are visible in the grass. The background shows autumn-colored trees and soft sunlight.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding in her lap?",
+      "sample_answers": [
+        "a book",
+        "a tablet",
+        "a big book"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a book",
+        "a ball",
+        "a bag"
+      ],
+      "evidence_hint": "Look at what the girl has in her hands and on her lap."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing?",
+      "sample_answers": [
+        "reading a book",
+        "looking at a book",
+        "reading outside"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reading",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at the girl's eyes and what she is doing with the book."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "sample_answers": [
+        "on the grass",
+        "outside by a tree",
+        "next to a tree"
+      ],
+      "sentence_frame": "She is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the grass by a tree",
+        "in a classroom",
+        "on a bed"
+      ],
+      "evidence_hint": "Look at what is around the girl \u2014 the ground and what is right beside her."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a book for?",
+      "sample_answers": [
+        "reading",
+        "learning",
+        "looking at pictures",
+        "finding out about things"
+      ],
+      "sentence_frame": "We use a book for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reading",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Think about what people do with a book."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "how",
+      "question": "How do you think the girl feels sitting outside with her book? Is she happy or upset?",
+      "sample_answers": [
+        "happy",
+        "she looks happy",
+        "she likes reading",
+        "calm"
+      ],
+      "sentence_frame": "I think she feels ___ because ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "upset",
+        "bored"
+      ],
+      "evidence_hint": "Look at the girl's face and how she is sitting with her book."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you like to read books? What is your favorite book?",
+      "sample_answers": [
+        "yes",
+        "I like books",
+        "my favorite book is...",
+        "I like pictures in books"
+      ],
+      "sentence_frame": "My favorite book is ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about books you have read or looked at."
+    }
+  ]
+}

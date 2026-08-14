@@ -1,0 +1,118 @@
+{
+  "scene_description": "A young child with curly red hair is sitting in a sandbox at a playground. She is wearing a denim jacket and pink shirt. She is playing with a yellow bucket and a pink shovel in the sand. A colorful playground with slides and climbing structures is visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the yellow thing next to the girl?",
+      "sample_answers": [
+        "a bucket",
+        "a yellow bucket",
+        "a pail"
+      ],
+      "sentence_frame": "The yellow thing is a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "bucket",
+        "cup",
+        "ball"
+      ],
+      "evidence_hint": "Look at the yellow object sitting in the sand next to the girl."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with the sand?",
+      "sample_answers": [
+        "digging",
+        "playing in the sand",
+        "scooping the sand",
+        "using a shovel"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "digging",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at the girl's hands and what she is holding."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "sample_answers": [
+        "in the sandbox",
+        "in the sand",
+        "at the playground"
+      ],
+      "sentence_frame": "She is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the sandbox",
+        "in the pool",
+        "on the grass"
+      ],
+      "evidence_hint": "Look at what is all around the girl on the ground."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a bucket and shovel for?",
+      "sample_answers": [
+        "digging sand",
+        "playing in the sandbox",
+        "scooping sand",
+        "building"
+      ],
+      "sentence_frame": "We use a bucket and shovel for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "digging sand",
+        "eating food",
+        "drawing pictures"
+      ],
+      "evidence_hint": "Look at what the girl is doing with the bucket and shovel in the picture."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the girl put in her bucket?",
+      "sample_answers": [
+        "sand",
+        "more sand",
+        "she might fill it with sand"
+      ],
+      "sentence_frame": "She might put ___ in the bucket.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "sand",
+        "water",
+        "toys"
+      ],
+      "evidence_hint": "Look at what is all around her and what she is holding."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever played in a sandbox? What did you do?",
+      "sample_answers": [
+        "yes",
+        "I dug in the sand",
+        "I made a sandcastle",
+        "no"
+      ],
+      "sentence_frame": "I played in the sand and ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "dug",
+        "built",
+        "scooped"
+      ],
+      "evidence_hint": "Think about a time you played outside in the sand."
+    }
+  ]
+}

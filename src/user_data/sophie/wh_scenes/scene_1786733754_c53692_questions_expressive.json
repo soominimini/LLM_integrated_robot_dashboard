@@ -1,0 +1,120 @@
+{
+  "scene_description": "A young child sits at an outdoor table and uses a long spoon to eat from a tall glass dessert cup (likely an ice cream sundae or parfait). A plate is on the table in front of the child. The setting appears to be a restaurant or caf\u00e9 patio.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the child eating from?",
+      "sample_answers": [
+        "a tall glass",
+        "a cup",
+        "an ice cream cup",
+        "a sundae glass"
+      ],
+      "sentence_frame": "The child is eating from ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a tall glass",
+        "a bowl",
+        "a bag"
+      ],
+      "evidence_hint": "Look at the container on the table in front of the child."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the child doing with the spoon?",
+      "sample_answers": [
+        "scooping",
+        "eating",
+        "digging in the cup",
+        "using the spoon to eat"
+      ],
+      "sentence_frame": "The child is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "scooping",
+        "stirring",
+        "throwing"
+      ],
+      "evidence_hint": "Look at the child's hand and the spoon going into the glass."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the child sitting?",
+      "sample_answers": [
+        "at a table",
+        "outside",
+        "at a restaurant",
+        "on a patio"
+      ],
+      "sentence_frame": "The child is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at a table outside",
+        "in a kitchen",
+        "on the floor"
+      ],
+      "evidence_hint": "Look at the chairs, table, and the background behind the child."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a spoon for?",
+      "sample_answers": [
+        "eating",
+        "scooping food",
+        "getting food out of a cup"
+      ],
+      "sentence_frame": "We use a spoon for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "eating",
+        "drawing",
+        "cutting"
+      ],
+      "evidence_hint": "Look at the long spoon the child is holding and think about what spoons do."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the child eat next \u2014 more of the dessert or something else on the plate?",
+      "sample_answers": [
+        "more ice cream",
+        "more of the dessert",
+        "something from the plate",
+        "another bite"
+      ],
+      "sentence_frame": "Next, the child might eat ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "more dessert",
+        "something from the plate",
+        "nothing"
+      ],
+      "evidence_hint": "Look at the tall glass and the plate on the table to see what food is still there."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "What is your favorite dessert to eat?",
+      "sample_answers": [
+        "ice cream",
+        "cake",
+        "cookies",
+        "I like ice cream"
+      ],
+      "sentence_frame": "My favorite dessert is ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "ice cream",
+        "cake",
+        "cookies"
+      ],
+      "evidence_hint": "Think about a yummy sweet food you like to eat."
+    }
+  ]
+}

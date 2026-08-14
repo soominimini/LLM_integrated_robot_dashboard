@@ -1,0 +1,119 @@
+{
+  "scene_description": "Two children wearing red winter hats and mittens stand on either side of a snowman outdoors. The snowman has a red scarf, button details, and a carrot nose. Snow-covered trees are visible in the background. The children appear to be hugging or decorating the snowman.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the big white thing in the middle of the picture?",
+      "sample_answers": [
+        "a snowman",
+        "snowman",
+        "a big snowman"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "snowman",
+        "snowball",
+        "robot"
+      ],
+      "evidence_hint": "Look at the big round white thing in the middle."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the two children doing with the snowman?",
+      "sample_answers": [
+        "hugging it",
+        "touching the snowman",
+        "holding the snowman",
+        "decorating it"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "hugging it",
+        "eating it",
+        "throwing it"
+      ],
+      "evidence_hint": "Look at the children's arms and hands near the snowman."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children and the snowman?",
+      "sample_answers": [
+        "outside",
+        "in the snow",
+        "outside in the snow",
+        "near the trees"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "outside in the snow",
+        "inside a house",
+        "at the beach"
+      ],
+      "evidence_hint": "Look at the ground and the trees around them."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children wearing on their heads?",
+      "sample_answers": [
+        "hats",
+        "red hats",
+        "winter hats",
+        "knit hats"
+      ],
+      "sentence_frame": "They are wearing ___ on their heads.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "hats",
+        "helmets",
+        "crowns"
+      ],
+      "evidence_hint": "Look at the top of each child's head."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do you think the children feel about the snowman? Do they look happy or sad?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "they look happy",
+        "they like the snowman"
+      ],
+      "sentence_frame": "I think they feel ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the children's faces and how close they are to the snowman."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen snow or built a snowman?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I made a snowman",
+        "I played in the snow"
+      ],
+      "sentence_frame": "I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you were outside in the cold or snow."
+    }
+  ]
+}

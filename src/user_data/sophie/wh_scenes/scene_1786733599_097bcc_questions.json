@@ -1,0 +1,65 @@
+{
+  "scene_description": "A girl with long brown hair wearing a white shirt is holding a colorful parachute with other children outdoors on a grassy area with trees in the background. Balls are visible in the air above the parachute.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children holding?",
+      "answer": "a colorful parachute",
+      "visual_choices": [
+        "a colorful parachute",
+        "a jump rope",
+        "a big blanket",
+        "a kite"
+      ],
+      "evidence_hint": "Look at what the children have in their hands."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is wearing a white shirt?",
+      "answer": "the girl in the middle",
+      "visual_choices": [
+        "the girl in the middle",
+        "the boy in back",
+        "the girl on the left",
+        "no one"
+      ],
+      "evidence_hint": "Look at the shirt colors of each child."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is in the air above the parachute?",
+      "answer": "balls",
+      "visual_choices": [
+        "balls",
+        "birds",
+        "leaves",
+        "balloons"
+      ],
+      "evidence_hint": "Look up above the colorful parachute."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "answer": "outside on the grass",
+      "visual_choices": [
+        "outside on the grass",
+        "in a gym",
+        "in a classroom",
+        "at the beach"
+      ],
+      "evidence_hint": "Look at the ground and the trees behind the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What colors is the parachute?",
+      "answer": "red, blue, green, yellow",
+      "visual_choices": [
+        "red, blue, green, yellow",
+        "all white",
+        "black and gray",
+        "pink and purple"
+      ],
+      "evidence_hint": "Look closely at the big cloth the children are holding."
+    }
+  ]
+}

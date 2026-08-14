@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl with braids sits on green grass next to a tree, looking down at a book or tablet on her lap. She is wearing a pink shirt and blue pants. There are yellow flowers in the grass around her.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is sitting on the grass?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a boy",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person sitting in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding on her lap?",
+      "answer": "a book",
+      "visual_choices": [
+        "a book",
+        "a ball",
+        "a lunchbox",
+        "a toy"
+      ],
+      "evidence_hint": "Look at what is resting on the girl's legs."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's shirt?",
+      "answer": "pink",
+      "visual_choices": [
+        "pink",
+        "blue",
+        "yellow",
+        "red"
+      ],
+      "evidence_hint": "Look at the top part of the girl's body."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl sitting?",
+      "answer": "on the grass",
+      "visual_choices": [
+        "on the grass",
+        "at a table",
+        "on a bed",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the ground underneath the girl."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is next to the girl?",
+      "answer": "a tree",
+      "visual_choices": [
+        "a tree",
+        "a fence",
+        "a slide",
+        "a bench"
+      ],
+      "evidence_hint": "Look at the big brown thing on the left side of the picture."
+    }
+  ]
+}

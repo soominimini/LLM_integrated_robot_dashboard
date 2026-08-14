@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl in a striped shirt and pink shorts stands at a wooden fence railing near water, feeding elephants with her hand. She holds a basket and is reaching toward the trunk of one of two large elephants.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is feeding the elephants?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a zookeeper",
+        "a boy",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person standing at the fence."
+    },
+    {
+      "wh_type": "what",
+      "question": "What animals are in the picture?",
+      "answer": "elephants",
+      "visual_choices": [
+        "elephants",
+        "giraffes",
+        "hippos",
+        "horses"
+      ],
+      "evidence_hint": "Look at the big animals near the water."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl carrying?",
+      "answer": "a basket",
+      "visual_choices": [
+        "a basket",
+        "a backpack",
+        "a bucket",
+        "a bag"
+      ],
+      "evidence_hint": "Look at what the girl is holding near her side."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl standing?",
+      "answer": "at a fence",
+      "visual_choices": [
+        "at a fence",
+        "in a tree",
+        "on a bench",
+        "in the water"
+      ],
+      "evidence_hint": "Look at the wooden rails near the girl's feet."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the elephant using to reach the girl?",
+      "answer": "its trunk",
+      "visual_choices": [
+        "its trunk",
+        "its tail",
+        "its ear",
+        "its foot"
+      ],
+      "evidence_hint": "Look at the long part of the elephant stretching toward the girl's hand."
+    }
+  ]
+}

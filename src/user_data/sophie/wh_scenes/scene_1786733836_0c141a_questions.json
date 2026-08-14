@@ -1,0 +1,65 @@
+{
+  "scene_description": "A giraffe leans its long neck toward two people at a zoo. An adult with a beard and a child wearing a hat are reaching their hands out toward the giraffe. There is a fence visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What animal is in the picture?",
+      "answer": "a giraffe",
+      "visual_choices": [
+        "a giraffe",
+        "a zebra",
+        "an elephant",
+        "a horse"
+      ],
+      "evidence_hint": "Look at the big animal with a long neck and spots."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is reaching their hands toward the giraffe?",
+      "answer": "an adult and a child",
+      "visual_choices": [
+        "an adult and a child",
+        "two children",
+        "a zookeeper",
+        "nobody"
+      ],
+      "evidence_hint": "Look at the people on the right side of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child wearing on their head?",
+      "answer": "a hat",
+      "visual_choices": [
+        "a hat",
+        "a helmet",
+        "a hood",
+        "nothing"
+      ],
+      "evidence_hint": "Look at the top of the smaller person's head."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the people and the giraffe?",
+      "answer": "at a zoo",
+      "visual_choices": [
+        "at a zoo",
+        "in a forest",
+        "at a farm",
+        "in a backyard"
+      ],
+      "evidence_hint": "Look at the fence and the platform behind the giraffe."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the spots on the giraffe?",
+      "answer": "brown",
+      "visual_choices": [
+        "brown",
+        "black",
+        "red",
+        "green"
+      ],
+      "evidence_hint": "Look at the pattern on the giraffe's neck and body."
+    }
+  ]
+}

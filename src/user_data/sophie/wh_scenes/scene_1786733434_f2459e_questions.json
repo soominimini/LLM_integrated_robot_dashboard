@@ -1,0 +1,65 @@
+{
+  "scene_description": "Three children are sitting at a table doing a craft activity. The girl in the front is wearing a teal shirt and holding a decorated round object with scissors. Two other children are behind her, also working on crafts. The table has papers, markers, and craft supplies on it.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding?",
+      "answer": "a round craft ball",
+      "visual_choices": [
+        "a round craft ball",
+        "a book",
+        "a cup",
+        "a balloon"
+      ],
+      "evidence_hint": "Look at what the girl in the teal shirt has in her hands."
+    },
+    {
+      "wh_type": "what",
+      "question": "What tool is the girl using?",
+      "answer": "scissors",
+      "visual_choices": [
+        "scissors",
+        "a paintbrush",
+        "a spoon",
+        "a pencil"
+      ],
+      "evidence_hint": "Look at the girl's right hand near the craft ball."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting at the table?",
+      "answer": "three children",
+      "visual_choices": [
+        "three children",
+        "two adults",
+        "one baby",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at all the people sitting around the table."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children sitting?",
+      "answer": "at a table",
+      "visual_choices": [
+        "at a table",
+        "on the floor",
+        "on a bed",
+        "outside"
+      ],
+      "evidence_hint": "Look at what is underneath all the craft supplies."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's shirt?",
+      "answer": "teal",
+      "visual_choices": [
+        "teal",
+        "red",
+        "yellow",
+        "pink"
+      ],
+      "evidence_hint": "Look at the shirt the girl in front is wearing."
+    }
+  ]
+}

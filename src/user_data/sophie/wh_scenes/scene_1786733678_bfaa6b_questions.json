@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young boy in a blue shirt sits at a white table looking through a green magnifying glass. On the table are colorful science toy items including beakers, test tubes, and small colored objects.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the boy holding up to his eye?",
+      "answer": "a magnifying glass",
+      "visual_choices": [
+        "a magnifying glass",
+        "a mirror",
+        "a ball",
+        "a cup"
+      ],
+      "evidence_hint": "Look at what the boy is holding in front of his face."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is sitting at the table?",
+      "answer": "a boy",
+      "visual_choices": [
+        "a boy",
+        "a girl",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person in the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the magnifying glass?",
+      "answer": "green",
+      "visual_choices": [
+        "green",
+        "red",
+        "blue",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the round ring the boy is holding."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the science toys?",
+      "answer": "on the table",
+      "visual_choices": [
+        "on the table",
+        "on the floor",
+        "in a bag",
+        "on a shelf"
+      ],
+      "evidence_hint": "Look at the flat surface in front of the boy."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the boy's shirt?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "green",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the clothes the boy is wearing."
+    }
+  ]
+}

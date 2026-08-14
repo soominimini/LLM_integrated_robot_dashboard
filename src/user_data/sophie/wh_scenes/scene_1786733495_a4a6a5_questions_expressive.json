@@ -1,0 +1,120 @@
+{
+  "scene_description": "A young boy wearing a striped blue shirt is crouching outdoors in a garden area with mulch and plants. He is holding something small (appears to be a pinecone or seeds) in one hand and looking at it closely through a magnifying glass held in his other hand.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the boy holding in his hand?",
+      "sample_answers": [
+        "a magnifying glass",
+        "a pinecone",
+        "seeds",
+        "a small thing"
+      ],
+      "sentence_frame": "He is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a magnifying glass",
+        "a ball",
+        "a book"
+      ],
+      "evidence_hint": "Look at what the boy has in his hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing?",
+      "sample_answers": [
+        "looking at something",
+        "using a magnifying glass",
+        "looking at a pinecone",
+        "exploring outside"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "looking through a magnifying glass",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the boy's eyes and what he is doing with his hands."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the boy?",
+      "sample_answers": [
+        "outside",
+        "in a garden",
+        "in the woods",
+        "near plants"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "outside in a garden",
+        "inside a house",
+        "at school"
+      ],
+      "evidence_hint": "Look at the ground and the plants around the boy."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a magnifying glass for?",
+      "sample_answers": [
+        "to see things bigger",
+        "to look closely",
+        "to make things look bigger"
+      ],
+      "sentence_frame": "We use a magnifying glass to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "see things bigger",
+        "eat food",
+        "draw pictures"
+      ],
+      "evidence_hint": "Look at what the boy is doing with the magnifying glass."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the boy find next when he looks around outside?",
+      "sample_answers": [
+        "a bug",
+        "a rock",
+        "a leaf",
+        "more seeds"
+      ],
+      "sentence_frame": "He might find ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a bug",
+        "a rock",
+        "a leaf"
+      ],
+      "evidence_hint": "Look at the ground and plants around him and think about what is outside."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever looked at something outside up close? What did you see?",
+      "sample_answers": [
+        "a bug",
+        "a flower",
+        "a rock",
+        "a leaf"
+      ],
+      "sentence_frame": "I saw ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "a bug",
+        "a flower",
+        "a rock"
+      ],
+      "evidence_hint": "Think about times you have been outside exploring."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_description": "A child wearing a colorful snowsuit, red hat, red mittens, and red boots is lying on an orange sled on a snowy hill.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the child riding on?",
+      "answer": "a sled",
+      "visual_choices": [
+        "a sled",
+        "a bike",
+        "a skateboard",
+        "a swing"
+      ],
+      "evidence_hint": "Look under the child's belly."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a dog",
+        "an adult",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person on the sled."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the child's hat?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "blue",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the top of the child's head."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the child?",
+      "answer": "in the snow",
+      "visual_choices": [
+        "in the snow",
+        "at the beach",
+        "in a pool",
+        "on the grass"
+      ],
+      "evidence_hint": "Look at the ground all around the child."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the sled?",
+      "answer": "orange",
+      "visual_choices": [
+        "orange",
+        "purple",
+        "white",
+        "black"
+      ],
+      "evidence_hint": "Look at the round disc under the child."
+    }
+  ]
+}

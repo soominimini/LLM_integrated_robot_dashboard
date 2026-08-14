@@ -1,0 +1,118 @@
+{
+  "scene_description": "A young girl with red hair and a red headband is smiling as she decorates a gingerbread house on a table. The gingerbread house has white icing, candy decorations, and small figurines around it. Colorful bokeh lights are visible in the background, suggesting a holiday setting.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the big thing on the table in front of the girl?",
+      "sample_answers": [
+        "a gingerbread house",
+        "a candy house",
+        "a cookie house"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "gingerbread house",
+        "birthday cake",
+        "sandbox"
+      ],
+      "evidence_hint": "Look at the big brown and white thing sitting on the table."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with the gingerbread house?",
+      "sample_answers": [
+        "decorating it",
+        "putting candy on it",
+        "fixing it up"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "decorating it",
+        "eating it",
+        "building blocks"
+      ],
+      "evidence_hint": "Look at the girl's hands and what she is touching on the house."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the gingerbread house?",
+      "sample_answers": [
+        "on the table",
+        "in front of the girl",
+        "on the counter"
+      ],
+      "sentence_frame": "The gingerbread house is ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the table",
+        "in the sky",
+        "in a bag"
+      ],
+      "evidence_hint": "Look at what the gingerbread house is sitting on."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What do you see on top of and around the gingerbread house?",
+      "sample_answers": [
+        "candy",
+        "icing",
+        "little people",
+        "decorations"
+      ],
+      "sentence_frame": "I see ___ on the house.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "candy and icing",
+        "flowers",
+        "toys"
+      ],
+      "evidence_hint": "Look closely at the roof and the sides of the gingerbread house."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How does the girl look \u2014 does she look happy or sad?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "she is smiling",
+        "she looks happy"
+      ],
+      "sentence_frame": "The girl looks ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the girl's face and her smile."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen or made a gingerbread house? What did it look like?",
+      "sample_answers": [
+        "yes, it had candy",
+        "no",
+        "mine had sprinkles",
+        "it was yummy"
+      ],
+      "sentence_frame": "My gingerbread house had ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "candy",
+        "icing",
+        "sprinkles"
+      ],
+      "evidence_hint": "Think about a time you made or saw something like this."
+    }
+  ]
+}

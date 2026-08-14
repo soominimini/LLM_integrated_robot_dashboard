@@ -1,0 +1,119 @@
+{
+  "scene_description": "Two young girls wearing dresses and headbands are running and playing outside on green grass with a golden dog between them. There are tall trees in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "who",
+      "question": "Who do you see in this picture?",
+      "sample_answers": [
+        "two girls",
+        "two kids and a dog",
+        "girls and a dog"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "two girls and a dog",
+        "two boys",
+        "a cat and a girl"
+      ],
+      "evidence_hint": "Look at all the people and animals in the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the girls doing?",
+      "sample_answers": [
+        "running",
+        "playing",
+        "running with the dog",
+        "chasing the dog"
+      ],
+      "sentence_frame": "The girls are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "running",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at the girls' legs and bodies \u2014 what are they doing?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the girls and the dog playing?",
+      "sample_answers": [
+        "outside",
+        "on the grass",
+        "in a park",
+        "outside near trees"
+      ],
+      "sentence_frame": "They are playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the grass outside",
+        "in a bedroom",
+        "in a kitchen"
+      ],
+      "evidence_hint": "Look at the ground and what is around them."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the dog doing?",
+      "sample_answers": [
+        "running",
+        "jumping",
+        "running between the girls",
+        "playing with the girls"
+      ],
+      "sentence_frame": "The dog is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "running",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at the dog in the middle of the picture."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do the girls look \u2014 are they happy or sad?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "they look happy",
+        "they are smiling"
+      ],
+      "sentence_frame": "The girls look ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the girls' faces \u2014 what do you notice?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Do you have a dog or a pet at home?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I have a dog",
+        "I have a cat"
+      ],
+      "sentence_frame": "I have a ___ at home.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about your own home and pets."
+    }
+  ]
+}

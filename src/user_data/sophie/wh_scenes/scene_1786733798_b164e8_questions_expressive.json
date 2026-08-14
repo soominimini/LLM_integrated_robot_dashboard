@@ -1,0 +1,115 @@
+{
+  "scene_description": "A young girl with a ponytail is painting a colorful rainbow on a large piece of paper. She is holding a paintbrush in one hand and a small blue cup (likely water or paint) in the other. The rainbow has red, blue, brown, and other colors. The girl is wearing a white top.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding in her hand?",
+      "sample_answers": [
+        "a paintbrush",
+        "a brush",
+        "a brush and a cup"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a paintbrush",
+        "a crayon",
+        "a pencil"
+      ],
+      "evidence_hint": "Look at what the girl has in her hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing?",
+      "sample_answers": [
+        "painting",
+        "painting a rainbow",
+        "making a picture"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "painting",
+        "drawing with a pencil",
+        "coloring with crayons"
+      ],
+      "evidence_hint": "Look at the girl's hands and the paper in front of her."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What did the girl paint on the paper?",
+      "sample_answers": [
+        "a rainbow",
+        "a colorful rainbow",
+        "colors in a curve"
+      ],
+      "sentence_frame": "She painted ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a rainbow",
+        "a house",
+        "a dog"
+      ],
+      "evidence_hint": "Look at the big picture on the paper."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl painting \u2014 on the paper or on the wall?",
+      "sample_answers": [
+        "on the paper",
+        "on a big piece of paper",
+        "on the canvas"
+      ],
+      "sentence_frame": "She is painting on ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "the paper",
+        "the wall",
+        "the table"
+      ],
+      "evidence_hint": "Look at where the paintbrush is touching."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a paintbrush for?",
+      "sample_answers": [
+        "for painting",
+        "to make pictures",
+        "to put paint on paper"
+      ],
+      "sentence_frame": "We use a paintbrush for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "painting",
+        "eating",
+        "writing letters"
+      ],
+      "evidence_hint": "Look at what the girl is doing with the paintbrush."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever painted a picture? What did you paint?",
+      "sample_answers": [
+        "yes, a house",
+        "I painted a sun",
+        "I painted with my mom",
+        "no"
+      ],
+      "sentence_frame": "I painted ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you used paint or a paintbrush."
+    }
+  ]
+}

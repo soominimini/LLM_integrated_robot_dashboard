@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young boy is crouching outdoors in a garden area, holding something small in his cupped hands and looking at it closely through a magnifying glass. The ground is covered with mulch and fallen leaves, and there are trees and plants in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a boy",
+      "visual_choices": [
+        "a boy",
+        "a girl",
+        "a baby",
+        "a man"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the boy holding up to look through?",
+      "answer": "a magnifying glass",
+      "visual_choices": [
+        "a magnifying glass",
+        "a cup",
+        "a phone",
+        "a spoon"
+      ],
+      "evidence_hint": "Look at what the boy is holding near his face."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the boy holding in his hands?",
+      "answer": "something small",
+      "visual_choices": [
+        "something small",
+        "a big ball",
+        "a sandwich",
+        "a book"
+      ],
+      "evidence_hint": "Look at the boy's cupped hands."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the boy?",
+      "answer": "outside in a garden",
+      "visual_choices": [
+        "outside in a garden",
+        "in a kitchen",
+        "in a bedroom",
+        "at a pool"
+      ],
+      "evidence_hint": "Look at the ground and the trees around the boy."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the boy's shirt?",
+      "answer": "blue and white stripes",
+      "visual_choices": [
+        "blue and white stripes",
+        "solid red",
+        "solid yellow",
+        "green and black"
+      ],
+      "evidence_hint": "Look at the shirt the boy is wearing."
+    }
+  ]
+}

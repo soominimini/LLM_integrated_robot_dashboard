@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl with pigtails is blowing bubbles outdoors. She is holding a bubble wand up to her mouth and several bubbles are floating in the air around her. She is wearing a white shirt and the background shows green trees.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a baby",
+        "a woman",
+        "a boy"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is floating in the air?",
+      "answer": "bubbles",
+      "visual_choices": [
+        "bubbles",
+        "balloons",
+        "snowflakes",
+        "leaves"
+      ],
+      "evidence_hint": "Look at the round, shiny things near the girl's face."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding?",
+      "answer": "a bubble wand",
+      "visual_choices": [
+        "a bubble wand",
+        "a spoon",
+        "a pencil",
+        "a fork"
+      ],
+      "evidence_hint": "Look at what is in the girl's hand near her mouth."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's shirt?",
+      "answer": "white",
+      "visual_choices": [
+        "white",
+        "red",
+        "blue",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the clothes the girl is wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl?",
+      "answer": "outside",
+      "visual_choices": [
+        "outside",
+        "in a kitchen",
+        "in a classroom",
+        "in a bedroom"
+      ],
+      "evidence_hint": "Look at the green trees and grass behind the girl."
+    }
+  ]
+}

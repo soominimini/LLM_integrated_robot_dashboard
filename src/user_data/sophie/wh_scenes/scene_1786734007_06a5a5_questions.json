@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two girls wearing dresses and headbands are running on green grass in a park with trees in the background. A golden-colored dog runs between them.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What animal is running with the girls?",
+      "answer": "a dog",
+      "visual_choices": [
+        "a dog",
+        "a cat",
+        "a rabbit",
+        "a bird"
+      ],
+      "evidence_hint": "Look in the middle, between the two girls."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is running in the picture?",
+      "answer": "two girls",
+      "visual_choices": [
+        "two girls",
+        "two boys",
+        "a mom and baby",
+        "a teacher"
+      ],
+      "evidence_hint": "Look at the people in the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the girls wearing on their heads?",
+      "answer": "headbands",
+      "visual_choices": [
+        "headbands",
+        "hats",
+        "helmets",
+        "hoods"
+      ],
+      "evidence_hint": "Look at the top of each girl's head."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the girls running?",
+      "answer": "on the grass",
+      "visual_choices": [
+        "on the grass",
+        "in a pool",
+        "on a sidewalk",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the ground under the girls' feet."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the dress on the girl on the left?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "yellow",
+        "purple"
+      ],
+      "evidence_hint": "Look at the girl on the left side of the picture."
+    }
+  ]
+}

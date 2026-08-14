@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young child wearing a red outfit and a Santa hat sits on the floor in front of a lit Christmas tree and a fireplace. The child is opening a glowing gift box.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is sitting on the floor?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a dog",
+        "an adult",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the child's head?",
+      "answer": "a Santa hat",
+      "visual_choices": [
+        "a Santa hat",
+        "a crown",
+        "a helmet",
+        "a bow"
+      ],
+      "evidence_hint": "Look at the top of the child's head."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the child opening?",
+      "answer": "a gift box",
+      "visual_choices": [
+        "a gift box",
+        "a backpack",
+        "a book",
+        "a lunchbox"
+      ],
+      "evidence_hint": "Look at what is in front of the child on the floor."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the Christmas tree?",
+      "answer": "behind the child",
+      "visual_choices": [
+        "behind the child",
+        "outside the window",
+        "on the table",
+        "next to the door"
+      ],
+      "evidence_hint": "Look at the big decorated tree in the background."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is glowing in the fireplace?",
+      "answer": "a fire",
+      "visual_choices": [
+        "a fire",
+        "a lamp",
+        "a candle",
+        "a flashlight"
+      ],
+      "evidence_hint": "Look at the right side of the picture near the wall."
+    }
+  ]
+}

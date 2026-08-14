@@ -1,0 +1,117 @@
+{
+  "scene_description": "A child wearing a blue helmet, knee pads, and inline roller skates is skating forward with arms outstretched for balance. Two other children are visible behind them, also on skates. They are skating in an outdoor area that looks like a paved rink or open concrete space.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is on the child's head?",
+      "sample_answers": [
+        "a helmet",
+        "a blue helmet",
+        "a hat"
+      ],
+      "sentence_frame": "The child is wearing ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a helmet",
+        "a hat",
+        "a hood"
+      ],
+      "evidence_hint": "Look at the top of the child's head in the front of the picture."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the child doing?",
+      "sample_answers": [
+        "roller skating",
+        "skating",
+        "rolling on skates"
+      ],
+      "sentence_frame": "The child is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "roller skating",
+        "running",
+        "jumping"
+      ],
+      "evidence_hint": "Look at the child's feet and the wheels on their shoes."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children skating?",
+      "sample_answers": [
+        "outside",
+        "on a paved area",
+        "on a rink",
+        "on the ground"
+      ],
+      "sentence_frame": "They are skating ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "outside on pavement",
+        "inside a house",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the ground and the space around the children."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What are the knee pads for?",
+      "sample_answers": [
+        "to keep knees safe",
+        "to protect their knees",
+        "so they don't get hurt"
+      ],
+      "sentence_frame": "Knee pads are for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "keeping knees safe",
+        "keeping warm",
+        "jumping higher"
+      ],
+      "evidence_hint": "Look at the pads on the child's knees and think about why skaters wear them."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "how",
+      "question": "How do you think the child feels while skating?",
+      "sample_answers": [
+        "excited",
+        "happy",
+        "a little scared",
+        "brave"
+      ],
+      "sentence_frame": "I think the child feels ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "excited",
+        "scared",
+        "happy"
+      ],
+      "evidence_hint": "Look at the child's arms stretched out and the way they are moving."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever worn roller skates or a helmet?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I have a helmet",
+        "I went skating"
+      ],
+      "sentence_frame": "I have ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you wore safety gear or tried skating."
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "scene_description": "A young girl in a striped shirt and pink shorts stands at a railed fence at a zoo, holding out food from a basket toward two large elephants. One elephant is reaching its trunk toward her hand to take the food. There is water and rocks visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What big animals do you see in the picture?",
+      "sample_answers": [
+        "elephants",
+        "two elephants",
+        "big gray elephants"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "elephants",
+        "giraffes",
+        "lions"
+      ],
+      "evidence_hint": "Look at the big gray animals near the fence."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with her hand?",
+      "sample_answers": [
+        "feeding the elephant",
+        "giving food to the elephant",
+        "holding out food"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "feeding the elephant",
+        "petting the elephant",
+        "waving"
+      ],
+      "evidence_hint": "Look at the girl's hand and what she is holding out toward the elephant."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl standing?",
+      "sample_answers": [
+        "at the fence",
+        "next to the fence",
+        "at the zoo"
+      ],
+      "sentence_frame": "The girl is standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at the fence",
+        "in the water",
+        "on the grass"
+      ],
+      "evidence_hint": "Look at what is right in front of the girl and around her."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the basket for in this picture?",
+      "sample_answers": [
+        "to carry food",
+        "to hold the elephant's food",
+        "to bring food to the elephant"
+      ],
+      "sentence_frame": "The basket is for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "carrying food",
+        "carrying toys",
+        "carrying clothes"
+      ],
+      "evidence_hint": "Look at the basket the girl is holding and what she is doing with it."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the elephant do next with its trunk?",
+      "sample_answers": [
+        "grab the food",
+        "take the food",
+        "eat the food from her hand"
+      ],
+      "sentence_frame": "The elephant might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "grab the food",
+        "walk away",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at where the elephant's trunk is pointing right now."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen an elephant at the zoo? What did it look like?",
+      "sample_answers": [
+        "yes, it was big",
+        "it was gray",
+        "no, I haven't",
+        "it had a long nose"
+      ],
+      "sentence_frame": "The elephant was ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "big",
+        "gray",
+        "loud"
+      ],
+      "evidence_hint": "Think about a time you went to the zoo or saw a big animal."
+    }
+  ]
+}

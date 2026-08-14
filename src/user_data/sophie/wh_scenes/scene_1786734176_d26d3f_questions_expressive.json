@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young child wearing a red Santa hat and red outfit sits on the floor opening a glowing gift box. Behind her is a decorated Christmas tree with colorful lights, and a fireplace with a fire burning is visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl wearing on her head?",
+      "sample_answers": [
+        "a Santa hat",
+        "a red hat",
+        "a Christmas hat"
+      ],
+      "sentence_frame": "She is wearing ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a Santa hat",
+        "a crown",
+        "a bow"
+      ],
+      "evidence_hint": "Look at the top of the girl's head."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with the box?",
+      "sample_answers": [
+        "opening it",
+        "opening a present",
+        "looking inside the box"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "opening it",
+        "wrapping it",
+        "throwing it"
+      ],
+      "evidence_hint": "Look at the girl's hands and the box in front of her."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the Christmas tree?",
+      "sample_answers": [
+        "behind the girl",
+        "in the back",
+        "behind her"
+      ],
+      "sentence_frame": "The Christmas tree is ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "behind the girl",
+        "in front of the girl",
+        "outside"
+      ],
+      "evidence_hint": "Look at where the big tree with lights is in the picture."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we do with a present?",
+      "sample_answers": [
+        "open it",
+        "unwrap it",
+        "give it to someone"
+      ],
+      "sentence_frame": "We ___  a present.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "open it",
+        "eat it",
+        "wear it"
+      ],
+      "evidence_hint": "Look at what the girl is doing with the box and think about what presents are for."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might be inside the glowing box?",
+      "sample_answers": [
+        "a toy",
+        "a gift",
+        "something special",
+        "a surprise"
+      ],
+      "sentence_frame": "Inside the box there might be ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a toy",
+        "a book",
+        "clothes"
+      ],
+      "evidence_hint": "Look at the light coming out of the box and think about what could be inside a Christmas present."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "What is your favorite present you ever got?",
+      "sample_answers": [
+        "a toy",
+        "a game",
+        "a bike",
+        "I got a doll"
+      ],
+      "sentence_frame": "My favorite present was ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "a toy",
+        "a game",
+        "clothes"
+      ],
+      "evidence_hint": "Think about a gift you got that made you really happy."
+    }
+  ]
+}

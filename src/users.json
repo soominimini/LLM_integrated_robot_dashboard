@@ -78,7 +78,7 @@
     "age": 5,
     "password_hash": "",
     "created_at": "2026-05-08T22:55:06.004546",
-    "last_login": "2026-08-13T20:50:48.551002",
+    "last_login": "2026-08-14T20:47:58.141838",
     "user_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie",
     "chat_dir": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/chat_history",
     "display_name": "sophie",

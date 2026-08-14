@@ -1,0 +1,116 @@
+{
+  "scene_description": "A young child in a blue shirt sits at a white table and looks through a green magnifying glass. On the table are colorful science toy items including test tubes in blue stands, a measuring cup, and small colored objects.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the boy holding up to his eye?",
+      "sample_answers": [
+        "a magnifying glass",
+        "a green circle",
+        "a glass"
+      ],
+      "sentence_frame": "He is holding ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a magnifying glass",
+        "a cup",
+        "a ball"
+      ],
+      "evidence_hint": "Look at what the boy is holding in front of his face."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing with the magnifying glass?",
+      "sample_answers": [
+        "looking through it",
+        "looking at things",
+        "using it to see"
+      ],
+      "sentence_frame": "He is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "looking through it",
+        "throwing it",
+        "eating with it"
+      ],
+      "evidence_hint": "Look at the boy's face and what he is doing with the green object."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the boy sitting?",
+      "sample_answers": [
+        "at a table",
+        "at a white table",
+        "by the science toys"
+      ],
+      "sentence_frame": "He is sitting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at a table",
+        "on the floor",
+        "in a bed"
+      ],
+      "evidence_hint": "Look at what is underneath the boy and the toys."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a magnifying glass for?",
+      "sample_answers": [
+        "to see things bigger",
+        "to look at small things",
+        "to make things look bigger"
+      ],
+      "sentence_frame": "We use a magnifying glass to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "see things bigger",
+        "drink water",
+        "draw pictures"
+      ],
+      "evidence_hint": "Think about why the boy is holding it up to look through it."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the boy look at next with his magnifying glass?",
+      "sample_answers": [
+        "the test tubes",
+        "the colored objects on the table",
+        "the measuring cup"
+      ],
+      "sentence_frame": "Next he might look at ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "the test tubes",
+        "the colored objects",
+        "the measuring cup"
+      ],
+      "evidence_hint": "Look at all the other science toys on the table in front of him."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever used a magnifying glass? What did you look at?",
+      "sample_answers": [
+        "yes",
+        "I looked at bugs",
+        "I looked at rocks",
+        "no"
+      ],
+      "sentence_frame": "I looked at ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "bugs",
+        "rocks",
+        "leaves"
+      ],
+      "evidence_hint": "Think about a time you looked at something very closely."
+    }
+  ]
+}
