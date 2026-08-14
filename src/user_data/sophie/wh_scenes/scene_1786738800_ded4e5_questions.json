@@ -3,27 +3,27 @@
   "questions": [
     {
       "wh_type": "what",
-      "question": "What number is on the page?",
-      "answer": "seven",
+      "question": "What number is on the workbook page?",
+      "answer": "7",
       "visual_choices": [
-        "seven",
-        "two",
-        "five",
-        "nine"
+        "7",
+        "3",
+        "9",
+        "1"
       ],
       "evidence_hint": "Look at the big number printed on the blue part of the page."
     },
     {
       "wh_type": "what",
-      "question": "What shapes are on the workbook page?",
+      "question": "What shapes are drawn on the page?",
       "answer": "circles",
       "visual_choices": [
         "circles",
+        "stars",
         "squares",
-        "triangles",
-        "stars"
+        "triangles"
       ],
-      "evidence_hint": "Look at the drawings printed on the white part of the page."
+      "evidence_hint": "Look at the middle of the workbook page."
     },
     {
       "wh_type": "what",
@@ -39,7 +39,7 @@
     },
     {
       "wh_type": "who",
-      "question": "Who is pointing at the workbook page?",
+      "question": "Who is pointing at the page?",
       "answer": "a girl",
       "visual_choices": [
         "a girl",
@@ -51,15 +51,15 @@
     },
     {
       "wh_type": "where",
-      "question": "Where is the workbook?",
-      "answer": "on a table",
+      "question": "Where are the crayons?",
+      "answer": "in a red box",
       "visual_choices": [
-        "on a table",
+        "in a red box",
         "on the floor",
-        "on a shelf",
-        "in a bag"
+        "in a bag",
+        "in a cup"
       ],
-      "evidence_hint": "Look at what is underneath the workbook."
+      "evidence_hint": "Look at the top right corner of the table."
     }
   ]
 }

@@ -1,23 +1,43 @@
 {
-  "scene_description": "Two children sit at a kitchen table doing schoolwork. A younger boy holds a crayon and works on a number-tracing workbook. An older girl wearing glasses and a flower headband leans over and points to his page, appearing to help him. Crayons and additional workbooks are on the table.",
+  "scene_description": "Two children sit at a kitchen table doing schoolwork. A younger boy holds a crayon and writes in a workbook showing the number 7. An older girl wearing glasses and a flower headband leans over and points to his workbook, appearing to help him. Crayons and additional workbooks are on the table.",
   "questions": [
     {
       "question_kind": "labeling",
       "wh_type": "what",
-      "question": "What are the children using to write?",
+      "question": "What is on the table?",
       "sample_answers": [
         "crayons",
-        "a crayon",
-        "markers"
+        "books",
+        "a workbook",
+        "crayons and books"
       ],
-      "sentence_frame": "They are using ___.",
+      "sentence_frame": "I see ___ on the table.",
       "support_level": "sentence_frame",
       "verbal_choices": [
-        "crayons",
-        "scissors",
-        "spoons"
+        "crayons and books",
+        "food and plates",
+        "toys and blocks"
       ],
-      "evidence_hint": "Look at what the boy is holding and what is in the red box on the table."
+      "evidence_hint": "Look at the things on the table in front of the children."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing?",
+      "sample_answers": [
+        "writing",
+        "coloring",
+        "drawing",
+        "writing in his book"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "writing",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the boy's hand and what he is holding."
     },
     {
       "question_kind": "action",
@@ -25,92 +45,77 @@
       "question": "What is the girl doing with her hand?",
       "sample_answers": [
         "pointing",
-        "pointing at the paper",
+        "pointing at the book",
+        "helping him",
         "showing him where to write"
       ],
       "sentence_frame": "The girl is ___.",
-      "support_level": "sentence_frame",
+      "support_level": "choice_support",
       "verbal_choices": [
-        "pointing",
-        "drawing",
-        "eating"
+        "pointing at the book",
+        "waving hello",
+        "holding a crayon"
       ],
       "evidence_hint": "Look at where the girl's finger is going."
     },
     {
       "question_kind": "location",
       "wh_type": "where",
-      "question": "Where are the two children sitting?",
+      "question": "Where are the children doing their work?",
       "sample_answers": [
-        "at a table",
+        "at the table",
         "in the kitchen",
-        "at the kitchen table"
+        "at home",
+        "at a table in the kitchen"
       ],
-      "sentence_frame": "They are sitting ___.",
+      "sentence_frame": "They are working ___.",
       "support_level": "choice_support",
       "verbal_choices": [
         "at the kitchen table",
-        "on the floor",
+        "at school",
         "outside"
       ],
-      "evidence_hint": "Look at the place around the children \u2014 the table, chairs, and room behind them."
+      "evidence_hint": "Look at the room around the children \u2014 do you see a stove and cabinets?"
     },
     {
       "question_kind": "function",
       "wh_type": "what",
-      "question": "What do we use a workbook for?",
+      "question": "What do we use crayons for?",
       "sample_answers": [
+        "coloring",
+        "drawing",
         "writing",
-        "practicing numbers",
-        "learning",
-        "doing schoolwork"
+        "making pictures"
       ],
-      "sentence_frame": "We use a workbook for ___.",
+      "sentence_frame": "We use crayons for ___.",
       "support_level": "sentence_frame",
       "verbal_choices": [
-        "writing and learning",
+        "coloring",
         "eating",
-        "sleeping"
+        "cutting"
       ],
-      "evidence_hint": "Look at the book on the table \u2014 it has numbers and writing on it."
-    },
-    {
-      "question_kind": "supported_inference",
-      "wh_type": "what",
-      "question": "What might the boy do next with his crayon?",
-      "sample_answers": [
-        "trace the number",
-        "color the page",
-        "write on the paper"
-      ],
-      "sentence_frame": "Next, the boy might ___.",
-      "support_level": "choice_support",
-      "verbal_choices": [
-        "trace the number",
-        "go to sleep",
-        "eat a snack"
-      ],
-      "evidence_hint": "Look at where the girl is pointing on the workbook page."
+      "evidence_hint": "Look at the crayons on the table and think about what you do with them."
     }
   ],
   "optional_extension_questions": [
     {
       "question_kind": "personal_extension",
       "wh_type": "what",
-      "question": "Do you ever use crayons to do schoolwork?",
+      "question": "Do you ever do schoolwork at home? What do you use?",
       "sample_answers": [
         "yes",
-        "I color at school",
         "I use crayons",
-        "no"
+        "I write",
+        "I color books"
       ],
-      "sentence_frame": "I use crayons to ___.",
+      "sentence_frame": "At home, I use ___ for my work.",
       "support_level": "modeling",
       "verbal_choices": [
-        "yes",
-        "no"
+        "crayons",
+        "pencils",
+        "markers"
       ],
-      "evidence_hint": "Think about what you do with crayons at school or home."
+      "evidence_hint": "Think about what you do when you practice writing or coloring at home."
     }
   ]
 }

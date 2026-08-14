@@ -11314,3 +11314,279 @@
 22:25:43 [32b5]       "suppor
 22:25:43 [32b5] ...(+1672 more chars)
 22:25:43 [32b5] └─ DONE  POST /api/wh_scene/upload -> 200 in 21952ms
+22:27:24 [c509] ┌─ WORK  POST /api/wh_scene/regenerate | fields: scene_id
+22:27:24 [c509] [Claude:wh-scene-receptive] >>> PROMPT (3470 chars) | model: claude-sonnet-4-6 | system: You create speech-therapy materials from scene images. Return JSON only.
+22:27:24 [c509] You are a pediatric speech-language pathologist creating therapy materials.
+22:27:24 [c509] 
+22:27:24 [c509] IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface. Focus ONLY on the illustration or scene depicted ON the card/page itself. Ignore everything outside the card — hands holding it, the person, the table, background, etc. Treat the illustration on the card as the entire scene for your analysis.
+22:27:24 [c509] 
+22:27:24 [c509] Analyze this image and generate 5 receptive WH-questions about the image for a child aged 5.
+22:27:24 [c509] 
+22:27:24 [c509] - Keep questions concrete, visually grounded, and low-inference.
+22:27:24 [c509] - Do not ask about hidden emotions, intentions, causes, or events that are not visible.
+22:27:24 [c509] 
+22:27:24 [c509] WH-question guidance:
+22:27:24 [c509] - Preferred WH types: what, who
+22:27:24 [c509] - Secondary WH type: where
+22:27:24 [c509] - Avoid when, why, and how unless the answer is clearly visible or strongly supported by routine/context.
+22:27:24 [c509] - For this task, default to what/who/where only.
+22:27:24 [c509] - It is acceptable to repeat WH types if each question targets a different visible detail.
+22:27:24 [c509] - Recommended distribution:
+22:27:24 [c509]   - 3 what questions
+22:27:24 [c509]   - 1 who question
+22:27:24 [c509]   - 1 where question, only if the location is visually clear
+22:27:24 [c509]   - If location is not visually clear, replace the where question with another what/who question.
+22:27:24 [c509] 
+22:27:24 [c509] Question rules:
+22:27:24 [c509] - Each answer must be directly visible in the image.
+22:27:24 [c509] - Each question must be short and simple.
+22:27:24 [c509] - Each answer must be 1-5 words.
+22:27:24 [c509] - Do not ask the child to infer background events, emotions, reasons, or future actions.
+22:27:24 [c509] - Avoid questions that require the child to know a broad scene label unless the setting is visually obvious.
+22:27:24 [c509] - Avoid gender labels if gender is visually ambiguous; use "person," "child," "adult," "boy/girl" only when clear.
+22:27:24 [c509] 
+22:27:24 [c509] Visual-choice rules:
+22:27:24 [c509] - Provide four visual choices.
+22:27:24 [c509] - One choice must be correct.
+22:27:24 [c509] - Three choices must be plausible but clearly incorrect.
+22:27:24 [c509] - Choices should be 1-4 words.
+22:27:24 [c509] - Choices should be visually and semantically distinct.
+22:27:24 [c509] - Do not include two choices that are too similar.
+22:27:24 [c509] 
+22:27:24 [c509] Evidence hint rules:
+22:27:24 [c509] - Tell the child where to look in the image.
+22:27:24 [c509] - Use simple visual language.
+22:27:24 [c509] - Do not give away the answer directly.
+22:27:24 [c509] 
+22:27:24 [c509] Return ONLY valid JSON in this exact format:
+22:27:24 [c509] 
+22:27:24 [c509] {
+22:27:24 [c509]   "scene_description": "Brief description of the visible scene.",
+22:27:24 [c509]   "questions": [
+22:27:24 [c509]     {
+22:27:24 [c509]       "wh_type": "what",
+22:27:24 [c509]       "question": "What is the child holding?",
+22:27:24 [c509]       "answer": "a ball",
+22:27:24 [c509]       "visual_choices": ["a ball", "a book", "a spoon", "a shoe"],
+22:27:24 [c509]       "evidence_hint": "Look at the child's hands."
+22:27:24 [c509]     },
+22:27:24 [c509]     {
+22:27:24 [c509]       "wh_type": "who",
+22:27:24 [c509]       "question": "Who is in the picture?",
+22:27:24 [c509]       "answer": "a child",
+22:27:24 [c509]       "visual_choices": ["a child", "a dog", "a teacher", "a baby"],
+22:27:24 [c509]       "evidence_hint": "Look at the person in the picture."
+22:27:24 [c509]     },
+22:27:24 [c509]     {
+22:27:24 [c509]       "wh_type": "what",
+22:27:24 [c509]       "question": "What is the child doing?",
+22:27:24 [c509]       "answer": "kicking a ball",
+22:27:24 [c509]       "visual_choices": ["kicking a ball", "eating food", "reading a book", "washing hands"],
+22:27:24 [c509]       "evidence_hint": "Look at the child's body and feet."
+22:27:24 [c509]     },
+22:27:24 [c509]     {
+22:27:24 [c509]       "wh_type": "where",
+22:27:24 [c509]       "question": "Where is the child?",
+22:27:24 [c509]       "answer": "on the grass",
+22:27:24 [c509]       "visual_choices": ["on the grass", "in bed", "in a kitchen", "at a table"],
+22:27:24 [c509]       "evidence_hint": "Look at the ground around the child."
+22:27:24 [c509]     },
+22:27:24 [c509]     {
+22:27:24 [c509]       "wh_type": "what",
+22:27:24 [c509]       "question": "What color is the ball?",
+22:27:24 [c509]       "answer": "black and white",
+22:27:24 [c509]       "visual_choices": ["black and white", "red", "yellow", "green"],
+22:27:24 [c509]       "evidence_hint": "Look at the ball."
+22:27:24 [c509]     }
+22:27:24 [c509]   ]
+22:27:24 [c509] }
+22:27:24 [c509] 
+22:27:32 [c509] [Claude:wh-scene-receptive] <<< RESPONSE (1476 chars):
+22:27:32 [c509] ```json
+22:27:32 [c509] {
+22:27:32 [c509]   "scene_description": "A workbook page showing the number 7, with circles and number-tracing activities. There are colorful crayon marks visible on the page.",
+22:27:32 [c509]   "questions": [
+22:27:32 [c509]     {
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What number is on the workbook page?",
+22:27:32 [c509]       "answer": "7",
+22:27:32 [c509]       "visual_choices": ["7", "3", "9", "1"],
+22:27:32 [c509]       "evidence_hint": "Look at the big number printed on the blue part of the page."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What shapes are drawn on the page?",
+22:27:32 [c509]       "answer": "circles",
+22:27:32 [c509]       "visual_choices": ["circles", "stars", "squares", "triangles"],
+22:27:32 [c509]       "evidence_hint": "Look at the middle of the workbook page."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What color are the crayon marks on the page?",
+22:27:32 [c509]       "answer": "pink",
+22:27:32 [c509]       "visual_choices": ["pink", "blue", "green", "orange"],
+22:27:32 [c509]       "evidence_hint": "Look at the marks drawn on the workbook page."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "wh_type": "who",
+22:27:32 [c509]       "question": "Who is pointing at the page?",
+22:27:32 [c509]       "answer": "a girl",
+22:27:32 [c509]       "visual_choices": ["a girl", "a teacher", "a baby", "a dog"],
+22:27:32 [c509]       "evidence_hint": "Look at the hand reaching across the page."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "wh_type": "where",
+22:27:32 [c509]       "question": "Where are the crayons?",
+22:27:32 [c509]       "answer": "in a red box",
+22:27:32 [c509]       "visual_choices": ["in a red box", "on the floor", "in a bag", "in a cup"],
+22:27:32 [c509]       "evidence_hint": "Look at the top right corner of the table."
+22:27:32 [c509]     }
+22:27:32 [c509]   ]
+22:27:32 [c509] }
+22:27:32 [c509] ```
+22:27:32 [c509] [Claude:wh-scene-expressive] >>> PROMPT (4944 chars) | model: claude-sonnet-4-6 | system: You create speech-therapy materials from scene images. Return JSON only.
+22:27:32 [c509] You are a pediatric speech-language pathologist creating therapy materials.
+22:27:32 [c509] 
+22:27:32 [c509] IMPORTANT: The photo may show a printed card, page, or picture being held by someone or placed on a surface. Focus ONLY on the illustration or scene depicted ON the card/page itself. Ignore everything outside the card — hands holding it, the person, the table, background, etc. Treat the illustration on the card as the entire scene for your analysis.
+22:27:32 [c509] 
+22:27:32 [c509] Analyze this image and generate 5 supported expressive questions about the image for a child aged 5.
+22:27:32 [c509] 
+22:27:32 [c509] Keep questions concrete, visually grounded, and answerable with a short phrase or 1 simple sentence.
+22:27:32 [c509] - Use supports such as sentence frames, example answers, and optional choices.
+22:27:32 [c509] - Avoid too many abstract imagination questions.
+22:27:32 [c509] - Do not require the child to infer hidden emotions, hidden intentions, or events that are not visible.
+22:27:32 [c509] 
+22:27:32 [c509] Developmental hierarchy:
+22:27:32 [c509] 1. Labeling visible objects or people
+22:27:32 [c509] 2. Describing visible actions
+22:27:32 [c509] 3. Describing location
+22:27:32 [c509] 4. Simple function or purpose, only if familiar and visually supported
+22:27:32 [c509] 5. One supported inference or feeling question, only if appropriate
+22:27:32 [c509] 
+22:27:32 [c509] Question selection rules:
+22:27:32 [c509] - At least 3 questions must be directly answerable from the picture.
+22:27:32 [c509] - At most 1 question may ask about feeling.
+22:27:32 [c509] - At most 1 question may ask about what might happen next.
+22:27:32 [c509] - Avoid asking what happened before unless there is a very clear routine cue.
+22:27:32 [c509] - Avoid "why" unless the reason is simple, familiar, and visually supported.
+22:27:32 [c509] - Personal-experience questions are allowed only as optional extension questions, not as the main 5 questions.
+22:27:32 [c509] 
+22:27:32 [c509] WH-type rules:
+22:27:32 [c509] - `wh_type` must match the actual question word.
+22:27:32 [c509] - Allowed values: "what", "who", "where", "how", "why".
+22:27:32 [c509] - Do not label a "How do you think..." question as `why`.
+22:27:32 [c509] 
+22:27:32 [c509] For EACH question, include:
+22:27:32 [c509] 1. `question_kind`: one of ["labeling", "action", "location", "function", "supported_inference", "feeling", "personal_extension"]
+22:27:32 [c509] 2. `wh_type`: the WH word used in the question
+22:27:32 [c509] 3. `question`: a simple question for the child
+22:27:32 [c509] 4. `sample_answers`: 2-4 acceptable child responses
+22:27:32 [c509] 5. `sentence_frame`: a short sentence starter the therapist can provide
+22:27:32 [c509] 6. `support_level`: one of ["independent", "sentence_frame", "choice_support", "modeling"]
+22:27:32 [c509] 7. `verbal_choices`: optional 2-3 choices if the child needs support
+22:27:32 [c509] 8. `evidence_hint`: where the child should look or what they should think about
+22:27:32 [c509] 
+22:27:32 [c509] Return ONLY valid JSON in this exact format:
+22:27:32 [c509] 
+22:27:32 [c509] {
+22:27:32 [c509]   "scene_description": "Brief description of the visible scene.",
+22:27:32 [c509]   "questions": [
+22:27:32 [c509]     {
+22:27:32 [c509]       "question_kind": "labeling",
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What do you see?",
+22:27:32 [c509]       "sample_answers": ["a ball", "a boy", "a soccer ball"],
+22:27:32 [c509]       "sentence_frame": "I see ___.",
+22:27:32 [c509]       "support_level": "sentence_frame",
+22:27:32 [c509]       "verbal_choices": ["a ball", "a book", "a spoon"],
+22:27:32 [c509]       "evidence_hint": "Look at the main object in the picture."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "question_kind": "action",
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What is the child doing?",
+22:27:32 [c509]       "sample_answers": ["kicking", "playing soccer", "kicking the ball"],
+22:27:32 [c509]       "sentence_frame": "He is ___.",
+22:27:32 [c509]       "support_level": "sentence_frame",
+22:27:32 [c509]       "verbal_choices": ["kicking", "sleeping", "eating"],
+22:27:32 [c509]       "evidence_hint": "Look at the child's body and feet."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "question_kind": "location",
+22:27:32 [c509]       "wh_type": "where",
+22:27:32 [c509]       "question": "Where is the child playing?",
+22:27:32 [c509]       "sample_answers": ["outside", "on the grass", "on a field"],
+22:27:32 [c509]       "sentence_frame": "He is playing ___.",
+22:27:32 [c509]       "support_level": "choice_support",
+22:27:32 [c509]       "verbal_choices": ["on the grass", "in bed", "in the kitchen"],
+22:27:32 [c509]       "evidence_hint": "Look at the place around the child."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "question_kind": "function",
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What do we use a ball for?",
+22:27:32 [c509]       "sample_answers": ["playing", "kicking", "throwing"],
+22:27:32 [c509]       "sentence_frame": "We use a ball for ___.",
+22:27:32 [c509]       "support_level": "sentence_frame",
+22:27:32 [c509]       "verbal_choices": ["playing", "sleeping", "eating"],
+22:27:32 [c509]       "evidence_hint": "Think about what people do with a ball."
+22:27:32 [c509]     },
+22:27:32 [c509]     {
+22:27:32 [c509]       "question_kind": "supported_inference",
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "What might happen next?",
+22:27:32 [c509]       "sample_answers": ["He kicks the ball", "The ball moves", "He keeps playing"],
+22:27:32 [c509]       "sentence_frame": "Next, he might ___.",
+22:27:32 [c509]       "support_level": "choice_support",
+22:27:32 [c509]       "verbal_choices": ["kick the ball", "go to sleep", "eat lunch"],
+22:27:32 [c509]       "evidence_hint": "Look at what the child is doing now."
+22:27:32 [c509]     }
+22:27:32 [c509]   ],
+22:27:32 [c509]   "optional_extension_questions": [
+22:27:32 [c509]     {
+22:27:32 [c509]       "question_kind": "personal_extension",
+22:27:32 [c509]       "wh_type": "what",
+22:27:32 [c509]       "question": "Do you like playing with a ball?",
+22:27:32 [c509]       "sample_answers": ["yes", "no", "I like balls", "I play soccer"],
+22:27:32 [c509]       "sentence_frame": "I like ___.",
+22:27:32 [c509]       "support_level": "modeling",
+22:27:32 [c509]       "verbal_choices": ["yes", "no"],
+22:27:32 [c509]       "evidence_hint": "Think about what you like to play."
+22:27:32 [c509]     }
+22:27:32 [c509]   ]
+22:27:32 [c509] }
+22:27:32 [c509] 
+22:27:47 [c509] [Claude:wh-scene-expressive] <<< RESPONSE (3170 chars):
+22:27:47 [c509] ```json
+22:27:47 [c509] {
+22:27:47 [c509]   "scene_description": "Two children sit at a kitchen table doing schoolwork. A younger boy holds a crayon and writes in a workbook showing the number 7. An older girl wearing glasses and a flower headband leans over and points to his workbook, appearing to help him. Crayons and additional workbooks are on the table.",
+22:27:47 [c509]   "questions": [
+22:27:47 [c509]     {
+22:27:47 [c509]       "question_kind": "labeling",
+22:27:47 [c509]       "wh_type": "what",
+22:27:47 [c509]       "question": "What is on the table?",
+22:27:47 [c509]       "sample_answers": ["crayons", "books", "a workbook", "crayons and books"],
+22:27:47 [c509]       "sentence_frame": "I see ___ on the table.",
+22:27:47 [c509]       "support_level": "sentence_frame",
+22:27:47 [c509]       "verbal_choices": ["crayons and books", "food and plates", "toys and blocks"],
+22:27:47 [c509]       "evidence_hint": "Look at the things on the table in front of the children."
+22:27:47 [c509]     },
+22:27:47 [c509]     {
+22:27:47 [c509]       "question_kind": "action",
+22:27:47 [c509]       "wh_type": "what",
+22:27:47 [c509]       "question": "What is the boy doing?",
+22:27:47 [c509]       "sample_answers": ["writing", "coloring", "drawing", "writing in his book"],
+22:27:47 [c509]       "sentence_frame": "The boy is ___.",
+22:27:47 [c509]       "support_level": "sentence_frame",
+22:27:47 [c509]       "verbal_choices": ["writing", "eating", "sleeping"],
+22:27:47 [c509]       "evidence_hint": "Look at the boy's hand and what he is holding."
+22:27:47 [c509]     },
+22:27:47 [c509]     {
+22:27:47 [c509]       "question_kind": "action",
+22:27:47 [c509]       "wh_type": "what",
+22:27:47 [c509]       "question": "What is the girl doing with her hand?",
+22:27:47 [c509]       "sample_answers": ["pointing", "pointing at the book", "helping him", "showing him where to write"],
+22:27:47 [c509]       "sentence_frame": "The girl is ___.",
+22:27:47 [c509]       "s
+22:27:47 [c509] ...(+1670 more chars)
+22:27:47 [c509] └─ DONE  POST /api/wh_scene/regenerate -> 200 in 23213ms
