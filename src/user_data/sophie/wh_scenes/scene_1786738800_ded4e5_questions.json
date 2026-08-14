@@ -1,0 +1,65 @@
+{
+  "scene_description": "A workbook page showing the number 7, with circles and number-tracing activities. There are colorful crayon marks visible on the page.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What number is on the page?",
+      "answer": "seven",
+      "visual_choices": [
+        "seven",
+        "two",
+        "five",
+        "nine"
+      ],
+      "evidence_hint": "Look at the big number printed on the blue part of the page."
+    },
+    {
+      "wh_type": "what",
+      "question": "What shapes are on the workbook page?",
+      "answer": "circles",
+      "visual_choices": [
+        "circles",
+        "squares",
+        "triangles",
+        "stars"
+      ],
+      "evidence_hint": "Look at the drawings printed on the white part of the page."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the crayon marks on the page?",
+      "answer": "pink",
+      "visual_choices": [
+        "pink",
+        "blue",
+        "green",
+        "orange"
+      ],
+      "evidence_hint": "Look at the marks drawn on the workbook page."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is pointing at the workbook page?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a teacher",
+        "a baby",
+        "a dog"
+      ],
+      "evidence_hint": "Look at the hand reaching across the page."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the workbook?",
+      "answer": "on a table",
+      "visual_choices": [
+        "on a table",
+        "on the floor",
+        "on a shelf",
+        "in a bag"
+      ],
+      "evidence_hint": "Look at what is underneath the workbook."
+    }
+  ]
+}

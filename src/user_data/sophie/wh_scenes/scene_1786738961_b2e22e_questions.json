@@ -1,0 +1,65 @@
+{
+  "scene_description": "A tiger cub with orange and black stripes is standing over a lion cub that is lying on its back on green grass. The two cubs appear to be playing together.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What animals are in the picture?",
+      "answer": "tiger and lion cubs",
+      "visual_choices": [
+        "tiger and lion cubs",
+        "two puppies",
+        "a cat and a dog",
+        "two bears"
+      ],
+      "evidence_hint": "Look at both animals in the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the tiger cub doing?",
+      "answer": "standing over the lion cub",
+      "visual_choices": [
+        "standing over the lion cub",
+        "sleeping on the grass",
+        "eating food",
+        "running away"
+      ],
+      "evidence_hint": "Look at where the tiger cub's body is."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the lion cub doing?",
+      "answer": "lying on its back",
+      "visual_choices": [
+        "lying on its back",
+        "jumping up high",
+        "sitting still",
+        "drinking water"
+      ],
+      "evidence_hint": "Look at the lion cub's body on the ground."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the cubs?",
+      "answer": "on the grass",
+      "visual_choices": [
+        "on the grass",
+        "in the water",
+        "on a rock",
+        "in the snow"
+      ],
+      "evidence_hint": "Look at the ground under the animals."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the tiger cub's stripes?",
+      "answer": "black",
+      "visual_choices": [
+        "black",
+        "white",
+        "red",
+        "blue"
+      ],
+      "evidence_hint": "Look at the lines on the tiger cub's body."
+    }
+  ]
+}

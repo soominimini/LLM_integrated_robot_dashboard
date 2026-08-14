@@ -1,0 +1,65 @@
+{
+  "scene_description": "A child and an adult are sitting outside at a table covered with a Halloween spider-web tablecloth. They are carving orange pumpkins. One pumpkin already has a face carved on it, and another has a drawn-on design. Several pumpkins and pumpkin pieces are on the table.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are they carving?",
+      "answer": "pumpkins",
+      "visual_choices": [
+        "pumpkins",
+        "watermelons",
+        "apples",
+        "boxes"
+      ],
+      "evidence_hint": "Look at the big orange things on the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the pumpkins?",
+      "answer": "orange",
+      "visual_choices": [
+        "orange",
+        "green",
+        "purple",
+        "red"
+      ],
+      "evidence_hint": "Look at the big round things on the table."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is touching the pumpkin?",
+      "answer": "a girl and an adult",
+      "visual_choices": [
+        "a girl and an adult",
+        "two adults",
+        "two boys",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the people sitting at the table."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the pumpkins?",
+      "answer": "on the table",
+      "visual_choices": [
+        "on the table",
+        "on the floor",
+        "in a bag",
+        "in a tree"
+      ],
+      "evidence_hint": "Look at what is under the pumpkins."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the tablecloth?",
+      "answer": "spider webs",
+      "visual_choices": [
+        "spider webs",
+        "stars",
+        "flowers",
+        "stripes"
+      ],
+      "evidence_hint": "Look at the pattern on the brown cloth on the table."
+    }
+  ]
+}

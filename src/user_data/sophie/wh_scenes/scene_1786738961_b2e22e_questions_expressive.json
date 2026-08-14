@@ -1,0 +1,119 @@
+{
+  "scene_description": "A tiger cub and a lion cub are playing together on green grass. The tiger cub is standing and leaning over the lion cub, which is lying on its back with one paw raised up.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What animals do you see in the picture?",
+      "sample_answers": [
+        "a tiger and a lion",
+        "two baby animals",
+        "a tiger cub and a lion cub"
+      ],
+      "sentence_frame": "I see a ___ and a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "tiger and lion",
+        "dog and cat",
+        "elephant and bear"
+      ],
+      "evidence_hint": "Look at both animals in the picture \u2014 notice the stripes on one and the plain golden fur on the other."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the two baby animals doing?",
+      "sample_answers": [
+        "playing",
+        "wrestling",
+        "playing together",
+        "playing on the grass"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "playing",
+        "sleeping",
+        "eating"
+      ],
+      "evidence_hint": "Look at how the animals are moving and touching each other."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the animals playing?",
+      "sample_answers": [
+        "on the grass",
+        "outside",
+        "on the ground"
+      ],
+      "sentence_frame": "They are playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the grass",
+        "in the water",
+        "in a tree"
+      ],
+      "evidence_hint": "Look at what is under the animals' feet and body."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the lion cub doing with its paw?",
+      "sample_answers": [
+        "holding it up",
+        "reaching up",
+        "raising its paw",
+        "putting its paw up"
+      ],
+      "sentence_frame": "The lion cub is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reaching up",
+        "covering its face",
+        "digging"
+      ],
+      "evidence_hint": "Look at the lion cub's front leg \u2014 where is it pointing?"
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the animals do next?",
+      "sample_answers": [
+        "keep playing",
+        "roll around",
+        "chase each other",
+        "run away"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "keep playing",
+        "go to sleep",
+        "eat food"
+      ],
+      "evidence_hint": "Look at how the animals are moving \u2014 think about what comes next when animals play."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen a tiger or a lion? Where did you see it?",
+      "sample_answers": [
+        "at the zoo",
+        "on TV",
+        "in a book",
+        "no"
+      ],
+      "sentence_frame": "I saw a ___ at ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "zoo",
+        "TV",
+        "book"
+      ],
+      "evidence_hint": "Think about a time you saw a big cat animal."
+    }
+  ]
+}

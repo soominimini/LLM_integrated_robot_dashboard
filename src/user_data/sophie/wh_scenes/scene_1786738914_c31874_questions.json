@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl wearing a colorful polka-dot swimsuit is jumping into a blue swimming pool while holding a yellow inflatable ring. A metal ladder is visible on the left side of the pool, and green bushes are in the background.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is jumping into the pool?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a dog",
+        "a baby",
+        "a man"
+      ],
+      "evidence_hint": "Look at the person in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding?",
+      "answer": "a yellow float ring",
+      "visual_choices": [
+        "a yellow float ring",
+        "a beach ball",
+        "a towel",
+        "a toy boat"
+      ],
+      "evidence_hint": "Look at what is around the girl's body."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's swimsuit?",
+      "answer": "colorful with dots",
+      "visual_choices": [
+        "colorful with dots",
+        "plain blue",
+        "all red",
+        "black and white"
+      ],
+      "evidence_hint": "Look at the clothes the girl is wearing."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl jumping?",
+      "answer": "into a pool",
+      "visual_choices": [
+        "into a pool",
+        "onto a bed",
+        "into a sandbox",
+        "onto the grass"
+      ],
+      "evidence_hint": "Look at the blue water below the girl."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the left side of the pool?",
+      "answer": "a metal ladder",
+      "visual_choices": [
+        "a metal ladder",
+        "a slide",
+        "a chair",
+        "a bucket"
+      ],
+      "evidence_hint": "Look at the left side of the picture near the water."
+    }
+  ]
+}

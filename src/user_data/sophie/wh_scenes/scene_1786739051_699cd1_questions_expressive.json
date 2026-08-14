@@ -1,0 +1,116 @@
+{
+  "scene_description": "Two young children are standing in a large rain puddle on a dirt path surrounded by green trees. The girl on the left holds a clear umbrella with a rainbow design and wears pink rain boots, a colorful jacket, and a denim skirt. The boy on the right holds a rainbow-striped umbrella and wears yellow rain boots and a colorful jacket. Their reflections are visible in the puddle.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children holding?",
+      "sample_answers": [
+        "umbrellas",
+        "a rainbow umbrella",
+        "an umbrella"
+      ],
+      "sentence_frame": "They are holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "umbrellas",
+        "balloons",
+        "buckets"
+      ],
+      "evidence_hint": "Look at what each child has in their hand."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the children doing with their feet?",
+      "sample_answers": [
+        "standing in a puddle",
+        "splashing in the water",
+        "stomping in the puddle"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "standing in a puddle",
+        "running on the grass",
+        "jumping on a bed"
+      ],
+      "evidence_hint": "Look at where the children's boots are."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children standing?",
+      "sample_answers": [
+        "in a puddle",
+        "outside on a path",
+        "in the water"
+      ],
+      "sentence_frame": "They are standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in a puddle",
+        "in a classroom",
+        "at the beach"
+      ],
+      "evidence_hint": "Look at the ground under the children's boots."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use an umbrella for?",
+      "sample_answers": [
+        "to stay dry",
+        "to keep the rain off",
+        "so we don't get wet"
+      ],
+      "sentence_frame": "We use an umbrella to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "stay dry from rain",
+        "eat lunch",
+        "go to sleep"
+      ],
+      "evidence_hint": "Think about why someone would carry an umbrella outside."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children do next in the puddle?",
+      "sample_answers": [
+        "splash in the puddle",
+        "jump in the water",
+        "stomp their boots"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "jump and splash",
+        "go to sleep",
+        "eat a snack"
+      ],
+      "evidence_hint": "Look at the big puddle and think about what kids like to do in puddles."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever jumped in a puddle? What did it feel like?",
+      "sample_answers": [
+        "yes, it was fun",
+        "it was wet",
+        "I got splashed",
+        "no"
+      ],
+      "sentence_frame": "When I jumped in a puddle, it felt ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "fun",
+        "wet",
+        "cold"
+      ],
+      "evidence_hint": "Think about a time you were outside in the rain."
+    }
+  ]
+}

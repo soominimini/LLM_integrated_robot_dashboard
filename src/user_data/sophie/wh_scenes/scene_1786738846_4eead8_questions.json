@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children are playing on a sandy beach. One child is pouring water from a red bucket onto a sandcastle decorated with small colorful flags. The ocean and blue sky are visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the child pouring water into?",
+      "answer": "a sandcastle",
+      "visual_choices": [
+        "a sandcastle",
+        "a pool",
+        "a bowl",
+        "a hole"
+      ],
+      "evidence_hint": "Look at what the water is falling onto near the bottom of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the bucket?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "blue",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the bucket one child is holding."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is playing in this picture?",
+      "answer": "two children",
+      "visual_choices": [
+        "two children",
+        "one adult",
+        "a dog",
+        "a family"
+      ],
+      "evidence_hint": "Look at all the people in the picture."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "answer": "at the beach",
+      "visual_choices": [
+        "at the beach",
+        "in a park",
+        "in a pool",
+        "in a backyard"
+      ],
+      "evidence_hint": "Look at the ground under the children and the water behind them."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on top of the sandcastle?",
+      "answer": "colorful flags",
+      "visual_choices": [
+        "colorful flags",
+        "candles",
+        "flowers",
+        "toys"
+      ],
+      "evidence_hint": "Look at the top of the big pile of sand."
+    }
+  ]
+}

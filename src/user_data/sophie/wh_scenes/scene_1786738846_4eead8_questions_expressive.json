@@ -1,0 +1,115 @@
+{
+  "scene_description": "Two children are playing on a sandy beach. One child is pouring water from a red bucket onto a large sandcastle decorated with colorful triangle flags. The ocean and blue sky are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children building in the sand?",
+      "sample_answers": [
+        "a sandcastle",
+        "a castle",
+        "a big sand pile"
+      ],
+      "sentence_frame": "They are building ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a sandcastle",
+        "a snowman",
+        "a house"
+      ],
+      "evidence_hint": "Look at the big sandy structure in front of the children."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the child with the red bucket doing?",
+      "sample_answers": [
+        "pouring water",
+        "dumping water on the sandcastle",
+        "tipping the bucket"
+      ],
+      "sentence_frame": "He is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "pouring water",
+        "eating",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the red bucket and what is coming out of it."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the two children playing?",
+      "sample_answers": [
+        "at the beach",
+        "on the sand",
+        "by the ocean"
+      ],
+      "sentence_frame": "They are playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "at the beach",
+        "in the park",
+        "in the kitchen"
+      ],
+      "evidence_hint": "Look at the ground under their feet and the water behind them."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What are the little flags on the sandcastle for?",
+      "sample_answers": [
+        "to decorate it",
+        "to make it look pretty",
+        "to put on top of the castle"
+      ],
+      "sentence_frame": "The flags are for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "decorating it",
+        "eating",
+        "swimming"
+      ],
+      "evidence_hint": "Look at where the flags are placed on the sandcastle."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might happen to the sandcastle after the water is poured on it?",
+      "sample_answers": [
+        "it gets wet",
+        "it gets harder",
+        "the sand sticks together"
+      ],
+      "sentence_frame": "The sandcastle might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "get wet",
+        "fly away",
+        "turn into a snowball"
+      ],
+      "evidence_hint": "Look at the water coming out of the bucket and where it is landing."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever played in the sand or at the beach?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I made a sandcastle",
+        "I played in the water"
+      ],
+      "sentence_frame": "I went to the beach and ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you played outside in the sand or water."
+    }
+  ]
+}

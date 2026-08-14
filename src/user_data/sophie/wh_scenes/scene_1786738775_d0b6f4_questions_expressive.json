@@ -1,0 +1,117 @@
+{
+  "scene_description": "Two pieces of white paper on a wooden table, each decorated with animal pictures made from real autumn leaves, berries, and seeds. The left paper shows a hedgehog and a butterfly made from colorful fall leaves and red berries. The right paper shows an owl and a bird made from brown leaves and seeds. Loose leaves, glue, and fruit are also on the table.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What animals do you see made from leaves on the papers?",
+      "sample_answers": [
+        "a butterfly",
+        "a hedgehog",
+        "an owl",
+        "a bird"
+      ],
+      "sentence_frame": "I see a ___ made from leaves.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "butterfly",
+        "hedgehog",
+        "owl"
+      ],
+      "evidence_hint": "Look at the shapes on the white papers \u2014 what animals can you spot?"
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the leaves being used to make?",
+      "sample_answers": [
+        "pictures of animals",
+        "a butterfly",
+        "a hedgehog",
+        "animal art"
+      ],
+      "sentence_frame": "The leaves are being used to make ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "animal pictures",
+        "food",
+        "a house"
+      ],
+      "evidence_hint": "Look at the white papers and see what shapes the leaves form."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the leaf animal pictures?",
+      "sample_answers": [
+        "on the paper",
+        "on the table",
+        "on white paper on the table"
+      ],
+      "sentence_frame": "The pictures are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the paper",
+        "on the floor",
+        "on the wall"
+      ],
+      "evidence_hint": "Look at where the leaf animals are sitting \u2014 what is underneath them?"
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the glue bottle on the table used for?",
+      "sample_answers": [
+        "to stick the leaves",
+        "to glue the leaves down",
+        "to make the leaves stay"
+      ],
+      "sentence_frame": "The glue is used to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "stick the leaves",
+        "color the leaves",
+        "cut the leaves"
+      ],
+      "evidence_hint": "Look at the white bottle near the leaves \u2014 think about what glue does."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What do you think the red berries are used for on the hedgehog picture?",
+      "sample_answers": [
+        "for the hedgehog's spots",
+        "to decorate it",
+        "to make dots on the hedgehog"
+      ],
+      "sentence_frame": "I think the berries are used for ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "decorating the hedgehog",
+        "eating",
+        "painting"
+      ],
+      "evidence_hint": "Look at the left paper \u2014 where are the red berries placed on the hedgehog?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever made a picture using leaves or nature things?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I made a leaf picture",
+        "I used sticks"
+      ],
+      "sentence_frame": "I made ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you did art with things from outside."
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young girl wearing a white knit sweater, white hat, and red scarf stands outdoors in an autumn setting. She is holding a small green pumpkin. Around her are wooden crates filled with orange and green pumpkins, hay, and orange marigold flowers. Red, orange, and yellow fall leaves cover the trees and ground behind her.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding in her arms?",
+      "sample_answers": [
+        "a pumpkin",
+        "a little pumpkin",
+        "a green pumpkin"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a pumpkin",
+        "a ball",
+        "a flower"
+      ],
+      "evidence_hint": "Look at what the girl has in her arms."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing with the pumpkin?",
+      "sample_answers": [
+        "holding it",
+        "carrying it",
+        "hugging it"
+      ],
+      "sentence_frame": "She is ___ the pumpkin.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "holding",
+        "throwing",
+        "eating"
+      ],
+      "evidence_hint": "Look at the girl's arms and what she is doing."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the pumpkins sitting?",
+      "sample_answers": [
+        "in a box",
+        "in a wooden crate",
+        "in a wooden box"
+      ],
+      "sentence_frame": "The pumpkins are in ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a wooden crate",
+        "a bag",
+        "a basket"
+      ],
+      "evidence_hint": "Look at the containers near the girl."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What colors are the leaves on the trees?",
+      "sample_answers": [
+        "red and yellow",
+        "orange and red",
+        "red, orange, and yellow"
+      ],
+      "sentence_frame": "The leaves are ___ and ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "red and yellow",
+        "blue and green",
+        "pink and purple"
+      ],
+      "evidence_hint": "Look at the trees and leaves behind the girl."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What do you think the girl might do with all these pumpkins?",
+      "sample_answers": [
+        "take them home",
+        "put them in the box",
+        "carry them",
+        "use them for Halloween"
+      ],
+      "sentence_frame": "She might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "take them home",
+        "put them in the box",
+        "eat them"
+      ],
+      "evidence_hint": "Look at all the pumpkins around her and think about what people do with pumpkins in fall."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen a pumpkin before? Where did you see it?",
+      "sample_answers": [
+        "yes, at the store",
+        "at Halloween",
+        "in my yard",
+        "at a farm"
+      ],
+      "sentence_frame": "I saw a pumpkin ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "at the store",
+        "at a farm",
+        "at my house"
+      ],
+      "evidence_hint": "Think about a time you saw pumpkins in real life."
+    }
+  ]
+}

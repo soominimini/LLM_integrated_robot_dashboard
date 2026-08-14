@@ -1,0 +1,65 @@
+{
+  "scene_description": "A young girl wearing a white knit sweater, white hat, and red scarf stands outdoors among wooden crates filled with pumpkins and orange flowers. She is holding a small striped gourd. The background shows colorful red and yellow autumn leaves.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is standing by the wooden crates?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a boy",
+        "a woman",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the person standing in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding in her arms?",
+      "answer": "a small gourd",
+      "visual_choices": [
+        "a small gourd",
+        "a flower",
+        "an apple",
+        "a basket"
+      ],
+      "evidence_hint": "Look at what the girl is holding close to her body."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is inside the wooden crates?",
+      "answer": "pumpkins",
+      "visual_choices": [
+        "pumpkins",
+        "apples",
+        "books",
+        "toys"
+      ],
+      "evidence_hint": "Look at the big wooden boxes in front of the girl."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's scarf?",
+      "answer": "red",
+      "visual_choices": [
+        "red",
+        "blue",
+        "green",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the scarf around the girl's neck."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is the girl standing?",
+      "answer": "outside in a garden",
+      "visual_choices": [
+        "outside in a garden",
+        "inside a house",
+        "in a classroom",
+        "at a beach"
+      ],
+      "evidence_hint": "Look at the trees and leaves all around the girl."
+    }
+  ]
+}

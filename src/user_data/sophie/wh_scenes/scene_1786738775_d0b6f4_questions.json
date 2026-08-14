@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two pieces of white paper on a wooden table, each decorated with animal pictures made from autumn leaves. The left paper shows a butterfly and a hedgehog made from colorful fall leaves and red berries. The right paper shows a butterfly, an owl, and a bird, also made from leaves and natural materials.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the animals made from?",
+      "answer": "leaves",
+      "visual_choices": [
+        "leaves",
+        "paper",
+        "paint",
+        "stickers"
+      ],
+      "evidence_hint": "Look closely at what the animals on the white papers are made of."
+    },
+    {
+      "wh_type": "what",
+      "question": "What animal is at the top of the left paper?",
+      "answer": "a butterfly",
+      "visual_choices": [
+        "a butterfly",
+        "a fish",
+        "a cat",
+        "a flower"
+      ],
+      "evidence_hint": "Look at the top part of the paper on the left side."
+    },
+    {
+      "wh_type": "what",
+      "question": "What animal is on the right paper with big round eyes?",
+      "answer": "an owl",
+      "visual_choices": [
+        "an owl",
+        "a rabbit",
+        "a frog",
+        "a bear"
+      ],
+      "evidence_hint": "Look at the right paper and find the animal with two big round eyes."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is holding the scissors?",
+      "answer": "a child",
+      "visual_choices": [
+        "a child",
+        "a teacher",
+        "a baby",
+        "no one"
+      ],
+      "evidence_hint": "Look at the bottom of the picture near the table."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the leaf pictures?",
+      "answer": "on the table",
+      "visual_choices": [
+        "on the table",
+        "on the wall",
+        "on the floor",
+        "in a bag"
+      ],
+      "evidence_hint": "Look at the flat surface under the white papers."
+    }
+  ]
+}

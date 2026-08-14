@@ -1,0 +1,116 @@
+{
+  "scene_description": "A large wooden dining table is set for a Thanksgiving feast. A roasted turkey, bowls of fruit and vegetables, corn, meat, candles, and small pumpkins cover the table. Two young children are standing near the table. Several adults stand in the background holding wine glasses.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What big food do you see on the table?",
+      "sample_answers": [
+        "a turkey",
+        "a big chicken",
+        "a roasted bird"
+      ],
+      "sentence_frame": "I see a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "turkey",
+        "pizza",
+        "sandwich"
+      ],
+      "evidence_hint": "Look at the large brown food at the front of the table."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl on the right doing?",
+      "sample_answers": [
+        "reaching for food",
+        "grabbing something",
+        "touching the fruit"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "reaching for food",
+        "sleeping",
+        "pouring a drink"
+      ],
+      "evidence_hint": "Look at the girl's arms and hands near the table."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the candles on the table?",
+      "sample_answers": [
+        "in the middle of the table",
+        "between the food",
+        "near the fruit"
+      ],
+      "sentence_frame": "The candles are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the middle of the table",
+        "on the floor",
+        "on the window"
+      ],
+      "evidence_hint": "Look for the glowing lights on the table."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we do with all this food on the table?",
+      "sample_answers": [
+        "we eat it",
+        "we have dinner",
+        "we share it with family"
+      ],
+      "sentence_frame": "We ___  the food.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "eat",
+        "throw",
+        "paint"
+      ],
+      "evidence_hint": "Think about why people put lots of food on a big table together."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the family do next?",
+      "sample_answers": [
+        "sit down and eat",
+        "have dinner together",
+        "eat the turkey"
+      ],
+      "sentence_frame": "Next, the family might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "sit down and eat",
+        "go to sleep",
+        "play outside"
+      ],
+      "evidence_hint": "Look at all the food ready on the table and the people standing around it."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "What is your favorite food to eat at a big family dinner?",
+      "sample_answers": [
+        "turkey",
+        "corn",
+        "fruit",
+        "I like mashed potatoes"
+      ],
+      "sentence_frame": "My favorite food is ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "turkey",
+        "corn",
+        "fruit"
+      ],
+      "evidence_hint": "Look at all the different foods on the table and think about which one you like best."
+    }
+  ]
+}

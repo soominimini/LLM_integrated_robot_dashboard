@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children ride kick scooters on a paved path in a sunny park. The girl in front wears a colorful helmet and a rainbow skirt and rides a pink scooter. The boy behind her wears a blue helmet and a striped shirt and rides a blue scooter.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children riding?",
+      "answer": "scooters",
+      "visual_choices": [
+        "scooters",
+        "bikes",
+        "skateboards",
+        "wagons"
+      ],
+      "evidence_hint": "Look at what the children are standing on and holding."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the girl wearing on her head?",
+      "answer": "a helmet",
+      "visual_choices": [
+        "a helmet",
+        "a hat",
+        "a bow",
+        "a hood"
+      ],
+      "evidence_hint": "Look at the top of the girl's head."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is riding the pink scooter?",
+      "answer": "the girl",
+      "visual_choices": [
+        "the girl",
+        "the boy",
+        "a dog",
+        "an adult"
+      ],
+      "evidence_hint": "Look at the pink scooter and who is on it."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children riding their scooters?",
+      "answer": "on a path in a park",
+      "visual_choices": [
+        "on a path in a park",
+        "inside a house",
+        "in a parking lot",
+        "on the beach"
+      ],
+      "evidence_hint": "Look at the ground and the trees around the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the boy's helmet?",
+      "answer": "blue",
+      "visual_choices": [
+        "blue",
+        "red",
+        "yellow",
+        "green"
+      ],
+      "evidence_hint": "Look at the helmet on the boy's head."
+    }
+  ]
+}

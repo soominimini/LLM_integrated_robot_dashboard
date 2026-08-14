@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two large white swans and four small gray baby swans (cygnets) swimming together on a pond. A duck is also visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What animals are swimming in the water?",
+      "answer": "swans",
+      "visual_choices": [
+        "swans",
+        "ducks",
+        "fish",
+        "frogs"
+      ],
+      "evidence_hint": "Look at the big white birds in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the big swans?",
+      "answer": "white",
+      "visual_choices": [
+        "white",
+        "black",
+        "brown",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the feathers on the large birds."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is swimming between the two big swans?",
+      "answer": "baby swans",
+      "visual_choices": [
+        "baby swans",
+        "ducks",
+        "fish",
+        "turtles"
+      ],
+      "evidence_hint": "Look at the small gray birds in the middle of the group."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the swans swimming?",
+      "answer": "on a pond",
+      "visual_choices": [
+        "on a pond",
+        "in a bathtub",
+        "on the grass",
+        "in a pool"
+      ],
+      "evidence_hint": "Look at the water all around the birds."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the baby swans?",
+      "answer": "gray",
+      "visual_choices": [
+        "gray",
+        "white",
+        "black",
+        "orange"
+      ],
+      "evidence_hint": "Look at the small birds swimming in the middle."
+    }
+  ]
+}

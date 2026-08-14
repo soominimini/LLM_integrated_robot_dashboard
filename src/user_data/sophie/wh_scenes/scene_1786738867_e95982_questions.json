@@ -1,0 +1,65 @@
+{
+  "scene_description": "Three young children wearing colorful ski gear and helmets are on a snowy ski slope with an adult instructor. The children are on skis and wearing bright yellow vests. The instructor wears a red jacket and white helmet.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children wearing on their heads?",
+      "answer": "helmets",
+      "visual_choices": [
+        "helmets",
+        "hats",
+        "hoods",
+        "earmuffs"
+      ],
+      "evidence_hint": "Look at the top of each child's head."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children standing on?",
+      "answer": "skis",
+      "visual_choices": [
+        "skis",
+        "a sled",
+        "ice skates",
+        "snowboard"
+      ],
+      "evidence_hint": "Look at the children's feet and the ground below them."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is wearing a red jacket?",
+      "answer": "the adult instructor",
+      "visual_choices": [
+        "the adult instructor",
+        "the small child",
+        "the child in green",
+        "no one"
+      ],
+      "evidence_hint": "Look at the person on the right side of the picture."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children?",
+      "answer": "on the snow",
+      "visual_choices": [
+        "on the snow",
+        "at the beach",
+        "in a gym",
+        "on the grass"
+      ],
+      "evidence_hint": "Look at the ground all around the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the vests the children are wearing?",
+      "answer": "yellow",
+      "visual_choices": [
+        "yellow",
+        "red",
+        "blue",
+        "orange"
+      ],
+      "evidence_hint": "Look at the bright vests on the children's bodies."
+    }
+  ]
+}

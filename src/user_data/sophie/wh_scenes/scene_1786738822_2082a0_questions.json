@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children are playing on a colorful wooden playground structure. One child with curly blonde hair wears a plaid shirt and blue shorts and is climbing up. The other child with dark curly hair wears a pink shirt and jeans and is standing on the platform. The playground has green panels, yellow flower decorations, and a brown hexagonal climbing frame.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What color is the girl's shirt?",
+      "answer": "pink",
+      "visual_choices": [
+        "pink",
+        "blue",
+        "yellow",
+        "red"
+      ],
+      "evidence_hint": "Look at the shirt the girl on the right is wearing."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is climbing up onto the playground?",
+      "answer": "the boy",
+      "visual_choices": [
+        "the boy",
+        "a dog",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the child on the left side of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the panels on the playground?",
+      "answer": "green",
+      "visual_choices": [
+        "green",
+        "red",
+        "purple",
+        "orange"
+      ],
+      "evidence_hint": "Look at the flat boards on the side of the playground structure."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the two children?",
+      "answer": "on a playground",
+      "visual_choices": [
+        "on a playground",
+        "in a kitchen",
+        "at the beach",
+        "in a classroom"
+      ],
+      "evidence_hint": "Look at the big wooden and colorful structure the children are on."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is the boy holding with his hands?",
+      "answer": "a railing",
+      "visual_choices": [
+        "a railing",
+        "a ball",
+        "a book",
+        "a sandwich"
+      ],
+      "evidence_hint": "Look at the boy's hands and what they are grabbing onto."
+    }
+  ]
+}

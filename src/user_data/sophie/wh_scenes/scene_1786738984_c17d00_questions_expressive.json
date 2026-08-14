@@ -1,0 +1,116 @@
+{
+  "scene_description": "Two children are sitting at a kitchen counter painting eggs with small paintbrushes. Several unpainted eggs are on the counter, along with a watercolor paint palette, a jar holding paintbrushes, and a wicker basket. Both children are focused on their eggs.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children painting?",
+      "sample_answers": [
+        "eggs",
+        "Easter eggs",
+        "white eggs"
+      ],
+      "sentence_frame": "They are painting ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "eggs",
+        "apples",
+        "rocks"
+      ],
+      "evidence_hint": "Look at what each child is holding in their hands."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the children doing with the paintbrushes?",
+      "sample_answers": [
+        "painting",
+        "painting the eggs",
+        "putting paint on the eggs"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "painting",
+        "eating",
+        "drawing"
+      ],
+      "evidence_hint": "Look at the brushes touching the eggs."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children doing their painting?",
+      "sample_answers": [
+        "at the counter",
+        "in the kitchen",
+        "at a table"
+      ],
+      "sentence_frame": "They are painting ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the kitchen",
+        "outside",
+        "in the bedroom"
+      ],
+      "evidence_hint": "Look at the room around the children \u2014 the counter and the refrigerator in the back."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use a paintbrush for?",
+      "sample_answers": [
+        "painting",
+        "putting on paint",
+        "making colors"
+      ],
+      "sentence_frame": "We use a paintbrush for ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "painting",
+        "eating",
+        "cutting"
+      ],
+      "evidence_hint": "Look at what the children are doing with the brushes in their hands."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the children do with the eggs when they are done painting them?",
+      "sample_answers": [
+        "put them in the basket",
+        "show someone",
+        "put them away"
+      ],
+      "sentence_frame": "When they are done, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "put them in the basket",
+        "eat them plain",
+        "throw them away"
+      ],
+      "evidence_hint": "Look at the wicker basket sitting on the counter near the children."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever painted something? What did you paint?",
+      "sample_answers": [
+        "yes",
+        "I painted a picture",
+        "I painted with my mom",
+        "no"
+      ],
+      "sentence_frame": "I painted ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "a picture",
+        "an egg",
+        "a rock"
+      ],
+      "evidence_hint": "Think about a time you used paint or a paintbrush."
+    }
+  ]
+}

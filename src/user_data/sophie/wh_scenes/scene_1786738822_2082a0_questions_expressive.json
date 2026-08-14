@@ -1,0 +1,121 @@
+{
+  "scene_description": "Two young children are playing on a colorful playground structure. A boy with curly blonde hair wearing a plaid shirt and denim shorts is climbing up the structure, and a girl with curly dark hair wearing a pink shirt and jeans is standing on the platform. The playground has green panels, wooden rails, and a hexagonal climbing frame. Buildings are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children playing on?",
+      "sample_answers": [
+        "a playground",
+        "a jungle gym",
+        "a climbing structure",
+        "playground equipment"
+      ],
+      "sentence_frame": "They are playing on ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a playground",
+        "a slide",
+        "a trampoline"
+      ],
+      "evidence_hint": "Look at the big colorful structure the children are on."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the boy doing on the playground?",
+      "sample_answers": [
+        "climbing up",
+        "climbing",
+        "going up the playground",
+        "holding the rail and climbing"
+      ],
+      "sentence_frame": "The boy is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "climbing up",
+        "sliding down",
+        "sitting"
+      ],
+      "evidence_hint": "Look at the boy's hands and legs \u2014 what is his body doing?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl standing?",
+      "sample_answers": [
+        "on the platform",
+        "on top of the playground",
+        "up high on the structure",
+        "on the playground"
+      ],
+      "sentence_frame": "The girl is standing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "on the platform",
+        "on the ground",
+        "on a slide"
+      ],
+      "evidence_hint": "Look at where the girl's feet are \u2014 is she up high or down low?"
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do we use the rails on the playground for?",
+      "sample_answers": [
+        "to hold on",
+        "to help you climb",
+        "so you don't fall",
+        "to grab"
+      ],
+      "sentence_frame": "We use the rails to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "hold on",
+        "sit on",
+        "eat with"
+      ],
+      "evidence_hint": "Look at the boy's hands \u2014 what is he doing with the rail?"
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the boy do next after he finishes climbing up?",
+      "sample_answers": [
+        "stand on the platform",
+        "play with the girl",
+        "go down the slide",
+        "stand next to the girl"
+      ],
+      "sentence_frame": "Next, the boy might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "stand on the platform",
+        "go to sleep",
+        "eat a snack"
+      ],
+      "evidence_hint": "Look at where the boy is climbing to \u2014 what is at the top?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been to a playground? What did you like to do there?",
+      "sample_answers": [
+        "I went on the slide",
+        "I climbed",
+        "I played with my friend",
+        "I like swings"
+      ],
+      "sentence_frame": "At the playground, I like to ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "slide",
+        "climb",
+        "swing"
+      ],
+      "evidence_hint": "Think about a playground you have visited."
+    }
+  ]
+}

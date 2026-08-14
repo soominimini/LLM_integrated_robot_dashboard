@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two children are sitting at a kitchen counter painting eggs with small paintbrushes. Several plain eggs sit on the counter, along with a watercolor paint palette, a jar holding brushes, and a wicker basket.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children painting?",
+      "answer": "eggs",
+      "visual_choices": [
+        "eggs",
+        "rocks",
+        "balloons",
+        "apples"
+      ],
+      "evidence_hint": "Look at what the children are holding in their hands."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children using to paint?",
+      "answer": "paintbrushes",
+      "visual_choices": [
+        "paintbrushes",
+        "crayons",
+        "markers",
+        "their fingers"
+      ],
+      "evidence_hint": "Look at the small tools the children are holding."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in this picture?",
+      "answer": "two children",
+      "visual_choices": [
+        "two children",
+        "one adult",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at all the people sitting at the counter."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children sitting?",
+      "answer": "at a counter",
+      "visual_choices": [
+        "at a counter",
+        "on the floor",
+        "at a park",
+        "in a bathtub"
+      ],
+      "evidence_hint": "Look at the flat surface in front of the children."
+    },
+    {
+      "wh_type": "what",
+      "question": "What colors are in the paint palette?",
+      "answer": "many colors",
+      "visual_choices": [
+        "many colors",
+        "only red",
+        "only blue",
+        "black and white"
+      ],
+      "evidence_hint": "Look at the flat tray with small circles of paint on the counter."
+    }
+  ]
+}

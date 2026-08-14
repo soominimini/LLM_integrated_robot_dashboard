@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two young children stand in a puddle on a dirt path surrounded by green trees. The girl on the left wears pink rain boots and holds a clear umbrella. The boy on the right wears yellow rain boots and holds a rainbow-colored umbrella. Both children wear colorful jackets.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What are the children holding?",
+      "answer": "umbrellas",
+      "visual_choices": [
+        "umbrellas",
+        "balloons",
+        "kites",
+        "bags"
+      ],
+      "evidence_hint": "Look at what each child is holding up in their hands."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the girl's boots?",
+      "answer": "pink",
+      "visual_choices": [
+        "pink",
+        "yellow",
+        "blue",
+        "red"
+      ],
+      "evidence_hint": "Look at the boots on the child on the left."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is in the picture?",
+      "answer": "two children",
+      "visual_choices": [
+        "two children",
+        "one adult",
+        "a dog",
+        "a family"
+      ],
+      "evidence_hint": "Look at all the people standing in the puddle."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children standing?",
+      "answer": "in a puddle",
+      "visual_choices": [
+        "in a puddle",
+        "in a pool",
+        "on the grass",
+        "in a sandbox"
+      ],
+      "evidence_hint": "Look at the ground right under the children's feet."
+    },
+    {
+      "wh_type": "what",
+      "question": "What colors is the boy's umbrella?",
+      "answer": "rainbow colors",
+      "visual_choices": [
+        "rainbow colors",
+        "all white",
+        "all black",
+        "pink and purple"
+      ],
+      "evidence_hint": "Look at the umbrella the child on the right is holding."
+    }
+  ]
+}

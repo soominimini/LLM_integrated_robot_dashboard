@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two boys are sliding down a black and white striped water slide into a blue swimming pool. The boy in front wears red striped swim shorts. Both boys have their arms raised and are smiling. Water is splashing around them.",
+  "questions": [
+    {
+      "wh_type": "who",
+      "question": "Who is on the water slide?",
+      "answer": "two boys",
+      "visual_choices": [
+        "two boys",
+        "a girl",
+        "a grown-up",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the people coming down the slide."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color are the front boy's swim shorts?",
+      "answer": "red and white",
+      "visual_choices": [
+        "red and white",
+        "blue",
+        "green",
+        "yellow"
+      ],
+      "evidence_hint": "Look at the shorts on the boy in front."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the boys sliding into?",
+      "answer": "a swimming pool",
+      "visual_choices": [
+        "a swimming pool",
+        "a sandbox",
+        "the grass",
+        "a bathtub"
+      ],
+      "evidence_hint": "Look at the blue water at the bottom of the slide."
+    },
+    {
+      "wh_type": "what",
+      "question": "What colors is the slide?",
+      "answer": "black and white",
+      "visual_choices": [
+        "black and white",
+        "red and blue",
+        "yellow and green",
+        "orange and purple"
+      ],
+      "evidence_hint": "Look at the stripes on the slide."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the boys doing with their arms?",
+      "answer": "raising them up",
+      "visual_choices": [
+        "raising them up",
+        "holding a ball",
+        "covering their eyes",
+        "crossing them"
+      ],
+      "evidence_hint": "Look at the boys' arms in the air."
+    }
+  ]
+}

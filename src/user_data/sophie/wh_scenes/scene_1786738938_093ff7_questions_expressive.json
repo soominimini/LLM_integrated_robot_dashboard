@@ -1,0 +1,117 @@
+{
+  "scene_description": "Two young boys are sliding together down a black-and-white striped water slide into a bright blue swimming pool. Water is splashing around them. Both boys are smiling and have their arms raised with thumbs up. The boy in front is wearing red-striped swim trunks and goggles.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the boys going down?",
+      "sample_answers": [
+        "a slide",
+        "a water slide",
+        "a big slide"
+      ],
+      "sentence_frame": "They are going down a ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "water slide",
+        "ladder",
+        "diving board"
+      ],
+      "evidence_hint": "Look at the big black-and-white thing the boys are sitting on."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the two boys doing?",
+      "sample_answers": [
+        "sliding down",
+        "going down the water slide",
+        "sliding into the pool"
+      ],
+      "sentence_frame": "The boys are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "sliding down",
+        "swimming",
+        "jumping"
+      ],
+      "evidence_hint": "Look at what the boys are doing with their bodies on the slide."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the boys sliding into?",
+      "sample_answers": [
+        "into the pool",
+        "into the water",
+        "into a swimming pool"
+      ],
+      "sentence_frame": "They are sliding into ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a swimming pool",
+        "the sand",
+        "a bathtub"
+      ],
+      "evidence_hint": "Look at the blue water at the bottom of the slide."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the boy in front wearing on his face?",
+      "sample_answers": [
+        "goggles",
+        "swim goggles",
+        "glasses for swimming"
+      ],
+      "sentence_frame": "He is wearing ___ on his face.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "goggles",
+        "sunglasses",
+        "a hat"
+      ],
+      "evidence_hint": "Look closely at the face of the boy sitting in front."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do the boys look \u2014 are they happy or scared?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "they look happy",
+        "they are smiling"
+      ],
+      "sentence_frame": "The boys look ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "scared",
+        "sad"
+      ],
+      "evidence_hint": "Look at the boys' faces and their arms in the air."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever been on a water slide? What was it like?",
+      "sample_answers": [
+        "yes, it was fun",
+        "no",
+        "it was fast",
+        "I went with my family"
+      ],
+      "sentence_frame": "I went on a slide and it was ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "fun",
+        "fast",
+        "scary"
+      ],
+      "evidence_hint": "Think about a time you went swimming or to a water park."
+    }
+  ]
+}

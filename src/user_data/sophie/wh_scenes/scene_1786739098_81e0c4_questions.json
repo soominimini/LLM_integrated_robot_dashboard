@@ -1,0 +1,65 @@
+{
+  "scene_description": "Two girls are decorating Halloween cupcakes and cookies in a kitchen. There are ghost-shaped treats, pumpkin cookies, a green bowl with frosting, and jack-o'-lanterns visible in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl in green holding?",
+      "answer": "a cupcake",
+      "visual_choices": [
+        "a cupcake",
+        "a cookie",
+        "a bowl",
+        "a pumpkin"
+      ],
+      "evidence_hint": "Look at what the girl on the right is holding in her hand."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the bowl on the table?",
+      "answer": "green",
+      "visual_choices": [
+        "green",
+        "red",
+        "blue",
+        "orange"
+      ],
+      "evidence_hint": "Look at the bowl sitting on the wooden board in the middle."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is decorating the treats?",
+      "answer": "two girls",
+      "visual_choices": [
+        "two girls",
+        "two boys",
+        "a mom and child",
+        "one girl"
+      ],
+      "evidence_hint": "Look at all the people standing at the table."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the girls decorating?",
+      "answer": "in a kitchen",
+      "visual_choices": [
+        "in a kitchen",
+        "in a classroom",
+        "outside",
+        "in a store"
+      ],
+      "evidence_hint": "Look at the stove and tiles on the wall behind the girls."
+    },
+    {
+      "wh_type": "what",
+      "question": "What shape are the white treats at the bottom?",
+      "answer": "ghosts",
+      "visual_choices": [
+        "ghosts",
+        "stars",
+        "pumpkins",
+        "cats"
+      ],
+      "evidence_hint": "Look at the small white figures lined up at the bottom of the picture."
+    }
+  ]
+}

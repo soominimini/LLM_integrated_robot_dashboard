@@ -1,0 +1,117 @@
+{
+  "scene_description": "Two large white adult swans and four small fluffy gray baby swans (cygnets) swimming together on a calm pond. The two adult swans swim on either side of the cygnets, with a duck visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What animals do you see in the water?",
+      "sample_answers": [
+        "swans",
+        "baby swans",
+        "swans and ducks",
+        "birds"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "swans",
+        "horses",
+        "fish"
+      ],
+      "evidence_hint": "Look at the big white birds swimming in the water."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the swans doing?",
+      "sample_answers": [
+        "swimming",
+        "floating on the water",
+        "swimming together"
+      ],
+      "sentence_frame": "The swans are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "swimming",
+        "flying",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the swans and what their bodies are doing in the water."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the baby swans swimming?",
+      "sample_answers": [
+        "in the middle",
+        "between the big swans",
+        "in between the two swans"
+      ],
+      "sentence_frame": "The baby swans are swimming ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "between the big swans",
+        "on the grass",
+        "in the sky"
+      ],
+      "evidence_hint": "Look at where the small gray fluffy babies are compared to the two big white swans."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "how",
+      "question": "How many baby swans do you see?",
+      "sample_answers": [
+        "four",
+        "four baby swans",
+        "I see four"
+      ],
+      "sentence_frame": "I see ___ baby swans.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "two",
+        "four",
+        "six"
+      ],
+      "evidence_hint": "Count the small gray fluffy birds swimming in the middle."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the big swans be doing to keep the babies safe?",
+      "sample_answers": [
+        "swimming next to them",
+        "staying close",
+        "watching them",
+        "protecting them"
+      ],
+      "sentence_frame": "The big swans are staying ___ the babies.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "close to",
+        "far away from",
+        "on top of"
+      ],
+      "evidence_hint": "Look at where the big swans are compared to the little ones \u2014 are they close or far away?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever seen a swan or a duck at a pond?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I saw a duck",
+        "I went to a pond"
+      ],
+      "sentence_frame": "I saw ___ at the pond.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you went somewhere with water and saw birds."
+    }
+  ]
+}

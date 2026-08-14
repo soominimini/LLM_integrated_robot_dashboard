@@ -1,0 +1,118 @@
+{
+  "scene_description": "Two young children are riding kick scooters on a paved path in a sunny park. The girl on the left has a colorful helmet and a rainbow skirt and rides a pink scooter. The boy on the right wears a blue helmet and a striped shirt and rides a blue scooter. Green trees and grass are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children riding in this picture?",
+      "sample_answers": [
+        "scooters",
+        "kick scooters",
+        "a pink scooter and a blue scooter"
+      ],
+      "sentence_frame": "They are riding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "scooters",
+        "bikes",
+        "skateboards"
+      ],
+      "evidence_hint": "Look at what the children are standing on and holding."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the two children doing?",
+      "sample_answers": [
+        "riding scooters",
+        "scooting",
+        "going fast on scooters"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "riding scooters",
+        "jumping",
+        "running"
+      ],
+      "evidence_hint": "Look at the children's bodies and feet \u2014 what are they doing?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children riding their scooters?",
+      "sample_answers": [
+        "in the park",
+        "outside",
+        "on a path",
+        "on a sidewalk"
+      ],
+      "sentence_frame": "They are riding ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the park",
+        "in the kitchen",
+        "in a bedroom"
+      ],
+      "evidence_hint": "Look at the ground and the trees and grass around the children."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What are the helmets on their heads for?",
+      "sample_answers": [
+        "to keep their heads safe",
+        "to protect them",
+        "so they don't get hurt"
+      ],
+      "sentence_frame": "The helmet keeps their ___ safe.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "head safe",
+        "feet warm",
+        "hands clean"
+      ],
+      "evidence_hint": "Look at what the children are wearing on their heads and think about why people wear helmets."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might happen next after the children finish riding their scooters?",
+      "sample_answers": [
+        "they stop and rest",
+        "they go home",
+        "they keep riding",
+        "they take off their helmets"
+      ],
+      "sentence_frame": "Next, they might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "stop and rest",
+        "keep riding",
+        "go to sleep"
+      ],
+      "evidence_hint": "Look at how fast they are going and think about what usually happens after playing outside."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever ridden a scooter or a bike? What did you wear to stay safe?",
+      "sample_answers": [
+        "yes, I wore a helmet",
+        "I have a scooter",
+        "no, but I want to",
+        "I wear a helmet"
+      ],
+      "sentence_frame": "I wore a ___ to stay safe.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "helmet",
+        "pads",
+        "nothing"
+      ],
+      "evidence_hint": "Think about a time you played outside on wheels."
+    }
+  ]
+}

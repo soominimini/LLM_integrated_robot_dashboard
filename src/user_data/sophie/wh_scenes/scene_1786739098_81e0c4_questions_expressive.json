@@ -1,0 +1,120 @@
+{
+  "scene_description": "Two girls are in a kitchen decorating Halloween cupcakes and cookies. There are ghost-shaped treats, pumpkin cookies, frosting in a green bowl, and jack-o'-lanterns in the background. One girl is spreading frosting on a cupcake while the other works on cookies.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the girls decorating?",
+      "sample_answers": [
+        "cupcakes",
+        "cookies",
+        "cupcakes and cookies",
+        "Halloween treats"
+      ],
+      "sentence_frame": "They are decorating ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cupcakes and cookies",
+        "sandwiches",
+        "pizza"
+      ],
+      "evidence_hint": "Look at the food on the table in front of the girls."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl in green doing with the cupcake?",
+      "sample_answers": [
+        "putting frosting on it",
+        "spreading frosting",
+        "decorating it",
+        "using a spoon"
+      ],
+      "sentence_frame": "She is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "spreading frosting",
+        "eating it",
+        "throwing it"
+      ],
+      "evidence_hint": "Look at the girl on the right and what she is holding."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the girls making their treats?",
+      "sample_answers": [
+        "in the kitchen",
+        "at the counter",
+        "inside"
+      ],
+      "sentence_frame": "They are making treats ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the kitchen",
+        "outside",
+        "in the bedroom"
+      ],
+      "evidence_hint": "Look at the room around the girls \u2014 the stove, tiles, and counter."
+    },
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What Halloween decorations do you see in the background?",
+      "sample_answers": [
+        "pumpkins",
+        "jack-o'-lanterns",
+        "a carved pumpkin",
+        "orange pumpkins"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "pumpkins",
+        "Christmas trees",
+        "balloons"
+      ],
+      "evidence_hint": "Look behind the girls on the counter in the back of the kitchen."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How do the girls look while they are decorating?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "they are smiling",
+        "they look like they are having fun"
+      ],
+      "sentence_frame": "They look ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "sad",
+        "scared"
+      ],
+      "evidence_hint": "Look at the girls' faces \u2014 what do you notice?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever decorated a cupcake or cookie? What did you put on it?",
+      "sample_answers": [
+        "yes",
+        "I put sprinkles",
+        "I used frosting",
+        "no"
+      ],
+      "sentence_frame": "I put ___ on my cupcake.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "sprinkles",
+        "frosting",
+        "candy"
+      ],
+      "evidence_hint": "Think about a time you decorated food or helped in the kitchen."
+    }
+  ]
+}

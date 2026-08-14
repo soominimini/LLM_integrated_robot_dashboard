@@ -1,0 +1,65 @@
+{
+  "scene_description": "Four children are running on a grassy area in a park. One girl in the middle is holding a large orange and brown kite up in the air. The other children are running alongside her. There are green trees and bushes in the background.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What is the girl holding up in the air?",
+      "answer": "a kite",
+      "visual_choices": [
+        "a kite",
+        "a balloon",
+        "a flag",
+        "an umbrella"
+      ],
+      "evidence_hint": "Look at what the girl in the middle is holding above her head."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is holding the kite?",
+      "answer": "a girl",
+      "visual_choices": [
+        "a girl",
+        "a boy",
+        "a teacher",
+        "a baby"
+      ],
+      "evidence_hint": "Look at the child in the middle of the picture."
+    },
+    {
+      "wh_type": "what",
+      "question": "What are the children doing?",
+      "answer": "running",
+      "visual_choices": [
+        "running",
+        "sitting",
+        "swimming",
+        "jumping rope"
+      ],
+      "evidence_hint": "Look at the children's legs and feet."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "answer": "on the grass",
+      "visual_choices": [
+        "on the grass",
+        "at the beach",
+        "in a classroom",
+        "on a sidewalk"
+      ],
+      "evidence_hint": "Look at the ground under the children's feet."
+    },
+    {
+      "wh_type": "what",
+      "question": "What color is the kite?",
+      "answer": "orange and brown",
+      "visual_choices": [
+        "orange and brown",
+        "blue and white",
+        "red and yellow",
+        "green and purple"
+      ],
+      "evidence_hint": "Look at the kite the girl is holding up high."
+    }
+  ]
+}

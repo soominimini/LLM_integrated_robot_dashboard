@@ -1,0 +1,117 @@
+{
+  "scene_description": "Three young children wearing colorful ski gear and helmets are standing on a snowy ski slope with skis on their feet. An adult ski instructor wearing a white helmet and red jacket stands nearby watching them. The children appear to be in a ski lesson, with one child reaching out to touch another child's helmet. Mountains and ski lift cables are visible in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are the children wearing on their heads?",
+      "sample_answers": [
+        "helmets",
+        "ski helmets",
+        "hats with helmets"
+      ],
+      "sentence_frame": "They are wearing ___ on their heads.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "helmets",
+        "hats",
+        "hoods"
+      ],
+      "evidence_hint": "Look at the top of each child's head."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the children doing in this picture?",
+      "sample_answers": [
+        "skiing",
+        "standing on skis",
+        "learning to ski"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "skiing",
+        "swimming",
+        "running"
+      ],
+      "evidence_hint": "Look at the children's feet and what is on the ground."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children skiing?",
+      "sample_answers": [
+        "in the snow",
+        "on a snowy hill",
+        "outside on a mountain"
+      ],
+      "sentence_frame": "They are skiing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in the snow",
+        "at the beach",
+        "in a gym"
+      ],
+      "evidence_hint": "Look at the ground and the background behind the children."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do you wear a helmet for?",
+      "sample_answers": [
+        "to keep your head safe",
+        "to protect your head",
+        "so you don't get hurt"
+      ],
+      "sentence_frame": "You wear a helmet to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "keep your head safe",
+        "stay warm",
+        "look pretty"
+      ],
+      "evidence_hint": "Look at the helmets on the children's heads and think about why people wear them."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "who",
+      "question": "Who is the grown-up standing next to the children? Is she a teacher or a mom shopping?",
+      "sample_answers": [
+        "a teacher",
+        "a ski teacher",
+        "a ski instructor",
+        "someone helping them ski"
+      ],
+      "sentence_frame": "She is a ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "ski teacher",
+        "doctor",
+        "mom shopping"
+      ],
+      "evidence_hint": "Look at what the grown-up is wearing and where she is standing near the children."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever played in the snow? What did you do?",
+      "sample_answers": [
+        "yes",
+        "I made a snowball",
+        "I went sledding",
+        "no"
+      ],
+      "sentence_frame": "In the snow, I ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "made a snowball",
+        "went sledding",
+        "built a snowman"
+      ],
+      "evidence_hint": "Think about a time you were outside in the cold or snow."
+    }
+  ]
+}

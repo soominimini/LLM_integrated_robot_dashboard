@@ -1,0 +1,117 @@
+{
+  "scene_description": "A young girl wearing a colorful polka-dot swimsuit is jumping into a bright blue outdoor swimming pool. She is holding a yellow inflatable duck ring around her waist. Water is splashing around her feet and legs. A metal pool ladder is visible on the left side, and green bushes are in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding around her waist?",
+      "sample_answers": [
+        "a floatie",
+        "a duck ring",
+        "a yellow ring",
+        "an inflatable duck"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a yellow duck ring",
+        "a ball",
+        "a towel"
+      ],
+      "evidence_hint": "Look at the yellow thing around the girl's middle."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What is the girl doing right now?",
+      "sample_answers": [
+        "jumping into the pool",
+        "jumping in the water",
+        "splashing into the pool"
+      ],
+      "sentence_frame": "The girl is ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "jumping in",
+        "sitting down",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the girl's body and the splashing water around her."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where is the girl jumping?",
+      "sample_answers": [
+        "into the pool",
+        "in the swimming pool",
+        "outside in the water"
+      ],
+      "sentence_frame": "She is jumping ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "into the pool",
+        "into a bathtub",
+        "onto the grass"
+      ],
+      "evidence_hint": "Look at the blue water all around the girl."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What is the floatie ring used for?",
+      "sample_answers": [
+        "to help her float",
+        "so she doesn't sink",
+        "to keep her safe in the water"
+      ],
+      "sentence_frame": "The floatie helps her ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "float in the water",
+        "run faster",
+        "stay dry"
+      ],
+      "evidence_hint": "Think about why kids wear floaties in a pool."
+    },
+    {
+      "question_kind": "feeling",
+      "wh_type": "how",
+      "question": "How does the girl look \u2014 is she happy or scared?",
+      "sample_answers": [
+        "happy",
+        "excited",
+        "she looks like she's having fun"
+      ],
+      "sentence_frame": "She looks ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "happy",
+        "scared",
+        "sad"
+      ],
+      "evidence_hint": "Look at the girl's face and her big smile."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever jumped into a pool? What did it feel like?",
+      "sample_answers": [
+        "yes, it was fun",
+        "it was cold",
+        "I was scared",
+        "I like swimming"
+      ],
+      "sentence_frame": "When I jumped in, it felt ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "fun",
+        "cold",
+        "scary"
+      ],
+      "evidence_hint": "Think about a time you were in the water."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_description": "A family Thanksgiving dinner scene with a large wooden table covered in holiday food including a roasted turkey, fruits, vegetables, corn, candles, and small pumpkins. Two young children are near the table, and several adults stand around holding wine glasses.",
+  "questions": [
+    {
+      "wh_type": "what",
+      "question": "What big food is on the table?",
+      "answer": "a roasted turkey",
+      "visual_choices": [
+        "a roasted turkey",
+        "a birthday cake",
+        "a pizza",
+        "a bowl of soup"
+      ],
+      "evidence_hint": "Look at the bottom of the table for a big brown food."
+    },
+    {
+      "wh_type": "what",
+      "question": "What is on the table that gives light?",
+      "answer": "candles",
+      "visual_choices": [
+        "candles",
+        "a flashlight",
+        "a lamp",
+        "a lantern"
+      ],
+      "evidence_hint": "Look in the middle of the table for something glowing."
+    },
+    {
+      "wh_type": "who",
+      "question": "Who is standing next to the table?",
+      "answer": "two children",
+      "visual_choices": [
+        "two children",
+        "two dogs",
+        "two babies",
+        "two teachers"
+      ],
+      "evidence_hint": "Look on the left and right sides of the table."
+    },
+    {
+      "wh_type": "what",
+      "question": "What small orange things are on the table?",
+      "answer": "small pumpkins",
+      "visual_choices": [
+        "small pumpkins",
+        "oranges",
+        "balls",
+        "apples"
+      ],
+      "evidence_hint": "Look around the table for small round orange decorations."
+    },
+    {
+      "wh_type": "where",
+      "question": "Where is all the food?",
+      "answer": "on the table",
+      "visual_choices": [
+        "on the table",
+        "on the floor",
+        "in a bag",
+        "on a shelf"
+      ],
+      "evidence_hint": "Look at the big wooden surface in the middle of the picture."
+    }
+  ]
+}

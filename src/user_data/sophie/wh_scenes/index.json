@@ -801,5 +801,192 @@
     "expressive_count": 5,
     "status": "ready",
     "created_at": "2026-08-14T21:11:01"
+  },
+  {
+    "id": "scene_1786738701_b5e67a",
+    "filename": "carving.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738701_b5e67a.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738701_b5e67a.png",
+    "scene_description": "A child and an adult are sitting outside at a table covered with a Halloween spider-web tablecloth. They are carving orange pumpkins. One pumpkin already has a face carved on it, and another has a drawn-on design. Several pumpkins and pumpkin pieces are on the table.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:18:45"
+  },
+  {
+    "id": "scene_1786738775_d0b6f4",
+    "filename": "fall drawing.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738775_d0b6f4.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738775_d0b6f4.png",
+    "scene_description": "Two pieces of white paper on a wooden table, each decorated with animal pictures made from autumn leaves. The left paper shows a butterfly and a hedgehog made from colorful fall leaves and red berries. The right paper shows a butterfly, an owl, and a bird, also made from leaves and natural materials.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:20:00"
+  },
+  {
+    "id": "scene_1786738800_ded4e5",
+    "filename": "helping.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738800_ded4e5.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738800_ded4e5.png",
+    "scene_description": "A workbook page showing the number 7, with circles and number-tracing activities. There are colorful crayon marks visible on the page.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:20:22"
+  },
+  {
+    "id": "scene_1786738822_2082a0",
+    "filename": "playground2.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738822_2082a0.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738822_2082a0.png",
+    "scene_description": "Two children are playing on a colorful wooden playground structure. One child with curly blonde hair wears a plaid shirt and blue shorts and is climbing up. The other child with dark curly hair wears a pink shirt and jeans and is standing on the platform. The playground has green panels, yellow flower decorations, and a brown hexagonal climbing frame.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:20:46"
+  },
+  {
+    "id": "scene_1786738846_4eead8",
+    "filename": "sand castle.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738846_4eead8.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738846_4eead8.png",
+    "scene_description": "Two children are playing on a sandy beach. One child is pouring water from a red bucket onto a sandcastle decorated with small colorful flags. The ocean and blue sky are visible in the background.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:21:07"
+  },
+  {
+    "id": "scene_1786738867_e95982",
+    "filename": "snowboard.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738867_e95982.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738867_e95982.png",
+    "scene_description": "Three young children wearing colorful ski gear and helmets are on a snowy ski slope with an adult instructor. The children are on skis and wearing bright yellow vests. The instructor wears a red jacket and white helmet.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:21:31"
+  },
+  {
+    "id": "scene_1786738891_da08c5",
+    "filename": "swan.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738891_da08c5.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738891_da08c5.png",
+    "scene_description": "Two large white swans and four small gray baby swans (cygnets) swimming together on a pond. A duck is also visible in the background.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:21:54"
+  },
+  {
+    "id": "scene_1786738914_c31874",
+    "filename": "swimming.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738914_c31874.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738914_c31874.png",
+    "scene_description": "A young girl wearing a colorful polka-dot swimsuit is jumping into a blue swimming pool while holding a yellow inflatable ring. A metal ladder is visible on the left side of the pool, and green bushes are in the background.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:22:18"
+  },
+  {
+    "id": "scene_1786738938_093ff7",
+    "filename": "swimming slide.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738938_093ff7.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738938_093ff7.png",
+    "scene_description": "Two boys are sliding down a black and white striped water slide into a blue swimming pool. The boy in front wears red striped swim shorts. Both boys have their arms raised and are smiling. Water is splashing around them.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:22:41"
+  },
+  {
+    "id": "scene_1786738961_b2e22e",
+    "filename": "tigers.png",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738961_b2e22e.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738961_b2e22e.png",
+    "scene_description": "A tiger cub with orange and black stripes is standing over a lion cub that is lying on its back on green grass. The two cubs appear to be playing together.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:23:04"
+  },
+  {
+    "id": "scene_1786738984_c17d00",
+    "filename": "Slide10.PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786738984_c17d00.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786738984_c17d00.png",
+    "scene_description": "Two children are sitting at a kitchen counter painting eggs with small paintbrushes. Several plain eggs sit on the counter, along with a watercolor paint palette, a jar holding brushes, and a wicker basket.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:23:25"
+  },
+  {
+    "id": "scene_1786739005_86d610",
+    "filename": "Slide12.PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786739005_86d610.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786739005_86d610.png",
+    "scene_description": "A young girl wearing a white knit sweater, white hat, and red scarf stands outdoors among wooden crates filled with pumpkins and orange flowers. She is holding a small striped gourd. The background shows colorful red and yellow autumn leaves.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:23:47"
+  },
+  {
+    "id": "scene_1786739027_f1f246",
+    "filename": "Slide18.PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786739027_f1f246.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786739027_f1f246.png",
+    "scene_description": "Two children ride kick scooters on a paved path in a sunny park. The girl in front wears a colorful helmet and a rainbow skirt and rides a pink scooter. The boy behind her wears a blue helmet and a striped shirt and rides a blue scooter.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:24:11"
+  },
+  {
+    "id": "scene_1786739051_699cd1",
+    "filename": "Slide19.PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786739051_699cd1.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786739051_699cd1.png",
+    "scene_description": "Two young children stand in a puddle on a dirt path surrounded by green trees. The girl on the left wears pink rain boots and holds a clear umbrella. The boy on the right wears yellow rain boots and holds a rainbow-colored umbrella. Both children wear colorful jackets.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:24:36"
+  },
+  {
+    "id": "scene_1786739076_17e900",
+    "filename": "Slide5.PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786739076_17e900.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786739076_17e900.png",
+    "scene_description": "A family Thanksgiving dinner scene with a large wooden table covered in holiday food including a roasted turkey, fruits, vegetables, corn, candles, and small pumpkins. Two young children are near the table, and several adults stand around holding wine glasses.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:24:58"
+  },
+  {
+    "id": "scene_1786739098_81e0c4",
+    "filename": "Slide6 (1).PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786739098_81e0c4.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786739098_81e0c4.png",
+    "scene_description": "Two girls are decorating Halloween cupcakes and cookies in a kitchen. There are ghost-shaped treats, pumpkin cookies, a green bowl with frosting, and jack-o'-lanterns visible in the background.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:25:21"
+  },
+  {
+    "id": "scene_1786739121_c09822",
+    "filename": "Slide6.PNG",
+    "image_path": "/home/qtrobot/tutorials-master/demos/version_1_llm_gemini/src/user_data/sophie/wh_scenes/images/scene_1786739121_c09822.png",
+    "image_url": "/images/sophie/wh_scenes/images/scene_1786739121_c09822.png",
+    "scene_description": "Four children are running on a grassy area in a park. One girl in the middle is holding a large orange and brown kite up in the air. The other children are running alongside her. There are green trees and bushes in the background.",
+    "question_count": 5,
+    "expressive_count": 5,
+    "status": "ready",
+    "created_at": "2026-08-14T22:25:43"
   }
 ]

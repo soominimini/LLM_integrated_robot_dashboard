@@ -1,0 +1,115 @@
+{
+  "scene_description": "Four children are running together on green grass in a sunny park. One girl in the middle is holding a large orange and brown kite up in the air. The other children \u2014 a boy in white, a girl in red, and a girl in a striped dress \u2014 are running alongside her. There are trees and bushes in the background.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What is the girl holding up in the air?",
+      "sample_answers": [
+        "a kite",
+        "a big kite",
+        "an orange kite"
+      ],
+      "sentence_frame": "She is holding ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "a kite",
+        "a ball",
+        "a flag"
+      ],
+      "evidence_hint": "Look at what the girl in the middle has in her hand above her head."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are all the children doing?",
+      "sample_answers": [
+        "running",
+        "they are running",
+        "running on the grass"
+      ],
+      "sentence_frame": "The children are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "running",
+        "sitting",
+        "sleeping"
+      ],
+      "evidence_hint": "Look at the children's legs and feet \u2014 what are their bodies doing?"
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the children playing?",
+      "sample_answers": [
+        "outside",
+        "in a park",
+        "on the grass"
+      ],
+      "sentence_frame": "The children are playing ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "in a park",
+        "in a classroom",
+        "at the beach"
+      ],
+      "evidence_hint": "Look at the ground and the trees around the children."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do you do with a kite?",
+      "sample_answers": [
+        "you fly it",
+        "you run with it",
+        "make it go up in the air"
+      ],
+      "sentence_frame": "You use a kite to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "fly it",
+        "eat it",
+        "read it"
+      ],
+      "evidence_hint": "Look at what the girl is doing with the kite \u2014 is it going up or down?"
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might happen next if the girl keeps running with the kite?",
+      "sample_answers": [
+        "the kite will fly up",
+        "it will go higher",
+        "the kite will go in the sky"
+      ],
+      "sentence_frame": "Next, the kite might ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "fly up high",
+        "fall on the ground",
+        "go in the water"
+      ],
+      "evidence_hint": "Look at the kite \u2014 it is already up in the air. What happens when you run fast with a kite?"
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever flown a kite or run outside with friends?",
+      "sample_answers": [
+        "yes",
+        "no",
+        "I ran outside",
+        "I played at the park"
+      ],
+      "sentence_frame": "I like to ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "yes",
+        "no"
+      ],
+      "evidence_hint": "Think about a time you played outside."
+    }
+  ]
+}

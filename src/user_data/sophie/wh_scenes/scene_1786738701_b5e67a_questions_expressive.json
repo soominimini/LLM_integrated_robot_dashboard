@@ -1,0 +1,115 @@
+{
+  "scene_description": "A woman and a young girl are outside at a table covered with a Halloween spider-web tablecloth, carving pumpkins together. There are multiple orange pumpkins on the table, one already partially carved with a face. The girl is touching a large uncarved pumpkin. Fall leaves are visible in the corner of the image.",
+  "questions": [
+    {
+      "question_kind": "labeling",
+      "wh_type": "what",
+      "question": "What are on the table?",
+      "sample_answers": [
+        "pumpkins",
+        "big orange pumpkins",
+        "pumpkins and leaves"
+      ],
+      "sentence_frame": "I see ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "pumpkins",
+        "watermelons",
+        "apples"
+      ],
+      "evidence_hint": "Look at the big orange things on the table."
+    },
+    {
+      "question_kind": "action",
+      "wh_type": "what",
+      "question": "What are the woman and the girl doing?",
+      "sample_answers": [
+        "carving pumpkins",
+        "cutting the pumpkin",
+        "making a jack-o-lantern"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "carving pumpkins",
+        "eating pumpkins",
+        "painting pumpkins"
+      ],
+      "evidence_hint": "Look at what their hands are doing with the pumpkins."
+    },
+    {
+      "question_kind": "location",
+      "wh_type": "where",
+      "question": "Where are the girl and the woman?",
+      "sample_answers": [
+        "outside",
+        "in the yard",
+        "on the grass outside"
+      ],
+      "sentence_frame": "They are ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "outside in the yard",
+        "in the kitchen",
+        "in a store"
+      ],
+      "evidence_hint": "Look at the ground and the background behind them."
+    },
+    {
+      "question_kind": "function",
+      "wh_type": "what",
+      "question": "What do people use a carving tool for when making a jack-o-lantern?",
+      "sample_answers": [
+        "to cut the pumpkin",
+        "to make a face",
+        "to carve it"
+      ],
+      "sentence_frame": "They use it to ___.",
+      "support_level": "sentence_frame",
+      "verbal_choices": [
+        "cut the pumpkin",
+        "eat the pumpkin",
+        "paint the pumpkin"
+      ],
+      "evidence_hint": "Look at the pumpkin that already has a face carved on it."
+    },
+    {
+      "question_kind": "supported_inference",
+      "wh_type": "what",
+      "question": "What might the pumpkin look like when they are done?",
+      "sample_answers": [
+        "a jack-o-lantern",
+        "a face on the pumpkin",
+        "a scary face"
+      ],
+      "sentence_frame": "When they are done, the pumpkin might look like ___.",
+      "support_level": "choice_support",
+      "verbal_choices": [
+        "a jack-o-lantern with a face",
+        "a plain pumpkin",
+        "a cake"
+      ],
+      "evidence_hint": "Look at the pumpkin that already has a face carved into it for a clue."
+    }
+  ],
+  "optional_extension_questions": [
+    {
+      "question_kind": "personal_extension",
+      "wh_type": "what",
+      "question": "Have you ever carved a pumpkin? What did it look like?",
+      "sample_answers": [
+        "yes, it had a scary face",
+        "no",
+        "mine had a smile"
+      ],
+      "sentence_frame": "My pumpkin had ___.",
+      "support_level": "modeling",
+      "verbal_choices": [
+        "a scary face",
+        "a happy face",
+        "I never carved one"
+      ],
+      "evidence_hint": "Think about Halloween and pumpkins at your home."
+    }
+  ]
+}
